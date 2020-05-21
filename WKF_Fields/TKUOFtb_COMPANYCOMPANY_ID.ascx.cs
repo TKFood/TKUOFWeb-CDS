@@ -43,6 +43,11 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
 		//這裡不用修改
 		//欄位的初始化資料都到SetField Method去做
         SetField(m_versionField);
+
+        if (!IsPostBack)
+        {
+            BindDropDownList();
+        }
     }    
 
     /// <summary>
@@ -135,8 +140,9 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
 
             //<FieldValue MA001='' MA002=''>
             XElement xe = new XElement("FieldValue"
-                ,new XAttribute("MA001", TextBox1.Text)
-                ,new XAttribute("MA002", LabelNAME.Text)
+                ,new XAttribute("MA001", TextBox1.Text.Trim())
+                ,new XAttribute("MA002", LabelNAME.Text.Trim())
+                ,new XAttribute("DropDownList1", DropDownList1.SelectedValue.ToString().Trim())
                 );
 
             return xe.ToString();
@@ -202,6 +208,7 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
 
                 TextBox1.Text = xe.Attribute("MA001").Value;
                 LabelNAME.Text = xe.Attribute("MA002").Value;
+                DropDownList1.Text = xe.Attribute("DropDownList1").Value;
             }
 
             switch (fieldOptional.FieldMode)
@@ -273,5 +280,50 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
             }
         }
     }
+
+    private void BindDropDownList()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();     
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("COMPANY_NAME", typeof(String));
+        dt.Columns.Add("ERPNO", typeof(String));
+
+     
+
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@" SELECT TOP 10 [COMPANY_NAME],[ERPNO] FROM [HJ_BM_DB].[dbo].[tb_COMPANY] ", conn);
+
+            ds.Clear();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList1.DataSource = ds.Tables[0];
+                DropDownList1.DataTextField = "COMPANY_NAME";
+                DropDownList1.DataValueField = "ERPNO";
+                DropDownList1.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
+
+
+    }
+
     #endregion
+
 }

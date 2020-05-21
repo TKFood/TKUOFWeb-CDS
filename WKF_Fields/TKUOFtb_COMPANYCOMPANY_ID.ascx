@@ -21,6 +21,14 @@
             <asp:Label ID="LabelNAME" runat="server" Text=""></asp:Label>
         </td>
    </tr>
+    <tr>
+        <td>
+            下拉式選項
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList1" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr>
 </table>
 
 <asp:Label ID="lblHasNoAuthority" runat="server" Text="無填寫權限" ForeColor="Red" Visible="False" meta:resourcekey="lblHasNoAuthorityResource1"></asp:Label>
