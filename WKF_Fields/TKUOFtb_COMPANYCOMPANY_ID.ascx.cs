@@ -190,7 +190,6 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
 
         if (fieldOptional != null)
         {
-
             //若有擴充屬性，可以用該屬性存取
             // fieldOptional.ExtensionSetting
 
