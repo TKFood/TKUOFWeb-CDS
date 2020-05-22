@@ -47,6 +47,12 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
         if (!IsPostBack)
         {
             BindDropDownList();
+            BindDropDownList2();
+            BindDropDownList3();
+            BindDropDownList4();
+            BindDropDownList5();
+            BindDropDownList6();
+            BindDropDownList7();
         }
     }    
 
@@ -144,6 +150,14 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 ,new XAttribute("MA002", LabelNAME.Text.Trim())
                 ,new XAttribute("MA011", TextBox2.Text.Trim())
                 ,new XAttribute("MA014", DropDownList1.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA015", DropDownList2.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA017", DropDownList3.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA018", DropDownList4.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA019", DropDownList5.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA028", TextBox3.Text.Trim())
+                ,new XAttribute("MA031", DropDownList6.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA033", TextBox4.Text.Trim())
+                ,new XAttribute("MA037", DropDownList7.SelectedValue.ToString().Trim())
                 );
 
             return xe.ToString();
@@ -211,6 +225,14 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 LabelNAME.Text = xe.Attribute("MA002").Value;
                 TextBox2.Text = xe.Attribute("MA011").Value;
                 DropDownList1.SelectedValue = xe.Attribute("MA014").Value;
+                DropDownList2.SelectedValue = xe.Attribute("MA015").Value;
+                DropDownList3.SelectedValue = xe.Attribute("MA017").Value;
+                DropDownList4.SelectedValue = xe.Attribute("MA018").Value;
+                DropDownList5.SelectedValue = xe.Attribute("MA019").Value;
+                TextBox3.Text = xe.Attribute("MA028").Value;
+                DropDownList6.SelectedValue = xe.Attribute("MA031").Value;
+                TextBox4.Text = xe.Attribute("MA033").Value;
+                DropDownList7.SelectedValue = xe.Attribute("MA037").Value;
             }
 
             switch (fieldOptional.FieldMode)
@@ -320,6 +342,216 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
         }
 
 
+    }
+
+    private void BindDropDownList2()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("ME001", typeof(String));
+        dt.Columns.Add("ME002", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(ME001)) AS ME001,ME002 FROM [TK].dbo.CMSME WHERE ME002 NOT LIKE '%停用%' ORDER BY ME001 ", conn);
+
+            ds.Clear();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList2.DataSource = ds.Tables[0];
+                DropDownList2.DataTextField = "ME002";
+                DropDownList2.DataValueField = "ME001";
+                DropDownList2.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    private void BindDropDownList3()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("MR002", typeof(String));
+        dt.Columns.Add("MR003", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(MR002)) AS MR002,MR003 FROM [TK].dbo.CMSMR WHERE MR001='1' ORDER BY MR002 ", conn);
+
+            ds.Clear();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList3.DataSource = ds.Tables[0];
+                DropDownList3.DataTextField = "MR003";
+                DropDownList3.DataValueField = "MR002";
+                DropDownList3.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    private void BindDropDownList4()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("MR002", typeof(String));
+        dt.Columns.Add("MR003", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(MR002)) AS MR002,MR003 FROM [TK].dbo.CMSMR WHERE MR001='3' ORDER BY MR002", conn);
+
+            ds.Clear();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList4.DataSource = ds.Tables[0];
+                DropDownList4.DataTextField = "MR003";
+                DropDownList4.DataValueField = "MR002";
+                DropDownList4.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+    private void BindDropDownList5()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("MR002", typeof(String));
+        dt.Columns.Add("MR003", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(MR002)) AS MR002,MR003 FROM [TK].dbo.CMSMR WHERE MR001='4' ORDER BY MR002", conn);
+
+            ds.Clear();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList5.DataSource = ds.Tables[0];
+                DropDownList5.DataTextField = "MR003";
+                DropDownList5.DataValueField = "MR002";
+                DropDownList5.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+    private void BindDropDownList6()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("NA002", typeof(String));
+        dt.Columns.Add("NA003", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(NA002)) AS NA002,NA003 FROM [TK].dbo.CMSNA WHERE COMPANY='TK' AND NA001='2' ORDER BY NA002", conn);
+
+            ds.Clear();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList6.DataSource = ds.Tables[0];
+                DropDownList6.DataTextField = "NA003";
+                DropDownList6.DataValueField = "NA002";
+                DropDownList6.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    private void BindDropDownList7()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.二聯式、2.三聯式、3.二聯式收銀機發票、4.三聯式收銀機發票、5.電子計算機發票、6.免用統一發票、7.電子發票
+
+        dt.Rows.Add(new Object[] {"7", "7電子發票" });
+        dt.Rows.Add(new Object[] {"1", "1二聯式" });
+        dt.Rows.Add(new Object[] { "2", "2三聯式" });
+        dt.Rows.Add(new Object[] { "3", "3二聯式收銀機發票" });
+        dt.Rows.Add(new Object[] { "4", "4三聯式收銀機發票" });
+        dt.Rows.Add(new Object[] { "5", "5電子計算機發票" });
+        dt.Rows.Add(new Object[] { "6", "6免用統一發票" });
+
+
+
+        DropDownList7.DataSource = dt;
+        DropDownList7.DataTextField = "Filed2";
+        DropDownList7.DataValueField = "Filed1";
+        DropDownList7.DataBind();
     }
 
     #endregion
