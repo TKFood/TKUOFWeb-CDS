@@ -4,7 +4,7 @@
 <table>
     <tr>
         <td>
-            <asp:Label ID="Label1" runat="server" Text="請輸入客戶代號:"></asp:Label>
+            <asp:Label ID="Label1" runat="server" Text="請輸入客戶代號: "></asp:Label>
         </td>      
         <td>
             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
@@ -23,7 +23,15 @@
    </tr>
     <tr>
         <td>
-            下拉式選項
+            <asp:Label ID="Label3" runat="server" Text="資本額: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox2" runat="server" Text="0"></asp:TextBox>
+        </td>    
+    </tr>
+    <tr>
+        <td>
+            交易幣別
         </td>
         <td>
             <asp:DropDownList ID="DropDownList1" runat="server" AppendDataBoundItems="false"></asp:DropDownList>

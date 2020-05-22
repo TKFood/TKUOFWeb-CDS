@@ -142,7 +142,8 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
             XElement xe = new XElement("FieldValue"
                 ,new XAttribute("MA001", TextBox1.Text.Trim())
                 ,new XAttribute("MA002", LabelNAME.Text.Trim())
-                ,new XAttribute("DropDownList1", DropDownList1.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA011", TextBox2.Text.Trim())
+                ,new XAttribute("MA014", DropDownList1.SelectedValue.ToString().Trim())
                 );
 
             return xe.ToString();
@@ -208,7 +209,8 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
 
                 TextBox1.Text = xe.Attribute("MA001").Value;
                 LabelNAME.Text = xe.Attribute("MA002").Value;
-                DropDownList1.Text = xe.Attribute("DropDownList1").Value;
+                TextBox2.Text = xe.Attribute("MA011").Value;
+                DropDownList1.SelectedValue = xe.Attribute("MA014").Value;
             }
 
             switch (fieldOptional.FieldMode)
@@ -288,17 +290,13 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
         DataTable dt = new DataTable();     
         DataRow ndr = dt.NewRow();
 
-        dt.Columns.Add("COMPANY_NAME", typeof(String));
-        dt.Columns.Add("ERPNO", typeof(String));
-
-     
+        dt.Columns.Add("MF001", typeof(String));
 
 
-
-        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand(@" SELECT TOP 10 [COMPANY_NAME],[ERPNO] FROM [HJ_BM_DB].[dbo].[tb_COMPANY] ", conn);
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(MF001)) AS MF001 FROM [TK].dbo.CMSMF ORDER BY MF001", conn);
 
             ds.Clear();
 
@@ -310,8 +308,8 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
             if (ds.Tables[0].Rows.Count > 0)
             {
                 DropDownList1.DataSource = ds.Tables[0];
-                DropDownList1.DataTextField = "COMPANY_NAME";
-                DropDownList1.DataValueField = "ERPNO";
+                DropDownList1.DataTextField = "MF001";
+                DropDownList1.DataValueField = "MF001";
                 DropDownList1.DataBind();
 
             }
