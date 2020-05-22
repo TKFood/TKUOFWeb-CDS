@@ -54,7 +54,15 @@
             <asp:DropDownList ID="DropDownList3" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
         </td>
     </tr>
-        <tr>
+    <tr>
+        <td>
+            型態別
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList12" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr>
+     <tr>
         <td>
             地區別
         </td>
@@ -84,7 +92,8 @@
         </td>
         <td>
             <asp:DropDownList ID="DropDownList6" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
-        </td>
+            <asp:Label ID="Label12" runat="server" Text=""></asp:Label>
+        </td>      
     </tr>
     <tr>
         <td>
@@ -101,6 +110,128 @@
         <td>
             <asp:DropDownList ID="DropDownList7" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
         </td>
+    </tr>
+     <tr>
+        <td>
+            課稅別
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList8" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <asp:Label ID="Label6" runat="server" Text="郵遞區號: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox5" runat="server" Text=""></asp:TextBox>
+        </td>    
+    </tr>
+     <tr>
+        <td>
+            收款方式
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList9" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr>
+     <tr>
+        <td>
+            票據寄領
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList10" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr>
+   <tr>
+        <td>
+            <asp:Label ID="Label7" runat="server" Text="結帳日期: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox6" runat="server" Text=""></asp:TextBox>
+        </td>    
+    </tr>
+    <tr>
+        <td>
+            <asp:Label ID="Label8" runat="server" Text="付款銀行(一): "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox7" runat="server" Text=""></asp:TextBox>
+        </td>    
+    </tr>
+    <tr>
+        <td>
+            <asp:Label ID="Label10" runat="server" Text="銀行帳號(一): "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox9" runat="server" Text=""></asp:TextBox>
+        </td>    
+    </tr>
+    <tr>
+        <td>
+            運輸方式
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList11" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr>  
+   
+    <tr>
+        <td>
+            <asp:Label ID="Label11" runat="server" Text="取價順序 "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox10" runat="server" Text="142"></asp:TextBox>
+            <asp:Label ID="Label13" runat="server" Text="(1客戶計價,2標準售價,3零售價,4售價定價一,5售價定價二): "></asp:Label>
+        </td>    
+    </tr>
+    <tr>
+        <td>
+            隨貨附發票
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList13" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr> 
+    <tr>
+        <td>
+            稅額
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList14" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr> 
+     <tr>
+        <td>
+            <asp:Label ID="Label14" runat="server" Text="收貨人: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox11" runat="server" Text=""></asp:TextBox>
+        </td>    
+    </tr>
+    <tr>
+        <td>
+            客戶分類
+        </td>
+        <td>
+            <asp:DropDownList ID="DropDownList15" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <asp:Label ID="Label15" runat="server" Text="食品登錄字號: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox12" runat="server" Text=""></asp:TextBox>
+        </td>    
+    </tr>
+     <tr>
+        <td>
+            <asp:Label ID="Label9" runat="server" Text="備註: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox8" runat="server" Text=""></asp:TextBox>
+        </td>    
     </tr>
 </table>
 

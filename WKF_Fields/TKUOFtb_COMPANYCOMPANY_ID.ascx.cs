@@ -53,6 +53,15 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
             BindDropDownList5();
             BindDropDownList6();
             BindDropDownList7();
+            BindDropDownList8();
+            BindDropDownList9();
+            BindDropDownList10();
+            BindDropDownList11();
+            BindDropDownList12();
+            BindDropDownList13();
+            BindDropDownList14();
+            BindDropDownList15();
+
         }
     }    
 
@@ -155,9 +164,26 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 ,new XAttribute("MA018", DropDownList4.SelectedValue.ToString().Trim())
                 ,new XAttribute("MA019", DropDownList5.SelectedValue.ToString().Trim())
                 ,new XAttribute("MA028", TextBox3.Text.Trim())
-                ,new XAttribute("MA031", DropDownList6.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA031", DropDownList6.Text.ToString().Trim())
                 ,new XAttribute("MA033", TextBox4.Text.Trim())
                 ,new XAttribute("MA037", DropDownList7.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA038", DropDownList8.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA040", TextBox5.Text.Trim())
+                ,new XAttribute("MA041", DropDownList9.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA042", DropDownList10.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA043", TextBox6.Text.Trim())
+                ,new XAttribute("MA046", TextBox7.Text.Trim())
+                ,new XAttribute("MA048", DropDownList11.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA049", TextBox8.Text.Trim())
+                ,new XAttribute("MA071", TextBox9.Text.Trim())
+                ,new XAttribute("MA075", TextBox10.Text.Trim())
+                ,new XAttribute("MA076", DropDownList12.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA083", DropDownList6.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA086", DropDownList13.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA087", DropDownList14.SelectedValue.ToString().Trim())
+                ,new XAttribute("MA099", TextBox11.Text.Trim())
+                ,new XAttribute("MA100", DropDownList15.SelectedValue.ToString().Trim())
+                ,new XAttribute("UDF02", TextBox12.Text.Trim())
                 );
 
             return xe.ToString();
@@ -230,9 +256,26 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 DropDownList4.SelectedValue = xe.Attribute("MA018").Value;
                 DropDownList5.SelectedValue = xe.Attribute("MA019").Value;
                 TextBox3.Text = xe.Attribute("MA028").Value;
-                DropDownList6.SelectedValue = xe.Attribute("MA031").Value;
+                DropDownList6.SelectedValue = xe.Attribute("MA083").Value;
                 TextBox4.Text = xe.Attribute("MA033").Value;
                 DropDownList7.SelectedValue = xe.Attribute("MA037").Value;
+                DropDownList8.SelectedValue = xe.Attribute("MA038").Value;
+                TextBox5.Text = xe.Attribute("MA040").Value;
+                DropDownList9.SelectedValue = xe.Attribute("MA041").Value;
+                DropDownList10.SelectedValue = xe.Attribute("MA042").Value;
+                TextBox6.Text = xe.Attribute("MA043").Value;
+                TextBox7.Text = xe.Attribute("MA046").Value;
+                DropDownList11.SelectedValue = xe.Attribute("MA048").Value;
+                TextBox8.Text = xe.Attribute("MA049").Value;
+                TextBox9.Text = xe.Attribute("MA071").Value;
+                TextBox10.Text = xe.Attribute("MA075").Value;
+                DropDownList12.SelectedValue = xe.Attribute("MA076").Value;
+                Label12.Text= xe.Attribute("MA031").Value;
+                DropDownList13.SelectedValue = xe.Attribute("MA086").Value;
+                DropDownList14.SelectedValue = xe.Attribute("MA087").Value;
+                TextBox11.Text = xe.Attribute("MA099").Value;
+                DropDownList15.SelectedValue = xe.Attribute("MA100").Value;
+                TextBox12.Text = xe.Attribute("UDF02").Value;
             }
 
             switch (fieldOptional.FieldMode)
@@ -357,7 +400,7 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(ME001)) AS ME001,ME002 FROM [TK].dbo.CMSME WHERE ME002 NOT LIKE '%停用%' ORDER BY ME001 ", conn);
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(ME001)) AS ME001,ME002 FROM [TK].dbo.CMSME WHERE ME002 NOT LIKE '%停用%' AND (ME001 LIKE '106%' OR ME001 LIKE '116%') ORDER BY ME001 ", conn);
 
             ds.Clear();
 
@@ -552,6 +595,197 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
         DropDownList7.DataTextField = "Filed2";
         DropDownList7.DataValueField = "Filed1";
         DropDownList7.DataBind();
+    }
+
+    private void BindDropDownList8()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.應稅內含、2.應稅外加、3.零稅率、4.免稅、9.不計稅
+
+        dt.Rows.Add(new Object[] { "1", "1應稅內含" });
+        dt.Rows.Add(new Object[] { "2", "2應稅外加" });
+        dt.Rows.Add(new Object[] { "3", "3零稅率" });
+        dt.Rows.Add(new Object[] { "4", "4免稅" });
+        dt.Rows.Add(new Object[] { "5", "5不計稅" });
+
+
+        DropDownList8.DataSource = dt;
+        DropDownList8.DataTextField = "Filed2";
+        DropDownList8.DataValueField = "Filed1";
+        DropDownList8.DataBind();
+    }
+
+    private void BindDropDownList9()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.現金、2.電匯、3.支票、4.其他
+
+        dt.Rows.Add(new Object[] { "1", "1現金" });
+        dt.Rows.Add(new Object[] { "2", "2電匯" });
+        dt.Rows.Add(new Object[] { "3", "3支票" });
+        dt.Rows.Add(new Object[] { "4", "4其他" });
+
+
+
+        DropDownList9.DataSource = dt;
+        DropDownList9.DataTextField = "Filed2";
+        DropDownList9.DataValueField = "Filed1";
+        DropDownList9.DataBind();
+    }
+
+    private void BindDropDownList10()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1:郵寄、2.自領、3.其它
+
+        dt.Rows.Add(new Object[] { "1", "1郵寄" });
+        dt.Rows.Add(new Object[] { "2", "2自領" });
+        dt.Rows.Add(new Object[] { "3", "3其它" });
+
+
+        DropDownList10.DataSource = dt;
+        DropDownList10.DataTextField = "Filed2";
+        DropDownList10.DataValueField = "Filed1";
+        DropDownList10.DataBind();
+    }
+    private void BindDropDownList11()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.空運、2.海運、3.海空聯運、4.郵寄、5.陸運、6.自取、7.自送、8.快遞  
+
+        dt.Rows.Add(new Object[] { "1", "1空運" });
+        dt.Rows.Add(new Object[] { "2", "2海運" });
+        dt.Rows.Add(new Object[] { "3", "3海空聯運" });
+        dt.Rows.Add(new Object[] { "4", "4郵寄" });
+        dt.Rows.Add(new Object[] { "5", "5陸運" });
+        dt.Rows.Add(new Object[] { "6", "6自取" });
+        dt.Rows.Add(new Object[] { "7", "7自送" });
+        dt.Rows.Add(new Object[] { "8", "8快遞" });
+
+        DropDownList11.DataSource = dt;
+        DropDownList11.DataTextField = "Filed2";
+        DropDownList11.DataValueField = "Filed1";
+        DropDownList11.DataBind();
+    }
+
+    private void BindDropDownList12()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("MR002", typeof(String));
+        dt.Columns.Add("MR003", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@"SELECT LTRIM(RTRIM(MR002)) AS MR002,MR003 FROM [TK].dbo.CMSMR WHERE MR001='4' ORDER BY MR002", conn);
+
+            ds.Clear();
+
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList12.DataSource = ds.Tables[0];
+                DropDownList12.DataTextField = "MR003";
+                DropDownList12.DataValueField = "MR002";
+                DropDownList12.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    private void BindDropDownList13()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //Y,N  
+
+        dt.Rows.Add(new Object[] { "Y", "Y" });
+        dt.Rows.Add(new Object[] { "N", "N" });
+
+        DropDownList13.DataSource = dt;
+        DropDownList13.DataTextField = "Filed2";
+        DropDownList13.DataValueField = "Filed1";
+        DropDownList13.DataBind();
+    }
+
+    private void BindDropDownList14()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.整張資料計算 2.單身單筆資料計算  
+
+        dt.Rows.Add(new Object[] { "1", "1整張資料計算" });
+        dt.Rows.Add(new Object[] { "2", "2單身單筆資料計算" });
+    
+        DropDownList14.DataSource = dt;
+        DropDownList14.DataTextField = "Filed2";
+        DropDownList14.DataValueField = "Filed1";
+        DropDownList14.DataBind();
+    }
+    private void BindDropDownList15()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.自然人 2.法人
+
+        dt.Rows.Add(new Object[] { "1", "1自然人" });
+        dt.Rows.Add(new Object[] { "2", "2法人" });
+
+        DropDownList15.DataSource = dt;
+        DropDownList15.DataTextField = "Filed2";
+        DropDownList15.DataValueField = "Filed1";
+        DropDownList15.DataBind();
     }
 
     #endregion
