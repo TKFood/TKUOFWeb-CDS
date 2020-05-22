@@ -152,7 +152,7 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
         {
             //回傳字串
             //取得表單欄位填寫的內容
-
+          
             //<FieldValue MA001='' MA002=''>
             XElement xe = new XElement("FieldValue"
                 ,new XAttribute("MA001", TextBox1.Text.Trim())
@@ -164,7 +164,7 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 ,new XAttribute("MA018", DropDownList4.SelectedValue.ToString().Trim())
                 ,new XAttribute("MA019", DropDownList5.SelectedValue.ToString().Trim())
                 ,new XAttribute("MA028", TextBox3.Text.Trim())
-                ,new XAttribute("MA031", DropDownList6.Text.ToString().Trim())
+                ,new XAttribute("MA031", DropDownList6.SelectedItem.ToString().Trim())
                 ,new XAttribute("MA033", TextBox4.Text.Trim())
                 ,new XAttribute("MA037", DropDownList7.SelectedValue.ToString().Trim())
                 ,new XAttribute("MA038", DropDownList8.SelectedValue.ToString().Trim())
