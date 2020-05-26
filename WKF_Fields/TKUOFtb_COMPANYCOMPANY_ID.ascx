@@ -22,12 +22,36 @@
             <asp:Label ID="LabelNAME" runat="server" Text=""></asp:Label>
         </td>
    </tr>
+   <tr>
+        <td>
+            <asp:Label ID="Label18" runat="server" Text="業務人員(工號): "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox15" runat="server" Text="0"></asp:TextBox>
+        </td>    
+    </tr>
     <tr>
         <td>
             <asp:Label ID="Label3" runat="server" Text="資本額: "></asp:Label>
         </td>      
         <td>
             <asp:TextBox ID="TextBox2" runat="server" Text="0"></asp:TextBox>
+        </td>    
+    </tr>
+      <tr>
+        <td>
+            <asp:Label ID="Label16" runat="server" Text="負責人: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox13" runat="server" Text="0"></asp:TextBox>
+        </td>    
+    </tr>
+       <tr>
+        <td>
+            <asp:Label ID="Label17" runat="server" Text="連絡人: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox14" runat="server" Text="0"></asp:TextBox>
         </td>    
     </tr>
     <tr>
@@ -201,6 +225,14 @@
             <asp:DropDownList ID="DropDownList14" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
         </td>
     </tr> 
+     <tr>
+        <td>
+            <asp:Label ID="Label19" runat="server" Text="收貨部門: "></asp:Label>
+        </td>      
+        <td>
+            <asp:TextBox ID="TextBox16" runat="server" Text=""></asp:TextBox>
+        </td>    
+    </tr>
      <tr>
         <td>
             <asp:Label ID="Label14" runat="server" Text="收貨人: "></asp:Label>

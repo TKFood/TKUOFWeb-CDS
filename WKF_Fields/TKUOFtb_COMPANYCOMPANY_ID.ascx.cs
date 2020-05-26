@@ -19,6 +19,7 @@ using System.Linq;
 using System.Data.SqlClient;
 using Ede.Uof.Utility.Data;
 using System.Xml.Linq;
+using System.Text;
 
 public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormManagement_VersionFieldUserControl_VersionFieldUC
 {
@@ -37,7 +38,7 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
 
     string MA001;
     string MA002;
-
+    DataSet dsCOMPANY=new DataSet();
     protected void Page_Load(object sender, EventArgs e)
     {
 		//這裡不用修改
@@ -151,39 +152,89 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
         get
         {
             //回傳字串
-            //取得表單欄位填寫的內容
-          
+            //取得表單欄位填寫的內容 
+            dsCOMPANY = SERACHtb_COMPANY(TextBox1.Text.Trim());
+         
             //<FieldValue MA001='' MA002=''>
             XElement xe = new XElement("FieldValue"
-                ,new XAttribute("MA001", TextBox1.Text.Trim())
-                ,new XAttribute("MA002", LabelNAME.Text.Trim())
-                ,new XAttribute("MA011", TextBox2.Text.Trim())
-                ,new XAttribute("MA014", DropDownList1.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA015", DropDownList2.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA017", DropDownList3.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA018", DropDownList4.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA019", DropDownList5.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA028", TextBox3.Text.Trim())
-                ,new XAttribute("MA031", DropDownList6.SelectedItem.ToString().Trim())
-                ,new XAttribute("MA033", TextBox4.Text.Trim())
-                ,new XAttribute("MA037", DropDownList7.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA038", DropDownList8.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA040", TextBox5.Text.Trim())
-                ,new XAttribute("MA041", DropDownList9.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA042", DropDownList10.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA043", TextBox6.Text.Trim())
-                ,new XAttribute("MA046", TextBox7.Text.Trim())
-                ,new XAttribute("MA048", DropDownList11.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA049", TextBox8.Text.Trim())
-                ,new XAttribute("MA071", TextBox9.Text.Trim())
-                ,new XAttribute("MA075", TextBox10.Text.Trim())
-                ,new XAttribute("MA076", DropDownList12.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA083", DropDownList6.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA086", DropDownList13.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA087", DropDownList14.SelectedValue.ToString().Trim())
-                ,new XAttribute("MA099", TextBox11.Text.Trim())
-                ,new XAttribute("MA100", DropDownList15.SelectedValue.ToString().Trim())
-                ,new XAttribute("UDF02", TextBox12.Text.Trim())
+                , new XAttribute("MA001", TextBox1.Text.Trim())
+                , new XAttribute("MA002", LabelNAME.Text.Trim())
+                , new XAttribute("MA003", LabelNAME.Text.Trim())       
+                , new XAttribute("MA004", TextBox13.Text.Trim())
+                , new XAttribute("MA005", TextBox14.Text.Trim())
+                , new XAttribute("MA006", dsCOMPANY.Tables[0].Rows[0]["PHONE"].ToString().Trim())
+                , new XAttribute("MA008", dsCOMPANY.Tables[0].Rows[0]["FAX"].ToString().Trim())
+                , new XAttribute("MA009", dsCOMPANY.Tables[0].Rows[0]["EMAIL"].ToString().Trim())
+                , new XAttribute("MA010", dsCOMPANY.Tables[0].Rows[0]["TAX_NUMBER"].ToString().Trim())
+                , new XAttribute("MA011", TextBox2.Text.Trim())
+                , new XAttribute("MA012", dsCOMPANY.Tables[0].Rows[0]["TURNOVER"].ToString().Trim())
+                , new XAttribute("MA013", dsCOMPANY.Tables[0].Rows[0]["WORKER_NUMBER"].ToString().Trim())
+                , new XAttribute("MA014", DropDownList1.SelectedValue.ToString().Trim())
+                , new XAttribute("MA015", DropDownList2.SelectedValue.ToString().Trim())
+                , new XAttribute("MA016", TextBox15.Text.Trim())
+                , new XAttribute("MA017", DropDownList3.SelectedValue.ToString().Trim())
+                , new XAttribute("MA018", DropDownList4.SelectedValue.ToString().Trim())
+                , new XAttribute("MA019", DropDownList5.SelectedValue.ToString().Trim())
+                , new XAttribute("MA023", dsCOMPANY.Tables[0].Rows[0]["CITY"].ToString().Trim() + dsCOMPANY.Tables[0].Rows[0]["TOWN"].ToString().Trim()+ dsCOMPANY.Tables[0].Rows[0]["ADDRESS"].ToString().Trim())
+                , new XAttribute("MA025", dsCOMPANY.Tables[0].Rows[0]["CITY"].ToString().Trim() + dsCOMPANY.Tables[0].Rows[0]["TOWN"].ToString().Trim() + dsCOMPANY.Tables[0].Rows[0]["ADDRESS"].ToString().Trim())
+                , new XAttribute("MA027", dsCOMPANY.Tables[0].Rows[0]["CITY"].ToString().Trim() + dsCOMPANY.Tables[0].Rows[0]["TOWN"].ToString().Trim() + dsCOMPANY.Tables[0].Rows[0]["ADDRESS"].ToString().Trim())
+                , new XAttribute("MA028", TextBox3.Text.Trim())
+                , new XAttribute("MA031", DropDownList6.SelectedItem.ToString().Trim())
+                , new XAttribute("MA032", "N")
+                , new XAttribute("MA033", TextBox4.Text.Trim())
+                , new XAttribute("MA034", "0")
+                , new XAttribute("MA035", "2")
+                , new XAttribute("MA036", "1")
+                , new XAttribute("MA037", DropDownList7.SelectedValue.ToString().Trim())
+                , new XAttribute("MA038", DropDownList8.SelectedValue.ToString().Trim())
+                , new XAttribute("MA039", "1")
+                , new XAttribute("MA040", TextBox5.Text.Trim())
+                , new XAttribute("MA041", DropDownList9.SelectedValue.ToString().Trim())
+                , new XAttribute("MA042", DropDownList10.SelectedValue.ToString().Trim())
+                , new XAttribute("MA043", TextBox6.Text.Trim())
+                , new XAttribute("MA044", "0")
+                , new XAttribute("MA045", "0")
+                , new XAttribute("MA046", TextBox7.Text.Trim())
+                , new XAttribute("MA047", "77305")
+                , new XAttribute("MA048", DropDownList11.SelectedValue.ToString().Trim())
+                , new XAttribute("MA049", TextBox8.Text.Trim())
+                , new XAttribute("MA059", "0")
+                , new XAttribute("MA060", "0")
+                , new XAttribute("MA061", "0")
+                , new XAttribute("MA066", "N")
+                , new XAttribute("MA071", TextBox9.Text.Trim())
+                , new XAttribute("MA075", TextBox10.Text.Trim())
+                , new XAttribute("MA076", DropDownList12.SelectedValue.ToString().Trim())
+                , new XAttribute("MA083", DropDownList6.SelectedValue.ToString().Trim())
+                , new XAttribute("MA084", "N")
+                , new XAttribute("MA085", TextBox15.Text.Trim())
+                , new XAttribute("MA086", DropDownList13.SelectedValue.ToString().Trim())
+                , new XAttribute("MA087", DropDownList14.SelectedValue.ToString().Trim())
+                , new XAttribute("MA088", "N")
+                , new XAttribute("MA089", "N")
+                , new XAttribute("MA090", "N")
+                , new XAttribute("MA091", "N")
+                , new XAttribute("MA092", "N")
+                , new XAttribute("MA093", "N")
+                , new XAttribute("MA094", "N")
+                , new XAttribute("MA095", "N")
+                , new XAttribute("MA096", "N")
+                , new XAttribute("MA097", "N")
+                , new XAttribute("MA098", TextBox16.Text.Trim())
+                , new XAttribute("MA099", TextBox11.Text.Trim())
+                , new XAttribute("MA100", DropDownList15.SelectedValue.ToString().Trim())
+                , new XAttribute("MA101", "1")
+                , new XAttribute("MA102", "1")
+                , new XAttribute("MA103", "2")
+                , new XAttribute("MA132", "2")
+                , new XAttribute("MA133", "0")
+                , new XAttribute("MA127", "1")
+                , new XAttribute("MA147", "N")
+                , new XAttribute("MA148", "1")
+                , new XAttribute("MA149", "1")
+                , new XAttribute("MA150", "N")
+                , new XAttribute("MA162", "N")
+                , new XAttribute("UDF02", TextBox12.Text.Trim())
                 );
 
             return xe.ToString();
@@ -250,8 +301,11 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 TextBox1.Text = xe.Attribute("MA001").Value;
                 LabelNAME.Text = xe.Attribute("MA002").Value;
                 TextBox2.Text = xe.Attribute("MA011").Value;
+                TextBox13.Text = xe.Attribute("MA004").Value;
+                TextBox14.Text = xe.Attribute("MA005").Value;
                 DropDownList1.SelectedValue = xe.Attribute("MA014").Value;
                 DropDownList2.SelectedValue = xe.Attribute("MA015").Value;
+                TextBox15.Text = xe.Attribute("MA026").Value;
                 DropDownList3.SelectedValue = xe.Attribute("MA017").Value;
                 DropDownList4.SelectedValue = xe.Attribute("MA018").Value;
                 DropDownList5.SelectedValue = xe.Attribute("MA019").Value;
@@ -273,6 +327,7 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 Label12.Text= xe.Attribute("MA031").Value;
                 DropDownList13.SelectedValue = xe.Attribute("MA086").Value;
                 DropDownList14.SelectedValue = xe.Attribute("MA087").Value;
+                TextBox16.Text = xe.Attribute("MA098").Value;
                 TextBox11.Text = xe.Attribute("MA099").Value;
                 DropDownList15.SelectedValue = xe.Attribute("MA100").Value;
                 TextBox12.Text = xe.Attribute("UDF02").Value;
@@ -313,21 +368,30 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
     protected void btn_Click(object sender, EventArgs e)
     {
         MA001 = TextBox1.Text;
-        MA002 = SERACHtb_COMPANY(MA001);
+        dsCOMPANY = SERACHtb_COMPANY(MA001);
 
-        LabelNAME.Text = MA002;
+        LabelNAME.Text = dsCOMPANY.Tables[0].Rows[0]["COMPANY_NAME"].ToString();
     }
 
-    public string SERACHtb_COMPANY(string COMPANY_ID)
+    public DataSet SERACHtb_COMPANY(string COMPANY_ID)
     {
         DataSet ds = new DataSet();
         DatabaseHelper DbQuery = new DatabaseHelper();
         DataTable dt = new DataTable();
+        StringBuilder SQLQUERY = new StringBuilder();
 
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand(@" SELECT [COMPANY_NAME],[ERPNO] FROM [HJ_BM_DB].[dbo].[tb_COMPANY] WHERE [ERPNO]=@ERPNO", conn);
+            SQLQUERY.Clear();
+            SQLQUERY.AppendFormat(@" SELECT [COMPANY_ID],[COMPANY_NAME],[ERPNO],[TAX_NUMBER],[PHONE],[FAX],[COUNTRY],[CITY],[TOWN],[ADDRESS]");
+            SQLQUERY.AppendFormat(@" ,[OVERSEAS_ADDR],[EMAIL],[WEBSITE],[FACEBOOK],[INDUSTRY],[TURNOVER],[WORKER_NUMBER],[EST_DATE],[PARENT_ID],[UPDATE_DATETIME]");
+            SQLQUERY.AppendFormat(@" ,[CREATE_DATETIME],[CREATE_USER_ID],[UPDATE_USER_ID],[NOTE],[OWNER_ID],[LAST_CONTACT_DATE],[STATUS]");
+            SQLQUERY.AppendFormat(@" FROM [HJ_BM_DB].[dbo].[tb_COMPANY]");
+            SQLQUERY.AppendFormat(@" WHERE [ERPNO]=@ERPNO");
+            SQLQUERY.AppendFormat(@" ");
+
+            SqlCommand command = new SqlCommand(SQLQUERY.ToString(), conn);
             command.Parameters.AddWithValue("@ERPNO", COMPANY_ID);
 
             ds.Clear();
@@ -339,11 +403,12 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
 
             if(ds.Tables[0].Rows.Count>0)
             {
-                return ds.Tables[0].Rows[0]["COMPANY_NAME"].ToString();
+                return ds;
+                //return ds.Tables[0].Rows[0]["COMPANY_NAME"].ToString();  
             }
             else
             {
-                return "查無資料";
+                return null;
             }
         }
     }
