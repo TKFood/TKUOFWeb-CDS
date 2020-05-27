@@ -210,25 +210,25 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 , new XAttribute("MA085", TextBox15.Text.Trim())
                 , new XAttribute("MA086", DropDownList13.SelectedValue.ToString().Trim())
                 , new XAttribute("MA087", DropDownList14.SelectedValue.ToString().Trim())
-                , new XAttribute("MA088", "N")
-                , new XAttribute("MA089", "N")
-                , new XAttribute("MA090", "N")
-                , new XAttribute("MA091", "N")
-                , new XAttribute("MA092", "N")
-                , new XAttribute("MA093", "N")
-                , new XAttribute("MA094", "N")
-                , new XAttribute("MA095", "N")
+                , new XAttribute("MA088", "1")
+                , new XAttribute("MA089", "1")
+                , new XAttribute("MA090", "1")
+                , new XAttribute("MA091", "1")
+                , new XAttribute("MA092", "1")
+                , new XAttribute("MA093", "1")
+                , new XAttribute("MA094", "0")
+                , new XAttribute("MA095", "0")
                 , new XAttribute("MA096", "N")
-                , new XAttribute("MA097", "N")
+                , new XAttribute("MA097", "1")
                 , new XAttribute("MA098", TextBox16.Text.Trim())
                 , new XAttribute("MA099", TextBox11.Text.Trim())
                 , new XAttribute("MA100", DropDownList15.SelectedValue.ToString().Trim())
                 , new XAttribute("MA101", "1")
                 , new XAttribute("MA102", "1")
                 , new XAttribute("MA103", "2")
-                , new XAttribute("MA132", "2")
-                , new XAttribute("MA133", "0")
-                , new XAttribute("MA127", "1")
+                , new XAttribute("MA132", "1")
+                , new XAttribute("MA133", "1")
+                , new XAttribute("MA127", "0")
                 , new XAttribute("MA147", "N")
                 , new XAttribute("MA148", "1")
                 , new XAttribute("MA149", "1")
@@ -305,7 +305,7 @@ public partial class WKF_OptionalFields_TKUOFtb_COMPANYCOMPANY_ID : WKF_FormMana
                 TextBox14.Text = xe.Attribute("MA005").Value;
                 DropDownList1.SelectedValue = xe.Attribute("MA014").Value;
                 DropDownList2.SelectedValue = xe.Attribute("MA015").Value;
-                TextBox15.Text = xe.Attribute("MA026").Value;
+                TextBox15.Text = xe.Attribute("MA016").Value;
                 DropDownList3.SelectedValue = xe.Attribute("MA017").Value;
                 DropDownList4.SelectedValue = xe.Attribute("MA018").Value;
                 DropDownList5.SelectedValue = xe.Attribute("MA019").Value;

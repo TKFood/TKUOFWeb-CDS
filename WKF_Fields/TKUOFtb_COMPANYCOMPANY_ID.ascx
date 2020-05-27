@@ -27,7 +27,7 @@
             <asp:Label ID="Label18" runat="server" Text="業務人員(工號): "></asp:Label>
         </td>      
         <td>
-            <asp:TextBox ID="TextBox15" runat="server" Text="0"></asp:TextBox>
+            <asp:TextBox ID="TextBox15" runat="server" Text=""></asp:TextBox>
         </td>    
     </tr>
     <tr>
@@ -43,7 +43,7 @@
             <asp:Label ID="Label16" runat="server" Text="負責人: "></asp:Label>
         </td>      
         <td>
-            <asp:TextBox ID="TextBox13" runat="server" Text="0"></asp:TextBox>
+            <asp:TextBox ID="TextBox13" runat="server" Text=""></asp:TextBox>
         </td>    
     </tr>
        <tr>
@@ -51,7 +51,7 @@
             <asp:Label ID="Label17" runat="server" Text="連絡人: "></asp:Label>
         </td>      
         <td>
-            <asp:TextBox ID="TextBox14" runat="server" Text="0"></asp:TextBox>
+            <asp:TextBox ID="TextBox14" runat="server" Text=""></asp:TextBox>
         </td>    
     </tr>
     <tr>
