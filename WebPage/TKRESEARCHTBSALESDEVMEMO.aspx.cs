@@ -46,7 +46,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALIDDATES],[PLACES],[ONSALESDATES],[PRODESGIN],[ASSESSMENT],[COSTS],[SALESPRICES],[TESTDATES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO]", conn);
+            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],[ASSESSMENTDATES],[COSTSDATES],[SALESPRICES],[TEST],[TESTDATES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] ORDER BY SERNO", conn);
             ds.Clear();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
