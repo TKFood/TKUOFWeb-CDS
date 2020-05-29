@@ -46,7 +46,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],[ASSESSMENTDATES],[COSTSDATES],[SALESPRICES],[TEST],[TESTDATES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] ORDER BY SERNO", conn);
+            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] ORDER BY SERNO", conn);
             ds.Clear();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -69,7 +69,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
             ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKWEBDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBSALESDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
     }
 
