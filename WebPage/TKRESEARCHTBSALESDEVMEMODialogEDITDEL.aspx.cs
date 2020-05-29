@@ -147,6 +147,20 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
 
     public void UPDATETBSALESDEVMEMO(string ID,string STATUS,string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES,string OWNER, string MEMO)
     {
+        if (string.IsNullOrEmpty(ASSESSMENTDATES))
+        {
+            ASSESSMENTDATES = "1911/1/1";   
+        }
+        if (string.IsNullOrEmpty(COSTSDATES))
+        {
+            COSTSDATES = "1911/1/1";
+        }
+        if (string.IsNullOrEmpty(TESTDATES))
+        {
+            TESTDATES = "1911/1/1";
+        }
+    
+
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         var SQL = "UPDATE [TKRESEARCH].[dbo].[TBSALESDEVMEMO] SET [STATUS]=@STATUS,[CLIENT]=@CLIENT,[PROD]=@PROD,[PRICES]=@PRICES,[PROMOTIONS]=@PROMOTIONS,[SPEC]=@SPEC,[VALID]=@VALID,[PLACES]=@PLACES,[ONSALES]=@ONSALES,[PRODESGIN]=@PRODESGIN,[ASSESSMENTDATES]=@ASSESSMENTDATES,[COSTSDATES]=@COSTSDATES,[SALESPRICES]=@SALESPRICES,[TEST]=@TEST,[TESTDATES]=@TESTDATES,[OWNER]=@OWNER,[MEMO]=@MEMO WHERE[ID]=@ID";
 

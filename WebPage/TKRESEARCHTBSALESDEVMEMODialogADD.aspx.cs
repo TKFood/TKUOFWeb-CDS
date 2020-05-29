@@ -104,6 +104,19 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
 
     public void ADDTBSALESDEVMEMO(string ID, string SERNO, string STATUS, string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES, string OWNER, string MEMO)
     {
+        if (string.IsNullOrEmpty(ASSESSMENTDATES))
+        {
+            ASSESSMENTDATES = "1911/1/1";
+        }
+        if (string.IsNullOrEmpty(COSTSDATES))
+        {
+            COSTSDATES = "1911/1/1";
+        }
+        if (string.IsNullOrEmpty(TESTDATES))
+        {
+            TESTDATES = "1911/1/1";
+        }
+
         StringBuilder SQL = new StringBuilder();
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
