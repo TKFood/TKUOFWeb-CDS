@@ -47,7 +47,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
 
 
 
-
+    #region BUTTON
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
@@ -78,7 +78,10 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
     }
 
 
-    #region
+    #endregion
+
+
+    #region FUNCTION
 
 
 

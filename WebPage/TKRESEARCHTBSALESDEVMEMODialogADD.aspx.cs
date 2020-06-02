@@ -24,7 +24,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
         ((Master_DialogMasterPage)this.Master).Button1CausesValidation = false;
         ((Master_DialogMasterPage)this.Master).Button1AutoCloseWindow = false;
         ((Master_DialogMasterPage)this.Master).Button1OnClick += CDS_WebPage_Dialog_Button1OnClick;
-  
+        ((Master_DialogMasterPage)this.Master).Button2OnClick += Button2OnClick;
 
         if (!IsPostBack)
         {
@@ -39,12 +39,51 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
 
 
 
-
+    #region BUTTON
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
+        ADD();
+    }
+
+    void Button2OnClick()
+    {
+        //設定回傳值並關閉視窗
+        //Dialog.SetReturnValue2(txtReturnValue.Text);
+
+        ADD();
+    }
+
+    #endregion
+
+
+    #region FUNCTION
+    private void BindDropDownList()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.二聯式、2.三聯式、3.二聯式收銀機發票、4.三聯式收銀機發票、5.電子計算機發票、6.免用統一發票、7.電子發票
+
+        dt.Rows.Add(new Object[] { "進行中", "進行中" });
+        dt.Rows.Add(new Object[] { "已完成", "已完成" });
+
+
+
+        DropDownList1.DataSource = dt;
+        DropDownList1.DataTextField = "Filed2";
+        DropDownList1.DataValueField = "Filed1";
+        DropDownList1.DataBind();
+    }
+
+    public void ADD()
+    {
         string ID = "";
         string SERNO = "";
         string STATUS = DropDownList1.SelectedValue.ToString().Trim();
@@ -72,36 +111,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
-
     }
-
-
-
-
-
-    #region
-    private void BindDropDownList()
-    {
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
-        DataTable dt = new DataTable();
-        DataRow ndr = dt.NewRow();
-
-        dt.Columns.Add("Filed1", typeof(String));
-        dt.Columns.Add("Filed2", typeof(String));
-        //1.二聯式、2.三聯式、3.二聯式收銀機發票、4.三聯式收銀機發票、5.電子計算機發票、6.免用統一發票、7.電子發票
-
-        dt.Rows.Add(new Object[] { "進行中", "進行中" });
-        dt.Rows.Add(new Object[] { "已完成", "已完成" });
-
-
-
-        DropDownList1.DataSource = dt;
-        DropDownList1.DataTextField = "Filed2";
-        DropDownList1.DataValueField = "Filed1";
-        DropDownList1.DataBind();
-    }
-
     public void ADDTBSALESDEVMEMO(string ID, string SERNO, string STATUS, string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES, string OWNER, string MEMO)
     {
         if (string.IsNullOrEmpty(ASSESSMENTDATES))

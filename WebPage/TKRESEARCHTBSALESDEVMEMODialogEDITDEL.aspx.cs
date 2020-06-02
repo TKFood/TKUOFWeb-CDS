@@ -24,7 +24,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
         ((Master_DialogMasterPage)this.Master).Button1CausesValidation = false;
         ((Master_DialogMasterPage)this.Master).Button1AutoCloseWindow = false;
         ((Master_DialogMasterPage)this.Master).Button1OnClick += CDS_WebPage_Dialog_Button1OnClick;
-  
+        ((Master_DialogMasterPage)this.Master).Button2OnClick += Button2OnClick;
 
         if (!IsPostBack)
         {
@@ -45,44 +45,32 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
 
 
 
-
+    #region BUTTON
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
-        string ID = lblParam.Text;
-        string STATUS = DropDownList1.SelectedValue.ToString().Trim();
-        string CLIENT = TextBox1.Text.ToString().Trim();
-        string PROD = TextBox2.Text.ToString().Trim();
-        string PRICES = TextBox3.Text.ToString().Trim();
-        string PROMOTIONS = TextBox4.Text.ToString().Trim();
-        string SPEC = TextBox5.Text.ToString().Trim();
-        string VALID = TextBox6.Text.ToString().Trim();
-        string PLACES = TextBox7.Text.ToString().Trim();
-        string ONSALES = TextBox8.Text.ToString().Trim();
-        string PRODESGIN = TextBox9.Text.ToString().Trim();
-        string ASSESSMENTDATES = txtDate1.Text.ToString().Trim();
-        string COSTSDATES = txtDate2.Text.ToString().Trim();
-        string SALESPRICES = TextBox10.Text.ToString().Trim();
-        string TEST = TextBox11.Text.ToString().Trim();
-        string TESTDATES = txtDate3.Text.ToString().Trim();
-        string OWNER = TextBox13.Text.ToString().Trim();
-        string MEMO = TextBox14.Text.ToString().Trim();
-        if (!string.IsNullOrEmpty(ID) && !string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(CLIENT) && !string.IsNullOrEmpty(PROD))
-        {
-            UPDATETBSALESDEVMEMO(ID, STATUS, CLIENT, PROD, PRICES, PROMOTIONS, SPEC, VALID, PLACES, ONSALES, PRODESGIN, ASSESSMENTDATES, COSTSDATES, SALESPRICES, TEST, TESTDATES, OWNER, MEMO);
-        }
 
-        Dialog.SetReturnValue2("NeedPostBack");
+        UPDATE();
+
         Dialog.Close(this);
 
     }
 
 
+    void Button2OnClick()
+    {
+        //設定回傳值並關閉視窗
+        //Dialog.SetReturnValue2(txtReturnValue.Text);
 
+        UPDATE();
 
+        SEARCHTTBSALESDEVMEMO(lblParam.Text);
+    }
 
-    #region
+    #endregion
+
+    #region FUNCTION
     private void BindDropDownList()
     {
         DataSet ds = new DataSet();
@@ -145,6 +133,33 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
 
     }
 
+    public void UPDATE()
+    {
+        string ID = lblParam.Text;
+        string STATUS = DropDownList1.SelectedValue.ToString().Trim();
+        string CLIENT = TextBox1.Text.ToString().Trim();
+        string PROD = TextBox2.Text.ToString().Trim();
+        string PRICES = TextBox3.Text.ToString().Trim();
+        string PROMOTIONS = TextBox4.Text.ToString().Trim();
+        string SPEC = TextBox5.Text.ToString().Trim();
+        string VALID = TextBox6.Text.ToString().Trim();
+        string PLACES = TextBox7.Text.ToString().Trim();
+        string ONSALES = TextBox8.Text.ToString().Trim();
+        string PRODESGIN = TextBox9.Text.ToString().Trim();
+        string ASSESSMENTDATES = txtDate1.Text.ToString().Trim();
+        string COSTSDATES = txtDate2.Text.ToString().Trim();
+        string SALESPRICES = TextBox10.Text.ToString().Trim();
+        string TEST = TextBox11.Text.ToString().Trim();
+        string TESTDATES = txtDate3.Text.ToString().Trim();
+        string OWNER = TextBox13.Text.ToString().Trim();
+        string MEMO = TextBox14.Text.ToString().Trim();
+        if (!string.IsNullOrEmpty(ID) && !string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(CLIENT) && !string.IsNullOrEmpty(PROD))
+        {
+            UPDATETBSALESDEVMEMO(ID, STATUS, CLIENT, PROD, PRICES, PROMOTIONS, SPEC, VALID, PLACES, ONSALES, PRODESGIN, ASSESSMENTDATES, COSTSDATES, SALESPRICES, TEST, TESTDATES, OWNER, MEMO);
+        }
+
+        Dialog.SetReturnValue2("NeedPostBack");
+    }
     public void UPDATETBSALESDEVMEMO(string ID,string STATUS,string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES,string OWNER, string MEMO)
     {
         if (string.IsNullOrEmpty(ASSESSMENTDATES))
