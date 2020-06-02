@@ -1,4 +1,5 @@
-﻿using Ede.Uof.Utility.Data;
+﻿using Ede.Uof.Utility.Component;
+using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel.Activation;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -24,7 +26,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
         ((Master_DialogMasterPage)this.Master).Button1CausesValidation = false;
         ((Master_DialogMasterPage)this.Master).Button1AutoCloseWindow = false;
         ((Master_DialogMasterPage)this.Master).Button1OnClick += CDS_WebPage_Dialog_Button1OnClick;
-        ((Master_DialogMasterPage)this.Master).Button2ClientOnClick = "Button2OnClick";
+        ((Master_DialogMasterPage)this.Master).Button2OnClick += Button2OnClick;
 
         if (!IsPostBack)
         {
@@ -48,15 +50,26 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
-
-        ADDTBSALESDEVMEMOHISTORY(lblParam.Text, TextBox1.Text);
+        if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox2.Text) && !string.IsNullOrEmpty(TextBox1.Text) )
+        {
+            ADDTBSALESDEVMEMOHISTORY(lblParam.Text, TextBox2.Text.Trim(), TextBox1.Text);
+        }
+        
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
 
     }
 
 
+    void Button2OnClick()
+    {
+        if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox2.Text) && !string.IsNullOrEmpty(TextBox1.Text))
+        {
+            ADDTBSALESDEVMEMOHISTORY(lblParam.Text, TextBox2.Text.Trim(), TextBox1.Text);
+        }
 
+        BindGrid(lblParam.Text);
+    }
 
 
     #region
@@ -74,7 +87,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand("SELECT CONVERT(NVARCHAR,[MEMODATES],111) AS MEMODATES ,[PROD],[MEMO],[ID],[PID] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMOHISTORY] WHERE [PID]=@ID  ORDER BY [MEMODATES]", conn);
+            SqlCommand command = new SqlCommand("SELECT CONVERT(NVARCHAR,[MEMODATES],120) AS MEMODATES ,[PROD],[MEMO],[ID],[PID] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMOHISTORY] WHERE [PID]=@ID ORDER BY [MEMODATES] DESC", conn);
             command.Parameters.AddWithValue("@ID", ID);
             ds.Clear();
 
@@ -89,21 +102,33 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
             TextBox2.Text = ds.Tables[0].Rows[0]["PROD"].ToString();
         }
 
-        Grid1.DataSource = ds.Tables[0];
+        Grid1.DataSource = ds.Tables[0];        
         Grid1.DataBind();
+              
+
+
     }
 
-    public void ADDTBSALESDEVMEMOHISTORY(string PID, string MEMO)
+    public void ADDTBSALESDEVMEMOHISTORY(string PID,string PROD, string MEMO)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        var SQL = "";
+        StringBuilder SQL = new StringBuilder();
+
+        SQL.AppendFormat(@" INSERT INTO [TKRESEARCH].[dbo].[TBSALESDEVMEMOHISTORY]");
+        SQL.AppendFormat(@" ([ID],[PID],[MEMODATES],[PROD],[MEMO])");
+        SQL.AppendFormat(@" VALUES (@ID,@PID,@MEMODATES,@PROD,@MEMO)");
+        SQL.AppendFormat(@" ");
 
         using (SqlConnection cnn = new SqlConnection(connectionString))
         {
-            using (SqlCommand cmd = new SqlCommand(SQL, cnn))
+            using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
             {
-                cmd.Parameters.AddWithValue("@ID", ID);
-               
+                cmd.Parameters.AddWithValue("@ID", Guid.NewGuid());
+                cmd.Parameters.AddWithValue("@PID", PID);
+                cmd.Parameters.AddWithValue("@MEMODATES", Convert.ToDateTime(DateTime.Now));
+                cmd.Parameters.AddWithValue("@PROD", PROD);
+                cmd.Parameters.AddWithValue("@MEMO", MEMO);
+
 
 
                 cnn.Open();

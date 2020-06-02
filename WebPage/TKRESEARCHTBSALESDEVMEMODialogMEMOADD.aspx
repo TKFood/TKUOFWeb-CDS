@@ -48,14 +48,14 @@
                 <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>                 
                     <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
                       <Columns>       
-                           <asp:BoundField HeaderText="填寫日期" DataField="MEMODATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                           <asp:BoundField HeaderText="填寫日期" DataField="MEMODATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>   
                            <asp:BoundField HeaderText="產品品項" DataField="PROD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>   
                            <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="600px"></ItemStyle>
+                            <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
                         </asp:BoundField>                        
                     </Columns>               
                 </Fast:Grid>
