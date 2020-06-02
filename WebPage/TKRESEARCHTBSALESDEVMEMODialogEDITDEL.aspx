@@ -157,7 +157,7 @@
                 <asp:Label ID="Label19" runat="server" Text="業務進度"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox14" runat="server"  Text="" TextMode="MultiLine" Width = "100%"  ></asp:TextBox>
+                <asp:TextBox ID="TextBox14" runat="server"  Text="" TextMode="MultiLine" Width = "100%" ReadOnly="true" ></asp:TextBox>
             </td> 
        </tr>
     <table>

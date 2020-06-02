@@ -57,7 +57,7 @@
                  
                     <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
                     <Columns>
-                        <asp:TemplateField HeaderText="單號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                        <asp:TemplateField HeaderText="維護專案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
                             <ItemTemplate>
                                 <asp:LinkButton ID="lbtnName" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
                             </ItemTemplate>
@@ -117,6 +117,12 @@
                            <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                             <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                         </asp:BoundField>
+                          <asp:TemplateField HeaderText="更新業務進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                            <ItemTemplate>
+                                <asp:LinkButton ID="MEMO" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
+                            </ItemTemplate>
+                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                        </asp:TemplateField> 
                     </Columns>
                 </Fast:Grid>
             </td>

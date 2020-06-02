@@ -71,6 +71,17 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBSALESDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            LinkButton lbtnName = (LinkButton)e.Row.FindControl("MEMO");
+
+            ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBSALESDEVMEMODialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
     }
 
     #endregion
