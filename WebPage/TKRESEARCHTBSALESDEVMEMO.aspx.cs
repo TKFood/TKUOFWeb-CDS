@@ -25,24 +25,23 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         //Dialog.Open2(btn, "~/CDS/WebPage/Dialog.aspx", "", 800, 600, Dialog.PostBackType.Allows, param);
 
 
-
-        //if (!IsPostBack)
-        //{
-        //    BindGrid(this.ViewState["STATUS"].ToString());
-        //}
-
-        //if (string.IsNullOrEmpty(ViewState["STATUS"].ToString()))
-        //{
-        //    DropDownList1.Text = "進行中";
-        //}
-        //else
-        //{
-        //    DropDownList1.Text = ViewState["STATUS"].ToString();
-        //}
-
-        BindGrid(DropDownList1.Text);
+        if (!IsPostBack)
+        {
+            BindGrid("進行中");
+        }
+        else
+        {
+            BindGrid(DropDownList1.Text);
+        }
+        
 
         BindDropDownList();
+
+        if (this.Session["STATUS"] != null)
+        {
+            DropDownList1.Text = this.Session["STATUS"].ToString();
+
+        }
 
     }
 
@@ -81,6 +80,8 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         {
             SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY SERNO", conn);
             command.Parameters.AddWithValue("@STATUS", STATUS);
+
+            this.Session["STATUS"] = STATUS;
 
             ds.Clear();
 
@@ -150,8 +151,8 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         if(!string.IsNullOrEmpty(Dialog.GetReturnValue()))
         {
             if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-            {
-                BindGrid(DropDownList1.Text.Trim());
+            {                
+                this.Session["STATUS"] = DropDownList1.Text.Trim();
             }
 
         }
@@ -159,14 +160,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
 
     protected void btn6_Click(object sender, EventArgs e)
     {
-        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        {
-            if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-            {
-                BindGrid(DropDownList1.Text.Trim());                
-            }
-
-        }
+        this.Session["STATUS"] = DropDownList1.Text.Trim();
     }
 
     #endregion
