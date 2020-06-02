@@ -28,14 +28,16 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
         ((Master_DialogMasterPage)this.Master).Button1OnClick += CDS_WebPage_Dialog_Button1OnClick;
         ((Master_DialogMasterPage)this.Master).Button2OnClick += Button2OnClick;
 
+
         if (!IsPostBack)
         {
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
 
             if (!string.IsNullOrEmpty(lblParam.Text))
-            {
+            {                
                 BindGrid(lblParam.Text);
+                SEARCHTBSALESDEVMEMO(lblParam.Text);
             }
 
         }
@@ -53,6 +55,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
         if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox2.Text) && !string.IsNullOrEmpty(TextBox1.Text) )
         {
             ADDTBSALESDEVMEMOHISTORY(lblParam.Text, TextBox2.Text.Trim(), TextBox1.Text);
+            UPDATETBSALESDEVMEMO(lblParam.Text, TextBox1.Text);
         }
         
         Dialog.SetReturnValue2("NeedPostBack");
@@ -66,9 +69,12 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
         if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox2.Text) && !string.IsNullOrEmpty(TextBox1.Text))
         {
             ADDTBSALESDEVMEMOHISTORY(lblParam.Text, TextBox2.Text.Trim(), TextBox1.Text);
+            UPDATETBSALESDEVMEMO(lblParam.Text, TextBox1.Text);
         }
 
         BindGrid(lblParam.Text);
+
+        Dialog.SetReturnValue2("NeedPostBack");
     }
 
 
@@ -97,16 +103,33 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
             adapter.Fill(ds, command.ToString());
         }
 
-        if(ds.Tables[0].Rows.Count>0)
-        {
-            TextBox2.Text = ds.Tables[0].Rows[0]["PROD"].ToString();
-        }
 
         Grid1.DataSource = ds.Tables[0];        
         Grid1.DataBind();
               
 
 
+    }
+
+    public void SEARCHTBSALESDEVMEMO(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE [ID]=@ID", conn);
+            command.Parameters.AddWithValue("@ID", ID);
+
+            DataSet ds = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
+
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                TextBox2.Text = ds.Tables[0].Rows[0]["PROD"].ToString();
+            }
+        }
     }
 
     public void ADDTBSALESDEVMEMOHISTORY(string PID,string PROD, string MEMO)
@@ -137,7 +160,30 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMOADD : Ede.Uof
         }
     }
 
-   
+    public void UPDATETBSALESDEVMEMO(string PID, string MEMO)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        StringBuilder SQL = new StringBuilder();
+
+        SQL.AppendFormat(@" UPDATE [TKRESEARCH].[dbo].[TBSALESDEVMEMO]");
+        SQL.AppendFormat(@" SET [MEMO]=@MEMO");
+        SQL.AppendFormat(@" WHERE [ID]=@ID");
+        SQL.AppendFormat(@" ");
+
+        using (SqlConnection cnn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
+            {
+                cmd.Parameters.AddWithValue("@ID", PID);
+                cmd.Parameters.AddWithValue("@MEMO", MEMO);
+
+                cnn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+
     #endregion
 
 
