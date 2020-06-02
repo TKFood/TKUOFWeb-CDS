@@ -24,18 +24,51 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         //故Dialog.Open2適合於參數為固定式的
         //Dialog.Open2(btn, "~/CDS/WebPage/Dialog.aspx", "", 800, 600, Dialog.PostBackType.Allows, param);
 
-        BindGrid();
+
 
         //if (!IsPostBack)
         //{
-        //    BindGrid();
+        //    BindGrid(this.ViewState["STATUS"].ToString());
         //}
-       
+
+        //if (string.IsNullOrEmpty(ViewState["STATUS"].ToString()))
+        //{
+        //    DropDownList1.Text = "進行中";
+        //}
+        //else
+        //{
+        //    DropDownList1.Text = ViewState["STATUS"].ToString();
+        //}
+
+        BindGrid(DropDownList1.Text);
+
+        BindDropDownList();
 
     }
 
     #region FUNCTION
-    private void BindGrid()
+    private void BindDropDownList()
+    {
+        DataSet ds = new DataSet();
+        DatabaseHelper DbQuery = new DatabaseHelper();
+        DataTable dt = new DataTable();
+        DataRow ndr = dt.NewRow();
+
+        dt.Columns.Add("Filed1", typeof(String));
+        dt.Columns.Add("Filed2", typeof(String));
+        //1.二聯式、2.三聯式、3.二聯式收銀機發票、4.三聯式收銀機發票、5.電子計算機發票、6.免用統一發票、7.電子發票
+
+        dt.Rows.Add(new Object[] { "進行中", "進行中" });
+        dt.Rows.Add(new Object[] { "已完成", "已完成" });
+
+
+
+        DropDownList1.DataSource = dt;
+        DropDownList1.DataTextField = "Filed2";
+        DropDownList1.DataValueField = "Filed1";
+        DropDownList1.DataBind();
+    }
+    private void BindGrid(string STATUS)
     {
         //建立Grid資料
         DataSet ds = new DataSet();
@@ -46,7 +79,9 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] ORDER BY SERNO", conn);
+            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY SERNO", conn);
+            command.Parameters.AddWithValue("@STATUS", STATUS);
+
             ds.Clear();
 
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -116,7 +151,19 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         {
             if (Dialog.GetReturnValue().Equals("NeedPostBack"))
             {
-                BindGrid();
+                BindGrid(DropDownList1.Text.Trim());
+            }
+
+        }
+    }
+
+    protected void btn6_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        {
+            if (Dialog.GetReturnValue().Equals("NeedPostBack"))
+            {
+                BindGrid(DropDownList1.Text.Trim());                
             }
 
         }

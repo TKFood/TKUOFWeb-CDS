@@ -48,6 +48,16 @@
                     onclick="btn5_Click" meta:resourcekey="btn4Resource1" />
             </td>            
         </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label2" runat="server" Text="狀態:" meta:resourcekey="Label4Resource1"></asp:Label>             
+            </td>
+            <td class="PopTableRightTD"> 
+                   <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClientClick="return btn5_Click(this)" 
+                    onclick="btn6_Click" meta:resourcekey="btn4Resource1" />                
+            </td>            
+        </tr>
     </table>
     <table class="PopTable">
          <tr >
