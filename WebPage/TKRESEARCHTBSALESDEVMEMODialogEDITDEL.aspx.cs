@@ -78,19 +78,34 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
         DataTable dt = new DataTable();
         DataRow ndr = dt.NewRow();
 
-        dt.Columns.Add("Filed1", typeof(String));
-        dt.Columns.Add("Filed2", typeof(String));
-        //1.二聯式、2.三聯式、3.二聯式收銀機發票、4.三聯式收銀機發票、5.電子計算機發票、6.免用統一發票、7.電子發票
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
 
-        dt.Rows.Add(new Object[] { "進行中", "進行中" });
-        dt.Rows.Add(new Object[] { "已完成", "已完成" });
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(@" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' ORDER BY [PARAID]", conn);
 
+            ds.Clear();
 
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            conn.Open();
 
-        DropDownList1.DataSource = dt;
-        DropDownList1.DataTextField = "Filed2";
-        DropDownList1.DataValueField = "Filed1";
-        DropDownList1.DataBind();
+            adapter.Fill(ds, command.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DropDownList1.DataSource = ds.Tables[0];
+                DropDownList1.DataTextField = "PARANAME";
+                DropDownList1.DataValueField = "PARANAME";
+                DropDownList1.DataBind();
+
+            }
+            else
+            {
+
+            }
+        }
     }
 
     public void SEARCHTTBSALESDEVMEMO(string ID)
