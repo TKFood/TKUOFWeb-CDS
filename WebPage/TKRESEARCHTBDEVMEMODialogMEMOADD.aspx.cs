@@ -87,27 +87,38 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogMEMOADD : Ede.Uof.Util
 
     private void BindGrid(string ID)
     {
-        //建立Grid資料
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT CONVERT(NVARCHAR,[MEMODATES],120) AS MEMODATES ,[PROD],[MEMO],[ID],[PID] FROM [TKRESEARCH].[dbo].[TBDEVMEMOHISTORY] WHERE [PID]=@ID ORDER BY [MEMODATES] DESC    ";
+
+        m_db.AddParameter("@ID", ID);
+
         DataTable dt = new DataTable();
 
-        //資源來源-用SqlCommand +SqlDataAdapter +DataTable 來查詢
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            SqlCommand command = new SqlCommand("SELECT CONVERT(NVARCHAR,[MEMODATES],120) AS MEMODATES ,[PROD],[MEMO],[ID],[PID] FROM [TKRESEARCH].[dbo].[TBDEVMEMOHISTORY] WHERE [PID]=@ID ORDER BY [MEMODATES] DESC", conn);
-            command.Parameters.AddWithValue("@ID", ID);
-            ds.Clear();
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
+        ////建立Grid資料
+        //DataSet ds = new DataSet();
+        //DatabaseHelper DbQuery = new DatabaseHelper();
+        //DataTable dt = new DataTable();
 
-            adapter.Fill(ds, command.ToString());
-        }
+        ////資源來源-用SqlCommand +SqlDataAdapter +DataTable 來查詢
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //using (SqlConnection conn = new SqlConnection(connectionString))
+        //{
+        //    SqlCommand command = new SqlCommand("SELECT CONVERT(NVARCHAR,[MEMODATES],120) AS MEMODATES ,[PROD],[MEMO],[ID],[PID] FROM [TKRESEARCH].[dbo].[TBDEVMEMOHISTORY] WHERE [PID]=@ID ORDER BY [MEMODATES] DESC", conn);
+        //    command.Parameters.AddWithValue("@ID", ID);
+        //    ds.Clear();
+
+        //    SqlDataAdapter adapter = new SqlDataAdapter(command);
+        //    conn.Open();
+
+        //    adapter.Fill(ds, command.ToString());
+        //}
 
 
-        Grid1.DataSource = ds.Tables[0];        
+        Grid1.DataSource = dt;        
         Grid1.DataBind();
               
 
@@ -117,73 +128,118 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogMEMOADD : Ede.Uof.Util
     public void SEARCHTBDEVMEMO(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE [ID]=@ID   ";
+
+        m_db.AddParameter("@ID", ID);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
         {
-            SqlCommand command = new SqlCommand(" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE [ID]=@ID", conn);
-            command.Parameters.AddWithValue("@ID", ID);
-
-            DataSet ds = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                TextBox2.Text = ds.Tables[0].Rows[0]["PROD"].ToString();
-            }
+            TextBox2.Text = dt.Rows[0]["PROD"].ToString();
         }
+
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //using (SqlConnection conn = new SqlConnection(connectionString))
+        //{
+        //    SqlCommand command = new SqlCommand(" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE [ID]=@ID", conn);
+        //    command.Parameters.AddWithValue("@ID", ID);
+
+        //    DataSet ds = new DataSet();
+        //    SqlDataAdapter adapter = new SqlDataAdapter(command);
+        //    conn.Open();
+
+        //    adapter.Fill(ds, command.ToString());
+
+        //    if (ds.Tables[0].Rows.Count > 0)
+        //    {
+        //        TextBox2.Text = ds.Tables[0].Rows[0]["PROD"].ToString();
+        //    }
+        //}
     }
 
     public void ADDTBDEVMEMOHISTORY(string PID,string PROD, string MEMO)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        StringBuilder SQL = new StringBuilder();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        SQL.AppendFormat(@" INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMOHISTORY]");
-        SQL.AppendFormat(@" ([ID],[PID],[MEMODATES],[PROD],[MEMO])");
-        SQL.AppendFormat(@" VALUES (@ID,@PID,@MEMODATES,@PROD,@MEMO)");
-        SQL.AppendFormat(@" ");
+        string cmdTxt = @"  INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMOHISTORY]
+                            ([ID],[PID],[MEMODATES],[PROD],[MEMO])
+                            VALUES (@ID,@PID,@MEMODATES,@PROD,@MEMO)
+                            ";
 
-        using (SqlConnection cnn = new SqlConnection(connectionString))
-        {
-            using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
-            {
-                cmd.Parameters.AddWithValue("@ID", Guid.NewGuid());
-                cmd.Parameters.AddWithValue("@PID", PID);
-                cmd.Parameters.AddWithValue("@MEMODATES", Convert.ToDateTime(DateTime.Now));
-                cmd.Parameters.AddWithValue("@PROD", PROD);
-                cmd.Parameters.AddWithValue("@MEMO", MEMO);
+        m_db.AddParameter("@ID", Guid.NewGuid());
+        m_db.AddParameter("@PID", PID);
+        m_db.AddParameter("@MEMODATES", Convert.ToDateTime(DateTime.Now));
+        m_db.AddParameter("@PROD", PROD);
+        m_db.AddParameter("@MEMO", MEMO);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //StringBuilder SQL = new StringBuilder();
+
+        //SQL.AppendFormat(@" INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMOHISTORY]");
+        //SQL.AppendFormat(@" ([ID],[PID],[MEMODATES],[PROD],[MEMO])");
+        //SQL.AppendFormat(@" VALUES (@ID,@PID,@MEMODATES,@PROD,@MEMO)");
+        //SQL.AppendFormat(@" ");
+
+        //using (SqlConnection cnn = new SqlConnection(connectionString))
+        //{
+        //    using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
+        //    {
+        //        cmd.Parameters.AddWithValue("@ID", Guid.NewGuid());
+        //        cmd.Parameters.AddWithValue("@PID", PID);
+        //        cmd.Parameters.AddWithValue("@MEMODATES", Convert.ToDateTime(DateTime.Now));
+        //        cmd.Parameters.AddWithValue("@PROD", PROD);
+        //        cmd.Parameters.AddWithValue("@MEMO", MEMO);
 
 
 
-                cnn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
+        //        cnn.Open();
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
     }
 
     public void UPDATETBDEVMEMO(string PID, string MEMO)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        StringBuilder SQL = new StringBuilder();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        SQL.AppendFormat(@" UPDATE [TKRESEARCH].[dbo].[TBDEVMEMO]");
-        SQL.AppendFormat(@" SET [MEMO]=@MEMO");
-        SQL.AppendFormat(@" WHERE [ID]=@ID");
-        SQL.AppendFormat(@" ");
+        string cmdTxt = @"  UPDATE [TKRESEARCH].[dbo].[TBDEVMEMO]
+                            SET [MEMO]=@MEMO
+                            WHERE [ID]=@ID
+                            ";
 
-        using (SqlConnection cnn = new SqlConnection(connectionString))
-        {
-            using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
-            {
-                cmd.Parameters.AddWithValue("@ID", PID);
-                cmd.Parameters.AddWithValue("@MEMO", MEMO);
+        m_db.AddParameter("@ID", PID);
+        m_db.AddParameter("@MEMO", MEMO);
 
-                cnn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
+        m_db.ExecuteNonQuery(cmdTxt);
+
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //StringBuilder SQL = new StringBuilder();
+
+        //SQL.AppendFormat(@" UPDATE [TKRESEARCH].[dbo].[TBDEVMEMO]");
+        //SQL.AppendFormat(@" SET [MEMO]=@MEMO");
+        //SQL.AppendFormat(@" WHERE [ID]=@ID");
+        //SQL.AppendFormat(@" ");
+
+        //using (SqlConnection cnn = new SqlConnection(connectionString))
+        //{
+        //    using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
+        //    {
+        //        cmd.Parameters.AddWithValue("@ID", PID);
+        //        cmd.Parameters.AddWithValue("@MEMO", MEMO);
+
+        //        cnn.Open();
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
     }
 
 

@@ -48,66 +48,49 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMO : Ede.Uof.Utility.Page.Base
     #region FUNCTION
     private void BindDropDownList()
     {
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
         DataTable dt = new DataTable();
-        DataRow ndr = dt.NewRow();
-
         dt.Columns.Add("PARAID", typeof(String));
         dt.Columns.Add("PARANAME", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='DEVSTATUS' ORDER BY [PARAID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
         {
-            SqlCommand command = new SqlCommand(@" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='DEVSTATUS' ORDER BY [PARAID]", conn);
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARANAME";
+            DropDownList1.DataValueField = "PARANAME";
+            DropDownList1.DataBind();
 
-            ds.Clear();
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                DropDownList1.DataSource = ds.Tables[0];
-                DropDownList1.DataTextField = "PARANAME";
-                DropDownList1.DataValueField = "PARANAME";
-                DropDownList1.DataBind();
-
-            }
-            else
-            {
-
-            }
         }
-      
+        else
+        {
+
+        }
+
+       
+
     }
     private void BindGrid(string STATUS)
     {
-        //建立Grid資料
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        this.Session["STATUS"] = STATUS;
+
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE STATUS=@STATUS ORDER BY KIND,SERNO                             ";
+
+        m_db.AddParameter("@STATUS", STATUS);
+
         DataTable dt = new DataTable();
 
-        //資源來源-用SqlCommand +SqlDataAdapter +DataTable 來查詢
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE STATUS=@STATUS ORDER BY KIND,SERNO", conn);
-            command.Parameters.AddWithValue("@STATUS", STATUS);
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-            this.Session["STATUS"] = STATUS;
-
-            ds.Clear();
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-        }
-
-        Grid1.DataSource = ds.Tables[0];
+        Grid1.DataSource = dt;
         Grid1.DataBind();
     }
 
@@ -136,6 +119,36 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMO : Ede.Uof.Utility.Page.Base
         }
     }
 
+    public void OnBeforeExport(object sender,Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string STATUS = DropDownList1.Text;
+
+        string cmdTxt = @" SELECT [STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE STATUS=@STATUS ORDER BY KIND,SERNO                              ";
+
+        m_db.AddParameter("@STATUS", STATUS);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count>0)
+        {
+            dt.Columns[0].Caption = "狀態";
+            dt.Columns[1].Caption = "類別";
+            dt.Columns[2].Caption = "客戶";
+            dt.Columns[3].Caption = "產品品項";
+            dt.Columns[4].Caption = "規格及屬性";
+            dt.Columns[5].Caption = "通路";
+            dt.Columns[6].Caption = "預估上市日期";
+            dt.Columns[7].Caption = "負責業務";
+            dt.Columns[8].Caption = "業務進度";
+
+            e.Datasource = dt;
+        }
+    }
     #endregion
 
     #region BUTTON

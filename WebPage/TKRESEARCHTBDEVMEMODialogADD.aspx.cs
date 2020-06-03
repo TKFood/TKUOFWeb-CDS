@@ -63,76 +63,60 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogADD : Ede.Uof.Utility.
     #region FUNCTION
     private void BindDropDownList()
     {
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
         DataTable dt = new DataTable();
-        DataRow ndr = dt.NewRow();
-
         dt.Columns.Add("PARAID", typeof(String));
         dt.Columns.Add("PARANAME", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='DEVSTATUS' ORDER BY [PARAID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
         {
-            SqlCommand command = new SqlCommand(@" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' ORDER BY [PARAID]", conn);
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARANAME";
+            DropDownList1.DataValueField = "PARANAME";
+            DropDownList1.DataBind();
 
-            ds.Clear();
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                DropDownList1.DataSource = ds.Tables[0];
-                DropDownList1.DataTextField = "PARANAME";
-                DropDownList1.DataValueField = "PARANAME";
-                DropDownList1.DataBind();
-
-            }
-            else
-            {
-
-            }
         }
+        else
+        {
+
+        }
+
+      
     }
 
     private void BindDropDownList2()
     {
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
         DataTable dt = new DataTable();
-        DataRow ndr = dt.NewRow();
-
         dt.Columns.Add("PARAID", typeof(String));
         dt.Columns.Add("PARANAME", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='DEVKIND' ORDER BY [PARAID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
         {
-            SqlCommand command = new SqlCommand(@" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='DEVKIND' ORDER BY [PARAID]", conn);
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "PARANAME";
+            DropDownList2.DataValueField = "PARANAME";
+            DropDownList2.DataBind();
 
-            ds.Clear();
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                DropDownList2.DataSource = ds.Tables[0];
-                DropDownList2.DataTextField = "PARANAME";
-                DropDownList2.DataValueField = "PARANAME";
-                DropDownList2.DataBind();
-
-            }
-            else
-            {
-
-            }
         }
+        else
+        {
+
+        }
+
+        
     }
 
     public void ADD()
@@ -159,37 +143,57 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogADD : Ede.Uof.Utility.
     }
     public void ADDTBDEVMEMO(string ID, string SERNO, string STATUS, string KIND, string CLIENT, string PROD, string SPEC, string PLACES, string ONSALES, string OWNER, string MEMO)
     {
-       
-
-        StringBuilder SQL = new StringBuilder();
-
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        SQL.AppendFormat(@" INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMO]");
-        SQL.AppendFormat(@" ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO])");
-        SQL.AppendFormat(@" VALUES");
-        SQL.AppendFormat(@" (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO)");
-        SQL.AppendFormat(@" ");
+        string cmdTxt = @"  INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMO]
+                            ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO])
+                            VALUES
+                            (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO)
+                            ";
 
-        using (SqlConnection cnn = new SqlConnection(connectionString))
-        {
-            using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
-            {
-                cmd.Parameters.AddWithValue("@STATUS", STATUS);
-                cmd.Parameters.AddWithValue("@KIND", KIND);
-                cmd.Parameters.AddWithValue("@CLIENT", CLIENT);
-                cmd.Parameters.AddWithValue("@PROD", PROD);       
-                cmd.Parameters.AddWithValue("@SPEC", SPEC);              
-                cmd.Parameters.AddWithValue("@PLACES", PLACES);
-                cmd.Parameters.AddWithValue("@ONSALES", ONSALES); 
-                cmd.Parameters.AddWithValue("@OWNER", OWNER);
-                cmd.Parameters.AddWithValue("@MEMO", MEMO);
-               
 
-                cnn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
+        m_db.AddParameter("@STATUS", STATUS);
+        m_db.AddParameter("@KIND", KIND);
+        m_db.AddParameter("@CLIENT", CLIENT);
+        m_db.AddParameter("@PROD", PROD);
+        m_db.AddParameter("@SPEC", SPEC);
+        m_db.AddParameter("@PLACES", PLACES);
+        m_db.AddParameter("@ONSALES", ONSALES);
+        m_db.AddParameter("@OWNER", OWNER);
+        m_db.AddParameter("@MEMO", MEMO);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+        //StringBuilder SQL = new StringBuilder();
+
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        //SQL.AppendFormat(@" INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMO]");
+        //SQL.AppendFormat(@" ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO])");
+        //SQL.AppendFormat(@" VALUES");
+        //SQL.AppendFormat(@" (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO)");
+        //SQL.AppendFormat(@" ");
+
+        //using (SqlConnection cnn = new SqlConnection(connectionString))
+        //{
+        //    using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
+        //    {
+        //        cmd.Parameters.AddWithValue("@STATUS", STATUS);
+        //        cmd.Parameters.AddWithValue("@KIND", KIND);
+        //        cmd.Parameters.AddWithValue("@CLIENT", CLIENT);
+        //        cmd.Parameters.AddWithValue("@PROD", PROD);       
+        //        cmd.Parameters.AddWithValue("@SPEC", SPEC);              
+        //        cmd.Parameters.AddWithValue("@PLACES", PLACES);
+        //        cmd.Parameters.AddWithValue("@ONSALES", ONSALES); 
+        //        cmd.Parameters.AddWithValue("@OWNER", OWNER);
+        //        cmd.Parameters.AddWithValue("@MEMO", MEMO);
+
+
+        //        cnn.Open();
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
 
 
     }
