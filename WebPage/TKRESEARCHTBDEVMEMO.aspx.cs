@@ -132,7 +132,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMO : Ede.Uof.Utility.Page.Base
             ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBSALESDEVMEMODialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
     }
 
