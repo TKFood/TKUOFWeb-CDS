@@ -152,33 +152,6 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogEDITDEL : Ede.Uof.Util
 
         }
 
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //using (SqlConnection conn = new SqlConnection(connectionString))
-        //{
-        //    SqlCommand command = new SqlCommand(" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE [ID]=@ID", conn);
-        //    command.Parameters.AddWithValue("@ID", ID);
-
-        //    DataSet ds = new DataSet();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(command);
-        //    conn.Open();
-
-        //    adapter.Fill(ds, command.ToString());
-
-        //    if (ds.Tables[0].Rows.Count > 0)
-        //    {
-        //        DropDownList1.Text = ds.Tables[0].Rows[0]["STATUS"].ToString();
-        //        DropDownList2.Text = ds.Tables[0].Rows[0]["KIND"].ToString();
-        //        TextBox1.Text= ds.Tables[0].Rows[0]["CLIENT"].ToString();
-        //        TextBox2.Text = ds.Tables[0].Rows[0]["PROD"].ToString();               
-        //        TextBox5.Text = ds.Tables[0].Rows[0]["SPEC"].ToString();               
-        //        TextBox7.Text = ds.Tables[0].Rows[0]["PLACES"].ToString();
-        //        TextBox8.Text = ds.Tables[0].Rows[0]["ONSALES"].ToString();                
-        //        TextBox13.Text = ds.Tables[0].Rows[0]["OWNER"].ToString();
-        //        TextBox14.Text = ds.Tables[0].Rows[0]["MEMO"].ToString();
-
-        //    }
-        //}
-
 
     }
 
@@ -223,28 +196,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogEDITDEL : Ede.Uof.Util
 
         m_db.ExecuteNonQuery(cmdTxt);
 
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //var SQL = " UPDATE [TKRESEARCH].[dbo].[TBDEVMEMO] SET STATUS=@STATUS,KIND=@KIND,CLIENT=@CLIENT,PROD=@PROD,SPEC=@SPEC,PLACES=@PLACES,ONSALES=@ONSALES,OWNER=@OWNER,MEMO=@MEMO WHERE[ID]=@ID";
-
-        //using (SqlConnection cnn = new SqlConnection(connectionString))
-        //{
-        //    using (SqlCommand cmd = new SqlCommand(SQL, cnn))
-        //    {
-        //        cmd.Parameters.AddWithValue("@ID", ID);
-        //        cmd.Parameters.AddWithValue("@STATUS", STATUS);
-        //        cmd.Parameters.AddWithValue("@KIND", KIND);
-        //        cmd.Parameters.AddWithValue("@CLIENT", CLIENT);
-        //        cmd.Parameters.AddWithValue("@PROD", PROD);
-        //        cmd.Parameters.AddWithValue("@SPEC", SPEC);                
-        //        cmd.Parameters.AddWithValue("@PLACES", PLACES);
-        //        cmd.Parameters.AddWithValue("@ONSALES", ONSALES);               
-        //        cmd.Parameters.AddWithValue("@OWNER", OWNER);
-        //        cmd.Parameters.AddWithValue("@MEMO", MEMO);
-
-        //        cnn.Open();
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
+      
     }
 
     protected void btn1_Click(object sender, EventArgs e)
@@ -264,18 +216,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogEDITDEL : Ede.Uof.Util
 
         m_db.ExecuteNonQuery(cmdTxt);
 
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //var SQL = "DELETE [TKRESEARCH].[dbo].[TBDEVMEMO]   WHERE[ID]=@ID";
-
-        //using (SqlConnection cnn = new SqlConnection(connectionString))
-        //{
-        //    using (SqlCommand cmd = new SqlCommand(SQL, cnn))
-        //    {
-        //        cmd.Parameters.AddWithValue("@ID", ID);
-        //        cnn.Open();
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
+      
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);

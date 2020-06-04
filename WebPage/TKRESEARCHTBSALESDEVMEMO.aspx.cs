@@ -48,67 +48,53 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
     #region FUNCTION
     private void BindDropDownList()
     {
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
         DataTable dt = new DataTable();
-        DataRow ndr = dt.NewRow();
-
         dt.Columns.Add("PARAID", typeof(String));
         dt.Columns.Add("PARANAME", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' ORDER BY [PARAID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
         {
-            SqlCommand command = new SqlCommand(@" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' ORDER BY [PARAID]", conn);
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARANAME";
+            DropDownList1.DataValueField = "PARANAME";
+            DropDownList1.DataBind();
 
-            ds.Clear();
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                DropDownList1.DataSource = ds.Tables[0];
-                DropDownList1.DataTextField = "PARANAME";
-                DropDownList1.DataValueField = "PARANAME";
-                DropDownList1.DataBind();
-
-            }
-            else
-            {
-
-            }
         }
-      
+        else
+        {
+
+        }
+
+       
+
     }
     private void BindGrid(string STATUS)
     {
-        //建立Grid資料
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        this.Session["STATUS"] = STATUS;
+
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY SERNO                            ";
+
+        m_db.AddParameter("@STATUS", STATUS);
+
         DataTable dt = new DataTable();
 
-        //資源來源-用SqlCommand +SqlDataAdapter +DataTable 來查詢
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            SqlCommand command = new SqlCommand("SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY SERNO", conn);
-            command.Parameters.AddWithValue("@STATUS", STATUS);
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-            this.Session["STATUS"] = STATUS;
-
-            ds.Clear();
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-        }
-
-        Grid1.DataSource = ds.Tables[0];
+        Grid1.DataSource = dt;
         Grid1.DataBind();
+
+       
     }
 
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)

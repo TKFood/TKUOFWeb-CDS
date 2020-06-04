@@ -165,36 +165,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogADD : Ede.Uof.Utility.
 
         m_db.ExecuteNonQuery(cmdTxt);
 
-        //StringBuilder SQL = new StringBuilder();
-
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-
-        //SQL.AppendFormat(@" INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMO]");
-        //SQL.AppendFormat(@" ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO])");
-        //SQL.AppendFormat(@" VALUES");
-        //SQL.AppendFormat(@" (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO)");
-        //SQL.AppendFormat(@" ");
-
-        //using (SqlConnection cnn = new SqlConnection(connectionString))
-        //{
-        //    using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
-        //    {
-        //        cmd.Parameters.AddWithValue("@STATUS", STATUS);
-        //        cmd.Parameters.AddWithValue("@KIND", KIND);
-        //        cmd.Parameters.AddWithValue("@CLIENT", CLIENT);
-        //        cmd.Parameters.AddWithValue("@PROD", PROD);       
-        //        cmd.Parameters.AddWithValue("@SPEC", SPEC);              
-        //        cmd.Parameters.AddWithValue("@PLACES", PLACES);
-        //        cmd.Parameters.AddWithValue("@ONSALES", ONSALES); 
-        //        cmd.Parameters.AddWithValue("@OWNER", OWNER);
-        //        cmd.Parameters.AddWithValue("@MEMO", MEMO);
-
-
-        //        cnn.Open();
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
-
+        
 
     }
     #endregion

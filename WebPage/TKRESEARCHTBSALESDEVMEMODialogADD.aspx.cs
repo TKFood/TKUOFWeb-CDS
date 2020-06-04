@@ -62,39 +62,31 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
     #region FUNCTION
     private void BindDropDownList()
     {
-        DataSet ds = new DataSet();
-        DatabaseHelper DbQuery = new DatabaseHelper();
         DataTable dt = new DataTable();
-        DataRow ndr = dt.NewRow();
-
         dt.Columns.Add("PARAID", typeof(String));
         dt.Columns.Add("PARANAME", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' ORDER BY [PARAID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
         {
-            SqlCommand command = new SqlCommand(@" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' ORDER BY [PARAID]", conn);
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARANAME";
+            DropDownList1.DataValueField = "PARANAME";
+            DropDownList1.DataBind();
 
-            ds.Clear();
-
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            conn.Open();
-
-            adapter.Fill(ds, command.ToString());
-
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                DropDownList1.DataSource = ds.Tables[0];
-                DropDownList1.DataTextField = "PARANAME";
-                DropDownList1.DataValueField = "PARANAME";
-                DropDownList1.DataBind();
-
-            }
-            else
-            {
-
-            }
         }
+        else
+        {
+
+        }
+
+       
     }
 
     public void ADD()
@@ -142,43 +134,41 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
             TESTDATES = "1911/1/1";
         }
 
-        StringBuilder SQL = new StringBuilder();
-
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        SQL.AppendFormat(@" INSERT INTO [TKRESEARCH].[dbo].[TBSALESDEVMEMO]");
-        SQL.AppendFormat(@" ([STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],[ASSESSMENTDATES],[COSTSDATES],[SALESPRICES],[TEST],[TESTDATES],[OWNER],[MEMO])");
-        SQL.AppendFormat(@" VALUES");
-        SQL.AppendFormat(@" (@STATUS,@CLIENT,@PROD,@PRICES,@PROMOTIONS,@SPEC,@VALID,@PLACES,@ONSALES,@PRODESGIN,@ASSESSMENTDATES,@COSTSDATES,@SALESPRICES,@TEST,@TESTDATES,@OWNER,@MEMO)");
-        SQL.AppendFormat(@" ");
+        string cmdTxt = @"  INSERT INTO [TKRESEARCH].[dbo].[TBSALESDEVMEMO]
+                            ([STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],[ASSESSMENTDATES],[COSTSDATES],[SALESPRICES],[TEST],[TESTDATES],[OWNER],[MEMO])
+                            VALUES
+                            (@STATUS,@CLIENT,@PROD,@PRICES,@PROMOTIONS,@SPEC,@VALID,@PLACES,@ONSALES,@PRODESGIN,@ASSESSMENTDATES,@COSTSDATES,@SALESPRICES,@TEST,@TESTDATES,@OWNER,@MEMO)
+                            ";
 
-        using (SqlConnection cnn = new SqlConnection(connectionString))
-        {
-            using (SqlCommand cmd = new SqlCommand(SQL.ToString(), cnn))
-            {
-                cmd.Parameters.AddWithValue("@STATUS", STATUS);
-                cmd.Parameters.AddWithValue("@CLIENT", CLIENT);
-                cmd.Parameters.AddWithValue("@PROD", PROD);
-                cmd.Parameters.AddWithValue("@PRICES", PRICES);
-                cmd.Parameters.AddWithValue("@PROMOTIONS", PROMOTIONS);
-                cmd.Parameters.AddWithValue("@SPEC", SPEC);
-                cmd.Parameters.AddWithValue("@VALID", VALID);
-                cmd.Parameters.AddWithValue("@PLACES", PLACES);
-                cmd.Parameters.AddWithValue("@ONSALES", ONSALES);
-                cmd.Parameters.AddWithValue("@PRODESGIN", PRODESGIN);
-                cmd.Parameters.AddWithValue("@ASSESSMENTDATES", Convert.ToDateTime(ASSESSMENTDATES));
-                cmd.Parameters.AddWithValue("@COSTSDATES", Convert.ToDateTime(COSTSDATES));
-                cmd.Parameters.AddWithValue("@SALESPRICES", SALESPRICES);
-                cmd.Parameters.AddWithValue("@TEST", TEST);
-                cmd.Parameters.AddWithValue("@TESTDATES", Convert.ToDateTime(TESTDATES));
-                cmd.Parameters.AddWithValue("@OWNER", OWNER);
-                cmd.Parameters.AddWithValue("@MEMO", MEMO);
-               
 
-                cnn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
+    
+        m_db.AddParameter("@STATUS", STATUS);
+        m_db.AddParameter("@CLIENT", CLIENT);
+        m_db.AddParameter("@PROD", PROD);
+        m_db.AddParameter("@PRICES", PRICES);
+        m_db.AddParameter("@PROMOTIONS", PROMOTIONS);
+        m_db.AddParameter("@SPEC", SPEC);
+        m_db.AddParameter("@VALID", VALID);
+        m_db.AddParameter("@PLACES", PLACES);
+        m_db.AddParameter("@ONSALES", ONSALES);
+        m_db.AddParameter("@PRODESGIN", PRODESGIN);
+        m_db.AddParameter("@ASSESSMENTDATES", Convert.ToDateTime(ASSESSMENTDATES));
+        m_db.AddParameter("@COSTSDATES", Convert.ToDateTime(COSTSDATES));
+        m_db.AddParameter("@SALESPRICES", SALESPRICES);
+        m_db.AddParameter("@TEST", TEST);
+        m_db.AddParameter("@TESTDATES", Convert.ToDateTime(TESTDATES));
+        m_db.AddParameter("@OWNER", OWNER);
+        m_db.AddParameter("@MEMO", MEMO);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+
+
+        
 
 
     }
