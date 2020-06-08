@@ -97,7 +97,7 @@
        </tr>
              <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label11" runat="server" Text="產品圖/樣袋"></asp:Label>
+                <asp:Label ID="Label11" runat="server" Text="產品圖/樣袋 完稿日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox9" runat="server"  Text=""  Width = "100%"></asp:TextBox>
@@ -105,7 +105,7 @@
        </tr>
          <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label12" runat="server" Text="可行性評估"></asp:Label>
+                <asp:Label ID="Label12" runat="server" Text="可行性評估 申請日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                  <asp:TextBox ID="txtDate1"  runat="server" Width = "100%"></asp:TextBox>
@@ -113,7 +113,7 @@
        </tr>
                <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label13" runat="server" Text="成本試算"></asp:Label>
+                <asp:Label ID="Label13" runat="server" Text="成本試算 申請日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                  <asp:TextBox ID="txtDate2" runat="server" Width = "100%"></asp:TextBox>
@@ -121,7 +121,7 @@
        </tr>        
              <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label14" runat="server" Text="報價"></asp:Label>
+                <asp:Label ID="Label14" runat="server" Text="報價日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox10" runat="server"  Text=""  Width = "100%"></asp:TextBox>
@@ -137,7 +137,7 @@
        </tr>
           <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label16" runat="server" Text="營標送驗日期"></asp:Label>
+                <asp:Label ID="Label16" runat="server" Text="營標送驗 申請日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="txtDate3" runat="server"  Text=""  Width = "100%"></asp:TextBox>
@@ -153,7 +153,7 @@
        </tr>  
              <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label18" runat="server" Text="業務進度"></asp:Label>
+                <asp:Label ID="Label18" runat="server" Text="研發進度"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox14" runat="server"  Text="" TextMode="MultiLine" Width = "100%" ></asp:TextBox>
