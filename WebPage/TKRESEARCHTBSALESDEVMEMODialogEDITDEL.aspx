@@ -14,7 +14,9 @@
     }); 
   
 </script>
+    <div style="overflow-x:auto;width:800px">
 
+        </div>
     <table class="PopTable" >
         <tr>
             <td class="PopTableLeftTD" >
