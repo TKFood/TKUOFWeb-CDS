@@ -62,55 +62,57 @@
     <table class="PopTable">
          <tr >
             <td colspan="2" class="PopTableRightTD" >
-                <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
-                <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                <div style="overflow-x:auto;width:2900px">
+                    <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
+                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
-                    <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                    <Columns>
-                        <asp:TemplateField HeaderText="維護專案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lbtnName" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
-                            </ItemTemplate>
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:TemplateField> 
-                          <asp:BoundField HeaderText="編號" DataField="SERNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField> 
-                         <asp:BoundField HeaderText="狀態" DataField="STATUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField> 
-                         <asp:BoundField HeaderText="類別" DataField="KIND" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField> 
-                         <asp:BoundField HeaderText="客戶" DataField="CLIENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField> 
-                         <asp:BoundField HeaderText="產品品項" DataField="PROD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField> 
-                         <asp:BoundField HeaderText="規格及屬性" DataField="SPEC" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField>                       
-                         <asp:BoundField HeaderText="通路" DataField="PLACES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField> 
-                         <asp:BoundField HeaderText="預估上市日期" DataField="ONSALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField>                          
-                         <asp:BoundField HeaderText="負責業務" DataField="OWNER" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:BoundField> 
-                           <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                            <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                        </asp:BoundField>
-                          <asp:TemplateField HeaderText="更新業務進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
-                            <ItemTemplate>
-                                <asp:LinkButton ID="MEMO" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
-                            </ItemTemplate>
-                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                        </asp:TemplateField> 
-                    </Columns>
-                </Fast:Grid>
+                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                            <Columns>
+                                <asp:TemplateField HeaderText="維護專案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lbtnName" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
+                                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:TemplateField> 
+                                  <asp:BoundField HeaderText="編號" DataField="SERNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                 <asp:BoundField HeaderText="狀態" DataField="STATUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                 <asp:BoundField HeaderText="類別" DataField="KIND" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                 <asp:BoundField HeaderText="客戶" DataField="CLIENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                 <asp:BoundField HeaderText="產品品項" DataField="PROD" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                </asp:BoundField> 
+                                 <asp:BoundField HeaderText="規格及屬性" DataField="SPEC" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                </asp:BoundField>                       
+                                 <asp:BoundField HeaderText="通路" DataField="PLACES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                 <asp:BoundField HeaderText="預估上市日期" DataField="ONSALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField>                          
+                                 <asp:BoundField HeaderText="負責業務" DataField="OWNER" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                   <asp:BoundField HeaderText="進度" DataField="MEMO" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                                </asp:BoundField>
+                                  <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="MEMO" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
+                                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:TemplateField> 
+                            </Columns>
+                        </Fast:Grid>
+                    </div>
             </td>
         </tr>
     </table>
