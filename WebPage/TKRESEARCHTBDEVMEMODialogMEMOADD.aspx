@@ -34,7 +34,7 @@
     <table class="PopTable">
          <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label2" runat="server" Text="業務進度"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text="進度"></asp:Label>
             </td>             
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox1" runat="server"  Text="" Width = "100%"  TextMode="MultiLine"  Rows="10"></asp:TextBox>
@@ -54,7 +54,7 @@
                            <asp:BoundField HeaderText="產品品項" DataField="PROD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>   
-                           <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                           <asp:BoundField HeaderText="進度" DataField="MEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                             <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
                         </asp:BoundField>                        
                     </Columns>               
