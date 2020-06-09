@@ -71,6 +71,11 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         Grid1.DataBind();
     }
 
+    protected void grid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid1.PageIndex = e.NewPageIndex;
+        BindGrid();
+    }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
     //    if (e.Row.RowType == DataControlRowType.DataRow)
