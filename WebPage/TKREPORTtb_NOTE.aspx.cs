@@ -25,43 +25,42 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         //Dialog.Open2(btn, "~/CDS/WebPage/Dialog.aspx", "", 800, 600, Dialog.PostBackType.Allows, param);
 
 
+
+
         if (!IsPostBack)
         {
-            BindGrid();
+            BindGrid(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+
+            txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
+            txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
+
         }
         else
         {
-            BindGrid();
+            BindGrid(txtDate1.Text, txtDate2.Text);
         }
-        
 
-        //BindDropDownList();
 
-        //if (this.Session["STATUS"] != null)
-        //{
-        //    DropDownList1.Text = this.Session["STATUS"].ToString();
-
-        //}
 
     }
 
     #region FUNCTION
     
-    private void BindGrid()
+    private void BindGrid(string SDATE,string EDATE)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        //this.Session["STATUS"] = STATUS;
-
         string cmdTxt = @" SELECT [COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME] 
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                           AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
                            ORDER BY [COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
 
                         ";
 
-        //m_db.AddParameter("@STATUS", STATUS);
+        m_db.AddParameter("@SDATE", SDATE);
+        m_db.AddParameter("@EDATE", EDATE);
 
         DataTable dt = new DataTable();
 
@@ -74,7 +73,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
     protected void grid_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         Grid1.PageIndex = e.NewPageIndex;
-        BindGrid();
+        BindGrid(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
@@ -97,7 +96,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string STATUS = DropDownList1.Text;
+        //string STATUS = DropDownList1.Text;
 
         string cmdTxt = @" SELECT [COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME] 
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
@@ -106,7 +105,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
                         ";
 
-        m_db.AddParameter("@STATUS", STATUS);
+        //m_db.AddParameter("@STATUS", STATUS);
 
         DataTable dt = new DataTable();
 
@@ -143,31 +142,11 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
     }
 
-    protected void btn3_Click(object sender, EventArgs e)
+
+    protected void btn1_Click(object sender, EventArgs e)
     {
-
-    }
-
-    protected void btn4_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    protected void btn5_Click(object sender, EventArgs e)
-    {
-        if(!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        {
-            if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-            {                
-                //this.Session["STATUS"] = DropDownList1.Text.Trim();
-            }
-
-        }
-    }
-
-    protected void btn6_Click(object sender, EventArgs e)
-    {
-        //this.Session["STATUS"] = DropDownList1.Text.Trim();
+        //this.Session["SDATE"] = txtDate1.Text.Trim();
+        //this.Session["EDATE"] = txtDate2.Text.Trim();
     }
 
     #endregion
