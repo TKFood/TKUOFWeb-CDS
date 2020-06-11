@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 
-public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_TKREPORTtb_NOTEtb_OPPORTUNITY : Ede.Uof.Utility.Page.BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -51,11 +51,11 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME] 
-                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
-                           WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+        string cmdTxt = @" SELECT [OPPORTUNITY_NAME],[PRODUCT],[NOTE_CONTENT],[tb_NOTE].[CREATE_DATETIME]
+                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_OPPORTUNITY] 
+                           WHERE [tb_NOTE].[OPPORTUNITY_ID]=[tb_OPPORTUNITY].[OPPORTUNITY_ID]
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
-                           ORDER BY [COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
+                           ORDER BY [OPPORTUNITY_NAME],[tb_NOTE].[CREATE_DATETIME]
 
                         ";
 
@@ -96,11 +96,11 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [COMPANY_NAME] ,[NOTE_CONTENT] ,CONVERT(varchar(100),[tb_NOTE].[CREATE_DATETIME], 111) AS CREATE_DATETIME 
-                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
-                           WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+        string cmdTxt = @" SELECT [OPPORTUNITY_NAME],[PRODUCT],[NOTE_CONTENT],CONVERT(varchar(100),[tb_NOTE].[CREATE_DATETIME], 111) AS CREATE_DATETIME
+                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_OPPORTUNITY] 
+                           WHERE [tb_NOTE].[OPPORTUNITY_ID]=[tb_OPPORTUNITY].[OPPORTUNITY_ID]
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
-                           ORDER BY [COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
+                           ORDER BY [OPPORTUNITY_NAME],[tb_NOTE].[CREATE_DATETIME]
 
                         ";
 
@@ -113,10 +113,10 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
         if (dt.Rows.Count>0)
         {
-            dt.Columns[0].Caption = "客戶";
-            dt.Columns[1].Caption = "記錄";
-            dt.Columns[2].Caption = "記錄日期";
-        
+            dt.Columns[0].Caption = "專案名稱";
+            dt.Columns[1].Caption = "商品";
+            dt.Columns[2].Caption = "記錄";
+            dt.Columns[3].Caption = "記錄時間";      
 
             e.Datasource = dt;
         }
