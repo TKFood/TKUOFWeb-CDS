@@ -153,7 +153,7 @@
        </tr>  
              <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label18" runat="server" Text="研發進度"></asp:Label>
+                <asp:Label ID="Label18" runat="server" Text="業務進度"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox14" runat="server"  Text="" TextMode="MultiLine" Width = "100%" ></asp:TextBox>
