@@ -51,8 +51,9 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME] 
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME] 
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
                            ORDER BY [COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
@@ -96,13 +97,15 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [COMPANY_NAME] ,[NOTE_CONTENT] ,CONVERT(varchar(100),[tb_NOTE].[CREATE_DATETIME], 111) AS CREATE_DATETIME 
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME] 
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
                            ORDER BY [COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
 
                         ";
+
 
         m_db.AddParameter("@SDATE", txtDate1.Text);
         m_db.AddParameter("@EDATE", txtDate2.Text);

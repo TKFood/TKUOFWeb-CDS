@@ -51,8 +51,9 @@ public partial class CDS_WebPage_TKREPORTtb_NOTEtb_OPPORTUNITY : Ede.Uof.Utility
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [OPPORTUNITY_NAME],[PRODUCT],[NOTE_CONTENT],[tb_NOTE].[CREATE_DATETIME]
+        string cmdTxt = @" SELECT [USER_NAME],[OPPORTUNITY_NAME],[PRODUCT],[NOTE_CONTENT],[tb_NOTE].[CREATE_DATETIME]
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_OPPORTUNITY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_NOTE].[OPPORTUNITY_ID]=[tb_OPPORTUNITY].[OPPORTUNITY_ID]
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
                            ORDER BY [OPPORTUNITY_NAME],[tb_NOTE].[CREATE_DATETIME]
@@ -96,8 +97,9 @@ public partial class CDS_WebPage_TKREPORTtb_NOTEtb_OPPORTUNITY : Ede.Uof.Utility
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [OPPORTUNITY_NAME],[PRODUCT],[NOTE_CONTENT],CONVERT(varchar(100),[tb_NOTE].[CREATE_DATETIME], 111) AS CREATE_DATETIME
+        string cmdTxt = @" SELECT [USER_NAME],[OPPORTUNITY_NAME],[PRODUCT],[NOTE_CONTENT],[tb_NOTE].[CREATE_DATETIME]
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_OPPORTUNITY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_NOTE].[OPPORTUNITY_ID]=[tb_OPPORTUNITY].[OPPORTUNITY_ID]
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
                            ORDER BY [OPPORTUNITY_NAME],[tb_NOTE].[CREATE_DATETIME]

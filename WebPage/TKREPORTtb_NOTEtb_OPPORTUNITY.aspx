@@ -36,6 +36,9 @@
                  
                             <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
                             <Columns>
+                                <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                </asp:BoundField>   
                                  <asp:BoundField HeaderText="專案名稱" DataField="OPPORTUNITY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                 </asp:BoundField>  
