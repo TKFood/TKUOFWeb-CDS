@@ -132,24 +132,30 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogADD : Ede.Uof.Utility.
         string ONSALES = TextBox8.Text.ToString().Trim();      
         string OWNER = TextBox13.Text.ToString().Trim();
         string MEMO = TextBox14.Text.ToString().Trim();
+        string FEASIBILITY = TextBox3.Text.ToString().Trim();
+        string SAMPLETRIAL = TextBox4.Text.ToString().Trim();
+        string COSTTRIAL = TextBox6.Text.ToString().Trim();
+        string SENDINSPECTION = TextBox9.Text.ToString().Trim();
+        string PROOFREADING = TextBox10.Text.ToString().Trim();
+        string PRODUCTION = TextBox11.Text.ToString().Trim();
 
         if (!string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(CLIENT) && !string.IsNullOrEmpty(PROD))
         {
-            ADDTBDEVMEMO(ID, SERNO, STATUS, KIND, CLIENT, PROD, SPEC, PLACES, ONSALES, OWNER, MEMO);
+            ADDTBDEVMEMO(ID, SERNO, STATUS, KIND, CLIENT, PROD, SPEC, PLACES, ONSALES, OWNER, MEMO, FEASIBILITY, SAMPLETRIAL, COSTTRIAL, SENDINSPECTION, PROOFREADING, PRODUCTION);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBDEVMEMO(string ID, string SERNO, string STATUS, string KIND, string CLIENT, string PROD, string SPEC, string PLACES, string ONSALES, string OWNER, string MEMO)
+    public void ADDTBDEVMEMO(string ID, string SERNO, string STATUS, string KIND, string CLIENT, string PROD, string SPEC, string PLACES, string ONSALES, string OWNER, string MEMO,string FEASIBILITY, string SAMPLETRIAL, string COSTTRIAL, string SENDINSPECTION, string PROOFREADING, string PRODUCTION)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMO]
-                            ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO])
+                            ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO],[FEASIBILITY],[SAMPLETRIAL],[COSTTRIAL],[SENDINSPECTION],[PROOFREADING],[PRODUCTION])
                             VALUES
-                            (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO)
+                            (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO,@FEASIBILITY,@SAMPLETRIAL,@COSTTRIAL,@SENDINSPECTION,@PROOFREADING,@PRODUCTION)
                             ";
 
 
@@ -162,6 +168,12 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogADD : Ede.Uof.Utility.
         m_db.AddParameter("@ONSALES", ONSALES);
         m_db.AddParameter("@OWNER", OWNER);
         m_db.AddParameter("@MEMO", MEMO);
+        m_db.AddParameter("@FEASIBILITY", FEASIBILITY);
+        m_db.AddParameter("@SAMPLETRIAL", SAMPLETRIAL);
+        m_db.AddParameter("@COSTTRIAL", COSTTRIAL);
+        m_db.AddParameter("@SENDINSPECTION", SENDINSPECTION);
+        m_db.AddParameter("@PROOFREADING", PROOFREADING);
+        m_db.AddParameter("@PRODUCTION", PRODUCTION);
 
         m_db.ExecuteNonQuery(cmdTxt);
 

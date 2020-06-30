@@ -101,6 +101,24 @@
                                  <asp:BoundField HeaderText="負責業務" DataField="OWNER" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField> 
+                                 <asp:BoundField HeaderText="可行性評估表" DataField="FEASIBILITY" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                  <asp:BoundField HeaderText="樣品試做" DataField="SAMPLETRIAL" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                  <asp:BoundField HeaderText="成本試算" DataField="COSTTRIAL" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                  <asp:BoundField HeaderText="送檢驗" DataField="SENDINSPECTION" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                  <asp:BoundField HeaderText="圖檔/校稿完成" DataField="PROOFREADING" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
+                                  <asp:BoundField HeaderText="試量產" DataField="PRODUCTION" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField> 
                                    <asp:BoundField HeaderText="進度" DataField="MEMO" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                 </asp:BoundField>

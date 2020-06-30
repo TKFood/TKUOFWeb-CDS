@@ -125,6 +125,7 @@
                              <asp:BoundField HeaderText="負責業務" DataField="OWNER" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
+                             
                                <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                             </asp:BoundField>

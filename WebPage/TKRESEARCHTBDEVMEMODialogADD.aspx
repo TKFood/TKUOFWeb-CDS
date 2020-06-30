@@ -83,6 +83,54 @@
                 <asp:TextBox ID="TextBox13" runat="server"  Text=""  Width = "100%"></asp:TextBox>
             </td> 
        </tr>  
+                <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label4" runat="server" Text="可行性評估表"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox3" runat="server"  Text=""  Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>  
+                <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label5" runat="server" Text="樣品試做"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox4" runat="server"  Text=""  Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>  
+                <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label7" runat="server" Text="成本試算"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox6" runat="server"  Text=""  Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>  
+                <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label11" runat="server" Text="送檢驗"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox9" runat="server"  Text=""  Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>  
+                <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label12" runat="server" Text="圖檔/校稿完成"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox10" runat="server"  Text=""  Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>  
+                <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label13" runat="server" Text="試量產"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox11" runat="server"  Text=""  Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>  
              <tr>
             <td class="PopTableLeftTD" >
                 <asp:Label ID="Label18" runat="server" Text="進度"></asp:Label>

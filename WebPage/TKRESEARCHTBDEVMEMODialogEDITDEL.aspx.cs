@@ -131,7 +131,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogEDITDEL : Ede.Uof.Util
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE [ID]=@ID ";
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[FEASIBILITY],[SAMPLETRIAL],[COSTTRIAL],[SENDINSPECTION],[PROOFREADING],[PRODUCTION],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE [ID]=@ID ";
         m_db.AddParameter("@ID", ID);
 
         DataTable dt = new DataTable();
@@ -149,7 +149,14 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogEDITDEL : Ede.Uof.Util
             TextBox8.Text = dt.Rows[0]["ONSALES"].ToString();
             TextBox13.Text = dt.Rows[0]["OWNER"].ToString();
             TextBox14.Text = dt.Rows[0]["MEMO"].ToString();
+            TextBox3.Text = dt.Rows[0]["FEASIBILITY"].ToString();
+            TextBox4.Text = dt.Rows[0]["SAMPLETRIAL"].ToString();
+            TextBox6.Text = dt.Rows[0]["COSTTRIAL"].ToString();
+            TextBox9.Text = dt.Rows[0]["SENDINSPECTION"].ToString();
+            TextBox10.Text = dt.Rows[0]["PROOFREADING"].ToString();
+            TextBox11.Text = dt.Rows[0]["PRODUCTION"].ToString();
 
+         
         }
 
 
@@ -167,20 +174,26 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogEDITDEL : Ede.Uof.Util
         string ONSALES = TextBox8.Text.ToString().Trim(); 
         string OWNER = TextBox13.Text.ToString().Trim();
         string MEMO = TextBox14.Text.ToString().Trim();
+        string FEASIBILITY = TextBox3.Text.ToString().Trim();
+        string SAMPLETRIAL = TextBox4.Text.ToString().Trim();
+        string COSTTRIAL = TextBox6.Text.ToString().Trim();
+        string SENDINSPECTION = TextBox9.Text.ToString().Trim();
+        string PROOFREADING = TextBox10.Text.ToString().Trim();
+        string PRODUCTION = TextBox11.Text.ToString().Trim();
 
         if (!string.IsNullOrEmpty(ID) && !string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(CLIENT) && !string.IsNullOrEmpty(PROD))
         {
-            UPDATETBDEVMEMO(ID, STATUS, KIND, CLIENT, PROD, SPEC, PLACES, ONSALES, OWNER, MEMO);
+            UPDATETBDEVMEMO(ID, STATUS, KIND, CLIENT, PROD, SPEC, PLACES, ONSALES, OWNER, MEMO, FEASIBILITY, SAMPLETRIAL, COSTTRIAL, SENDINSPECTION, PROOFREADING, PRODUCTION);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBDEVMEMO(string ID, string STATUS, string KIND, string CLIENT, string PROD, string SPEC, string PLACES, string ONSALES, string OWNER, string MEMO)
+    public void UPDATETBDEVMEMO(string ID, string STATUS, string KIND, string CLIENT, string PROD, string SPEC, string PLACES, string ONSALES, string OWNER, string MEMO, string FEASIBILITY, string SAMPLETRIAL, string COSTTRIAL, string SENDINSPECTION, string PROOFREADING, string PRODUCTION)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  UPDATE [TKRESEARCH].[dbo].[TBDEVMEMO] SET STATUS=@STATUS,KIND=@KIND,CLIENT=@CLIENT,PROD=@PROD,SPEC=@SPEC,PLACES=@PLACES,ONSALES=@ONSALES,OWNER=@OWNER,MEMO=@MEMO WHERE[ID]=@ID
+        string cmdTxt = @"  UPDATE [TKRESEARCH].[dbo].[TBDEVMEMO] SET STATUS=@STATUS,KIND=@KIND,CLIENT=@CLIENT,PROD=@PROD,SPEC=@SPEC,PLACES=@PLACES,ONSALES=@ONSALES,OWNER=@OWNER,MEMO=@MEMO,FEASIBILITY=@FEASIBILITY,SAMPLETRIAL=@SAMPLETRIAL,COSTTRIAL=@COSTTRIAL,SENDINSPECTION=@SENDINSPECTION,PROOFREADING=@PROOFREADING,PRODUCTION=@PRODUCTION WHERE[ID]=@ID
                             ";
 
         m_db.AddParameter("@ID", ID);
@@ -193,6 +206,12 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMODialogEDITDEL : Ede.Uof.Util
         m_db.AddParameter("@ONSALES", ONSALES);
         m_db.AddParameter("@OWNER", OWNER);
         m_db.AddParameter("@MEMO", MEMO);
+        m_db.AddParameter("@FEASIBILITY", FEASIBILITY);
+        m_db.AddParameter("@SAMPLETRIAL", SAMPLETRIAL);
+        m_db.AddParameter("@COSTTRIAL", COSTTRIAL);
+        m_db.AddParameter("@SENDINSPECTION", SENDINSPECTION);
+        m_db.AddParameter("@PROOFREADING", PROOFREADING);
+        m_db.AddParameter("@PRODUCTION", PRODUCTION);
 
         m_db.ExecuteNonQuery(cmdTxt);
 

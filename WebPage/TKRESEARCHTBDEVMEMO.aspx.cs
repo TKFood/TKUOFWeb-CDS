@@ -82,7 +82,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMO : Ede.Uof.Utility.Page.Base
 
         this.Session["STATUS"] = STATUS;
 
-        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE STATUS=@STATUS ORDER BY KIND,SERNO                             ";
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[FEASIBILITY],[SAMPLETRIAL],[COSTTRIAL],[SENDINSPECTION],[PROOFREADING],[PRODUCTION],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE STATUS=@STATUS ORDER BY KIND,SERNO                             ";
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -126,7 +126,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMO : Ede.Uof.Utility.Page.Base
 
         string STATUS = DropDownList1.Text;
 
-        string cmdTxt = @" SELECT [STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE STATUS=@STATUS ORDER BY KIND,SERNO                              ";
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[FEASIBILITY],[SAMPLETRIAL],[COSTTRIAL],[SENDINSPECTION],[PROOFREADING],[PRODUCTION],[MEMO] FROM [TKRESEARCH].[dbo].[TBDEVMEMO] WHERE STATUS=@STATUS ORDER BY KIND,SERNO                              ";
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -144,7 +144,13 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVMEMO : Ede.Uof.Utility.Page.Base
             dt.Columns[5].Caption = "通路";
             dt.Columns[6].Caption = "預估上市日期";
             dt.Columns[7].Caption = "負責業務";
-            dt.Columns[8].Caption = "業務進度";
+            dt.Columns[8].Caption = "可行性評估表";
+            dt.Columns[9].Caption = "樣品試做";
+            dt.Columns[10].Caption = "成本試算";
+            dt.Columns[11].Caption = "送檢驗";
+            dt.Columns[12].Caption = "圖檔/校稿完成";
+            dt.Columns[13].Caption = "試量產";
+            dt.Columns[14].Caption = "進度";
 
             e.Datasource = dt;
         }
