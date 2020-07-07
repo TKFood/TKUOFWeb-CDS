@@ -67,24 +67,24 @@
                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
                         <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
-                        <Columns>
-                            <asp:TemplateField HeaderText="維護專案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="lbtnName" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
-                                </ItemTemplate>
-                                <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
-                            </asp:TemplateField> 
-                              <asp:BoundField HeaderText="編號" DataField="SERNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                        <Columns>                            
+                            <asp:BoundField HeaderText="編號" DataField="SERNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                            </asp:BoundField> 
-                             <asp:BoundField HeaderText="狀態" DataField="STATUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                            </asp:BoundField> 
+                            </asp:BoundField>                           
                              <asp:BoundField HeaderText="客戶" DataField="CLIENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
+                              <asp:BoundField HeaderText="負責業務" DataField="OWNER" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                            </asp:BoundField>   
                              <asp:BoundField HeaderText="產品品項" DataField="PROD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                            </asp:BoundField> 
+                                  <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                            </asp:BoundField>
+                               <asp:BoundField HeaderText="狀態" DataField="STATUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
                              <asp:BoundField HeaderText="末售" DataField="PRICES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
@@ -122,13 +122,14 @@
                              <asp:BoundField HeaderText="營標送驗 申請日期" DataField="TESTDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
-                             <asp:BoundField HeaderText="負責業務" DataField="OWNER" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                            </asp:BoundField> 
-                             
-                               <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
-                            </asp:BoundField>
+                                                      
+                         
+                            <asp:TemplateField HeaderText="維護專案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="lbtnName" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
+                                </ItemTemplate>
+                                <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                            </asp:TemplateField> 
                               <asp:TemplateField HeaderText="更新業務進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
                                 <ItemTemplate>
                                     <asp:LinkButton ID="MEMO" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
