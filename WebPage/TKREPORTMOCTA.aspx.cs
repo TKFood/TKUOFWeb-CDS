@@ -11,7 +11,7 @@ using System.Web.UI.WebControls;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 
-public partial class CDS_WebPage_TKREPORTMOCMANULINE : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_TKREPORTMOCTA : Ede.Uof.Utility.Page.BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -51,12 +51,14 @@ public partial class CDS_WebPage_TKREPORTMOCMANULINE : Ede.Uof.Utility.Page.Base
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [MANU],[CLINET],CONVERT(NVARCHAR,[MANUDATE],112) AS MANUDATE,[MOCMANULINE].[MB002],CONVERT(INT,(ISNULL([PACKAGE],0))) AS PACKAGE,ISNULL([NUM],0) AS NUM,MB004
-                            FROM [TKMOC].[dbo].[MOCMANULINE]
-                            LEFT JOIN [TK].dbo.INVMB ON INVMB.MB001=[MOCMANULINE].MB001
-                            WHERE CONVERT(NVARCHAR,[MANUDATE],112)>=@SDATE AND  CONVERT(NVARCHAR,[MANUDATE],112)<=@EDATE
-                            AND (NUM>0 OR [PACKAGE]>0)
-                            ORDER BY [MANU],[MANUDATE],[CLINET],[MB002]
+        string cmdTxt = @" SELECT MD002,ISNULL(MA002,'') AS MA002,TA003,TA034,CASE WHEN TA007<>'kg' THEN CONVERT(INT,TA015) ELSE 0  END  AS TA015,CASE WHEN TA007='kg' THEN TA015 ELSE 0  END  AS TA015KG,TA007
+                            FROM [TK].dbo.CMSMD,[TK].dbo.MOCTA
+                            LEFT JOIN [TK].dbo.COPTC ON TC001=TA026 AND TC002=TA027
+                            LEFT JOIN [TK].dbo.COPMA ON MA001=TC004
+                            WHERE TA021=MD001
+                            AND MD001 IN ('02','03','04','09')
+                            AND TA003>=@SDATE AND TA003<=@EDATE
+                            ORDER BY  MD002,TA003,MA002
 
                         ";
 
@@ -97,12 +99,14 @@ public partial class CDS_WebPage_TKREPORTMOCMANULINE : Ede.Uof.Utility.Page.Base
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [MANU],[CLINET],CONVERT(NVARCHAR,[MANUDATE],112) AS MANUDATE,[MOCMANULINE].[MB002],CONVERT(INT,(ISNULL([PACKAGE],0))) AS PACKAGE,ISNULL([NUM],0) AS NUM,MB004
-                            FROM [TKMOC].[dbo].[MOCMANULINE]
-                            LEFT JOIN [TK].dbo.INVMB ON INVMB.MB001=[MOCMANULINE].MB001
-                            WHERE CONVERT(NVARCHAR,[MANUDATE],112)>=@SDATE AND  CONVERT(NVARCHAR,[MANUDATE],112)<=@EDATE
-                            AND (NUM>0 OR [PACKAGE]>0)
-                            ORDER BY [MANU],[MANUDATE],[CLINET],[MB002]
+        string cmdTxt = @" SELECT MD002,ISNULL(MA002,'') AS MA002,TA003,TA034,CASE WHEN TA007<>'kg' THEN CONVERT(INT,TA015) ELSE 0  END  AS TA015,CASE WHEN TA007='kg' THEN TA015 ELSE 0  END  AS TA015KG,TA007
+                            FROM [TK].dbo.CMSMD,[TK].dbo.MOCTA
+                            LEFT JOIN [TK].dbo.COPTC ON TC001=TA026 AND TC002=TA027
+                            LEFT JOIN [TK].dbo.COPMA ON MA001=TC004
+                            WHERE TA021=MD001
+                            AND MD001 IN ('02','03','04','09')
+                            AND TA003>=@SDATE AND TA003<=@EDATE
+                            ORDER BY  MD002,TA003,MA002
 
                         ";
 
@@ -116,12 +120,13 @@ public partial class CDS_WebPage_TKREPORTMOCMANULINE : Ede.Uof.Utility.Page.Base
 
         if (dt.Rows.Count>0)
         {
-            dt.Columns[0].Caption = "預排-線別";
+            dt.Columns[0].Caption = "實際-線別";
             dt.Columns[1].Caption = "客戶";
             dt.Columns[2].Caption = "預計生產日期";
             dt.Columns[3].Caption = "品名";
             dt.Columns[4].Caption = "包裝數";
             dt.Columns[5].Caption = "重量";
+            dt.Columns[6].Caption = "單位";
 
             e.Datasource = dt;
         }
