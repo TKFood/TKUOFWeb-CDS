@@ -83,6 +83,9 @@
                                   <asp:BoundField HeaderText="業務進度" DataField="MEMO" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                             </asp:BoundField>
+                                  <asp:BoundField HeaderText="研發進度" DataField="DEVMEMO" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                            </asp:BoundField>
                                <asp:BoundField HeaderText="狀態" DataField="STATUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
@@ -133,6 +136,12 @@
                               <asp:TemplateField HeaderText="更新業務進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
                                 <ItemTemplate>
                                     <asp:LinkButton ID="MEMO" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
+                                </ItemTemplate>
+                                <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                            </asp:TemplateField> 
+                             <asp:TemplateField HeaderText="更新研發進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="DEVMEMO" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
                                 </ItemTemplate>
                                 <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
                             </asp:TemplateField> 

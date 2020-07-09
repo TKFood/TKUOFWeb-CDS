@@ -162,6 +162,14 @@
                 <asp:TextBox ID="TextBox14" runat="server"  Text="" TextMode="MultiLine" Width = "100%" ReadOnly="true" ></asp:TextBox>
             </td> 
        </tr>
+             <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label20" runat="server" Text="研發進度"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox15" runat="server"  Text="" TextMode="MultiLine" Width = "100%" ReadOnly="true" ></asp:TextBox>
+            </td> 
+       </tr>
     <table>
         <tr>
             <td class="PopTableLeftTD" >
