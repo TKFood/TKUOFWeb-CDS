@@ -83,7 +83,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
 
         this.Session["STATUS"] = STATUS;
 
-        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO],[DEVMEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY SERNO                            ";
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO],[DEVMEMO],CONVERT(NVARCHAR,[MEMODATES],111) [MEMODATES],CONVERT(NVARCHAR,[DEVMEMODATES],111) [DEVMEMODATES] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY [OWNER],[CLIENT],[PROD]                            ";
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -133,6 +133,49 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
         }
     }
 
+    public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string STATUS = DropDownList1.Text;
+
+        string cmdTxt = @" SELECT [SERNO],[CLIENT],[OWNER],[PROD],[MEMO],[DEVMEMO],[STATUS],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,CONVERT(NVARCHAR,[MEMODATES],111) [MEMODATES],CONVERT(NVARCHAR,[DEVMEMODATES],111) [DEVMEMODATES] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY [OWNER],[CLIENT],[PROD]                            ";
+
+        m_db.AddParameter("@STATUS", STATUS);
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            dt.Columns[0].Caption = "編號";
+            dt.Columns[1].Caption = "客戶";
+            dt.Columns[2].Caption = "負責業務";
+            dt.Columns[3].Caption = "產品品項";
+            dt.Columns[4].Caption = "業務進度";
+            dt.Columns[5].Caption = "研發進度";
+            dt.Columns[6].Caption = "狀態";
+            dt.Columns[7].Caption = "末售";
+            dt.Columns[8].Caption = "促銷設定";
+            dt.Columns[9].Caption = "規格及屬性";
+            dt.Columns[10].Caption = "產品效期";
+            dt.Columns[11].Caption = "通路";
+            dt.Columns[12].Caption = "預估上市日期";
+            dt.Columns[13].Caption = "產品圖/樣袋完稿日期";
+            dt.Columns[14].Caption = "可行性評估申請日期";
+            dt.Columns[15].Caption = "成本試算申請日期";
+            dt.Columns[16].Caption = "報價日期";
+            dt.Columns[17].Caption = "營標送驗";
+            dt.Columns[18].Caption = "營標送驗申請日期";
+            dt.Columns[19].Caption = "業務更新日期";
+            dt.Columns[20].Caption = "研發更新日期";
+
+            e.Datasource = dt;
+        }
+    }
     #endregion
 
     #region BUTTON

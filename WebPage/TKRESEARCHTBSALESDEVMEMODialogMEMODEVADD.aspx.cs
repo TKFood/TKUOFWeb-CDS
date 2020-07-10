@@ -155,12 +155,13 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogMEMODEVADD : Ede.
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  UPDATE [TKRESEARCH].[dbo].[TBSALESDEVMEMO]
-                            SET [DEVMEMO]=@DEVMEMO
+                            SET [DEVMEMO]=@DEVMEMO,[DEVMEMODATES]=@DEVMEMODATES
                             WHERE [ID]=@ID
                             ";
 
         m_db.AddParameter("@ID", PID);
         m_db.AddParameter("@DEVMEMO", DEVMEMO);
+        m_db.AddParameter("@DEVMEMODATES", Convert.ToDateTime(DateTime.Now));
 
         m_db.ExecuteNonQuery(cmdTxt);
 
