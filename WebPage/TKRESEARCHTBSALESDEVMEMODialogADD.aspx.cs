@@ -102,6 +102,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
         string VALID = TextBox6.Text.ToString().Trim();
         string PLACES = TextBox7.Text.ToString().Trim();
         string ONSALES = TextBox8.Text.ToString().Trim();
+        string ONSALESDATES = txtDate4.Text.ToString().Trim();
         string PRODESGIN = TextBox9.Text.ToString().Trim();
         string ASSESSMENTDATES = txtDate1.Text.ToString().Trim();
         string COSTSDATES = txtDate2.Text.ToString().Trim();
@@ -114,13 +115,13 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
 
         if (!string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(CLIENT) && !string.IsNullOrEmpty(PROD))
         {
-            ADDTBSALESDEVMEMO(ID, SERNO, STATUS, CLIENT, PROD, PRICES, PROMOTIONS, SPEC, VALID, PLACES, ONSALES, PRODESGIN, ASSESSMENTDATES, COSTSDATES, SALESPRICES, TEST, TESTDATES, OWNER, MEMO,DEVMEMO);
+            ADDTBSALESDEVMEMO(ID, SERNO, STATUS, CLIENT, PROD, PRICES, PROMOTIONS, SPEC, VALID, PLACES, ONSALES, ONSALESDATES, PRODESGIN, ASSESSMENTDATES, COSTSDATES, SALESPRICES, TEST, TESTDATES, OWNER, MEMO,DEVMEMO);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBSALESDEVMEMO(string ID, string SERNO, string STATUS, string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES, string OWNER, string MEMO,string DEVMEMO)
+    public void ADDTBSALESDEVMEMO(string ID, string SERNO, string STATUS, string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES,string ONSALESDATES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES, string OWNER, string MEMO,string DEVMEMO)
     {
         if (string.IsNullOrEmpty(ASSESSMENTDATES))
         {
@@ -134,14 +135,18 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
         {
             TESTDATES = "1911/1/1";
         }
+        if(string.IsNullOrEmpty(ONSALESDATES))
+        {
+            ONSALESDATES = "1911/1/1";
+        }
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  INSERT INTO [TKRESEARCH].[dbo].[TBSALESDEVMEMO]
-                            ([STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],[ASSESSMENTDATES],[COSTSDATES],[SALESPRICES],[TEST],[TESTDATES],[OWNER],[MEMO],[DEVMEMO])
+                            ([STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[ONSALESDATES],[PRODESGIN],[ASSESSMENTDATES],[COSTSDATES],[SALESPRICES],[TEST],[TESTDATES],[OWNER],[MEMO],[DEVMEMO])
                             VALUES
-                            (@STATUS,@CLIENT,@PROD,@PRICES,@PROMOTIONS,@SPEC,@VALID,@PLACES,@ONSALES,@PRODESGIN,@ASSESSMENTDATES,@COSTSDATES,@SALESPRICES,@TEST,@TESTDATES,@OWNER,@MEMO,@DEVMEMO)
+                            (@STATUS,@CLIENT,@PROD,@PRICES,@PROMOTIONS,@SPEC,@VALID,@PLACES,@ONSALES,@ONSALESDATES,@PRODESGIN,@ASSESSMENTDATES,@COSTSDATES,@SALESPRICES,@TEST,@TESTDATES,@OWNER,@MEMO,@DEVMEMO)
                             ";
 
 
@@ -155,6 +160,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
         m_db.AddParameter("@VALID", VALID);
         m_db.AddParameter("@PLACES", PLACES);
         m_db.AddParameter("@ONSALES", ONSALES);
+        m_db.AddParameter("@ONSALESDATES", Convert.ToDateTime(ONSALESDATES));
         m_db.AddParameter("@PRODESGIN", PRODESGIN);
         m_db.AddParameter("@ASSESSMENTDATES", Convert.ToDateTime(ASSESSMENTDATES));
         m_db.AddParameter("@COSTSDATES", Convert.ToDateTime(COSTSDATES));

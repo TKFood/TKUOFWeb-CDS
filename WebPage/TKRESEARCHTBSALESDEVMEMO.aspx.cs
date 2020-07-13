@@ -83,7 +83,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
 
         this.Session["STATUS"] = STATUS;
 
-        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO],[DEVMEMO],CONVERT(NVARCHAR,[MEMODATES],111) [MEMODATES],CONVERT(NVARCHAR,[DEVMEMODATES],111) [DEVMEMODATES] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY [OWNER],[CLIENT],[PROD]                            ";
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],CONVERT(NVARCHAR,[ONSALESDATES],111) ONSALESDATES,[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO],[DEVMEMO],CONVERT(NVARCHAR,[MEMODATES],111) [MEMODATES],CONVERT(NVARCHAR,[DEVMEMODATES],111) [DEVMEMODATES] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY [OWNER],[CLIENT],[PROD]                            ";
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -131,6 +131,27 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBSALESDEVMEMODialogMEMODEVADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.Cells[13].Text.Equals("1911/01/01"))
+            {
+                e.Row.Cells[13].ForeColor = System.Drawing.Color.Red;
+            }
+            if (e.Row.Cells[15].Text.Equals("1911/01/01"))
+            {
+                e.Row.Cells[15].ForeColor = System.Drawing.Color.Red;
+            }
+            if (e.Row.Cells[16].Text.Equals("1911/01/01"))
+            {
+                e.Row.Cells[16].ForeColor = System.Drawing.Color.Red;
+            }
+            if (e.Row.Cells[19].Text.Equals("1911/01/01"))
+            {
+                e.Row.Cells[19].ForeColor = System.Drawing.Color.Red;
+            }
+        }
+          
     }
 
     public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -140,7 +161,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
 
         string STATUS = DropDownList1.Text;
 
-        string cmdTxt = @" SELECT [SERNO],[CLIENT],[OWNER],[PROD],[MEMO],[DEVMEMO],[STATUS],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,CONVERT(NVARCHAR,[MEMODATES],111) [MEMODATES],CONVERT(NVARCHAR,[DEVMEMODATES],111) [DEVMEMODATES] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY [OWNER],[CLIENT],[PROD]                            ";
+        string cmdTxt = @" SELECT [SERNO],[CLIENT],[OWNER],[PROD],[MEMO],[DEVMEMO],[STATUS],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],CONVERT(NVARCHAR,[ONSALESDATES],111) ONSALESDATES,[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES ,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,CONVERT(NVARCHAR,[MEMODATES],111) [MEMODATES],CONVERT(NVARCHAR,[DEVMEMODATES],111) [DEVMEMODATES] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE STATUS=@STATUS ORDER BY [OWNER],[CLIENT],[PROD]                            ";
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -163,15 +184,16 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
             dt.Columns[9].Caption = "規格及屬性";
             dt.Columns[10].Caption = "產品效期";
             dt.Columns[11].Caption = "通路";
-            dt.Columns[12].Caption = "預估上市日期";
-            dt.Columns[13].Caption = "產品圖/樣袋完稿日期";
-            dt.Columns[14].Caption = "可行性評估申請日期";
-            dt.Columns[15].Caption = "成本試算申請日期";
-            dt.Columns[16].Caption = "報價日期";
-            dt.Columns[17].Caption = "營標送驗";
-            dt.Columns[18].Caption = "營標送驗申請日期";
-            dt.Columns[19].Caption = "業務更新日期";
-            dt.Columns[20].Caption = "研發更新日期";
+            dt.Columns[12].Caption = "預估上市說明";
+            dt.Columns[13].Caption = "預估上市日期";
+            dt.Columns[14].Caption = "產品圖/樣袋完稿備註";
+            dt.Columns[15].Caption = "可行性評估申請日期";
+            dt.Columns[16].Caption = "成本試算申請日期";
+            dt.Columns[17].Caption = "報價備註";
+            dt.Columns[18].Caption = "營標送驗";
+            dt.Columns[19].Caption = "營標送驗申請日期";
+            dt.Columns[20].Caption = "業務更新日期";
+            dt.Columns[21].Caption = "研發更新日期";
 
             e.Datasource = dt;
         }

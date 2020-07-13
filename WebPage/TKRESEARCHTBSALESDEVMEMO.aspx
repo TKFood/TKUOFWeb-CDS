@@ -104,10 +104,13 @@
                              <asp:BoundField HeaderText="通路" DataField="PLACES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
-                             <asp:BoundField HeaderText="預估上市日期" DataField="ONSALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                             <asp:BoundField HeaderText="預估上市說明" DataField="ONSALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
-                             <asp:BoundField HeaderText="產品圖/樣袋完稿日期" DataField="PRODESGIN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                               <asp:BoundField HeaderText="預估上市日期" DataField="ONSALESDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                            </asp:BoundField>
+                             <asp:BoundField HeaderText="產品圖/樣袋完稿備註" DataField="PRODESGIN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
                              <asp:BoundField HeaderText="可行性評估申請日期" DataField="ASSESSMENTDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
@@ -116,10 +119,10 @@
                              <asp:BoundField HeaderText="成本試算申請日期" DataField="COSTSDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
-                             <asp:BoundField HeaderText="報價日期" DataField="SALESPRICES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                             <asp:BoundField HeaderText="報價備註" DataField="SALESPRICES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
-                             <asp:BoundField HeaderText="營標送驗" DataField="TEST" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                             <asp:BoundField HeaderText="營標送驗備註" DataField="TEST" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
                              <asp:BoundField HeaderText="營標送驗申請日期" DataField="TESTDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >

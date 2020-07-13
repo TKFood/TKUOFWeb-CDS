@@ -11,6 +11,7 @@
         $("#<%= txtDate1.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
         $("#<%= txtDate2.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
         $("#<%= txtDate3.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
+        $("#<%= txtDate4.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
     });
 </script>
 
@@ -89,10 +90,18 @@
        </tr>
           <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label10" runat="server" Text="預估上市日期"></asp:Label>
+                <asp:Label ID="Label10" runat="server" Text="預估上市說明"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox8" runat="server"  Text="" Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>
+                  <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label20" runat="server" Text="預估上市日期"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="txtDate4" runat="server"  Text="" Width = "100%"></asp:TextBox>
             </td> 
        </tr>
              <tr>

@@ -138,7 +138,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO],[DEVMEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE [ID]=@ID ";
+        string cmdTxt = @" SELECT [ID],[SERNO],[STATUS],[CLIENT],[PROD],[PRICES],[PROMOTIONS],[SPEC],[VALID],[PLACES],[ONSALES],[ONSALESDATES],[PRODESGIN],CONVERT(NVARCHAR,[ASSESSMENTDATES],111) ASSESSMENTDATES,CONVERT(NVARCHAR,[COSTSDATES],111) COSTSDATES,[SALESPRICES],[TEST],CONVERT(NVARCHAR,[TESTDATES],111) TESTDATES,[OWNER],[MEMO],[DEVMEMO] FROM [TKRESEARCH].[dbo].[TBSALESDEVMEMO] WHERE [ID]=@ID ";
         m_db.AddParameter("@ID", ID);
 
         DataTable dt = new DataTable();
@@ -165,6 +165,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
             TextBox13.Text = dt.Rows[0]["OWNER"].ToString();
             TextBox14.Text = dt.Rows[0]["MEMO"].ToString();
             TextBox15.Text = dt.Rows[0]["DEVMEMO"].ToString();
+            txtDate4.Text = dt.Rows[0]["ONSALESDATES"].ToString();
 
         }
 
@@ -218,6 +219,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
         string VALID = TextBox6.Text.ToString().Trim();
         string PLACES = TextBox7.Text.ToString().Trim();
         string ONSALES = TextBox8.Text.ToString().Trim();
+        string ONSALESDATES = txtDate4.Text.ToString().Trim();
         string PRODESGIN = TextBox9.Text.ToString().Trim();
         string ASSESSMENTDATES = txtDate1.Text.ToString().Trim();
         string COSTSDATES = txtDate2.Text.ToString().Trim();
@@ -230,12 +232,12 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
 
         if (!string.IsNullOrEmpty(ID) && !string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(CLIENT) && !string.IsNullOrEmpty(PROD))
         {
-            UPDATETBSALESDEVMEMO(ID, STATUS, CLIENT, PROD, PRICES, PROMOTIONS, SPEC, VALID, PLACES, ONSALES, PRODESGIN, ASSESSMENTDATES, COSTSDATES, SALESPRICES, TEST, TESTDATES, OWNER, MEMO, DEVMEMO);
+            UPDATETBSALESDEVMEMO(ID, STATUS, CLIENT, PROD, PRICES, PROMOTIONS, SPEC, VALID, PLACES, ONSALES, ONSALESDATES, PRODESGIN, ASSESSMENTDATES, COSTSDATES, SALESPRICES, TEST, TESTDATES, OWNER, MEMO, DEVMEMO);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBSALESDEVMEMO(string ID,string STATUS,string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES,string OWNER, string MEMO, string DEVMEMO)
+    public void UPDATETBSALESDEVMEMO(string ID,string STATUS,string CLIENT, string PROD, string PRICES, string PROMOTIONS, string SPEC, string VALID, string PLACES, string ONSALES,string ONSALESDATES, string PRODESGIN, string ASSESSMENTDATES, string COSTSDATES, string SALESPRICES, string TEST, string TESTDATES,string OWNER, string MEMO, string DEVMEMO)
     {
         if (string.IsNullOrEmpty(ASSESSMENTDATES))
         {
@@ -249,11 +251,15 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
         {
             TESTDATES = "1911/1/1";
         }
+        if (string.IsNullOrEmpty(ONSALESDATES))
+        {
+            ONSALESDATES = "1911/1/1";
+        }
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  UPDATE [TKRESEARCH].[dbo].[TBSALESDEVMEMO] SET [STATUS]=@STATUS,[CLIENT]=@CLIENT,[PROD]=@PROD,[PRICES]=@PRICES,[PROMOTIONS]=@PROMOTIONS,[SPEC]=@SPEC,[VALID]=@VALID,[PLACES]=@PLACES,[ONSALES]=@ONSALES,[PRODESGIN]=@PRODESGIN,[ASSESSMENTDATES]=@ASSESSMENTDATES,[COSTSDATES]=@COSTSDATES,[SALESPRICES]=@SALESPRICES,[TEST]=@TEST,[TESTDATES]=@TESTDATES,[OWNER]=@OWNER,[MEMO]=@MEMO,[DEVMEMO]=@DEVMEMO WHERE[ID]=@ID
+        string cmdTxt = @"  UPDATE [TKRESEARCH].[dbo].[TBSALESDEVMEMO] SET [STATUS]=@STATUS,[CLIENT]=@CLIENT,[PROD]=@PROD,[PRICES]=@PRICES,[PROMOTIONS]=@PROMOTIONS,[SPEC]=@SPEC,[VALID]=@VALID,[PLACES]=@PLACES,[ONSALES]=@ONSALES,[ONSALESDATES]=@ONSALESDATES,[PRODESGIN]=@PRODESGIN,[ASSESSMENTDATES]=@ASSESSMENTDATES,[COSTSDATES]=@COSTSDATES,[SALESPRICES]=@SALESPRICES,[TEST]=@TEST,[TESTDATES]=@TESTDATES,[OWNER]=@OWNER,[MEMO]=@MEMO,[DEVMEMO]=@DEVMEMO WHERE[ID]=@ID
                             ";
 
 
@@ -267,6 +273,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
         m_db.AddParameter("@VALID", VALID);
         m_db.AddParameter("@PLACES", PLACES);
         m_db.AddParameter("@ONSALES", ONSALES);
+        m_db.AddParameter("@ONSALESDATES", ONSALESDATES);
         m_db.AddParameter("@PRODESGIN", PRODESGIN);
         m_db.AddParameter("@ASSESSMENTDATES", Convert.ToDateTime(ASSESSMENTDATES));
         m_db.AddParameter("@COSTSDATES", Convert.ToDateTime(COSTSDATES));
