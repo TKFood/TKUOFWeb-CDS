@@ -42,6 +42,11 @@
                                  <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                 </asp:BoundField>   
+                              <%--  <asp:TemplateField HeaderText="記錄" >
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Bind("NOTE_CONTENT") %>'></asp:Label>
+                                    </ItemTemplate>                                        
+                                 </asp:TemplateField>--%>
                                  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
                                 </asp:BoundField>   
