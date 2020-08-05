@@ -12,8 +12,11 @@
 
 </script>
 
-    <table class="PopTable" >         
-         <tr>            
+    <table class="PopTable" >  
+         <tr>   
+              <td class="PopTableLeftTD">
+                <asp:Label ID="Label2" runat="server" Text="查詢:" meta:resourcekey="Label4Resource1"></asp:Label>             
+            </td>
             <td class="PopTableRightTD">                   
                
                 <asp:Button ID="Button1" runat="server" Text=" 查詢 "
@@ -34,7 +37,10 @@
                                 </asp:BoundField>   
                                  <asp:BoundField HeaderText="交辨事項" DataField="SUBJECT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                </asp:BoundField>                                
+                                </asp:BoundField>   
+                                 <asp:BoundField HeaderText="回覆內容" DataField="DESCRIPTION" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                </asp:BoundField>   
                                  <asp:BoundField HeaderText="預計完成日" DataField="END_TIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField>   

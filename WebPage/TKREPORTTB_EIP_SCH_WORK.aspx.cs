@@ -49,15 +49,17 @@ public partial class CDS_WebPage_TKREPORTTB_EIP_SCH_WORK : Ede.Uof.Utility.Page.
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" SELECT 
-                            USER1.[NAME] AS 'NAME1',[TB_EIP_SCH_WORK].[SUBJECT],CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
-                            ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' ELSE '進行中' END AS 'STATUS'
-                            ,[TB_EIP_SCH_WORK].[WORK_STATE],[TB_EIP_SCH_WORK].[EXECUTE_USER],[TB_EIP_SCH_WORK].[SOURCE_USER]
-                            FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
-                            LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
-                            LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
-                            WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
-                            AND DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE())>=0
-                            ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
+                        USER1.[NAME] AS 'NAME1',[TB_EIP_SCH_WORK].[SUBJECT]
+                        ,(SELECT TOP 1 ISNULL([DESCRIPTION],'') FROM [UOF].[dbo].[TB_EIP_SCH_WORK_RECORD] WHERE [TB_EIP_SCH_WORK_RECORD].[WORK_GUID]=[TB_EIP_SCH_WORK].[WORK_GUID] ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
+                        ,CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
+                        ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' ELSE '進行中' END AS 'STATUS'
+                        ,[TB_EIP_SCH_WORK].[WORK_STATE],[TB_EIP_SCH_WORK].[EXECUTE_USER],[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
+                        AND DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE())>=0
+                        ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
 
                         ";
 
@@ -98,18 +100,19 @@ public partial class CDS_WebPage_TKREPORTTB_EIP_SCH_WORK : Ede.Uof.Utility.Page.
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" SELECT 
-                            USER1.[NAME] AS 'NAME1',[TB_EIP_SCH_WORK].[SUBJECT],CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
-                            ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' ELSE '進行中' END AS 'STATUS'
-                            ,[TB_EIP_SCH_WORK].[WORK_STATE],[TB_EIP_SCH_WORK].[EXECUTE_USER],[TB_EIP_SCH_WORK].[SOURCE_USER]
-                            FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
-                            LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
-                            LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
-                            WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
-                            AND DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE())>=0
-                            ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
+                        USER1.[NAME] AS 'NAME1',[TB_EIP_SCH_WORK].[SUBJECT]
+                        ,(SELECT TOP 1 ISNULL([DESCRIPTION],'') FROM [UOF].[dbo].[TB_EIP_SCH_WORK_RECORD] WHERE [TB_EIP_SCH_WORK_RECORD].[WORK_GUID]=[TB_EIP_SCH_WORK].[WORK_GUID] ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
+                        ,CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
+                        ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' ELSE '進行中' END AS 'STATUS'
+                        ,[TB_EIP_SCH_WORK].[WORK_STATE],[TB_EIP_SCH_WORK].[EXECUTE_USER],[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
+                        AND DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE())>=0
+                        ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
 
                         ";
-
 
 
 
@@ -121,10 +124,11 @@ public partial class CDS_WebPage_TKREPORTTB_EIP_SCH_WORK : Ede.Uof.Utility.Page.
         {
             dt.Columns[0].Caption = "被交辨人";
             dt.Columns[1].Caption = "交辨事項";
-            dt.Columns[2].Caption = "預計完成日";
-            dt.Columns[3].Caption = "延遲天數";
-            dt.Columns[4].Caption = "交辨人";
-            dt.Columns[5].Caption = "狀態";
+            dt.Columns[2].Caption = "回覆內容";
+            dt.Columns[3].Caption = "預計完成日";
+            dt.Columns[4].Caption = "延遲天數";
+            dt.Columns[5].Caption = "交辨人";
+            dt.Columns[6].Caption = "狀態";
 
 
             e.Datasource = dt;
