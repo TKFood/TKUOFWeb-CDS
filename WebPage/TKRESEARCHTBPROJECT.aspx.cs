@@ -82,7 +82,7 @@ public partial class CDS_WebPage_TKRESEARCHTBPROJECT : Ede.Uof.Utility.Page.Base
 
         this.Session["STATUS"] = STATUS;
 
-        string cmdTxt = @" SELECT  [ID],[SERNO],[PROJECTNO],[PROJECTNAME],[ONLINEFINISH],[PAPERFINISH],[MEMO],[STATUS] FROM [TKRESEARCH].[dbo].[TBPROJECT] WHERE STATUS=@STATUS ORDER BY STATUS,SERNO                             ";
+        string cmdTxt = @" SELECT  [ID],[SERNO],[PROJECTNO],[PROJECTNAME],[ONLINEFINISH],[PAPERFINISH],[MEMO],[PROJECTSTATUS] FROM [TKRESEARCH].[dbo].[TBPROJECT] WHERE PROJECTSTATUS=@STATUS ORDER BY PROJECTSTATUS,SERNO                             ";
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -126,7 +126,7 @@ public partial class CDS_WebPage_TKRESEARCHTBPROJECT : Ede.Uof.Utility.Page.Base
 
         string STATUS = DropDownList1.Text;
 
-        string cmdTxt = @" SELECT  [SERNO],[PROJECTNO],[PROJECTNAME],[ONLINEFINISH],[PAPERFINISH],[MEMO],[STATUS],[ID] FROM [TKRESEARCH].[dbo].[TBPROJECT] WHERE STATUS=@STATUS ORDER BY STATUS,SERNO                              ";
+        string cmdTxt = @" SELECT  [SERNO],[PROJECTNO],[PROJECTNAME],[ONLINEFINISH],[PAPERFINISH],[MEMO],[PROJECTSTATUS],[ID] FROM [TKRESEARCH].[dbo].[TBPROJECT] WHERE PROJECTSTATUS=@STATUS ORDER BY PROJECTSTATUS,SERNO                              ";
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -137,7 +137,13 @@ public partial class CDS_WebPage_TKRESEARCHTBPROJECT : Ede.Uof.Utility.Page.Base
         if (dt.Rows.Count>0)
         {
             dt.Columns[0].Caption = "編號";
-     
+            dt.Columns[1].Caption = "專案編號";
+            dt.Columns[2].Caption = "專案名稱";
+            dt.Columns[3].Caption = "線上校稿完成";
+            dt.Columns[4].Caption = "紙本簽核完成";
+            dt.Columns[5].Caption = "備註";
+            dt.Columns[6].Caption = "狀態";
+
 
             e.Datasource = dt;
         }

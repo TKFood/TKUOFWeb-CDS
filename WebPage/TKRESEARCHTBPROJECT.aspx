@@ -10,7 +10,7 @@
         //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
         //OpenDialogResult為關閉視後會執行的JS Function
         //參數使用JSON格式傳遞
-        $uof.dialog.open2("~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+        $uof.dialog.open2("~/CDS/WebPage/TKRESEARCHTBPROJECTDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
           return false;
 
@@ -72,7 +72,7 @@
                                   <asp:BoundField HeaderText="項目" DataField="SERNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                 </asp:BoundField> 
-                                   <asp:BoundField HeaderText="狀態" DataField="STATUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                   <asp:BoundField HeaderText="狀態" DataField="PROJECTSTATUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField> 
                                   <asp:BoundField HeaderText="專案編號" DataField="PROJECTNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
