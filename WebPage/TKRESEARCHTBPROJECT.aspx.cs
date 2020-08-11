@@ -107,16 +107,16 @@ public partial class CDS_WebPage_TKRESEARCHTBPROJECT : Ede.Uof.Utility.Page.Base
             Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBPROJECTDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    LinkButton lbtnName = (LinkButton)e.Row.FindControl("MEMO");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            LinkButton lbtnName = (LinkButton)e.Row.FindControl("MEMO");
 
-        //    ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+            ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBPROJECTDialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
     }
 
     public void OnBeforeExport(object sender,Ede.Uof.Utility.Component.BeforeExportEventArgs e)

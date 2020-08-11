@@ -96,6 +96,12 @@
                                     </ItemTemplate>
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:TemplateField> 
+                                 <asp:TemplateField HeaderText="更新備註" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="MEMO" runat="server" Text='<%# Bind("ID") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
+                                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                                </asp:TemplateField> 
                             </Columns>
                         </Fast:Grid>
                     </div>
