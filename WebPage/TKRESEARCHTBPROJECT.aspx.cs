@@ -27,7 +27,7 @@ public partial class CDS_WebPage_TKRESEARCHTBPROJECT : Ede.Uof.Utility.Page.Base
 
         if (!IsPostBack)
         {
-            BindGrid("進行中");
+            BindGrid("已完成");
         }
         else
         {
@@ -104,7 +104,7 @@ public partial class CDS_WebPage_TKRESEARCHTBPROJECT : Ede.Uof.Utility.Page.Base
             ExpandoObject param = new { ID = row["SERNO"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBPROJECTDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
         //if (e.Row.RowType == DataControlRowType.DataRow)
