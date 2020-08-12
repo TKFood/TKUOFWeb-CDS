@@ -79,7 +79,7 @@
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField> 
                                   <asp:BoundField HeaderText="專案名稱" DataField="PROJECTNAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                    <ItemStyle HorizontalAlign="Left" Width="400px"></ItemStyle>
                                 </asp:BoundField> 
                                   <asp:BoundField HeaderText="線上校稿完成" DataField="ONLINEFINISH" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
@@ -88,7 +88,7 @@
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField> 
                                   <asp:BoundField HeaderText="備註" DataField="MEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                 </asp:BoundField> 
                                   <asp:TemplateField HeaderText="維護專案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
                                     <ItemTemplate>
