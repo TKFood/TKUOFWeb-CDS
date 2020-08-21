@@ -107,7 +107,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTS : Ede.Uof.Utility.Page.BasePage
             ExpandoObject param = new { ID = row["NO"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBPROJECTDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKUOFTBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
     }
