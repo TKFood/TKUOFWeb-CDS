@@ -84,7 +84,8 @@ public partial class CDS_WebPage_TKUOFTBPROJECTS : Ede.Uof.Utility.Page.BasePage
 
         string cmdTxt = @" 
                         SELECT  [ID],[NO],[SUBJECT],[CREATE_NEME],[CREATE_DEP],CONVERT(NVARCHAR,[CREATE_TIME],111) [CREATE_TIME],[STATUS],[CONTENTS],CONVERT(NVARCHAR,[PUCLOSE_TIME],111) [PUCLOSE_TIME],[HADNUMS],[HADCONTENTS],[NOWNUMS],[TOTALNUMS],[CLOSE_CONTENTS],CONVERT(NVARCHAR,[CLOSE_TIME],111) [CLOSE_TIME]
-                        FROM [TKUOF].[dbo].[TBPROJECTS]
+                        FROM [TKQC].[dbo].[TBPROJECTS]
+                        ORDER BY [NO]
                         ";
 
         m_db.AddParameter("@STATUS", STATUS);
@@ -121,7 +122,8 @@ public partial class CDS_WebPage_TKUOFTBPROJECTS : Ede.Uof.Utility.Page.BasePage
 
         string cmdTxt = @" 
                         SELECT  [ID],[NO],[SUBJECT],[CREATE_NEME],[CREATE_DEP],CONVERT(NVARCHAR,[CREATE_TIME],111) [CREATE_TIME],[STATUS],[CONTENTS],CONVERT(NVARCHAR,[PUCLOSE_TIME],111) [PUCLOSE_TIME],[HADNUMS],[HADCONTENTS],[NOWNUMS],[TOTALNUMS],[CLOSE_CONTENTS],CONVERT(NVARCHAR,[CLOSE_TIME],111) [CLOSE_TIME]
-                        FROM [TKUOF].[dbo].[TBPROJECTS]
+                        FROM [TKQC].[dbo].[TBPROJECTS]
+                        ORDER BY [NO]
                         ";
 
         m_db.AddParameter("@STATUS", STATUS);

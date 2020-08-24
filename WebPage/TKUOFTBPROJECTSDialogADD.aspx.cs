@@ -125,7 +125,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogADD : Ede.Uof.Utility.Page
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        INSERT INTO [TKUOF].[dbo].[TBPROJECTS]
+                        INSERT INTO [TKQC].[dbo].[TBPROJECTS]
                         ([ID],[NO],[SUBJECT],[CREATE_NEME],[CREATE_DEP],[CREATE_TIME],[STATUS],[CONTENTS],[PUCLOSE_TIME],[HADNUMS],[HADCONTENTS],[NOWNUMS],[TOTALNUMS],[CLOSE_CONTENTS],[CLOSE_TIME])
                         VALUES
                         (@ID,@NO,@SUBJECT,@CREATE_NEME,@CREATE_DEP,@CREATE_TIME,@STATUS,@CONTENTS,@PUCLOSE_TIME,@HADNUMS,@HADCONTENTS,@NOWNUMS,@TOTALNUMS,@CLOSE_CONTENTS,@CLOSE_TIME)

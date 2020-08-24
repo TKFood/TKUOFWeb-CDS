@@ -33,9 +33,13 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
 
             BindDropDownList();
 
+            BindGrid(lblParam.Text);
+
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
                 SEARCHTBPROJECTS(lblParam.Text);
+
+                BindGrid(lblParam.Text);
             }
 
         }
@@ -108,7 +112,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
 
         string cmdTxt = @" 
                         SELECT  [ID],[NO],[SUBJECT],[CREATE_NEME],[CREATE_DEP],CONVERT(NVARCHAR,[CREATE_TIME],111) [CREATE_TIME],[STATUS],[CONTENTS],CONVERT(NVARCHAR,[PUCLOSE_TIME],111) [PUCLOSE_TIME],[HADNUMS],[HADCONTENTS],[NOWNUMS],[TOTALNUMS],[CLOSE_CONTENTS],CONVERT(NVARCHAR,[CLOSE_TIME],111) [CLOSE_TIME]
-                        FROM [TKUOF].[dbo].[TBPROJECTS]
+                        FROM [TKQC].[dbo].[TBPROJECTS]
                         WHERE [NO]=@NO
                         ";
         m_db.AddParameter("@NO", NO);
@@ -188,7 +192,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        UPDATE [TKUOF].[dbo].[TBPROJECTS]
+                        UPDATE [TKQC].[dbo].[TBPROJECTS]
                         SET [SUBJECT]=@SUBJECT,[CREATE_NEME]=@CREATE_NEME,[CREATE_DEP]=@CREATE_DEP,[CREATE_TIME]=@CREATE_TIME,[STATUS]=@STATUS,[CONTENTS]=@CONTENTS,[PUCLOSE_TIME]=@PUCLOSE_TIME,[HADNUMS]=@HADNUMS,[HADCONTENTS]=@HADCONTENTS,[NOWNUMS]=@NOWNUMS,[TOTALNUMS]=@TOTALNUMS,[CLOSE_CONTENTS]=@CLOSE_CONTENTS,[CLOSE_TIME]=@CLOSE_TIME
                         WHERE [NO]=@NO
                             ";
@@ -216,6 +220,41 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
 
     }
 
+    private void BindGrid(string NO)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT [ID],[NO],[FORMNO],[SUBJECT]
+                        FROM [TKQC].[dbo].[TBFORMQC]
+                        WHERE [NO]=@NO
+                        ";
+
+        m_db.AddParameter("@NO", NO);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        
+
+    }
+
+    public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        
+    }
+
+    #endregion
+
+    #region BUTTON
     protected void btn1_Click(object sender, EventArgs e)
     {
         DELTBPROJECTS(lblParam.Text);
@@ -226,7 +265,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  DELETE [TKUOF].[dbo].[TBPROJECTS]  WHERE[NO]=@NO
+        string cmdTxt = @"  DELETE [TKQC].[dbo].[TBPROJECTS]  WHERE[NO]=@NO
                             ";
 
         m_db.AddParameter("@NO", NO);
