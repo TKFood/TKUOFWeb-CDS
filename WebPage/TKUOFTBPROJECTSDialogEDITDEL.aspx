@@ -149,13 +149,13 @@
                             <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
                             <Columns>
                                
-                                <asp:BoundField HeaderText="專案編號" DataField="NO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <asp:BoundField HeaderText="專案編號" DataField="QCFrm002PN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField> 
-                                 <asp:BoundField HeaderText="表單編號" DataField="FORMNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                 <asp:BoundField HeaderText="表單編號" DataField="QCFrm002SN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField> 
-                                 <asp:BoundField HeaderText="表單主旨" DataField="SUBJECT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                 <asp:BoundField HeaderText="表單主旨" DataField="QCFrm002QCC" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
                                 </asp:BoundField> 
                            

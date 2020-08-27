@@ -226,9 +226,10 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        SELECT [ID],[NO],[FORMNO],[SUBJECT]
+                        SELECT [ID],[TaskId],[QCFrm002SN],[QCFrm002QCC],[QCFrm002PN]
                         FROM [TKQC].[dbo].[TBFORMQC]
-                        WHERE [NO]=@NO
+                        WHERE [QCFrm002PN]=@NO
+                        ORDER BY [QCFrm002SN]
                         ";
 
         m_db.AddParameter("@NO", NO);
