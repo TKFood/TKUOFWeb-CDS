@@ -229,7 +229,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
                         SELECT [ID],[TaskId],[QCFrm002SN],[QCFrm002QCC],[QCFrm002PN]
                         FROM [TKQC].[dbo].[TBFORMQC]
                         WHERE [QCFrm002PN]=@NO
-                        ORDER BY [QCFrm002SN]
+                        ORDER BY [QCFrm002SN],[QCFrm002QCC]
                         ";
 
         m_db.AddParameter("@NO", NO);
