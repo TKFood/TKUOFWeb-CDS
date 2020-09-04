@@ -143,7 +143,7 @@
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField> 
                                 <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                    <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
                                 </asp:BoundField> 
                                
                              

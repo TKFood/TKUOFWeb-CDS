@@ -39,8 +39,8 @@ public partial class CDS_WebPage_TKSALESCLIENT : Ede.Uof.Utility.Page.BasePage
         else
         {
             BindGrid(txtDate1.Text, txtDate2.Text);
-            BindGrid2(DateTime.Now.AddDays(-DateTime.Now.Day + 1).ToString("yyyy/MM/dd"), DateTime.Now.AddMonths(1).AddDays(-DateTime.Now.AddMonths(1).Day).ToString("yyyy/MM/dd"));
-            BindGrid3(DateTime.Now.AddDays(-DateTime.Now.Day + 1).ToString("yyyy/MM/dd"), DateTime.Now.AddMonths(1).AddDays(-DateTime.Now.AddMonths(1).Day).ToString("yyyy/MM/dd"));
+            BindGrid2(txtDate1.Text, txtDate2.Text);
+            BindGrid3(txtDate1.Text, txtDate2.Text);
 
         }
 
