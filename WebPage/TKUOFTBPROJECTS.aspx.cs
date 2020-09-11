@@ -111,6 +111,16 @@ public partial class CDS_WebPage_TKUOFTBPROJECTS : Ede.Uof.Utility.Page.BasePage
             Dialog.Open2(lbtnName, "~/CDS/WebPage/TKUOFTBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            LinkButton MEMO = (LinkButton)e.Row.FindControl("MEMO");
+
+            ExpandoObject param = new { ID = row["NO"].ToString() }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(MEMO, "~/CDS/WebPage/TKUOFTBPROJECTSMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
     }
 
     public void OnBeforeExport(object sender,Ede.Uof.Utility.Component.BeforeExportEventArgs e)

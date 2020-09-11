@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.ServiceModel.Activation;
 using System.Web;
@@ -244,7 +245,19 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
 
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+            ExpandoObject param = new { ID = row["QCFrm002SN"].ToString() }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+
+            Dialog.Open2(lbtnName, "~/WKF/FormUse/PersonalBox/MyFormList.aspx?item=SignSelf&formNumber=BPM200400033&taskId=92db6bed-c946-42ed-ab4d-a415e5577b22", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            //Dialog.Open2(lbtnName, "~/WKF/FormUse/ViewForm.aspx?TASK_ID=92db6bed-c946-42ed-ab4d-a415e5577b22", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+        }
 
     }
 
@@ -277,6 +290,8 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
+
+
     #endregion
 
 

@@ -143,7 +143,7 @@
          <tr >
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid1"  runat="server" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
+                    <Fast:Grid ID="Grid1" runat="server"  OnRowDataBound="Grid1_RowDataBound" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
                         <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
                             <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
@@ -158,7 +158,12 @@
                                  <asp:BoundField HeaderText="表單主旨" DataField="QCFrm002QCC" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
                                 </asp:BoundField> 
-                           
+                                <asp:TemplateField HeaderText="更新備註" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lbtnName" runat="server" Text='<%# Bind("QCFrm002SN") %>' meta:resourcekey="lbtnNameResource1"></asp:LinkButton>
+                                    </ItemTemplate>
+                                    <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                                </asp:TemplateField> 
                             </Columns>
                         </Fast:Grid>
                     </div>
