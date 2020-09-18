@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Dynamic;
 using System.Linq;
 using System.ServiceModel.Activation;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -250,15 +251,79 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
             DataRowView row = (DataRowView)e.Row.DataItem;
             LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
 
-            ExpandoObject param = new { ID = row["QCFrm002SN"].ToString() }.ToExpando();
+            //ExpandoObject param = new { ID = row["QCFrm002SN"].ToString() }.ToExpando();
+            ////Grid開窗是用RowDataBound事件再開窗
 
-            //Grid開窗是用RowDataBound事件再開窗
+            //Dialog.Open2(lbtnName, "~/WKF/FormUse/PersonalBox/MyFormList.aspx?item=SignSelf&formNumber=BPM200400033&taskId=92db6bed-c946-42ed-ab4d-a415e5577b22", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            ////Dialog.Open2(lbtnName, "~/WKF/FormUse/ViewForm.aspx?TASK_ID=92db6bed-c946-42ed-ab4d-a415e5577b22", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
-            Dialog.Open2(lbtnName, "~/WKF/FormUse/PersonalBox/MyFormList.aspx?item=SignSelf&formNumber=BPM200400033&taskId=92db6bed-c946-42ed-ab4d-a415e5577b22", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-            //Dialog.Open2(lbtnName, "~/WKF/FormUse/ViewForm.aspx?TASK_ID=92db6bed-c946-42ed-ab4d-a415e5577b22", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            string Taskid = FindTaskid(row["QCFrm002SN"].ToString());
+            //string Taskid = "bf878ff0-357f-4817-9f2b-9c7671bfe076";
+
+            //有判斷權限
+            //ExpandoObject param = new { TASKID = Taskid }.ToExpando();
+
+            //Dialog.Open2(lbtnName, "~/WKF/FormUse/Sign_View.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+
+            //無判斷權限(直接觀看表單)
+            ExpandoObject param = new { TASK_ID = Taskid }.ToExpando();
+
+            Dialog.Open2(lbtnName, "~/WKF/FormUse/ViewForm.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
 
         }
 
+    }
+
+    public string FindTaskid(string QCFrm002SN)
+    {
+        SqlConnection sqlConn = new SqlConnection();
+        SqlCommand sqlComm = new SqlCommand();
+        string connectionString;
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
+        StringBuilder sbSql = new StringBuilder();
+
+        try
+        {
+            connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+            sqlConn = new SqlConnection(connectionString);
+
+            sbSql.Clear();
+
+            sbSql.AppendFormat(@"  SELECT TOP 1 [TaskId] FROM [TKQC].[dbo].[TBFORMQC] WHERE [QCFrm002SN]='{0}'
+                                   
+                                    ", QCFrm002SN);
+
+            adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+            sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+            sqlConn.Open();
+            ds1.Clear();
+            adapter1.Fill(ds1, "TEMPds1");
+            sqlConn.Close();
+
+
+            if (ds1.Tables["TEMPds1"].Rows.Count >= 1)
+            {
+                return ds1.Tables["TEMPds1"].Rows[0]["TaskId"].ToString();
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+        catch
+        {
+            return "";
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
     }
 
     public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)

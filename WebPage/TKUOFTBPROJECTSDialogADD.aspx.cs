@@ -93,7 +93,8 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogADD : Ede.Uof.Utility.Page
     {
         Guid ID = Guid.NewGuid();
         //string SERNO = "";
-        string NO = TextBox1.Text.Trim();
+        //string NO = TextBox1.Text.Trim();
+        string NO = GETMAXMO();
         string SUBJECT = TextBox2.Text.Trim();
         string CREATE_NEME = TextBox3.Text.Trim();
         string CREATE_DEP = TextBox4.Text.Trim();
@@ -150,7 +151,88 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogADD : Ede.Uof.Utility.Page
         m_db.ExecuteNonQuery(cmdTxt);
 
     }
-    #endregion
+
+    public string GETMAXMO()
+    {
+        SqlConnection sqlConn = new SqlConnection();
+        SqlCommand sqlComm = new SqlCommand();
+        string connectionString;
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
+        StringBuilder sbSql = new StringBuilder();
+
+        string MAXNO;
+
+        try
+        {
+            connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+            sqlConn = new SqlConnection(connectionString);
+
+           
+            sbSql.Clear();
+
+            ds1.Clear();
+
+            sbSql.AppendFormat(@"  
+                                SELECT ISNULL(MAX([NO]),'0000000000') AS NO
+                                FROM [TKQC].[dbo].[TBPROJECTS]
+                                WHERE [NO] LIKE '%{0}%'
+                                ",DateTime.Now.ToString("yyyyMM"));
+
+            adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+            sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+            sqlConn.Open();
+            ds1.Clear();
+            adapter1.Fill(ds1, "ds1");
+            sqlConn.Close();
 
 
-}
+            if (ds1.Tables["ds1"].Rows.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                if (ds1.Tables["ds1"].Rows.Count >= 1)
+                {
+                    MAXNO = SETMAXNO(ds1.Tables["ds1"].Rows[0]["NO"].ToString());
+                    return MAXNO;
+
+                }
+                return null;
+            }
+
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+    }
+
+    public string SETMAXNO(string MAXNO)
+    {
+        if (MAXNO.Equals("0000000000"))
+        {
+            return DateTime.Now.ToString("yyyyMM") + "0001";
+        }
+
+        else
+        {
+            int serno = Convert.ToInt16(MAXNO.Substring(6, 4));
+            serno = serno + 1;
+            string temp = serno.ToString();
+            temp = temp.PadLeft(4, '0');
+            return DateTime.Now.ToString("yyyyMM") + temp.ToString();
+        }
+    }
+
+        #endregion
+
+
+    }

@@ -36,7 +36,7 @@
                 <asp:Label ID="Label2" runat="server" Text="專案編號"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox1" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" ReadOnly="true"  Text="自動編號" Width = "100%"></asp:TextBox>
             </td> 
        </tr>
         <tr>
