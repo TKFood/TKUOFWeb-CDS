@@ -269,7 +269,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
             //無判斷權限(直接觀看表單)
             ExpandoObject param = new { TASK_ID = Taskid }.ToExpando();
 
-            Dialog.Open2(lbtnName, "~/WKF/FormUse/ViewForm.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/WKF/FormUse/ViewForm.aspx", "", 1000, 800, Dialog.PostBackType.AfterReturn, param);
 
 
         }

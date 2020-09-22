@@ -348,6 +348,23 @@ public partial class CDS_WebPage_TKSALESCLIENT : Ede.Uof.Utility.Page.BasePage
         }
     }
 
+    protected void grid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid1.PageIndex = e.NewPageIndex;
+        BindGrid(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+
+    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid2.PageIndex = e.NewPageIndex;
+        BindGrid2(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+
+    protected void grid3_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid3.PageIndex = e.NewPageIndex;
+        BindGrid3(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
     #endregion
 
     #region BUTTON

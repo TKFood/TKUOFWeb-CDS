@@ -31,14 +31,14 @@
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
-	<Tabs>
-		<telerik:RadTab Text="業務行事歷">
-		</telerik:RadTab>
-		<telerik:RadTab Text="業務客戶明細記錄">
-		</telerik:RadTab>
-		<telerik:RadTab Text="業務比對分析">
-		</telerik:RadTab>
-	</Tabs>
+	    <Tabs>
+		    <telerik:RadTab Text="業務行事歷">
+		    </telerik:RadTab>
+		    <telerik:RadTab Text="業務客戶明細記錄">
+		    </telerik:RadTab>
+		    <telerik:RadTab Text="業務比對分析">
+		    </telerik:RadTab>
+	    </Tabs>
     </telerik:RadTabStrip>
     <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
 	    <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
