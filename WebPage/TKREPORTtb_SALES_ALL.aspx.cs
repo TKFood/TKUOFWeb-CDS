@@ -109,20 +109,34 @@ public partial class CDS_WebPage_TKREPORTtb_SALES_ALL : Ede.Uof.Utility.Page.Bas
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"
-                        SELECT [USER_GUID],[USER_ID],[ACCOUNT],[NAME],START_TIME,SUBJECT,DESCRIPTION,[tb_COMPANY].COMPANY_ID,[tb_COMPANY].COMPANY_NAME,[tb_NOTE].[NOTE_CONTENT]
+                     SELECT CONVERT(NVARCHAR,DATES,111) DATES,[USER_GUID],[USER_ID],[ACCOUNT],[NAME],START_TIME,SUBJECT,DESCRIPTION,[COMPANY_NAME] ,[NOTE_CONTENT]
                         FROM (
+                        SELECT  DATEADD(d,rows-1,@SDATE) DATES from (
+                        SELECT 
+                        ID,row_number()over(ORDER BY id) rows  
+                        FROM  
+                        sysobjects
+                        )TEMP 
+                        WHERE  
+                        TEMP.rows <= DATEDIFF(d,@SDATE, @EDATE) + 1
+                        ) AS TEMP2
+                        LEFT JOIN
+                        (
                         SELECT [TB_EB_USER].[USER_GUID],[tb_USER].[USER_ID],[ACCOUNT],[NAME],CONVERT(NVARCHAR,[START_TIME],111) AS START_TIME,SUBJECT,DESCRIPTION
                         FROM [UOF].[dbo].[TB_EB_USER],[UOF].dbo.[TB_EIP_SCH_WORK],[HJ_BM_DB].[dbo].[tb_USER]
                         WHERE [TB_EB_USER].[USER_GUID]=[TB_EIP_SCH_WORK].EXECUTE_USER
                         AND [tb_USER].[USER_GUID]=[TB_EB_USER].[USER_GUID]
                         AND [SOURCE_TYPE]='Self'
                         AND [NAME] IN ('洪櫻芬','王琇平','葉枋俐','何姍怡','林琪琪','林杏育','張釋予','蔡顏鴻','陳帟靜','黃鈺涵')
-                        AND CONVERT(NVARCHAR,[START_TIME],111)>=@SDATE AND CONVERT(NVARCHAR,[START_TIME],111)<=@EDATE
-                        ) AS TEMP
-                        LEFT JOIN [HJ_BM_DB].[dbo].[tb_COMPANY]  ON [OWNER_ID]=[USER_ID]
-                        LEFT JOIN [HJ_BM_DB].[dbo].[tb_NOTE] ON [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID AND  CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)=START_TIME 
-                        WHERE ISNULL([NOTE_CONTENT],'')<>''
-                        ORDER BY [NAME],CONVERT(NVARCHAR,[START_TIME],112)
+                        ) AS TEMP3 ON TEMP3.START_TIME=CONVERT(NVARCHAR,DATES,111)
+                        LEFT JOIN
+                        (
+                        SELECT [OWNER_ID],[COMPANY_NAME] ,[NOTE_CONTENT],CONVERT(NVARCHAR,[tb_NOTE].[CREATE_DATETIME],111) CREATE_DATETIME
+                        FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY]
+                        WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                        ) AS TEMP4 ON TEMP4.OWNER_ID=TEMP3.USER_ID AND TEMP4.CREATE_DATETIME=CONVERT(NVARCHAR,DATES,111)
+                        WHERE ISNULL([NAME],'')<>''
+                        ORDER BY [NAME],CONVERT(NVARCHAR,DATES,111)
 
                         ";
 
