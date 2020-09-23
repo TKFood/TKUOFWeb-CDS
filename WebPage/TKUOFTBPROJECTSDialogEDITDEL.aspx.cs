@@ -244,6 +244,12 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         Grid1.DataBind();
     }
 
+    protected void grid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid1.PageIndex = e.NewPageIndex;
+        BindGrid(lblParam.Text);
+    }
+
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
