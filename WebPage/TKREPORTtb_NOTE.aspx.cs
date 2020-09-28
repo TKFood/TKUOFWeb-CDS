@@ -51,7 +51,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME]
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%Jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%JPG%' OR [tb_NOTE].[FILE_NAME] LIKE '%jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%png%' OR [tb_NOTE].[FILE_NAME] LIKE '%PNG%' OR [tb_NOTE].[FILE_NAME] LIKE '%Pmg%') THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
@@ -78,16 +78,30 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-    //    if (e.Row.RowType == DataControlRowType.DataRow)
-    //    {
-    //        DataRowView row = (DataRowView)e.Row.DataItem;
-    //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+        string PATH = "https://eip.tkfood.com.tw/BM/upload/note/";
+        Image img = (Image)e.Row.FindControl("Image1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Image img1 = (Image)e.Row.FindControl("Image1");
 
-    //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+            if(!string.IsNullOrEmpty(row["FILE_NAME"].ToString()))
+            {
+                img.ImageUrl = PATH + row["FILE_NAME"].ToString();
+                //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
+            }
+          
+        }
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
 
-    //        //Grid開窗是用RowDataBound事件再開窗
-    //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-    //    }
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
 
 
     }

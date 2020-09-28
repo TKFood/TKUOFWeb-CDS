@@ -52,7 +52,14 @@
                                 </asp:BoundField>   
                                  <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>   
+                                </asp:BoundField> 
+                               
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px"/>
+                                    </ItemTemplate >
+                                </asp:TemplateField>
+                                
                             </Columns>
                         </Fast:Grid>
                     </div>
