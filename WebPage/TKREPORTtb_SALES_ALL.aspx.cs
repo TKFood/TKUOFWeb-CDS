@@ -108,40 +108,51 @@ public partial class CDS_WebPage_TKREPORTtb_SALES_ALL : Ede.Uof.Utility.Page.Bas
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"
-                        SELECT CONVERT(NVARCHAR,DATES,111) DATES,[TB_EB_USER].[USER_GUID],[TB_EB_USER].[ACCOUNT],[TB_EB_USER].[NAME],[tb_USER].USER_ID,START_TIME,[SUBJECT],[DESCRIPTION],TEMP4.[CREATE_DATETIME],[COMPANY_NAME] ,[NOTE_CONTENT]
-                        FROM (
-                        SELECT  DATEADD(d,rows-1,@SDATE) DATES from
-                        (
-                        SELECT 
-                        ID,row_number()over(ORDER BY id) rows  
-                        FROM  
-                        sysobjects
-                        )TEMP 
-                        WHERE  
-                        TEMP.rows <= DATEDIFF(d,@SDATE, @EDATE) + 1
-                        ) AS TEMP2
-                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] ON  [TB_EB_USER].[NAME] IN ('洪櫻芬','王琇平','葉枋俐','何姍怡','林琪琪','林杏育','張釋予','蔡顏鴻','陳帟靜','黃鈺涵')
-                        LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [tb_USER].USER_GUID=[TB_EB_USER].USER_GUID
-                        LEFT JOIN
-                        (
-                        SELECT [EXECUTE_USER],CONVERT(NVARCHAR,[START_TIME],111) AS START_TIME,[SUBJECT],[DESCRIPTION]
-                        FROM [UOF].dbo.[TB_EIP_SCH_WORK]
-                        WHERE [SOURCE_TYPE]='Self'
-                        ) AS TEMP3 ON TEMP3.[EXECUTE_USER]=[TB_EB_USER].USER_GUID AND START_TIME=CONVERT(NVARCHAR,DATES,111)
-                        LEFT JOIN
-                        (
-                        SELECT [OWNER_ID],[COMPANY_NAME] ,[NOTE_CONTENT],CONVERT(NVARCHAR,[tb_NOTE].[CREATE_DATETIME],111) CREATE_DATETIME
-                        FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY]
-                        WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
-                        ) AS TEMP4 ON TEMP4.OWNER_ID=USER_ID AND TEMP4.CREATE_DATETIME=CONVERT(NVARCHAR,DATES,111)
-                        WHERE (ISNULL([SUBJECT],'')<>'' OR ISNULL([NOTE_CONTENT],'')<>'')
-                        ORDER BY [NAME],CONVERT(NVARCHAR,DATES,111)
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,[NOTE_CONTENT] ,CONVERT(NVARCHAR,[tb_NOTE].[CREATE_DATETIME],111) AS [CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%Jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%JPG%' OR [tb_NOTE].[FILE_NAME] LIKE '%jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%png%' OR [tb_NOTE].[FILE_NAME] LIKE '%PNG%' OR [tb_NOTE].[FILE_NAME] LIKE '%Pmg%') THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
+                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                           WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                           AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                           ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
 
                         ";
 
         m_db.AddParameter("@SDATE", SDATE);
         m_db.AddParameter("@EDATE", EDATE);
+
+        //string cmdTxt = @"
+        //                SELECT CONVERT(NVARCHAR,DATES,111) DATES,[TB_EB_USER].[USER_GUID],[TB_EB_USER].[ACCOUNT],[TB_EB_USER].[NAME],[tb_USER].USER_ID,START_TIME,[SUBJECT],[DESCRIPTION],TEMP4.[CREATE_DATETIME],[COMPANY_NAME] ,[NOTE_CONTENT]
+        //                FROM (
+        //                SELECT  DATEADD(d,rows-1,@SDATE) DATES from
+        //                (
+        //                SELECT 
+        //                ID,row_number()over(ORDER BY id) rows  
+        //                FROM  
+        //                sysobjects
+        //                )TEMP 
+        //                WHERE  
+        //                TEMP.rows <= DATEDIFF(d,@SDATE, @EDATE) + 1
+        //                ) AS TEMP2
+        //                LEFT JOIN [UOF].[dbo].[TB_EB_USER] ON  [TB_EB_USER].[NAME] IN ('洪櫻芬','王琇平','葉枋俐','何姍怡','林琪琪','林杏育','張釋予','蔡顏鴻','陳帟靜','黃鈺涵')
+        //                LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [tb_USER].USER_GUID=[TB_EB_USER].USER_GUID
+        //                LEFT JOIN
+        //                (
+        //                SELECT [EXECUTE_USER],CONVERT(NVARCHAR,[START_TIME],111) AS START_TIME,[SUBJECT],[DESCRIPTION]
+        //                FROM [UOF].dbo.[TB_EIP_SCH_WORK]
+        //                WHERE [SOURCE_TYPE]='Self'
+        //                ) AS TEMP3 ON TEMP3.[EXECUTE_USER]=[TB_EB_USER].USER_GUID AND START_TIME=CONVERT(NVARCHAR,DATES,111)
+        //                LEFT JOIN
+        //                (
+        //                SELECT [OWNER_ID],[COMPANY_NAME] ,[NOTE_CONTENT],CONVERT(NVARCHAR,[tb_NOTE].[CREATE_DATETIME],111) CREATE_DATETIME
+        //                FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY]
+        //                WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+        //                ) AS TEMP4 ON TEMP4.OWNER_ID=USER_ID AND TEMP4.CREATE_DATETIME=CONVERT(NVARCHAR,DATES,111)
+        //                WHERE (ISNULL([SUBJECT],'')<>'' OR ISNULL([NOTE_CONTENT],'')<>'')
+        //                ORDER BY [NAME],CONVERT(NVARCHAR,DATES,111)
+
+        //                ";
+
+
 
         DataTable dt = new DataTable();
 
