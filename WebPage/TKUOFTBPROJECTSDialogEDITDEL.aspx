@@ -118,7 +118,7 @@
                 <asp:Label ID="Label14" runat="server" Text="累計案件數"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox9" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                <asp:TextBox ID="TextBox9" runat="server"  Text="" Width = "100%" ReadOnly="true" Enabled="false" ></asp:TextBox>
             </td> 
        </tr> 
         <tr>

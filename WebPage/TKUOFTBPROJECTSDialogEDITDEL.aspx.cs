@@ -45,7 +45,10 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
             }
 
         }
-        
+
+        TextBox9.Text = FindTBFORMQCNUMS(lblParam.Text.Trim());
+
+
     }
 
 
@@ -331,6 +334,57 @@ public partial class CDS_WebPage_TKUOFTBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
             sqlConn.Close();
         }
     }
+
+    public string FindTBFORMQCNUMS(string QCFrm002PN)
+    {
+        SqlConnection sqlConn = new SqlConnection();
+        SqlCommand sqlComm = new SqlCommand();
+        string connectionString;
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
+        StringBuilder sbSql = new StringBuilder();
+
+        try
+        {
+            connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+            sqlConn = new SqlConnection(connectionString);
+
+            sbSql.Clear();
+
+            sbSql.AppendFormat(@"  SELECT COUNT(ID) AS NUMS   FROM [TKQC].[dbo].[TBFORMQC]   WHERE [QCFrm002PN]='{0}'
+                                   
+                                    ", QCFrm002PN);
+
+            adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+
+            sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+            sqlConn.Open();
+            ds1.Clear();
+            adapter1.Fill(ds1, "TEMPds1");
+            sqlConn.Close();
+
+
+            if (ds1.Tables["TEMPds1"].Rows.Count >= 1)
+            {
+                return ds1.Tables["TEMPds1"].Rows[0]["NUMS"].ToString();
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+        catch
+        {
+            return "";
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
+    }
+
 
     public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
