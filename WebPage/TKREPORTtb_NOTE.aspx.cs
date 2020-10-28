@@ -5,7 +5,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Dynamic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Security.AntiXss;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Ede.Uof.Utility.Data;
@@ -30,6 +32,8 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         if (!IsPostBack)
         {
             BindGrid(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid2(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid3(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
 
             txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
             txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
@@ -38,6 +42,8 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         else
         {
             BindGrid(txtDate1.Text, txtDate2.Text);
+            BindGrid2(txtDate1.Text, txtDate2.Text);
+            BindGrid3(txtDate1.Text, txtDate2.Text);
         }
 
 
@@ -51,11 +57,12 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,[NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%Jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%JPG%' OR [tb_NOTE].[FILE_NAME] LIKE '%jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%png%' OR [tb_NOTE].[FILE_NAME] LIKE '%PNG%' OR [tb_NOTE].[FILE_NAME] LIKE '%Pmg%') THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%Jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%JPG%' OR [tb_NOTE].[FILE_NAME] LIKE '%jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%png%' OR [tb_NOTE].[FILE_NAME] LIKE '%PNG%' OR [tb_NOTE].[FILE_NAME] LIKE '%Pmg%') THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                           AND NOTE_CONTENT LIKE '%主管決議%' AND  NOTE_CONTENT LIKE '%是%'
                            ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
 
                         ";
@@ -88,10 +95,134 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             if(!string.IsNullOrEmpty(row["FILE_NAME"].ToString()))
             {
                 img.ImageUrl = PATH + row["FILE_NAME"].ToString();
+
+                //獲取當前行的圖片路徑
+                string ImgUrl = img.ImageUrl;
+                //給帶圖片的單元格添加點擊事件
+                e.Row.Cells[3].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
+                    + ".checked=true;CellClick('" + ImgUrl + "')");
+
                 //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
             }
+
           
         }
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
+
+
+    }
+
+    private void BindGrid2(string SDATE, string EDATE)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%Jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%JPG%' OR [tb_NOTE].[FILE_NAME] LIKE '%jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%png%' OR [tb_NOTE].[FILE_NAME] LIKE '%PNG%' OR [tb_NOTE].[FILE_NAME] LIKE '%Pmg%') THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
+                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                           WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                           AND NOTE_ID NOT IN (select NOTE_ID from [HJ_BM_DB].dbo.tb_NOTE  WHERE NOTE_CONTENT like '%'+char(10)+'%' AND NOTE_CONTENT LIKE '%主管決議%' AND  NOTE_CONTENT LIKE '%是%')
+                           AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                           ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
+
+                        ";
+
+        m_db.AddParameter("@SDATE", SDATE);
+        m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid2.PageIndex = e.NewPageIndex;
+        BindGrid(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        string PATH = "https://eip.tkfood.com.tw/BM/upload/note/";
+        Image img = (Image)e.Row.FindControl("Image1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Image img1 = (Image)e.Row.FindControl("Image1");
+
+            if (!string.IsNullOrEmpty(row["FILE_NAME"].ToString()))
+            {
+                img.ImageUrl = PATH + row["FILE_NAME"].ToString();
+
+                //獲取當前行的圖片路徑
+                string ImgUrl = img.ImageUrl;
+                //給帶圖片的單元格添加點擊事件
+                e.Row.Cells[3].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
+                    + ".checked=true;CellClick('" + ImgUrl + "')");
+
+                //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
+            }
+
+
+        }
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
+
+
+    }
+
+    private void BindGrid3(string SDATE, string EDATE)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME],[OPPORTUNITY_NAME],[PRODUCT],REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],Replace(Convert(Varchar(12),CONVERT(money,ISNULL([tb_OPPORTUNITY].[AMOUNT],0)),1),'.00','') AS AMOUNT,(CASE WHEN [USER_NAME]='公司' THEN '蔡顏鴻' ELSE [USER_NAME] END ) AS TEMP  
+                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_OPPORTUNITY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_COMPANY] ON [tb_OPPORTUNITY].[COMPANY_ID]=[tb_COMPANY].[COMPANY_ID]
+                           WHERE [tb_NOTE].[OPPORTUNITY_ID]=[tb_OPPORTUNITY].[OPPORTUNITY_ID]
+                           AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                           ORDER BY TEMP,[USER_NAME],[COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
+
+                        ";
+
+        m_db.AddParameter("@SDATE", SDATE);
+        m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+    }
+
+    protected void grid3_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid1.PageIndex = e.NewPageIndex;
+        BindGrid3(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
         //    if (e.Row.RowType == DataControlRowType.DataRow)
         //    {
         //        DataRowView row = (DataRowView)e.Row.DataItem;
@@ -138,6 +269,28 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             e.Datasource = dt;
         }
     }
+
+    /// <summary>
+    /// 保留訊息換行內容
+    /// </summary>
+    /// <param name="htmlConent"></param>
+    /// <returns></returns>
+    internal string AppendContext(string htmlConent)
+    {
+        Regex regex_newline = new Regex("(\r\n|\r|\n)");
+        var convertStr = regex_newline.Replace(htmlConent, "<br/>");
+        var result = "";
+
+        //處理字串需保留 < br > 符合設定格式
+        string[] line = convertStr.Split(new string[] { "<br/>" }, StringSplitOptions.None);
+        foreach (string ss in line)
+        {
+            result += AntiXssEncoder.HtmlEncode(ss, true) + "<br/>";
+        }
+
+        return result;
+    }
+
     #endregion
 
     #region BUTTON
