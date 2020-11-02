@@ -34,6 +34,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             BindGrid(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
             BindGrid2(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
             BindGrid3(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid4(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
 
             txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
             txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
@@ -44,6 +45,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             BindGrid(txtDate1.Text, txtDate2.Text);
             BindGrid2(txtDate1.Text, txtDate2.Text);
             BindGrid3(txtDate1.Text, txtDate2.Text);
+            BindGrid4(txtDate1.Text, txtDate2.Text);
         }
 
 
@@ -62,7 +64,8 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
-                           AND NOTE_CONTENT LIKE '%主管決議%' AND  NOTE_CONTENT LIKE '%是%'
+                           AND [tb_NOTE].[COMPANY_ID]<>'0'
+                           AND (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
                            ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
 
                         ";
@@ -130,8 +133,16 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
-                           AND NOTE_ID NOT IN (select NOTE_ID from [HJ_BM_DB].dbo.tb_NOTE  WHERE NOTE_CONTENT like '%'+char(10)+'%' AND NOTE_CONTENT LIKE '%主管決議%' AND  NOTE_CONTENT LIKE '%是%')
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                           AND [tb_NOTE].[COMPANY_ID]<>'0'
+                           AND NOTE_ID NOT IN 
+                               (
+                               SELECT NOTE_ID
+                               FROM [HJ_BM_DB].[dbo].[tb_NOTE]
+                               WHERE  (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
+                               AND [tb_NOTE].[COMPANY_ID]<>'0'
+                               AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                               )
                            ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
 
                         ";
@@ -201,6 +212,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_COMPANY] ON [tb_OPPORTUNITY].[COMPANY_ID]=[tb_COMPANY].[COMPANY_ID]
                            WHERE [tb_NOTE].[OPPORTUNITY_ID]=[tb_OPPORTUNITY].[OPPORTUNITY_ID]
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                           AND (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
                            ORDER BY TEMP,[USER_NAME],[COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
 
                         ";
@@ -222,6 +234,61 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         BindGrid3(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
     }
     protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
+
+
+    }
+
+    private void BindGrid4(string SDATE, string EDATE)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME],[OPPORTUNITY_NAME],[PRODUCT],REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],Replace(Convert(Varchar(12),CONVERT(money,ISNULL([tb_OPPORTUNITY].[AMOUNT],0)),1),'.00','') AS AMOUNT,(CASE WHEN [USER_NAME]='公司' THEN '蔡顏鴻' ELSE [USER_NAME] END ) AS TEMP  
+                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_OPPORTUNITY] 
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_COMPANY] ON [tb_OPPORTUNITY].[COMPANY_ID]=[tb_COMPANY].[COMPANY_ID]
+                           WHERE [tb_NOTE].[OPPORTUNITY_ID]=[tb_OPPORTUNITY].[OPPORTUNITY_ID]
+                           AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                           AND NOTE_ID NOT IN 
+                               (
+                               SELECT NOTE_ID
+                               FROM [HJ_BM_DB].[dbo].[tb_NOTE]
+                               WHERE  (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
+                               AND OPPORTUNITY_ID<>'0'
+                               AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                               )
+                           ORDER BY TEMP,[USER_NAME],[COMPANY_NAME],[tb_NOTE].[CREATE_DATETIME]
+
+                        ";
+
+        m_db.AddParameter("@SDATE", SDATE);
+        m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        Grid4.DataSource = dt;
+        Grid4.DataBind();
+    }
+
+    protected void grid4_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid1.PageIndex = e.NewPageIndex;
+        BindGrid3(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+    protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         //    if (e.Row.RowType == DataControlRowType.DataRow)
         //    {
