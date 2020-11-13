@@ -13,11 +13,10 @@ using System.Web.UI.WebControls;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 
-public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_Mobile_MobileTKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         //用ExpandoObject物件傳遞參數
         //ExpandoObject param = new { Name = "asd" }.ToExpando();
         //ExpandoObject param = new { Name = txtParam.Text }.ToExpando();
@@ -48,13 +47,11 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             BindGrid4(txtDate1.Text, txtDate2.Text);
         }
 
-
-
     }
 
     #region FUNCTION
-    
-    private void BindGrid(string SDATE,string EDATE)
+
+    private void BindGrid(string SDATE, string EDATE)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -95,7 +92,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             DataRowView row = (DataRowView)e.Row.DataItem;
             Image img1 = (Image)e.Row.FindControl("Image1");
 
-            if(!string.IsNullOrEmpty(row["FILE_NAME"].ToString()))
+            if (!string.IsNullOrEmpty(row["FILE_NAME"].ToString()))
             {
                 img.ImageUrl = PATH + row["FILE_NAME"].ToString();
 
@@ -108,7 +105,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
                 //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
             }
 
-          
+
         }
         //    if (e.Row.RowType == DataControlRowType.DataRow)
         //    {
@@ -129,20 +126,31 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        //string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%Jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%JPG%' OR [tb_NOTE].[FILE_NAME] LIKE '%jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%png%' OR [tb_NOTE].[FILE_NAME] LIKE '%PNG%' OR [tb_NOTE].[FILE_NAME] LIKE '%Pmg%') THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
+        //                   FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+        //                   LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+        //                   WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+        //                   AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+        //                   AND [tb_NOTE].[COMPANY_ID]<>'0'
+        //                   AND NOTE_ID NOT IN 
+        //                       (
+        //                       SELECT NOTE_ID
+        //                       FROM [HJ_BM_DB].[dbo].[tb_NOTE]
+        //                       WHERE  (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
+        //                       AND [tb_NOTE].[COMPANY_ID]<>'0'
+        //                       AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+        //                       )
+        //                   ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
+
+        //                ";
+
         string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%Jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%JPG%' OR [tb_NOTE].[FILE_NAME] LIKE '%jpg%' OR [tb_NOTE].[FILE_NAME] LIKE '%png%' OR [tb_NOTE].[FILE_NAME] LIKE '%PNG%' OR [tb_NOTE].[FILE_NAME] LIKE '%Pmg%') THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
                            AND [tb_NOTE].[COMPANY_ID]<>'0'
-                           AND NOTE_ID NOT IN 
-                               (
-                               SELECT NOTE_ID
-                               FROM [HJ_BM_DB].[dbo].[tb_NOTE]
-                               WHERE  (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
-                               AND [tb_NOTE].[COMPANY_ID]<>'0'
-                               AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
-                               )
+                          
                            ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
 
                         ";
@@ -161,7 +169,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
     protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         Grid2.PageIndex = e.NewPageIndex;
-        BindGrid(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+        BindGrid2(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
@@ -304,7 +312,7 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
     }
 
-    public void OnBeforeExport(object sender,Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -326,12 +334,12 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        if (dt.Rows.Count>0)
+        if (dt.Rows.Count > 0)
         {
             dt.Columns[0].Caption = "客戶";
             dt.Columns[1].Caption = "記錄";
             dt.Columns[2].Caption = "記錄日期";
-        
+
 
             e.Datasource = dt;
         }

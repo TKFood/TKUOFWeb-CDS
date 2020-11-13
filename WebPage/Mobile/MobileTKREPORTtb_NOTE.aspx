@@ -1,6 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="TKREPORTtb_NOTE.aspx.cs" Inherits="CDS_WebPage_TKREPORTtb_NOTE" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="MobileTKREPORTtb_NOTE.aspx.cs" Inherits="CDS_WebPage_Mobile_MobileTKREPORTtb_NOTE" %>
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
-
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/trontastic/jquery-ui.css">
@@ -96,7 +95,7 @@
                                 </asp:BoundField> 
                                  <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemTemplate>
-                                        <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
                                         <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
                                     </ItemTemplate>                                        
                                  </asp:TemplateField>
@@ -131,7 +130,7 @@
                                 </asp:BoundField>   
                                 <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemTemplate>
-                                        <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
                                         <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
                                     </ItemTemplate>                                        
                                  </asp:TemplateField>
@@ -178,7 +177,7 @@
                                 </asp:BoundField> 
                                  <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemTemplate>
-                                        <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
                                         <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
                                     </ItemTemplate>                                        
                                  </asp:TemplateField>
@@ -195,5 +194,7 @@
             </td>
         </tr>
     </table>
+
+
 </asp:Content>
 
