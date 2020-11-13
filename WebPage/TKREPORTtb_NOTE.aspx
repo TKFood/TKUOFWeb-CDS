@@ -3,8 +3,10 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/trontastic/jquery-ui.css">
-<link href="~/CSS/NEWStyleSheet.css" rel="stylesheet" />
+<link href="~/CSS/NEWStyleSheet.css" type="text/css" rel="stylesheet" />
+
 
 <script>    
     $(function () {
@@ -12,6 +14,35 @@
         $("#<%= txtDate2.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });      
     });
 
+    function ImageClick(img) {
+        //alert(img);
+        var clientId = '#' + img.id
+
+        var widthString = $(clientId).css("width");
+        var heightString = $(clientId).css("height");
+        var widthUnit = widthString.replace("px", "");
+        var heightUnit = heightString.replace("px", "");
+        var width = parseInt(widthUnit, 10);
+        var height = parseInt(heightUnit, 10);
+
+
+
+        if ($(clientId).hasClass("BigImage")) {
+            width = (width / 10);
+            height = (height / 10);
+            $(clientId).css("width", width + "px");
+            $(clientId).css("height", height + "px");
+            $(clientId).removeClass("BigImage");
+        }
+        else {
+            width = (width * 10);
+            height = (height * 10);
+            $(clientId).css("width", width + "px");
+            $(clientId).css("height", height + "px");
+            $(clientId).addClass("BigImage");
+        }
+
+    }
   
 </script>
 
@@ -32,6 +63,7 @@
     </table>
     <label>客戶記錄-主管決議:是</label>
     <table class="PopTable">
+          <tr>
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
                     <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging" >
@@ -60,7 +92,7 @@
                                
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px"/>
+                                        <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>
                                     </ItemTemplate >
                                 </asp:TemplateField>
                                 
@@ -72,6 +104,7 @@
     </table>
     <label>專案記錄-主管決議:是</label>
       <table class="PopTable">
+            <tr>
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
                     <Fast:Grid ID="Grid3" OnRowDataBound="Grid3_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource3" OnPageIndexChanging="grid3_PageIndexChanging" >
@@ -116,6 +149,7 @@
 
     <label>客戶記錄-主管決議:否</label>
      <table class="PopTable">
+           <tr>
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
                     <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid2_PageIndexChanging" >
@@ -141,7 +175,7 @@
                                
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px"/>
+                                        <asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>
                                     </ItemTemplate >
                                 </asp:TemplateField>
                                 
@@ -154,6 +188,7 @@
 
      <label>專案記錄-主管決議:否</label>
       <table class="PopTable">
+          <tr>
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
                     <Fast:Grid ID="Grid4" OnRowDataBound="Grid4_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource4" OnPageIndexChanging="grid4_PageIndexChanging" >
@@ -195,5 +230,7 @@
             </td>
         </tr>
     </table>
+
+     
 </asp:Content>
 

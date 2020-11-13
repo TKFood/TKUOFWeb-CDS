@@ -35,3 +35,7 @@ html, body {
         width: 550px;
         height: 350px;
     }
+
+.Show_Label {
+    color: red;
+}
