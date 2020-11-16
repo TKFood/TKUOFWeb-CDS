@@ -4,8 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/trontastic/jquery-ui.css">
-<link href="~/CSS/NEWStyleSheet.css" type="text/css" rel="stylesheet" />
+<link href="CSS/NEWStyleSheet.css" type="text/css" rel="stylesheet" />
 
 
 <script>    
@@ -43,7 +42,17 @@
         }
 
     }
-  
+
+    function CellClick(ImgUrl) {
+        //alert(ImgUrl);
+        $(".Show_imgStyle").attr("src", ImgUrl);
+        $("#Show_img_Max").css("display", "block");
+       
+    }
+    function divClick() {
+        //alert("Show_img_Max");
+        $("#Show_img_Max").css("display", "none");
+    }
 </script>
 
     <table class="PopTable" >         
@@ -175,7 +184,8 @@
                                
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>
+                                        <%--<asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>--%>
+                                        <asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px"/>                                  
                                     </ItemTemplate >
                                 </asp:TemplateField>
                                 
@@ -231,6 +241,14 @@
         </tr>
     </table>
 
-     
+    <table>
+        <div id="Show_img_Max" onclick="divClick()">
+            <div>                
+                <img src="" class="Show_imgStyle" />
+            </div>
+        </div>
+
+    </table>     
+  
 </asp:Content>
 

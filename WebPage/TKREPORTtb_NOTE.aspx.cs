@@ -179,8 +179,8 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
                 //獲取當前行的圖片路徑
                 string ImgUrl = img.ImageUrl;
                 //給帶圖片的單元格添加點擊事件
-                //e.Row.Cells[3].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
-                //    + ".checked=true;CellClick('" + ImgUrl + "')");
+                e.Row.Cells[4].Attributes.Add("onclick", e.Row.Cells[4].ClientID.ToString()
+                    + ".checked=true;CellClick('" + ImgUrl + "')");
 
                 //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
             }
