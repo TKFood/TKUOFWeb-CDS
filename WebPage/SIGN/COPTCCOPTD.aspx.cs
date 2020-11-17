@@ -41,10 +41,11 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        SELECT TC001,TC002,CONVERT(INT,TC029) TC029,CONVERT(INT,TC030) TC030,CONVERT(INT,(TC029+TC030)) AS MONEYS
-                        FROM [TK].dbo.COPTC
-                        WHERE TC027='N' 
-                        AND  TC003=@SDATE
+                        SELECT MQ002,TC001,TC002,CONVERT(INT,TC029) TC029,CONVERT(INT,TC030) TC030,CONVERT(INT,(TC029+TC030)) AS MONEYS
+                        FROM [TK].dbo.COPTC,[TK].dbo.CMSMQ
+                        WHERE TC001=MQ001
+                        AND TC027='N' 
+                        AND TC003=@SDATE
                         ORDER BY TC001,TC002
                         ";
 
@@ -175,13 +176,13 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
             if (ck.Checked)
             {
                 TableCellCollection cell = gvr.Cells;
-                TC001TC002 += "'"+cell[1].Text+ cell[2].Text + "',";
+                TC001TC002 += "'"+cell[2].Text+ cell[3].Text + "',";
             }
         }
         TC001TC002 += "''";
         Label3.Text = TC001TC002.ToString();
 
-        string SQL= SETSQL(Label3.Text);
+        string SQL = SETSQL(Label3.Text);
 
         UPDATECOPTCCOPTD(SQL);
 

@@ -40,7 +40,10 @@
                                     <ItemTemplate>
                                         <asp:CheckBox ID="CheckBox" AutoCallBack="true" runat="server"></asp:CheckBox>
                                     </ItemTemplate>
-                                  </asp:TemplateField>                               
+                                  </asp:TemplateField>     
+                                  <asp:BoundField HeaderText="單別" DataField="MQ002" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                </asp:BoundField>  
                                  <asp:BoundField HeaderText="訂單單別" DataField="TC001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                 </asp:BoundField>  
