@@ -166,6 +166,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
     protected void btn2_Click(object sender, EventArgs e)
     {
         string TC001TC002 = "";
+        Grid1.EditIndex = -1;
 
         foreach (GridViewRow gvr in this.Grid1.Rows)
         {
