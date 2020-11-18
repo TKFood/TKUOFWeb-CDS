@@ -133,7 +133,7 @@
                                                 </ItemTemplate>
                                               </asp:TemplateField>     
                                               <asp:BoundField HeaderText="單別" DataField="MQ002" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                                <ItemStyle HorizontalAlign="Center" Width="500px"></ItemStyle>
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                             </asp:BoundField>  
                                              <asp:BoundField HeaderText="訂單單別" DataField="TE001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
@@ -145,7 +145,7 @@
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>  
                                                <asp:BoundField HeaderText="客戶" DataField="MA002" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                                <ItemStyle HorizontalAlign="Center" Width="600px"></ItemStyle>
+                                                <ItemStyle HorizontalAlign="Center" Width="400px"></ItemStyle>
                                             </asp:BoundField>                                             
                                            <asp:TemplateField HeaderText="明細" ItemStyle-Width="600px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemTemplate>
