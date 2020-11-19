@@ -305,7 +305,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
                         ,TF183 TD088,TF184 TD089,TF185 TD090,TF186 TD091,TF187 TD092,TF188 TD093,TF189 TD094,TF194 TD095,TF195 TD096,TF137 TD097
                         FROM [TK].dbo.COPTF
                         WHERE TF001+TF002+TF104 NOT IN (SELECT TD001+TD002+TD003 FROM [TK].dbo.COPTD  WHERE TD001+TD002 IN ({1}))
-                        AND TF001+TF002 IN ({1})
+                        AND TF001+TF002+TF003 IN ({0})
 
                         --更新COPTC
                         UPDATE [TK].dbo.COPTC
