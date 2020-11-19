@@ -20,4 +20,12 @@
 		<Resource Name="vi" Value="Quẹt thẻ trực tuyến" />
 		<Resource Name="id" Value="absensi swipe kartu" />
 	</CustomControl>
+	
+	<CustomControl ControlType="CDS_WebPart_UC_Calendar" ControlPath="~/CDS/WebPart/UC_Calendar.ascx" DefaultTitle="行事歷區塊" TitleStyle="h" ZoneIndex="0">
+		<Resource Name="zh-CN" Value="行事歷區塊" />
+		<Resource Name="zh-TW" Value="行事歷區塊" />
+		<Resource Name="en-US" Value="Online Punch" />
+		<Resource Name="vi" Value="Quẹt thẻ trực tuyến" />
+		<Resource Name="id" Value="absensi swipe kartu" />
+	</CustomControl>
 </CustomControls>
