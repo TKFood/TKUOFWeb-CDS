@@ -107,7 +107,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                         WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                         ELSE '<br />'
-                                    END + +CONVERT(NVARCHAR,TF006)+'-新訂單數量'+CONVERT(NVARCHAR,CONVERT(INT,TF009))+'-新單價'+CONVERT(NVARCHAR,TF013)+'-新贈品量'+CONVERT(NVARCHAR,CONVERT(INT,TF020)) AS 'data()'
+                                    END +'序號-'+CONVERT(NVARCHAR,TF104)+'-'+CONVERT(NVARCHAR,TF006)+'-新訂單數量'+CONVERT(NVARCHAR,CONVERT(INT,TF009))+'-新單價'+CONVERT(NVARCHAR,TF013)+'-新贈品量'+CONVERT(NVARCHAR,CONVERT(INT,TF020)) AS 'data()'
                             FROM  [TK].dbo.COPTF WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
                             FOR XML PATH(''), TYPE  
                         ).value('.','nvarchar(max)')  As DETAILS 
@@ -281,7 +281,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
         return SQL.ToString();
     }
 
-    public string SETSQL2(string TE001TE002TE002,string TE001TE002)
+    public string SETSQL2(string TE001TE002TE003, string TE001TE002)
     {
         StringBuilder SQL = new StringBuilder();
 
@@ -298,13 +298,13 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
                         ) 
 
                         SELECT COMPANY ,CREATOR ,USR_GROUP ,CREATE_DATE ,FLAG ,CREATE_TIME, MODI_TIME, TRANS_TYPE, TRANS_NAME,DataGroup
-                        ,TF001 TD001,TF002 TD002,TF004 TD003,TF005 TD004,TF006 TD005,TF007 TD006,TF008 TD007,TF009 TD008,TF010 TD010
-                        ,TF013 TD011,TF013 TD012,TF015 TD013,TF016 TD014,TF063 TD015,TF017 TD016,TF032 TD020
+                        ,TF001 TD001,TF002 TD002,TF104 TD003,TF005 TD004,TF006 TD005,TF007 TD006,TF008 TD007,TF009 TD008,TF010 TD010
+                        ,TF013 TD011,TF014 TD012,TF015 TD013,TF016 TD014,TF063 TD015,TF017 TD016,TF032 TD020
                         ,'Y' TD021,TF012 TD023,TF020 TD026,TF021 TD027,TF022 TD028,TF064 TD029,TF023 TD029,TF024 TD030
                         ,TF024 TD031,TF026 TD032,TF027 TD034,TF028 TD036,TF044 TD049,TF045 TD050,TF046 TD052
                         ,TF183 TD088,TF184 TD089,TF185 TD090,TF186 TD091,TF187 TD092,TF188 TD093,TF189 TD094,TF194 TD095,TF195 TD096,TF137 TD097
                         FROM [TK].dbo.COPTF
-                        WHERE TF001+TF002+TF004 NOT IN (SELECT TD001+TD002+TD003 FROM [TK].dbo.COPTD  WHERE TD001+TD002 IN ({1}))
+                        WHERE TF001+TF002+TF104 NOT IN (SELECT TD001+TD002+TD003 FROM [TK].dbo.COPTD  WHERE TD001+TD002 IN ({1}))
                         AND TF001+TF002 IN ({1})
 
                         --更新COPTC
@@ -332,13 +332,13 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
                         ,TD010=TF010,TD011=TF013,TD012=TF014,TD013=TF015,TD014=TF016
                         ,TD015=TF032,TD016=TF017,TD020=TF032,TD023=TF012,TD024=TF020
                         ,TD026=TF021,TD027=TF022,TD028=TF064,TD029=TF023,TD030=TF024
-                        ,TD031=TF025,TD032=TF026,TD034=TF027,TD036=TF028,TD049=TF184
+                        ,TD031=TF025,TD032=TF026,TD034=TF027,TD036=TF028,TD049=TF044
                         ,TD050=TF045,TD052=TF046,TD088=TF183,TD089=TF184,TD091=TF186
                         ,TD092=TF187,TD093=TF188,TD094=TF189,TD095=TF194,TD096=TF195 
                         ,TD097=TF137,TD090=TF185 
                         ,FLAG=COPTD.FLAG+1
                         FROM [TK].dbo.COPTF
-                        WHERE TD001+TD002+TD003=TF001+TF002+TF004
+                        WHERE TD001+TD002+TD003=TF001+TF002+TF104
                         AND TF001+TF002+TF003 IN ({0})
 
                         UPDATE [TK].dbo.COPTE
@@ -399,7 +399,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
 
                        
                       
-                        ", TE001TE002TE002, TE001TE002);
+                        ", TE001TE002TE003, TE001TE002);
 
         return SQL.ToString();
     }
