@@ -61,7 +61,7 @@
                                     
                                     <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
                                         <ItemTemplate>
-                                            <asp:Button ID="Button1" runat="server" Text="Button"  OnClick="MyButtonClick" CommandArgument='<%# Eval("WORK_GUID") %>'/>
+                                            <asp:Button ID="Button1" runat="server" Text="結案" ForeColor="Red" OnClick="MyButtonClick" CommandArgument='<%# Eval("WORK_GUID") %>'/>
                                         </ItemTemplate>
                                       </asp:TemplateField>  
                                 </Columns>
