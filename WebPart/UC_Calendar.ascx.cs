@@ -16,14 +16,14 @@ public partial class CDS_WebPart_UC_Calendar : System.Web.UI.UserControl
     {
         if (!IsPostBack)
         {
-            DateTime FirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            DateTime LastDay = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1).AddDays(-1);
+            DateTime FirstDay = DateTime.Now.AddDays(-DateTime.Now.Day + 1);
+            DateTime LastDay = DateTime.Now.AddDays(1 - DateTime.Now.Day).AddMonths(1).AddDays(-1);
 
-            BindGrid(FirstDay.ToString("yyyy/MM/dd"), LastDay.AddDays(7).ToString("yyyy/MM/dd"));
-            BindGrid2(FirstDay.ToString("yyyy/MM/dd"), LastDay.AddDays(7).ToString("yyyy/MM/dd"));
+            BindGrid(FirstDay.ToString("yyyy/MM/dd"), LastDay.ToString("yyyy/MM/dd"));
+            BindGrid2(FirstDay.ToString("yyyy/MM/dd"), LastDay.ToString("yyyy/MM/dd"));
 
             txtDate1.Text = FirstDay.ToString("yyyy/MM/dd");
-            txtDate2.Text = LastDay.AddDays(-1).ToString("yyyy/MM/dd");
+            txtDate2.Text = LastDay.ToString("yyyy/MM/dd");
         }
         else
         {
