@@ -28,4 +28,12 @@
 		<Resource Name="vi" Value="Quẹt thẻ trực tuyến" />
 		<Resource Name="id" Value="absensi swipe kartu" />
 	</CustomControl>
+
+	<CustomControl ControlType="CDS_WebPart_UC_TB_EIP_SCH_WORK" ControlPath="~/CDS/WebPart/UC_TB_EIP_SCH_WORK.ascx" DefaultTitle="交辨區塊" TitleStyle="h" ZoneIndex="0">
+		<Resource Name="zh-CN" Value="交辨區塊" />
+		<Resource Name="zh-TW" Value="交辨區塊" />
+		<Resource Name="en-US" Value="Online Punch" />
+		<Resource Name="vi" Value="Quẹt thẻ trực tuyến" />
+		<Resource Name="id" Value="absensi swipe kartu" />
+	</CustomControl>
 </CustomControls>
