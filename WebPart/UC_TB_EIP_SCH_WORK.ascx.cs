@@ -48,7 +48,7 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
                         FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
-                        WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
+                        WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding','Audit')
                         AND USER1.[NAME] IN ('洪櫻芬','王琇平','葉枋俐','何姍怡','林琪琪','林杏育','張釋予','蔡顏鴻','陳帟靜','黃鈺涵')
                         AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111) >=@SDATE AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111) <=@EDATE
                         ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
