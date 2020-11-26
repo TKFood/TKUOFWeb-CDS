@@ -50,7 +50,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogADD : Ede.Uof.Utility.Pa
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
-        UPDATE();
+        ADD();
 
         Dialog.Close(this);
 
@@ -62,80 +62,20 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogADD : Ede.Uof.Utility.Pa
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
-        UPDATE();
+        ADD();
 
-        SEARCHTCOPCONDTIONS(lblParam.Text);
+       
     }
 
     #endregion
 
     #region FUNCTION
-   
 
-    public void SEARCHTCOPCONDTIONS(string ID)
+
+    public void ADD()
     {
-
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        string cmdTxt = @"   
-                        SELECT 
-                        [ID]
-                        ,[SERNO]
-                        ,[MA001]
-                        ,[MA002]
-                        ,[CONTACTPERSON]
-                        ,[TEL1]
-                        ,[TEL2]
-                        ,[ISPURATTCH]
-                        ,[ISCOPATTCH]
-                        ,[ISSHOWMONEYS]
-                        ,[ISINVOICES]
-                        ,[ISSHIPMARK]
-                        ,[LIMITDAYS]
-                        ,[PAYMENT]
-                        ,[SENDADDRESS]
-                        ,[COMMENT]
-                        FROM [TKBUSINESS].[dbo].[COPCONDTIONS]
-                        WHERE [ID]=@ID
-                        ORDER BY SERNO
-                        ";
-        m_db.AddParameter("@ID", ID);
-
-        DataTable dt = new DataTable();
-
-        dt.Load(m_db.ExecuteReader(cmdTxt));
-
-        if (dt.Rows.Count > 0)
-        {           
-            TextBox1.Text = dt.Rows[0]["MA001"].ToString();
-            TextBox2.Text = dt.Rows[0]["MA002"].ToString();
-            TextBox3.Text = dt.Rows[0]["CONTACTPERSON"].ToString();
-            TextBox4.Text = dt.Rows[0]["TEL1"].ToString();
-            //TextBox5.Text = dt.Rows[0]["TEL2"].ToString();
-            TextBox6.Text = dt.Rows[0]["ISPURATTCH"].ToString();
-            TextBox7.Text = dt.Rows[0]["ISCOPATTCH"].ToString();
-            TextBox8.Text = dt.Rows[0]["ISSHOWMONEYS"].ToString();
-            TextBox9.Text = dt.Rows[0]["ISINVOICES"].ToString();
-            TextBox10.Text = dt.Rows[0]["ISSHIPMARK"].ToString();
-            TextBox11.Text = dt.Rows[0]["LIMITDAYS"].ToString();
-            TextBox12.Text = dt.Rows[0]["PAYMENT"].ToString();
-            TextBox13.Text = dt.Rows[0]["SENDADDRESS"].ToString();
-            TextBox14.Text = dt.Rows[0]["COMMENT"].ToString();
-
-
-
-
-        }
-
-
-
-
-    }
-
-    public void UPDATE()
-    {
-        string ID = lblParam.Text;
+        Guid ID = Guid.NewGuid();
+        //string SERNO = "";
         string MA001 = TextBox1.Text;
         string MA002 = TextBox2.Text;
         string CONTACTPERSON = TextBox3.Text;
@@ -150,41 +90,34 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogADD : Ede.Uof.Utility.Pa
         string SENDADDRESS = TextBox13.Text;
         string COMMENT = TextBox14.Text;
 
-        if (!string.IsNullOrEmpty(ID) )
+        int SERNO = FINDMAXSERNO();
+
+        if ( !string.IsNullOrEmpty(MA001) && !string.IsNullOrEmpty(MA002))
         {
-            UPDATETBCOPCONDTIONS(ID, MA001, MA002, CONTACTPERSON, TEL1, ISPURATTCH, ISCOPATTCH, ISSHOWMONEYS, ISINVOICES, ISSHIPMARK, LIMITDAYS, PAYMENT, SENDADDRESS, COMMENT);
+
+            ADDCOPCONDTIONS(ID, SERNO, MA001, MA002, CONTACTPERSON, TEL1, ISPURATTCH, ISCOPATTCH, ISSHOWMONEYS, ISINVOICES, ISSHIPMARK, LIMITDAYS, PAYMENT, SENDADDRESS, COMMENT);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
+        Dialog.Close(this);
     }
-    public void UPDATETBCOPCONDTIONS(string ID, string MA001, string MA002, string CONTACTPERSON, string TEL1, string ISPURATTCH, string ISCOPATTCH, string ISSHOWMONEYS, string ISINVOICES, string ISSHIPMARK, string LIMITDAYS, string PAYMENT, string SENDADDRESS, string COMMENT)
+    public void ADDCOPCONDTIONS(Guid ID,int SERNO, string MA001, string MA002, string CONTACTPERSON, string TEL1, string ISPURATTCH, string ISCOPATTCH, string ISSHOWMONEYS, string ISINVOICES, string ISSHIPMARK, string LIMITDAYS, string PAYMENT, string SENDADDRESS, string COMMENT)
     {
-
-
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        UPDATE [TKBUSINESS].[dbo].[COPCONDTIONS]
-                        SET MA001=@MA001
-                        ,MA002=@MA002
-                        ,CONTACTPERSON=@CONTACTPERSON
-                        ,TEL1=@TEL1
-                        ,ISPURATTCH=@ISPURATTCH
-                        ,ISCOPATTCH=@ISCOPATTCH
-                        ,ISSHOWMONEYS=@ISSHOWMONEYS
-                        ,ISINVOICES=@ISINVOICES
-                        ,ISSHIPMARK=@ISSHIPMARK
-                        ,LIMITDAYS=@LIMITDAYS
-                        ,PAYMENT=@PAYMENT
-                        ,SENDADDRESS=@SENDADDRESS
-                        ,COMMENT=@COMMENT
-                        WHERE [ID]=@ID
-                   
+                        INSERT INTO [TKBUSINESS].[dbo].[COPCONDTIONS]
+                        ([ID],[SERNO],[MA001],[MA002],[CONTACTPERSON],[TEL1],[ISPURATTCH],[ISCOPATTCH],[ISSHOWMONEYS],[ISINVOICES],[ISSHIPMARK],[LIMITDAYS],[PAYMENT],[SENDADDRESS],[COMMENT])
+                        VALUES
+                        (@ID,@SERNO,@MA001,@MA002,@CONTACTPERSON,@TEL1,@ISPURATTCH,@ISCOPATTCH,@ISSHOWMONEYS,@ISINVOICES,@ISSHIPMARK,@LIMITDAYS,@PAYMENT,@SENDADDRESS,@COMMENT)         
+
                             ";
 
 
+
         m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@SERNO", SERNO);
         m_db.AddParameter("@MA001", MA001);
         m_db.AddParameter("@MA002", MA002);
         m_db.AddParameter("@CONTACTPERSON", CONTACTPERSON);
@@ -199,33 +132,33 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogADD : Ede.Uof.Utility.Pa
         m_db.AddParameter("@SENDADDRESS", SENDADDRESS);
         m_db.AddParameter("@COMMENT", COMMENT);
 
+
+
         m_db.ExecuteNonQuery(cmdTxt);
 
-
-
     }
 
-    protected void btn1_Click(object sender, EventArgs e)
+    public int FINDMAXSERNO()
     {
-        DELTBSALESDEVMEMO(lblParam.Text);
-    }
-
-    public void DELTBSALESDEVMEMO(string SERNO)
-    {
+        DataTable dt = new DataTable();
+     
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  DELETE [TKRESEARCH].[dbo].[TBPROJECT]  WHERE[SERNO]=@SERNO
-                            ";
+        string cmdTxt = @" SELECT MAX(SERNO)+1 AS SERNO FROM [TKBUSINESS].[dbo].[COPCONDTIONS]";
 
-        m_db.AddParameter("@SERNO", SERNO);
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        m_db.ExecuteNonQuery(cmdTxt);
-
-
-        Dialog.SetReturnValue2("NeedPostBack");
-        Dialog.Close(this);
+        if(dt.Rows.Count>0)
+        {
+            return Convert.ToInt32(dt.Rows[0]["SERNO"].ToString());
+        }
+        else
+        {
+            return 0;
+        }
     }
+
     #endregion
 
 
