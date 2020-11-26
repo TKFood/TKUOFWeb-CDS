@@ -135,45 +135,71 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
 
     public void UPDATE()
     {
-        //string SERNO = lblParam.Text;
-        //string PROJECTSTATUS = DropDownList1.SelectedValue.ToString().Trim();
-        //string PROJECTNO = TextBox1.Text;
-        //string PROJECTNAME = TextBox2.Text;
-        //string ONLINEFINISH = TextBox3.Text;
-        //string PAPERFINISH = TextBox4.Text;
-        //string MEMO = TextBox5.Text;
+        string ID = lblParam.Text;
+        string MA001 = TextBox1.Text;
+        string MA002 = TextBox2.Text;
+        string CONTACTPERSON = TextBox3.Text;
+        string TEL1 = TextBox4.Text;
+        string ISPURATTCH = TextBox6.Text;
+        string ISCOPATTCH = TextBox7.Text;
+        string ISSHOWMONEYS = TextBox8.Text;
+        string ISINVOICES = TextBox9.Text;
+        string ISSHIPMARK = TextBox10.Text;
+        string LIMITDAYS = TextBox11.Text;
+        string PAYMENT = TextBox12.Text;
+        string SENDADDRESS = TextBox13.Text;
+        string COMMENT = TextBox14.Text;
 
+        if (!string.IsNullOrEmpty(ID) )
+        {
+            UPDATETBCOPCONDTIONS(ID, MA001, MA002, CONTACTPERSON, TEL1, ISPURATTCH, ISCOPATTCH, ISSHOWMONEYS, ISINVOICES, ISSHIPMARK, LIMITDAYS, PAYMENT, SENDADDRESS, COMMENT);
+        }
 
-        //if (!string.IsNullOrEmpty(SERNO) && !string.IsNullOrEmpty(PROJECTSTATUS) && !string.IsNullOrEmpty(PROJECTNO))
-        //{
-        //    UPDATETBSALESDEVMEMO(SERNO, PROJECTNO, PROJECTNAME, ONLINEFINISH, PAPERFINISH, MEMO, PROJECTSTATUS);
-        //}
-
-        //Dialog.SetReturnValue2("NeedPostBack");
+        Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBSALESDEVMEMO(string SERNO, string PROJECTNO, string PROJECTNAME, string ONLINEFINISH, string PAPERFINISH, string MEMO, string PROJECTSTATUS)
+    public void UPDATETBCOPCONDTIONS(string ID, string MA001, string MA002, string CONTACTPERSON, string TEL1, string ISPURATTCH, string ISCOPATTCH, string ISSHOWMONEYS, string ISINVOICES, string ISSHIPMARK, string LIMITDAYS, string PAYMENT, string SENDADDRESS, string COMMENT)
     {
-       
-
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        //string cmdTxt = @"  
-        //            UPDATE [TKRESEARCH].[dbo].[TBPROJECT]
-        //            SET [PROJECTNO]=@PROJECTNO,[PROJECTNAME]=@PROJECTNAME,[ONLINEFINISH]=@ONLINEFINISH,[PAPERFINISH]=@PAPERFINISH,[MEMO]=@MEMO,[PROJECTSTATUS]=@PROJECTSTATUS
-        //            WHERE [SERNO]=@SERNO
-        //                    ";
 
 
-        //m_db.AddParameter("@SERNO", SERNO);
-        //m_db.AddParameter("@PROJECTNO", PROJECTNO);
-        //m_db.AddParameter("@PROJECTNAME", PROJECTNAME);
-        //m_db.AddParameter("@ONLINEFINISH", ONLINEFINISH);
-        //m_db.AddParameter("@PAPERFINISH", PAPERFINISH);
-        //m_db.AddParameter("@MEMO", MEMO); 
-        //m_db.AddParameter("@PROJECTSTATUS", PROJECTSTATUS);
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        //m_db.ExecuteNonQuery(cmdTxt);
+        string cmdTxt = @"  
+                        UPDATE [TKBUSINESS].[dbo].[COPCONDTIONS]
+                        SET MA001=@MA001
+                        ,MA002=@MA002
+                        ,CONTACTPERSON=@CONTACTPERSON
+                        ,TEL1=@TEL1
+                        ,ISPURATTCH=@ISPURATTCH
+                        ,ISCOPATTCH=@ISCOPATTCH
+                        ,ISSHOWMONEYS=@ISSHOWMONEYS
+                        ,ISINVOICES=@ISINVOICES
+                        ,ISSHIPMARK=@ISSHIPMARK
+                        ,LIMITDAYS=@LIMITDAYS
+                        ,PAYMENT=@PAYMENT
+                        ,SENDADDRESS=@SENDADDRESS
+                        ,COMMENT=@COMMENT
+                        WHERE [ID]=@ID
+                   
+                            ";
+
+
+        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@MA001", MA001);
+        m_db.AddParameter("@MA002", MA002);
+        m_db.AddParameter("@CONTACTPERSON", CONTACTPERSON);
+        m_db.AddParameter("@TEL1", TEL1);
+        m_db.AddParameter("@ISPURATTCH", ISPURATTCH);
+        m_db.AddParameter("@ISCOPATTCH", ISCOPATTCH);
+        m_db.AddParameter("@ISSHOWMONEYS", ISSHOWMONEYS);
+        m_db.AddParameter("@ISINVOICES", ISINVOICES);
+        m_db.AddParameter("@ISSHIPMARK", ISSHIPMARK);
+        m_db.AddParameter("@LIMITDAYS", LIMITDAYS);
+        m_db.AddParameter("@PAYMENT", PAYMENT);
+        m_db.AddParameter("@SENDADDRESS", SENDADDRESS);
+        m_db.AddParameter("@COMMENT", COMMENT);
+
+        m_db.ExecuteNonQuery(cmdTxt);
 
 
 
