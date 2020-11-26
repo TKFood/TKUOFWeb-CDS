@@ -2,13 +2,36 @@
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<script>    
+    function btn4_Click(sender) {
+        //從前端開始視窗
+        //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
+        //OpenDialogResult為關閉視後會執行的JS Function
+        //參數使用JSON格式傳遞
+        $uof.dialog.open2("~/CDS/WebPage/TKRESEARCHTBPROJECTDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+
+          return false;
+
+      }
+
+    //如果有設定回傳值則執行sender Event
+    function OpenDialogResult(returnValue) {
+        if (typeof (returnValue) == "undefined")
+            return false;
+        else
+            return true;
+    }
+
+
+
+</script>
 
       <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
 	    <Tabs>
 		    <telerik:RadTab Text="國內商務出貨標準">
 		    </telerik:RadTab>
-		    <telerik:RadTab Text="">
+		    <telerik:RadTab Text="新增資料">
 		    </telerik:RadTab>
 	    </Tabs>
     </telerik:RadTabStrip>
@@ -83,7 +106,17 @@
 	    </telerik:RadPageView>
 	    <telerik:RadPageView ID="RadPageView2" runat="server">
 		    <div id="tabs-2">
-              
+              <table class="PopTable">
+                 <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">      
+                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)"  meta:resourcekey="btn4Resource1" />
+
+                        </td>            
+                    </tr> 
+                  </table>
           </div>
 	    </telerik:RadPageView>
     </telerik:RadMultiPage>​
