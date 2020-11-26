@@ -66,11 +66,16 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
 
         SEARCHTCOPCONDTIONS(lblParam.Text);
     }
+    protected void btn1_Click(object sender, EventArgs e)
+    {
+        DELCOPCONDTIONS(lblParam.Text);
+    }
+
 
     #endregion
 
     #region FUNCTION
-   
+
 
     public void SEARCHTCOPCONDTIONS(string ID)
     {
@@ -205,10 +210,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
 
     }
 
-    protected void btn1_Click(object sender, EventArgs e)
-    {
-        DELTBSALESDEVMEMO(lblParam.Text);
-    }
+
 
     public void DELTBSALESDEVMEMO(string SERNO)
     {
@@ -221,6 +223,24 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
         m_db.AddParameter("@SERNO", SERNO);
 
         m_db.ExecuteNonQuery(cmdTxt);
+
+
+        Dialog.SetReturnValue2("NeedPostBack");
+        Dialog.Close(this);
+    }
+
+    public void DELCOPCONDTIONS(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  DELETE [TKBUSINESS].[dbo].[COPCONDTIONS]  WHERE[ID]=@ID
+                            ";
+
+        m_db.AddParameter("@ID", ID);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
 
 
         Dialog.SetReturnValue2("NeedPostBack");
