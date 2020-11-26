@@ -118,7 +118,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
             ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBSALESDEVMEMODialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVMEMODialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -129,7 +129,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMO : Ede.Uof.Utility.Page
             ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBSALESDEVMEMODialogMEMODEVADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVMEMODialogMEMODEVADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
