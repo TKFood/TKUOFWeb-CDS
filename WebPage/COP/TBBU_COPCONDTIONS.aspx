@@ -37,10 +37,7 @@
                                             </asp:BoundField>  
                                               <asp:BoundField HeaderText="電話1" DataField="TEL1" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
-                                            </asp:BoundField>  
-                                             <asp:BoundField HeaderText="電話2" DataField="TEL2" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                                <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
-                                            </asp:BoundField>  
+                                            </asp:BoundField>                                             
                                               <asp:BoundField HeaderText="採購單(附單)" DataField="ISPURATTCH" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>  
@@ -65,9 +62,12 @@
                                               <asp:BoundField HeaderText="寄送地址" DataField="SENDADDRESS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>  
-                                             <asp:BoundField HeaderText="備註" DataField="COMMENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                                <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
-                                            </asp:BoundField>  
+                                            <asp:TemplateField HeaderText="備註" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemTemplate>
+                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENT") %>' style="text-align:left" HorizontalAlign="Left" Width="100%" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                    <ItemStyle HorizontalAlign="Left" Width="100"></ItemStyle>
+                                                </ItemTemplate>                                        
+                                             </asp:TemplateField>                                             
                                               <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("ID") %>'/>

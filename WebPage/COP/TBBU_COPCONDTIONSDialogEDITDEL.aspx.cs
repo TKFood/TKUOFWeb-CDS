@@ -34,7 +34,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
-                //SEARCHTTBPROJECT(lblParam.Text);
+                SEARCHTCOPCONDTIONS(lblParam.Text);
             }
 
         }
@@ -64,7 +64,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
 
         UPDATE();
 
-        SEARCHTTBPROJECT(lblParam.Text);
+        SEARCHTCOPCONDTIONS(lblParam.Text);
     }
 
     #endregion
@@ -72,32 +72,63 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
     #region FUNCTION
    
 
-    public void SEARCHTTBPROJECT(string SERNO)
+    public void SEARCHTCOPCONDTIONS(string ID)
     {
 
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        //string cmdTxt = @" SELECT  [ID],[SERNO],[PROJECTNO],[PROJECTNAME],[ONLINEFINISH],[PAPERFINISH],[MEMO],[PROJECTSTATUS] FROM [TKRESEARCH].[dbo].[TBPROJECT] WHERE  [SERNO]=@SERNO   ";
-        //m_db.AddParameter("@SERNO", SERNO);
+        string cmdTxt = @"   
+                        SELECT 
+                        [ID]
+                        ,[SERNO]
+                        ,[MA001]
+                        ,[MA002]
+                        ,[CONTACTPERSON]
+                        ,[TEL1]
+                        ,[TEL2]
+                        ,[ISPURATTCH]
+                        ,[ISCOPATTCH]
+                        ,[ISSHOWMONEYS]
+                        ,[ISINVOICES]
+                        ,[ISSHIPMARK]
+                        ,[LIMITDAYS]
+                        ,[PAYMENT]
+                        ,[SENDADDRESS]
+                        ,[COMMENT]
+                        FROM [TKBUSINESS].[dbo].[COPCONDTIONS]
+                        WHERE [ID]=@ID
+                        ORDER BY SERNO
+                        ";
+        m_db.AddParameter("@ID", ID);
 
-        //DataTable dt = new DataTable();
+        DataTable dt = new DataTable();
 
-        //dt.Load(m_db.ExecuteReader(cmdTxt));
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        //if (dt.Rows.Count > 0)
-        //{
-        //    DropDownList1.Text = dt.Rows[0]["PROJECTSTATUS"].ToString();
-        //    TextBox1.Text = dt.Rows[0]["PROJECTNO"].ToString();
-        //    TextBox2.Text = dt.Rows[0]["PROJECTNAME"].ToString();
-        //    TextBox3.Text = dt.Rows[0]["ONLINEFINISH"].ToString();
-        //    TextBox4.Text = dt.Rows[0]["PAPERFINISH"].ToString();
-        //    TextBox5.Text = dt.Rows[0]["MEMO"].ToString();
+        if (dt.Rows.Count > 0)
+        {           
+            TextBox1.Text = dt.Rows[0]["MA001"].ToString();
+            TextBox2.Text = dt.Rows[0]["MA002"].ToString();
+            TextBox3.Text = dt.Rows[0]["CONTACTPERSON"].ToString();
+            TextBox4.Text = dt.Rows[0]["TEL1"].ToString();
+            //TextBox5.Text = dt.Rows[0]["TEL2"].ToString();
+            TextBox6.Text = dt.Rows[0]["ISPURATTCH"].ToString();
+            TextBox7.Text = dt.Rows[0]["ISCOPATTCH"].ToString();
+            TextBox8.Text = dt.Rows[0]["ISSHOWMONEYS"].ToString();
+            TextBox9.Text = dt.Rows[0]["ISINVOICES"].ToString();
+            TextBox10.Text = dt.Rows[0]["ISSHIPMARK"].ToString();
+            TextBox11.Text = dt.Rows[0]["LIMITDAYS"].ToString();
+            TextBox12.Text = dt.Rows[0]["PAYMENT"].ToString();
+            TextBox13.Text = dt.Rows[0]["SENDADDRESS"].ToString();
+            TextBox14.Text = dt.Rows[0]["COMMENT"].ToString();
 
 
-        //}
 
-       
+
+        }
+
+
 
 
     }
