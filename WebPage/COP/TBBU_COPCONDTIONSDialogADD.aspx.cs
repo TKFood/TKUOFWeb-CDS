@@ -91,26 +91,27 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogADD : Ede.Uof.Utility.Pa
         string COMMENT = TextBox14.Text;
 
         int SERNO = FINDMAXSERNO();
+        string ISUSED = "Y";
 
         if ( !string.IsNullOrEmpty(MA001) && !string.IsNullOrEmpty(MA002))
         {
 
-            ADDCOPCONDTIONS(ID, SERNO, MA001, MA002, CONTACTPERSON, TEL1, ISPURATTCH, ISCOPATTCH, ISSHOWMONEYS, ISINVOICES, ISSHIPMARK, LIMITDAYS, PAYMENT, SENDADDRESS, COMMENT);
+            ADDCOPCONDTIONS(ID, SERNO, ISUSED, MA001, MA002, CONTACTPERSON, TEL1, ISPURATTCH, ISCOPATTCH, ISSHOWMONEYS, ISINVOICES, ISSHIPMARK, LIMITDAYS, PAYMENT, SENDADDRESS, COMMENT);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDCOPCONDTIONS(Guid ID,int SERNO, string MA001, string MA002, string CONTACTPERSON, string TEL1, string ISPURATTCH, string ISCOPATTCH, string ISSHOWMONEYS, string ISINVOICES, string ISSHIPMARK, string LIMITDAYS, string PAYMENT, string SENDADDRESS, string COMMENT)
+    public void ADDCOPCONDTIONS(Guid ID,int SERNO,string ISUSED, string MA001, string MA002, string CONTACTPERSON, string TEL1, string ISPURATTCH, string ISCOPATTCH, string ISSHOWMONEYS, string ISINVOICES, string ISSHIPMARK, string LIMITDAYS, string PAYMENT, string SENDADDRESS, string COMMENT)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
                         INSERT INTO [TKBUSINESS].[dbo].[COPCONDTIONS]
-                        ([ID],[SERNO],[MA001],[MA002],[CONTACTPERSON],[TEL1],[ISPURATTCH],[ISCOPATTCH],[ISSHOWMONEYS],[ISINVOICES],[ISSHIPMARK],[LIMITDAYS],[PAYMENT],[SENDADDRESS],[COMMENT])
+                        ([ID],[SERNO],[ISUSED],[MA001],[MA002],[CONTACTPERSON],[TEL1],[ISPURATTCH],[ISCOPATTCH],[ISSHOWMONEYS],[ISINVOICES],[ISSHIPMARK],[LIMITDAYS],[PAYMENT],[SENDADDRESS],[COMMENT])
                         VALUES
-                        (@ID,@SERNO,@MA001,@MA002,@CONTACTPERSON,@TEL1,@ISPURATTCH,@ISCOPATTCH,@ISSHOWMONEYS,@ISINVOICES,@ISSHIPMARK,@LIMITDAYS,@PAYMENT,@SENDADDRESS,@COMMENT)         
+                        (@ID,@SERNO,@ISUSED,@MA001,@MA002,@CONTACTPERSON,@TEL1,@ISPURATTCH,@ISCOPATTCH,@ISSHOWMONEYS,@ISINVOICES,@ISSHIPMARK,@LIMITDAYS,@PAYMENT,@SENDADDRESS,@COMMENT)         
 
                             ";
 
@@ -118,6 +119,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogADD : Ede.Uof.Utility.Pa
 
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@SERNO", SERNO);
+        m_db.AddParameter("@ISUSED", ISUSED);
         m_db.AddParameter("@MA001", MA001);
         m_db.AddParameter("@MA002", MA002);
         m_db.AddParameter("@CONTACTPERSON", CONTACTPERSON);

@@ -51,6 +51,7 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
                         ,[SENDADDRESS]
                         ,REPLACE([COMMENT] ,char(10),'<br/>') AS [COMMENT] 
                         FROM [TKBUSINESS].[dbo].[COPCONDTIONS]
+                        WHERE ISUSED='Y'
                         ORDER BY SERNO
                         ";
 

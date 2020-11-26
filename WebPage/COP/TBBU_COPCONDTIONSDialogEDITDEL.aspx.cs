@@ -234,7 +234,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  DELETE [TKBUSINESS].[dbo].[COPCONDTIONS]  WHERE[ID]=@ID
+        string cmdTxt = @"  UPDATE  [TKBUSINESS].[dbo].[COPCONDTIONS] SET [ISUSED]='N'  WHERE[ID]=@ID
                             ";
 
         m_db.AddParameter("@ID", ID);

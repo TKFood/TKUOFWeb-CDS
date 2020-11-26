@@ -145,10 +145,10 @@
     <table>
         <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label4" runat="server" Text="是否刪除"></asp:Label>
+                <asp:Label ID="Label4" runat="server" Text="是否隱藏不用"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                  <asp:Button ID="Button1" runat="server" Text="刪除" forecolor="red"
+                  <asp:Button ID="Button1" runat="server" Text="隱藏不用" forecolor="red"
                     onclick="btn1_Click" meta:resourcekey="btn1Resource1" />
             </td> 
         </tr>     
