@@ -8,7 +8,7 @@
         //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
         //OpenDialogResult為關閉視後會執行的JS Function
         //參數使用JSON格式傳遞
-        $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_COPCONDTIONSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+        $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_COPCOPMACLIENTDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
           return false;
 
@@ -29,7 +29,7 @@
       <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
 	    <Tabs>
-		    <telerik:RadTab Text="國內商務出貨標準">
+		    <telerik:RadTab Text="經銷通路對應">
 		    </telerik:RadTab>
 		    <telerik:RadTab Text="新增資料">
 		    </telerik:RadTab>
