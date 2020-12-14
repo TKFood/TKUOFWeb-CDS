@@ -43,7 +43,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        SELECT MQ002,TC001,TC002,CONVERT(INT,TC029) TC029,CONVERT(INT,TC030) TC030,CONVERT(INT,(TC029+TC030)) AS MONEYS
+                        SELECT MQ002,TC001,TC002,CONVERT(INT,TC029) TC029,CONVERT(INT,TC030) TC030,CONVERT(INT,(TC029+TC030)) AS MONEYS,TC053 AS TC053
                         , (     
                             SELECT CASE
                                         WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
