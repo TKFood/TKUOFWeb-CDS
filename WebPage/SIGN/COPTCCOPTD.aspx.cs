@@ -425,7 +425,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
             if (ck.Checked)
             {
                 TableCellCollection cell = gvr.Cells;
-                TC001TC002 += "'"+cell[2].Text+ cell[3].Text + "',";
+                TC001TC002 += "'"+cell[3].Text+ cell[4].Text + "',";
             }
         }
         TC001TC002 += "''";

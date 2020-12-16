@@ -84,30 +84,42 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+       
+
+        string cmdTxt = @" 
+                        SELECT [ID]
+                        ,[MA001]
+                        ,[MA002]
+                        ,[CLIENTS]
+                        FROM [TKBUSINESS].[dbo].[COPCOPMACLIENT]
+                        ORDER BY [MA001],[CLIENTS]
+                        ";
+
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            dt.Columns[0].Caption = "ID";
+            dt.Columns[1].Caption = "客戶代號";
+            dt.Columns[2].Caption = "客戶";
+            dt.Columns[3].Caption = "客戶的賣家(渠道)";
+
+
+            e.Datasource = dt;
+        }
     }
+
     #endregion
 
     #region BUTTON
-    protected void btn_Click(object sender, EventArgs e)
-    {
-
-
-        //開窗後回傳參數
-        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        {
-            //txtReturnValue.Text = Dialog.GetReturnValue();
-        }
-
-
-    }
-
-
-    protected void btn1_Click(object sender, EventArgs e)
-    {
-        //this.Session["SDATE"] = txtDate1.Text.Trim();
-        //this.Session["EDATE"] = txtDate2.Text.Trim();
-    }
+  
     protected void MyButtonClick(object sender, System.EventArgs e)
     {
 
