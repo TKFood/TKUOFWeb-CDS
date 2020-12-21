@@ -6,7 +6,7 @@
     
     <tr class="">
             <td class="">
-                 <asp:Label ID="Label1" runat="server" Text="請購單主檔" ></asp:Label>
+                 <asp:Label ID="Label1" runat="server" Text="請購單" ></asp:Label>
             </td>       
         </tr>
     <tr  class="">
@@ -47,8 +47,17 @@
         </tr>
     </table>
 
-<asp:Button ID="btnInert" runat="server" Text="新增" OnClick="btnInert_Click" />
-<asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />
+<table>
+      <tr  class="">
+         <td  class="">
+              <asp:Label ID="Label8" runat="server" Text="明細"></asp:Label>
+                 <asp:Button ID="btnInert" runat="server" Text="新增" OnClick="btnInert_Click" />
+                <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />
+         </td>        
+        </tr>
+</table>
+
+
 
 
 <asp:Label ID="lblHasNoAuthority" runat="server" Text="無填寫權限" ForeColor="Red" Visible="False" meta:resourcekey="lblHasNoAuthorityResource1"></asp:Label>
