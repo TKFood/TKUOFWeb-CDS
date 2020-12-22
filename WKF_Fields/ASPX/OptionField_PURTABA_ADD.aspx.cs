@@ -44,10 +44,17 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
     {
 
     }
+    protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        string AA = "";
+       
+    }
 
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-     
+        string AA = "";
+
+
     }
 
     protected void Button2_OnClick(object sender, EventArgs e)

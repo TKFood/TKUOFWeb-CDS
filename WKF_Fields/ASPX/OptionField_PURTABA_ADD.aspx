@@ -20,14 +20,14 @@
          <tr >
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
+                    <Fast:Grid ID="Grid1"  OnRowDataBound="Grid1_RowDataBound"  OnRowCommand="GridView1_RowCommand"  runat="server" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
                         <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
                             <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
                             <Columns>
                                 <asp:TemplateField HeaderText="選取" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
                                     <ItemTemplate>
-                                        <asp:Button ID="Button1" runat="server" Text="選取" />
+                                        <asp:Button ID="Button1" runat="server" Text="選取"  CommandName="SELECT"  CommandArgument='<%# Eval("MB001") %>'/>
                                     </ItemTemplate>
                                     <ItemStyle HorizontalAlign="Center" Width="20px"></ItemStyle>
                                 </asp:TemplateField> 
