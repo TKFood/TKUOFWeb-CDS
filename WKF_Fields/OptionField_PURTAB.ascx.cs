@@ -178,13 +178,25 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
 
         if (fieldOptional != null)
         {
+            Dialog.Open2(btnInert, "~/CDS/WKF_Fields/ASPX/MaintainItem.aspx", "", 500, 400, Dialog.PostBackType.AfterReturn);
+
+            if (string.IsNullOrEmpty(fieldOptional.FieldValue))
+            {
+                txtFieldValue.Text = "<FieldValue/>";
+            }
+            else
+            {
+                txtFieldValue.Text = fieldOptional.FieldValue;
+                BindGrid();
+            }
+
 
             //若有擴充屬性，可以用該屬性存取
             // fieldOptional.ExtensionSetting
 
-            
+
             //草稿
-            if(!fieldOptional.IsAudit)
+            if (!fieldOptional.IsAudit)
             {
                 if(fieldOptional.HasAuthority)
                 {
@@ -288,28 +300,28 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
     #region CODE
     private void BindGrid()
     {
-        //XElement xe = XElement.Parse(txtFieldValue.Text);
+        XElement xe = XElement.Parse(txtFieldValue.Text);
 
-        //DataTable dt = new DataTable();
-        //dt.Columns.Add("ID");
-        //dt.Columns.Add("TXT1");
-        //dt.Columns.Add("TXT2");
-        //dt.Columns.Add("DDL");
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID");
+        dt.Columns.Add("TXT1");
+        dt.Columns.Add("TXT2");
+        dt.Columns.Add("DDL");
 
-        //var nodes = (from xl in xe.Elements("Item")
-        //             select xl);
-        //////<FieldValue txt1=''  txt2='' />
-        //foreach (var node in nodes)
-        //{
-        //    dt.Rows.Add(node.Attribute("id").Value,
-        //       node.Attribute("txt1").Value,
-        //       node.Attribute("txt2").Value,
-        //       node.Attribute("dropdown").Value);
+        var nodes = (from xl in xe.Elements("Item")
+                     select xl);
+        ////<FieldValue txt1=''  txt2='' />
+        foreach (var node in nodes)
+        {
+            dt.Rows.Add(node.Attribute("id").Value,
+               node.Attribute("txt1").Value,
+               node.Attribute("txt2").Value,
+               node.Attribute("dropdown").Value);
 
-        //}
+        }
 
-        //Grid1.DataSource = dt;
-        //Grid1.DataBind();
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
     }
 
 
@@ -370,49 +382,49 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
     #region ENEVNTS
     protected void btnInert_Click(object sender, EventArgs e)
     {
-        //string returnValue = string.Format("<Return>{0}</Return>", Dialog.GetReturnValue());
+        string returnValue = string.Format("<Return>{0}</Return>", Dialog.GetReturnValue());
 
-        //XElement xe = XElement.Parse(txtFieldValue.Text);
-        //XElement returnXe = XElement.Parse(returnValue);
-        //var nodes = (from xl in returnXe.Elements("Item")
-        //             select xl);
+        XElement xe = XElement.Parse(txtFieldValue.Text);
+        XElement returnXe = XElement.Parse(returnValue);
+        var nodes = (from xl in returnXe.Elements("Item")
+                     select xl);
 
-        //xe.Add(nodes);
-
-
-        //// < FieldValue tel='' >
-        //// <Item id=xx txt1='' txt2='' dropdown='' />
-        //// <Item id=xx txt1='' txt2='' dropdown='' />
-        ////      <Item id=xx txt1='' txt2='' dropdown='' />
-        ////      <Item id=xx txt1='' txt2='' dropdown=''/>
-        ////</ FieldValue >
-
-        //txtFieldValue.Text = xe.ToString();
+        xe.Add(nodes);
 
 
-        //BindGrid();
+        // < FieldValue tel='' >
+        // <Item id=xx txt1='' txt2='' dropdown='' />
+        // <Item id=xx txt1='' txt2='' dropdown='' />
+        //      <Item id=xx txt1='' txt2='' dropdown='' />
+        //      <Item id=xx txt1='' txt2='' dropdown=''/>
+        //</ FieldValue >
+
+        txtFieldValue.Text = xe.ToString();
+
+
+        BindGrid();
     }
 
 
 
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        //string[] ids = Grid1.GetSelectedRowGUIDs();
+        string[] ids = Grid1.GetSelectedRowGUIDs();
 
-        //XmlDocument xmlDoc = new XmlDocument();
-        //xmlDoc.LoadXml(txtFieldValue.Text);
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.LoadXml(txtFieldValue.Text);
 
-        //foreach (string id in ids)
-        //{
-        //    string xpath = string.Format("./FieldValue/Item[@id='{0}']", id);
-        //    XmlNode node = xmlDoc.SelectSingleNode(xpath);
+        foreach (string id in ids)
+        {
+            string xpath = string.Format("./FieldValue/Item[@id='{0}']", id);
+            XmlNode node = xmlDoc.SelectSingleNode(xpath);
 
-        //    xmlDoc.SelectSingleNode("FieldValue").RemoveChild(node);
+            xmlDoc.SelectSingleNode("FieldValue").RemoveChild(node);
 
-        //}
+        }
 
-        //txtFieldValue.Text = xmlDoc.OuterXml;
-        //BindGrid();
+        txtFieldValue.Text = xmlDoc.OuterXml;
+        BindGrid();
     }
     #endregion
 

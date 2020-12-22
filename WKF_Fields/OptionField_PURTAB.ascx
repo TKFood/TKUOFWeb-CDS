@@ -55,6 +55,33 @@
                 <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />
          </td>        
         </tr>
+    <tr>
+        <td>
+          <Ede:Grid ID="Grid1" runat="server" DataKeyNames="ID" AutoGenerateColumns="false">
+            <Columns>
+                <asp:BoundField HeaderText="TXT1" DataField="TXT1" />
+                <asp:BoundField HeaderText="TXT2" DataField="TXT2" />
+                <asp:BoundField HeaderText="DDL" DataField="DDL" />
+                <asp:TemplateField HeaderText="操作">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lbtnModify" runat="server">修改</asp:LinkButton>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+
+        </Ede:Grid>
+        </td>
+    </tr>
+</table>
+
+<table> 
+    <tr>
+        <td>
+            <asp:TextBox ID="txtFieldValue" runat="server"   
+            TextMode="MultiLine" Width="300px" Height="300px"
+             ></asp:TextBox>
+        </td>
+    </tr>
 </table>
 
 
