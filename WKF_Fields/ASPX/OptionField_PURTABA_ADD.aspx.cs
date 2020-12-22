@@ -50,6 +50,10 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
      
     }
 
+    protected void Button2_OnClick(object sender, EventArgs e)
+    {
+        BindGrid(TextBox1.Text);
+    }
 
     private void CDS_WKF_Fields_MaintainItem_Button2OnClick()
     {
