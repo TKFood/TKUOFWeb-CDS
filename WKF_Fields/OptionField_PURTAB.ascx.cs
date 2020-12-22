@@ -304,9 +304,10 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
 
         DataTable dt = new DataTable();
         dt.Columns.Add("ID");
-        dt.Columns.Add("TXT1");
-        dt.Columns.Add("TXT2");
-        dt.Columns.Add("DDL");
+        dt.Columns.Add("品號");
+        dt.Columns.Add("品名");
+        dt.Columns.Add("數量");
+        dt.Columns.Add("需求日");
 
         var nodes = (from xl in xe.Elements("Item")
                      select xl);
@@ -314,9 +315,10 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         foreach (var node in nodes)
         {
             dt.Rows.Add(node.Attribute("id").Value,
-               node.Attribute("txt1").Value,
-               node.Attribute("txt2").Value,
-               node.Attribute("dropdown").Value);
+               node.Attribute("品號").Value,
+               node.Attribute("品名").Value,
+               node.Attribute("數量").Value,
+               node.Attribute("需求日").Value);
 
         }
 
@@ -377,6 +379,18 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         }
        
     }
+
+    public string GetXML(string id)
+    {
+        XElement xe = new XElement("Item",
+            new XAttribute("id", id),
+             new XAttribute("品號", TextBox7.Text),
+              new XAttribute("品名", TextBox8.Text),
+               new XAttribute("數量", TextBox9.Text),
+                new XAttribute("需求日", TextBox10.Text));
+        return xe.ToString();
+    }
+
     #endregion
 
     #region ENEVNTS
@@ -393,10 +407,10 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
 
 
         // < FieldValue tel='' >
-        // <Item id=xx txt1='' txt2='' dropdown='' />
-        // <Item id=xx txt1='' txt2='' dropdown='' />
-        //      <Item id=xx txt1='' txt2='' dropdown='' />
-        //      <Item id=xx txt1='' txt2='' dropdown=''/>
+        // <Item id=xx txt1='' txt2='' txt3='' />
+        // <Item id=xx txt1='' txt2='' txt3='' />
+        //      <Item id=xx txt1='' txt2='' txt3='' />
+        //      <Item id=xx txt1='' txt2='' txt3=''/>
         //</ FieldValue >
 
         txtFieldValue.Text = xe.ToString();
@@ -424,6 +438,38 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         }
 
         txtFieldValue.Text = xmlDoc.OuterXml;
+        BindGrid();
+    }
+
+    protected void btnADD_Click(object sender, EventArgs e)
+    {
+        txtFieldValue2.Text += GetXML(Guid.NewGuid().ToString());
+
+        string returnValue = string.Format("<Return>{0}</Return>", txtFieldValue2.Text);
+
+        XElement xe = XElement.Parse(txtFieldValue.Text);
+        XElement returnXe = XElement.Parse(returnValue);
+        var nodes = (from xl in returnXe.Elements("Item")
+                     select xl);
+
+        xe.Add(nodes);
+
+
+        // < FieldValue tel='' >
+        // <Item id=xx txt1='' txt2='' txt3='' />
+        // <Item id=xx txt1='' txt2='' txt3='' />
+        //      <Item id=xx txt1='' txt2='' txt3='' />
+        //      <Item id=xx txt1='' txt2='' txt3=''/>
+        //</ FieldValue >
+
+        txtFieldValue.Text = xe.ToString();
+
+        txtFieldValue2.Text = "";
+        TextBox7.Text = "";
+        TextBox8.Text = "";
+        TextBox9.Text = "";
+        TextBox10.Text = "";
+
         BindGrid();
     }
     #endregion

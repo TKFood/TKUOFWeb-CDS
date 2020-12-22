@@ -48,20 +48,40 @@
     </table>
 
 <table>
+    <tr>
+        <td>
+             <asp:Label ID="Label9" runat="server" Text="品號:"></asp:Label>
+            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+        </td>
+         <td>
+             <asp:Label ID="Label10" runat="server" Text="品名:"></asp:Label>
+             <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
+        </td>
+         <td>
+             <asp:Label ID="Label11" runat="server" Text="數量:"></asp:Label>
+             <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+        </td>
+         <td>
+             <asp:Label ID="Label12" runat="server" Text="需求日:"></asp:Label>
+             <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
+        </td>
+    </tr>
       <tr  class="">
          <td  class="">
               <asp:Label ID="Label8" runat="server" Text="明細"></asp:Label>
                  <asp:Button ID="btnInert" runat="server" Text="新增" OnClick="btnInert_Click" />
                 <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />
+               <asp:Button ID="Button1" runat="server" Text="新增ADD" OnClick="btnADD_Click" />
          </td>        
         </tr>
     <tr>
         <td>
           <Ede:Grid ID="Grid1" runat="server" DataKeyNames="ID" AutoGenerateColumns="false">
             <Columns>
-                <asp:BoundField HeaderText="TXT1" DataField="TXT1" />
-                <asp:BoundField HeaderText="TXT2" DataField="TXT2" />
-                <asp:BoundField HeaderText="DDL" DataField="DDL" />
+                <asp:BoundField HeaderText="品號" DataField="品號" />
+                <asp:BoundField HeaderText="品名" DataField="品名" />
+                <asp:BoundField HeaderText="數量" DataField="數量" />
+                <asp:BoundField HeaderText="需求日" DataField="需求日" />
                 <asp:TemplateField HeaderText="操作">
                     <ItemTemplate>
                         <asp:LinkButton ID="lbtnModify" runat="server">修改</asp:LinkButton>
@@ -78,6 +98,11 @@
     <tr>
         <td>
             <asp:TextBox ID="txtFieldValue" runat="server"   
+            TextMode="MultiLine" Width="300px" Height="300px"
+             ></asp:TextBox>
+        </td>
+         <td>
+            <asp:TextBox ID="txtFieldValue2" runat="server"   
             TextMode="MultiLine" Width="300px" Height="300px"
              ></asp:TextBox>
         </td>
