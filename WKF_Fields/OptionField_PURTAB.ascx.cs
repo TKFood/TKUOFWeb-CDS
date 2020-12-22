@@ -178,7 +178,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
 
         if (fieldOptional != null)
         {
-            Dialog.Open2(btnInert, "~/CDS/WKF_Fields/ASPX/MaintainItem.aspx", "", 500, 400, Dialog.PostBackType.AfterReturn);
+            Dialog.Open2(btnInert, "~/CDS/WKF_Fields/ASPX/OptionField_PURTABA_ADD.aspx", "", 500, 400, Dialog.PostBackType.AfterReturn);
 
             if (string.IsNullOrEmpty(fieldOptional.FieldValue))
             {
