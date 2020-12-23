@@ -28,6 +28,7 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
         
     }
 
+    #region FUNCTION
     private void BindGrid(string MB001)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -63,11 +64,14 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
             //Reference the GridView Row.
             GridViewRow row = Grid1.Rows[rowIndex];
 
-           
-            MB001 = row.Cells[1].Text;
-            MB002 = row.Cells[2].Text;
 
+            MB001 = row.Cells[1].Text.Trim();
+            MB002 = row.Cells[2].Text.Trim();
             //TextBox1.Text = MB002;
+
+            Dialog.SetReturnValue2(GetXML(MB001, MB002));
+
+            Dialog.Close(this);
         }
     }
 
@@ -76,6 +80,18 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
 
     }
 
+    public string GetXML(string MB001,string MB002)
+    {
+        XElement xe = new XElement("Item",
+            new XAttribute("MB001", MB001),
+             new XAttribute("MB002", MB002));
+
+        return xe.ToString();
+    }
+    #endregion
+
+
+    #region BUTTON
     protected void Button2_OnClick(object sender, EventArgs e)
     {
         BindGrid(TextBox1.Text);
@@ -83,16 +99,18 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
 
     private void CDS_WKF_Fields_MaintainItem_Button2OnClick()
     {
-      
+
 
     }
 
-    
+
 
     private void CDS_WKF_Fields_MaintainItem_Button1OnClick()
     {
-        
+
 
 
     }
+    #endregion
+
 }

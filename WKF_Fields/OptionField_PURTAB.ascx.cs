@@ -397,26 +397,16 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
     protected void btnInert_Click(object sender, EventArgs e)
     {
         string returnValue = string.Format("<Return>{0}</Return>", Dialog.GetReturnValue());
-
-        XElement xe = XElement.Parse(txtFieldValue.Text);
+     
         XElement returnXe = XElement.Parse(returnValue);
         var nodes = (from xl in returnXe.Elements("Item")
                      select xl);
 
-        xe.Add(nodes);
-
-
-        // < FieldValue tel='' >
-        // <Item id=xx txt1='' txt2='' txt3='' />
-        // <Item id=xx txt1='' txt2='' txt3='' />
-        //      <Item id=xx txt1='' txt2='' txt3='' />
-        //      <Item id=xx txt1='' txt2='' txt3=''/>
-        //</ FieldValue >
-
-        txtFieldValue.Text = xe.ToString();
-
-
-        BindGrid();
+        foreach (var node in nodes)
+        {
+            TextBox7.Text = node.Attribute("MB001").Value;
+            TextBox8.Text = node.Attribute("MB002").Value;
+        }
     }
 
 

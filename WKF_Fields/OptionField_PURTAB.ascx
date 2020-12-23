@@ -52,6 +52,7 @@
         <td>
              <asp:Label ID="Label9" runat="server" Text="品號:"></asp:Label>
             <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+             <asp:Button ID="btnInert" runat="server" Text="查詢" OnClick="btnInert_Click" />
         </td>
          <td>
              <asp:Label ID="Label10" runat="server" Text="品名:"></asp:Label>
@@ -69,9 +70,8 @@
       <tr  class="">
          <td  class="">
               <asp:Label ID="Label8" runat="server" Text="明細"></asp:Label>
-                 <asp:Button ID="btnInert" runat="server" Text="新增" OnClick="btnInert_Click" />
-                <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />
-               <asp:Button ID="Button1" runat="server" Text="新增ADD" OnClick="btnADD_Click" />
+                <asp:Button ID="Button1" runat="server" Text="新增" OnClick="btnADD_Click" /> 
+                <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" />               
          </td>        
         </tr>
     <tr>
