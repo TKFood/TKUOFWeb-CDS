@@ -67,7 +67,7 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
 
             MB001 = row.Cells[1].Text.Trim();
             MB002 = row.Cells[2].Text.Trim();
-            //TextBox1.Text = MB002;
+            //TextBox1.Text = MB002; 
 
             Dialog.SetReturnValue2(GetXML(MB001, MB002));
 
