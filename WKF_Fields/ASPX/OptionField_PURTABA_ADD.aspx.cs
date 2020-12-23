@@ -12,13 +12,20 @@ using System.Xml.Linq;
 
 public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
 {
+    string MB001 = "";
+    string MB002 = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         ((Master_DialogMasterPage)this.Master).Button1AutoCloseWindow = false;
         ((Master_DialogMasterPage)this.Master).Button1OnClick += CDS_WKF_Fields_MaintainItem_Button1OnClick;
         ((Master_DialogMasterPage)this.Master).Button2OnClick += CDS_WKF_Fields_MaintainItem_Button2OnClick;
 
-        BindGrid("");
+        if (!IsPostBack)
+        {
+            BindGrid("");
+        }
+        
     }
 
     private void BindGrid(string MB001)
@@ -46,14 +53,26 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
     }
     protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        string AA = "";
-       
+        if (e.CommandName == "SELECT")
+        {
+            //TextBox1.Text = Convert.ToString(e.CommandArgument.ToString());
+            //MB001 = Convert.ToString(e.CommandArgument.ToString());
+
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+
+            //Reference the GridView Row.
+            GridViewRow row = Grid1.Rows[rowIndex];
+
+           
+            MB001 = row.Cells[1].Text;
+            MB002 = row.Cells[2].Text;
+
+            //TextBox1.Text = MB002;
+        }
     }
 
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        string AA = "";
-
 
     }
 
