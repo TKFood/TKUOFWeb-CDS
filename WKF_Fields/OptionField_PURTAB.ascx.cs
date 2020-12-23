@@ -433,34 +433,39 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
 
     protected void btnADD_Click(object sender, EventArgs e)
     {
-        txtFieldValue2.Text += GetXML(Guid.NewGuid().ToString());
+        if(!string.IsNullOrEmpty(TextBox7.Text)&& !string.IsNullOrEmpty(TextBox7.Text) && !string.IsNullOrEmpty(TextBox8.Text) && !string.IsNullOrEmpty(TextBox10.Text))
+        {
+            txtFieldValue2.Text += GetXML(Guid.NewGuid().ToString());
 
-        string returnValue = string.Format("<Return>{0}</Return>", txtFieldValue2.Text);
+            string returnValue = string.Format("<Return>{0}</Return>", txtFieldValue2.Text);
 
-        XElement xe = XElement.Parse(txtFieldValue.Text);
-        XElement returnXe = XElement.Parse(returnValue);
-        var nodes = (from xl in returnXe.Elements("Item")
-                     select xl);
+            XElement xe = XElement.Parse(txtFieldValue.Text);
+            XElement returnXe = XElement.Parse(returnValue);
+            var nodes = (from xl in returnXe.Elements("Item")
+                         select xl);
 
-        xe.Add(nodes);
+            xe.Add(nodes);
 
 
-        // < FieldValue tel='' >
-        // <Item id=xx txt1='' txt2='' txt3='' />
-        // <Item id=xx txt1='' txt2='' txt3='' />
-        //      <Item id=xx txt1='' txt2='' txt3='' />
-        //      <Item id=xx txt1='' txt2='' txt3=''/>
-        //</ FieldValue >
+            // < FieldValue tel='' >
+            // <Item id=xx txt1='' txt2='' txt3='' />
+            // <Item id=xx txt1='' txt2='' txt3='' />
+            //      <Item id=xx txt1='' txt2='' txt3='' />
+            //      <Item id=xx txt1='' txt2='' txt3=''/>
+            //</ FieldValue >
 
-        txtFieldValue.Text = xe.ToString();
+            txtFieldValue.Text = xe.ToString();
 
-        txtFieldValue2.Text = "";
-        TextBox7.Text = "";
-        TextBox8.Text = "";
-        TextBox9.Text = "";
-        TextBox10.Text = "";
+            txtFieldValue2.Text = "";
+            TextBox7.Text = "";
+            TextBox8.Text = "";
+            TextBox9.Text = "";
+            TextBox10.Text = "";
 
-        BindGrid();
+            BindGrid();
+        }
+        
+
     }
     #endregion
 

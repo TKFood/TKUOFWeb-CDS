@@ -76,35 +76,34 @@
         </tr>
     <tr>
         <td>
-          <Ede:Grid ID="Grid1" runat="server" DataKeyNames="ID" AutoGenerateColumns="false">
-            <Columns>
-                <asp:BoundField HeaderText="品號" DataField="品號" />
-                <asp:BoundField HeaderText="品名" DataField="品名" />
-                <asp:BoundField HeaderText="數量" DataField="數量" />
-                <asp:BoundField HeaderText="需求日" DataField="需求日" />
-                <asp:TemplateField HeaderText="操作">
-                    <ItemTemplate>
-                        <asp:LinkButton ID="lbtnModify" runat="server">修改</asp:LinkButton>
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
+            <div>
+                 <Ede:Grid ID="Grid1" runat="server" DataKeyNames="ID" AutoGenerateColumns="false">
+                    <Columns>
+                        <asp:BoundField HeaderText="品號" DataField="品號" />
+                        <asp:BoundField HeaderText="品名" DataField="品名" />
+                        <asp:BoundField HeaderText="數量" DataField="數量" />
+                        <asp:BoundField HeaderText="需求日" DataField="需求日" />                   
+                   
+                    </Columns>
 
-        </Ede:Grid>
+                </Ede:Grid>
+            </div>
+         
         </td>
     </tr>
 </table>
 
 <table> 
+    
+</table>
+
+<table> 
     <tr>
         <td>
-            <asp:TextBox ID="txtFieldValue" runat="server"   
-            TextMode="MultiLine" Width="300px" Height="300px"
-             ></asp:TextBox>
+            <asp:TextBox ID="txtFieldValue"  runat="server" TextMode="MultiLine" Width="300px" Height="300px" ></asp:TextBox>
         </td>
          <td>
-            <asp:TextBox ID="txtFieldValue2" runat="server"   
-            TextMode="MultiLine" Width="300px" Height="300px"
-             ></asp:TextBox>
+            <asp:TextBox ID="txtFieldValue2" runat="server"  TextMode="MultiLine" Width="300px" Height="300px"  ></asp:TextBox>
         </td>
     </tr>
 </table>
