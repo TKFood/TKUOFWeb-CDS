@@ -32,6 +32,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         set { this.m_ShowGetValueButton = value; }
     }
 
+    string DGXML = "";
     #endregion
 
     protected void Page_Load(object sender, EventArgs e)
@@ -391,6 +392,10 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         return xe.ToString();
     }
 
+    public void SETLabelMESSAGES()
+    {
+        LabelMESSAGES.Text = "";
+    }
     #endregion
 
     #region ENEVNTS
@@ -416,6 +421,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         string[] ids = Grid1.GetSelectedRowGUIDs();
 
         XmlDocument xmlDoc = new XmlDocument();
+
         xmlDoc.LoadXml(txtFieldValue.Text);
 
         foreach (string id in ids)
@@ -428,12 +434,40 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         }
 
         txtFieldValue.Text = xmlDoc.OuterXml;
+
         BindGrid();
     }
 
     protected void btnADD_Click(object sender, EventArgs e)
     {
-        if(!string.IsNullOrEmpty(TextBox7.Text)&& !string.IsNullOrEmpty(TextBox7.Text) && !string.IsNullOrEmpty(TextBox8.Text) && !string.IsNullOrEmpty(TextBox10.Text))
+        SETLabelMESSAGES();
+        
+        if (!string.IsNullOrEmpty(TextBox10.Text)&& TextBox10.Text.Length==8)
+        {
+            string yyyy = TextBox10.Text.Substring(0, 4);
+            string MM = TextBox10.Text.Substring(4, 2);
+            string dd = TextBox10.Text.Substring(6, 2);
+
+            string strDate = yyyy + "/" + MM + "/" + dd;
+            DateTime dtDate;
+
+            if (DateTime.TryParse(strDate, out dtDate))
+            {
+                
+            }
+            else
+            {
+                LabelMESSAGES.Text = "不是正確的日期格式型別！";
+
+            }
+        }
+        else
+        {
+            LabelMESSAGES.Text = "不是正確的日期格式型別！";
+
+        }
+
+        if (string.IsNullOrEmpty(LabelMESSAGES.Text) && !string.IsNullOrEmpty(TextBox7.Text)&& !string.IsNullOrEmpty(TextBox8.Text) && !string.IsNullOrEmpty(TextBox9.Text) && !string.IsNullOrEmpty(TextBox10.Text))
         {
             txtFieldValue2.Text += GetXML(Guid.NewGuid().ToString());
 
