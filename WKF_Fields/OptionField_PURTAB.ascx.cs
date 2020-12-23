@@ -18,6 +18,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Ede.Uof.Utility.Page.Common;
 using System.Linq;
+using Kendo.Mvc.Extensions;
 
 public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_VersionFieldUserControl_VersionFieldUC
 {
@@ -129,8 +130,13 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         get
         {
             //回傳字串
-			//取得表單欄位填寫的內容
-			return String.Empty;
+            //取得表單欄位填寫的內容
+            XElement xe = XElement.Parse(txtFieldValue.Text);
+            xe.SetAttributeValue("NAME", TextBox4.Text);
+            xe.SetAttributeValue("DEP", TextBox5.Text);
+            xe.SetAttributeValue("COMMENT", TextBox6.Text);
+
+            return xe.ToString();
         }
         set
         {
@@ -187,10 +193,21 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
             }
             else
             {
+                
                 txtFieldValue.Text = fieldOptional.FieldValue;
                 BindGrid();
             }
 
+            //<FieldValue txt1=''  txt2='' />
+
+            if (!string.IsNullOrEmpty(fieldOptional.FieldValue))
+            {
+
+                XElement xe = XElement.Parse(fieldOptional.FieldValue);
+                TextBox4.Text = xe.Attribute("NAME").Value;
+                TextBox5.Text = xe.Attribute("DEP").Value;
+                TextBox6.Text = xe.Attribute("COMMENT").Value;
+            }
 
             //若有擴充屬性，可以用該屬性存取
             // fieldOptional.ExtensionSetting
