@@ -132,6 +132,8 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
             //回傳字串
             //取得表單欄位填寫的內容
             XElement xe = XElement.Parse(txtFieldValue.Text);
+            xe.SetAttributeValue("TA001", TextBox1.Text);
+            xe.SetAttributeValue("TA002", TextBox2.Text);
             xe.SetAttributeValue("NAME", TextBox4.Text);
             xe.SetAttributeValue("DEP", TextBox5.Text);
             xe.SetAttributeValue("COMMENT", TextBox6.Text);
@@ -204,6 +206,8 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
             {
 
                 XElement xe = XElement.Parse(fieldOptional.FieldValue);
+                TextBox1.Text = xe.Attribute("TA001").Value;
+                TextBox2.Text = xe.Attribute("TA002").Value;
                 TextBox4.Text = xe.Attribute("NAME").Value;
                 TextBox5.Text = xe.Attribute("DEP").Value;
                 TextBox6.Text = xe.Attribute("COMMENT").Value;
