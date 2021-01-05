@@ -330,6 +330,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         dt.Columns.Add("品名");
         dt.Columns.Add("數量");
         dt.Columns.Add("需求日");
+        dt.Columns.Add("單身備註");
 
         var nodes = (from xl in xe.Elements("Item")
                      select xl);
@@ -340,7 +341,8 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
                node.Attribute("品號").Value,
                node.Attribute("品名").Value,
                node.Attribute("數量").Value,
-               node.Attribute("需求日").Value);
+               node.Attribute("需求日").Value,
+               node.Attribute("單身備註").Value);
 
         }
 
@@ -409,7 +411,10 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
              new XAttribute("品號", TextBox7.Text),
               new XAttribute("品名", TextBox8.Text),
                new XAttribute("數量", TextBox9.Text),
-                new XAttribute("需求日", TextBox10.Text));
+                new XAttribute("需求日", TextBox10.Text),
+                 new XAttribute("單身備註", TextBox11.Text)
+
+                );
         return xe.ToString();
     }
 
@@ -432,6 +437,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
         {
             TextBox7.Text = node.Attribute("MB001").Value;
             TextBox8.Text = node.Attribute("MB002").Value;
+     
         }
     }
 
@@ -516,6 +522,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
             TextBox8.Text = "";
             TextBox9.Text = "";
             TextBox10.Text = "";
+            TextBox11.Text = "";
 
             BindGrid();
         }

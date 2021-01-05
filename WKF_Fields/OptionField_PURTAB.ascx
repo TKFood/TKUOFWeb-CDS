@@ -70,6 +70,10 @@
                  <asp:Label ID="Label16" runat="server" Text="需求日(年4碼+月2碼+日2碼):<br/>"></asp:Label>
                  <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
             </td>
+             <td>
+                 <asp:Label ID="Label8" runat="server" Text="單身備註:<br/>"></asp:Label>
+                 <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox>
+            </td>
         </tr>          
       </table>
 </div>
@@ -96,7 +100,8 @@
                             <asp:BoundField HeaderText="品號" DataField="品號" HeaderStyle-Width="100px" />
                             <asp:BoundField HeaderText="品名" DataField="品名" HeaderStyle-Width="400px"/>
                             <asp:BoundField HeaderText="數量" DataField="數量" HeaderStyle-Width="100px" />
-                            <asp:BoundField HeaderText="需求日" DataField="需求日" HeaderStyle-Width="100px"/>                   
+                            <asp:BoundField HeaderText="需求日" DataField="需求日" HeaderStyle-Width="100px"/> 
+                             <asp:BoundField HeaderText="單身備註" DataField="單身備註" HeaderStyle-Width="100px"/> 
                    
                         </Columns>
                     </Ede:Grid>

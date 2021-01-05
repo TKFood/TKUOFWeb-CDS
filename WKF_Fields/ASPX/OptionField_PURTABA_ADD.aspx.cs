@@ -15,6 +15,7 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
     string MB001 = "";
     string MB002 = "";
 
+
     protected void Page_Load(object sender, EventArgs e)
     {
         ((Master_DialogMasterPage)this.Master).Button1AutoCloseWindow = false;
@@ -67,6 +68,7 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
 
             MB001 = row.Cells[1].Text.Trim();
             MB002 = row.Cells[2].Text.Trim();
+
             //TextBox1.Text = MB002; 
 
             Dialog.SetReturnValue2(GetXML(MB001, MB002));
@@ -84,7 +86,9 @@ public partial class CDS_WKF_Fields_ASPX_OptionField_PURTABA_ADD : BasePage
     {
         XElement xe = new XElement("Item",
             new XAttribute("MB001", MB001),
-             new XAttribute("MB002", MB002));
+             new XAttribute("MB002", MB002)
+
+             );
 
         return xe.ToString();
     }
