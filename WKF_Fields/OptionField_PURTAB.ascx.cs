@@ -38,11 +38,13 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		//這裡不用修改
-		//欄位的初始化資料都到SetField Method去做
+        TextBox3.Text = DateTime.Now.ToString("yyyyMMdd");
+
+        //這裡不用修改
+        //欄位的初始化資料都到SetField Method去做
         SetField(m_versionField);
 
-        TextBox3.Text = DateTime.Now.ToString("yyyyMMdd");
+        
     }    
 
     /// <summary>
@@ -134,6 +136,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
             XElement xe = XElement.Parse(txtFieldValue.Text);
             xe.SetAttributeValue("TA001", TextBox1.Text);
             xe.SetAttributeValue("TA002", TextBox2.Text);
+            xe.SetAttributeValue("TA003", TextBox3.Text);
             xe.SetAttributeValue("NAME", TextBox4.Text);
             xe.SetAttributeValue("DEP", TextBox5.Text);
             xe.SetAttributeValue("COMMENT", TextBox6.Text);
@@ -208,6 +211,7 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
                 XElement xe = XElement.Parse(fieldOptional.FieldValue);
                 TextBox1.Text = xe.Attribute("TA001").Value;
                 TextBox2.Text = xe.Attribute("TA002").Value;
+                TextBox3.Text = xe.Attribute("TA003").Value;
                 TextBox4.Text = xe.Attribute("NAME").Value;
                 TextBox5.Text = xe.Attribute("DEP").Value;
                 TextBox6.Text = xe.Attribute("COMMENT").Value;
@@ -362,6 +366,21 @@ public partial class WKF_OptionalFields_OptionField_PURTAB : WKF_FormManagement_
             TextBox5.Text = "";
         }
     }
+    protected void TextBox9_TextChanged(object sender, EventArgs e)
+    {
+        int n;
+
+        if (!int.TryParse(TextBox9.Text, out n))
+        {
+            TextBox9.Text = "";
+            LabelMESSAGES.Text = "不是正確的數字！";
+        }
+        else
+        {
+            SETLabelMESSAGES();
+        }
+    }
+
 
     public string  SEARCHCMSMV(string MV001)
     {

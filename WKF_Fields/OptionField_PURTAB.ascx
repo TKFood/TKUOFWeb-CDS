@@ -25,7 +25,7 @@
     <tr  class="">
          <td  class="">
               <asp:Label ID="Label4" runat="server" Text="請購日期:"></asp:Label>
-             <asp:TextBox ID="TextBox3" runat="server" Text="請購日期，不用填" ReadOnly="true"></asp:TextBox>
+             <asp:TextBox ID="TextBox3" runat="server" Text="請購日期，不用填" ></asp:TextBox>
          </td>        
         </tr>
     <tr  class="">
@@ -64,7 +64,7 @@
             </td>
              <td>
                  <asp:Label ID="Label15" runat="server" Text="數量:<br/>"></asp:Label>
-                 <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                 <asp:TextBox ID="TextBox9" runat="server"  AutoPostBack="true" OnTextChanged="TextBox9_TextChanged"></asp:TextBox>
             </td>
              <td>
                  <asp:Label ID="Label16" runat="server" Text="需求日(年4碼+月2碼+日2碼):<br/>"></asp:Label>
