@@ -48,7 +48,7 @@ public partial class CDS_WebPage_SIGN_SIGNPURTATB : Ede.Uof.Utility.Page.BasePag
                         SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +''+CONVERT(NVARCHAR,TB005)+'-數量'+CONVERT(NVARCHAR,CONVERT(INT,TB011))+'-單價' AS 'data()'
+                                END +''+TB005+'-數量'+CONVERT(NVARCHAR,CONVERT(INT,TB009))+'' AS 'data()'
                         FROM  [TK].dbo.PURTB WHERE TA001=TB001 AND TA002=TB002 
                         FOR XML PATH(''), TYPE  
                         ).value('.','nvarchar(max)')  As DETAILS 
