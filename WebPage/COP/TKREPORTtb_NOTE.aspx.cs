@@ -35,6 +35,9 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             BindGrid2(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
             BindGrid3(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
             BindGrid4(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid5(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid6(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid7(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
 
             txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
             txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
@@ -46,6 +49,10 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             BindGrid2(txtDate1.Text, txtDate2.Text);
             BindGrid3(txtDate1.Text, txtDate2.Text);
             BindGrid4(txtDate1.Text, txtDate2.Text);
+            BindGrid5(txtDate1.Text, txtDate2.Text);
+            BindGrid6(txtDate1.Text, txtDate2.Text);
+            BindGrid7(txtDate1.Text, txtDate2.Text);
+
         }
 
 
@@ -293,6 +300,168 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         BindGrid3(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
     }
     protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
+
+
+    }
+
+    private void BindGrid5(string SDATE, string EDATE)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT COUNT(*) AS COUNTS
+                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                            AND [tb_NOTE].[COMPANY_ID]<>'0'
+
+                        ";
+
+        m_db.AddParameter("@SDATE", SDATE);
+        m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        Grid5.DataSource = dt;
+        Grid5.DataBind();
+    }
+
+    protected void grid5_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid5.PageIndex = e.NewPageIndex;
+        BindGrid3(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+    protected void Grid5_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
+
+
+    }
+
+
+
+    private void BindGrid6(string SDATE, string EDATE)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                            SELECT [USER_NAME]
+                            ,(SELECT COUNT(*)  FROM [UOF].[dbo].[TB_EIP_SCH_WORK]  
+                            WHERE [SUBJECT] LIKE '%拜訪%' 
+                            AND CONVERT(nvarchar,[START_TIME],111)>='2021/03/01'
+                            AND CONVERT(nvarchar,[START_TIME],111)<='2021/03/31'
+                            AND [EXECUTE_USER]=[USER_GUID]) AS PRECOUNTS
+                            ,COUNT([COMPANY_NAME] ) AS COUNTS
+                            FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                            WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                            AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                            AND [tb_NOTE].[COMPANY_ID]<>'0'
+                            GROUP BY     [USER_NAME]   ,[USER_GUID]         
+                            ORDER BY [USER_NAME]                          
+
+                        ";
+
+        m_db.AddParameter("@SDATE", SDATE);
+        m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        Grid6.DataSource = dt;
+        Grid6.DataBind();
+    }
+
+    protected void grid6_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid6.PageIndex = e.NewPageIndex;
+        BindGrid6(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+    protected void Grid6_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
+
+
+    }
+
+    private void BindGrid7(string SDATE, string EDATE)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                            SELECT [NAME],CONVERT(nvarchar,[START_TIME],111) AS 'DAYS',[SUBJECT]
+                            FROM [UOF].[dbo].[TB_EIP_SCH_WORK], [UOF].[dbo].[TB_EB_USER]
+
+                            WHERE [TB_EB_USER].[USER_GUID]=[TB_EIP_SCH_WORK].[EXECUTE_USER]
+                            AND [SUBJECT] LIKE '%拜訪%' 
+                            AND CONVERT(nvarchar,[START_TIME],111)>=@SDATE 
+                            AND CONVERT(nvarchar,[START_TIME],111)<=@EDATE
+                            ORDER BY [NAME],CONVERT(nvarchar,[START_TIME],111) ,[DESCRIPTION]
+                        
+
+                        ";
+
+        DateTime SD = Convert.ToDateTime(SDATE);
+        SD=SD.AddDays(7);
+        DateTime ED = Convert.ToDateTime(EDATE);
+        ED=ED.AddDays(7);
+
+        string SSDATE = SD.ToString("yyyy/MM/dd");
+        string EEDATE = ED.ToString("yyyy/MM/dd");
+
+        m_db.AddParameter("@SDATE", SSDATE);
+        m_db.AddParameter("@EDATE", EEDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        Grid7.DataSource = dt;
+        Grid7.DataBind();
+    }
+
+    protected void grid7_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid7.PageIndex = e.NewPageIndex;
+        BindGrid7(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
+    }
+    protected void Grid7_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         //    if (e.Row.RowType == DataControlRowType.DataRow)
         //    {
