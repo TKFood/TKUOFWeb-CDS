@@ -8,7 +8,7 @@
         //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
         //OpenDialogResult為關閉視後會執行的JS Function
         //參數使用JSON格式傳遞
-        $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_COPCONDTIONSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+        $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_PRODUCTSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
           return false;
 
@@ -42,14 +42,46 @@
                  <tr>
                     <td colspan="2" class="PopTableRightTD" >
                         <div style="overflow-x:auto;width:100%">
-                            <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport1" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource1" OnPageIndexChanging="grid1_PageIndexChanging" >
+                            <Fast:Grid ID="Grid1" style="overflow-x:auto;width:100%" OnRowDataBound="Grid1_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport1" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource1" OnPageIndexChanging="grid1_PageIndexChanging" >
                                 <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>                 
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
                                         <Columns>
                                              <asp:BoundField HeaderText="品號" DataField="MB001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                             </asp:BoundField>  
-                                             
+                                              <asp:BoundField HeaderText="品名" DataField="MB002" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="規格" DataField="MB003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="單位" DataField="MB004" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="口味" DataField="MA003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="箱入數" DataField="MD007" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="有效期" DataField="VALIDITYPERIOD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="標準售價" DataField="MB047" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="條碼" DataField="MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="商品特點" DataField="PRODUCTSFEATURES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="銷售重點" DataField="SALESFOCUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                                   <asp:BoundField HeaderText="文案" DataField="COPYWRITINGS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
                                           
                                         </Columns>
                                 </Fast:Grid>
