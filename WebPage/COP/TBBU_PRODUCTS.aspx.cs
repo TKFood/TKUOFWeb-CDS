@@ -33,12 +33,13 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                       SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
+                        SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
                         ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
-                        FROM [TKBUSINESS].[dbo].[PRODUCTS],[TK].dbo.[INVMB] 
+                        FROM [TKBUSINESS].[dbo].[PRODUCTS]
+                        LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
                         LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
-                        LEFT JOIN [TK].dbo.BOMMD ON MD001=MB001 AND MD003 LIKE '201%'
-                        WHERE [PRODUCTS].[MB001]=[INVMB].[MB001]
+                        LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
+
                         ORDER BY [PRODUCTS].[MB001]
                         ";
 

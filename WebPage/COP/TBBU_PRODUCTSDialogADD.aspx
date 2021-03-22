@@ -12,7 +12,7 @@
     }); 
   
 </script>
-    <div style="overflow-x:auto;width:800px">
+    <div style="overflow-x:auto;width:100%">
 
         </div>
     <table class="PopTable" >
@@ -37,10 +37,10 @@
        </tr>
                 <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label3" runat="server" Text="商品特點"></asp:Label>
+                <asp:Label ID="Label3" runat="server" Text="商品特點"  ></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox2" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                <asp:TextBox ID="TextBox2" runat="server"  Text=""  Width = "200%" TextMode="MultiLine"  Row="5" style="height:120px;"></asp:TextBox>
             </td> 
        </tr>
                 <tr>
@@ -48,15 +48,15 @@
                 <asp:Label ID="Label5" runat="server" Text="銷售重點"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox3" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                <asp:TextBox ID="TextBox3" runat="server"  Text="" Width = "200%" TextMode="MultiLine"  Row="5"  style="height:120px;"></asp:TextBox>
             </td> 
        </tr>
                 <tr>
             <td class="PopTableLeftTD" >
-                <asp:Label ID="Label6" runat="server" Text="文案1"></asp:Label>
+                <asp:Label ID="Label6" runat="server" Text="文案"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox4" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server"  Text="" Width = "200%" TextMode="MultiLine"  Row="5"  style="height:120px;"></asp:TextBox>
             </td> 
        </tr>
        
