@@ -82,6 +82,13 @@
                                                    <asp:BoundField HeaderText="文案" DataField="COPYWRITINGS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                             </asp:BoundField>  
+                                             
+                                            <asp:TemplateField HeaderText="照片" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" />
+                                                </ItemTemplate >
+                                            </asp:TemplateField>
+
                                            <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("MB001") %>'/>
