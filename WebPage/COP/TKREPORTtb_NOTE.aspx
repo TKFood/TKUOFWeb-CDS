@@ -54,316 +54,399 @@
         $("#Show_img_Max").css("display", "none");
     }
 </script>
+    <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
+    <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
+	    <Tabs>
+		    <telerik:RadTab Text="客情資料整理">
+		    </telerik:RadTab>
+		    <telerik:RadTab Text="明細資料">
+		    </telerik:RadTab>
+	    </Tabs>
+    </telerik:RadTabStrip>
+	<telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
+	    <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
+		   <div id="tabs-1">
+                <table class="PopTable" >         
+                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                        <td class="PopTableRightTD">                    
+                            <asp:TextBox ID="txtDate1"  runat="server" Width = "100px"></asp:TextBox>
+                            <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
+                            <asp:TextBox ID="txtDate2"  runat="server" Width = "100px"></asp:TextBox>
+                            <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢 "
+                                onclick="btn1_Click" meta:resourcekey="btn4Resource1" />                
+                        </td>            
+                    </tr>
+                </table>
 
-    <table class="PopTable" >         
-         <tr>
-            <td class="PopTableLeftTD">
-                <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>             
-            </td>
-            <td class="PopTableRightTD">                    
-                <asp:TextBox ID="txtDate1"  runat="server" Width = "100px"></asp:TextBox>
-                <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
-                <asp:TextBox ID="txtDate2"  runat="server" Width = "100px"></asp:TextBox>
-                <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
-                <asp:Button ID="Button1" runat="server" Text=" 查詢 "
-                    onclick="btn1_Click" meta:resourcekey="btn4Resource1" />                
-            </td>            
-        </tr>
-    </table>
+                 <label>當月累積數</label>
+                <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid8" OnRowDataBound="Grid8_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource8" OnPageIndexChanging="grid8_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                 
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務員" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="負責客戶數" DataField="SALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="拜訪客戶數" DataField="COMS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="拜訪次數" DataField="NOTES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="拜訪客戶完成率%" DataField="PCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                
+                                
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
 
-     <label>當月累積數</label>
-    <table class="PopTable">
-          <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid8" OnRowDataBound="Grid8_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource8" OnPageIndexChanging="grid8_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                <label>記錄當週筆數</label>
+                <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid5" OnRowDataBound="Grid5_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource5" OnPageIndexChanging="grid5_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                 <asp:BoundField HeaderText="業務員" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>  
-                                  <asp:BoundField HeaderText="負責客戶數" DataField="SALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                  <asp:BoundField HeaderText="拜訪客戶數" DataField="COMS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                  <asp:BoundField HeaderText="拜訪次數" DataField="NOTES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                  <asp:BoundField HeaderText="拜訪客戶完成率" DataField="PCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="客情記錄次數" DataField="COUNTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
                                 
                                 
-                            </Columns>
-                        </Fast:Grid>
-                    </div>
-            </td>
-        </tr>
-    </table>
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
 
-    <label>記錄當週筆數</label>
-    <table class="PopTable">
-          <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid5" OnRowDataBound="Grid5_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource5" OnPageIndexChanging="grid5_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+               <label>業務員記錄</label>
+                <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid6" OnRowDataBound="Grid6_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource6" OnPageIndexChanging="grid6_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                 <asp:BoundField HeaderText="客情記錄次數" DataField="COUNTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務員" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="預計拜訪次數" DataField="PRECOUNTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="實際記錄次數" DataField="COUNTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="完成度%" DataField="PCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField> 
                                 
                                 
-                            </Columns>
-                        </Fast:Grid>
-                    </div>
-            </td>
-        </tr>
-    </table>
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
+                <label>下週預排拜訪</label>
+                <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid7" OnRowDataBound="Grid7_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource7" OnPageIndexChanging="grid7_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                 
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務員" DataField="NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="預計拜訪日期" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="拜訪客戶" DataField="SUBJECT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                            </asp:BoundField>   
+                                
+                                
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
 
-   <label>業務員記錄</label>
-    <table class="PopTable">
-          <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid6" OnRowDataBound="Grid6_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource6" OnPageIndexChanging="grid6_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                <label>客戶記錄-主管決議:是</label>
+                <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                 <asp:BoundField HeaderText="業務員" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>  
-                                  <asp:BoundField HeaderText="預計拜訪次數" DataField="PRECOUNTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                  <asp:BoundField HeaderText="實際記錄次數" DataField="COUNTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                  <asp:BoundField HeaderText="完成度%" DataField="PCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField> 
-                                
-                                
-                            </Columns>
-                        </Fast:Grid>
-                    </div>
-            </td>
-        </tr>
-    </table>
-    <label>下週預排拜訪</label>
-    <table class="PopTable">
-          <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid7" OnRowDataBound="Grid7_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource7" OnPageIndexChanging="grid7_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
-                 
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                 <asp:BoundField HeaderText="業務員" DataField="NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>  
-                                  <asp:BoundField HeaderText="預計拜訪日期" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                  <asp:BoundField HeaderText="拜訪客戶" DataField="SUBJECT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                </asp:BoundField>   
-                                
-                                
-                            </Columns>
-                        </Fast:Grid>
-                    </div>
-            </td>
-        </tr>
-    </table>
-
-    <label>客戶記錄-主管決議:是</label>
-    <table class="PopTable">
-          <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
-                 
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                 <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                 <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>   
-                                <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemTemplate>
-                                        <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                        <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                    </ItemTemplate>                                        
-                                 </asp:TemplateField>
-                               <%--  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                </asp:BoundField> --%>  
-                                 <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField> 
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                             <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>   
+                                            <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemTemplate>
+                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                                </ItemTemplate>                                        
+                                             </asp:TemplateField>
+                                           <%--  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                            </asp:BoundField> --%>  
+                                             <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField> 
                                
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>
-                                    </ItemTemplate >
-                                </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>
+                                                </ItemTemplate >
+                                            </asp:TemplateField>
                                 
-                            </Columns>
-                        </Fast:Grid>
-                    </div>
-            </td>
-        </tr>
-    </table>
-    <label>專案記錄-主管決議:是</label>
-      <table class="PopTable">
-            <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid3" OnRowDataBound="Grid3_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource3" OnPageIndexChanging="grid3_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
+                <label>專案記錄-主管決議:是</label>
+                  <table class="PopTable">
+                        <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid3" OnRowDataBound="Grid3_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource3" OnPageIndexChanging="grid3_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                 <asp:BoundField HeaderText="客戶名稱" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>  
-                                 <asp:BoundField HeaderText="專案名稱" DataField="OPPORTUNITY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>  
-                                 <asp:BoundField HeaderText="商品" DataField="PRODUCT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                </asp:BoundField>   
-                                <asp:BoundField HeaderText="專案金額" DataField="AMOUNT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                </asp:BoundField> 
-                                 <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemTemplate>
-                                        <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                        <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                    </ItemTemplate>                                        
-                                 </asp:TemplateField>
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                            <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                             <asp:BoundField HeaderText="客戶名稱" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>  
+                                             <asp:BoundField HeaderText="專案名稱" DataField="OPPORTUNITY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>  
+                                             <asp:BoundField HeaderText="商品" DataField="PRODUCT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                            </asp:BoundField>   
+                                            <asp:BoundField HeaderText="專案金額" DataField="AMOUNT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField> 
+                                             <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemTemplate>
+                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                                </ItemTemplate>                                        
+                                             </asp:TemplateField>
 
-                               <%--  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                </asp:BoundField>   --%>
-                                 <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>   
-                            </Columns>
-                        </Fast:Grid>
-                    </div>
-            </td>
-        </tr>
-    </table>
+                                           <%--  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                            </asp:BoundField>   --%>
+                                             <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>   
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
 
-    <label>客戶記錄-主管決議:否</label>
-     <table class="PopTable">
-           <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid2_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                <label>客戶記錄-主管決議:否</label>
+                 <table class="PopTable">
+                       <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid2_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                 <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                 <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>   
-                                <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemTemplate>
-                                        <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                        <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                    </ItemTemplate>                                        
-                                 </asp:TemplateField>
-                                 <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField> 
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                             <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>   
+                                            <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemTemplate>
+                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                                </ItemTemplate>                                        
+                                             </asp:TemplateField>
+                                             <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField> 
                                
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <%--<asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>--%>
-                                        <asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px"/>                                  
-                                    </ItemTemplate >
-                                </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <%--<asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>--%>
+                                                    <asp:Image ID="Image2" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px"/>                                  
+                                                </ItemTemplate >
+                                            </asp:TemplateField>
                                 
-                            </Columns>
-                        </Fast:Grid>
-                    </div>
-            </td>
-        </tr>
-    </table>
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
 
-     <label>專案記錄-主管決議:否</label>
-      <table class="PopTable">
-          <tr>
-            <td colspan="2" class="PopTableRightTD" >
-                <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid4" OnRowDataBound="Grid4_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource4" OnPageIndexChanging="grid4_PageIndexChanging" >
-                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                 <label>專案記錄-主管決議:否</label>
+                  <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid4" OnRowDataBound="Grid4_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource4" OnPageIndexChanging="grid4_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
-                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
-                            <Columns>
-                                <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
-                                </asp:BoundField>   
-                                 <asp:BoundField HeaderText="客戶名稱" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>  
-                                 <asp:BoundField HeaderText="專案名稱" DataField="OPPORTUNITY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>  
-                                 <asp:BoundField HeaderText="商品" DataField="PRODUCT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                </asp:BoundField>   
-                                <asp:BoundField HeaderText="專案金額" DataField="AMOUNT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                </asp:BoundField> 
-                                 <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemTemplate>
-                                        <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                        <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                    </ItemTemplate>                                        
-                                 </asp:TemplateField>
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                            <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                             <asp:BoundField HeaderText="客戶名稱" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>  
+                                             <asp:BoundField HeaderText="專案名稱" DataField="OPPORTUNITY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>  
+                                             <asp:BoundField HeaderText="商品" DataField="PRODUCT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                            </asp:BoundField>   
+                                            <asp:BoundField HeaderText="專案金額" DataField="AMOUNT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField> 
+                                             <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemTemplate>
+                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                                </ItemTemplate>                                        
+                                             </asp:TemplateField>
 
-                               <%--  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                                </asp:BoundField>   --%>
-                                 <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                    <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
-                                </asp:BoundField>   
-                            </Columns>
-                        </Fast:Grid>
+                                           <%--  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                            </asp:BoundField>   --%>
+                                             <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>   
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <div id="Show_img_Max" onclick="divClick()">
+                        <div>                
+                            <img src="" class="Show_imgStyle" />
+                        </div>
                     </div>
-            </td>
-        </tr>
-    </table>
 
-    <table>
-        <div id="Show_img_Max" onclick="divClick()">
-            <div>                
-                <img src="" class="Show_imgStyle" />
-            </div>
-        </div>
+                </table>   
+               
+                 </div>
+	    </telerik:RadPageView>
+	    <telerik:RadPageView ID="RadPageView2" runat="server">
+		    <div id="tabs-2">
+              <table class="PopTable">
+                 <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label1" runat="server" Text="資料" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                                  
+                    </tr> 
+                  </table>
+                <label>當月客戶已訪數</label>
+                <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid9" OnRowDataBound="Grid9_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource9" OnPageIndexChanging="grid9_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                 
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務員" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="拜訪客戶數" DataField="NOTES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                
+                                
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
 
-    </table>     
+                 <label>當月客戶未訪數</label>
+                <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid10" OnRowDataBound="Grid10_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource10" OnPageIndexChanging="grid10_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                 
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務員" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>  
+                                              <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                            </asp:BoundField>   
+                                              <asp:BoundField HeaderText="拜訪客戶數" DataField="NOTES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                
+                                
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
+
+          </div>
+	    </telerik:RadPageView>
+    </telerik:RadMultiPage>​
   
 </asp:Content>
 
