@@ -111,6 +111,9 @@
                                   <asp:BoundField HeaderText="實際記錄次數" DataField="COUNTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                     <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
                                 </asp:BoundField>   
+                                  <asp:BoundField HeaderText="完成度%" DataField="PCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                </asp:BoundField> 
                                 
                                 
                             </Columns>

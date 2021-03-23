@@ -369,11 +369,12 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
+                            SELECT [USER_NAME],PRECOUNTS,COUNTS,CONVERT(decimal(16,2),(CASE WHEN PRECOUNTS>0 THEN (CONVERT(decimal(16,2),COUNTS)/CONVERT(decimal(16,2),PRECOUNTS)*100) ELSE COUNTS END)) AS 'PCTS'
+                            FROM (
                             SELECT [USER_NAME]
                             ,(SELECT COUNT(*)  FROM [UOF].[dbo].[TB_EIP_SCH_WORK]  
                             WHERE [SUBJECT] LIKE '%拜訪%' 
-                            AND CONVERT(nvarchar,[START_TIME],111)>='2021/03/01'
-                            AND CONVERT(nvarchar,[START_TIME],111)<='2021/03/31'
+                            AND CONVERT(nvarchar,[START_TIME],111)>=@SDATE AND CONVERT(nvarchar,[START_TIME],111)<=@EDATE
                             AND [EXECUTE_USER]=[USER_GUID]) AS PRECOUNTS
                             ,COUNT([COMPANY_NAME] ) AS COUNTS
                             FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
@@ -381,8 +382,11 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
                             WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
                             AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
                             AND [tb_NOTE].[COMPANY_ID]<>'0'
-                            GROUP BY     [USER_NAME]   ,[USER_GUID]         
-                            ORDER BY [USER_NAME]                          
+                            GROUP BY     [USER_NAME]   ,[USER_GUID]   
+                            ) AS TEMP
+                            WHERE [USER_NAME]  COLLATE Chinese_Taiwan_Stroke_CI_AS IN (SELECT [USER_NAME] FROM [HJ_BM_DB].[dbo].[COPSALES])
+                            ORDER BY [USER_NAME] 
+                                                   
 
                         ";
 
