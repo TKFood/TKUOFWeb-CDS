@@ -36,7 +36,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         string cmdTxt = @" 
                         SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
                         ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
-                        ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID]
+                        ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
                         FROM [TKBUSINESS].[dbo].[PRODUCTS]
                         LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
                         LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
@@ -100,11 +100,16 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             {
                 //img.ImageUrl = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
 
+
                 PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
                                 ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
 
-                img.ImageUrl = PATH.ToString();
 
+                //img.ImageUrl  = Request.ApplicationPath + "/Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
+
+                //  img.ImageUrl = string.Format("~/Common/FileCenter/Downloadfile.ashx?id={0}", row["THUMBNAIL_FILE_ID"].ToString());
+                 img.ImageUrl = PATH.ToString();
+                //e.Row.Cells[0].Text = row["THUMBNAIL_FILE_ID"].ToString();
                 ////獲取當前行的圖片路徑
                 //string ImgUrl = img.ImageUrl;
                 ////給帶圖片的單元格添加點擊事件
@@ -122,27 +127,35 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
 
-        //string cmdTxt = @" 
-                      
-        //                ";
+        string cmdTxt = @" 
+                       SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
+                        ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
+                        ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+                        FROM [TKBUSINESS].[dbo].[PRODUCTS]
+                        LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
+                        LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
+                        LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
+                        LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_TOPIC]=[PRODUCTS].[MB001] COLLATE Chinese_Taiwan_Stroke_BIN
+                        ORDER BY [PRODUCTS].[MB001]
+                        ";
 
 
 
-        //DataTable dt = new DataTable();
+        DataTable dt = new DataTable();
 
-        //dt.Load(m_db.ExecuteReader(cmdTxt));
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        //if (dt.Rows.Count > 0)
-        //{
-        //    dt.Columns[0].Caption = "ID";
-           
+        if (dt.Rows.Count > 0)
+        {
+            dt.Columns[0].Caption = "ID";
 
-        //    e.Datasource = dt;
-        //}
+
+            e.Datasource = dt;
+        }
     }
     #endregion
 
