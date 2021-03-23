@@ -68,14 +68,16 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
         // AND (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
 
-        string cmdTxt = @" SELECT [USER_NAME],[COMPANY_NAME] ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%.J%' OR [tb_NOTE].[FILE_NAME] LIKE '%.j%' OR [tb_NOTE].[FILE_NAME] LIKE '%.P%' OR [tb_NOTE].[FILE_NAME] LIKE '%.p%' ) THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
-                           FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
-                           LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
-                           WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
-                           AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
-                           AND [tb_NOTE].[COMPANY_ID]<>'0'
+        string cmdTxt = @" 
+                        SELECT [tb_USER].[USER_NAME],[COMPANY_NAME] ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%.J%' OR [tb_NOTE].[FILE_NAME] LIKE '%.j%' OR [tb_NOTE].[FILE_NAME] LIKE '%.P%' OR [tb_NOTE].[FILE_NAME] LIKE '%.p%' ) THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
+                        FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                        LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                        LEFT JOIN [HJ_BM_DB].[dbo].[COPSALES] ON [COPSALES].[USER_ID]=[tb_USER].[USER_ID]
+                        WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                        AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                        AND [tb_NOTE].[COMPANY_ID]<>'0'
                           
-                           ORDER BY [USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
+                        ORDER BY [ORDERS],[USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
 
                         ";
 
