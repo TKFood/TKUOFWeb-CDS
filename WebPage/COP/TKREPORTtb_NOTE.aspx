@@ -70,7 +70,42 @@
             </td>            
         </tr>
     </table>
-    <label>記錄筆數</label>
+
+     <label>當月累積數</label>
+    <table class="PopTable">
+          <tr>
+            <td colspan="2" class="PopTableRightTD" >
+                <div style="overflow-x:auto;width:100%">
+                    <Fast:Grid ID="Grid8" OnRowDataBound="Grid8_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource8" OnPageIndexChanging="grid8_PageIndexChanging" >
+                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                 
+                            <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                            <Columns>
+                                 <asp:BoundField HeaderText="業務員" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                </asp:BoundField>  
+                                  <asp:BoundField HeaderText="負責客戶數" DataField="SALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                </asp:BoundField>   
+                                  <asp:BoundField HeaderText="拜訪客戶數" DataField="COMS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                </asp:BoundField>   
+                                  <asp:BoundField HeaderText="拜訪次數" DataField="NOTES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                </asp:BoundField>   
+                                  <asp:BoundField HeaderText="拜訪客戶完成率" DataField="PCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                    <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                </asp:BoundField>   
+                                
+                                
+                            </Columns>
+                        </Fast:Grid>
+                    </div>
+            </td>
+        </tr>
+    </table>
+
+    <label>記錄當週筆數</label>
     <table class="PopTable">
           <tr>
             <td colspan="2" class="PopTableRightTD" >

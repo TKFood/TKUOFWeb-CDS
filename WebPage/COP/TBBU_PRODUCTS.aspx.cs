@@ -103,12 +103,13 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
                 PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
                                 ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
-
+                
+                img.ImageUrl = PATH.ToString();
 
                 //img.ImageUrl  = Request.ApplicationPath + "/Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
 
                 //  img.ImageUrl = string.Format("~/Common/FileCenter/Downloadfile.ashx?id={0}", row["THUMBNAIL_FILE_ID"].ToString());
-                 img.ImageUrl = PATH.ToString();
+
                 //e.Row.Cells[0].Text = row["THUMBNAIL_FILE_ID"].ToString();
                 ////獲取當前行的圖片路徑
                 //string ImgUrl = img.ImageUrl;
