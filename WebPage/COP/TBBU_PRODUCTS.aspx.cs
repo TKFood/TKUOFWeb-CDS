@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -11,6 +13,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
+using Image = System.Web.UI.WebControls.Image;
 
 public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePage
 {
@@ -158,6 +163,29 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             e.Datasource = dt;
         }
     }
+
+    //private void AddImage(ExcelWorksheet oSheet, int rowIndex, int colIndex, string imagePath)
+    //{
+    //    Bitmap image = new Bitmap(imagePath);
+    //    ExcelPicture excelImage = null;
+    //    if (image != null)
+    //    {
+    //        excelImage = oSheet.Drawings.AddPicture("Debopam Pal", image);
+    //        excelImage.From.Column = colIndex;
+    //        excelImage.From.Row = rowIndex;
+    //        excelImage.SetSize(100, 100);
+    //        //2x2 px space for better alignment
+    //        excelImage.From.ColumnOff = Pixel2MTU(2);
+    //        excelImage.From.RowOff = Pixel2MTU(2);
+    //    }
+    //}
+
+    //public int Pixel2MTU(int pixels)
+    //{
+    //    int mtus = pixels * 9525;
+    //    return mtus;
+    //}
+
     #endregion
 
     #region BUTTON
@@ -179,6 +207,28 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
     {
         //this.Session["SDATE"] = txtDate1.Text.Trim();
         //this.Session["EDATE"] = txtDate2.Text.Trim();
+    }
+
+    protected void btn2_Click(object sender, EventArgs e)
+    {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+                                                                    // 沒設置的話會跳出 Please set the excelpackage.licensecontext property
+
+        //檔案名稱
+        var fileName = "ExampleExcel" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+        var file = new FileInfo(fileName);
+        using (var excel = new ExcelPackage(file))
+        {
+            //建立頁籤
+            excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+            ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"C:\TEMP\40100010650490.png"));//插入圖片
+            picture.SetPosition(100, 100);//設置圖片的位置
+            picture.SetSize(100, 100);//設置圖片的大小
+
+            //儲存Excel
+            Byte[] bin = excel.GetAsByteArray();
+            File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+        }
     }
     protected void MyButtonClick(object sender, System.EventArgs e)
     {

@@ -38,6 +38,15 @@
 	<telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
 	    <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
 		   <div id="tabs-1">
+              <table class="PopTable">
+                 <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Button ID="Button2" runat="server" Text="匯出" onclick="btn2_Click"  meta:resourcekey="btn2Resource1" />
+                             
+                        </td>
+                                 
+                    </tr> 
+                  </table>
              <table class="PopTable">
                  <tr>
                     <td colspan="2" class="PopTableRightTD" >
