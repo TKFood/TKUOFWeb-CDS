@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -221,7 +222,21 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         {
             //建立頁籤
             excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
-            ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"C:\TEMP\40100010650490.png"));//插入圖片
+
+            WebClient MyWebClient = new WebClient();
+            string fileURL = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
+            Byte[] pageData = MyWebClient.DownloadData(fileURL);
+            MemoryStream fs = new MemoryStream();
+            fs.Write(pageData, 0, pageData.Length - 1);
+            // ;
+
+            var imgfs = System.Drawing.Image.FromStream(fs);
+            fs.Close();
+            
+            ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", imgfs);//插入圖片
+            
+            //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png"));//插入圖片
+            //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"C:\TEMP\40100010650490.png"));//插入圖片
             picture.SetPosition(100, 100);//設置圖片的位置
             picture.SetSize(100, 100);//設置圖片的大小
 
