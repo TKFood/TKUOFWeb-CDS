@@ -277,7 +277,11 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
                         //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png"));//插入圖片
                         //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"C:\TEMP\40100010650490.png"));//插入圖片
-                        picture.SetPosition(60* ROWS, 100);//設置圖片的位置
+
+                        picture.From.Row = ROWS;
+                        picture.From.Column = COLUMNS;
+                        
+                        picture.SetPosition(1* ROWS-1,5, 3,0);//設置圖片的位置
                         picture.SetSize(50, 50);//設置圖片的大小
                     }
 
