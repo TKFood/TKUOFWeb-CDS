@@ -231,6 +231,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             // 寫入資料試試
             ws.Cells[2, 1].Value = "測試測試";
 
+            //網路圖片
             WebClient MyWebClient = new WebClient();
             string fileURL = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
             Byte[] pageData = MyWebClient.DownloadData(fileURL);
