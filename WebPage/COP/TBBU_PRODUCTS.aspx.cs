@@ -187,6 +187,11 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
     //    return mtus;
     //}
 
+    public override void VerifyRenderingInServerForm(Control control) 
+    { 
+
+    }
+
     #endregion
 
     #region BUTTON
@@ -220,15 +225,18 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         var file = new FileInfo(fileName);
         using (var excel = new ExcelPackage(file))
         {
-            //建立頁籤
-            excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+            // 建立分頁
+            var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+
+            // 寫入資料試試
+            ws.Cells[2, 1].Value = "測試測試";
 
             WebClient MyWebClient = new WebClient();
             string fileURL = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
             Byte[] pageData = MyWebClient.DownloadData(fileURL);
             MemoryStream fs = new MemoryStream();
             fs.Write(pageData, 0, pageData.Length - 1);
-            // ;
+           
 
             var imgfs = System.Drawing.Image.FromStream(fs);
             fs.Close();
@@ -241,11 +249,41 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             picture.SetSize(100, 100);//設置圖片的大小
 
             //儲存Excel
-            Byte[] bin = excel.GetAsByteArray();
-            File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+            //Byte[] bin = excel.GetAsByteArray();
+            //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+
+            //儲存和歸來的Excel檔案作為一個ByteArray
+            var data = excel.GetAsByteArray();
+            HttpResponse response = HttpContext.Current.Response;
+            Response.Clear();
+
+            //輸出標頭檔案　　
+            Response.AddHeader("content-disposition", "attachment;  filename="+fileName+"");
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.BinaryWrite(data);
+            Response.Flush();
+            Response.End();
+            //package.Save();//這個方法是直接下載到本地
         }
     }
-    protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void btn3_Click(object sender, EventArgs e)
+    {
+        Response.ClearContent();
+        Response.AddHeader("content-disposition", "attachment; filename=test.xls");
+        Response.ContentEncoding = System.Text.Encoding.GetEncoding("big5");
+        HttpContext.Current.Response.Write("<meta http-equiv=Content-Type content=text/html;charset=big5>");
+        HttpContext.Current.Response.Write("<head><meta http-equiv=Content-Type content=text/html;charset=big5></head>");
+        Response.Charset = "big5";
+        Response.ContentType = "application/excel";
+
+
+        System.IO.StringWriter sw = new System.IO.StringWriter();
+        HtmlTextWriter htw = new HtmlTextWriter(sw);
+        Grid1.RenderControl(htw);
+        Response.Write(sw.ToString());
+        Response.End();
+    }
+        protected void MyButtonClick(object sender, System.EventArgs e)
     {
       
 
