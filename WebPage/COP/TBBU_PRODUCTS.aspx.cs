@@ -16,7 +16,6 @@ using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
-using Image = System.Web.UI.WebControls.Image;
 using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePage
@@ -93,13 +92,13 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
         
 
-        StringBuilder PATH = new StringBuilder();        
+        StringBuilder PATH = new StringBuilder();
 
-        Image img = (Image)e.Row.FindControl("Image1");
+        System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             DataRowView row = (DataRowView)e.Row.DataItem;
-            Image img1 = (Image)e.Row.FindControl("Image1");
+            System.Web.UI.WebControls.Image img1 = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
 
            
 
