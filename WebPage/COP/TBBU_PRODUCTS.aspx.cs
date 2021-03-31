@@ -220,14 +220,13 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
         if(dt.Rows.Count>0)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
-                                                                        // 沒設置的話會跳出 Please set the excelpackage.licensecontext property
-
             //檔案名稱
             var fileName = "ExampleExcel" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
-            var file = new FileInfo(fileName);
-            using (var excel = new ExcelPackage(file))
-            {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+
+            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            {              
+
                 // 建立分頁
                 var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
 
@@ -334,7 +333,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                     ws.Cells[ROWS, 12].Value = od["COPYWRITINGS"].ToString();
                     ws.Cells[ROWS, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 12].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    
+
                     ws.Cells[ROWS, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
                     if (!string.IsNullOrEmpty(od["PHOTO_DESC"].ToString()))
@@ -360,22 +359,22 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                         //var imgfs = System.Drawing.Image.FromStream(fs);
                         //fs.Close();
 
-                        ExcelPicture picture= excel.Workbook.Worksheets[0].Drawings.AddPicture(od["MB001"].ToString(), imgfs);//插入圖片
+                        ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(od["MB001"].ToString(), imgfs);//插入圖片
 
                         //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png"));//插入圖片
                         //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"C:\TEMP\40100010650490.png"));//插入圖片
 
                         picture.From.Row = ROWS;
                         picture.From.Column = COLUMNS;
-                        
-                        picture.SetPosition(1* ROWS-1,5,12,5);//設置圖片的位置
+
+                        picture.SetPosition(1 * ROWS - 1, 5, 12, 5);//設置圖片的位置
                         picture.SetSize(50, 50);//設置圖片的大小
                     }
 
                     ROWS++;
                 }
 
-                
+
 
 
                 ////預設列寬、行高
@@ -410,6 +409,15 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                 Response.End();
                 //package.Save();//這個方法是直接下載到本地
             }
+            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+            //                                                            // 沒設置的話會跳出 Please set the excelpackage.licensecontext property
+
+            
+            ////var file = new FileInfo(fileName);
+            //using (var excel = new ExcelPackage(file))
+            //{
+                
+            //}
         }
 
     }

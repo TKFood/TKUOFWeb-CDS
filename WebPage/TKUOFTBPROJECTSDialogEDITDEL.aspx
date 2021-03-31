@@ -118,7 +118,7 @@
                 <asp:Label ID="Label14" runat="server" Text="累計案件數"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox9" runat="server"  Text="" Width = "100%" ReadOnly="true" Enabled="false" ></asp:TextBox>
+                <asp:TextBox ID="TextBox9" runat="server"  Text="" Width = "100%"></asp:TextBox>
             </td> 
        </tr> 
         <tr>
@@ -143,7 +143,7 @@
          <tr >
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
-                    <Fast:Grid ID="Grid1" runat="server"  OnRowDataBound="Grid1_RowDataBound" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging">
+                    <Fast:Grid ID="Grid1" runat="server"  OnRowDataBound="Grid1_RowDataBound" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
                         <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
                             <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>

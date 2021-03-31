@@ -19,6 +19,7 @@
       <culture name="en-US"></culture>
       <culture name="vi"></culture>
       <culture name="id"></culture>
+      <culture name="ja-jp"></culture>
     </item>
     <item id ="AppSchema" value=""></item>
   </AppSetting>
