@@ -65,28 +65,29 @@ public partial class CDS_WebPage_COP_TBBU_TBSALESSCHEDULES : Ede.Uof.Utility.Pag
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button1");
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button1");
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBSALESSCHEDULESDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
 
 
-        
+
 
         //StringBuilder PATH = new StringBuilder();
 
@@ -96,7 +97,7 @@ public partial class CDS_WebPage_COP_TBBU_TBSALESSCHEDULES : Ede.Uof.Utility.Pag
         //    DataRowView row = (DataRowView)e.Row.DataItem;
         //    System.Web.UI.WebControls.Image img1 = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
 
-           
+
 
         //    if (!string.IsNullOrEmpty(row["PHOTO_GUID"].ToString()))
         //    {
@@ -105,7 +106,7 @@ public partial class CDS_WebPage_COP_TBBU_TBSALESSCHEDULES : Ede.Uof.Utility.Pag
 
         //        PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
         //                        ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
-                
+
         //        img.ImageUrl = PATH.ToString();
 
         //        //img.ImageUrl  = Request.ApplicationPath + "/Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();

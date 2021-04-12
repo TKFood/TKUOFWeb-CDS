@@ -105,6 +105,11 @@
                                                 <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
                                             </asp:BoundField> 
                                             
+                                           <asp:TemplateField HeaderText="BTN" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("ID") %>'/>
+                                            </ItemTemplate>
+                                          </asp:TemplateField>  
                                         </Columns>
                                 </Fast:Grid>
                             </div>
