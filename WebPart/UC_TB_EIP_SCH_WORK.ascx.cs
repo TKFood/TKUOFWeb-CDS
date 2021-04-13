@@ -17,15 +17,15 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
         {
             DateTime FirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime LastDay = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1).AddDays(-1);
-
+         //   DateTime.DaysInMonth()
             BindGrid(FirstDay.ToString("yyyy/MM/dd"), LastDay.ToString("yyyy/MM/dd"));
 
-            txtDate1.Text = FirstDay.ToString("yyyy/MM/dd");
-            txtDate2.Text = LastDay.ToString("yyyy/MM/dd");
+            txtDate1.SelectedDate = FirstDay;
+            txtDate2.SelectedDate = LastDay;
         }
         else
         {
-            BindGrid(txtDate1.Text, txtDate2.Text);
+            BindGrid(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
         }
 
            
