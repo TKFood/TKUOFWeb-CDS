@@ -13,10 +13,10 @@
                 <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>             
             </td>
             <td class="PopTableRightTD">       
-                <telerik:RadDatePicker ID="txtDate1"  runat="server" Width = "100px"></telerik:RadDatePicker>
+                <telerik:RadDatePicker ID="txtDate1"  runat="server" Width = "160px"></telerik:RadDatePicker>
                
                 <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
-                 <telerik:RadDatePicker ID="txtDate2"  runat="server" Width = "100px"></telerik:RadDatePicker>
+                 <telerik:RadDatePicker ID="txtDate2"  runat="server" Width = "160px"></telerik:RadDatePicker>
                
                 <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
                 <asp:Button ID="Button1" runat="server" Text=" 查詢 "
