@@ -31,33 +31,33 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
         if (!IsPostBack)
         {
-            BindGrid(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid2(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid3(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid4(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid5(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid6(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid7(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid8(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid9(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
-            BindGrid10(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid2(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid3(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid4(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid5(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid6(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid7(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid8(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid9(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
+            BindGrid10(DateTime.Now.AddDays(-6).ToString("yyyy/MM/dd"), DateTime.Now.ToString("yyyy/MM/dd"));
 
-            txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
-            txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
+            txtDate1.SelectedDate = DateTime.Now.AddDays(-6);
+            txtDate2.SelectedDate = DateTime.Now;
 
         }
         else
         {
-            BindGrid(txtDate1.Text, txtDate2.Text);
-            BindGrid2(txtDate1.Text, txtDate2.Text);
-            BindGrid3(txtDate1.Text, txtDate2.Text);
-            BindGrid4(txtDate1.Text, txtDate2.Text);
-            BindGrid5(txtDate1.Text, txtDate2.Text);
-            BindGrid6(txtDate1.Text, txtDate2.Text);
-            BindGrid7(txtDate1.Text, txtDate2.Text);
-            BindGrid8(txtDate1.Text, txtDate2.Text);
-            BindGrid9(txtDate1.Text, txtDate2.Text);
-            BindGrid10(txtDate1.Text, txtDate2.Text);
+            BindGrid(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid2(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid3(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid4(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid5(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid6(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid7(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid8(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid9(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+            BindGrid10(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
 
         }
 
@@ -696,8 +696,8 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
                         ";
 
 
-        m_db.AddParameter("@SDATE", txtDate1.Text);
-        m_db.AddParameter("@EDATE", txtDate2.Text);
+        m_db.AddParameter("@SDATE", txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"));
+        m_db.AddParameter("@EDATE", txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
 
         DataTable dt = new DataTable();
 

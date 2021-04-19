@@ -9,8 +9,7 @@
 
 <script>    
     $(function () {
-        $("#<%= txtDate1.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
-        $("#<%= txtDate2.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });      
+         
     });
 
     function ImageClick(img) {
@@ -72,9 +71,9 @@
                             <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>             
                         </td>
                         <td class="PopTableRightTD">                    
-                            <asp:TextBox ID="txtDate1"  runat="server" Width = "100px"></asp:TextBox>
+                            <telerik:RadDatePicker ID="txtDate1"  runat="server" Width = "120px"></telerik:RadDatePicker>
                             <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
-                            <asp:TextBox ID="txtDate2"  runat="server" Width = "100px"></asp:TextBox>
+                            <telerik:RadDatePicker ID="txtDate2"  runat="server" Width = "120px"></telerik:RadDatePicker>
                             <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
                             <asp:Button ID="Button1" runat="server" Text=" 查詢 "
                                 onclick="btn1_Click" meta:resourcekey="btn4Resource1" />                

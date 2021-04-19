@@ -52,6 +52,19 @@ public partial class CDS_WebPart_UC_Calendar : System.Web.UI.UserControl
 
                         ";
 
+        //string cmdTxt = @"
+        //               SELECT TOP 1 
+        //                '' 'USER_GUID'
+        //                ,'' '[USER_ID'
+        //                ,'' 'ACCOUNT'
+        //                ,'' 'NAME'
+        //                ,'' AS START_TIME
+        //                ,''SUBJECT
+        //                ,'' DESCRIPTION
+        //                FROM [UOF].[dbo].TB_DMS_AGENCY_SUBSCRIBE
+
+        //                ";
+
         m_db.AddParameter("@SDATE", SDATE);
         m_db.AddParameter("@EDATE", EDATE);
 
@@ -109,6 +122,20 @@ public partial class CDS_WebPart_UC_Calendar : System.Web.UI.UserControl
                         ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
 
                         ";
+
+        //string cmdTxt = @"
+        //                SELECT TOP 1 
+        //                'NAME1'AS 'NAME1','SUBJECT' AS SUBJECT
+        //                ,'DESCRIPTION' AS 'DESCRIPTION'
+        //                ,''  AS END_TIME
+        //                ,''  AS DIFFDATES
+        //                ,'NAME2'  AS 'NAME2'
+        //                ,'STATUS' AS 'STATUS'
+        //                ,'1' 'WORK_STATE','' 'EXECUTE_USER','' 'SOURCE_USER'
+        //                ,'' 'WORK_GUID'
+        //                FROM [UOF].[dbo].TB_DMS_AGENCY_SUBSCRIBE
+
+        //                ";
 
         m_db.AddParameter("@SDATE", SDATE);
         m_db.AddParameter("@EDATE", EDATE);

@@ -39,7 +39,7 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
 
         string cmdTxt = @"
                         SELECT 
-                        USER1.[NAME] AS 'NAME1',REPLACE([TB_EIP_SCH_WORK].[SUBJECT],char(10),'<br/>')  SUBJECT
+                        USER1.[NAME] AS 'NAME1',REPLACE([TB_EIP_SCH_WORK].[SUBJECT],char(10),'<br/>') AS   SUBJECT
                         ,(SELECT TOP 1 ISNULL([DESCRIPTION],'') FROM [UOF].[dbo].[TB_EIP_SCH_WORK_RECORD] WHERE [TB_EIP_SCH_WORK_RECORD].[WORK_GUID]=[TB_EIP_SCH_WORK].[WORK_GUID] ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
                         ,CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
                         ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' ELSE '進行中' END AS 'STATUS'
@@ -54,6 +54,20 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
                         ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
 
                         ";
+
+        //string cmdTxt = @"
+        //                SELECT TOP 1 
+        //                'NAME1'AS 'NAME1','SUBJECT' AS SUBJECT
+        //                ,'DESCRIPTION' AS 'DESCRIPTION'
+        //                ,''  AS END_TIME
+        //                ,''  AS DIFFDATES
+        //                ,'NAME2'  AS 'NAME2'
+        //                ,'STATUS' AS 'STATUS'
+        //                ,'1' 'WORK_STATE','' 'EXECUTE_USER','' 'SOURCE_USER'
+        //                ,'' 'WORK_GUID'
+        //                FROM [UOF].[dbo].TB_DMS_AGENCY_SUBSCRIBE
+
+        //                ";
 
         m_db.AddParameter("@SDATE", SDATE);
         m_db.AddParameter("@EDATE", EDATE);
