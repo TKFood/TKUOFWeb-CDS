@@ -90,7 +90,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         }
 
 
-        
+
 
         StringBuilder PATH = new StringBuilder();
 
@@ -100,7 +100,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             DataRowView row = (DataRowView)e.Row.DataItem;
             System.Web.UI.WebControls.Image img1 = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
 
-           
+
 
             if (!string.IsNullOrEmpty(row["PHOTO_GUID"].ToString()))
             {

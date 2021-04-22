@@ -79,7 +79,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
         string MB001 = TextBox1.Text;
         string PRODUCTSFEATURES = TextBox2.Text;
         string SALESFOCUS = TextBox3.Text;
-        string COPYWRITINGS = TextBox4.Text;
+        string COPYWRITINGS = "";
    
 
         if ( !string.IsNullOrEmpty(MB001))

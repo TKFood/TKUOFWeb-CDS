@@ -16,7 +16,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -38,7 +38,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             }
 
         }
-        
+
     }
 
 
@@ -101,7 +101,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             TextBox1.Text = dt.Rows[0]["MB002"].ToString();
             TextBox2.Text = dt.Rows[0]["PRODUCTSFEATURES"].ToString();
             TextBox3.Text = dt.Rows[0]["SALESFOCUS"].ToString();
-            TextBox4.Text = dt.Rows[0]["COPYWRITINGS"].ToString();
+           
 
         }
 
@@ -116,7 +116,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         string MB002 = TextBox1.Text;
         string PRODUCTSFEATURES = TextBox2.Text;
         string SALESFOCUS = TextBox3.Text;
-        string COPYWRITINGS = TextBox4.Text;
+        string COPYWRITINGS = "";
 
 
         if (!string.IsNullOrEmpty(ID) )

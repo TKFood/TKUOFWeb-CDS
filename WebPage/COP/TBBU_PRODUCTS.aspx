@@ -83,16 +83,12 @@
                                               <asp:BoundField HeaderText="條碼" DataField="MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                             </asp:BoundField>  
-                                              <asp:BoundField HeaderText="商品特點" DataField="PRODUCTSFEATURES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                              <asp:BoundField HeaderText="銷售重點" DataField="PRODUCTSFEATURES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                            </asp:BoundField>  
-                                              <asp:BoundField HeaderText="銷售重點" DataField="SALESFOCUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                            </asp:BoundField>   
+                                                   <asp:BoundField HeaderText="銷售通路" DataField="SALESFOCUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                            </asp:BoundField>  
-                                                   <asp:BoundField HeaderText="文案" DataField="COPYWRITINGS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                            </asp:BoundField>  
-                                             
+                                            </asp:BoundField>
                                             <asp:TemplateField HeaderText="照片" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
                                                     <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" />
@@ -103,7 +99,7 @@
                                             <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("MB001") %>'/>
                                             </ItemTemplate>
-                                          </asp:TemplateField>  
+                                          </asp:TemplateField>
                                         </Columns>
                                 </Fast:Grid>
                             </div>
