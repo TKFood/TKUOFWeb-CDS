@@ -223,7 +223,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         if(dt.Rows.Count>0)
         {
             //檔案名稱
-            var fileName = "ExampleExcel" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+            var fileName = "商品清單" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
 
             using (var excel = new ExcelPackage(new FileInfo(fileName)))
@@ -338,40 +338,57 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
                     ws.Cells[ROWS, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
-                    if (!string.IsNullOrEmpty(od["PHOTO_DESC"].ToString()))
+                    try
                     {
-                        //網路圖片
-                        WebClient MyWebClient = new WebClient();
-                        StringBuilder PATH = new StringBuilder();
+                        if (!string.IsNullOrEmpty(od["PHOTO_DESC"].ToString()))
+                        {
+                            //網路圖片
+                            WebClient MyWebClient = new WebClient();
+                            StringBuilder PATH = new StringBuilder();
 
-                        PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
-                                ", od["RESIZE_FILE_ID"].ToString(), od["PHOTO_DESC"].ToString());
 
-                        //string fileURL = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
-                        //string fileURL = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=2a44a870-f960-4178-9551-e9612fd46b30&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100710430390.jpg";
-                        string fileURL = PATH.ToString();
 
-                        var pageData = MyWebClient.DownloadData(fileURL);
+                            PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
+                                ", od["RESIZE_FILE_ID"].ToString());
 
-                        Stream imgms = new MemoryStream(pageData);
-                        System.Drawing.Bitmap imgfs = new System.Drawing.Bitmap(imgms);
+                            //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
+                            //        ", od["RESIZE_FILE_ID"].ToString(), od["PHOTO_DESC"].ToString());
 
-                        //MemoryStream fs = new MemoryStream();
-                        //fs.Write(pageData, 0, pageData.Length - 1);
-                        //var imgfs = System.Drawing.Image.FromStream(fs);
-                        //fs.Close();
+                            //string fileURL = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
+                            //string fileURL = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=2a44a870-f960-4178-9551-e9612fd46b30&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100710430390.jpg";
+                            string fileURL = PATH.ToString();
 
-                        ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(od["MB001"].ToString(), imgfs);//插入圖片
+                            var pageData = MyWebClient.DownloadData(fileURL);
 
-                        //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png"));//插入圖片
-                        //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"C:\TEMP\40100010650490.png"));//插入圖片
+                            Stream imgms = new MemoryStream(pageData);
+                            System.Drawing.Bitmap imgfs = new System.Drawing.Bitmap(imgms);
 
-                        picture.From.Row = ROWS;
-                        picture.From.Column = COLUMNS;
+                            //MemoryStream fs = new MemoryStream();
+                            //fs.Write(pageData, 0, pageData.Length - 1);
+                            //var imgfs = System.Drawing.Image.FromStream(fs);
+                            //fs.Close();
 
-                        picture.SetPosition(1 * ROWS - 1, 5, 12, 5);//設置圖片的位置
-                        picture.SetSize(50, 50);//設置圖片的大小
+                            ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(od["MB001"].ToString(), imgfs);//插入圖片
+
+                            //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png"));//插入圖片
+                            //ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture("logo", System.Drawing.Image.FromFile(@"C:\TEMP\40100010650490.png"));//插入圖片
+
+                            picture.From.Row = ROWS;
+                            picture.From.Column = COLUMNS;
+
+                            picture.SetPosition(1 * ROWS - 1, 5, 12, 5);//設置圖片的位置
+                            picture.SetSize(50, 50);//設置圖片的大小
+                        }
                     }
+                    catch
+                    {
+
+                    }
+                    finally
+                    {
+
+                    }
+                   
 
                     ROWS++;
                 }
