@@ -39,6 +39,16 @@
 	    <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
 		   <div id="tabs-1">
               <table class="PopTable">
+                   <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label2" runat="server" Text="狀態:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                        <td class="PopTableRightTD"> 
+                               <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClientClick="return btn5_Click(this)" 
+                                 meta:resourcekey="btn4Resource1" />                
+                        </td>            
+                    </tr>
                  <tr>
                         <td class="PopTableLeftTD">
                             <%--<asp:Button ID="Button2" runat="server" Text="匯出" onclick="btn2_Click"  meta:resourcekey="btn2Resource1" />--%>

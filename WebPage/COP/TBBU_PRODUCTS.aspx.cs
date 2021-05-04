@@ -25,38 +25,97 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
         if (!IsPostBack)
         {
-            BindGrid();
+            BindGrid("");
         }
         else
         {
-            BindGrid();
+            BindGrid(DropDownList1.Text);
         }
+
+        BindDropDownList();
+
+        if (this.Session["STATUS"] != null)
+        {
+            DropDownList1.Text = this.Session["STATUS"].ToString();
+
+        }
+
+
     }
     #region FUNCTION
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("SALESFOCUS", typeof(String));
 
-    private void BindGrid()
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '全部' AS SALESFOCUS UNION ALL SELECT SALESFOCUS  FROM  [TKBUSINESS].[dbo].[PRODUCTS]  GROUP BY SALESFOCUS ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "SALESFOCUS";
+            DropDownList1.DataValueField = "SALESFOCUS";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+    private void BindGrid(string SALESFOCUS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" 
-                        SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
-                        ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
-                        ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
-                        FROM [TKBUSINESS].[dbo].[PRODUCTS]
-                        LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
-                        LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
-                        LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
-                        LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
-                        ORDER BY [PRODUCTS].[MB001]
-                        ";
+        StringBuilder cmdTxt = new StringBuilder();
+
+        if(!string.IsNullOrEmpty(SALESFOCUS)&&!SALESFOCUS.Equals("全部"))
+        {
+            cmdTxt.AppendFormat(@" 
+                                SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
+                                ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
+                                ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+                                FROM [TKBUSINESS].[dbo].[PRODUCTS]
+                                LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
+                                LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
+                                LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
+                                LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
+                                WHERE [SALESFOCUS] LIKE '%{0}%'
+                                ORDER BY [PRODUCTS].[MB001]
+                                ", SALESFOCUS);
+        }
+        else
+        {
+            cmdTxt.AppendFormat(@" 
+                                SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
+                                ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
+                                ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+                                FROM [TKBUSINESS].[dbo].[PRODUCTS]
+                                LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
+                                LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
+                                LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
+                                LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
+                                ORDER BY [PRODUCTS].[MB001]
+                                ");
+        }
+        
 
         //m_db.AddParameter("@SDATE", SDATE);
         //m_db.AddParameter("@EDATE", EDATE);
 
         DataTable dt = new DataTable();
 
-        dt.Load(m_db.ExecuteReader(cmdTxt));
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
         Grid1.DataSource = dt;
         Grid1.DataBind();
@@ -489,6 +548,18 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
     {
       
 
+    }
+
+    protected void btn5_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        {
+            if (Dialog.GetReturnValue().Equals("NeedPostBack"))
+            {
+                this.Session["STATUS"] = DropDownList1.Text.Trim();
+            }
+
+        }
     }
     #endregion
 }
