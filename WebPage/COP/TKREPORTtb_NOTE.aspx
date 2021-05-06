@@ -60,6 +60,8 @@
 		    </telerik:RadTab>
 		    <telerik:RadTab Text="明細資料">
 		    </telerik:RadTab>
+            <telerik:RadTab Text="客情明細資料">
+		    </telerik:RadTab>
 	    </Tabs>
     </telerik:RadTabStrip>
 	<telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
@@ -445,7 +447,72 @@
 
           </div>
 	    </telerik:RadPageView>
+
+    <telerik:RadPageView ID="RadPageView3" runat="server">
+		    <div id="tabs-3">
+                  <table class="PopTable" >         
+                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label4" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                        <td class="PopTableRightTD">                    
+                            <telerik:RadDatePicker ID="txtDate3"  runat="server" Width = "120px"></telerik:RadDatePicker>
+                            <asp:Label ID="Label5" runat="server" Text="~"></asp:Label>
+                            <telerik:RadDatePicker ID="txtDate4"  runat="server" Width = "120px"></telerik:RadDatePicker>
+                            <asp:Label ID="Label6" runat="server" Text=" "></asp:Label>
+
+                             <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                              <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClientClick="return btn2_Click(this)" 
+                                 meta:resourcekey="btn2Resource1" />   
+                            
+
+                        </td>            
+                    </tr>
+                </table>
+                <label>明細</label>
+                 <table class="PopTable">
+                      <tr>
+                        <td colspan="2" class="PopTableRightTD" >
+                            <div style="overflow-x:auto;width:100%">
+                                <Fast:Grid ID="Grid11" OnRowDataBound="Grid11_RowDataBound" runat="server"  OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource11" OnPageIndexChanging="grid11_PageIndexChanging" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                 
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
+                                        <Columns>
+                                             <asp:BoundField HeaderText="業務" DataField="USER_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="140px"></ItemStyle>
+                                            </asp:BoundField>   
+                                             <asp:BoundField HeaderText="客戶" DataField="COMPANY_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField>   
+                                            <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemTemplate>
+                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("NOTE_CONTENT") %>' style="text-align:left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                    <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                                </ItemTemplate>                                        
+                                             </asp:TemplateField>
+                                           <%--  <asp:BoundField HeaderText="記錄" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
+                                            </asp:BoundField> --%>  
+                                             <asp:BoundField HeaderText="記錄日期" DataField="CREATE_DATETIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            </asp:BoundField> 
+                               
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:Image ID="Image1" runat="server"  HorizontalAlign="Center"  Length="100px" Width="100px" onclick="ImageClick(this)"/>
+                                                </ItemTemplate >
+                                            </asp:TemplateField>
+                                
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                        </td>
+                    </tr>
+                </table>
+
+          </div>
+	    </telerik:RadPageView>
     </telerik:RadMultiPage>​
-  
 </asp:Content>
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Dynamic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security.AntiXss;
@@ -44,7 +45,10 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
 
             txtDate1.SelectedDate = DateTime.Now.AddDays(-6);
             txtDate2.SelectedDate = DateTime.Now;
+            txtDate3.SelectedDate = DateTime.Now.AddDays(-DateTime.Now.Day + 1);
+            txtDate4.SelectedDate = DateTime.Now.AddMonths(1).AddDays(-DateTime.Now.AddMonths(1).Day);
 
+            BindGrid11(txtDate3.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate4.SelectedDate.Value.ToString("yyyy/MM/dd"), TextBox2.Text.ToString());
         }
         else
         {
@@ -58,6 +62,19 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
             BindGrid8(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
             BindGrid9(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
             BindGrid10(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+
+            if(!string.IsNullOrEmpty(TextBox2.Text))
+            {
+                BindGrid11(txtDate3.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate4.SelectedDate.Value.ToString("yyyy/MM/dd"), TextBox2.Text.ToString());
+            }
+            
+
+
+        }
+
+        if (this.Session["COMPANY_NAME"] != null)
+        {
+            TextBox2.Text = this.Session["COMPANY_NAME"].ToString();
 
         }
 
@@ -658,12 +675,65 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
         Grid10.DataBind();
     }
 
+
     protected void grid10_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         Grid10.PageIndex = e.NewPageIndex;
         BindGrid10(this.Session["SDATE"].ToString(), this.Session["EDATE"].ToString());
     }
     protected void Grid10_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        DataRowView row = (DataRowView)e.Row.DataItem;
+        //        LinkButton lbtnName = (LinkButton)e.Row.FindControl("lbtnName");
+
+        //        ExpandoObject param = new { ID = row["ID"].ToString() }.ToExpando();
+
+        //        //Grid開窗是用RowDataBound事件再開窗
+        //        Dialog.Open2(lbtnName, "~/CDS/WebPage/TKRESEARCHTBDEVMEMODialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    }
+
+
+    }
+    private void BindGrid11(string SDATE, string EDATE, string COMPANY_NAME)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        // AND (NOTE_CONTENT LIKE '%主管決議:是%' OR NOTE_CONTENT LIKE '%主管決議: 是%' OR NOTE_CONTENT LIKE '%主管決議:  是%')
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                        SELECT [tb_USER].[USER_NAME],[COMPANY_NAME] ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT] ,[tb_NOTE].[CREATE_DATETIME],CASE WHEN ([tb_NOTE].[FILE_NAME] LIKE '%.J%' OR [tb_NOTE].[FILE_NAME] LIKE '%.j%' OR [tb_NOTE].[FILE_NAME] LIKE '%.P%' OR [tb_NOTE].[FILE_NAME] LIKE '%.p%' ) THEN [tb_NOTE].[FILE_NAME] ELSE NULL END AS [FILE_NAME]
+                        FROM [HJ_BM_DB].[dbo].[tb_NOTE],[HJ_BM_DB].[dbo].[tb_COMPANY] 
+                        LEFT JOIN [HJ_BM_DB].[dbo].[tb_USER] ON [USER_ID]=[OWNER_ID]
+                        LEFT JOIN [HJ_BM_DB].[dbo].[COPSALES] ON [COPSALES].[USER_ID]=[tb_USER].[USER_ID]
+                        WHERE [tb_COMPANY].COMPANY_ID=[tb_NOTE].COMPANY_ID 
+                        AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)>=@SDATE AND CONVERT(nvarchar,[tb_NOTE].[CREATE_DATETIME],111)<=@EDATE
+                        AND [tb_NOTE].[COMPANY_ID]<>'0'
+                        AND [COMPANY_NAME] LIKE '%{0}%'
+                        ORDER BY [ORDERS],[USER_NAME],[COMPANY_NAME], [tb_NOTE].[CREATE_DATETIME]
+
+                        ", COMPANY_NAME);
+
+        m_db.AddParameter("@SDATE", SDATE);
+        m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid11.DataSource = dt;
+        Grid11.DataBind();
+    }
+
+    protected void grid11_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Grid11.PageIndex = e.NewPageIndex;
+        BindGrid11(txtDate3.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate4.SelectedDate.Value.ToString("yyyy/MM/dd"), TextBox2.Text.Trim());
+    }
+    protected void Grid11_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         //    if (e.Row.RowType == DataControlRowType.DataRow)
         //    {
@@ -756,6 +826,20 @@ public partial class CDS_WebPage_TKREPORTtb_NOTE : Ede.Uof.Utility.Page.BasePage
     {
         //this.Session["SDATE"] = txtDate1.Text.Trim();
         //this.Session["EDATE"] = txtDate2.Text.Trim();
+    }
+
+    protected void btn2_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        {
+            if (Dialog.GetReturnValue().Equals("NeedPostBack"))
+            {
+                this.Session["COMPANY_NAME"] = TextBox2.Text.Trim();
+            }
+
+        }
+
+       
     }
 
     #endregion
