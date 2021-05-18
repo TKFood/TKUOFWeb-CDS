@@ -94,6 +94,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                 QUERYS.AppendFormat(@" AND  [SALESFOCUS] LIKE '%{0}%' ", DropDownList1.Text);
             }
         }
+
         //建議售價
         if (!string.IsNullOrEmpty(TextBox1.Text)&& !string.IsNullOrEmpty(TextBox2.Text))
         {
@@ -107,6 +108,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         {
             QUERYS.AppendFormat(@" AND [PRICES1]<={0} ", TextBox2.Text);
         }
+
         //IP價
         if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
         {
@@ -120,6 +122,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         {
             QUERYS.AppendFormat(@" AND [PRICES2]<={0} ", TextBox4.Text);
         }
+
         //DM價
         if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
         {
@@ -134,6 +137,23 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             QUERYS.AppendFormat(@" AND [PRICES3]<={0} ", TextBox6.Text);
         }
 
+        //口味
+        if (!string.IsNullOrEmpty(TextBox7.Text) )
+        {
+            QUERYS.AppendFormat(@" AND MA003 LIKE '%{0}%'", TextBox7.Text);
+        }
+
+        //效期
+        if (!string.IsNullOrEmpty(TextBox8.Text))
+        {
+            QUERYS.AppendFormat(@" AND CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) LIKE '%{0}%'", TextBox8.Text);
+        }
+
+        //銷售重點
+        if (!string.IsNullOrEmpty(TextBox9.Text))
+        {
+            QUERYS.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
+        }
         cmdTxt.AppendFormat(@" 
                                 SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
                                 ,[PRICES1],[PRICES2],[PRICES3]
