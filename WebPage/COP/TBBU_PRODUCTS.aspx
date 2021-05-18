@@ -45,8 +45,7 @@
                         </td>
                         <td class="PopTableRightTD"> 
                                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClientClick="return btn5_Click(this)" 
-                                 meta:resourcekey="btn4Resource1" />                
+                                         
                         </td>            
                     </tr>
                  <tr>
@@ -54,6 +53,76 @@
                             <%--<asp:Button ID="Button2" runat="server" Text="匯出" onclick="btn2_Click"  meta:resourcekey="btn2Resource1" />--%>
                             <%--<asp:Button ID="Button3" runat="server" Text="匯出2" onclick="btn3_Click"  meta:resourcekey="btn2Resource1" />--%>
                              
+                        </td>
+                                 
+                    </tr> 
+                              <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="建議售價:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                       <td>
+                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                            <asp:Label ID="Label4" runat="server" Text="~" meta:resourcekey="Label4Resource1"></asp:Label>     
+                            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                        </td>
+                                 
+                    </tr> 
+                       <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label5" runat="server" Text="IP價:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                       <td>
+                            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                            <asp:Label ID="Label6" runat="server" Text="~" meta:resourcekey="Label4Resource1"></asp:Label>     
+                            <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                        </td>
+                                 
+                    </tr> 
+                   <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label7" runat="server" Text="DM價:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                       <td>
+                            <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+                            <asp:Label ID="Label8" runat="server" Text="~" meta:resourcekey="Label4Resource1"></asp:Label>     
+                            <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                        </td>
+                                 
+                    </tr> 
+                        <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label9" runat="server" Text="口味:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                       <td>
+                            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                        </td>
+                                 
+                    </tr> 
+                   <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label10" runat="server" Text="效期:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                       <td>
+                            <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
+                        </td>
+                                 
+                    </tr> 
+                   <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label11" runat="server" Text="銷售重點:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                        </td>
+                       <td>
+                            <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                        </td>
+                                 
+                    </tr> 
+                     <tr>
+                        <td class="PopTableLeftTD">
+                                       
+                        </td>
+                       <td>
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClientClick="return btn5_Click(this)" 
+                                 meta:resourcekey="btn4Resource1" />   
                         </td>
                                  
                     </tr> 
