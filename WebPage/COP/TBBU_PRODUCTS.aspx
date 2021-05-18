@@ -87,9 +87,16 @@
                                               <asp:BoundField HeaderText="有效期" DataField="VALIDITYPERIOD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                             </asp:BoundField>  
-                                              <asp:BoundField HeaderText="標準售價" DataField="MB047" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                              <asp:BoundField HeaderText="建議售價" DataField="PRICES1" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                             </asp:BoundField>  
+                                             <asp:BoundField HeaderText="IP價" DataField="PRICES2" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+                                             <asp:BoundField HeaderText="DM價" DataField="PRICES3" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            </asp:BoundField>  
+
                                               <asp:BoundField HeaderText="條碼" DataField="MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                             </asp:BoundField>  
