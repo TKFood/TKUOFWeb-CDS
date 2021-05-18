@@ -85,6 +85,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
         string cmdTxt = @"   
                       SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
+                        ,[PRICES1],[PRICES2],[PRICES3]
                         ,[MB002]
                         FROM [TKBUSINESS].[dbo].[PRODUCTS]
                         LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
@@ -101,7 +102,9 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             TextBox1.Text = dt.Rows[0]["MB002"].ToString();
             TextBox2.Text = dt.Rows[0]["PRODUCTSFEATURES"].ToString();
             TextBox3.Text = dt.Rows[0]["SALESFOCUS"].ToString();
-           
+            TextBox4.Text = dt.Rows[0]["PRICES1"].ToString();
+            TextBox5.Text = dt.Rows[0]["PRICES2"].ToString();
+            TextBox6.Text = dt.Rows[0]["PRICES3"].ToString();
 
         }
 
@@ -117,16 +120,19 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         string PRODUCTSFEATURES = TextBox2.Text;
         string SALESFOCUS = TextBox3.Text;
         string COPYWRITINGS = "";
+        string PRICES1 = TextBox4.Text;
+        string PRICES2 = TextBox5.Text;
+        string PRICES3 = TextBox6.Text;
 
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATEPRODUCTS(ID, PRODUCTSFEATURES, SALESFOCUS, COPYWRITINGS);
+            UPDATEPRODUCTS(ID, PRODUCTSFEATURES, SALESFOCUS, COPYWRITINGS, PRICES1, PRICES2, PRICES3);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATEPRODUCTS(string ID, string PRODUCTSFEATURES, string SALESFOCUS, string COPYWRITINGS)
+    public void UPDATEPRODUCTS(string ID, string PRODUCTSFEATURES, string SALESFOCUS, string COPYWRITINGS, string PRICES1, string PRICES2, string PRICES3)
     {
 
 
@@ -139,6 +145,9 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         [PRODUCTSFEATURES]=@PRODUCTSFEATURES
                         ,[SALESFOCUS]=@SALESFOCUS
                         ,[COPYWRITINGS]=@COPYWRITINGS
+                        ,[PRICES1]=@PRICES1
+                        ,[PRICES2]=@PRICES2
+                        ,[PRICES3]=@PRICES3
                         WHERE [MB001]=@ID
                    
                             ";
@@ -148,6 +157,9 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         m_db.AddParameter("@PRODUCTSFEATURES", PRODUCTSFEATURES);
         m_db.AddParameter("@SALESFOCUS", SALESFOCUS);
         m_db.AddParameter("@COPYWRITINGS", COPYWRITINGS);
+        m_db.AddParameter("@PRICES1", PRICES1);
+        m_db.AddParameter("@PRICES2", PRICES2);
+        m_db.AddParameter("@PRICES3", PRICES3);
 
 
 
