@@ -80,27 +80,30 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
         string PRODUCTSFEATURES = TextBox2.Text;
         string SALESFOCUS = TextBox3.Text;
         string COPYWRITINGS = "";
-   
+        string PRICES1 = TextBox4.Text;
+        string PRICES2 = TextBox5.Text;
+        string PRICES3 = TextBox6.Text;
+
 
         if ( !string.IsNullOrEmpty(MB001))
         {
 
-            ADDPRODUCTS(MB001, PRODUCTSFEATURES, SALESFOCUS, COPYWRITINGS);
+            ADDPRODUCTS(MB001, PRODUCTSFEATURES, SALESFOCUS, COPYWRITINGS, PRICES1, PRICES2, PRICES3);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDPRODUCTS(string MB001, string PRODUCTSFEATURES, string SALESFOCUS, string COPYWRITINGS)
+    public void ADDPRODUCTS(string MB001, string PRODUCTSFEATURES, string SALESFOCUS, string COPYWRITINGS, string PRICES1, string PRICES2, string PRICES3)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
                         INSERT INTO [TKBUSINESS].[dbo].[PRODUCTS]
-                        ([MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS])
+                        ([MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PRICES1],[PRICES2],[PRICES3])
                         VALUES
-                        (@MB001,@PRODUCTSFEATURES,@SALESFOCUS,@COPYWRITINGS)         
+                        (@MB001,@PRODUCTSFEATURES,@SALESFOCUS,@COPYWRITINGS,@PRICES1,@PRICES2,@PRICES3)         
 
                             ";
 
@@ -110,6 +113,9 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
         m_db.AddParameter("@PRODUCTSFEATURES", PRODUCTSFEATURES);
         m_db.AddParameter("@SALESFOCUS", SALESFOCUS);
         m_db.AddParameter("@COPYWRITINGS", COPYWRITINGS);
+        m_db.AddParameter("@PRICES1", PRICES1);
+        m_db.AddParameter("@PRICES2", PRICES2);
+        m_db.AddParameter("@PRICES3", PRICES3);
 
 
 
