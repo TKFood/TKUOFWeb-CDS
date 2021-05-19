@@ -92,6 +92,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
                         ,[CONTACTPERSON]
                         ,[TEL1]
                         ,[TEL2]
+                        ,[EMAILS]
                         ,[ISPURATTCH]
                         ,[ISCOPATTCH]
                         ,[ISSHOWMONEYS]
@@ -117,7 +118,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
             TextBox2.Text = dt.Rows[0]["MA002"].ToString();
             TextBox3.Text = dt.Rows[0]["CONTACTPERSON"].ToString();
             TextBox4.Text = dt.Rows[0]["TEL1"].ToString();
-            //TextBox5.Text = dt.Rows[0]["TEL2"].ToString();
+            TextBox5.Text = dt.Rows[0]["EMAILS"].ToString();
             TextBox6.Text = dt.Rows[0]["ISPURATTCH"].ToString();
             TextBox7.Text = dt.Rows[0]["ISCOPATTCH"].ToString();
             TextBox8.Text = dt.Rows[0]["ISSHOWMONEYS"].ToString();
@@ -145,6 +146,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
         string MA002 = TextBox2.Text;
         string CONTACTPERSON = TextBox3.Text;
         string TEL1 = TextBox4.Text;
+        string EMAILS = TextBox5.Text;
         string ISPURATTCH = TextBox6.Text;
         string ISCOPATTCH = TextBox7.Text;
         string ISSHOWMONEYS = TextBox8.Text;
@@ -157,12 +159,12 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATETBCOPCONDTIONS(ID, MA001, MA002, CONTACTPERSON, TEL1, ISPURATTCH, ISCOPATTCH, ISSHOWMONEYS, ISINVOICES, ISSHIPMARK, LIMITDAYS, PAYMENT, SENDADDRESS, COMMENT);
+            UPDATETBCOPCONDTIONS(ID, MA001, MA002, CONTACTPERSON, TEL1, EMAILS,ISPURATTCH, ISCOPATTCH, ISSHOWMONEYS, ISINVOICES, ISSHIPMARK, LIMITDAYS, PAYMENT, SENDADDRESS, COMMENT);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBCOPCONDTIONS(string ID, string MA001, string MA002, string CONTACTPERSON, string TEL1, string ISPURATTCH, string ISCOPATTCH, string ISSHOWMONEYS, string ISINVOICES, string ISSHIPMARK, string LIMITDAYS, string PAYMENT, string SENDADDRESS, string COMMENT)
+    public void UPDATETBCOPCONDTIONS(string ID, string MA001, string MA002, string CONTACTPERSON, string TEL1, string EMAILS, string ISPURATTCH, string ISCOPATTCH, string ISSHOWMONEYS, string ISINVOICES, string ISSHIPMARK, string LIMITDAYS, string PAYMENT, string SENDADDRESS, string COMMENT)
     {
 
 
@@ -175,6 +177,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
                         ,MA002=@MA002
                         ,CONTACTPERSON=@CONTACTPERSON
                         ,TEL1=@TEL1
+                        ,EMAILS=@EMAILS
                         ,ISPURATTCH=@ISPURATTCH
                         ,ISCOPATTCH=@ISCOPATTCH
                         ,ISSHOWMONEYS=@ISSHOWMONEYS
@@ -194,6 +197,7 @@ public partial class CDS_WebPage_TBBU_COPCONDTIONSDialogEDITDEL : Ede.Uof.Utilit
         m_db.AddParameter("@MA002", MA002);
         m_db.AddParameter("@CONTACTPERSON", CONTACTPERSON);
         m_db.AddParameter("@TEL1", TEL1);
+        m_db.AddParameter("@EMAILS", EMAILS);
         m_db.AddParameter("@ISPURATTCH", ISPURATTCH);
         m_db.AddParameter("@ISCOPATTCH", ISCOPATTCH);
         m_db.AddParameter("@ISSHOWMONEYS", ISSHOWMONEYS);

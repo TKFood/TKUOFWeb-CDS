@@ -49,6 +49,7 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
                         ,[LIMITDAYS]
                         ,[PAYMENT]
                         ,[SENDADDRESS]
+                        ,[EMAILS]
                         ,REPLACE([COMMENT] ,char(10),'<br/>') AS [COMMENT] 
                         FROM [TKBUSINESS].[dbo].[COPCONDTIONS]
                         WHERE ISUSED='Y'
@@ -118,6 +119,7 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
                         ,[LIMITDAYS]
                         ,[PAYMENT]
                         ,[SENDADDRESS]
+                        ,[EMAILS]
                         ,REPLACE([COMMENT] ,char(10),'<br/>') AS [COMMENT] 
                         FROM [TKBUSINESS].[dbo].[COPCONDTIONS]
                         WHERE ISUSED='Y'
@@ -146,7 +148,8 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
             dt.Columns[11].Caption = "允收期限";
             dt.Columns[12].Caption = "收款條件";
             dt.Columns[13].Caption = "寄送地址";
-            dt.Columns[14].Caption = "備註";
+            dt.Columns[14].Caption = "EMAILS";
+            dt.Columns[15].Caption = "備註";
 
             e.Datasource = dt;
         }

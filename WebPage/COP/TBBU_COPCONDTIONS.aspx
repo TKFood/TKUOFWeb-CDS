@@ -60,7 +60,10 @@
                                             </asp:BoundField>  
                                               <asp:BoundField HeaderText="電話1" DataField="TEL1" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
-                                            </asp:BoundField>                                             
+                                            </asp:BoundField>
+                                             <asp:BoundField HeaderText="EMAIL" DataField="EMAILS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
                                               <asp:BoundField HeaderText="採購單(附單)" DataField="ISPURATTCH" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>  

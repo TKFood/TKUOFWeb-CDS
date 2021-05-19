@@ -59,6 +59,14 @@
                 <asp:TextBox ID="TextBox4" runat="server"  Text="" Width = "100%"></asp:TextBox>
             </td> 
        </tr>
+         <tr>
+            <td class="PopTableLeftTD" >
+                <asp:Label ID="Label7" runat="server" Text="EMAIL"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox5" runat="server"  Text="" Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>
                <%-- <tr>
             <td class="PopTableLeftTD" >
                 <asp:Label ID="Label7" runat="server" Text="電話2"></asp:Label>
