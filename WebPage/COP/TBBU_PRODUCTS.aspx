@@ -41,7 +41,7 @@
               <table class="PopTable">
                    <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="狀態:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                            <asp:Label ID="Label2" runat="server" Text="銷售通路:" meta:resourcekey="Label4Resource1"></asp:Label>             
                         </td>
                         <td class="PopTableRightTD"> 
                                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
