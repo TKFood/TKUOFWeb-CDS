@@ -128,6 +128,9 @@
                              <asp:BoundField HeaderText="營標送驗申請日期" DataField="TESTDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
+                             <asp:BoundField HeaderText="業務樣本確認日期" DataField="SALESCHECKOK" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                            </asp:BoundField> 
                             <asp:BoundField HeaderText="業務更新日期" DataField="MEMODATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 

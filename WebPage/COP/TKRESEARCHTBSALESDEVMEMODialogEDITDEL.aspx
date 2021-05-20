@@ -165,6 +165,14 @@
        </tr>  
              <tr>
             <td class="PopTableLeftTD" >
+                <asp:Label ID="Label22" runat="server" Text="業務樣本確認日期"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox12" runat="server"  Text="" Width = "100%"></asp:TextBox>
+            </td> 
+       </tr>  
+             <tr>
+            <td class="PopTableLeftTD" >
                 <asp:Label ID="Label19" runat="server" Text="業務進度"></asp:Label>
             </td>
             <td class="PopTableRightTD">
