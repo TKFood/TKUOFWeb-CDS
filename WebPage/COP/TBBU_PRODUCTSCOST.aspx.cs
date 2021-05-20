@@ -68,26 +68,26 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTSCOST : Ede.Uof.Utility.Page.Ba
                                 FROM (
                                 SELECT 
                                 ME002,ME001,MB002
-                                ,CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) AS '材料成本之單位成本'
-                                ,CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006)) AS '人工成本之單位成本'
-                                ,CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006)) AS '製造費用之單位成本'
-                                ,CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)) AS '加工費用之單位成本'
-                                ,(CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005))+CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006))+CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006))+CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014))) AS '單位成本'
+                                ,CASE WHEN ME007>0 THEN CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) ELSE 0 END AS '材料成本之單位成本'
+                                ,CASE WHEN ME008>0 THEN CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006)) ELSE 0 END AS '人工成本之單位成本'
+                                ,CASE WHEN ME009>0 THEN CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006)) ELSE 0 END AS '製造費用之單位成本'
+                                ,CASE WHEN ME010>0 THEN CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)) ELSE 0 END AS '加工費用之單位成本'
+                                ,((CASE WHEN ME007>0 THEN CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) ELSE 0 END)+(CASE WHEN ME008>0 THEN CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006)) ELSE 0 END )+(CASE WHEN ME009>0 THEN CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006)) ELSE 0 END)+(CASE WHEN ME010>0 THEN CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)) ELSE 0 END)) AS '單位成本'
                                 FROM [TK].dbo.CSTME,[TK].dbo.INVMB
                                 WHERE ME001=MB001
-                                AND ( ME001 LIKE '4%' OR ME001 LIKE '5%') 
+                                AND ( ME001 LIKE '4%' OR ME001 LIKE '5%')
                                 AND ME002>='{1}'  AND ME002<='{2}'  
                                 AND (MB002 LIKE '%{0}%')
                                 UNION ALL
                                 SELECT '平均',ME001,MB002
-                                ,AVG(CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005))) AS '材料成本之單位成本'
-                                ,AVG(CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006))) AS '人工成本之單位成本'
-                                ,AVG(CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006))) AS '製造費用之單位成本'
-                                ,AVG(CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014))) AS '加工費用之單位成本'
-                                ,AVG((CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005))+CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006))+CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006))+CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)))) AS '單位成本'
+                                ,AVG(CASE WHEN ME007>0 THEN CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) ELSE 0 END) AS '材料成本之單位成本'
+                                ,AVG(CASE WHEN ME008>0 THEN CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006)) ELSE 0 END) AS '人工成本之單位成本'
+                                ,AVG(CASE WHEN ME009>0 THEN CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006)) ELSE 0 END) AS '製造費用之單位成本'
+                                ,AVG(CASE WHEN ME010>0 THEN CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)) ELSE 0 END) AS '加工費用之單位成本'
+                                ,AVG(((CASE WHEN ME007>0 THEN CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) ELSE 0 END)+(CASE WHEN ME008>0 THEN CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006)) ELSE 0 END )+(CASE WHEN ME009>0 THEN CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006)) ELSE 0 END)+(CASE WHEN ME010>0 THEN CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)) ELSE 0 END))) AS '單位成本'
                                 FROM [TK].dbo.CSTME,[TK].dbo.INVMB
                                 WHERE ME001=MB001
-                                AND ( ME001 LIKE '4%' OR ME001 LIKE '5%') 
+                                AND ( ME001 LIKE '4%' OR ME001 LIKE '5%')
                                 AND ME002>='{1}'  AND ME002<='{2}'  
                                 AND (MB002 LIKE '%{0}%')
                                 GROUP BY ME001,MB002
