@@ -29,7 +29,7 @@
       <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
 	    <Tabs>
-		    <telerik:RadTab Text="國內商務商品資料整理">
+		    <telerik:RadTab Text="資料整理">
 		    </telerik:RadTab>
 		    <telerik:RadTab Text="新增資料">
 		    </telerik:RadTab>
@@ -41,7 +41,7 @@
               <table class="PopTable">
                    <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="品號/品名:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                            <asp:Label ID="Label2" runat="server" Text="品名:" meta:resourcekey="Label4Resource1"></asp:Label>             
                         </td>
                         <td class="PopTableRightTD"> 
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>                                         
