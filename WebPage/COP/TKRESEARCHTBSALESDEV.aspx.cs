@@ -136,7 +136,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEV : Ede.Uof.Utility.Page.Bas
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
 
