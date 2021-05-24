@@ -113,7 +113,12 @@
                                   <asp:BoundField HeaderText="研發進度" DataField="DEVHISTORYS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Left" Width="360px"></ItemStyle>
                             </asp:BoundField>                         
-                            
+                      
+                            <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
+                                <ItemTemplate>
+                                    <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("SERNO") %>'/>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </Fast:Grid>
                 </div>               
