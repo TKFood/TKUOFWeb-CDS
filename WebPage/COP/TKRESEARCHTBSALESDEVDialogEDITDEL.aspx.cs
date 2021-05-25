@@ -249,9 +249,13 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogEDITDEL : Ede.Uof.Uti
 
 
 
+
+
+
         m_db.AddParameter("@SERNO", SERNO);
         m_db.AddParameter("@STATUS", STATUS);
         m_db.AddParameter("@CLIENT", CLIENT);
+        m_db.AddParameter("@SALES", SALES);
         m_db.AddParameter("@PROD", PROD);
         m_db.AddParameter("@SPEC", SPEC);
         m_db.AddParameter("@VALID", VALID);
@@ -259,7 +263,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogEDITDEL : Ede.Uof.Uti
         m_db.AddParameter("@PROMOTIONS", PROMOTIONS);
         m_db.AddParameter("@PLACES", PLACES);
         m_db.AddParameter("@ONSALES", ONSALES);
-        m_db.AddParameter("@ONSALESDATES", ONSALESDATES);
+        m_db.AddParameter("@ONSALESDATES", Convert.ToDateTime(ONSALESDATES));
         m_db.AddParameter("@DESIGNS", DESIGNS);
         m_db.AddParameter("@SALESHISTORYS", SALESHISTORYS);
         m_db.AddParameter("@DEVHISTORYS", DEVHISTORYS);

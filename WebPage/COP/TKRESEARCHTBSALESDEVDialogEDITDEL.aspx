@@ -146,7 +146,7 @@
                 <asp:Label ID="Label3" runat="server" Text="是否刪除"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                  <asp:Button ID="btn1" runat="server" Text="刪除" OnClientClick="return btn1_Click(this)" 
+                  <asp:Button ID="btn1" runat="server" Text="刪除" ForeColor="Red" OnClientClick="return btn1_Click(this)" 
                     onclick="btn1_Click" meta:resourcekey="btn1Resource1" />
             </td> 
         </tr>
