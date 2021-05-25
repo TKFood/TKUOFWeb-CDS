@@ -14,7 +14,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
-public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogSALESADD : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogDEVSADD : Ede.Uof.Utility.Page.BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -54,7 +54,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogSALESADD : Ede.Uof.Ut
         //Dialog.SetReturnValue2(txtReturnValue.Text);
         if(!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) )
         {
-            ADDTBSALESDEVHISOTRYSALES(lblParam.Text, TextBox1.Text);
+            ADDTBSALESDEVHISOTRYDEV(lblParam.Text, TextBox1.Text);
             UPDATETBSALESDEV(lblParam.Text, TextBox1.Text);
         }
         
@@ -68,7 +68,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogSALESADD : Ede.Uof.Ut
     {
         if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text))
         {
-            ADDTBSALESDEVHISOTRYSALES(lblParam.Text, TextBox1.Text);
+            ADDTBSALESDEVHISOTRYDEV(lblParam.Text, TextBox1.Text);
             UPDATETBSALESDEV(lblParam.Text, TextBox1.Text);
         }
 
@@ -93,7 +93,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogSALESADD : Ede.Uof.Ut
         string cmdTxt = @" 
                            SELECT CONVERT(NVARCHAR,[MEMODATES],120) AS MEMODATES 
                             ,[MEMO],[ID],[PID] 
-                            FROM [TKRESEARCH].[dbo].[TBSALESDEVHISOTRYSALES] 
+                            FROM [TKRESEARCH].[dbo].[TBSALESDEVHISOTRYDEV] 
                             WHERE [PID]=@ID     
                             ORDER BY [MEMODATES] DESC
                             ";
@@ -118,7 +118,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogSALESADD : Ede.Uof.Ut
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                      
+                       
                         ";
 
         m_db.AddParameter("@ID", ID);
@@ -135,13 +135,13 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogSALESADD : Ede.Uof.Ut
         
     }
 
-    public void ADDTBSALESDEVHISOTRYSALES(string PID, string MEMO)
+    public void ADDTBSALESDEVHISOTRYDEV(string PID, string MEMO)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        INSERT INTO [TKRESEARCH].[dbo].[TBSALESDEVHISOTRYSALES] 
+                        INSERT INTO [TKRESEARCH].[dbo].[TBSALESDEVHISOTRYDEV] 
                         ([PID],[MEMODATES],[MEMO])
                         VALUES (@PID,@MEMODATES,@MEMO)
                             ";
@@ -157,18 +157,18 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogSALESADD : Ede.Uof.Ut
         
     }
 
-    public void UPDATETBSALESDEV(string SERNO, string SALESHISTORYS)
+    public void UPDATETBSALESDEV(string SERNO, string DEVHISTORYS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  UPDATE [TKRESEARCH].[dbo].[TBSALESDEV]
-                            SET [SALESHISTORYS]=@SALESHISTORYS
+                            SET [DEVHISTORYS]=@DEVHISTORYS
                             WHERE [SERNO]=@SERNO
                             ";
 
         m_db.AddParameter("@SERNO", SERNO);
-        m_db.AddParameter("@SALESHISTORYS", SALESHISTORYS);
+        m_db.AddParameter("@DEVHISTORYS", DEVHISTORYS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);

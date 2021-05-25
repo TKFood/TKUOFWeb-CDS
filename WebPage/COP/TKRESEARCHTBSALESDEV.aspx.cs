@@ -124,38 +124,41 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEV : Ede.Uof.Utility.Page.Bas
             //Button1
             //Get the button that raised the event
             Button btn = (Button)e.Row.FindControl("Button1");
-
             //Get the row that contains this button
             GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-
             //string cellvalue = gvr.Cells[2].Text.Trim();
             string Cellvalue = btn.CommandArgument;
-
             DataRowView row = (DataRowView)e.Row.DataItem;
             Button lbtnName = (Button)e.Row.FindControl("Button1");
-
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
             //Button2
             //Get the button that raised the event
             Button btn2 = (Button)e.Row.FindControl("Button2");
-
             //Get the row that contains this button
             GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
-
             //string cellvalue = gvr.Cells[2].Text.Trim();
             string Cellvalue2 = btn2.CommandArgument;
-
             DataRowView row2 = (DataRowView)e.Row.DataItem;
             Button lbtnName2 = (Button)e.Row.FindControl("Button2");
-
             ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
-
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
+
+            //Button3
+            //Get the button that raised the event
+            Button btn3 = (Button)e.Row.FindControl("Button3");
+            //Get the row that contains this button
+            GridViewRow gvr3 = (GridViewRow)btn3.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue3 = btn3.CommandArgument;
+            DataRowView row3 = (DataRowView)e.Row.DataItem;
+            Button lbtnName3 = (Button)e.Row.FindControl("Button3");
+            ExpandoObject param3 = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName3, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVDialogDEVSADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param3);
         }
 
 
