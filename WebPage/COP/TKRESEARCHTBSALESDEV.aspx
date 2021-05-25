@@ -114,11 +114,21 @@
                                 <ItemStyle HorizontalAlign="Left" Width="360px"></ItemStyle>
                             </asp:BoundField>                         
                       
-                            <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
+                            <asp:TemplateField HeaderText="修改明細" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
                                     <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("SERNO") %>'/>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                              <asp:TemplateField HeaderText="更新業務進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                  <ItemTemplate>
+                                    <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("SERNO") %>'/>
+                                </ItemTemplate>                                
+                            </asp:TemplateField> 
+                             <asp:TemplateField HeaderText="更新研發進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
+                                 <ItemTemplate>
+                                    <asp:Button ID="Button3" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("SERNO") %>'/>
+                                </ItemTemplate>
+                            </asp:TemplateField> 
                         </Columns>
                     </Fast:Grid>
                 </div>               
