@@ -8,10 +8,7 @@
 
 <script>
     $(function () {
-        $("#<%= txtDate1.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
-        $("#<%= txtDate2.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
-        $("#<%= txtDate3.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
-        $("#<%= txtDate4.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
+       
     }); 
   
 </script>
@@ -104,7 +101,7 @@
                 <asp:Label ID="Label21" runat="server" Text="預估上市日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="txtDate4" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                <telerik:RadDatePicker ID="RadDatePicker4"  runat="server" Width = "120px"></telerik:RadDatePicker>
             </td> 
        </tr>
              <tr>
@@ -120,7 +117,7 @@
                 <asp:Label ID="Label13" runat="server" Text="可行性評估 申請日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                 <asp:TextBox ID="txtDate1"  runat="server" Width = "100%" ></asp:TextBox>
+                  <telerik:RadDatePicker ID="RadDatePicker1"  runat="server" Width = "120px"></telerik:RadDatePicker>
             </td> 
        </tr>
                <tr>
@@ -128,7 +125,7 @@
                 <asp:Label ID="Label14" runat="server" Text="成本試算 申請日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                 <asp:TextBox ID="txtDate2" runat="server" Width = "100%" ></asp:TextBox>
+                 <telerik:RadDatePicker ID="RadDatePicker2"  runat="server" Width = "120px"></telerik:RadDatePicker>
             </td> 
        </tr>        
              <tr>
@@ -152,7 +149,7 @@
                 <asp:Label ID="Label17" runat="server" Text="營標送驗 申請日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="txtDate3" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                <telerik:RadDatePicker ID="RadDatePicker3"  runat="server" Width = "120px"></telerik:RadDatePicker>
             </td> 
        </tr>       
              <tr>

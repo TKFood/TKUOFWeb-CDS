@@ -157,16 +157,16 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
             TextBox7.Text = dt.Rows[0]["PLACES"].ToString();
             TextBox8.Text = dt.Rows[0]["ONSALES"].ToString();
             TextBox9.Text = dt.Rows[0]["PRODESGIN"].ToString();
-            txtDate1.Text = dt.Rows[0]["ASSESSMENTDATES"].ToString();
-            txtDate2.Text = dt.Rows[0]["COSTSDATES"].ToString();
+            RadDatePicker1.SelectedDate = Convert.ToDateTime(dt.Rows[0]["ASSESSMENTDATES"].ToString());
+            RadDatePicker2.SelectedDate = Convert.ToDateTime(dt.Rows[0]["COSTSDATES"].ToString());
             TextBox10.Text = dt.Rows[0]["SALESPRICES"].ToString();
             TextBox11.Text = dt.Rows[0]["TEST"].ToString();
-            txtDate3.Text = dt.Rows[0]["TESTDATES"].ToString();
+            RadDatePicker3.SelectedDate = Convert.ToDateTime(dt.Rows[0]["TESTDATES"].ToString());
             TextBox12.Text = dt.Rows[0]["SALESCHECKOK"].ToString();
             TextBox13.Text = dt.Rows[0]["OWNER"].ToString();
             TextBox14.Text = dt.Rows[0]["MEMO"].ToString();
             TextBox15.Text = dt.Rows[0]["DEVMEMO"].ToString();
-            txtDate4.Text = dt.Rows[0]["ONSALESDATES"].ToString();
+            RadDatePicker4.SelectedDate = Convert.ToDateTime(dt.Rows[0]["ONSALESDATES"].ToString());
 
         }
 
@@ -220,14 +220,14 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogEDITDEL : Ede.Uof
         string VALID = TextBox6.Text.ToString().Trim();
         string PLACES = TextBox7.Text.ToString().Trim();
         string ONSALES = TextBox8.Text.ToString().Trim();
-        string ONSALESDATES = txtDate4.Text.ToString().Trim();
+        string ONSALESDATES = RadDatePicker4.SelectedDate.Value.ToString("yyyy/MM/dd");
         string PRODESGIN = TextBox9.Text.ToString().Trim();
-        string ASSESSMENTDATES = txtDate1.Text.ToString().Trim();
-        string COSTSDATES = txtDate2.Text.ToString().Trim();
+        string ASSESSMENTDATES = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
+        string COSTSDATES = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
         string SALESPRICES = TextBox10.Text.ToString().Trim();
         string TEST = TextBox11.Text.ToString().Trim();
         string SALESCHECKOK = TextBox12.Text.ToString().Trim();
-        string TESTDATES = txtDate3.Text.ToString().Trim();
+        string TESTDATES = RadDatePicker3.SelectedDate.Value.ToString("yyyy/MM/dd");
         string OWNER = TextBox13.Text.ToString().Trim();
         string MEMO = TextBox14.Text.ToString().Trim();
         string DEVMEMO = TextBox15.Text.ToString().Trim();

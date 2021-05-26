@@ -102,13 +102,13 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVMEMODialogADD : Ede.Uof.Uti
         string VALID = TextBox6.Text.ToString().Trim();
         string PLACES = TextBox7.Text.ToString().Trim();
         string ONSALES = TextBox8.Text.ToString().Trim();
-        string ONSALESDATES = txtDate4.Text.ToString().Trim();
+        string ONSALESDATES = RadDatePicker4.SelectedDate.Value.ToString("yyyy/MM/dd");
         string PRODESGIN = TextBox9.Text.ToString().Trim();
-        string ASSESSMENTDATES = txtDate1.Text.ToString().Trim();
-        string COSTSDATES = txtDate2.Text.ToString().Trim();
+        string ASSESSMENTDATES = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
+        string COSTSDATES = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
         string SALESPRICES = TextBox10.Text.ToString().Trim();
         string TEST = TextBox11.Text.ToString().Trim();
-        string TESTDATES = txtDate3.Text.ToString().Trim();
+        string TESTDATES = RadDatePicker3.SelectedDate.Value.ToString("yyyy/MM/dd");
         string SALESCHECKOK = TextBox12.Text.ToString().Trim();
         string OWNER = TextBox13.Text.ToString().Trim();
         string MEMO = TextBox14.Text.ToString().Trim();
