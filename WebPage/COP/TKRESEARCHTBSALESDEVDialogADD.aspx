@@ -8,7 +8,7 @@
 
 <script>
     $(function () {
-        $("#<%= txtDate1.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
+       
       
     });
 </script>
@@ -109,7 +109,7 @@
                 <asp:Label ID="Label20" runat="server" Text="預估上市日期"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="txtDate1" runat="server"  Text="" Width = "100%"></asp:TextBox>
+                 <telerik:RadDatePicker ID="RadDatePicker1"  runat="server" Width = "120px"></telerik:RadDatePicker>
             </td> 
        </tr>
              <tr>

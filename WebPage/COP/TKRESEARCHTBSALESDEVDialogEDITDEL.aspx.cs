@@ -177,7 +177,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogEDITDEL : Ede.Uof.Uti
             TextBox7.Text = dt.Rows[0]["PROMOTIONS"].ToString();
             TextBox8.Text = dt.Rows[0]["PLACES"].ToString();
             TextBox9.Text = dt.Rows[0]["ONSALES"].ToString();
-            txtDate1.Text = dt.Rows[0]["ONSALESDATES"].ToString();           
+            RadDatePicker1.SelectedDate = Convert.ToDateTime(dt.Rows[0]["ONSALESDATES"].ToString());           
             TextBox10.Text = dt.Rows[0]["DESIGNS"].ToString();
             TextBox11.Text = dt.Rows[0]["SALESHISTORYS"].ToString();
             TextBox12.Text = dt.Rows[0]["DEVHISTORYS"].ToString();
@@ -203,7 +203,7 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogEDITDEL : Ede.Uof.Uti
         string PROMOTIONS = TextBox7.Text.ToString().Trim();
         string PLACES = TextBox8.Text.ToString().Trim();
         string ONSALES = TextBox9.Text.ToString().Trim();
-        string ONSALESDATES = txtDate1.Text.ToString().Trim();
+        string ONSALESDATES = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
         string DESIGNS = TextBox10.Text.ToString().Trim();
         string SALESHISTORYS = TextBox11.Text.ToString().Trim();
         string DEVHISTORYS = TextBox12.Text.ToString().Trim();

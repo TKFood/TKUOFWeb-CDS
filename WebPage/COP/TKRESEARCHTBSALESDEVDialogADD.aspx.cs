@@ -103,9 +103,9 @@ public partial class CDS_WebPage_TKRESEARCHTBSALESDEVDialogADD : Ede.Uof.Utility
         string PROMOTIONS = TextBox7.Text.ToString().Trim();
         string PLACES = TextBox8.Text.ToString().Trim();
         string ONSALES = TextBox9.Text.ToString().Trim();
-        string ONSALESDATES = TextBox10.Text.ToString().Trim();
-        string DESIGNS = TextBox11.Text.ToString().Trim();
-        string SALESHISTORYS = txtDate1.Text.ToString().Trim();
+        string ONSALESDATES = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
+        string DESIGNS = TextBox10.Text.ToString().Trim();
+        string SALESHISTORYS = TextBox11.Text.ToString().Trim();
         string DEVHISTORYS = TextBox12.Text.ToString().Trim();
         
 
