@@ -96,10 +96,14 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
     }
     public void ADDPRODUCTS(string MB001, string PRODUCTSFEATURES, string SALESFOCUS, string COPYWRITINGS, string PRICES1, string PRICES2, string PRICES3)
     {
+        Label8.Text = "";
+
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  
+        try
+        {
+            string cmdTxt = @"  
                         INSERT INTO [TKBUSINESS].[dbo].[PRODUCTS]
                         ([MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PRICES1],[PRICES2],[PRICES3])
                         VALUES
@@ -109,17 +113,30 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
 
 
 
-        m_db.AddParameter("@MB001", MB001);
-        m_db.AddParameter("@PRODUCTSFEATURES", PRODUCTSFEATURES);
-        m_db.AddParameter("@SALESFOCUS", SALESFOCUS);
-        m_db.AddParameter("@COPYWRITINGS", COPYWRITINGS);
-        m_db.AddParameter("@PRICES1", PRICES1);
-        m_db.AddParameter("@PRICES2", PRICES2);
-        m_db.AddParameter("@PRICES3", PRICES3);
+            m_db.AddParameter("@MB001", MB001);
+            m_db.AddParameter("@PRODUCTSFEATURES", PRODUCTSFEATURES);
+            m_db.AddParameter("@SALESFOCUS", SALESFOCUS);
+            m_db.AddParameter("@COPYWRITINGS", COPYWRITINGS);
+            m_db.AddParameter("@PRICES1", PRICES1);
+            m_db.AddParameter("@PRICES2", PRICES2);
+            m_db.AddParameter("@PRICES3", PRICES3);
 
 
 
-        m_db.ExecuteNonQuery(cmdTxt);
+            m_db.ExecuteNonQuery(cmdTxt);
+
+            Label8.Text = "成功";
+        }
+        catch
+        {
+            Label8.Text = "新增失敗";
+        }
+        finally
+        {
+
+        }
+
+        
 
     }
 
