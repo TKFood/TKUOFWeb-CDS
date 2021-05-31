@@ -128,18 +128,18 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBDEVNEWDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
-            ////Button2
-            ////Get the button that raised the event
-            //Button btn2 = (Button)e.Row.FindControl("Button2");
-            ////Get the row that contains this button
-            //GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
-            ////string cellvalue = gvr.Cells[2].Text.Trim();
-            //string Cellvalue2 = btn2.CommandArgument;
-            //DataRowView row2 = (DataRowView)e.Row.DataItem;
-            //Button lbtnName2 = (Button)e.Row.FindControl("Button2");
-            //ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
-            ////Grid開窗是用RowDataBound事件再開窗
-            //Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
+            //Button2
+            //Get the button that raised the event
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            //Get the row that contains this button
+            GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue2 = btn2.CommandArgument;
+            DataRowView row2 = (DataRowView)e.Row.DataItem;
+            Button lbtnName2 = (Button)e.Row.FindControl("Button2");
+            ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TKRESEARCHTBDEVNEWDialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
 
 
         }
