@@ -10,7 +10,7 @@
         //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
         //OpenDialogResult為關閉視後會執行的JS Function
         //參數使用JSON格式傳遞
-        $uof.dialog.open2("~/CDS/WebPage/COP/TKRESEARCHTBSALESDEVDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+        $uof.dialog.open2("~/CDS/WebPage/COP/TKRESEARCHTBDEVNEWVDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
           return false;
 
@@ -77,14 +77,14 @@
                              <asp:BoundField HeaderText="接單日期" DataField="SDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField>
-                             <asp:BoundField HeaderText="客戶" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                             <asp:BoundField HeaderText="口味名稱" DataField="PRODUCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                            </asp:BoundField> 
+                               <asp:BoundField HeaderText="客戶" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField> 
                              <asp:BoundField HeaderText="負責業務" DataField="SALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                            </asp:BoundField> 
-                             <asp:BoundField HeaderText="口味名稱" DataField="PRODUCTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                             </asp:BoundField> 
                                <asp:BoundField HeaderText="需求數量" DataField="NUMS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
