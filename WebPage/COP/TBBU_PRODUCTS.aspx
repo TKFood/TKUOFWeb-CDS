@@ -121,8 +121,8 @@
                                        
                         </td>
                        <td>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClientClick="return btn5_Click(this)" 
-                                 meta:resourcekey="btn4Resource1" />   
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn5_Click" 
+                                 meta:resourcekey="btn5Resource1" />   
                         </td>
                                  
                     </tr> 

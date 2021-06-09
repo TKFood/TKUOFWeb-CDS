@@ -22,23 +22,30 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
+            BindDropDownList();
+
             BindGrid("");
         }
         else
         {
-            BindGrid("");
+            //if (ViewState["TextBox1"] != null)
+            //{
+            //    TextBox1.Text = ViewState["TextBox1"].ToString();
+               
+            //}
+                
+
+            //if (this.Session["STATUS"] != null)
+            //{
+            //    DropDownList1.SelectedItem.Text = this.Session["STATUS"].ToString();
+
+            //}
+
         }
 
-        BindDropDownList();
-
-        if (this.Session["STATUS"] != null)
-        {
-            DropDownList1.Text = this.Session["STATUS"].ToString();
-
-        }
+       
 
 
     }
@@ -80,7 +87,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
-        QUERYS.AppendFormat(@" ");
+      
 
         //狀態
         if (!string.IsNullOrEmpty(DropDownList1.Text))
@@ -169,37 +176,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                                 ORDER BY [PRODUCTS].[MB001]
                                 ", QUERYS.ToString());
 
-        //if(!string.IsNullOrEmpty(SALESFOCUS)&&!SALESFOCUS.Equals("全部"))
-        //{
-        //    cmdTxt.AppendFormat(@" 
-        //                        SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
-        //                        ,[PRICES1],[PRICES2],[PRICES3]
-        //                        ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
-        //                        ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
-        //                        FROM [TKBUSINESS].[dbo].[PRODUCTS]
-        //                        LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
-        //                        LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
-        //                        LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
-        //                        LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
-        //                        WHERE [SALESFOCUS] LIKE '%{0}%'
-        //                        ORDER BY [PRODUCTS].[MB001]
-        //                        ", SALESFOCUS);
-        //}
-        //else
-        //{
-        //    cmdTxt.AppendFormat(@" 
-        //                        SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
-        //                        ,[PRICES1],[PRICES2],[PRICES3]
-        //                        ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
-        //                        ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
-        //                        FROM [TKBUSINESS].[dbo].[PRODUCTS]
-        //                        LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
-        //                        LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
-        //                        LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
-        //                        LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
-        //                        ORDER BY [PRODUCTS].[MB001]
-        //                        ");
-        //}
+       
 
 
         //m_db.AddParameter("@SDATE", SDATE);
@@ -369,6 +346,8 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                 QUERYS.AppendFormat(@" AND  [SALESFOCUS] LIKE '%{0}%' ", DropDownList1.Text);
             }
         }
+
+        this.Session["STATUS"] = DropDownList1.Text;
 
         //建議售價
         if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
@@ -742,14 +721,39 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
     protected void btn5_Click(object sender, EventArgs e)
     {
-        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        {
-            if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-            {
-                this.Session["STATUS"] = DropDownList1.Text.Trim();
-            }
 
-        }
+        //this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
+        ViewState["TextBox1"] = TextBox1.Text.ToString();
+        ViewState["TextBox2"] = TextBox2.Text.ToString();
+        ViewState["TextBox3"] = TextBox3.Text.ToString();
+        ViewState["TextBox4"] = TextBox4.Text.ToString();
+        ViewState["TextBox5"] = TextBox5.Text.ToString();
+        ViewState["TextBox6"] = TextBox6.Text.ToString();
+        ViewState["TextBox7"] = TextBox7.Text.ToString();
+        ViewState["TextBox8"] = TextBox8.Text.ToString();
+        ViewState["TextBox9"] = TextBox9.Text.ToString();
+
+        BindGrid("");
+
+        TextBox1.Text = ViewState["TextBox1"].ToString();
+        TextBox2.Text = ViewState["TextBox2"].ToString();
+        TextBox3.Text = ViewState["TextBox3"].ToString();
+        TextBox4.Text = ViewState["TextBox4"].ToString();
+        TextBox5.Text = ViewState["TextBox5"].ToString();
+        TextBox6.Text = ViewState["TextBox6"].ToString();
+        TextBox7.Text = ViewState["TextBox7"].ToString();
+        TextBox8.Text = ViewState["TextBox8"].ToString();
+        TextBox9.Text = ViewState["TextBox9"].ToString();
+     
+
+        //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        //{
+        //    if (Dialog.GetReturnValue().Equals("NeedPostBack"))
+        //    {
+
+        //    }
+
+        //}
     }
     #endregion
 }
