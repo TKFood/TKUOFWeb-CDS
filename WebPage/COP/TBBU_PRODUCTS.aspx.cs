@@ -30,12 +30,15 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         }
         else
         {
+
+            BindGrid("");
+
             //if (ViewState["TextBox1"] != null)
             //{
             //    TextBox1.Text = ViewState["TextBox1"].ToString();
-               
+
             //}
-                
+
 
             //if (this.Session["STATUS"] != null)
             //{
@@ -98,7 +101,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             }
             else if(!DropDownList1.Text.Equals("全部"))
             {
-                QUERYS.AppendFormat(@" AND  [SALESFOCUS] LIKE '%{0}%' ", DropDownList1.Text);
+                QUERYS.AppendFormat(@" AND  [SALESFOCUS]='{0}' ", DropDownList1.Text);
             }
         }
 
