@@ -9,7 +9,7 @@
             //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
             //OpenDialogResult為關閉視後會執行的JS Function
             //參數使用JSON格式傳遞
-            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_PRODUCTSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
             return false;
 
@@ -205,6 +205,17 @@
         </telerik:RadPageView>
         <telerik:RadPageView ID="RadPageView3" runat="server">
             <div id="tabs-3">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
+
+                        </td>
+                    </tr>
+                </table>
             </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>​
