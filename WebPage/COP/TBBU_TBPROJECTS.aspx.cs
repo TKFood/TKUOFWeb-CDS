@@ -26,12 +26,14 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
         {
             TextBox1.Text = DateTime.Now.Year.ToString();
 
-            BindGrid("");
+            BindGrid();
+            BindGrid2();
         }
         else
         {
 
-            BindGrid("");
+            BindGrid();
+            BindGrid2();
 
 
         }
@@ -70,7 +72,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
 
 
     }
-    private void BindGrid(string SALESFOCUS)
+    private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -167,7 +169,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             WHERE [YEARS]=@YEARS
                             ORDER BY [YEARS],[WEEKS]
                               
-                            ", QUERYS.ToString());
+                            ");
 
 
 
@@ -226,6 +228,61 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
 
         //    e.Datasource = dt;
         //}
+    }
+
+    private void BindGrid2()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT
+                            [ID]
+                            ,[YEARS]
+                            ,[WEEKS]
+                            ,[STORES]
+                            ,[ITEMS]
+                            ,[CONTENTS]
+                            FROM [TKBUSINESS].[dbo].[TBPROJECTS]
+                            WHERE [YEARS]='2021'
+                            ORDER BY [YEARS],[WEEKS],[STORES]
+                              
+                            ");
+
+
+
+
+        m_db.AddParameter("@YEARS", TextBox2.Text.ToString().Trim());
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid("");
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+
+      
     }
 
 
