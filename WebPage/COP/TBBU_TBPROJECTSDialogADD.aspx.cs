@@ -28,6 +28,8 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
 
         if (!IsPostBack)
         {
+            BindDropDownList();
+
             ////接收主頁面傳遞之參數
             //lblParam.Text = Request["ID"];
 
@@ -70,13 +72,42 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
     #endregion
 
     #region FUNCTION
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("SALESFOCUS", typeof(String));
 
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[STORES] FROM [TKBUSINESS].[dbo].[STORESKIND] ORDER BY ID";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "STORES";
+            DropDownList1.DataValueField = "STORES";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
 
     public void ADD()
     { 
         string YEARS = TextBox1.Text;
         string WEEKS = TextBox2.Text;
-        string STORES = TextBox3.Text;
+        //string STORES = TextBox3.Text;
+        string STORES = DropDownList1.SelectedValue.Trim();
         string ITEMS = TextBox4.Text;
         string CONTENTS = TextBox5.Text;
 

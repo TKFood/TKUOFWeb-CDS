@@ -16,7 +16,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+       
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -28,6 +28,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
 
         if (!IsPostBack)
         {
+            BindDropDownList();
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
 
@@ -75,7 +76,35 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
     #endregion
 
     #region FUNCTION
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("SALESFOCUS", typeof(String));
 
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[STORES] FROM [TKBUSINESS].[dbo].[STORESKIND] ORDER BY ID";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "STORES";
+            DropDownList1.DataValueField = "STORES";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
 
     public void SEARCHTTBPROJECTS(string ID)
     {
@@ -105,7 +134,8 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         {           
             TextBox1.Text = dt.Rows[0]["YEARS"].ToString();
             TextBox2.Text = dt.Rows[0]["WEEKS"].ToString();
-            TextBox3.Text = dt.Rows[0]["STORES"].ToString();
+            //TextBox3.Text = dt.Rows[0]["STORES"].ToString();
+            DropDownList1.SelectedValue = dt.Rows[0]["STORES"].ToString().Trim();
             TextBox4.Text = dt.Rows[0]["ITEMS"].ToString();
             TextBox5.Text = dt.Rows[0]["CONTENTS"].ToString();
 
@@ -122,7 +152,8 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         string ID = lblParam.Text;
         string YEARS = TextBox1.Text;
         string WEEKS = TextBox2.Text;
-        string STORES = TextBox3.Text;
+        //string STORES = TextBox3.Text;
+        string STORES = DropDownList1.SelectedValue.Trim();
         string ITEMS = TextBox4.Text;
         string CONTENTS = TextBox5.Text;
 

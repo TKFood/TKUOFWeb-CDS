@@ -47,7 +47,8 @@
                 <asp:Label ID="Label5" runat="server" Text="通路"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox3" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+                <%--<asp:TextBox ID="TextBox3" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>--%>
+                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
             </td>
         </tr>
         <tr>
