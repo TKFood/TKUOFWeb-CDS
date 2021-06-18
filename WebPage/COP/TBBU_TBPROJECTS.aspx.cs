@@ -25,6 +25,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
         if (!IsPostBack)
         {
             TextBox1.Text = DateTime.Now.Year.ToString();
+            TextBox2.Text = DateTime.Now.Year.ToString();
 
             BindGrid();
             BindGrid2();
@@ -192,7 +193,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-
+       
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -249,7 +250,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             ,[ITEMS]
                             ,[CONTENTS]
                             FROM [TKBUSINESS].[dbo].[TBPROJECTS]
-                            WHERE [YEARS]='2021'
+                            WHERE [YEARS]=@YEARS
                             ORDER BY [YEARS],[WEEKS],[STORES]
                               
                             ");
@@ -275,7 +276,25 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button1");
 
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button1");
+
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
     }
 
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
