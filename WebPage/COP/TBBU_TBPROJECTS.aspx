@@ -2,7 +2,11 @@
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.7.2.min.js"><\/script>');</script>
     <script>    
         function btn4_Click(sender) {
             //從前端開始視窗
@@ -23,7 +27,16 @@
                 return true;
         }
 
-
+        function words_deal() {
+            var curLength = $("#TextBox1").val().length;
+            if (curLength > 4) {
+                var num = $("#TextBox1").val().substr(0, 4);
+                $("#TextBox1").val(num);
+                alert("超過字數限制，多出的字將被移除！");
+            } else {
+                $("#TextBox1").text(4 - $("#TextArea1").val().length);
+            }
+        }
 
     </script>
 
@@ -47,7 +60,7 @@
                             <asp:Label ID="Label2" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox1" runat="server" MaxLength="4" ></asp:TextBox>
 
                         </td>
                     </tr>
@@ -151,7 +164,7 @@
                             <asp:Label ID="Label1" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox2" runat="server" MaxLength="4"></asp:TextBox>
 
                         </td>
                     </tr>

@@ -31,7 +31,7 @@
                 <asp:Label ID="Label2" runat="server" Text="年度"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="1" Style="height: 20px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Text="" MaxLength="4" Width="200%"  Row="1" Style="height: 20px;"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -39,7 +39,7 @@
                 <asp:Label ID="Label3" runat="server" Text="週次"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox2" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="1" Style="height: 20px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox2" runat="server" Text=""  MaxLength="2" Width="200%"  Row="1" Style="height: 20px;"></asp:TextBox>
             </td>
         </tr>
         <tr>

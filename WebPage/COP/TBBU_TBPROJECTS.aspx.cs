@@ -170,9 +170,9 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             ) AS TEMP
                             WHERE 1=1
                             AND [YEARS]=@YEARS
-                            ORDER BY [YEARS],[WEEKS]
+                            ORDER BY [YEARS],CONVERT(INT,[WEEKS])
                               
-                            " );
+                            ");
 
 
 
