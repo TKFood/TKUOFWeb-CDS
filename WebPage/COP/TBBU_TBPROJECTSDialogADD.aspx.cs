@@ -105,9 +105,9 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
     public void ADD()
     { 
         string YEARS = TextBox1.Text;
-        string WEEKS = TextBox2.Text;
-        //string STORES = TextBox3.Text;
+        string WEEKS = TextBox2.Text;      
         string STORES = DropDownList1.SelectedValue.Trim();
+        string NAMES = TextBox3.Text;
         string ITEMS = TextBox4.Text;
         string CONTENTS = TextBox5.Text;
 
@@ -115,13 +115,13 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
         if ( !string.IsNullOrEmpty(YEARS)&& !string.IsNullOrEmpty(WEEKS))
         {
 
-            ADDTBPROJECTS(YEARS, WEEKS, STORES, ITEMS, CONTENTS);
+            ADDTBPROJECTS(YEARS, WEEKS, STORES, NAMES, ITEMS, CONTENTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBPROJECTS(string YEARS, string WEEKS, string STORES, string ITEMS, string CONTENTS)
+    public void ADDTBPROJECTS(string YEARS, string WEEKS, string STORES,string NAMES, string ITEMS, string CONTENTS)
     {
         Label8.Text = "";
 
@@ -132,9 +132,9 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
         {
             string cmdTxt = @"  
                             INSERT INTO  [TKBUSINESS].[dbo].[TBPROJECTS]
-                            ([YEARS],[WEEKS],[STORES],[ITEMS],[CONTENTS])
+                            ([YEARS],[WEEKS],[STORES],[NAMES],[ITEMS],[CONTENTS])
                             VALUES
-                            (@YEARS,@WEEKS,@STORES,@ITEMS,@CONTENTS)
+                            (@YEARS,@WEEKS,@STORES,@NAMES,@ITEMS,@CONTENTS)
 
                             ";
 
@@ -143,6 +143,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
             m_db.AddParameter("@YEARS", YEARS);
             m_db.AddParameter("@WEEKS", WEEKS);
             m_db.AddParameter("@STORES", STORES);
+            m_db.AddParameter("@NAMES", NAMES);
             m_db.AddParameter("@ITEMS", ITEMS);
             m_db.AddParameter("@CONTENTS", CONTENTS);
 

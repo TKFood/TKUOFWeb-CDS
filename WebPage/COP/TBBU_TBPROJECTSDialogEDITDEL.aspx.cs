@@ -118,6 +118,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
                         ,[YEARS]
                         ,[WEEKS]
                         ,[STORES]
+                        ,[NAMES]
                         ,[ITEMS]
                         ,[CONTENTS]
                         FROM [TKBUSINESS].[dbo].[TBPROJECTS]
@@ -134,8 +135,9 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         {           
             TextBox1.Text = dt.Rows[0]["YEARS"].ToString();
             TextBox2.Text = dt.Rows[0]["WEEKS"].ToString();
-            //TextBox3.Text = dt.Rows[0]["STORES"].ToString();
+            
             DropDownList1.SelectedValue = dt.Rows[0]["STORES"].ToString().Trim();
+            TextBox3.Text = dt.Rows[0]["NAMES"].ToString();
             TextBox4.Text = dt.Rows[0]["ITEMS"].ToString();
             TextBox5.Text = dt.Rows[0]["CONTENTS"].ToString();
 
@@ -152,8 +154,9 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         string ID = lblParam.Text;
         string YEARS = TextBox1.Text;
         string WEEKS = TextBox2.Text;
-        //string STORES = TextBox3.Text;
+        
         string STORES = DropDownList1.SelectedValue.Trim();
+        string NAMES = TextBox3.Text;
         string ITEMS = TextBox4.Text;
         string CONTENTS = TextBox5.Text;
 
@@ -162,12 +165,12 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATETBPROJECTS(ID, YEARS, WEEKS, STORES, ITEMS, CONTENTS);
+            UPDATETBPROJECTS(ID, YEARS, WEEKS, STORES, NAMES, ITEMS, CONTENTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBPROJECTS(string ID, string YEARS, string WEEKS, string STORES, string ITEMS, string CONTENTS )
+    public void UPDATETBPROJECTS(string ID, string YEARS, string WEEKS, string STORES,string NAMES, string ITEMS, string CONTENTS )
     {
 
 
@@ -180,6 +183,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
                             [YEARS]=@YEARS
                             ,[WEEKS]=@WEEKS
                             ,[STORES]=@STORES
+                            ,[NAMES]=@NAMES
                             ,[ITEMS]=@ITEMS
                             ,[CONTENTS]=@CONTENTS
                             WHERE [ID]=@ID
@@ -191,6 +195,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         m_db.AddParameter("@YEARS", YEARS);
         m_db.AddParameter("@WEEKS", WEEKS);
         m_db.AddParameter("@STORES", STORES);
+        m_db.AddParameter("@NAMES", NAMES);
         m_db.AddParameter("@ITEMS", ITEMS);
         m_db.AddParameter("@CONTENTS", CONTENTS);
 
