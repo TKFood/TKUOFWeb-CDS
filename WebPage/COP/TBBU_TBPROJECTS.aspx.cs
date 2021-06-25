@@ -96,7 +96,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%好市多%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '好市多' 
@@ -104,7 +104,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%全聯%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '全聯'
@@ -112,7 +112,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%CVS-7-11%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As 'CVS-7-11'
@@ -120,7 +120,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%CVS-全家%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As 'CVS-全家'
@@ -128,7 +128,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%KA-家樂福%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As 'KA-家樂福'
@@ -136,7 +136,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%門市%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '門市'
@@ -144,7 +144,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%官網%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '官網'
@@ -152,7 +152,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%新東陽%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '新東陽'
@@ -160,7 +160,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
-                                END +[STORES]+''+[ITEMS]+' '+ISNULL([CONTENTS],'') AS 'data()'
+                                END +ISNULL([NAMES],'')+''+ISNULL([ITEMS],'')+' '+ISNULL([CONTENTS],'') AS 'data()'
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%ㄧ般經銷%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As 'ㄧ般經銷'
