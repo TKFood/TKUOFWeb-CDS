@@ -81,8 +81,9 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
-       
-      
+
+
+
         cmdTxt.AppendFormat(@" 
                             --20210617 查年度的週計劃
                             SELECT [YEARS],[WEEKS],[FDAY],[EDAY],[好市多],[全聯],[CVS-7-11],[CVS-全家],[KA-家樂福],[門市],[官網],[新東陽],[ㄧ般經銷]
@@ -167,10 +168,11 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
 
                             FROM [TKBUSINESS].[dbo].[TBYEARWEEKS]
                             ) AS TEMP
-                            WHERE [YEARS]=@YEARS
+                            WHERE 1=1
+                            AND [YEARS]=@YEARS
                             ORDER BY [YEARS],[WEEKS]
                               
-                            ");
+                            " );
 
 
 
@@ -239,6 +241,16 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        //通路
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS.AppendFormat(@" AND [STORES] LIKE '%{0}%'", TextBox3.Text);
+        }
+        //活動名稱
+        if (!string.IsNullOrEmpty(TextBox4.Text))
+        {
+            QUERYS.AppendFormat(@" AND [NAMES] LIKE '%{0}%'", TextBox4.Text);
+        }
 
 
         cmdTxt.AppendFormat(@" 
@@ -247,13 +259,16 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             ,[YEARS]
                             ,[WEEKS]
                             ,[STORES]
+                            ,[NAMES]
                             ,[ITEMS]
                             ,[CONTENTS]
                             FROM [TKBUSINESS].[dbo].[TBPROJECTS]
-                            WHERE [YEARS]=@YEARS
+                            WHERE 1=1
+                            AND [YEARS]=@YEARS
+                            {0}
                             ORDER BY [YEARS],[WEEKS],[STORES]
                               
-                            ");
+                            ", QUERYS.ToString());
 
 
 
