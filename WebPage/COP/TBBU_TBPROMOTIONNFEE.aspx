@@ -45,8 +45,6 @@
         <Tabs>
             <telerik:RadTab Text="總表">
             </telerik:RadTab>
-            <telerik:RadTab Text="明細資料整理">
-            </telerik:RadTab>
             <telerik:RadTab Text="新增資料">
             </telerik:RadTab>
         </Tabs>
@@ -63,6 +61,15 @@
                             <asp:TextBox ID="TextBox1" runat="server" MaxLength="4"></asp:TextBox>
 
                         </td>
+                    </tr>
+                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label4" runat="server" Text="計劃名稱:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                        </td>
+
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
@@ -103,58 +110,8 @@
                 </table>
             </div>
         </telerik:RadPageView>
+       
         <telerik:RadPageView ID="RadPageView2" runat="server">
-            <div id="tabs-2">
-                <table class="PopTable">
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <asp:Label ID="Label1" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
-                        </td>
-                        <td class="PopTableRightTD">
-                            <asp:TextBox ID="TextBox2" runat="server" MaxLength="4"></asp:TextBox>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <asp:Label ID="Label4" runat="server" Text="通路:" meta:resourcekey="Label4Resource1"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <td class="PopTableLeftTD"></td>
-                        <td>
-                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn1_Click"
-                                meta:resourcekey="btn5Resource1" />
-                        </td>
-
-                    </tr>
-                </table>
-                <table class="PopTable">
-                    <tr>
-                        <td colspan="2" class="PopTableRightTD">
-                            <div style="overflow-x: auto; width: 100%">
-                                <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid_PageIndexChanging2">
-                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
-                                    <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
-                                    <Columns>
-                                        <asp:BoundField HeaderText="編號" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                        </asp:BoundField>
-
-                                    </Columns>
-                                </Fast:Grid>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </telerik:RadPageView>
-        <telerik:RadPageView ID="RadPageView3" runat="server">
             <div id="tabs-3">
                 <table class="PopTable">
                     <tr>

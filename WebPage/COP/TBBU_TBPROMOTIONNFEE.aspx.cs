@@ -25,18 +25,16 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         if (!IsPostBack)
         {
             TextBox1.Text = DateTime.Now.Year.ToString();
-            TextBox2.Text = DateTime.Now.Year.ToString();
+            TextBox2.Text = "";
 
             BindGrid();
-            //BindGrid2();
+          
         }
         else
         {
 
             BindGrid();
-            //BindGrid2();
-
-
+           
         }
 
        
@@ -81,7 +79,11 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
-
+        //計劃名稱
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND [NAMES] LIKE '%{0}%'", TextBox2.Text);
+        }
 
 
         cmdTxt.AppendFormat(@" 
@@ -97,9 +99,11 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
 
                             FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
                             WHERE 1=1
-                            AND [YEARS]=@YEARS
+                            AND [YEARS]=@YEARS    
+                            {0}
+                          
                               
-                            ");
+                            ", QUERYS.ToString());
 
 
 
@@ -160,87 +164,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         //}
     }
 
-    private void BindGrid2()
-    {
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        StringBuilder cmdTxt = new StringBuilder();
-        StringBuilder QUERYS = new StringBuilder();
-
-        //通路
-        if (!string.IsNullOrEmpty(TextBox3.Text))
-        {
-            QUERYS.AppendFormat(@" AND [STORES] LIKE '%{0}%'", TextBox3.Text);
-        }
-    
-
-
-        cmdTxt.AppendFormat(@" 
-                            SELECT
-                            [ID]
-                            ,[YEARS]
-                            ,[WEEKS]
-                            ,[STORES]
-                            ,[NAMES]
-                            ,[ITEMS]
-                            ,[CONTENTS]
-                            FROM [TKBUSINESS].[dbo].[TBPROJECTS]
-                            WHERE 1=1
-                            AND [YEARS]=@YEARS
-                            {0}
-                            ORDER BY [YEARS],[WEEKS],[STORES]
-                              
-                            ", QUERYS.ToString());
-
-
-
-
-        m_db.AddParameter("@YEARS", TextBox2.Text.ToString().Trim());
-        //m_db.AddParameter("@EDATE", EDATE);
-
-        DataTable dt = new DataTable();
-
-        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
-
-        Grid2.DataSource = dt;
-        Grid2.DataBind();
-    }
-
-    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
-    {
-        //Grid1.PageIndex = e.NewPageIndex;
-        //BindGrid("");
-    }
-    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            //Get the button that raised the event
-            Button btn = (Button)e.Row.FindControl("Button1");
-
-            //Get the row that contains this button
-            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-
-            //string cellvalue = gvr.Cells[2].Text.Trim();
-            string Cellvalue = btn.CommandArgument;
-
-            DataRowView row = (DataRowView)e.Row.DataItem;
-            Button lbtnName = (Button)e.Row.FindControl("Button1");
-
-            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-
-            //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        }
-    }
-
-    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
-    {
-        SETEXCEL();
-
-      
-    }
+   
 
 
 
