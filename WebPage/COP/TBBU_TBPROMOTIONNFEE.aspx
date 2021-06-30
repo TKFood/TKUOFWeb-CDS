@@ -13,7 +13,7 @@
             //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
             //OpenDialogResult為關閉視後會執行的JS Function
             //參數使用JSON格式傳遞
-            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
             return false;
 
