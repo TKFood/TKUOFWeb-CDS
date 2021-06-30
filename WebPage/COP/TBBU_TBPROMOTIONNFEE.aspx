@@ -62,7 +62,7 @@
 
                         </td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label4" runat="server" Text="計劃名稱:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
@@ -91,16 +91,20 @@
                                         <asp:BoundField HeaderText="年度" DataField="YEARS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="計劃名稱" DataField="YEARS" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="計劃名稱" DataField="NAMES" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                      <asp:TemplateField HeaderText="各項費用" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="各項費用" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Label ID="CONTENT1" runat="server" Text='<%# Bind("各項費用預估") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>
                                                 <itemstyle horizontalalign="Left" width="200px"></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-
+                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
                                     </Columns>
                                 </Fast:Grid>
@@ -110,7 +114,7 @@
                 </table>
             </div>
         </telerik:RadPageView>
-       
+
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-3">
                 <table class="PopTable">
