@@ -167,7 +167,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
             ExpandoObject param2 = new { ID = Cellvalue2 }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TBPROMOTIONNFEEDETAILSDialog.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
+            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEDETAILSDialog.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
         }
 
     }

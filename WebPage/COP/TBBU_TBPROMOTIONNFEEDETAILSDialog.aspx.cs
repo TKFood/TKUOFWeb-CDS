@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.ServiceModel.Activation;
 using System.Text;
@@ -14,7 +15,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
-public partial class CDS_WebPage_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Utility.Page.BasePage
+
+public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Utility.Page.BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -52,9 +54,9 @@ public partial class CDS_WebPage_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Utility.
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
-        if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox2.Text) && !string.IsNullOrEmpty(TextBox1.Text) )
+        if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text) )
         {
-            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox2.Text.Trim(), TextBox1.Text);
+            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text);
            
         }
         
@@ -66,9 +68,9 @@ public partial class CDS_WebPage_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Utility.
 
     void Button2OnClick()
     {
-        if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox2.Text) && !string.IsNullOrEmpty(TextBox1.Text))
+        if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text))
         {
-            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox2.Text.Trim(), TextBox1.Text);
+            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text);
           
         }
 
@@ -116,6 +118,36 @@ public partial class CDS_WebPage_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Utility.
 
     }
 
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Button1
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button1");
+
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button1");
+
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+            DELTETBPROMOTIONNFEEDETAILS(Cellvalue);
+
+        }
+
+      
+
+    }
+
     public void SEARCHTBSALESDEVMEMO(string ID)
     {
         StringBuilder cmdTxt = new StringBuilder();
@@ -146,24 +178,29 @@ public partial class CDS_WebPage_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Utility.
         
     }
 
-    public void ADDTBPROMOTIONNFEEDETAILS(string PID,string PROD, string MEMO)
+    public void ADDTBPROMOTIONNFEEDETAILS(string MID,string FEENAME, string FEEMONEYS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
+                        INSERT INTO [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
+                        ([MID],[FEENAME],[FEEMONEYS])
+                        VALUES
+                        (@MID,@FEENAME,@FEEMONEYS)
                             ";
 
        
-        m_db.AddParameter("@ID", Guid.NewGuid());
-    
+        m_db.AddParameter("@MID", MID);
+        m_db.AddParameter("@FEENAME", FEENAME);
+        m_db.AddParameter("@FEEMONEYS", FEEMONEYS);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
         
     }
 
-    public void UPDATETBPROMOTIONNFEEDETAILS(string PID, string MEMO)
+    public void DELTETBPROMOTIONNFEEDETAILS(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -172,9 +209,8 @@ public partial class CDS_WebPage_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Utility.
 
                             ";
 
-        m_db.AddParameter("@ID", PID);
-        m_db.AddParameter("@MEMO", MEMO);
-        m_db.AddParameter("@MEMODATES", Convert.ToDateTime(DateTime.Now));
+        m_db.AddParameter("@ID", ID);
+     
 
         m_db.ExecuteNonQuery(cmdTxt);
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DialogMasterPage.master" AutoEventWireup="true" CodeFile="TBPROMOTIONNFEEDETAILSDialog.aspx.cs" Inherits="CDS_WebPage_TBPROMOTIONNFEEDETAILSDialog" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DialogMasterPage.master" AutoEventWireup="true" CodeFile="TBBU_TBPROMOTIONNFEEDETAILSDialog.aspx.cs" Inherits="CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog" %>
 
 <%@ Register Src="~/Common/HtmlEditor/UC_HtmlEditor.ascx" TagPrefix="uc1" TagName="UC_HtmlEditor" %>
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
@@ -34,17 +34,25 @@
     <table class="PopTable">
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label2" runat="server" Text="各項費用預估"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text="費用名稱"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="10"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
+            </td>
+        </tr>
+           <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label4" runat="server" Text="費用金額"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox3" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
             </td>
         </tr>
     </table>
     <table class="PopTable">
         <tr>
             <td colspan="2" class="PopTableRightTD">
-                <Fast:Grid ID="Grid1" runat="server" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
+                <Fast:Grid ID="Grid1" runat="server"  OnRowDataBound="Grid1_RowDataBound" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                     <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
                     <Columns>
