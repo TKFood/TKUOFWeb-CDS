@@ -120,34 +120,44 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
 
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            //Button1
-            //Get the button that raised the event
-            Button btn = (Button)e.Row.FindControl("Button1");
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    //Button1
+        //    //Get the button that raised the event
+        //    Button btn = (Button)e.Row.FindControl("Button1");
 
-            //Get the row that contains this button
-            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+        //    //Get the row that contains this button
+        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-            //string cellvalue = gvr.Cells[2].Text.Trim();
-            string Cellvalue = btn.CommandArgument;
+        //    //string cellvalue = gvr.Cells[2].Text.Trim();
+        //    string Cellvalue = btn.CommandArgument;
 
-            DataRowView row = (DataRowView)e.Row.DataItem;
-            Button lbtnName = (Button)e.Row.FindControl("Button1");
+        //    DataRowView row = (DataRowView)e.Row.DataItem;
+        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
 
-            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-            //Grid開窗是用RowDataBound事件再開窗
-            //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        //    //Grid開窗是用RowDataBound事件再開窗
+        //    //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
-            DELTETBPROMOTIONNFEEDETAILS(Cellvalue);
+        //    DELTETBPROMOTIONNFEEDETAILS(Cellvalue);
 
-        }
+        //}
 
       
 
     }
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        string MID = lblParam.Text;
+        string FEENAME = "";
 
+        if (e.CommandName == "Del")
+        {
+            FEENAME = (e.CommandArgument.ToString());
+            //-- your delete method here
+        }
+    }
     public void SEARCHTBSALESDEVMEMO(string ID)
     {
         StringBuilder cmdTxt = new StringBuilder();

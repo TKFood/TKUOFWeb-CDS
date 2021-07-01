@@ -40,7 +40,7 @@
                 <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
             </td>
         </tr>
-           <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label4" runat="server" Text="費用金額"></asp:Label>
             </td>
@@ -52,7 +52,7 @@
     <table class="PopTable">
         <tr>
             <td colspan="2" class="PopTableRightTD">
-                <Fast:Grid ID="Grid1" runat="server"  OnRowDataBound="Grid1_RowDataBound" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
+                <Fast:Grid ID="Grid1" runat="server" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_RowCommand" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                     <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
                     <Columns>
@@ -62,8 +62,13 @@
                         <asp:BoundField HeaderText="費用金額" DataField="FEEMONEYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
-
+                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="Red" CommandArgument='<%# Eval("FEENAME") %>'    CausesValidation="False"  CommandName="Del"  OnClientClick="return confirm('是否刪除 ?');"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
+
                 </Fast:Grid>
             </td>
         </tr>
