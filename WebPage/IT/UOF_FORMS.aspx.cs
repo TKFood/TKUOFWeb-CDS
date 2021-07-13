@@ -25,12 +25,14 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
         if (!IsPostBack)
         {            
 
-            BindGrid("");
+            BindGrid1("");
+            BindGrid2("");
         }
         else
         {
 
-            BindGrid("");
+            BindGrid1("");
+            BindGrid2("");
 
         }
 
@@ -40,7 +42,7 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
     }
     #region FUNCTION
   
-    private void BindGrid(string SALESFOCUS)
+    private void BindGrid1(string SALESFOCUS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -51,12 +53,91 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
       
 
    
-        //建議售價
+        //查詢條件
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
             QUERYS.AppendFormat(@" AND DOC_NBR LIKE '%{0}%'", TextBox1.Text);
         }
    
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT
+                            (CASE WHEN  usr.IS_SUSPENDED = 1 THEN  usr.NAME + '(x)' WHEN  ISNULL(usr.ACCOUNT,'''') = '' THEN  'unknown user' ELSE usr.NAME END) AS APPLICANT_NAME
+                            ,form.FORM_NAME
+                            ,DOC_NBR
+                            ,CONVERT(NVARCHAR,BEGIN_TIME,111) AS BEGIN_TIME
+
+                            ,task.TASK_ID
+                            ,END_TIME
+                            ,TASK_RESULT
+                            ,TASK_STATUS
+                            ,task.USER_GUID
+                            ,formVer.FORM_VERSION_ID
+                            ,formVer.FORM_ID
+                            ,CURRENT_SITE_ID
+                            ,MESSAGE_CONTENT
+                            ,LOCK_STATUS
+                            ,ISNULL(formVer.DISPLAY_TITLE,'') AS VERSION_TITLE
+                            ,ISNULL(task.JSON_DISPLAY,'') AS JSON_DISPLAY
+
+                            FROM [UOF].dbo.TB_WKF_TASK task
+                            INNER JOIN [UOF].dbo.TB_WKF_FORM_VERSION formVer ON task.FORM_VERSION_ID = formVer.FORM_VERSION_ID
+                            INNER JOIN [UOF].dbo.TB_WKF_FORM form  ON  formVer.FORM_ID = form.FORM_ID 
+                            LEFT JOIN [UOF].dbo.TB_EB_USER [usr]  ON task.USER_GUID = usr.USER_GUID
+
+                            WHERE
+                            1=1  AND  TASK_STATUS NOT IN ('2')
+                                {0}
+                            ORDER BY form.FORM_NAME,DOC_NBR
+                               
+                                ", QUERYS.ToString());
+
+       
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+  
+
+
+    protected void grid1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        
+
+
+    }
+
+    private void BindGrid2(string SALESFOCUS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+
+
+        //查詢條件
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND DOC_NBR LIKE '%{0}%'", TextBox2.Text);
+        }
+
 
         cmdTxt.AppendFormat(@" 
                             SELECT
@@ -94,7 +175,7 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
                                
                                 ", QUERYS.ToString());
 
-       
+
 
 
         //m_db.AddParameter("@SDATE", SDATE);
@@ -104,18 +185,18 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
-        Grid1.DataSource = dt;
-        Grid1.DataBind();
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
     }
 
-    protected void grid1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         //Grid1.PageIndex = e.NewPageIndex;
         //BindGrid();
     }
-    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
+
 
 
     }
