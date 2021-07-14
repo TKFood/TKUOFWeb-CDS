@@ -26,13 +26,13 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
         {            
 
             BindGrid1("");
-            BindGrid2("");
+           // BindGrid2("");
         }
         else
         {
 
             BindGrid1("");
-            BindGrid2("");
+            //BindGrid2("");
 
         }
 
@@ -463,13 +463,19 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
 
     }
 
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+        //SETEXCEL();
+
+    }
     #endregion
 
     #region BUTTON
     protected void btn_Click(object sender, EventArgs e)
     {
 
-
+        BindGrid1("");
         //開窗後回傳參數
         if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
         {
@@ -499,10 +505,10 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
       
 
     }
-
+  
     protected void btn5_Click(object sender, EventArgs e)
     {
-
+        BindGrid2("");
     }
     #endregion
 }
