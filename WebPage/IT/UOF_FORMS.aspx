@@ -91,7 +91,7 @@
                 </table>
             </div>
         </telerik:RadPageView>
-        <telerik:RadPageView ID="RadPageView2" runat="server" Selected="true">
+        <telerik:RadPageView ID="RadPageView2" runat="server" >
             <div id="tabs-2">
                 <table class="PopTable">
                     <tr>

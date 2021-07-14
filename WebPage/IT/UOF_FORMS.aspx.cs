@@ -26,13 +26,13 @@ public partial class CDS_WebPage_IT_UOF_FORMS : Ede.Uof.Utility.Page.BasePage
         {            
 
             BindGrid1("");
-           // BindGrid2("");
+            BindGrid2("");
         }
         else
         {
 
             BindGrid1("");
-            //BindGrid2("");
+            BindGrid2("");
 
         }
 
