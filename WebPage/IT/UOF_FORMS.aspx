@@ -4,38 +4,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-        .loading {
-            position: absolute;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-        }
-
-            .loading .mask {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                background-color: #444;
-                opacity: 0.5;
-            }
-
-            .loading .animation {
-                width: 64px;
-                height: 64px;
-                margin: auto;
-                margin-top: 40px;
-                background: url(https://i.imgur.com/6pCtQAW.gif);
-            }
-    </style>
+    
 
     <script>    
         function btn4_Click(sender) {
