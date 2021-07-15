@@ -2,7 +2,41 @@
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .loading {
+            position: absolute;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+            .loading .mask {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: #444;
+                opacity: 0.5;
+            }
+
+            .loading .animation {
+                width: 64px;
+                height: 64px;
+                margin: auto;
+                margin-top: 40px;
+                background: url(https://i.imgur.com/6pCtQAW.gif);
+            }
+    </style>
+
     <script>    
         function btn4_Click(sender) {
             //從前端開始視窗
@@ -23,9 +57,16 @@
                 return true;
         }
 
+        function myFunction() {
+            //document.getElementById("demo").innerHTML = "Hello World";
+          
+        }
+     
 
 
     </script>
+   
+
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
@@ -55,11 +96,21 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <p id="demo"></p>
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click" 
                                 meta:resourcekey="btn1Resource1" />
                         </td>
 
                     </tr>
+
+                   <%--<tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                             <button onclick="myFunction()">Click me</button>
+                        </td>
+
+                    </tr>--%>
+
                 </table>
                 <table class="PopTable">
                     <tr>
@@ -68,7 +119,7 @@
                                 <Fast:Grid ID="Grid1" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid1_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource1" OnPageIndexChanging="grid1_PageIndexChanging">
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
-                                    <Columns>                                      
+                                    <Columns>
                                         <asp:BoundField HeaderText="申請者" DataField="APPLICANT_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
@@ -78,7 +129,7 @@
                                         <asp:BoundField HeaderText="表單編號" DataField="DOC_NBR" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
                                         </asp:BoundField>
-                                      
+
                                         <asp:BoundField HeaderText="申請時間" DataField="BEGIN_TIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
@@ -91,7 +142,7 @@
                 </table>
             </div>
         </telerik:RadPageView>
-        <telerik:RadPageView ID="RadPageView2" runat="server" >
+        <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">
                     <tr>
