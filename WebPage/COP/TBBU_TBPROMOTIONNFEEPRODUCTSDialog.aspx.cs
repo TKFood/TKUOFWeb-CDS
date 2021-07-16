@@ -56,7 +56,20 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
         //Dialog.SetReturnValue2(txtReturnValue.Text);
         if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text) )
         {
-            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text);
+            string MID = lblParam.Text;
+            string MB001 = TextBox1.Text.Trim();
+            string MB002= TextBox3.Text.Trim();
+            string MB003= TextBox4.Text.Trim();
+            string MB004= TextBox5.Text.Trim();
+            string PRICES= TextBox6.Text.Trim();
+            string SPRICES= TextBox7.Text.Trim();
+            string COSTS = TextBox8.Text.Trim();
+            string NUMS= TextBox9.Text.Trim();
+            string MONEYS= TextBox10.Text.Trim();
+            string FEES= TextBox11.Text.Trim();
+            string EARNS= TextBox12.Text.Trim();
+
+            ADDTBPROMOTIONNFEEPRODUCTS(MID, MB001, MB002, MB003, MB004, PRICES, SPRICES, COSTS, NUMS, MONEYS, FEES, EARNS);
            
         }
         
@@ -70,8 +83,21 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
     {
         if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text))
         {
-            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text);
-          
+            string MID = lblParam.Text;
+            string MB001 = TextBox1.Text.Trim();
+            string MB002 = TextBox3.Text.Trim();
+            string MB003 = TextBox4.Text.Trim();
+            string MB004 = TextBox5.Text.Trim();
+            string PRICES = TextBox6.Text.Trim();
+            string SPRICES = TextBox7.Text.Trim();
+            string COSTS = TextBox8.Text.Trim();
+            string NUMS = TextBox9.Text.Trim();
+            string MONEYS = TextBox10.Text.Trim();
+            string FEES = TextBox11.Text.Trim();
+            string EARNS = TextBox12.Text.Trim();
+
+            ADDTBPROMOTIONNFEEPRODUCTS(MID, MB001, MB002, MB003, MB004, PRICES, SPRICES, COSTS, NUMS, MONEYS, FEES, EARNS);
+
         }
 
         BindGrid(lblParam.Text);
@@ -95,12 +121,21 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         cmdTxt.AppendFormat(@" 
-                            SELECT  
+                            SELECT 
                             [ID]
                             ,[MID]
-                            ,[FEENAME]
-                            ,[FEEMONEYS]
-                            FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
+                            ,[MB001]
+                            ,[MB002]
+                            ,[MB003]
+                            ,[MB004]
+                            ,[PRICES]
+                            ,[SPRICES]
+                            ,[COSTS]
+                            ,[NUMS]
+                            ,[MONEYS]
+                            ,[FEES]
+                            ,[EARNS]
+                            FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS]
                             WHERE [MID]=@MID
                             ");
 
@@ -150,12 +185,14 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         string MID = lblParam.Text;
-        string FEENAME = "";
+        string ID = "";
 
         if (e.CommandName == "Del")
         {
-            FEENAME = (e.CommandArgument.ToString());
+            ID = (e.CommandArgument.ToString());
             //-- your delete method here
+            DELTETBPROMOTIONNFEEDETAILS(MID, ID);
+            BindGrid(lblParam.Text);
         }
     }
     public void SEARCHTBSALESDEVMEMO(string ID)
@@ -188,39 +225,49 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
         
     }
 
-    public void ADDTBPROMOTIONNFEEDETAILS(string MID,string FEENAME, string FEEMONEYS)
+    public void ADDTBPROMOTIONNFEEPRODUCTS(string MID, string MB001, string MB002, string MB003, string MB004, string PRICES, string SPRICES, string COSTS, string NUMS, string MONEYS, string FEES, string EARNS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        INSERT INTO [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
-                        ([MID],[FEENAME],[FEEMONEYS])
+                        INSERT INTO [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS]
+                        ([MID],[MB001],[MB002],[MB003],[MB004],[PRICES],[SPRICES],[COSTS],[NUMS],[MONEYS],[FEES],[EARNS])
                         VALUES
-                        (@MID,@FEENAME,@FEEMONEYS)
+                        (@MID,@MB001,@MB002,@MB003,@MB004,@PRICES,@SPRICES,@COSTS,@NUMS,@MONEYS,@FEES,@EARNS)
                             ";
 
        
         m_db.AddParameter("@MID", MID);
-        m_db.AddParameter("@FEENAME", FEENAME);
-        m_db.AddParameter("@FEEMONEYS", FEEMONEYS);
+        m_db.AddParameter("@MB001", MB001);
+        m_db.AddParameter("@MB002", MB002);
+        m_db.AddParameter("@MB003", MB003);
+        m_db.AddParameter("@MB004", MB004);
+        m_db.AddParameter("@PRICES", PRICES);
+        m_db.AddParameter("@SPRICES", SPRICES);
+        m_db.AddParameter("@COSTS", COSTS);
+        m_db.AddParameter("@NUMS", NUMS);
+        m_db.AddParameter("@MONEYS", MONEYS);
+        m_db.AddParameter("@FEES", FEES);
+        m_db.AddParameter("@EARNS", EARNS);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
         
     }
 
-    public void DELTETBPROMOTIONNFEEDETAILS(string ID)
+    public void DELTETBPROMOTIONNFEEDETAILS(string MID, string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-
+                            DELETE [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS]
+                            WHERE MID=@MID AND ID=@ID
                             ";
 
+        m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@ID", ID);
-     
 
         m_db.ExecuteNonQuery(cmdTxt);
 
