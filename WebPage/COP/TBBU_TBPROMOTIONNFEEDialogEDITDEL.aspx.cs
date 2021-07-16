@@ -84,9 +84,8 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"   
-                        SELECT  [ID]
-                        ,[YEARS]
-                        ,[NAMES]
+                        SELECT  
+                        [YEARS],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS],[PROFITS],[COMMENTS]
                         FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
                         WHERE [ID]=@ID
                         ";
@@ -99,8 +98,19 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         if (dt.Rows.Count > 0)
         {           
             TextBox1.Text = dt.Rows[0]["YEARS"].ToString();
-            TextBox2.Text = dt.Rows[0]["NAMES"].ToString();
-           
+            TextBox2.Text = dt.Rows[0]["SALES"].ToString();
+            TextBox3.Text = dt.Rows[0]["NAMES"].ToString();
+            TextBox4.Text = dt.Rows[0]["KINDS"].ToString();
+            TextBox5.Text = dt.Rows[0]["PROMOTIONS"].ToString();
+            TextBox6.Text = dt.Rows[0]["PROMOTIONSSETS"].ToString();
+            TextBox7.Text = dt.Rows[0]["SDATES"].ToString();
+            TextBox8.Text = dt.Rows[0]["CLIENTS"].ToString();
+            TextBox9.Text = dt.Rows[0]["STORES"].ToString();
+            TextBox10.Text = dt.Rows[0]["SALESNUMS"].ToString();
+            TextBox11.Text = dt.Rows[0]["SALESMONEYS"].ToString();
+            TextBox12.Text = dt.Rows[0]["PROFITS"].ToString();
+            TextBox13.Text = dt.Rows[0]["COMMENTS"].ToString();
+
 
 
 
@@ -114,19 +124,32 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
     public void UPDATE()
     {
         string ID = lblParam.Text;
+
         string YEARS = TextBox1.Text;
-        string NAMES = TextBox2.Text;
-        
+        string SALES = TextBox2.Text;
+        string NAMES = TextBox3.Text;
+        string KINDS = TextBox4.Text;
+        string PROMOTIONS = TextBox5.Text;
+        string PROMOTIONSSETS = TextBox6.Text;
+        string SDATES = TextBox7.Text;
+        string CLIENTS = TextBox8.Text;
+        string STORES = TextBox9.Text;
+        string SALESNUMS = TextBox10.Text;
+        string SALESMONEYS = TextBox11.Text;
+        string PROFITS = TextBox12.Text;
+        string COMMENTS = TextBox13.Text;
+
+
 
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATETBPROMOTIONNFEE(ID, YEARS, NAMES);
+            UPDATETBPROMOTIONNFEE(ID, YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, PROFITS, COMMENTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string NAMES)
+    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string PROFITS, string COMMENTS)
     {
 
 
@@ -135,8 +158,21 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
 
         string cmdTxt = @"                         
                         UPDATE [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
-                        SET [YEARS]=@YEARS
+                        SET 
+                        [YEARS]=@YEARS
+                        ,[SALES]=@SALES
                         ,[NAMES]=@NAMES
+						,[KINDS]=@KINDS
+                        ,[PROMOTIONS]=@PROMOTIONS
+                        ,[PROMOTIONSSETS]=@PROMOTIONSSETS
+                        ,[SDATES]=@SDATES
+                        ,[CLIENTS]=@CLIENTS
+                        ,[STORES]=@STORES
+                        ,[SALESNUMS]=@SALESNUMS
+                        ,[SALESMONEYS]=@SALESMONEYS
+                        ,[PROFITS]=@PROFITS
+                        ,[COMMENTS]=@COMMENTS
+
                         WHERE  [ID]= @ID
                    
                             ";
@@ -144,9 +180,18 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
 
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@YEARS", YEARS);
+        m_db.AddParameter("@SALES", SALES);
         m_db.AddParameter("@NAMES", NAMES);
-       
-
+        m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@PROMOTIONS", PROMOTIONS);
+        m_db.AddParameter("@PROMOTIONSSETS", PROMOTIONSSETS);
+        m_db.AddParameter("@SDATES", SDATES);
+        m_db.AddParameter("@CLIENTS", CLIENTS);
+        m_db.AddParameter("@STORES", STORES);
+        m_db.AddParameter("@SALESNUMS", SALESNUMS);
+        m_db.AddParameter("@SALESMONEYS", SALESMONEYS);
+        m_db.AddParameter("@PROFITS", PROFITS);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);

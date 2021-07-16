@@ -87,7 +87,20 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
 
 
         cmdTxt.AppendFormat(@" 
-                            SELECT [ID],[YEARS],[NAMES]
+                           SELECT [ID]
+                            ,[YEARS]
+                            ,[SALES]
+                            ,[NAMES]
+                            ,[KINDS]
+                            ,[PROMOTIONS]
+                            ,[PROMOTIONSSETS]
+                            ,[SDATES]
+                            ,[CLIENTS]
+                            ,[STORES]
+                            ,[SALESNUMS]
+                            ,[SALESMONEYS]
+                            ,[PROFITS]
+                            ,[COMMENTS]
                             ,ISNULL( (     
                             SELECT CASE
                             WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
