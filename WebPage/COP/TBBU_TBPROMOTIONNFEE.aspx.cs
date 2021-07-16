@@ -109,6 +109,14 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE [TBPROMOTIONNFEEDETAILS].[MID]=[TBPROMOTIONNFEE].[ID]
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '各項費用預估' 
+                            ,ISNULL( (     
+                            SELECT CASE
+                            WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
+                            ELSE '<br />'
+                            END +ISNULL([MB002],'')+':'+ISNULL(CONVERT(NVARCHAR,(CONVERT(INT,[MONEYS]))),'')+'元' AS 'data()'
+                            FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [TBPROMOTIONNFEEPRODUCTS].[MID]=[TBPROMOTIONNFEE].[ID]
+                            FOR XML PATH(''), TYPE  
+                            ).value('.','nvarchar(max)'),'')  As '各項商品' 
 
                             FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
                             WHERE 1=1
@@ -158,7 +166,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
 
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-
+           
 
         }
 

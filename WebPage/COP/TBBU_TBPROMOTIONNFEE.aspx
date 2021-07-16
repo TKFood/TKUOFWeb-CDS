@@ -133,6 +133,12 @@
                                                 <itemstyle horizontalalign="Left" width="200px"></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                              <asp:TemplateField HeaderText="各項商品" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT2" runat="server" Text='<%# Bind("各項商品") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="200px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="修改計劃" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
