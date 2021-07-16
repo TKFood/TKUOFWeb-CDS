@@ -191,7 +191,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
         {
             ID = (e.CommandArgument.ToString());
             //-- your delete method here
-            DELTETBPROMOTIONNFEEDETAILS(MID, ID);
+            DELETETBPROMOTIONNFEEPRODUCTS(MID, ID);
             BindGrid(lblParam.Text);
         }
     }
@@ -256,7 +256,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
         
     }
 
-    public void DELTETBPROMOTIONNFEEDETAILS(string MID, string ID)
+    public void DELETETBPROMOTIONNFEEPRODUCTS(string MID, string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);

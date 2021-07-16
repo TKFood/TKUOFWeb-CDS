@@ -64,7 +64,7 @@
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="Red" CommandArgument='<%# Eval("FEENAME") %>'    CausesValidation="False"  CommandName="Del"  OnClientClick="return confirm('是否刪除 ?');"/>
+                                <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="Red" CommandArgument='<%# Eval("ID") %>'    CausesValidation="False"  CommandName="Del"  OnClientClick="return confirm('是否刪除 ?');"/>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

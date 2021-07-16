@@ -150,12 +150,14 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         string MID = lblParam.Text;
-        string FEENAME = "";
+        string ID = "";
 
         if (e.CommandName == "Del")
         {
-            FEENAME = (e.CommandArgument.ToString());
+            ID = (e.CommandArgument.ToString());
             //-- your delete method here
+            DELETETBPROMOTIONNFEEDETAILS(MID, ID);
+            BindGrid(lblParam.Text);
         }
     }
     public void SEARCHTBSALESDEVMEMO(string ID)
@@ -210,17 +212,19 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
         
     }
 
-    public void DELTETBPROMOTIONNFEEDETAILS(string ID)
+    public void DELETETBPROMOTIONNFEEDETAILS(string MID, string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-
+                            DELETE [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
+                            WHERE MID=@MID AND ID=@ID
                             ";
 
+        m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@ID", ID);
-     
+
 
         m_db.ExecuteNonQuery(cmdTxt);
 
