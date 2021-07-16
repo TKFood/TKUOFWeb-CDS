@@ -183,6 +183,29 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
             Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEDETAILSDialog.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
         }
 
+
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Button2
+            //Get the button that raised the event
+            Button btn3 = (Button)e.Row.FindControl("Button3");
+
+            //Get the row that contains this button
+            GridViewRow gvr3 = (GridViewRow)btn3.NamingContainer;
+
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue3 = btn3.CommandArgument;
+
+            DataRowView row3 = (DataRowView)e.Row.DataItem;
+            Button lbtnName3 = (Button)e.Row.FindControl("Button3");
+
+            ExpandoObject param3 = new { ID = Cellvalue3 }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName3, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEPRODUCTSDialog.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param3);
+        }
+
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
