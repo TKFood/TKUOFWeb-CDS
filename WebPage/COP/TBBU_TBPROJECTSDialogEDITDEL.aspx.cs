@@ -121,6 +121,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
                         ,[NAMES]
                         ,[ITEMS]
                         ,[CONTENTS]
+                        ,[DAYS] 
                         FROM [TKBUSINESS].[dbo].[TBPROJECTS]
                         WHERE [ID]=@ID
                         ";
@@ -140,6 +141,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
             TextBox3.Text = dt.Rows[0]["NAMES"].ToString();
             TextBox4.Text = dt.Rows[0]["ITEMS"].ToString();
             TextBox5.Text = dt.Rows[0]["CONTENTS"].ToString();
+            TextBox6.Text = dt.Rows[0]["DAYS"].ToString();
 
 
         }
@@ -159,18 +161,19 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         string NAMES = TextBox3.Text;
         string ITEMS = TextBox4.Text;
         string CONTENTS = TextBox5.Text;
+        string DAYS = TextBox6.Text;
 
-    
+
 
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATETBPROJECTS(ID, YEARS, WEEKS, STORES, NAMES, ITEMS, CONTENTS);
+            UPDATETBPROJECTS(ID, YEARS, WEEKS, STORES, NAMES, ITEMS, CONTENTS, DAYS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBPROJECTS(string ID, string YEARS, string WEEKS, string STORES,string NAMES, string ITEMS, string CONTENTS )
+    public void UPDATETBPROJECTS(string ID, string YEARS, string WEEKS, string STORES,string NAMES, string ITEMS, string CONTENTS,string DAYS)
     {
 
 
@@ -186,6 +189,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
                             ,[NAMES]=@NAMES
                             ,[ITEMS]=@ITEMS
                             ,[CONTENTS]=@CONTENTS
+                            ,[DAYS]=@DAYS
                             WHERE [ID]=@ID
                    
                             ";
@@ -198,6 +202,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         m_db.AddParameter("@NAMES", NAMES);
         m_db.AddParameter("@ITEMS", ITEMS);
         m_db.AddParameter("@CONTENTS", CONTENTS);
+        m_db.AddParameter("@DAYS", DAYS);
 
 
 

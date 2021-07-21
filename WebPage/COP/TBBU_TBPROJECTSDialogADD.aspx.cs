@@ -110,18 +110,19 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
         string NAMES = TextBox3.Text;
         string ITEMS = TextBox4.Text;
         string CONTENTS = TextBox5.Text;
+        string DAYS = TextBox6.Text;
 
 
         if ( !string.IsNullOrEmpty(YEARS)&& !string.IsNullOrEmpty(WEEKS))
         {
 
-            ADDTBPROJECTS(YEARS, WEEKS, STORES, NAMES, ITEMS, CONTENTS);
+            ADDTBPROJECTS(YEARS, WEEKS, STORES, NAMES, ITEMS, CONTENTS, DAYS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBPROJECTS(string YEARS, string WEEKS, string STORES,string NAMES, string ITEMS, string CONTENTS)
+    public void ADDTBPROJECTS(string YEARS, string WEEKS, string STORES,string NAMES, string ITEMS, string CONTENTS,string DAYS)
     {
         Label8.Text = "";
 
@@ -132,9 +133,9 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
         {
             string cmdTxt = @"  
                             INSERT INTO  [TKBUSINESS].[dbo].[TBPROJECTS]
-                            ([YEARS],[WEEKS],[STORES],[NAMES],[ITEMS],[CONTENTS])
+                            ([YEARS],[WEEKS],[STORES],[NAMES],[ITEMS],[CONTENTS],[DAYS])
                             VALUES
-                            (@YEARS,@WEEKS,@STORES,@NAMES,@ITEMS,@CONTENTS)
+                            (@YEARS,@WEEKS,@STORES,@NAMES,@ITEMS,@CONTENTS,@DAYS)
 
                             ";
 
@@ -146,7 +147,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogADD : Ede.Uof.Utility.Page
             m_db.AddParameter("@NAMES", NAMES);
             m_db.AddParameter("@ITEMS", ITEMS);
             m_db.AddParameter("@CONTENTS", CONTENTS);
-
+            m_db.AddParameter("@DAYS", DAYS);
 
 
             m_db.ExecuteNonQuery(cmdTxt);
