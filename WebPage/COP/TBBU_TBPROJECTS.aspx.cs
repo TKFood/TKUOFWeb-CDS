@@ -262,6 +262,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                             ,[NAMES]
                             ,[ITEMS]
                             ,[CONTENTS]
+                            ,[DAYS]
                             FROM [TKBUSINESS].[dbo].[TBPROJECTS]
                             WHERE 1=1
                             AND [YEARS]=@YEARS

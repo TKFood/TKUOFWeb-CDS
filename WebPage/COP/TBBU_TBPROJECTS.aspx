@@ -60,7 +60,7 @@
                             <asp:Label ID="Label2" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:TextBox ID="TextBox1" runat="server" MaxLength="4" ></asp:TextBox>
+                            <asp:TextBox ID="TextBox1" runat="server" MaxLength="4"></asp:TextBox>
 
                         </td>
                     </tr>
@@ -216,6 +216,9 @@
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="活動名稱" DataField="NAMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="活動時間" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="活動品項" DataField="ITEMS" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
