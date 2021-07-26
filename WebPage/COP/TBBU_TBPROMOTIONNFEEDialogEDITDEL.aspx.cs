@@ -30,7 +30,10 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         {
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
+
             BindDropDownList();
+            BindDropDownList2();
+            BindDropDownList3();
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
@@ -107,6 +110,66 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
 
     }
 
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("METHOD", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[METHOD] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODS] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "METHOD";
+            DropDownList2.DataValueField = "METHOD";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("METHODWAY", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT [ID],[METHODWAY] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODWAYS] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "METHODWAY";
+            DropDownList3.DataValueField = "METHODWAY";
+            DropDownList3.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
     public void SEARCHTBPROMOTIONNFEE(string ID)
     {
 
@@ -131,8 +194,8 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
             TextBox2.Text = dt.Rows[0]["SALES"].ToString();
             TextBox3.Text = dt.Rows[0]["NAMES"].ToString();
             DropDownList1.Text = dt.Rows[0]["KINDS"].ToString();
-            TextBox5.Text = dt.Rows[0]["PROMOTIONS"].ToString();
-            TextBox6.Text = dt.Rows[0]["PROMOTIONSSETS"].ToString();
+            DropDownList2.Text = dt.Rows[0]["PROMOTIONS"].ToString();
+            DropDownList3.Text = dt.Rows[0]["PROMOTIONSSETS"].ToString();
             TextBox7.Text = dt.Rows[0]["SDATES"].ToString();
             TextBox8.Text = dt.Rows[0]["CLIENTS"].ToString();
             TextBox9.Text = dt.Rows[0]["STORES"].ToString();
@@ -161,8 +224,8 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         string SALES = TextBox2.Text;
         string NAMES = TextBox3.Text;
         string KINDS = DropDownList1.SelectedValue.ToString().Trim();
-        string PROMOTIONS = TextBox5.Text;
-        string PROMOTIONSSETS = TextBox6.Text;
+        string PROMOTIONS = DropDownList2.SelectedValue.ToString().Trim();
+        string PROMOTIONSSETS = DropDownList3.SelectedValue.ToString().Trim();
         string SDATES = TextBox7.Text;
         string CLIENTS = TextBox8.Text;
         string STORES = TextBox9.Text;

@@ -16,8 +16,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        BindDropDownList();
-
+     
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -29,7 +28,10 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
 
         if (!IsPostBack)
         {
-           
+            BindDropDownList();
+            BindDropDownList2();
+            BindDropDownList3();
+
             ////接收主頁面傳遞之參數
             //lblParam.Text = Request["ID"];
 
@@ -63,6 +65,66 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
             DropDownList1.DataTextField = "KIND";
             DropDownList1.DataValueField = "KIND";
             DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("METHOD", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[METHOD] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODS] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "METHOD";
+            DropDownList2.DataValueField = "METHOD";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("METHODWAY", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT [ID],[METHODWAY] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODWAYS] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "METHODWAY";
+            DropDownList3.DataValueField = "METHODWAY";
+            DropDownList3.DataBind();
 
         }
         else
@@ -111,8 +173,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         string SALES = TextBox2.Text;
         string NAMES = TextBox3.Text;
         string KINDS = DropDownList1.Text;
-        string PROMOTIONS = TextBox5.Text;
-        string PROMOTIONSSETS = TextBox6.Text;
+        string PROMOTIONS = DropDownList2.Text;
+        string PROMOTIONSSETS = DropDownList3.Text;
         string SDATES = TextBox7.Text;
         string CLIENTS = TextBox8.Text;
         string STORES = TextBox9.Text;

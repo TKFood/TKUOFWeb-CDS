@@ -80,7 +80,8 @@
                 <asp:Label ID="Label7" runat="server" Text="方式"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox5" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+                <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
         <tr>
@@ -88,7 +89,8 @@
                 <asp:Label ID="Label8" runat="server" Text="搭贈方式"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox6" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+                <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+                <%--<asp:TextBox ID="TextBox6" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
         <tr>
