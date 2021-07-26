@@ -36,6 +36,22 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
+                <asp:Label ID="Label16" runat="server" Text="申請部門"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox14" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label17" runat="server" Text="職務"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox15" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
                 <asp:Label ID="Label3" runat="server" Text="申請人"></asp:Label>
             </td>
             <td class="PopTableRightTD">
@@ -129,7 +145,7 @@
                 <asp:Label ID="Label15" runat="server" Text="說明"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox13" runat="server" Text="" Width="100%" Row="5" TextMode="MultiLine"  ></asp:TextBox>
+                <asp:TextBox ID="TextBox13" runat="server" Text="" Width="100%" Row="5" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
 

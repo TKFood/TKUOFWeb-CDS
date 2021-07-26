@@ -88,19 +88,21 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         string SALESMONEYS = TextBox11.Text;
         string PROFITS = TextBox12.Text;
         string COMMENTS = TextBox13.Text;
+        string DEPNAME = TextBox14.Text;
+        string TITLES = TextBox15.Text;
 
 
 
         if ( !string.IsNullOrEmpty(YEARS)&& !string.IsNullOrEmpty(NAMES))
         {
 
-            ADDTBPROMOTIONNFEE(YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, PROFITS, COMMENTS);
+            ADDTBPROMOTIONNFEE(YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBPROMOTIONNFEE(string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string PROFITS, string COMMENTS)
+    public void ADDTBPROMOTIONNFEE(string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES)
     {
         Label8.Text = "";
 
@@ -111,15 +113,17 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         {
             string cmdTxt = @"  
                             INSERT INTO  [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
-                            ([YEARS],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS],[PROFITS],[COMMENTS])
+                            ([YEARS],[DEPNAME],[TITLES],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS],[PROFITS],[COMMENTS])
                             VALUES
-                            (@YEARS, @SALES, @NAMES, @KINDS, @PROMOTIONS, @PROMOTIONSSETS, @SDATES, @CLIENTS, @STORES, @SALESNUMS, @SALESMONEYS, @PROFITS, @COMMENTS)
+                            (@YEARS,@DEPNAME,@TITLES, @SALES, @NAMES, @KINDS, @PROMOTIONS, @PROMOTIONSSETS, @SDATES, @CLIENTS, @STORES, @SALESNUMS, @SALESMONEYS, @PROFITS, @COMMENTS)
 
                             ";
 
 
 
             m_db.AddParameter("@YEARS", YEARS);
+            m_db.AddParameter("@DEPNAME", DEPNAME);
+            m_db.AddParameter("@TITLES", TITLES);
             m_db.AddParameter("@SALES", SALES);
             m_db.AddParameter("@NAMES", NAMES);
             m_db.AddParameter("@KINDS", KINDS);

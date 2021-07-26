@@ -89,6 +89,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         cmdTxt.AppendFormat(@" 
                            SELECT [ID]
                             ,[YEARS]
+                            ,[DEPNAME]
+                            ,[TITLES]
                             ,[SALES]
                             ,[NAMES]
                             ,[KINDS]
