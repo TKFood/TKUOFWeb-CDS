@@ -48,6 +48,14 @@
                 <asp:TextBox ID="TextBox3" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
             </td>
         </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label5" runat="server" Text="費用計算方式"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
+            </td>
+        </tr>
     </table>
     <table class="PopTable">
         <tr>
@@ -62,9 +70,12 @@
                         <asp:BoundField HeaderText="費用金額" DataField="FEEMONEYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
+                        <asp:BoundField HeaderText="費用計算方式" DataField="FEECOUNTMETHOD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                        </asp:BoundField>
                         <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="Red" CommandArgument='<%# Eval("ID") %>'    CausesValidation="False"  CommandName="Del"  OnClientClick="return confirm('是否刪除 ?');"/>
+                                <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' CausesValidation="False" CommandName="Del" OnClientClick="return confirm('是否刪除 ?');" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

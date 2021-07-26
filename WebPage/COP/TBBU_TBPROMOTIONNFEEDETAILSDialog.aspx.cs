@@ -56,7 +56,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
         //Dialog.SetReturnValue2(txtReturnValue.Text);
         if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text) )
         {
-            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text);
+            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text, TextBox4.Text);
            
         }
         
@@ -70,7 +70,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
     {
         if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text))
         {
-            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text);
+            ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text, TextBox4.Text);
           
         }
 
@@ -100,6 +100,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
                             ,[MID]
                             ,[FEENAME]
                             ,[FEEMONEYS]
+                            ,[FEECOUNTMETHOD]
                             FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
                             WHERE [MID]=@MID
                             ");
@@ -190,22 +191,23 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
         
     }
 
-    public void ADDTBPROMOTIONNFEEDETAILS(string MID,string FEENAME, string FEEMONEYS)
+    public void ADDTBPROMOTIONNFEEDETAILS(string MID,string FEENAME, string FEEMONEYS, string FEECOUNTMETHOD)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
                         INSERT INTO [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
-                        ([MID],[FEENAME],[FEEMONEYS])
+                        ([MID],[FEENAME],[FEEMONEYS],[FEECOUNTMETHOD])
                         VALUES
-                        (@MID,@FEENAME,@FEEMONEYS)
+                        (@MID,@FEENAME,@FEEMONEYS,@FEECOUNTMETHOD)
                             ";
 
        
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@FEENAME", FEENAME);
         m_db.AddParameter("@FEEMONEYS", FEEMONEYS);
+        m_db.AddParameter("@FEECOUNTMETHOD", FEECOUNTMETHOD);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
