@@ -16,7 +16,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+        BindDropDownList();
+
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -42,7 +43,38 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         
     }
 
+    #region FUNCTION
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
 
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT [ID],[KIND] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEKINDS] ORDER BY [ID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "KIND";
+            DropDownList1.DataValueField = "KIND";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    #endregion
 
 
     #region BUTTON
@@ -78,7 +110,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         string YEARS = TextBox1.Text;
         string SALES = TextBox2.Text;
         string NAMES = TextBox3.Text;
-        string KINDS = TextBox4.Text;
+        string KINDS = DropDownList1.Text;
         string PROMOTIONS = TextBox5.Text;
         string PROMOTIONSSETS = TextBox6.Text;
         string SDATES = TextBox7.Text;

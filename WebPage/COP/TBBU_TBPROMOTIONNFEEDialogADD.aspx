@@ -71,7 +71,8 @@
                 <asp:Label ID="Label5" runat="server" Text="類別"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+                 <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                <%--<asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
         <tr>
