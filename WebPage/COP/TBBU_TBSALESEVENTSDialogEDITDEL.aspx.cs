@@ -1,0 +1,216 @@
+﻿using Ede.Uof.Utility.Data;
+using Ede.Uof.Utility.Page.Common;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.ServiceModel.Activation;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+
+public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utility.Page.BasePage
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+       
+        //設定回傳值
+        Dialog.SetReturnValue2("");
+
+        //註冊Dialog的Button 狀態
+        ((Master_DialogMasterPage)this.Master).Button1CausesValidation = false;
+        ((Master_DialogMasterPage)this.Master).Button1AutoCloseWindow = false;
+        ((Master_DialogMasterPage)this.Master).Button1OnClick += CDS_WebPage_Dialog_Button1OnClick;
+        ((Master_DialogMasterPage)this.Master).Button2OnClick += Button2OnClick;
+
+        if (!IsPostBack)
+        {
+            BindDropDownList();
+            //接收主頁面傳遞之參數
+            lblParam.Text = Request["ID"];
+
+
+            if (!string.IsNullOrEmpty(lblParam.Text))
+            {
+                SEARCHTBSALESEVENTS(lblParam.Text);
+            }
+
+        }
+
+    }
+
+
+
+
+    #region BUTTON
+    void CDS_WebPage_Dialog_Button1OnClick()
+    {
+        //設定回傳值並關閉視窗
+        //Dialog.SetReturnValue2(txtReturnValue.Text);
+
+        UPDATE();
+
+        Dialog.Close(this);
+
+    }
+
+
+    void Button2OnClick()
+    {
+        //設定回傳值並關閉視窗
+        //Dialog.SetReturnValue2(txtReturnValue.Text);
+
+        UPDATE();
+
+        SEARCHTBSALESEVENTS(lblParam.Text);
+    }
+    protected void btn1_Click(object sender, EventArgs e)
+    {
+        DELTBSALESEVENTS(lblParam.Text);
+    }
+
+
+    #endregion
+
+    #region FUNCTION
+    private void BindDropDownList()
+    {
+      
+
+
+
+    }
+
+    public void SEARCHTBSALESEVENTS(string ID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   
+                       SELECT 
+                        [ID]
+                        ,[SALES]
+                        ,[KINDS]
+                        ,[EVENTS]
+                        ,[SDAYS]
+                        ,[EDAYS]
+                        ,[COMMENTS]
+                        ,[ISCLOSE]
+                        FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                        WHERE [ID]=@ID
+                        ";
+
+        m_db.AddParameter("@ID", ID);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {           
+            TextBox1.Text = dt.Rows[0]["SALES"].ToString();
+            TextBox2.Text = dt.Rows[0]["KINDS"].ToString();
+            TextBox3.Text = dt.Rows[0]["EVENTS"].ToString();
+            TextBox4.Text = dt.Rows[0]["SDAYS"].ToString();
+            TextBox5.Text = dt.Rows[0]["EDAYS"].ToString();
+            TextBox6.Text = dt.Rows[0]["COMMENTS"].ToString();
+            TextBox7.Text = dt.Rows[0]["ISCLOSE"].ToString();
+
+
+        }
+
+
+
+
+    }
+
+    public void UPDATE()
+    {
+        string ID = lblParam.Text;
+        string SALES = TextBox1.Text;
+        string KINDS = TextBox2.Text;
+        string EVENTS = TextBox3.Text;
+        string SDAYS = TextBox4.Text;
+        string EDAYS = TextBox5.Text;
+        string COMMENTS = TextBox6.Text;
+        string ISCLOSE = TextBox7.Text;
+
+
+
+
+
+        if (!string.IsNullOrEmpty(ID) )
+        {
+            UPDATETBSALESEVENTS(ID, SALES, KINDS, EVENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
+        }
+
+        Dialog.SetReturnValue2("NeedPostBack");
+    }
+    public void UPDATETBSALESEVENTS(string ID, string SALES, string KINDS, string EVENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
+    {
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                           UPDATE  [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            SET 
+                            [SALES]=@SALES
+                            ,[KINDS]=@KINDS
+                            ,[EVENTS]=@EVENTS
+                            ,[SDAYS]=@SDAYS
+                            ,[EDAYS]=@EDAYS
+                            ,[COMMENTS]=@COMMENTS
+                            ,[ISCLOSE]=@ISCLOSE
+                            WHERE [ID]=@ID
+                   
+                            ";
+
+
+        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@SALES", SALES);
+        m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@EVENTS", EVENTS);
+        m_db.AddParameter("@SDAYS", SDAYS);
+        m_db.AddParameter("@EDAYS", EDAYS);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@ISCLOSE", ISCLOSE);
+
+
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+
+
+    }
+
+
+
+    public void DELTBSALESEVENTS(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  DELETE  [TKBUSINESS].[dbo].[TBSALESEVENTS] WHERE [ID]=@ID
+                            ";
+
+        m_db.AddParameter("@ID", ID);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+
+        Dialog.SetReturnValue2("NeedPostBack");
+        Dialog.Close(this);
+    }
+
+    
+    #endregion
+
+
+}
