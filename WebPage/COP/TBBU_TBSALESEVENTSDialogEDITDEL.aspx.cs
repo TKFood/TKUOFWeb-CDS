@@ -28,7 +28,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
 
         if (!IsPostBack)
         {
-            BindDropDownList();
+            BindDropDownList1();
+            BindDropDownList2();
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
 
@@ -41,8 +42,6 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         }
 
     }
-
-
 
 
     #region BUTTON
@@ -76,6 +75,66 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
     #endregion
 
     #region FUNCTION
+    private void BindDropDownList1()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("NAME", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "NAME";
+            DropDownList1.DataValueField = "NAME";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("KINDS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[KINDS] FROM [TKBUSINESS].[dbo].[TBSALESKINDS] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "KINDS";
+            DropDownList2.DataValueField = "KINDS";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
     private void BindDropDownList()
     {
       
@@ -111,9 +170,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
         if (dt.Rows.Count > 0)
-        {           
-            TextBox1.Text = dt.Rows[0]["SALES"].ToString();
-            TextBox2.Text = dt.Rows[0]["KINDS"].ToString();
+        {
+            DropDownList1.Text = dt.Rows[0]["SALES"].ToString();
+            DropDownList2.Text = dt.Rows[0]["KINDS"].ToString();
             TextBox3.Text = dt.Rows[0]["EVENTS"].ToString();
             TextBox4.Text = dt.Rows[0]["SDAYS"].ToString();
             TextBox5.Text = dt.Rows[0]["EDAYS"].ToString();
@@ -131,8 +190,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
     public void UPDATE()
     {
         string ID = lblParam.Text;
-        string SALES = TextBox1.Text;
-        string KINDS = TextBox2.Text;
+        string SALES = DropDownList1.Text;
+        string KINDS = DropDownList2.Text;
         string EVENTS = TextBox3.Text;
         string SDAYS = TextBox4.Text;
         string EDAYS = TextBox5.Text;
