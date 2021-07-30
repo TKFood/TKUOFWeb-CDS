@@ -30,6 +30,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         {
             BindDropDownList1();
             BindDropDownList2();
+            BindDropDownList3();
+
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
 
@@ -134,7 +136,35 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
 
 
     }
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ISCLOSES", typeof(String));
 
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT [ID],[ISCLOSES] FROM [TKBUSINESS].[dbo].[TBSALESCLOSES] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "ISCLOSES";
+            DropDownList3.DataValueField = "ISCLOSES";
+            DropDownList3.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
     private void BindDropDownList()
     {
       
@@ -174,10 +204,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
             DropDownList1.Text = dt.Rows[0]["SALES"].ToString();
             DropDownList2.Text = dt.Rows[0]["KINDS"].ToString();
             TextBox3.Text = dt.Rows[0]["EVENTS"].ToString();
-            TextBox4.Text = dt.Rows[0]["SDAYS"].ToString();
-            TextBox5.Text = dt.Rows[0]["EDAYS"].ToString();
+            RadDatePicker1.SelectedDate = Convert.ToDateTime(dt.Rows[0]["SDAYS"].ToString());
+            RadDatePicker2.SelectedDate = Convert.ToDateTime(dt.Rows[0]["EDAYS"].ToString());  
             TextBox6.Text = dt.Rows[0]["COMMENTS"].ToString();
-            TextBox7.Text = dt.Rows[0]["ISCLOSE"].ToString();
+            DropDownList3.Text = dt.Rows[0]["ISCLOSE"].ToString();
 
 
         }
@@ -193,10 +223,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         string SALES = DropDownList1.Text;
         string KINDS = DropDownList2.Text;
         string EVENTS = TextBox3.Text;
-        string SDAYS = TextBox4.Text;
-        string EDAYS = TextBox5.Text;
+        string SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
+        string EDAYS = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
         string COMMENTS = TextBox6.Text;
-        string ISCLOSE = TextBox7.Text;
+        string ISCLOSE = DropDownList3.Text;
 
 
 
