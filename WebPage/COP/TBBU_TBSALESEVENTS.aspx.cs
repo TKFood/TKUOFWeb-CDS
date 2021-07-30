@@ -112,7 +112,15 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         //是否結案
         if (!string.IsNullOrEmpty(DropDownList1.Text))
         {
-            QUERYS.AppendFormat(@" AND [ISCLOSE] LIKE '%{0}%'", DropDownList1.Text);
+            if (DropDownList1.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [ISCLOSE] LIKE '%{0}%'", DropDownList1.Text);
+            }
+           
         }
         //業務員
         if (!string.IsNullOrEmpty(DropDownList2.Text))
@@ -127,6 +135,11 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
             }
            
         }
+        //客戶
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%'", TextBox1.Text);
+        }
 
 
 
@@ -138,6 +151,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             [ID]
                             ,[SALES]
                             ,[KINDS]
+                            ,[CLIENTS]
                             ,[EVENTS]
                             ,[SDAYS]
                             ,[EDAYS]
@@ -188,6 +202,21 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+
+            //Button2
+            //Get the button that raised the event
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            //Get the row that contains this button
+            GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue2 = btn2.CommandArgument;
+            DataRowView row2 = (DataRowView)e.Row.DataItem;
+            Button lbtnName2 = (Button)e.Row.FindControl("Button2");
+            ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
+
         }
     }
 

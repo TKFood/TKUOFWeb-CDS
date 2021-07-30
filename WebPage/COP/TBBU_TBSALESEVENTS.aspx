@@ -58,7 +58,7 @@
                             <asp:Label ID="Label1" runat="server" Text="是否結案" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                           <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
 
                         </td>
                     </tr>
@@ -68,6 +68,15 @@
                         </td>
                         <td>
                             <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label2" runat="server" Text="客戶" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                         </td>
 
                     </tr>
@@ -97,6 +106,9 @@
                                         <asp:BoundField HeaderText="類別" DataField="KINDS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="客戶" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="待辦事件" DataField="EVENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
                                         </asp:BoundField>
@@ -112,9 +124,13 @@
                                         <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
-
-                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
