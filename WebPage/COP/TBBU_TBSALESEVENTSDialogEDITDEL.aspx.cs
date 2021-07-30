@@ -184,6 +184,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
                         [ID]
                         ,[SALES]
                         ,[KINDS]
+                        ,[CLIENTS]
                         ,[EVENTS]
                         ,[SDAYS]
                         ,[EDAYS]
@@ -203,6 +204,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         {
             DropDownList1.Text = dt.Rows[0]["SALES"].ToString();
             DropDownList2.Text = dt.Rows[0]["KINDS"].ToString();
+            TextBox1.Text = dt.Rows[0]["CLIENTS"].ToString();
             TextBox3.Text = dt.Rows[0]["EVENTS"].ToString();
             RadDatePicker1.SelectedDate = Convert.ToDateTime(dt.Rows[0]["SDAYS"].ToString());
             RadDatePicker2.SelectedDate = Convert.ToDateTime(dt.Rows[0]["EDAYS"].ToString());  
@@ -222,6 +224,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         string ID = lblParam.Text;
         string SALES = DropDownList1.Text;
         string KINDS = DropDownList2.Text;
+        string CLIENTS = TextBox1.Text;
         string EVENTS = TextBox3.Text;
         string SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
         string EDAYS = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
@@ -234,12 +237,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATETBSALESEVENTS(ID, SALES, KINDS, EVENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
+            UPDATETBSALESEVENTS(ID, SALES, KINDS, CLIENTS, EVENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBSALESEVENTS(string ID, string SALES, string KINDS, string EVENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
+    public void UPDATETBSALESEVENTS(string ID, string SALES, string KINDS,string CLIENTS, string EVENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
     {
 
 
@@ -251,6 +254,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
                             SET 
                             [SALES]=@SALES
                             ,[KINDS]=@KINDS
+                            ,[CLIENTS]=@CLIENTS
                             ,[EVENTS]=@EVENTS
                             ,[SDAYS]=@SDAYS
                             ,[EDAYS]=@EDAYS
@@ -264,6 +268,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@SALES", SALES);
         m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@CLIENTS", CLIENTS);
         m_db.AddParameter("@EVENTS", EVENTS);
         m_db.AddParameter("@SDAYS", SDAYS);
         m_db.AddParameter("@EDAYS", EDAYS);

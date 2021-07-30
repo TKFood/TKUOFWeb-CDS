@@ -170,6 +170,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
         string SALES = DropDownList1.Text;
         string KINDS = DropDownList2.Text;
+        string CLIENTS = TextBox1.Text;
         string EVENTS = TextBox3.Text;
         string SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
         string EDAYS = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
@@ -181,13 +182,13 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(EVENTS))
         {
 
-            ADDTBSALESEVENTS(SALES, KINDS, EVENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
+            ADDTBSALESEVENTS(SALES, KINDS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBSALESEVENTS(string SALES, string KINDS, string EVENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
+    public void ADDTBSALESEVENTS(string SALES, string KINDS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
     {
         Label8.Text = "";
 
@@ -198,15 +199,16 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         {
             string cmdTxt = @"  
                             INSERT INTO [TKBUSINESS].[dbo].[TBSALESEVENTS]
-                            ([SALES],[KINDS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE])
+                            ([SALES],[KINDS],[CLIENTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE])
                             VALUES
-                            (@SALES,@KINDS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE)
+                            (@SALES,@KINDS,@CLIENTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE)
                             ";
 
 
 
             m_db.AddParameter("@SALES", SALES);
             m_db.AddParameter("@KINDS", KINDS);
+            m_db.AddParameter("@CLIENTS", CLIENTS);
             m_db.AddParameter("@EVENTS", EVENTS);
             m_db.AddParameter("@SDAYS", SDAYS);
             m_db.AddParameter("@EDAYS", EDAYS);
