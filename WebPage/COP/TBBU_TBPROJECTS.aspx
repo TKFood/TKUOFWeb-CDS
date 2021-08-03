@@ -57,7 +57,7 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="年度:" autocomplete="off" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="TextBox1" runat="server" MaxLength="4"></asp:TextBox>
@@ -141,6 +141,18 @@
                                                 <itemstyle horizontalalign="Left" width="200px"></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="經銷-統記" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT10" runat="server" Text='<%# Bind("經銷統記") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="200px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="經銷-統創" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT11" runat="server" Text='<%# Bind("經銷統創") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="200px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="ㄧ般經銷" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Label ID="CONTENT9" runat="server" Text='<%# Bind("ㄧ般經銷") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>
@@ -161,7 +173,7 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label1" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="年度:" autocomplete="off"  meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="TextBox2" runat="server" MaxLength="4"></asp:TextBox>
@@ -170,7 +182,7 @@
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label4" runat="server" Text="活動通路:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="活動通路:" autocomplete="off"  meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
@@ -179,7 +191,7 @@
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label6" runat="server" Text="活動名稱:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label6" runat="server" Text="活動名稱:" autocomplete="off"  meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>

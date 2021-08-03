@@ -86,7 +86,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
 
         cmdTxt.AppendFormat(@" 
                             --20210617 查年度的週計劃
-                            SELECT [YEARS],[WEEKS],[FDAY],[EDAY],[好市多],[全聯],[CVS-7-11],[CVS-全家],[KA-家樂福],[門市],[官網],[新東陽],[ㄧ般經銷]
+                            SELECT [YEARS],[WEEKS],[FDAY],[EDAY],[好市多],[全聯],[CVS-7-11],[CVS-全家],[KA-家樂福],[門市],[官網],[新東陽],[經銷統記],[經銷統創],[ㄧ般經銷]
                             FROM (
                             SELECT 
                             [YEARS]
@@ -157,6 +157,24 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
                              FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%新東陽%'
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '新東陽'
+                            , ISNULL((     
+                            SELECT CASE
+                                    WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
+                                    ELSE '<br />'
+                                   END +ISNULL([NAMES],'')+'<br>'+ISNULL([DAYS],'')+'<br>'+ISNULL([ITEMS],'')+'<br> '+ISNULL([CONTENTS],'') AS 'data()'
+                                FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%統記%'
+                             
+                            FOR XML PATH(''), TYPE  
+                            ).value('.','nvarchar(max)'),'')  As '經銷統記'
+                            , ISNULL((     
+                            SELECT CASE
+                                    WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
+                                    ELSE '<br />'
+                                   END +ISNULL([NAMES],'')+'<br>'+ISNULL([DAYS],'')+'<br>'+ISNULL([ITEMS],'')+'<br> '+ISNULL([CONTENTS],'') AS 'data()'
+                                FROM [TKBUSINESS].[dbo].[TBPROJECTS] WHERE [TBPROJECTS].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTS].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%統創%'
+                             
+                            FOR XML PATH(''), TYPE  
+                            ).value('.','nvarchar(max)'),'')  As '經銷統創'
                             , ISNULL((     
                             SELECT CASE
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
