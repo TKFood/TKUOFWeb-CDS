@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="TBBU_TBSALESEVENTS.aspx.cs" Inherits="CDS_WebPage_TBBU_TBSALESEVENTS" %>
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -77,6 +77,16 @@
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+
+                           <%-- <asp:AutoCompleteExtender
+                                ID="AutoCompleteExtender1"
+                                runat="server"
+                                MinimumPrefixLength="1"
+                                TargetControlID="TextBox1"
+                                ServiceMethod="GetCompletionList"
+                                ServicePath="WebService/WebService.asmx"
+                                CompletionSetCount="15" />--%>
+
                         </td>
 
                     </tr>
@@ -98,42 +108,42 @@
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
                                         <asp:BoundField HeaderText="編號" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="業務員" DataField="SALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="類別" DataField="KINDS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="客戶" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="100px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="待辦事件" DataField="EVENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="300px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="起始日" DataField="SDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="結案日" DataField="EDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="進度內容" DataField="COMMENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="300px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="300px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
+                                            <itemstyle horizontalalign="Center" width="80px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemTemplate>
+                                            <itemtemplate>
                                                 <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
-                                            </ItemTemplate>
+                                            </itemtemplate>
                                         </asp:TemplateField>
 
                                         <asp:TemplateField HeaderText="BTN" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemTemplate>
+                                            <itemtemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
-                                            </ItemTemplate>
+                                            </itemtemplate>
                                         </asp:TemplateField>
                                     </Columns>
                                 </Fast:Grid>

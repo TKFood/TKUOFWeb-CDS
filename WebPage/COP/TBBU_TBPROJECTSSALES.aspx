@@ -141,6 +141,18 @@
                                                 <itemstyle horizontalalign="Left" width="200px"></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="經銷-統記" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT10" runat="server" Text='<%# Bind("經銷統記") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="200px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="經銷-統創" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT11" runat="server" Text='<%# Bind("經銷統創") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="200px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="ㄧ般經銷" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Label ID="CONTENT9" runat="server" Text='<%# Bind("ㄧ般經銷") %>' Style="text-align: left" HorizontalAlign="Left" Width="200px" ItemStyle-HorizontalAlign="Left"></asp:Label>

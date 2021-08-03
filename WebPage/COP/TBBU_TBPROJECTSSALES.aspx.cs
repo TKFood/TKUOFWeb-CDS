@@ -39,7 +39,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
 
         }
 
-       
+
 
 
     }
@@ -86,7 +86,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
 
         cmdTxt.AppendFormat(@" 
                             --20210617 查年度的週計劃
-                            SELECT [YEARS],[WEEKS],[FDAY],[EDAY],[好市多],[全聯],[CVS-7-11],[CVS-全家],[KA-家樂福],[門市],[官網],[新東陽],[ㄧ般經銷]
+                            SELECT [YEARS],[WEEKS],[FDAY],[EDAY],[好市多],[全聯],[CVS-7-11],[CVS-全家],[KA-家樂福],[門市],[官網],[新東陽],[經銷統記],[經銷統創],[ㄧ般經銷]
                             FROM (
                             SELECT 
                             [YEARS]
@@ -169,6 +169,24 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
                                     WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                     ELSE '<br />'
                                   END +ISNULL([NAMES],'')+'<br>'+ISNULL([DAYS],'')+'<br>'+ISNULL([TARGETS],'')+'<br> '+ISNULL([FEES],'')+'<br> '+ISNULL([ITEMS],'') AS 'data()'
+                                FROM [TKBUSINESS].[dbo].[TBPROJECTSSALES] WHERE [TBPROJECTSSALES].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTSSALES].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%統記%'
+                             
+                            FOR XML PATH(''), TYPE  
+                            ).value('.','nvarchar(max)'),'')  As '經銷統記'
+                            , ISNULL((     
+                            SELECT CASE
+                                    WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
+                                    ELSE '<br />'
+                                  END +ISNULL([NAMES],'')+'<br>'+ISNULL([DAYS],'')+'<br>'+ISNULL([TARGETS],'')+'<br> '+ISNULL([FEES],'')+'<br> '+ISNULL([ITEMS],'') AS 'data()'
+                                FROM [TKBUSINESS].[dbo].[TBPROJECTSSALES] WHERE [TBPROJECTSSALES].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTSSALES].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%統創%'
+                             
+                            FOR XML PATH(''), TYPE  
+                            ).value('.','nvarchar(max)'),'')  As '經銷統創'
+                            , ISNULL((     
+                            SELECT CASE
+                                    WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
+                                    ELSE '<br />'
+                                  END +ISNULL([NAMES],'')+'<br>'+ISNULL([DAYS],'')+'<br>'+ISNULL([TARGETS],'')+'<br> '+ISNULL([FEES],'')+'<br> '+ISNULL([ITEMS],'') AS 'data()'
                                 FROM [TKBUSINESS].[dbo].[TBPROJECTSSALES] WHERE [TBPROJECTSSALES].[YEARS]=[TBYEARWEEKS].YEARS AND [TBPROJECTSSALES].[WEEKS]=[TBYEARWEEKS].WEEKS AND [STORES] LIKE '%ㄧ般經銷%'
                              
                             FOR XML PATH(''), TYPE  
@@ -203,7 +221,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-       
+
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -325,13 +343,13 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
     {
         SETEXCEL();
 
-      
+
     }
 
 
 
-    public override void VerifyRenderingInServerForm(Control control) 
-    { 
+    public override void VerifyRenderingInServerForm(Control control)
+    {
 
     }
 
@@ -345,7 +363,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
 
         QUERYS.AppendFormat(@" ");
 
-       cmdTxt.AppendFormat(@" 
+        cmdTxt.AppendFormat(@" 
                                 
                                 ", QUERYS.ToString());
 
@@ -354,14 +372,14 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
-        if(dt.Rows.Count>0)
+        if (dt.Rows.Count > 0)
         {
             //檔案名稱
             var fileName = "計劃清單" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
 
             using (var excel = new ExcelPackage(new FileInfo(fileName)))
-            {              
+            {
 
                 // 建立分頁
                 var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
@@ -381,14 +399,14 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
                 ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-               
+
 
                 foreach (DataRow od in dt.Rows)
                 {
                     ws.Cells[ROWS, 1].Value = od["MB001"].ToString();
                     ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                   
+
                 }
 
 
@@ -429,11 +447,11 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
             //ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
             //                                                            // 沒設置的話會跳出 Please set the excelpackage.licensecontext property
 
-            
+
             ////var file = new FileInfo(fileName);
             //using (var excel = new ExcelPackage(file))
             //{
-                
+
             //}
         }
 
@@ -483,9 +501,9 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
         //Response.Write(sw.ToString());
         //Response.End();
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void MyButtonClick(object sender, System.EventArgs e)
     {
-      
+
 
     }
 
@@ -495,14 +513,14 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
         ////this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
         //ViewState["TextBox1"] = TextBox1.Text.ToString();
         //ViewState["TextBox2"] = TextBox2.Text.ToString();
-       
+
 
         //BindGrid("");
 
         //TextBox1.Text = ViewState["TextBox1"].ToString();
         //TextBox2.Text = ViewState["TextBox2"].ToString();
-        
-     
+
+
 
         //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
         //{
