@@ -262,12 +262,54 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
             try
             {
                 string cmdTxt = @"  
-                          
-                            ";
+                                INSERT INTO [HJ_BM_DB].[dbo].[tb_NOTE]
+                                (                            
+                                [NOTE_CONTENT]
+                                ,[NOTE_KIND]
+                                ,[FILE_NAME]
+                                ,[NOTE_DATE]
+                                ,[NOTE_TIME]
+                                ,[UPDATE_DATETIME]
+                                ,[CONTACT_ID]
+                                ,[COMPANY_ID]
+                                ,[OPPORTUNITY_ID]
+                                ,[SALES_STAGE]
+                                ,[CREATE_DATETIME]
+                                ,[CREATE_USER_ID]
+                                )
+                                VALUES
+                                (                              
+                                @NOTE_CONTENT
+                                ,@NOTE_KIND
+                                ,@FILE_NAME
+                                ,@NOTE_DATE
+                                ,@NOTE_TIME
+                                ,@UPDATE_DATETIME
+                                ,@CONTACT_ID
+                                ,@COMPANY_ID
+                                ,@OPPORTUNITY_ID
+                                ,@SALES_STAGE
+                                ,@CREATE_DATETIME
+                                ,@CREATE_USER_ID
+                                )
+                                 
+                                ";
 
 
 
-                //m_db.AddParameter("@SALES", SALES);
+        
+                m_db.AddParameter("@NOTE_CONTENT", NOTE_CONTENT);
+                m_db.AddParameter("@NOTE_KIND", NOTE_KIND);
+                m_db.AddParameter("@FILE_NAME", FILE_NAME);
+                m_db.AddParameter("@NOTE_DATE", NOTE_DATE);
+                m_db.AddParameter("@NOTE_TIME", NOTE_TIME);
+                m_db.AddParameter("@UPDATE_DATETIME", UPDATE_DATETIME);
+                m_db.AddParameter("@CONTACT_ID", CONTACT_ID);
+                m_db.AddParameter("@COMPANY_ID", COMPANY_ID);
+                m_db.AddParameter("@OPPORTUNITY_ID", OPPORTUNITY_ID);
+                m_db.AddParameter("@SALES_STAGE", SALES_STAGE);
+                m_db.AddParameter("@CREATE_DATETIME", CREATE_DATETIME);
+                m_db.AddParameter("@CREATE_USER_ID", CREATE_USER_ID);
 
 
 
