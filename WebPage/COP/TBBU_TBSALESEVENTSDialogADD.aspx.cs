@@ -58,6 +58,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
+        ADD_HJ_BM_DB_tb_NOTE();
 
         Dialog.Close(this);
 
@@ -70,8 +71,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
+        ADD_HJ_BM_DB_tb_NOTE();
 
-       
+
     }
 
     #endregion
@@ -241,7 +243,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     public void ADD_HJ_BM_DB_tb_NOTE()
     {
         string NOTE_ID=null;
-        string NOTE_CONTENT = TextBox3.Text;
+        string NOTE_CONTENT = TextBox2 .Text+ "<br>" + TextBox3.Text + "<br>" + "結案日 " + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>" + TextBox6.Text;
         string NOTE_KIND = "1";
         string FILE_NAME = null;
         string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
@@ -257,7 +259,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        if(!String.IsNullOrEmpty(COMPANY_ID) && String.IsNullOrEmpty(CREATE_USER_ID))
+        if(!String.IsNullOrEmpty(COMPANY_ID) && !String.IsNullOrEmpty(CREATE_USER_ID))
         {
             try
             {
@@ -266,14 +268,14 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
                                 (                            
                                 [NOTE_CONTENT]
                                 ,[NOTE_KIND]
-                                ,[FILE_NAME]
+                               
                                 ,[NOTE_DATE]
                                 ,[NOTE_TIME]
                                 ,[UPDATE_DATETIME]
                                 ,[CONTACT_ID]
                                 ,[COMPANY_ID]
                                 ,[OPPORTUNITY_ID]
-                                ,[SALES_STAGE]
+                               
                                 ,[CREATE_DATETIME]
                                 ,[CREATE_USER_ID]
                                 )
@@ -281,14 +283,14 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
                                 (                              
                                 @NOTE_CONTENT
                                 ,@NOTE_KIND
-                                ,@FILE_NAME
+                               
                                 ,@NOTE_DATE
                                 ,@NOTE_TIME
                                 ,@UPDATE_DATETIME
                                 ,@CONTACT_ID
                                 ,@COMPANY_ID
                                 ,@OPPORTUNITY_ID
-                                ,@SALES_STAGE
+                               
                                 ,@CREATE_DATETIME
                                 ,@CREATE_USER_ID
                                 )
@@ -300,14 +302,14 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         
                 m_db.AddParameter("@NOTE_CONTENT", NOTE_CONTENT);
                 m_db.AddParameter("@NOTE_KIND", NOTE_KIND);
-                m_db.AddParameter("@FILE_NAME", FILE_NAME);
+                //m_db.AddParameter("@FILE_NAME", FILE_NAME);
                 m_db.AddParameter("@NOTE_DATE", NOTE_DATE);
                 m_db.AddParameter("@NOTE_TIME", NOTE_TIME);
                 m_db.AddParameter("@UPDATE_DATETIME", UPDATE_DATETIME);
                 m_db.AddParameter("@CONTACT_ID", CONTACT_ID);
                 m_db.AddParameter("@COMPANY_ID", COMPANY_ID);
                 m_db.AddParameter("@OPPORTUNITY_ID", OPPORTUNITY_ID);
-                m_db.AddParameter("@SALES_STAGE", SALES_STAGE);
+                //m_db.AddParameter("@SALES_STAGE", SALES_STAGE);
                 m_db.AddParameter("@CREATE_DATETIME", CREATE_DATETIME);
                 m_db.AddParameter("@CREATE_USER_ID", CREATE_USER_ID);
 
