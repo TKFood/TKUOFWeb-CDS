@@ -52,6 +52,14 @@
                 <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" Style="height: 20px;"></asp:TextBox>
             </td>
         </tr>
+          <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label3" runat="server" Text="專案"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox2" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+            </td>
+        </tr>
         <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label6" runat="server" Text="待辦事件"></asp:Label>

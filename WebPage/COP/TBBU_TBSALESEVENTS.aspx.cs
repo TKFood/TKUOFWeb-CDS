@@ -152,6 +152,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             ,[SALES]
                             ,[KINDS]
                             ,[CLIENTS]
+                            ,[PROJECTS]
                             ,[EVENTS]
                             ,[SDAYS]
                             ,[EDAYS]
@@ -160,7 +161,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
                             WHERE 1=1
                             {0}
-                            ORDER BY [SALES],[CLIENTS],[EVENTS],[EDAYS]
+                            ORDER BY [SALES],[CLIENTS],[PROJECTS],[EDAYS]
                               
                             ", QUERYS.ToString());
 

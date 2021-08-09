@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel.Activation;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -171,6 +172,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         string SALES = DropDownList1.Text;
         string KINDS = DropDownList2.Text;
         string CLIENTS = TextBox1.Text;
+        string PROJECTS = TextBox2.Text;
         string EVENTS = TextBox3.Text;
         string SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
         string EDAYS = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
@@ -179,16 +181,16 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         //string ISCLOSE = TextBox7.Text;
 
 
-        if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(EVENTS))
+        if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(PROJECTS) && !string.IsNullOrEmpty(EVENTS))
         {
 
-            ADDTBSALESEVENTS(SALES, KINDS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
+            ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBSALESEVENTS(string SALES, string KINDS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
+    public void ADDTBSALESEVENTS(string SALES, string KINDS,string PROJECTS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
     {
         Label8.Text = "";
 
@@ -199,9 +201,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         {
             string cmdTxt = @"  
                             INSERT INTO [TKBUSINESS].[dbo].[TBSALESEVENTS]
-                            ([SALES],[KINDS],[CLIENTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE])
+                            ([SALES],[KINDS],[CLIENTS],[PROJECTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE])
                             VALUES
-                            (@SALES,@KINDS,@CLIENTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE)
+                            (@SALES,@KINDS,@CLIENTS,@PROJECTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE)
                             ";
 
 
@@ -209,6 +211,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
             m_db.AddParameter("@SALES", SALES);
             m_db.AddParameter("@KINDS", KINDS);
             m_db.AddParameter("@CLIENTS", CLIENTS);
+            m_db.AddParameter("@PROJECTS", PROJECTS);
             m_db.AddParameter("@EVENTS", EVENTS);
             m_db.AddParameter("@SDAYS", SDAYS);
             m_db.AddParameter("@EDAYS", EDAYS);
@@ -235,7 +238,121 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
     }
 
-   
+    public void ADD_HJ_BM_DB_tb_NOTE()
+    {
+        string NOTE_ID=null;
+        string NOTE_CONTENT = TextBox3.Text;
+        string NOTE_KIND = "1";
+        string FILE_NAME = null;
+        string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
+        string NOTE_TIME = DateTime.Now.ToString("HH:mm");
+        string UPDATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:00");
+        string CONTACT_ID = "0";
+        string COMPANY_ID = SEARCHCOMPANY_ID(TextBox1.Text.Trim());
+        string OPPORTUNITY_ID = "0";
+        string SALES_STAGE = null;
+        string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        string CREATE_USER_ID = SEARCHCREATE_USER_ID(DropDownList1.Text);
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        if(!String.IsNullOrEmpty(COMPANY_ID) && String.IsNullOrEmpty(CREATE_USER_ID))
+        {
+            try
+            {
+                string cmdTxt = @"  
+                          
+                            ";
+
+
+
+                //m_db.AddParameter("@SALES", SALES);
+
+
+
+
+
+                m_db.ExecuteNonQuery(cmdTxt);
+
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+       
+
+    }
+
+    public string SEARCHCOMPANY_ID(string COMPANYNAME)
+    {
+        DataTable dt = new DataTable();     
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT  
+                            [COMPANY_ID]
+                            ,[COMPANY_NAME]
+                            FROM [HJ_BM_DB].[dbo].[tb_COMPANY]
+                            WHERE [COMPANY_NAME]=@COMPANY_NAME
+                                ");
+
+        m_db.AddParameter("@COMPANY_NAME", COMPANYNAME);
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows[0]["COMPANY_ID"].ToString();
+
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public string SEARCHCREATE_USER_ID(string USER_NAME)
+    {
+        DataTable dt = new DataTable();
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [USER_ID]
+                            ,[USER_NAME]
+                            FROM [HJ_BM_DB].[dbo].[tb_USER]
+                            WHERE [USER_NAME]=@USER_NAME
+                                ");
+
+        m_db.AddParameter("@USER_NAME", USER_NAME);
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows[0]["USER_ID"].ToString();
+
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     #endregion
 
