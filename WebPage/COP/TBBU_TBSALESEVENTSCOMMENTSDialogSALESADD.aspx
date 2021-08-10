@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label2" runat="server" Text="進度"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text="進度內容"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="10"></asp:TextBox>
@@ -49,10 +49,12 @@
                         <asp:BoundField HeaderText="填寫日期" DataField="ADDDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
-
-                        <asp:BoundField HeaderText="進度" DataField="COMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                            <ItemStyle HorizontalAlign="Left" Width="600px"></ItemStyle>
-                        </asp:BoundField>
+                        <asp:TemplateField HeaderText="進度內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                            <ItemTemplate>
+                                <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="300px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                <itemstyle horizontalalign="Left" width="300px"></itemstyle>
+                            </ItemTemplate>
+                        </asp:TemplateField>                 
                     </Columns>
                 </Fast:Grid>
             </td>

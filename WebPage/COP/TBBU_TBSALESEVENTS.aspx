@@ -78,7 +78,7 @@
                         <td>
                             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
-                           <%-- <asp:AutoCompleteExtender
+                            <%-- <asp:AutoCompleteExtender
                                 ID="AutoCompleteExtender1"
                                 runat="server"
                                 MinimumPrefixLength="1"
@@ -108,51 +108,51 @@
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
                                         <asp:BoundField HeaderText="編號" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="業務員" DataField="SALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="類別" DataField="KINDS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="客戶" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Left" width="100px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:BoundField HeaderText="專案" DataField="PROJECTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Left" width="300px"></itemstyle>
+                                        <asp:BoundField HeaderText="專案" DataField="PROJECTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="待辦事件" DataField="EVENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Left" width="300px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="起始日" DataField="SDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="結案日" DataField="EDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="60px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
-                                                <ItemTemplate>
-                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' style="text-align:left" HorizontalAlign="Left" Width="300px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                                    <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
-                                                </ItemTemplate>                                        
-                                             </asp:TemplateField>
-                                       <%-- <asp:BoundField HeaderText="進度內容" DataField="COMMENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="進度內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="300px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="300px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <%-- <asp:BoundField HeaderText="進度內容" DataField="COMMENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <itemstyle horizontalalign="Left" width="300px"></itemstyle>
                                         </asp:BoundField>--%>
                                         <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="80px"></itemstyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemtemplate>
+                                            <ItemTemplate>
                                                 <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
-                                            </itemtemplate>
+                                            </ItemTemplate>
                                         </asp:TemplateField>
 
                                         <asp:TemplateField HeaderText="BTN" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemtemplate>
+                                            <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
-                                            </itemtemplate>
+                                            </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
                                 </Fast:Grid>

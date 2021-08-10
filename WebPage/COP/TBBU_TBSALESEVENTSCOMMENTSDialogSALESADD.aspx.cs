@@ -101,7 +101,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
                             [ID]
                             ,[MID]
                             ,CONVERT(NVARCHAR, [ADDDATES],120) AS ADDDATES 
-                            ,[COMMENTS]
+                            ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
                             FROM [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS]
                             WHERE [MID]=@ID     
                             ORDER BY [ADDDATES] DESC
