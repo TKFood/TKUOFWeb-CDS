@@ -117,13 +117,13 @@
                                             <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="客戶" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="100px"></itemstyle>
+                                            <itemstyle horizontalalign="Left" width="100px"></itemstyle>
                                         </asp:BoundField>
                                          <asp:BoundField HeaderText="專案" DataField="PROJECTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="300px"></itemstyle>
+                                            <itemstyle horizontalalign="Left" width="300px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="待辦事件" DataField="EVENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="300px"></itemstyle>
+                                            <itemstyle horizontalalign="Left" width="300px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="起始日" DataField="SDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <itemstyle horizontalalign="Center" width="60px"></itemstyle>
@@ -132,7 +132,7 @@
                                             <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="進度內容" DataField="COMMENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <itemstyle horizontalalign="Center" width="300px"></itemstyle>
+                                            <itemstyle horizontalalign="Left" width="300px"></itemstyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <itemstyle horizontalalign="Center" width="80px"></itemstyle>
