@@ -49,10 +49,14 @@
                 <asp:Label ID="Label2" runat="server" Text="客戶"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" Style="height: 20px;"></asp:TextBox>
+                <telerik:RadAutoCompleteBox RenderMode="Lightweight" runat="server" ID="RadAutoCompleteBox1" Width="400" DropDownHeight="150"
+                    EmptyMessage="請輸入名稱">
+                    <WebServiceSettings Method="GetCompanyNames" Path="TBBU_TBSALESEVENTSDialogADD.aspx" />
+                </telerik:RadAutoCompleteBox>
+                <%--<asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label3" runat="server" Text="專案"></asp:Label>
             </td>
@@ -118,4 +122,5 @@
 
 
 </asp:Content>
+
 

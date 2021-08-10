@@ -9,9 +9,10 @@ using System.Linq;
 using System.ServiceModel.Activation;
 using System.Text;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using Telerik.Web.UI;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.Page.BasePage
 {
@@ -32,6 +33,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
             BindDropDownList1();
             BindDropDownList2();
             BindDropDownList3();
+
+
+            RadDatePicker1.SelectedDate = DateTime.Now;
+            RadDatePicker2.SelectedDate = DateTime.Now;
 
             ////接收主頁面傳遞之參數
             //lblParam.Text = Request["ID"];
@@ -58,6 +63,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
+        
         ADD_HJ_BM_DB_tb_NOTE();
 
         Dialog.Close(this);
@@ -71,6 +77,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
+        
         ADD_HJ_BM_DB_tb_NOTE();
 
 
@@ -173,17 +180,29 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
         string SALES = DropDownList1.Text;
         string KINDS = DropDownList2.Text;
-        string CLIENTS = TextBox1.Text;
+        //string CLIENTS = TextBox1.Text;
+        string CLIENTSNAME = RadAutoCompleteBox1.Text.Replace(";", "");
+        string CLIENTS = CLIENTSNAME;
         string PROJECTS = TextBox2.Text;
         string EVENTS = TextBox3.Text;
-        string SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
-        string EDAYS = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
+        string SDAYS = null;
+        if (!string.IsNullOrEmpty(RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd")))
+        {
+            SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
+        }
+        string EDAYS = null;
+        if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+        {
+            EDAYS = RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd");
+        }
+   
         string COMMENTS = TextBox6.Text;
         string ISCLOSE = "N";
         //string ISCLOSE = TextBox7.Text;
 
 
-        if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(PROJECTS) && !string.IsNullOrEmpty(EVENTS))
+
+        if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(COMMENTS))
         {
 
             ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
@@ -242,15 +261,35 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
     public void ADD_HJ_BM_DB_tb_NOTE()
     {
+        string NOTE_CONTENT = null;
+
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            NOTE_CONTENT = NOTE_CONTENT+ TextBox2.Text + "<br>";
+        }
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            NOTE_CONTENT = NOTE_CONTENT+ TextBox3.Text + "<br>";
+        }
+        if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+        {
+            NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+        }
+        if (!string.IsNullOrEmpty(TextBox6.Text))
+        {
+            NOTE_CONTENT = NOTE_CONTENT + TextBox6.Text + "";
+        }
+
         string NOTE_ID=null;
-        string NOTE_CONTENT = TextBox2 .Text+ "<br>" + TextBox3.Text + "<br>" + "結案日 " + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>" + TextBox6.Text;
+        //string NOTE_CONTENT = TextBox2 .Text+ "<br>" + TextBox3.Text + "<br>" + "結案日 " + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>" + TextBox6.Text;
         string NOTE_KIND = "1";
         string FILE_NAME = null;
         string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
         string NOTE_TIME = DateTime.Now.ToString("HH:mm");
         string UPDATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:00");
         string CONTACT_ID = "0";
-        string COMPANY_ID = SEARCHCOMPANY_ID(TextBox1.Text.Trim());
+        string CLIENTSNAME = RadAutoCompleteBox1.Text.Replace(";", "");
+        string COMPANY_ID = SEARCHCOMPANY_ID(CLIENTSNAME);
         string OPPORTUNITY_ID = "0";
         string SALES_STAGE = null;
         string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -390,6 +429,82 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         if (dt.Rows.Count > 0)
         {
             return dt.Rows[0]["USER_ID"].ToString();
+
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+   
+
+    [WebMethod]
+    public static AutoCompleteBoxData GetCompanyNames(object context)
+    {
+        List<AutoCompleteBoxItemData> result = new List<AutoCompleteBoxItemData>();
+               
+        DataTable data = SEARCHCOMPANYNAME();
+
+        //string CLIENTS = RadAutoCompleteBox1.Text;
+
+        foreach (DataRow row in data.Rows)
+        {
+            AutoCompleteBoxItemData childNode = new AutoCompleteBoxItemData();
+            childNode.Text = row["COMPANY_NAME"].ToString();
+            childNode.Value = row["COMPANY_NAME"].ToString();
+            result.Add(childNode);
+        }
+
+        AutoCompleteBoxData res = new AutoCompleteBoxData();
+        res.Items = result.ToArray();
+
+        return res;
+
+        //string searchString = ((Dictionary<string, object>)context)["Text"].ToString();
+        //DataTable data = GetChildNodes(searchString);
+        //List<AutoCompleteBoxItemData> result = new List<AutoCompleteBoxItemData>();
+
+        //foreach (DataRow row in data.Rows)
+        //{
+        //    AutoCompleteBoxItemData childNode = new AutoCompleteBoxItemData();
+        //    childNode.Text = row["ACCOUNT"].ToString();
+        //    childNode.Value = row["ACCOUNT"].ToString();
+        //    result.Add(childNode);
+        //}
+
+        //AutoCompleteBoxData res = new AutoCompleteBoxData();
+        //res.Items = result.ToArray();
+
+        //return res;
+    }
+
+
+    private static DataTable SEARCHCOMPANYNAME()
+    {
+        DataTable dt = new DataTable();
+
+      
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT  
+                            [COMPANY_ID]
+                            ,[COMPANY_NAME]
+                            FROM [HJ_BM_DB].[dbo].[tb_COMPANY]
+                            ORDER BY [COMPANY_NAME]
+                                ");
+
+        //m_db.AddParameter("@COMPANY_NAME", COMPANYNAME);
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
 
         }
         else
