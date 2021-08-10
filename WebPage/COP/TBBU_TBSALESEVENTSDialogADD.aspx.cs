@@ -442,9 +442,11 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     [WebMethod]
     public static AutoCompleteBoxData GetCompanyNames(object context)
     {
+        string searchString = ((Dictionary<string, object>)context)["Text"].ToString();
+
         List<AutoCompleteBoxItemData> result = new List<AutoCompleteBoxItemData>();
                
-        DataTable data = SEARCHCOMPANYNAME();
+        DataTable data = SEARCHCOMPANYNAME(searchString);
 
         //string CLIENTS = RadAutoCompleteBox1.Text;
 
@@ -480,7 +482,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     }
 
 
-    private static DataTable SEARCHCOMPANYNAME()
+    private static DataTable SEARCHCOMPANYNAME(string searchString)
     {
         DataTable dt = new DataTable();
 
@@ -495,10 +497,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
                             [COMPANY_ID]
                             ,[COMPANY_NAME]
                             FROM [HJ_BM_DB].[dbo].[tb_COMPANY]
+                            WHERE [COMPANY_NAME] LIKE @COMPANY_NAME+'%'
                             ORDER BY [COMPANY_NAME]
-                                ");
+                                
+                            ");
 
-        //m_db.AddParameter("@COMPANY_NAME", COMPANYNAME);
+        m_db.AddParameter("@COMPANY_NAME", searchString);
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
