@@ -73,6 +73,14 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
     }
 
 
+    protected void btn2_Click(object sender, EventArgs e)
+    {
+        if(!string.IsNullOrEmpty(TextBox7.Text))
+        {
+            ADDTBPROJECTS(TextBox7.Text);
+        }
+    }
+
     #endregion
 
     #region FUNCTION
@@ -232,7 +240,70 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSDialogEDITDEL : Ede.Uof.Utility.
         Dialog.Close(this);
     }
 
-    
+    public void ADDTBPROJECTS(string NEWWEEKS)
+    {
+        string YEARS = TextBox1.Text;
+        string WEEKS = NEWWEEKS;
+        string STORES = DropDownList1.SelectedValue.Trim();
+        string NAMES = TextBox3.Text;
+        string ITEMS = TextBox4.Text;
+        string CONTENTS = TextBox5.Text;
+        string DAYS = TextBox6.Text;
+
+
+        if (!string.IsNullOrEmpty(YEARS) && !string.IsNullOrEmpty(WEEKS))
+        {
+
+            ADDTBPROJECTS(YEARS, WEEKS, STORES, NAMES, ITEMS, CONTENTS, DAYS);
+        }
+
+        Dialog.SetReturnValue2("NeedPostBack");
+        Dialog.Close(this);
+    }
+    public void ADDTBPROJECTS(string YEARS, string WEEKS, string STORES, string NAMES, string ITEMS, string CONTENTS, string DAYS)
+    {
+        Label8.Text = "";
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        try
+        {
+            string cmdTxt = @"  
+                            INSERT INTO  [TKBUSINESS].[dbo].[TBPROJECTS]
+                            ([YEARS],[WEEKS],[STORES],[NAMES],[ITEMS],[CONTENTS],[DAYS])
+                            VALUES
+                            (@YEARS,@WEEKS,@STORES,@NAMES,@ITEMS,@CONTENTS,@DAYS)
+
+                            ";
+
+
+
+            m_db.AddParameter("@YEARS", YEARS);
+            m_db.AddParameter("@WEEKS", WEEKS);
+            m_db.AddParameter("@STORES", STORES);
+            m_db.AddParameter("@NAMES", NAMES);
+            m_db.AddParameter("@ITEMS", ITEMS);
+            m_db.AddParameter("@CONTENTS", CONTENTS);
+            m_db.AddParameter("@DAYS", DAYS);
+
+
+            m_db.ExecuteNonQuery(cmdTxt);
+
+            Label8.Text = "成功";
+        }
+        catch
+        {
+            Label8.Text = "新增失敗";
+        }
+        finally
+        {
+
+        }
+
+
+
+    }
     #endregion
 
 

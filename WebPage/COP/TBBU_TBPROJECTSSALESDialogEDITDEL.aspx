@@ -96,7 +96,27 @@
 
 
     </table>
-
+    <table>
+        <tr>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label11" runat="server" Text="複製到週次" ForeColor="red"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox8" runat="server" Text="" MaxLength="2" Width="200%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label12" runat="server" Text="是否複製"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:Button ID="Button2" runat="server" Text="複製" ForeColor="red"
+                    OnClick="btn2_Click" meta:resourcekey="btn1Resource1" />
+            </td>
+        </tr>
+    </table>
     <table>
         <tr>
             <td class="PopTableLeftTD">

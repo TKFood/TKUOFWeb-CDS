@@ -294,7 +294,7 @@ public partial class CDS_WebPage_TBBU_TBPROJECTSSALES : Ede.Uof.Utility.Page.Bas
                             WHERE 1=1
                             AND [YEARS]=@YEARS
                             {0}
-                            ORDER BY [YEARS],[WEEKS],[STORES]
+                            ORDER BY [YEARS],CONVERT(INT,[WEEKS]),[STORES] ,[NAMES]
                               
                             ", QUERYS.ToString());
 
