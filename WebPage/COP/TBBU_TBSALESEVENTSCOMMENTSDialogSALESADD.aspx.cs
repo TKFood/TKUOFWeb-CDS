@@ -58,6 +58,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         {
             ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text);
             UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text);
+
+            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text);
         }
         
         Dialog.SetReturnValue2("NeedPostBack");
@@ -72,6 +74,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         {
             ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text);
             UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text);
+
+            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text);
         }
 
         BindGrid(lblParam.Text);
@@ -305,7 +309,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
 
         if (dt.Rows.Count > 0)
         {
-            return dt.Rows[0]["PROJECTS"].ToString() + "<br>" + dt.Rows[0]["EVENTS"].ToString() + "<br>" + "結案日 " + dt.Rows[0]["EDAYS"].ToString()+ COMMENTS;
+            return dt.Rows[0]["PROJECTS"].ToString() + "<br>" + dt.Rows[0]["EVENTS"].ToString() + "<br>" + "結案日 " + dt.Rows[0]["EDAYS"].ToString() + "<br>" + COMMENTS;
 
         }
         else
@@ -314,21 +318,21 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         }
     }
 
-    public void ADD_HJ_BM_DB_tb_NOTE()
+    public void ADD_HJ_BM_DB_tb_NOTE(string ID, string COMMENTS)
     {
         string NOTE_ID = null;
-        string NOTE_CONTENT = SEARCHPROJECTSCOMMENTS(lblParam.Text, TextBox1.Text);
+        string NOTE_CONTENT = SEARCHPROJECTSCOMMENTS(ID, COMMENTS);
         string NOTE_KIND = "1";
         string FILE_NAME = null;
         string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
         string NOTE_TIME = DateTime.Now.ToString("HH:mm");
         string UPDATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:00");
         string CONTACT_ID = "0";
-        string COMPANY_ID = SEARCHCOMPANY_ID(SEARCHPROJECTSCLIENTS(lblParam.Text));
+        string COMPANY_ID = SEARCHCOMPANY_ID(SEARCHPROJECTSCLIENTS(ID));
         string OPPORTUNITY_ID = "0";
         string SALES_STAGE = null;
         string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        string CREATE_USER_ID = SEARCHCREATE_USER_ID(SEARCHPROJECTSSALES(lblParam.Text));
+        string CREATE_USER_ID = SEARCHCREATE_USER_ID(SEARCHPROJECTSSALES(ID));
 
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
