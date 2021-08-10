@@ -131,9 +131,15 @@
                                         <asp:BoundField HeaderText="結案日" DataField="EDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <itemstyle horizontalalign="Center" width="60px"></itemstyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="進度內容" DataField="COMMENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                         <asp:TemplateField HeaderText="記錄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center" >
+                                                <ItemTemplate>
+                                                    <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' style="text-align:left" HorizontalAlign="Left" Width="300px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                    <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                                </ItemTemplate>                                        
+                                             </asp:TemplateField>
+                                       <%-- <asp:BoundField HeaderText="進度內容" DataField="COMMENTS" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <itemstyle horizontalalign="Left" width="300px"></itemstyle>
-                                        </asp:BoundField>
+                                        </asp:BoundField>--%>
                                         <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <itemstyle horizontalalign="Center" width="80px"></itemstyle>
                                         </asp:BoundField>

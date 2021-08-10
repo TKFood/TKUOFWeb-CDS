@@ -156,7 +156,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             ,[EVENTS]
                             ,[SDAYS]
                             ,[EDAYS]
-                            ,[COMMENTS]
+                            ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
                             ,[ISCLOSE]
                             FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
                             WHERE 1=1
