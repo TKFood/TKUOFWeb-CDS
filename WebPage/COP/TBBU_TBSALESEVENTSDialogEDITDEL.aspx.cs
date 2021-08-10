@@ -7,10 +7,12 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel.Activation;
+using System.Text;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using Telerik.Web.UI;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utility.Page.BasePage
 {
@@ -225,7 +227,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
     {
         string ID = lblParam.Text;
         string SALES = DropDownList1.Text;
-        string KINDS = DropDownList2.Text;
+        string KINDS = DropDownList2.Text;       
         string CLIENTS = TextBox1.Text;
         string PROJECTS= TextBox2.Text;
         string EVENTS = TextBox3.Text;
@@ -308,7 +310,84 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogEDITDEL : Ede.Uof.Utili
         Dialog.Close(this);
     }
 
-    
+    [WebMethod]
+    public static AutoCompleteBoxData GetCompanyNames(object context)
+    {
+        string searchString = ((Dictionary<string, object>)context)["Text"].ToString();
+
+        List<AutoCompleteBoxItemData> result = new List<AutoCompleteBoxItemData>();
+
+        DataTable data = SEARCHCOMPANYNAME(searchString);
+
+        //string CLIENTS = RadAutoCompleteBox1.Text;
+
+        foreach (DataRow row in data.Rows)
+        {
+            AutoCompleteBoxItemData childNode = new AutoCompleteBoxItemData();
+            childNode.Text = row["COMPANY_NAME"].ToString();
+            childNode.Value = row["COMPANY_NAME"].ToString();
+            result.Add(childNode);
+        }
+
+        AutoCompleteBoxData res = new AutoCompleteBoxData();
+        res.Items = result.ToArray();
+
+        return res;
+
+        //string searchString = ((Dictionary<string, object>)context)["Text"].ToString();
+        //DataTable data = GetChildNodes(searchString);
+        //List<AutoCompleteBoxItemData> result = new List<AutoCompleteBoxItemData>();
+
+        //foreach (DataRow row in data.Rows)
+        //{
+        //    AutoCompleteBoxItemData childNode = new AutoCompleteBoxItemData();
+        //    childNode.Text = row["ACCOUNT"].ToString();
+        //    childNode.Value = row["ACCOUNT"].ToString();
+        //    result.Add(childNode);
+        //}
+
+        //AutoCompleteBoxData res = new AutoCompleteBoxData();
+        //res.Items = result.ToArray();
+
+        //return res;
+    }
+
+
+    private static DataTable SEARCHCOMPANYNAME(string searchString)
+    {
+        DataTable dt = new DataTable();
+
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT  
+                            [COMPANY_ID]
+                            ,[COMPANY_NAME]
+                            FROM [HJ_BM_DB].[dbo].[tb_COMPANY]
+                            WHERE [COMPANY_NAME] LIKE @COMPANY_NAME+'%'
+                            ORDER BY [COMPANY_NAME]
+                                
+                            ");
+
+        m_db.AddParameter("@COMPANY_NAME", searchString);
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     #endregion
 
 

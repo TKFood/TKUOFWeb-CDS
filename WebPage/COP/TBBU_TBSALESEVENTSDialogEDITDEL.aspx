@@ -48,7 +48,7 @@
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label10" runat="server" Text="客戶"></asp:Label>
             </td>
-            <td class="PopTableRightTD">
+            <td class="PopTableRightTD">                
                 <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%"  Style="height: 20px;"></asp:TextBox>
             </td>
         </tr>
