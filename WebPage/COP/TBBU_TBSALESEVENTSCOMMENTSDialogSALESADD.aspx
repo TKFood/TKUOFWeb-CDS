@@ -51,8 +51,8 @@
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="進度內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
-                                <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="300px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                <itemstyle horizontalalign="Left" width="300px"></itemstyle>
+                                <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                <itemstyle horizontalalign="Left" width="600px"></itemstyle>
                             </ItemTemplate>
                         </asp:TemplateField>                 
                     </Columns>

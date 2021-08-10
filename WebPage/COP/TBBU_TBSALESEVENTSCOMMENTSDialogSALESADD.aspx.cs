@@ -280,7 +280,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
     public string SEARCHPROJECTSCOMMENTS(string ID, string COMMENTS)
     {
         DataTable dt = new DataTable();
-
+        string NOTE_CONTENT = null;
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -308,9 +308,26 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
         if (dt.Rows.Count > 0)
-        {
-            return dt.Rows[0]["PROJECTS"].ToString() + "<br>" + dt.Rows[0]["EVENTS"].ToString() + "<br>" + "結案日 " + dt.Rows[0]["EDAYS"].ToString() + "<br>" + COMMENTS;
+        {         
 
+            if (!string.IsNullOrEmpty(dt.Rows[0]["PROJECTS"].ToString()))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + dt.Rows[0]["PROJECTS"].ToString() + "<br>";
+            }
+            if (!string.IsNullOrEmpty(dt.Rows[0]["EVENTS"].ToString()))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + dt.Rows[0]["EVENTS"].ToString() + "<br>";
+            }
+            if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + "結案日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
+            }
+            if (!string.IsNullOrEmpty(COMMENTS))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + COMMENTS + "";
+            }
+
+            return NOTE_CONTENT;
         }
         else
         {
@@ -333,6 +350,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         string SALES_STAGE = null;
         string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string CREATE_USER_ID = SEARCHCREATE_USER_ID(SEARCHPROJECTSSALES(ID));
+
+
 
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
