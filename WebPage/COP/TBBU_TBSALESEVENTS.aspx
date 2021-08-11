@@ -62,6 +62,7 @@
 
                         </td>
                     </tr>
+
                     <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label4" runat="server" Text="業務員" meta:resourcekey="Label4Resource1"></asp:Label>
@@ -70,6 +71,15 @@
                             <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
                         </td>
 
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label5" runat="server" Text="類別" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+
+                        </td>
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
@@ -87,6 +97,15 @@
                                 ServicePath="WebService/WebService.asmx"
                                 CompletionSetCount="15" />--%>
 
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label6" runat="server" Text="專案" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                         </td>
 
                     </tr>

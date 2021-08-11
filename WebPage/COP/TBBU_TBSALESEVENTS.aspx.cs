@@ -26,6 +26,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         {
             BindDropDownList1();
             BindDropDownList2();
+            BindDropDownList3();
 
             BindGrid();           
         }
@@ -101,6 +102,36 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
 
     }
+
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("KINDS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[KINDS] FROM [TKBUSINESS].[dbo].[TBSALESKINDS] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "KINDS";
+            DropDownList3.DataValueField = "KINDS";
+            DropDownList3.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -135,10 +166,28 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
             }
            
         }
+        //是否結案
+        if (!string.IsNullOrEmpty(DropDownList3.Text))
+        {
+            if (DropDownList3.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [KINDS] LIKE '%{0}%'", DropDownList3.Text);
+            }
+
+        }
         //客戶
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
             QUERYS.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%'", TextBox1.Text);
+        }
+        //專案
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND [PROJECTS] LIKE '%{0}%'", TextBox2.Text);
         }
 
 
