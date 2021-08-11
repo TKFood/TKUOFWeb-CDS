@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Ede.Uof.EIP.SystemInfo;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
@@ -20,12 +21,19 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Page.BasePage
 {
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        string ACCOUNT = null;
+        string NAME = null;
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+        //NAME = "洪櫻芬";
+
         if (!IsPostBack)
         {
             BindDropDownList1();
-            BindDropDownList2();
+            BindDropDownList2(NAME);
             BindDropDownList3();
 
             BindGrid();           
@@ -73,7 +81,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
 
     }
 
-    private void BindDropDownList2()
+    private void BindDropDownList2(string NAME)
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("NAME", typeof(String));
@@ -82,7 +90,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME] ORDER BY [ID]";
+        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME] WHERE [NAME]=@NAME ORDER BY [ID]";
+
+        m_db.AddParameter("@NAME", NAME);
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
@@ -165,6 +175,11 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
                 QUERYS.AppendFormat(@" AND [SALES] LIKE '%{0}%'", DropDownList2.Text);
             }
            
+        }
+        else
+        {
+            //如果沒有指定的業務員，就不要查詢結果
+            QUERYS.AppendFormat(@" AND 1=0");
         }
         //是否結案
         if (!string.IsNullOrEmpty(DropDownList3.Text))

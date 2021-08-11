@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Ede.Uof.EIP.SystemInfo;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
@@ -22,6 +23,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        string ACCOUNT = null;
+        string Name = null;
+        ACCOUNT = Current.Account;
+        Name = Current.Name;
+
+
         if (!IsPostBack)
         {
             BindDropDownList1();
