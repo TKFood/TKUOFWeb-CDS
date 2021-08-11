@@ -64,7 +64,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
         ADD();
         
-        ADD_HJ_BM_DB_tb_NOTE();
+        ADD_HJ_BM_DB_tb_NOTE(DropDownList2.Text);
 
         Dialog.Close(this);
 
@@ -78,7 +78,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
         ADD();
         
-        ADD_HJ_BM_DB_tb_NOTE();
+        ADD_HJ_BM_DB_tb_NOTE(DropDownList2.Text);
 
 
     }
@@ -259,7 +259,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
     }
 
-    public void ADD_HJ_BM_DB_tb_NOTE()
+    public void ADD_HJ_BM_DB_tb_NOTE(string KIND)
     {
         string NOTE_CONTENT = null;
 
@@ -271,10 +271,22 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         {
             NOTE_CONTENT = NOTE_CONTENT+ TextBox3.Text + "<br>";
         }
-        if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+
+        if(KIND.Equals("拜訪"))
         {
-            NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+            }
         }
+        else
+        {
+            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+            }
+        }
+        
         if (!string.IsNullOrEmpty(TextBox6.Text))
         {
             NOTE_CONTENT = NOTE_CONTENT + TextBox6.Text + "";

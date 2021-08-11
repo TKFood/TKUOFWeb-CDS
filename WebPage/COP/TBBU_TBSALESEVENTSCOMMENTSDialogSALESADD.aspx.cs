@@ -306,6 +306,14 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         m_db.AddParameter("@ID", ID);
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+        
+        string KIND = null;
+        
+        if (!string.IsNullOrEmpty(dt.Rows[0]["KINDS"].ToString()))
+        {
+            KIND = dt.Rows[0]["KINDS"].ToString();
+        }
+            
 
         if (dt.Rows.Count > 0)
         {         
@@ -318,9 +326,22 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
             {
                 NOTE_CONTENT = NOTE_CONTENT + dt.Rows[0]["EVENTS"].ToString() + "<br>";
             }
-            if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
+
+            if (KIND.Equals("拜訪"))
             {
-                NOTE_CONTENT = NOTE_CONTENT + "結案日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
+
+                if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
+                {
+                    NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
+                }
+            }
+            else
+            {
+
+                if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
+                {
+                    NOTE_CONTENT = NOTE_CONTENT + "結案日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
+                }
             }
             if (!string.IsNullOrEmpty(COMMENTS))
             {
