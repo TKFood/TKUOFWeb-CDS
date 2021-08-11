@@ -1,4 +1,5 @@
-﻿using Ede.Uof.Utility.Data;
+﻿using Ede.Uof.EIP.SystemInfo;
+using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,11 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogEDITDEL : Ede.U
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+        string ACCOUNT = null;
+        string NAME = null;
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -30,7 +35,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogEDITDEL : Ede.U
 
         if (!IsPostBack)
         {
-            BindDropDownList1();
+            BindDropDownList1(NAME);
             BindDropDownList2();
             BindDropDownList3();
 
@@ -79,7 +84,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogEDITDEL : Ede.U
     #endregion
 
     #region FUNCTION
-    private void BindDropDownList1()
+    private void BindDropDownList1(string NAME)
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("NAME", typeof(String));
@@ -88,7 +93,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogEDITDEL : Ede.U
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME] ORDER BY [ID]";
+
+        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME] WHERE [NAME]=@NAME ORDER BY [ID]";
+
+        m_db.AddParameter("@NAME", NAME);
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
 

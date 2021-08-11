@@ -24,9 +24,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
     protected void Page_Load(object sender, EventArgs e)
     {
         string ACCOUNT = null;
-        string Name = null;
+        string NAME = null;
         ACCOUNT = Current.Account;
-        Name = Current.Name;
+        NAME = Current.User.Name;
 
 
         if (!IsPostBack)
