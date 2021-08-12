@@ -107,6 +107,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     #region FUNCTION
     public bool UPLOAD(ref string imgSavePath)
     {
+        string STATUS = "N";
         //獲取上傳的檔名
         string fileName = this.FileUpload.FileName;
         fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + fileName;
@@ -127,10 +128,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         string path2 = Server.MapPath("~/UPLOADTEMP/");
         //string path = Server.MapPath(@"\../HJ_BM/UPLOAD");
 
-        //Label13.Text = path;
+        
 
         //判斷上傳控制元件是否上傳檔案
-        if (FileUpload.HasFile)
+        if (FileUpload.HasFile&& STATUS.Equals("N"))
         {
             //判斷上傳檔案的副檔名是否為允許的副檔名".gif", ".png", ".jpeg", ".jpg" ,".bmp"
             String fileExtension = System.IO.Path.GetExtension(fileName).ToLower();
@@ -143,7 +144,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
                     this.FileUpload.PostedFile.SaveAs(path + fileName);
                     this.FileUpload.PostedFile.SaveAs(path2 + fileName);
                     imgSavePath = path + fileName;//原圖儲存路徑
-                       
+
+                    STATUS = "Y";
+                    Label13.Text = "已上傳";
+
                     return true;
 }
             }
