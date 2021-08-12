@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DialogMasterPage.master" AutoEventWireup="true" CodeFile="TBBU_TBSALESEVENTSDialogADD.aspx.cs" Inherits="CDS_WebPage_TBBU_TBSALESEVENTSDialogADD" %>
 
 <%@ Register Src="~/Common/HtmlEditor/UC_HtmlEditor.ascx" TagPrefix="uc1" TagName="UC_HtmlEditor" %>
+<%@ Register Src="~/Common/FileCenter/V3/UC_FileCenter.ascx" TagPrefix="uc1" TagName="UC_FileCenter" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -11,6 +12,10 @@
 
         });
 
+       
+        function onClientUploaded(id, name, folder, size, type) {
+            //alert('File_ID=' + id + '\r\nFileName=' + name + '\r\nFolder=' + folder + '\r\nSize=' + size + '\r\nType=' + type);
+        }
     </script>
     <div style="overflow-x: auto; width: 100%">
     </div>
@@ -108,11 +113,24 @@
             </td>
         </tr>
 
-
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label12" runat="server" Text="選擇圖片"></asp:Label>
+              
+            </td>
+            <td>
+                <asp:FileUpload ID="FileUpload" runat="server" />
+                  <%--<uc1:UC_FileCenter runat="server" ID="UC_FileCenter" ModuleName="CDS" SubFolder="FileCenter" OnClientUploaded="onClientUploaded" />--%>
+            </td>
+            <td>
+                <asp:Button ID="btnSubmit" runat="server" Text="上傳圖片" OnClick="btnSave_Click" />
+            </td>
+        </tr>
 
 
     </table>
     <table>
+
         <tr>
             <td>
                 <asp:Label ID="Label8" runat="server" Text=""></asp:Label>
