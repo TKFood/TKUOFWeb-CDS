@@ -600,6 +600,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
     protected void btn1_Click(object sender, EventArgs e)
     {
+        //Response.Write("<script>alert('已儲存')</script>");
         //this.Session["SDATE"] = txtDate1.Text.Trim();
         //this.Session["EDATE"] = txtDate2.Text.Trim();
     }
