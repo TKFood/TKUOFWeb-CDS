@@ -12,7 +12,7 @@
 
         });
 
-       
+
         function onClientUploaded(id, name, folder, size, type) {
             //alert('File_ID=' + id + '\r\nFileName=' + name + '\r\nFolder=' + folder + '\r\nSize=' + size + '\r\nType=' + type);
         }
@@ -116,11 +116,12 @@
         <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label12" runat="server" Text="選擇圖片"></asp:Label>
-              
+
             </td>
             <td>
                 <asp:FileUpload ID="FileUpload" runat="server" />
-                  <%--<uc1:UC_FileCenter runat="server" ID="UC_FileCenter" ModuleName="CDS" SubFolder="FileCenter" OnClientUploaded="onClientUploaded" />--%>
+                <asp:Label ID="Label13" runat="server" Text="PATH"></asp:Label>
+                <%--<uc1:UC_FileCenter runat="server" ID="UC_FileCenter" ModuleName="CDS" SubFolder="FileCenter" OnClientUploaded="onClientUploaded" />--%>
             </td>
             <td>
                 <asp:Button ID="btnSubmit" runat="server" Text="上傳圖片" OnClick="btnSave_Click" />

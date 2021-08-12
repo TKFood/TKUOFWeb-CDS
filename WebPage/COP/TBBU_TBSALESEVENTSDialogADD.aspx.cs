@@ -107,38 +107,48 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     #region FUNCTION
     public bool Upload(ref string imgSavePath)
     {
-            //獲取上傳的檔名
-            string fileName = this.FileUpload.FileName;
-            fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + fileName;
-            string route = "https://eip.tkfood.com.tw/UOFTEST/UPLOAD";//你的伺服器地址
-            //如果伺服器不存在該名資料夾 就生成一個
-            //if (!Directory.Exists(route + "/UPLOAD/"))
-            //{
-            //    Directory.CreateDirectory(route + "/UPLOAD/");
-            //}
+        //獲取上傳的檔名
+        string fileName = this.FileUpload.FileName;
+        fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + fileName;
+        //你的伺服器地址
+        string route = "https://eip.tkfood.com.tw/BM/UPLOAD";
 
-            //獲取物理路徑（圖片儲存的位置）
-            String path = Server.MapPath("~/UPLOAD/");
-            //判斷上傳控制元件是否上傳檔案
-            if (FileUpload.HasFile)
+        //如果伺服器不存在該名資料夾 就生成一個
+        //if (!Directory.Exists(route + "/UPLOAD/"))
+        //{
+        //    Directory.CreateDirectory(route + "/UPLOAD/");
+        //}
+
+        //獲取物理路徑（圖片儲存的位置）
+        //上傳圖片時，雖然是傳到「C:\VSPROJECT\TKUOF\UOF18\UPLOAD」
+        //但是在主機上，UPLOAD的資料夾是指到[ https://eip.tkfood.com.tw/BM/upload/note/] 中
+        string path = Server.MapPath("~/UPLOAD/");
+        string path2 = Server.MapPath("~/UPLOADTEMP/");
+        //string path = Server.MapPath(@"\../HJ_BM/UPLOAD");
+
+        Label13.Text = path;
+
+        //判斷上傳控制元件是否上傳檔案
+        if (FileUpload.HasFile)
+        {
+            //判斷上傳檔案的副檔名是否為允許的副檔名".gif", ".png", ".jpeg", ".jpg" ,".bmp"
+            String fileExtension = System.IO.Path.GetExtension(fileName).ToLower();
+            String[] Extensions = { ".gif", ".png", ".jpeg", ".jpg", ".bmp" };
+            for (int i = 0; i<Extensions.Length; i++)
             {
-                //判斷上傳檔案的副檔名是否為允許的副檔名".gif", ".png", ".jpeg", ".jpg" ,".bmp"
-                String fileExtension = System.IO.Path.GetExtension(fileName).ToLower();
-                String[] Extensions = { ".gif", ".png", ".jpeg", ".jpg", ".bmp" };
-                for (int i = 0; i<Extensions.Length; i++)
+                if (fileExtension == Extensions[i])
                 {
-                    if (fileExtension == Extensions[i])
-                    {
-                        //進行上傳圖片操作
-                        this.FileUpload.PostedFile.SaveAs(path + fileName);
-                        imgSavePath = path + fileName;//原圖儲存路徑
+                    //進行上傳圖片操作
+                    this.FileUpload.PostedFile.SaveAs(path + fileName);
+                    this.FileUpload.PostedFile.SaveAs(path2 + fileName);
+                    imgSavePath = path + fileName;//原圖儲存路徑
                        
-                        return true;
+                    return true;
 }
-                }
             }
-            return false;
         }
+        return false;
+     }
     private void BindDropDownList1()
     {
         DataTable dt = new DataTable();
