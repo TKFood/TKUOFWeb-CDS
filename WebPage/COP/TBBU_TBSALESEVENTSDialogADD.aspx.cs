@@ -92,7 +92,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     {
         //將上傳的檔案確認寫入到SERVER
         var imgSavePath = "";//儲存圖片路徑       
-        var result = Upload(ref imgSavePath);
+        var result = UPLOAD(ref imgSavePath);
         if (result)
         {
             //圖片上傳完成  進行寫資料庫操作
@@ -105,7 +105,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     #endregion
 
     #region FUNCTION
-    public bool Upload(ref string imgSavePath)
+    public bool UPLOAD(ref string imgSavePath)
     {
         //獲取上傳的檔名
         string fileName = this.FileUpload.FileName;
@@ -123,10 +123,11 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         //上傳圖片時，雖然是傳到「C:\VSPROJECT\TKUOF\UOF18\UPLOAD」
         //但是在主機上，UPLOAD的資料夾是指到[ https://eip.tkfood.com.tw/BM/upload/note/] 中
         string path = Server.MapPath("~/UPLOAD/");
+        //UPLOADTEMP是存在TKUOF備查的
         string path2 = Server.MapPath("~/UPLOADTEMP/");
         //string path = Server.MapPath(@"\../HJ_BM/UPLOAD");
 
-        Label13.Text = path;
+        //Label13.Text = path;
 
         //判斷上傳控制元件是否上傳檔案
         if (FileUpload.HasFile)
