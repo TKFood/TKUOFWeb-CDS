@@ -100,7 +100,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME]  WHERE NAME NOT IN ('全部') ORDER BY [ID]";
+        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME]  WHERE NAME NOT IN ('全部') AND [NAME]=@NAME ORDER BY [ID]";
 
         m_db.AddParameter("@NAME", NAME);
 
