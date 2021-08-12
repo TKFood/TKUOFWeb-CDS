@@ -112,7 +112,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn1_Click" 
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 

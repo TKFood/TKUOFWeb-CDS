@@ -116,7 +116,7 @@
             </td>
             <td class="PopTableRightTD">
                 <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="red"
-                    OnClick="btn1_Click" meta:resourcekey="btn1Resource1" />
+                    OnClick="btn1_Click" meta:resourcekey="btn1Resource1" onclientclick="return confirm('是否刪除 '); "/>
             </td>
         </tr>
     </table>
