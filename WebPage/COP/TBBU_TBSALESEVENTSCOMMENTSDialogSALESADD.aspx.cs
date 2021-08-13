@@ -499,7 +499,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
                                 (                              
                                 @NOTE_CONTENT
                                 ,@NOTE_KIND
-                                ,@FILE_NAME]      
+                                ,@FILE_NAME      
                                 ,@NOTE_DATE
                                 ,@NOTE_TIME
                                 ,@UPDATE_DATETIME
