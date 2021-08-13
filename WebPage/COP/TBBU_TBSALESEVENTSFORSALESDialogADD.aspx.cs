@@ -88,9 +88,80 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
 
     }
 
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        //將上傳的檔案確認寫入到SERVER
+        var imgSavePath = "";//儲存圖片路徑       
+        var result = UPLOAD(ref imgSavePath);
+        if (result)
+        {
+            //圖片上傳完成  進行寫資料庫操作
+            Response.Write("<script>alert('已儲存')</script>");
+
+        }
+        else
+        {
+            Response.Write("<script>alert('已上傳過1次，或上傳失敗')</script>");
+        }
+
+    }
+
     #endregion
 
     #region FUNCTION
+    public bool UPLOAD(ref string imgSavePath)
+    {
+        string STATUS = "N";
+        //獲取上傳的檔名
+        string FILENAME = this.FileUpload.FileName;
+        FILENAME = DateTime.Now.ToString("yyyyMMddHHmmss") + FILENAME;
+        //你的伺服器地址
+        string route = "https://eip.tkfood.com.tw/BM/UPLOAD";
+
+        //如果伺服器不存在該名資料夾 就生成一個
+        //if (!Directory.Exists(route + "/UPLOAD/"))
+        //{
+        //    Directory.CreateDirectory(route + "/UPLOAD/");
+        //}
+
+        //獲取物理路徑（圖片儲存的位置）
+        //上傳圖片時，雖然是傳到「C:\VSPROJECT\TKUOF\UOF18\UPLOAD」
+        //但是在主機上，UPLOAD的資料夾是指到[ https://eip.tkfood.com.tw/BM/upload/note/] 中
+        string PATH = Server.MapPath("~/UPLOAD/");
+        //UPLOADTEMP是存在TKUOF備查的
+        string PATH2 = Server.MapPath("~/UPLOADTEMP/");
+        //string path = Server.MapPath(@"\../HJ_BM/UPLOAD");
+
+
+
+        //判斷上傳控制元件是否上傳檔案
+        if (FileUpload.HasFile && LabelISSTATUS.Text.Equals("N"))
+        {
+            //判斷上傳檔案的副檔名是否為允許的副檔名".gif", ".png", ".jpeg", ".jpg" ,".bmp"
+            String fileExtension = System.IO.Path.GetExtension(FILENAME).ToLower();
+            String[] Extensions = { ".gif", ".png", ".jpeg", ".jpg", ".bmp" };
+            for (int i = 0; i < Extensions.Length; i++)
+            {
+                if (fileExtension == Extensions[i])
+                {
+                    //進行上傳圖片操作
+                    this.FileUpload.PostedFile.SaveAs(PATH + FILENAME);
+                    this.FileUpload.PostedFile.SaveAs(PATH2 + FILENAME);
+                    imgSavePath = PATH + FILENAME;//原圖儲存路徑
+
+
+
+                    LabelNAME.Text = FILENAME;
+                    Label14.Text = "已上傳";
+                    LabelISSTATUS.Text = "Y"; ;
+
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void BindDropDownList1(string NAME)
     {
         DataTable dt = new DataTable();
@@ -193,6 +264,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         string PROJECTS = TextBox2.Text;
         string EVENTS = TextBox3.Text;
         string SDAYS = null;
+        string FILENAME = LabelNAME.Text;//UPLOAD 後才會有值
+
         if (!string.IsNullOrEmpty(RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd")))
         {
             SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
@@ -212,13 +285,13 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(COMMENTS))
         {
 
-            ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
+            ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE, FILENAME);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBSALESEVENTS(string SALES, string KINDS,string PROJECTS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
+    public void ADDTBSALESEVENTS(string SALES, string KINDS,string PROJECTS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE, string FILENAME)
     {
         Label8.Text = "";
 
@@ -229,9 +302,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         {
             string cmdTxt = @"  
                             INSERT INTO [TKBUSINESS].[dbo].[TBSALESEVENTS]
-                            ([SALES],[KINDS],[CLIENTS],[PROJECTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE])
+                            ([SALES],[KINDS],[CLIENTS],[PROJECTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE],[FILENAME])
                             VALUES
-                            (@SALES,@KINDS,@CLIENTS,@PROJECTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE)
+                            (@SALES,@KINDS,@CLIENTS,@PROJECTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE,@FILENAME)
                             ";
 
 
@@ -245,6 +318,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
             m_db.AddParameter("@EDAYS", EDAYS);
             m_db.AddParameter("@COMMENTS", COMMENTS);
             m_db.AddParameter("@ISCLOSE", ISCLOSE);
+            m_db.AddParameter("@FILENAME", FILENAME);
 
 
 
@@ -270,39 +344,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
     {
         string NOTE_CONTENT = null;
 
-        if (!string.IsNullOrEmpty(TextBox2.Text))
-        {
-            NOTE_CONTENT = NOTE_CONTENT+ TextBox2.Text + "<br>";
-        }
-        if (!string.IsNullOrEmpty(TextBox3.Text))
-        {
-            NOTE_CONTENT = NOTE_CONTENT+ TextBox3.Text + "<br>";
-        }
-
-        if(KIND.Equals("拜訪"))
-        {
-            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
-            {
-                NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
-            }
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
-            {
-                NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
-            }
-        }
         
-        if (!string.IsNullOrEmpty(TextBox6.Text))
-        {
-            NOTE_CONTENT = NOTE_CONTENT + TextBox6.Text + "";
-        }
 
         string NOTE_ID=null;
         //string NOTE_CONTENT = TextBox2 .Text+ "<br>" + TextBox3.Text + "<br>" + "結案日 " + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>" + TextBox6.Text;
         string NOTE_KIND = "1";
-        string FILE_NAME = null;
+        string FILE_NAME = LabelNAME.Text;//UPLOAD 後才會有值
         string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
         string NOTE_TIME = DateTime.Now.ToString("HH:mm");
         string UPDATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:00");
@@ -317,7 +364,36 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        if(!String.IsNullOrEmpty(COMPANY_ID) && !String.IsNullOrEmpty(CREATE_USER_ID))
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            NOTE_CONTENT = NOTE_CONTENT + TextBox2.Text + "<br>";
+        }
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            NOTE_CONTENT = NOTE_CONTENT + TextBox3.Text + "<br>";
+        }
+
+        if (KIND.Equals("拜訪"))
+        {
+            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+            }
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+            {
+                NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+            }
+        }
+
+        if (!string.IsNullOrEmpty(TextBox6.Text))
+        {
+            NOTE_CONTENT = NOTE_CONTENT + TextBox6.Text + "";
+        }
+
+        if (!String.IsNullOrEmpty(COMPANY_ID) && !String.IsNullOrEmpty(CREATE_USER_ID))
         {
             try
             {
@@ -326,7 +402,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
                                 (                            
                                 [NOTE_CONTENT]
                                 ,[NOTE_KIND]
-                               
+                                ,[FILE_NAME]
                                 ,[NOTE_DATE]
                                 ,[NOTE_TIME]
                                 ,[UPDATE_DATETIME]
@@ -341,7 +417,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
                                 (                              
                                 @NOTE_CONTENT
                                 ,@NOTE_KIND
-                               
+                                ,@FILE_NAME
                                 ,@NOTE_DATE
                                 ,@NOTE_TIME
                                 ,@UPDATE_DATETIME
@@ -360,7 +436,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         
                 m_db.AddParameter("@NOTE_CONTENT", NOTE_CONTENT);
                 m_db.AddParameter("@NOTE_KIND", NOTE_KIND);
-                //m_db.AddParameter("@FILE_NAME", FILE_NAME);
+                m_db.AddParameter("@FILE_NAME", FILE_NAME);
                 m_db.AddParameter("@NOTE_DATE", NOTE_DATE);
                 m_db.AddParameter("@NOTE_TIME", NOTE_TIME);
                 m_db.AddParameter("@UPDATE_DATETIME", UPDATE_DATETIME);

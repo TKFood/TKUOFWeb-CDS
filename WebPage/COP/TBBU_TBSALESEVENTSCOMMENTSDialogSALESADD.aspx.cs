@@ -38,7 +38,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {                
-                //BindGrid(lblParam.Text);
+                BindGrid(lblParam.Text);
                 //SEARCHTBSALESDEVMEMO(lblParam.Text);
             }
 
