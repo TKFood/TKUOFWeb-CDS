@@ -38,6 +38,35 @@
             }
         }
 
+        function ImageClick(img) {
+            //alert(img);
+            var clientId = '#' + img.id
+
+            var widthString = $(clientId).css("width");
+            var heightString = $(clientId).css("height");
+            var widthUnit = widthString.replace("px", "");
+            var heightUnit = heightString.replace("px", "");
+            var width = parseInt(widthUnit, 10);
+            var height = parseInt(heightUnit, 10);
+
+
+
+            if ($(clientId).hasClass("BigImage")) {
+                width = (width / 10);
+                height = (height / 10);
+                $(clientId).css("width", width + "px");
+                $(clientId).css("height", height + "px");
+                $(clientId).removeClass("BigImage");
+            }
+            else {
+                width = (width * 10);
+                height = (height * 10);
+                $(clientId).css("width", width + "px");
+                $(clientId).css("height", height + "px");
+                $(clientId).addClass("BigImage");
+            }
+
+        }
     </script>
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
@@ -112,7 +141,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn1_Click" 
+                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn1_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -162,6 +191,11 @@
                                         <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:Image ID="Image1" runat="server" HorizontalAlign="Center" Length="100px" Width="100px" onclick="ImageClick(this)" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />

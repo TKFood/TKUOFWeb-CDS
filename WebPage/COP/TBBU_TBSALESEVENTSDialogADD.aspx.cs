@@ -344,16 +344,37 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     {
         string NOTE_CONTENT = null;
 
+
+        string NOTE_ID=null;
+        //string NOTE_CONTENT = TextBox2 .Text+ "<br>" + TextBox3.Text + "<br>" + "結案日 " + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>" + TextBox6.Text;
+        string NOTE_KIND = "1";
+        string FILE_NAME = LabelNAME.Text;//UPLOAD 後才會有值
+        string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
+        string NOTE_TIME = DateTime.Now.ToString("HH:mm");
+        string UPDATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:00");
+        string CONTACT_ID = "0";
+        string CLIENTSNAME = RadAutoCompleteBox1.Text.Replace(";", "");
+        string COMPANY_ID = SEARCHCOMPANY_ID(CLIENTSNAME);
+        string OPPORTUNITY_ID = "0";
+        string SALES_STAGE = null;
+        string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        string CREATE_USER_ID = SEARCHCREATE_USER_ID(DropDownList1.Text);
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+
         if (!string.IsNullOrEmpty(TextBox2.Text))
         {
-            NOTE_CONTENT = NOTE_CONTENT+ TextBox2.Text + "<br>";
+            NOTE_CONTENT = NOTE_CONTENT + TextBox2.Text + "<br>";
         }
         if (!string.IsNullOrEmpty(TextBox3.Text))
         {
-            NOTE_CONTENT = NOTE_CONTENT+ TextBox3.Text + "<br>";
+            NOTE_CONTENT = NOTE_CONTENT + TextBox3.Text + "<br>";
         }
 
-        if(KIND.Equals("拜訪"))
+        if (KIND.Equals("拜訪"))
         {
             if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
             {
@@ -367,31 +388,13 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
                 NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
             }
         }
-        
+
         if (!string.IsNullOrEmpty(TextBox6.Text))
         {
             NOTE_CONTENT = NOTE_CONTENT + TextBox6.Text + "";
         }
 
-        string NOTE_ID=null;
-        //string NOTE_CONTENT = TextBox2 .Text+ "<br>" + TextBox3.Text + "<br>" + "結案日 " + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>" + TextBox6.Text;
-        string NOTE_KIND = "1";
-        string FILE_NAME = null;
-        string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
-        string NOTE_TIME = DateTime.Now.ToString("HH:mm");
-        string UPDATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:00");
-        string CONTACT_ID = "0";
-        string CLIENTSNAME = RadAutoCompleteBox1.Text.Replace(";", "");
-        string COMPANY_ID = SEARCHCOMPANY_ID(CLIENTSNAME);
-        string OPPORTUNITY_ID = "0";
-        string SALES_STAGE = null;
-        string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        string CREATE_USER_ID = SEARCHCREATE_USER_ID(DropDownList1.Text);
-
-        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        if(!String.IsNullOrEmpty(COMPANY_ID) && !String.IsNullOrEmpty(CREATE_USER_ID))
+        if (!String.IsNullOrEmpty(COMPANY_ID) && !String.IsNullOrEmpty(CREATE_USER_ID))
         {
             try
             {
@@ -400,7 +403,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
                                 (                            
                                 [NOTE_CONTENT]
                                 ,[NOTE_KIND]
-                               
+                                ,[FILE_NAME]
                                 ,[NOTE_DATE]
                                 ,[NOTE_TIME]
                                 ,[UPDATE_DATETIME]
@@ -415,7 +418,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
                                 (                              
                                 @NOTE_CONTENT
                                 ,@NOTE_KIND
-                               
+                                ,@FILE_NAME
                                 ,@NOTE_DATE
                                 ,@NOTE_TIME
                                 ,@UPDATE_DATETIME
@@ -434,7 +437,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         
                 m_db.AddParameter("@NOTE_CONTENT", NOTE_CONTENT);
                 m_db.AddParameter("@NOTE_KIND", NOTE_KIND);
-                //m_db.AddParameter("@FILE_NAME", FILE_NAME);
+                m_db.AddParameter("@FILE_NAME", FILE_NAME);
                 m_db.AddParameter("@NOTE_DATE", NOTE_DATE);
                 m_db.AddParameter("@NOTE_TIME", NOTE_TIME);
                 m_db.AddParameter("@UPDATE_DATETIME", UPDATE_DATETIME);

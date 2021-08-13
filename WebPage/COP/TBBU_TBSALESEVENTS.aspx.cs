@@ -18,6 +18,7 @@ using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
+using Image = System.Web.UI.WebControls.Image;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BasePage
 {
@@ -214,6 +215,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             ,[EDAYS]
                             ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
                             ,[ISCLOSE]
+                            ,[FILENAME]
                             FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
                             WHERE 1=1
                             {0}
@@ -242,6 +244,29 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        string PATH = "https://eip.tkfood.com.tw/BM/upload/note/";
+        Image img = (Image)e.Row.FindControl("Image1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Image img1 = (Image)e.Row.FindControl("Image1");
+
+            if (!string.IsNullOrEmpty(row["FILENAME"].ToString()))
+            {
+                img.ImageUrl = PATH + row["FILENAME"].ToString();
+
+                //獲取當前行的圖片路徑
+                string ImgUrl = img.ImageUrl;
+                ////給帶圖片的單元格添加點擊事件
+                //e.Row.Cells[10].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
+                //    + ".checked=true;CellClick('" + ImgUrl + "')");
+
+                //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
+            }
+
+
+        }
+
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             //Get the button that raised the event
