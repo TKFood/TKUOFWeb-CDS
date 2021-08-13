@@ -27,7 +27,7 @@
                 <asp:Label ID="Label3" runat="server" Text="待辦事件"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox2" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="10"></asp:TextBox>
+                <asp:TextBox ID="TextBox2" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="10" ReadOnly="true"></asp:TextBox>
             </td>
         </tr>
         <tr>

@@ -34,7 +34,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         {
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
-            //SEARCHTBSALESEVENTS(lblParam.Text);
+            SEARCHTBSALESEVENTS(lblParam.Text);
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {                
