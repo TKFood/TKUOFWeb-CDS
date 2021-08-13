@@ -50,16 +50,33 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
 
 
     #region BUTTON
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        //將上傳的檔案確認寫入到SERVER
+        var imgSavePath = "";//儲存圖片路徑       
+        var result = UPLOAD(ref imgSavePath);
+        if (result)
+        {
+            //圖片上傳完成  進行寫資料庫操作
+            Response.Write("<script>alert('已儲存')</script>");
+
+        }
+        else
+        {
+            Response.Write("<script>alert('已上傳過1次，或上傳失敗')</script>");
+        }
+
+    }
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
         if(!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) )
         {
-            ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text);
-            UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text);
+            ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
+            UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
 
-            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text);
+            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text, LabelNAME.Text);
         }
         
         Dialog.SetReturnValue2("NeedPostBack");
@@ -72,10 +89,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
     {
         if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text))
         {
-            ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text);
-            UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text);
+            ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
+            UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
 
-            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text);
+            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text, LabelNAME.Text);
         }
 
         BindGrid(lblParam.Text);
@@ -88,9 +105,85 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
 
 
     #region FUNCTION
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        string PATH = "https://eip.tkfood.com.tw/BM/upload/note/";
+        Image img = (Image)e.Row.FindControl("Image1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Image img1 = (Image)e.Row.FindControl("Image1");
+
+            if (!string.IsNullOrEmpty(row["FILENAME"].ToString()))
+            {
+                img.ImageUrl = PATH + row["FILENAME"].ToString();
+
+                //獲取當前行的圖片路徑
+                string ImgUrl = img.ImageUrl;
+                ////給帶圖片的單元格添加點擊事件
+                //e.Row.Cells[10].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
+                //    + ".checked=true;CellClick('" + ImgUrl + "')");
+
+                //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
+            }
+
+
+        }
+
+    }
+
+    public bool UPLOAD(ref string imgSavePath)
+    {
+        string STATUS = "N";
+        //獲取上傳的檔名
+        string FILENAME = this.FileUpload.FileName;
+        FILENAME = DateTime.Now.ToString("yyyyMMddHHmmss") + FILENAME;
+        //你的伺服器地址
+        string route = "https://eip.tkfood.com.tw/BM/UPLOAD";
+
+        //如果伺服器不存在該名資料夾 就生成一個
+        //if (!Directory.Exists(route + "/UPLOAD/"))
+        //{
+        //    Directory.CreateDirectory(route + "/UPLOAD/");
+        //}
+
+        //獲取物理路徑（圖片儲存的位置）
+        //上傳圖片時，雖然是傳到「C:\VSPROJECT\TKUOF\UOF18\UPLOAD」
+        //但是在主機上，UPLOAD的資料夾是指到[ https://eip.tkfood.com.tw/BM/upload/note/] 中
+        string PATH = Server.MapPath("~/UPLOAD/");
+        //UPLOADTEMP是存在TKUOF備查的
+        string PATH2 = Server.MapPath("~/UPLOADTEMP/");
+        //string path = Server.MapPath(@"\../HJ_BM/UPLOAD");
 
 
 
+        //判斷上傳控制元件是否上傳檔案
+        if (FileUpload.HasFile && LabelISSTATUS.Text.Equals("N"))
+        {
+            //判斷上傳檔案的副檔名是否為允許的副檔名".gif", ".png", ".jpeg", ".jpg" ,".bmp"
+            String fileExtension = System.IO.Path.GetExtension(FILENAME).ToLower();
+            String[] Extensions = { ".gif", ".png", ".jpeg", ".jpg", ".bmp" };
+            for (int i = 0; i < Extensions.Length; i++)
+            {
+                if (fileExtension == Extensions[i])
+                {
+                    //進行上傳圖片操作
+                    this.FileUpload.PostedFile.SaveAs(PATH + FILENAME);
+                    this.FileUpload.PostedFile.SaveAs(PATH2 + FILENAME);
+                    imgSavePath = PATH + FILENAME;//原圖儲存路徑
+
+
+
+                    LabelNAME.Text = FILENAME;
+                    Label14.Text = "已上傳";
+                    LabelISSTATUS.Text = "Y"; ;
+
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     private void BindGrid(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -102,6 +195,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
                             ,[MID]
                             ,CONVERT(NVARCHAR, [ADDDATES],120) AS ADDDATES 
                             ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
+                            ,[FILENAME]
                             FROM [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS]
                             WHERE [MID]=@ID     
                             ORDER BY [ADDDATES] DESC
@@ -153,16 +247,16 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
 
     }
 
-    public void ADDTBSALESEVENTSCOMMENTS(string MID, string COMMENTS)
+    public void ADDTBSALESEVENTSCOMMENTS(string MID, string COMMENTS,string FILENAME)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
                         INSERT INTO  [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS]
-                        ([MID],[ADDDATES],[COMMENTS])
+                        ([MID],[ADDDATES],[COMMENTS],[FILENAME])
                         VALUES
-                        (@MID,@ADDDATES,@COMMENTS)
+                        (@MID,@ADDDATES,@COMMENTS,@FILENAME)
                             ";
 
        
@@ -170,25 +264,27 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@ADDDATES", Convert.ToDateTime(DateTime.Now));
         m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@FILENAME", FILENAME);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
         
     }
 
-    public void UPDATETBSALESEVENTS(string ID, string COMMENTS)
+    public void UPDATETBSALESEVENTS(string ID, string COMMENTS,string FILENAME)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  UPDATE [TKBUSINESS].[dbo].[TBSALESEVENTS]
                             SET [COMMENTS]=@COMMENTS
+                            ,[FILENAME]=@FILENAME
                             WHERE [ID]=@ID
                             ";
 
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@COMMENTS", COMMENTS);
-
+        m_db.AddParameter("@FILENAME", FILENAME);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
@@ -356,12 +452,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         }
     }
 
-    public void ADD_HJ_BM_DB_tb_NOTE(string ID, string COMMENTS)
+    public void ADD_HJ_BM_DB_tb_NOTE(string ID, string COMMENTS,string FILENAME)
     {
         string NOTE_ID = null;
         string NOTE_CONTENT = SEARCHPROJECTSCOMMENTS(ID, COMMENTS);
         string NOTE_KIND = "1";
-        string FILE_NAME = null;
+        string FILE_NAME = FILENAME;
         string NOTE_DATE = DateTime.Now.ToString("yyyy-MM-dd");
         string NOTE_TIME = DateTime.Now.ToString("HH:mm");
         string UPDATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:00");
@@ -386,7 +482,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
                                 (                            
                                 [NOTE_CONTENT]
                                 ,[NOTE_KIND]
-                               
+                                ,[FILE_NAME]
                                 ,[NOTE_DATE]
                                 ,[NOTE_TIME]
                                 ,[UPDATE_DATETIME]
@@ -401,7 +497,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
                                 (                              
                                 @NOTE_CONTENT
                                 ,@NOTE_KIND
-                               
+                                ,@FILE_NAME]
                                 ,@NOTE_DATE
                                 ,@NOTE_TIME
                                 ,@UPDATE_DATETIME
@@ -420,7 +516,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
 
                 m_db.AddParameter("@NOTE_CONTENT", NOTE_CONTENT);
                 m_db.AddParameter("@NOTE_KIND", NOTE_KIND);
-                //m_db.AddParameter("@FILE_NAME", FILE_NAME);
+                m_db.AddParameter("@FILE_NAME", FILE_NAME);
                 m_db.AddParameter("@NOTE_DATE", NOTE_DATE);
                 m_db.AddParameter("@NOTE_TIME", NOTE_TIME);
                 m_db.AddParameter("@UPDATE_DATETIME", UPDATE_DATETIME);

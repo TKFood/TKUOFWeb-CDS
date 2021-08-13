@@ -38,11 +38,27 @@
                 <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="10"></asp:TextBox>
             </td>
         </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label12" runat="server" Text="選擇圖片"></asp:Label>
+
+            </td>
+            <td>
+                <asp:FileUpload ID="FileUpload" runat="server" />
+                <asp:Label ID="LabelNAME" runat="server" Text=""></asp:Label>
+                <asp:Label ID="Label14" runat="server" Text=""></asp:Label>
+                <asp:Label ID="LabelISSTATUS" runat="server" Text="N"></asp:Label>
+                <%--<uc1:UC_FileCenter runat="server" ID="UC_FileCenter" ModuleName="CDS" SubFolder="FileCenter" OnClientUploaded="onClientUploaded" />--%>
+            </td>
+            <td>
+                <asp:Button ID="btnSubmit" runat="server" Text="上傳圖片" OnClick="btnSave_Click" />
+            </td>
+        </tr>
     </table>
     <table class="PopTable">
         <tr>
             <td colspan="2" class="PopTableRightTD">
-                <Fast:Grid ID="Grid1" runat="server" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
+                <Fast:Grid ID="Grid1" runat="server" OnRowDataBound="Grid1_RowDataBound" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                     <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
                     <Columns>
@@ -54,7 +70,12 @@
                                 <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="600px" ItemStyle-HorizontalAlign="Left"></asp:Label>
                                 <itemstyle horizontalalign="Left" width="600px"></itemstyle>
                             </ItemTemplate>
-                        </asp:TemplateField>                 
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Image ID="Image1" runat="server" HorizontalAlign="Center" Length="100px" Width="100px"  />
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </Fast:Grid>
             </td>

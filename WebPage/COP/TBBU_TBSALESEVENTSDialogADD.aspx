@@ -120,7 +120,7 @@
             </td>
             <td>
                 <asp:FileUpload ID="FileUpload" runat="server" />
-                <asp:Label ID="LabelNAME" runat="server" Text="NAME"></asp:Label>
+                <asp:Label ID="LabelNAME" runat="server" Text=""></asp:Label>
                 <asp:Label ID="Label14" runat="server" Text=""></asp:Label>
                 <asp:Label ID="LabelISSTATUS" runat="server" Text="N"></asp:Label>
                 <%--<uc1:UC_FileCenter runat="server" ID="UC_FileCenter" ModuleName="CDS" SubFolder="FileCenter" OnClientUploaded="onClientUploaded" />--%>
