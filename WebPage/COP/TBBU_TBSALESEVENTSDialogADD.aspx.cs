@@ -18,9 +18,12 @@ using System.IO;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.Page.BasePage
 {
+    string TKBUFILENAME = null;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-     
+       
+
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -94,10 +97,14 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         var imgSavePath = "";//儲存圖片路徑       
         var result = UPLOAD(ref imgSavePath);
         if (result)
-        {
+        {           
             //圖片上傳完成  進行寫資料庫操作
             Response.Write("<script>alert('已儲存')</script>");
     
+        }
+        else
+        {
+            Response.Write("<script>alert('已上傳過1次，或上傳失敗')</script>");
         }
 
     }
@@ -109,8 +116,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
     {
         string STATUS = "N";
         //獲取上傳的檔名
-        string fileName = this.FileUpload.FileName;
-        fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + fileName;
+        string FILENAME = this.FileUpload.FileName;
+        FILENAME = DateTime.Now.ToString("yyyyMMddHHmmss") + FILENAME;
         //你的伺服器地址
         string route = "https://eip.tkfood.com.tw/BM/UPLOAD";
 
@@ -123,30 +130,33 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         //獲取物理路徑（圖片儲存的位置）
         //上傳圖片時，雖然是傳到「C:\VSPROJECT\TKUOF\UOF18\UPLOAD」
         //但是在主機上，UPLOAD的資料夾是指到[ https://eip.tkfood.com.tw/BM/upload/note/] 中
-        string path = Server.MapPath("~/UPLOAD/");
+        string PATH = Server.MapPath("~/UPLOAD/");
         //UPLOADTEMP是存在TKUOF備查的
-        string path2 = Server.MapPath("~/UPLOADTEMP/");
+        string PATH2 = Server.MapPath("~/UPLOADTEMP/");
         //string path = Server.MapPath(@"\../HJ_BM/UPLOAD");
 
         
 
         //判斷上傳控制元件是否上傳檔案
-        if (FileUpload.HasFile&& STATUS.Equals("N"))
+        if (FileUpload.HasFile&& LabelISSTATUS.Text.Equals("N"))
         {
             //判斷上傳檔案的副檔名是否為允許的副檔名".gif", ".png", ".jpeg", ".jpg" ,".bmp"
-            String fileExtension = System.IO.Path.GetExtension(fileName).ToLower();
+            String fileExtension = System.IO.Path.GetExtension(FILENAME).ToLower();
             String[] Extensions = { ".gif", ".png", ".jpeg", ".jpg", ".bmp" };
             for (int i = 0; i<Extensions.Length; i++)
             {
                 if (fileExtension == Extensions[i])
                 {
                     //進行上傳圖片操作
-                    this.FileUpload.PostedFile.SaveAs(path + fileName);
-                    this.FileUpload.PostedFile.SaveAs(path2 + fileName);
-                    imgSavePath = path + fileName;//原圖儲存路徑
+                    this.FileUpload.PostedFile.SaveAs(PATH + FILENAME);
+                    this.FileUpload.PostedFile.SaveAs(PATH2 + FILENAME);
+                    imgSavePath = PATH + FILENAME;//原圖儲存路徑
 
-                    STATUS = "Y";
-                    Label13.Text = "已上傳";
+
+
+                    LabelNAME.Text = FILENAME;
+                    Label14.Text = "已上傳";
+                    LabelISSTATUS.Text = "Y"; ;
 
                     return true;
 }
@@ -254,6 +264,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         string PROJECTS = TextBox2.Text;
         string EVENTS = TextBox3.Text;
         string SDAYS = null;
+        string FILENAME = LabelNAME.Text;//UPLOAD 後才會有值
+
         if (!string.IsNullOrEmpty(RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd")))
         {
             SDAYS = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
@@ -273,13 +285,13 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(COMMENTS))
         {
 
-            ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE);
+            ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE, FILENAME);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBSALESEVENTS(string SALES, string KINDS,string PROJECTS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE)
+    public void ADDTBSALESEVENTS(string SALES, string KINDS,string PROJECTS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE,string FILENAME)
     {
         Label8.Text = "";
 
@@ -290,9 +302,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         {
             string cmdTxt = @"  
                             INSERT INTO [TKBUSINESS].[dbo].[TBSALESEVENTS]
-                            ([SALES],[KINDS],[CLIENTS],[PROJECTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE])
+                            ([SALES],[KINDS],[CLIENTS],[PROJECTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE],[FILENAME])
                             VALUES
-                            (@SALES,@KINDS,@CLIENTS,@PROJECTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE)
+                            (@SALES,@KINDS,@CLIENTS,@PROJECTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE,@FILENAME)
                             ";
 
 
@@ -306,6 +318,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
             m_db.AddParameter("@EDAYS", EDAYS);
             m_db.AddParameter("@COMMENTS", COMMENTS);
             m_db.AddParameter("@ISCLOSE", ISCLOSE);
+            m_db.AddParameter("@FILENAME", FILENAME);
 
 
 
