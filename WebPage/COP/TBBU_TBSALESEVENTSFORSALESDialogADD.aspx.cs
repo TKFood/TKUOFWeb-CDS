@@ -292,11 +292,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         }
         else if(string.IsNullOrEmpty(COMMENTS))
         {
-            Response.Write("<script>alert('進度內容 不得為空')</script>");
+            //顯示訊息
+            //ScriptManager.RegisterStartupScript(this.Page, GetType(), Guid.NewGuid().ToString(), "alert('進度內容 不得為空')", true);     
         }
         else
         {
-            Response.Write("<script>alert('錯誤，請通知資訊')</script>");
+            //ScriptManager.RegisterStartupScript(this.Page, GetType(), Guid.NewGuid().ToString(), "alert('錯誤，請通知資訊')", true);          
         }
 
    
