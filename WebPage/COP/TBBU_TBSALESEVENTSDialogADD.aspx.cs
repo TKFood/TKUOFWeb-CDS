@@ -302,9 +302,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         {
             string cmdTxt = @"  
                             INSERT INTO [TKBUSINESS].[dbo].[TBSALESEVENTS]
-                            ([SALES],[KINDS],[CLIENTS],[PROJECTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE],[FILENAME])
+                            ([SALES],[KINDS],[CLIENTS],[PROJECTS],[EVENTS],[SDAYS],[EDAYS],[COMMENTS],[ISCLOSE],[FILENAME],[ADDDATES])
                             VALUES
-                            (@SALES,@KINDS,@CLIENTS,@PROJECTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE,@FILENAME)
+                            (@SALES,@KINDS,@CLIENTS,@PROJECTS,@EVENTS,@SDAYS,@EDAYS,@COMMENTS,@ISCLOSE,@FILENAME,@ADDDATES)
                             ";
 
 
@@ -319,6 +319,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
             m_db.AddParameter("@COMMENTS", COMMENTS);
             m_db.AddParameter("@ISCLOSE", ISCLOSE);
             m_db.AddParameter("@FILENAME", FILENAME);
+            m_db.AddParameter("@ADDDATES", Convert.ToDateTime(DateTime.Now));
 
 
 

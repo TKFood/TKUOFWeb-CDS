@@ -16,6 +16,10 @@ using System.Web.UI.WebControls;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESADD : Ede.Uof.Utility.Page.BasePage
 {
+    string ID = null;
+    string COMMENTS = null;
+    string FIRSTADDDATES = null;
+
     protected void Page_Load(object sender, EventArgs e)
     {
        
@@ -34,7 +38,15 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         {
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
+            ID= Request["ID"];
             SEARCHTBSALESEVENTS(lblParam.Text);
+
+            //檢查[TBSALESEVENTSCOMMENTS]是否是空的，如果是就自動新增一筆
+            int ROWOCUNTS = SEARCHTBSALESEVENTSCOMMENTS(ID);
+            if(ROWOCUNTS==0)
+            {
+                ADDTBSALESEVENTSCOMMENTSFIRST(lblParam.Text, TextBox1.Text, "", FIRSTADDDATES);
+            }
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {                
@@ -229,6 +241,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
                         ,[EDAYS]
                         ,[COMMENTS]
                         ,[ISCLOSE]
+                        ,[FILENAME]
+                        ,[ADDDATES]
                         FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
                         WHERE [ID]=@ID    
                         ";
@@ -243,6 +257,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         {
             TextBox2.Text = dt.Rows[0]["EVENTS"].ToString();
             TextBox1.Text = dt.Rows[0]["COMMENTS"].ToString();
+
+            COMMENTS = dt.Rows[0]["COMMENTS"].ToString();
+            FIRSTADDDATES = dt.Rows[0]["ADDDATES"].ToString();
         }
 
 
@@ -272,6 +289,29 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         
     }
 
+    public void ADDTBSALESEVENTSCOMMENTSFIRST(string MID, string COMMENTS, string FILENAME, string FIRSTADDDATES)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        INSERT INTO  [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS]
+                        ([MID],[ADDDATES],[COMMENTS],[FILENAME])
+                        VALUES
+                        (@MID,@ADDDATES,@COMMENTS,@FILENAME)
+                            ";
+
+
+
+        m_db.AddParameter("@MID", MID);
+        m_db.AddParameter("@ADDDATES", FIRSTADDDATES);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@FILENAME", FILENAME);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+
+    }
     public void UPDATETBSALESEVENTS(string ID, string COMMENTS,string FILENAME)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -613,6 +653,40 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         }
     }
 
+    public int SEARCHTBSALESEVENTSCOMMENTS(string ID)
+    {
+        DataTable dt = new DataTable();
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT  
+                            [ID]
+                            ,[MID]
+                            ,[ADDDATES]
+                            ,[COMMENTS]
+                            ,[FILENAME]
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS]
+                            WHERE [MID]=@MID
+                                ");
+
+        m_db.AddParameter("@MID", ID);
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows.Count;
+
+        }
+        else
+        {
+            return 0;
+        }
+    }
     #endregion
 
 
