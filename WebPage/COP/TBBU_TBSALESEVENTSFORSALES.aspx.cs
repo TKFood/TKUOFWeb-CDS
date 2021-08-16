@@ -42,7 +42,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
         else
         {
 
-           BindGrid();
+           
            
 
         }
@@ -620,7 +620,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
     #region BUTTON
     protected void btn_Click(object sender, EventArgs e)
     {
-
+        BindGrid();
 
         //開窗後回傳參數
         if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))

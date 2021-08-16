@@ -208,7 +208,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="結案按鈕" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >
                                             <ItemTemplate>
-                                                <asp:Button ID="Button3" runat="server" Text="結案" CommandName="UPDATE"  ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                                <asp:Button ID="Button3" runat="server" Text="結案" CommandName="Button3"  ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

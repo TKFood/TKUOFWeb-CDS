@@ -41,7 +41,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         else
         {
 
-           BindGrid();
+          
            
 
         }
@@ -244,81 +244,74 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //string PATH = "https://eip.tkfood.com.tw/BM/upload/note/";
-        //Image img = (Image)e.Row.FindControl("Image1");
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Image img1 = (Image)e.Row.FindControl("Image1");
+        string PATH = "https://eip.tkfood.com.tw/BM/upload/note/";
+        Image img = (Image)e.Row.FindControl("Image1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Image img1 = (Image)e.Row.FindControl("Image1");
 
-        //    if (!string.IsNullOrEmpty(row["FILENAME"].ToString()))
-        //    {
-        //        img.ImageUrl = PATH + row["FILENAME"].ToString();
+            if (!string.IsNullOrEmpty(row["FILENAME"].ToString()))
+            {
+                img.ImageUrl = PATH + row["FILENAME"].ToString();
 
-        //        //獲取當前行的圖片路徑
-        //        string ImgUrl = img.ImageUrl;
-        //        ////給帶圖片的單元格添加點擊事件
-        //        //e.Row.Cells[10].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
-        //        //    + ".checked=true;CellClick('" + ImgUrl + "')");
+                //獲取當前行的圖片路徑
+                string ImgUrl = img.ImageUrl;
+                ////給帶圖片的單元格添加點擊事件
+                //e.Row.Cells[10].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
+                //    + ".checked=true;CellClick('" + ImgUrl + "')");
 
-        //        //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
-        //    }
-
-
-        //}
-
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+                //img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
+            }
 
 
-        //    //Button2
-        //    //Get the button that raised the event
-        //    Button btn2 = (Button)e.Row.FindControl("Button2");
-        //    //Get the row that contains this button
-        //    GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue2 = btn2.CommandArgument;
-        //    DataRowView row2 = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName2 = (Button)e.Row.FindControl("Button2");
-        //    ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
+        }
 
-        //    //Button3
-        //    //Get the button that raised the event
-        //    Button btn3 = (Button)e.Row.FindControl("Button3");
-        //    //Get the row that contains this button
-        //    GridViewRow gvr3 = (GridViewRow)btn3.NamingContainer;
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue3 = btn3.CommandArgument;
-        //    DataRowView row3 = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName3 = (Button)e.Row.FindControl("Button3");
-        //    ExpandoObject param3 = new { ID = Cellvalue }.ToExpando();
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    //UPDATETBSALESEVENTS(Cellvalue3);
-        //    //Response.Write("<script>alert('"+ Cellvalue3 + "')</script>");
-        //}
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button1");
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button1");
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+
+            //Button2
+            //Get the button that raised the event
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            //Get the row that contains this button
+            GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue2 = btn2.CommandArgument;
+            DataRowView row2 = (DataRowView)e.Row.DataItem;
+            Button lbtnName2 = (Button)e.Row.FindControl("Button2");
+            ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
+
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if (e.CommandName == "UPDATE")
+        string A = "";
+        if (e.CommandName == "Button3")
         {
             //取得 custid 的值
             var ID = e.CommandArgument;
+
+            UPDATETBSALESEVENTS(ID.ToString());
             // ... 做後面要做的事情 .....
             //Response.Write("<script>alert('" + ID.ToString() + "')</script>");
+
+            //顯示訊息
+            //ScriptManager.RegisterStartupScript(this.Page, GetType(), Guid.NewGuid().ToString(), "alert('"+ID.ToString()+"')", true);
         }
     }
 
@@ -647,16 +640,21 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
             m_db.ExecuteNonQuery(cmdTxt);
 
-            Response.Write("<script>alert('結案完成')</script>");
+            //顯示訊息
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), Guid.NewGuid().ToString(), "alert('結案完成')", true);
         }
         catch
         {
-            Response.Write("<script>alert('結案失敗')</script>");
+            //顯示訊息
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), Guid.NewGuid().ToString(), "alert('結案失敗')", true);
+          
         }
         finally
         {
 
         }
+
+        BindGrid();
     }
 
 
@@ -679,6 +677,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
     protected void btn1_Click(object sender, EventArgs e)
     {
+        BindGrid();
         //Response.Write("<script>alert('已儲存')</script>");
         //this.Session["SDATE"] = txtDate1.Text.Trim();
         //this.Session["EDATE"] = txtDate2.Text.Trim();
