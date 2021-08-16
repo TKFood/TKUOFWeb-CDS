@@ -169,7 +169,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                                <asp:Button ID="Button2" runat="server" Text="更新" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 

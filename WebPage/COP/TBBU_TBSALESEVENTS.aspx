@@ -5,8 +5,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.7.2.min.js"><\/script>');</script>
+
     <script>    
         function btn4_Click(sender) {
             //從前端開始視窗
@@ -198,7 +197,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                                <asp:Button ID="Button2" runat="server" Text="更新" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
