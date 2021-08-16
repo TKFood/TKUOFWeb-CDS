@@ -243,6 +243,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
         if (dt.Rows.Count > 0)
         {
             TextBox2.Text = dt.Rows[0]["EVENTS"].ToString();
+            TextBox1.Text = dt.Rows[0]["COMMENTS"].ToString();
         }
 
 
