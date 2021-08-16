@@ -271,18 +271,13 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         {
             //Get the button that raised the event
             Button btn = (Button)e.Row.FindControl("Button1");
-
             //Get the row that contains this button
             GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-
             //string cellvalue = gvr.Cells[2].Text.Trim();
             string Cellvalue = btn.CommandArgument;
-
             DataRowView row = (DataRowView)e.Row.DataItem;
             Button lbtnName = (Button)e.Row.FindControl("Button1");
-
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
@@ -300,6 +295,30 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
 
+            //Button3
+            //Get the button that raised the event
+            Button btn3 = (Button)e.Row.FindControl("Button3");
+            //Get the row that contains this button
+            GridViewRow gvr3 = (GridViewRow)btn3.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue3 = btn3.CommandArgument;
+            DataRowView row3 = (DataRowView)e.Row.DataItem;
+            Button lbtnName3 = (Button)e.Row.FindControl("Button3");
+            ExpandoObject param3 = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            //UPDATETBSALESEVENTS(Cellvalue3);
+            //Response.Write("<script>alert('"+ Cellvalue3 + "')</script>");
+        }
+    }
+
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "UPDATE")
+        {
+            //取得 custid 的值
+            var ID = e.CommandArgument;
+            // ... 做後面要做的事情 .....
+            //Response.Write("<script>alert('" + ID.ToString() + "')</script>");
         }
     }
 
@@ -438,7 +457,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         if (dt.Rows.Count>0)
         {
             //檔案名稱
-            var fileName = "清單" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+            var fileName = "明細清單" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
 
             using (var excel = new ExcelPackage(new FileInfo(fileName)))
@@ -605,6 +624,41 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         }
 
     }
+
+    public void UPDATETBSALESEVENTS(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        try
+        {
+            string cmdTxt = @"  
+                            UPDATE  [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            SET [ISCLOSE]='Y'
+                            WHERE [ID]=@ID
+                            ";
+
+
+
+            m_db.AddParameter("@ID", ID);
+   
+
+
+
+            m_db.ExecuteNonQuery(cmdTxt);
+
+            Response.Write("<script>alert('結案完成')</script>");
+        }
+        catch
+        {
+            Response.Write("<script>alert('結案失敗')</script>");
+        }
+        finally
+        {
+
+        }
+    }
+
 
     #endregion
 

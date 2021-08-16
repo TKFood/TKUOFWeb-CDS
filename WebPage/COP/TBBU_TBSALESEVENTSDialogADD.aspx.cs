@@ -286,10 +286,18 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         {
 
             ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE, FILENAME);
+       
+            Dialog.SetReturnValue2("NeedPostBack");
+            Dialog.Close(this);
         }
-
-        Dialog.SetReturnValue2("NeedPostBack");
-        Dialog.Close(this);
+        else if(string.IsNullOrEmpty(COMMENTS))
+        {
+            Response.Write("<script>alert('進度內容 不得為空')</script>");
+        }
+        else
+        {
+            Response.Write("<script>alert('錯誤，請通知資訊')</script>");
+        }
     }
     public void ADDTBSALESEVENTS(string SALES, string KINDS,string PROJECTS, string EVENTS,string CLIENTS, string SDAYS, string EDAYS, string COMMENTS, string ISCLOSE,string FILENAME)
     {
