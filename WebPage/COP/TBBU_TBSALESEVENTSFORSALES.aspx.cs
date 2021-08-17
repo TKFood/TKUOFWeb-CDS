@@ -634,6 +634,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
 
     protected void btn1_Click(object sender, EventArgs e)
     {
+        BindGrid();
         //this.Session["SDATE"] = txtDate1.Text.Trim();
         //this.Session["EDATE"] = txtDate2.Text.Trim();
     }
