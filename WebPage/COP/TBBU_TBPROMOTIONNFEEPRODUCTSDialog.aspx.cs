@@ -70,7 +70,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
             string EARNS= TextBox12.Text.Trim();
 
             ADDTBPROMOTIONNFEEPRODUCTS(MID, MB001, MB002, MB003, MB004, PRICES, SPRICES, COSTS, NUMS, MONEYS, FEES, EARNS);
-           
+
+            UPDATETBPROMOTIONNFEE(MID);
         }
         
         Dialog.SetReturnValue2("NeedPostBack");
@@ -98,6 +99,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
 
             ADDTBPROMOTIONNFEEPRODUCTS(MID, MB001, MB002, MB003, MB004, PRICES, SPRICES, COSTS, NUMS, MONEYS, FEES, EARNS);
 
+            UPDATETBPROMOTIONNFEE(MID);
         }
 
         BindGrid(lblParam.Text);
@@ -192,6 +194,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
             ID = (e.CommandArgument.ToString());
             //-- your delete method here
             DELETETBPROMOTIONNFEEPRODUCTS(MID, ID);
+            UPDATETBPROMOTIONNFEE(MID);
+
             BindGrid(lblParam.Text);
         }
     }
@@ -274,6 +278,23 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
         
     }
 
+    public void UPDATETBPROMOTIONNFEE(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        UPDATE [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
+                        SET [SALESNUMS]=(SELECT SUM([NUMS]) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
+                        ,[SALESMONEYS]=(SELECT SUM(MONEYS) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
+                        ,[PROFITS]=(SELECT SUM(MONEYS-COSTS-FEES) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
+                        WHERE [ID]=@ID
+                            ";
+
+        m_db.AddParameter("@ID", ID);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
 
     #endregion
 
