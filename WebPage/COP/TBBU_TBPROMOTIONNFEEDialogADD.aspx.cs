@@ -1,4 +1,5 @@
-﻿using Ede.Uof.Utility.Data;
+﻿using Ede.Uof.EIP.SystemInfo;
+using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,19 @@ using System.Web.UI.WebControls;
 
 
 public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility.Page.BasePage
-{
+{   
+
     protected void Page_Load(object sender, EventArgs e)
     {
-     
+        string ACCOUNT = null;
+        string NAME = null;
+        string DEPNAME = null;
+        string JOB = null;
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+        DEPNAME= Current.User.GroupName;
+        JOB = Current.User.JobTitle;
+
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -31,6 +41,11 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
             BindDropDownList();
             BindDropDownList2();
             BindDropDownList3();
+
+            TextBox1.Text = DateTime.Now.Year.ToString();
+            TextBox14.Text = DEPNAME;
+            TextBox15.Text = JOB;
+            TextBox2.Text = NAME;
 
             ////接收主頁面傳遞之參數
             //lblParam.Text = Request["ID"];
