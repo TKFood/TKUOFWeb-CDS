@@ -117,7 +117,7 @@
                 <asp:Label ID="Label13" runat="server" Text="毛利比"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
+                <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" ></asp:TextBox>
             </td>
         </tr>
     </table>
