@@ -314,6 +314,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
             var ID = e.CommandArgument;
 
             UPDATETBSALESEVENTS(ID.ToString());
+            BindGrid();
             // ... 做後面要做的事情 .....
             //Response.Write("<script>alert('" + ID.ToString() + "')</script>");
 
