@@ -57,7 +57,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
         if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text) )
         {
             ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text, TextBox4.Text);
-           
+
+            UPDATETBPROMOTIONNFEE(lblParam.Text);
         }
         
         Dialog.SetReturnValue2("NeedPostBack");
@@ -71,7 +72,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
         if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text))
         {
             ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text, TextBox4.Text);
-          
+
+            UPDATETBPROMOTIONNFEE(lblParam.Text);
         }
 
         BindGrid(lblParam.Text);
@@ -232,7 +234,23 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
 
         
     }
+    public void UPDATETBPROMOTIONNFEE(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        string cmdTxt = @"  
+                        UPDATE [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
+                        SET [SALESNUMS]=(SELECT SUM([NUMS]) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
+                        ,[SALESMONEYS]=(SELECT SUM(MONEYS) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
+                        ,[PROFITS]=(SELECT SUM(MONEYS-COSTS-FEES) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)-(SELECT SUM([FEEMONEYS]) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE [MID]=@ID)
+                        WHERE [ID]=@ID
+                            ";
+
+        m_db.AddParameter("@ID", ID);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
 
     #endregion
 

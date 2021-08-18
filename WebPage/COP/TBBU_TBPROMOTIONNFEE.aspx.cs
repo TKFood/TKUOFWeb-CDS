@@ -33,7 +33,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         else
         {
 
-            BindGrid();
+           
            
         }
 
@@ -218,6 +218,22 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
 
     }
 
+    protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "ADDPROJECTS")
+        {
+            BindGrid();
+        }
+        if (e.CommandName == "ADDFEES")
+        {
+            BindGrid();
+        }
+        if (e.CommandName == "ADDPRODUCTS")
+        {
+            BindGrid();
+        }
+    }
+
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         SETEXCEL();
@@ -385,6 +401,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
 
     protected void btn1_Click(object sender, EventArgs e)
     {
+        BindGrid();
         //this.Session["SDATE"] = txtDate1.Text.Trim();
         //this.Session["EDATE"] = txtDate2.Text.Trim();
     }
