@@ -99,7 +99,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
                             [ID]
                             ,[MID]
                             ,[FEENAME]
-                            ,[FEEMONEYS]
+                            ,CONVERT(INT,[FEEMONEYS]) AS [FEEMONEYS]
                             ,[FEECOUNTMETHOD]
                             FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
                             WHERE [MID]=@MID

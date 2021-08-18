@@ -17,7 +17,7 @@
     <table class="PopTable">
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label1" runat="server" Text="CDS_WebPage_TBBU_TBSALESSCHEDULESDialogEDITDEL"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="TBBU_TBPROMOTIONNFEEDialogEDITDEL"></asp:Label>
             </td>
             <td class="PopTableRightTD" colspan="2">
                 <asp:Label ID="lblParam" runat="server" Text=""></asp:Label>
