@@ -299,8 +299,15 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        string A = "";
+    {  
+        if (e.CommandName == "Button1")
+        {
+            BindGrid();
+        }
+        if (e.CommandName == "Button2")
+        {
+            BindGrid();
+        }
         if (e.CommandName == "Button3")
         {
             //取得 custid 的值
