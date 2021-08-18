@@ -160,6 +160,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
             ID = (e.CommandArgument.ToString());
             //-- your delete method here
             DELETETBPROMOTIONNFEEDETAILS(MID, ID);
+
+            UPDATETBPROMOTIONNFEE(MID);
             BindGrid(lblParam.Text);
         }
     }
