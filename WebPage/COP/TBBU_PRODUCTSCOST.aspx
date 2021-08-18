@@ -41,7 +41,7 @@
               <table class="PopTable">
                    <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="品名:" meta:resourcekey="Label4Resource1"></asp:Label>             
+                            <asp:Label ID="Label2" runat="server" Text="品名/品號:" meta:resourcekey="Label4Resource1"></asp:Label>             
                         </td>
                         <td class="PopTableRightTD"> 
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>                                         
@@ -64,7 +64,7 @@
                                        
                         </td>
                        <td>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClientClick="return btn5_Click(this)" 
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢"  OnClick="Button1_Click"  OnClientClick="return btn5_Click(this)" 
                                  meta:resourcekey="btn4Resource1" />   
                         </td>
                                  

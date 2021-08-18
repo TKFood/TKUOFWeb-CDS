@@ -33,7 +33,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTSCOST : Ede.Uof.Utility.Page.Ba
         }
         else
         {
-            BindGrid("");
+           
         }
 
        
@@ -77,7 +77,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTSCOST : Ede.Uof.Utility.Page.Ba
                                 WHERE ME001=MB001
                                 AND ( ME001 LIKE '4%' OR ME001 LIKE '5%')
                                 AND ME002>='{1}'  AND ME002<='{2}'  
-                                AND (MB002 LIKE '%{0}%')
+                                 AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')
                                 UNION ALL
                                 SELECT '平均',ME001,MB002
                                 ,AVG(CASE WHEN (ME007>0 AND (ME003+ME004+ME005)>0 ) THEN CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) ELSE 0 END) AS '材料成本之單位成本'
@@ -89,8 +89,30 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTSCOST : Ede.Uof.Utility.Page.Ba
                                 WHERE ME001=MB001
                                 AND ( ME001 LIKE '4%' OR ME001 LIKE '5%')
                                 AND ME002>='{1}'  AND ME002<='{2}'  
-                                AND (MB002 LIKE '%{0}%')
+                                AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')
                                 GROUP BY ME001,MB002
+                                UNION ALL
+                                SELECT SUBSTRING(TG003,1,6),MB001,MB002,CONVERT(DECIMAL(16,4),SUM(TH047)/SUM(TH016)),0,0,0,CONVERT(DECIMAL(16,4),SUM(TH047)/SUM(TH016))
+                                FROM [TK].dbo.PURTG,[TK].dbo.PURTH,[TK].dbo.INVMB
+                                WHERE TG001=TH001 AND TG002=TH002
+                                AND TH004=MB001
+                                AND TH030='Y'
+                                AND TH016>0
+                                AND (MB001 LIKE '4%' OR MB001 LIKE '5%' )
+                                AND SUBSTRING(TG003,1,6)>='{1}'  AND SUBSTRING(TG003,1,6)<='{2}'
+                                AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')
+                                GROUP BY SUBSTRING(TG003,1,6),MB001,MB002
+                                UNION ALL
+                                SELECT '平均',MB001,MB002,CONVERT(DECIMAL(16,4),SUM(TH047)/SUM(TH016)),0,0,0,CONVERT(DECIMAL(16,4),SUM(TH047)/SUM(TH016))
+                                FROM [TK].dbo.PURTG,[TK].dbo.PURTH,[TK].dbo.INVMB
+                                WHERE TG001=TH001 AND TG002=TH002
+                                AND TH004=MB001
+                                AND TH030='Y'
+                                AND TH016>0
+                                AND (MB001 LIKE '4%' OR MB001 LIKE '5%' )
+                                AND SUBSTRING(TG003,1,6)>='{1}'  AND SUBSTRING(TG003,1,6)<='{2}'
+                                AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')
+                                GROUP BY SUBSTRING(TG003,0,6),MB001,MB002
                                 ) AS TEMP
                                 ORDER BY ME001,ME002
                                 ", TextBox1.Text.Trim(),txtDate1.SelectedDate.Value.ToString("yyyyMM"), txtDate2.SelectedDate.Value.ToString("yyyyMM"));
@@ -212,6 +234,11 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTSCOST : Ede.Uof.Utility.Page.Ba
     #endregion
 
     #region BUTTON
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        BindGrid("");
+    }
     protected void btn_Click(object sender, EventArgs e)
     {
 
