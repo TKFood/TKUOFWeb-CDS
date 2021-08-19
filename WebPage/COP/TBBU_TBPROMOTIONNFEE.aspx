@@ -5,8 +5,6 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.7.2.min.js"><\/script>');</script>
     <script>    
         function btn4_Click(sender) {
             //從前端開始視窗
@@ -178,7 +176,7 @@
                             <asp:Label ID="Label3" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
+                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red"  OnClientClick="return btn4_Click(this)" OnClick="btn4_Click" meta:resourcekey="btn4Resource1" />
 
                         </td>
                     </tr>

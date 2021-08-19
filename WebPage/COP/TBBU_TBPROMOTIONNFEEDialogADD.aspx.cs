@@ -157,11 +157,11 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
     #region BUTTON
     void CDS_WebPage_Dialog_Button1OnClick()
     {
-        //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
+        //設定回傳值並關閉視窗       
 
         ADD();
 
+        Dialog.SetReturnValue2("ADD");
         Dialog.Close(this);
 
     }
@@ -170,8 +170,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
     void Button2OnClick()
     {
         //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
-
+        Dialog.SetReturnValue2("ADD");
         ADD();
 
        

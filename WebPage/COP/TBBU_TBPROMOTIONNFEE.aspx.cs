@@ -427,35 +427,24 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         //Response.Write(sw.ToString());
         //Response.End();
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void MyButtonClick(object sender, System.EventArgs e)
     {
       
 
     }
-
-    protected void btn5_Click(object sender, EventArgs e)
+    protected void btn4_Click(object sender, EventArgs e)
     {
-
-        ////this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
-        //ViewState["TextBox1"] = TextBox1.Text.ToString();
-        //ViewState["TextBox2"] = TextBox2.Text.ToString();
-       
-
-        //BindGrid("");
-
-        //TextBox1.Text = ViewState["TextBox1"].ToString();
-        //TextBox2.Text = ViewState["TextBox2"].ToString();
-        
-     
-
-        //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        //{
-        //    if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-        //    {
-
-        //    }
-
-        //}
+        //開窗後回傳參數
+        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        {
+            //Label3.Text = Dialog.GetReturnValue();
+            if (Dialog.GetReturnValue().Equals("ADD"))
+            {
+                BindGrid();
+            }
+            
+        }
     }
+  
     #endregion
 }
