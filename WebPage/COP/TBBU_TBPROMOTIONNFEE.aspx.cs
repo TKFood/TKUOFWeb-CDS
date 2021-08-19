@@ -115,7 +115,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             SELECT CASE
                             WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                             ELSE '<br />'
-                            END +ISNULL([MB002],'')+':'+ISNULL(CONVERT(NVARCHAR,(CONVERT(INT,[MONEYS]))),'')+'元' AS 'data()'
+                            END +ISNULL([MB002],'')+'<br>'+'預估總業績 '+ISNULL(CONVERT(NVARCHAR,(CONVERT(INT,[MONEYS]))),'')+'元'+'<br>'+'預估總費用 '+ISNULL(CONVERT(NVARCHAR,(CONVERT(INT,[FEES]))),'')+'元' AS 'data()'
                             FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [TBPROMOTIONNFEEPRODUCTS].[MID]=[TBPROMOTIONNFEE].[ID]
                             FOR XML PATH(''), TYPE  
                             ).value('.','nvarchar(max)'),'')  As '各項商品' 
