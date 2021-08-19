@@ -715,7 +715,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             SELECT
                             [tb_COMPANY].COMPANY_NAME
                             ,CONVERT(NVARCHAR,[tb_NOTE].[CREATE_DATETIME],111) AS [CREATE_DATETIME]
-                            ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT]
+                            ,[NOTE_CONTENT]
 
                             FROM [HJ_BM_DB].[dbo].[tb_NOTE]
                             LEFT JOIN [HJ_BM_DB].[dbo].[tb_COMPANY] ON [tb_NOTE].COMPANY_ID=[tb_COMPANY].COMPANY_ID
