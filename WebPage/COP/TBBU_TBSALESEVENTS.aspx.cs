@@ -36,7 +36,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
             BindDropDownList2();
             BindDropDownList3();
 
-            BindGrid();           
+            BindGrid();
+            //BindGrid2();
         }
         else
         {
@@ -358,7 +359,73 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         //}
     }
 
-  
+    private void BindGrid2()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+        //客戶
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS.AppendFormat(@" AND [tb_COMPANY].COMPANY_NAME LIKE '%{0}%'", TextBox3.Text);           
+        }
+
+
+        if (!string.IsNullOrEmpty(QUERYS.ToString()))
+        {
+            cmdTxt.AppendFormat(@"                          
+                            SELECT
+                            [tb_COMPANY].COMPANY_NAME
+                            ,CONVERT(NVARCHAR,[tb_NOTE].[CREATE_DATETIME],111) AS [CREATE_DATETIME]
+                            ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT]
+
+                            FROM [HJ_BM_DB].[dbo].[tb_NOTE]
+                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_COMPANY] ON [tb_NOTE].COMPANY_ID=[tb_COMPANY].COMPANY_ID
+                            WHERE 1=1
+                            {0}
+                            ORDER BY [tb_NOTE].[CREATE_DATETIME]
+                            ", QUERYS.ToString());
+
+        }
+
+
+
+
+
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid("");
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+    
+    }
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL2();
+    }
+
 
 
     public override void VerifyRenderingInServerForm(Control control) 
@@ -626,6 +693,155 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
     }
 
+    public void SETEXCEL2()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+        //客戶
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS.AppendFormat(@" AND [tb_COMPANY].COMPANY_NAME LIKE '%{0}%'", TextBox3.Text);
+        }
+
+
+        if (!string.IsNullOrEmpty(QUERYS.ToString()))
+        {
+            cmdTxt.AppendFormat(@"                          
+                            SELECT
+                            [tb_COMPANY].COMPANY_NAME
+                            ,CONVERT(NVARCHAR,[tb_NOTE].[CREATE_DATETIME],111) AS [CREATE_DATETIME]
+                            ,REPLACE([NOTE_CONTENT],char(10),'<br/>') AS [NOTE_CONTENT]
+
+                            FROM [HJ_BM_DB].[dbo].[tb_NOTE]
+                            LEFT JOIN [HJ_BM_DB].[dbo].[tb_COMPANY] ON [tb_NOTE].COMPANY_ID=[tb_COMPANY].COMPANY_ID
+                            WHERE 1=1
+                            {0}
+                            ORDER BY [tb_NOTE].[CREATE_DATETIME]
+                            ", QUERYS.ToString());
+
+        }
+
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            //檔案名稱
+            var fileName = "客情明細" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+
+            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            {
+
+                // 建立分頁
+                var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+
+
+                //預設行高
+                ws.DefaultRowHeight = 20;
+
+                // 寫入資料試試
+                //ws.Cells[2, 1].Value = "測試測試";
+                int ROWS = 2;
+                int COLUMNS = 1;
+
+
+                //excel標題
+                ws.Cells[1, 1].Value = "客戶";
+                ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+                ws.Cells[1, 2].Value = "日期";
+                ws.Cells[1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+                ws.Cells[1, 3].Value = "客情記錄";
+                ws.Cells[1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+                
+
+                foreach (DataRow od in dt.Rows)
+                {
+                    ws.Cells[ROWS, 1].Value = od["COMPANY_NAME"].ToString();
+                    ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+                    ws.Cells[ROWS, 2].Value = od["CREATE_DATETIME"].ToString();
+                    ws.Cells[ROWS, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+                    ws.Cells[ROWS, 3].Value = od["NOTE_CONTENT"].ToString();
+                    ws.Cells[ROWS, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+
+
+                    ROWS++;
+
+                }
+
+
+
+
+                ////預設列寬、行高
+                ws.DefaultColWidth = 40; //預設列寬
+                ws.DefaultRowHeight = 40; //預設行高
+                ws.Cells.Style.ShrinkToFit = true;//单元格自动适应大小
+
+
+                //// 遇\n或(char)10自動斷行
+                ws.Cells.Style.WrapText = true;
+
+                //自適應寬度設定
+                ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                //自適應高度設定        
+                //ws.Row(1).CustomHeight = true;
+
+
+
+                //儲存Excel
+                //Byte[] bin = excel.GetAsByteArray();
+                //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+
+                //儲存和歸來的Excel檔案作為一個ByteArray
+                var data = excel.GetAsByteArray();
+                HttpResponse response = HttpContext.Current.Response;
+                Response.Clear();
+
+                //輸出標頭檔案　　
+                Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.BinaryWrite(data);
+                Response.Flush();
+                Response.End();
+                //package.Save();//這個方法是直接下載到本地
+            }
+            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+            //                                                            // 沒設置的話會跳出 Please set the excelpackage.licensecontext property
+
+
+            ////var file = new FileInfo(fileName);
+            //using (var excel = new ExcelPackage(file))
+            //{
+
+            //}
+        }
+
+    }
+
     public void UPDATETBSALESEVENTS(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -669,6 +885,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
     #endregion
 
     #region BUTTON
+
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        BindGrid2();
+    }
+
     protected void btn_Click(object sender, EventArgs e)
     {
 
@@ -712,7 +934,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         //Response.Write(sw.ToString());
         //Response.End();
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void MyButtonClick(object sender, System.EventArgs e)
     {
       
 
