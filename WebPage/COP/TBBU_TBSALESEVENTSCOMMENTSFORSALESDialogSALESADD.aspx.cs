@@ -19,6 +19,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
     string ID = null;
     string COMMENTS = null;
     string FIRSTADDDATES = null;
+    string TBSALESEVENTSMAXID = null;
+    string TBSALESEVENTSCOMMENTSMAXID = null;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -88,7 +90,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
             ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
             UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
 
-            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text, LabelNAME.Text);
+            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text, LabelNAME.Text, TBSALESEVENTSCOMMENTSMAXID);
         }
         
         Dialog.SetReturnValue2("NeedPostBack");
@@ -104,7 +106,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
             ADDTBSALESEVENTSCOMMENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
             UPDATETBSALESEVENTS(lblParam.Text, TextBox1.Text, LabelNAME.Text);
 
-            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text, LabelNAME.Text);
+            ADD_HJ_BM_DB_tb_NOTE(lblParam.Text, TextBox1.Text, LabelNAME.Text, TBSALESEVENTSCOMMENTSMAXID);
         }
 
         BindGrid(lblParam.Text);
@@ -286,7 +288,38 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
 
         m_db.ExecuteNonQuery(cmdTxt);
 
-        
+        TBSALESEVENTSCOMMENTSMAXID = SEARCHTBSALESEVENTSCOMMENTSMAXID(COMMENTS);
+
+    }
+
+    public string SEARCHTBSALESEVENTSCOMMENTSMAXID(string SERACHKEYS)
+    {
+        DataTable dt = new DataTable();
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT TOP 1 MAX([ID]) ID
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS]
+                            WHERE [COMMENTS]=@SERACHKEYS
+                                ");
+
+        m_db.AddParameter("@SERACHKEYS", SERACHKEYS);
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows[0]["ID"].ToString();
+
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public void ADDTBSALESEVENTSCOMMENTSFIRST(string MID, string COMMENTS, string FILENAME, string FIRSTADDDATES)
@@ -493,7 +526,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         }
     }
 
-    public void ADD_HJ_BM_DB_tb_NOTE(string ID, string COMMENTS,string FILENAME)
+    public void ADD_HJ_BM_DB_tb_NOTE(string ID, string COMMENTS,string FILENAME, string TBSALESEVENTSCOMMENTSMAXID)
     {
         string NOTE_ID = null;
         string NOTE_CONTENT = SEARCHPROJECTSCOMMENTS(ID, COMMENTS);
@@ -508,7 +541,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         string SALES_STAGE = null;
         string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string CREATE_USER_ID = SEARCHCREATE_USER_ID(SEARCHPROJECTSSALES(ID));
-
+        string TBSALESEVENTSID = ID;
+        string TBSALESEVENTSCOMMENTSID = TBSALESEVENTSCOMMENTSMAXID;
 
 
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
@@ -533,6 +567,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
                                
                                 ,[CREATE_DATETIME]
                                 ,[CREATE_USER_ID]
+                                ,[TBSALESEVENTSID]
+                                ,[TBSALESEVENTSCOMMENTSID]
                                 )
                                 VALUES
                                 (                              
@@ -548,6 +584,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
                                
                                 ,@CREATE_DATETIME
                                 ,@CREATE_USER_ID
+                                ,@TBSALESEVENTSID
+                                ,@TBSALESEVENTSCOMMENTSID
                                 )
                                  
                                 ";
@@ -567,7 +605,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
                 //m_db.AddParameter("@SALES_STAGE", SALES_STAGE);
                 m_db.AddParameter("@CREATE_DATETIME", CREATE_DATETIME);
                 m_db.AddParameter("@CREATE_USER_ID", CREATE_USER_ID);
-
+                m_db.AddParameter("@TBSALESEVENTSID", TBSALESEVENTSID);
+                m_db.AddParameter("@TBSALESEVENTSCOMMENTSID", TBSALESEVENTSCOMMENTSID);
 
 
 
