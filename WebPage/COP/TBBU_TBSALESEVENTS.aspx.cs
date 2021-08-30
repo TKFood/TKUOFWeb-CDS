@@ -881,6 +881,116 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         BindGrid();
     }
 
+    public void ADDtb_NOTE()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        try
+        {
+            //先針對TBSALESEVENTS補新增到tb_NOTE
+            //再針對TBSALESEVENTSCOMMENTS補新增到tb_NOTE
+            string cmdTxt = @"  
+                           INSERT INTO [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_NOTE]
+                            (
+                            [NOTE_CONTENT]
+                            ,[NOTE_KIND]
+                            ,[FILE_NAME]
+                            ,[NOTE_DATE]
+                            ,[NOTE_TIME]
+                            ,[UPDATE_DATETIME]
+                            ,[CONTACT_ID]
+                            ,[COMPANY_ID]
+                            ,[OPPORTUNITY_ID]
+                            ,[SALES_STAGE]
+                            ,[CREATE_DATETIME]
+                            ,[CREATE_USER_ID]
+                            ,[TBSALESEVENTSID]
+                            ,[TBSALESEVENTSCOMMENTSID]
+                            )
+                            SELECT 
+                            [PROJECTS]+'<br>'+[EVENTS]++'<br> 拜訪日:'+[EDAYS]+'<br>'+[COMMENTS] AS [NOTE_CONTENT]
+                            ,'1' AS [NOTE_KIND]
+                            ,[FILENAME] AS [FILE_NAME]
+                            ,[EDAYS] AS [NOTE_DATE]
+                            ,'00:00:00' AS [NOTE_TIME]
+                            ,[ADDDATES] AS [UPDATE_DATETIME]
+                            ,'0' AS [CONTACT_ID]
+                            ,[tb_COMPANY].[COMPANY_ID] AS [COMPANY_ID]
+                            ,'0' AS [OPPORTUNITY_ID]
+                            , NULL AS [SALES_STAGE]
+                            ,[ADDDATES] AS [CREATE_DATETIME]
+                            ,[tb_COMPANY].[OWNER_ID] AS [CREATE_USER_ID]
+                            ,ID AS [TBSALESEVENTSID]
+                            ,'' AS [TBSALESEVENTSCOMMENTSID]
+
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            LEFT JOIN [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_COMPANY] ON [COMPANY_NAME]=[CLIENTS]
+                            WHERE [tb_COMPANY].[COMPANY_ID]+CONVERT(NVARCHAR,[TBSALESEVENTS].[ID])  NOT IN (SELECT [COMPANY_ID]+[TBSALESEVENTSID] FROM [192.168.1.223].[HJ_BM_DB].[dbo].[tb_NOTE] WHERE ISNULL([TBSALESEVENTSID],'')<>'')
+
+
+                            --
+                            INSERT INTO [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_NOTE]
+                            (
+                            [NOTE_CONTENT]
+                            ,[NOTE_KIND]
+                            ,[FILE_NAME]
+                            ,[NOTE_DATE]
+                            ,[NOTE_TIME]
+                            ,[UPDATE_DATETIME]
+                            ,[CONTACT_ID]
+                            ,[COMPANY_ID]
+                            ,[OPPORTUNITY_ID]
+                            ,[SALES_STAGE]
+                            ,[CREATE_DATETIME]
+                            ,[CREATE_USER_ID]
+                            ,[TBSALESEVENTSID]
+                            ,[TBSALESEVENTSCOMMENTSID]
+                            )
+                            SELECT 
+                            [PROJECTS]+'<br>'+[EVENTS]++'<br> 拜訪日:'+[EDAYS]+'<br>'+[TBSALESEVENTSCOMMENTS].[COMMENTS] AS [NOTE_CONTENT]
+                            ,'1' AS [NOTE_KIND]
+                            ,[TBSALESEVENTSCOMMENTS].[FILENAME] AS [FILE_NAME]
+                            ,[EDAYS] AS [NOTE_DATE]
+                            ,'00:00:00' AS [NOTE_TIME]
+                            ,[TBSALESEVENTSCOMMENTS].[ADDDATES] AS [UPDATE_DATETIME]
+                            ,'0' AS [CONTACT_ID]
+                            ,[tb_COMPANY].[COMPANY_ID] AS [COMPANY_ID]
+                            ,'0' AS [OPPORTUNITY_ID]
+                            , NULL AS [SALES_STAGE]
+                            ,[TBSALESEVENTSCOMMENTS].[ADDDATES] AS [CREATE_DATETIME]
+                            ,[tb_COMPANY].[OWNER_ID] AS [CREATE_USER_ID]
+                            ,[TBSALESEVENTSCOMMENTS].MID AS [TBSALESEVENTSID]
+                            ,[TBSALESEVENTSCOMMENTS].ID AS [TBSALESEVENTSCOMMENTSID]
+
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS],[TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            LEFT JOIN [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_COMPANY] ON [COMPANY_NAME]=[CLIENTS]
+                            WHERE [TBSALESEVENTS].ID=[TBSALESEVENTSCOMMENTS].MID
+                            AND CONVERT(NVARCHAR,[tb_COMPANY].[COMPANY_ID])+CONVERT(NVARCHAR,[TBSALESEVENTSCOMMENTS].MID)+CONVERT(NVARCHAR,[TBSALESEVENTSCOMMENTS].ID) NOT IN (SELECT CONVERT(NVARCHAR,[COMPANY_ID])+[TBSALESEVENTSID]+[TBSALESEVENTSCOMMENTSID] FROM [192.168.1.223].[HJ_BM_DB].[dbo].[tb_NOTE] WHERE ISNULL([TBSALESEVENTSID]+[TBSALESEVENTSCOMMENTSID],'')<>'')
+
+
+
+                            ";
+
+
+
+           //m_db.AddParameter("@ID", ID);
+            m_db.ExecuteNonQuery(cmdTxt);
+
+            //顯示訊息
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), Guid.NewGuid().ToString(), "alert('完成')", true);
+        }
+        catch
+        {
+            //顯示訊息
+            ScriptManager.RegisterStartupScript(this.Page, GetType(), Guid.NewGuid().ToString(), "alert('失敗')", true);
+
+        }
+        finally
+        {
+
+        }
+    }
 
     #endregion
 
@@ -940,29 +1050,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
     }
 
-    protected void btn5_Click(object sender, EventArgs e)
+    protected void Button5_OnClick(object sender, EventArgs e)
     {
 
-        ////this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
-        //ViewState["TextBox1"] = TextBox1.Text.ToString();
-        //ViewState["TextBox2"] = TextBox2.Text.ToString();
-       
-
-        //BindGrid("");
-
-        //TextBox1.Text = ViewState["TextBox1"].ToString();
-        //TextBox2.Text = ViewState["TextBox2"].ToString();
-        
-     
-
-        //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        //{
-        //    if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-        //    {
-
-        //    }
-
-        //}
+        ADDtb_NOTE();
     }
     #endregion
 }

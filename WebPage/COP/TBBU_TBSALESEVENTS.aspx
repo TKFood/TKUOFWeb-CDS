@@ -77,6 +77,8 @@
             </telerik:RadTab>
             <telerik:RadTab Text="客情資料查詢">
             </telerik:RadTab>
+             <telerik:RadTab Text="新增客情資料回寫">
+            </telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
     <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
@@ -284,6 +286,21 @@
                                     </Columns>
                                 </Fast:Grid>
                             </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+         <telerik:RadPageView ID="RadPageView4" runat="server">
+            <div id="tabs-2">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label7" runat="server" Text="新增客情資料回寫" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:Button ID="Button5" runat="server" Text="新增客情資料回寫" ForeColor="red" OnClick="Button5_OnClick" meta:resourcekey="btn4Resource1" />
+
                         </td>
                     </tr>
                 </table>
