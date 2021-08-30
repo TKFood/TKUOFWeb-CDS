@@ -48,7 +48,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
             int ROWOCUNTS = SEARCHTBSALESEVENTSCOMMENTS(ID);
             if (ROWOCUNTS == 0)
             {
-                ADDTBSALESEVENTSCOMMENTSFIRST(lblParam.Text, TextBox1.Text, "", FIRSTADDDATES);
+               ADDTBSALESEVENTSCOMMENTSFIRST(lblParam.Text, TextBox1.Text, "", FIRSTADDDATES);
             }
 
 

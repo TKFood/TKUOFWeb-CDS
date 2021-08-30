@@ -888,49 +888,11 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
         try
         {
-            //先針對TBSALESEVENTS補新增到tb_NOTE
-            //再針對TBSALESEVENTSCOMMENTS補新增到tb_NOTE
+
+            //先針對TBSALESEVENTSCOMMENTS補新增到tb_NOTE
+            //再針對TBSALESEVENTS補新增到tb_NOTE，過濾已在TBSALESEVENTSCOMMENTS有資料的
             string cmdTxt = @"  
-                           INSERT INTO [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_NOTE]
-                            (
-                            [NOTE_CONTENT]
-                            ,[NOTE_KIND]
-                            ,[FILE_NAME]
-                            ,[NOTE_DATE]
-                            ,[NOTE_TIME]
-                            ,[UPDATE_DATETIME]
-                            ,[CONTACT_ID]
-                            ,[COMPANY_ID]
-                            ,[OPPORTUNITY_ID]
-                            ,[SALES_STAGE]
-                            ,[CREATE_DATETIME]
-                            ,[CREATE_USER_ID]
-                            ,[TBSALESEVENTSID]
-                            ,[TBSALESEVENTSCOMMENTSID]
-                            )
-                            SELECT 
-                            [PROJECTS]+'<br>'+[EVENTS]++'<br> 拜訪日:'+[EDAYS]+'<br>'+[COMMENTS] AS [NOTE_CONTENT]
-                            ,'1' AS [NOTE_KIND]
-                            ,[FILENAME] AS [FILE_NAME]
-                            ,[EDAYS] AS [NOTE_DATE]
-                            ,'00:00:00' AS [NOTE_TIME]
-                            ,[ADDDATES] AS [UPDATE_DATETIME]
-                            ,'0' AS [CONTACT_ID]
-                            ,[tb_COMPANY].[COMPANY_ID] AS [COMPANY_ID]
-                            ,'0' AS [OPPORTUNITY_ID]
-                            , NULL AS [SALES_STAGE]
-                            ,[ADDDATES] AS [CREATE_DATETIME]
-                            ,[tb_COMPANY].[OWNER_ID] AS [CREATE_USER_ID]
-                            ,ID AS [TBSALESEVENTSID]
-                            ,'' AS [TBSALESEVENTSCOMMENTSID]
-
-                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
-                            LEFT JOIN [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_COMPANY] ON [COMPANY_NAME]=[CLIENTS]
-                            WHERE [tb_COMPANY].[COMPANY_ID]+CONVERT(NVARCHAR,[TBSALESEVENTS].[ID])  NOT IN (SELECT [COMPANY_ID]+[TBSALESEVENTSID] FROM [192.168.1.223].[HJ_BM_DB].[dbo].[tb_NOTE] WHERE ISNULL([TBSALESEVENTSID],'')<>'')
-
-
-                            --
-                            INSERT INTO [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_NOTE]
+                          INSERT INTO [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_NOTE]
                             (
                             [NOTE_CONTENT]
                             ,[NOTE_KIND]
@@ -967,6 +929,44 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             LEFT JOIN [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_COMPANY] ON [COMPANY_NAME]=[CLIENTS]
                             WHERE [TBSALESEVENTS].ID=[TBSALESEVENTSCOMMENTS].MID
                             AND CONVERT(NVARCHAR,[tb_COMPANY].[COMPANY_ID])+CONVERT(NVARCHAR,[TBSALESEVENTSCOMMENTS].MID)+CONVERT(NVARCHAR,[TBSALESEVENTSCOMMENTS].ID) NOT IN (SELECT CONVERT(NVARCHAR,[COMPANY_ID])+[TBSALESEVENTSID]+[TBSALESEVENTSCOMMENTSID] FROM [192.168.1.223].[HJ_BM_DB].[dbo].[tb_NOTE] WHERE ISNULL([TBSALESEVENTSID]+[TBSALESEVENTSCOMMENTSID],'')<>'')
+
+                            INSERT INTO [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_NOTE]
+                            (
+                            [NOTE_CONTENT]
+                            ,[NOTE_KIND]
+                            ,[FILE_NAME]
+                            ,[NOTE_DATE]
+                            ,[NOTE_TIME]
+                            ,[UPDATE_DATETIME]
+                            ,[CONTACT_ID]
+                            ,[COMPANY_ID]
+                            ,[OPPORTUNITY_ID]
+                            ,[SALES_STAGE]
+                            ,[CREATE_DATETIME]
+                            ,[CREATE_USER_ID]
+                            ,[TBSALESEVENTSID]
+                            ,[TBSALESEVENTSCOMMENTSID]
+                            )
+                            SELECT 
+                            [PROJECTS]+'<br>'+[EVENTS]++'<br> 拜訪日:'+[EDAYS]+'<br>'+[COMMENTS] AS [NOTE_CONTENT]
+                            ,'1' AS [NOTE_KIND]
+                            ,[FILENAME] AS [FILE_NAME]
+                            ,[EDAYS] AS [NOTE_DATE]
+                            ,'00:00:00' AS [NOTE_TIME]
+                            ,[ADDDATES] AS [UPDATE_DATETIME]
+                            ,'0' AS [CONTACT_ID]
+                            ,[tb_COMPANY].[COMPANY_ID] AS [COMPANY_ID]
+                            ,'0' AS [OPPORTUNITY_ID]
+                            , NULL AS [SALES_STAGE]
+                            ,[ADDDATES] AS [CREATE_DATETIME]
+                            ,[tb_COMPANY].[OWNER_ID] AS [CREATE_USER_ID]
+                            ,ID AS [TBSALESEVENTSID]
+                            ,'' AS [TBSALESEVENTSCOMMENTSID]
+
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            LEFT JOIN [192.168.1.223]. [HJ_BM_DB].[dbo].[tb_COMPANY] ON [COMPANY_NAME]=[CLIENTS]
+                            WHERE [tb_COMPANY].[COMPANY_ID]+CONVERT(NVARCHAR,[TBSALESEVENTS].[ID])  NOT IN (SELECT [COMPANY_ID]+[TBSALESEVENTSID] FROM [192.168.1.223].[HJ_BM_DB].[dbo].[tb_NOTE] WHERE ISNULL([TBSALESEVENTSID],'')<>'')
+                            AND CONVERT(NVARCHAR,[TBSALESEVENTS].[ID])  NOT IN (SELECT MID FROM [TKBUSINESS].[dbo].[TBSALESEVENTSCOMMENTS])
 
 
 
