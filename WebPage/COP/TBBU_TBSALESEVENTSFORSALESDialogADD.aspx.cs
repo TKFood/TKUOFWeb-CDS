@@ -17,8 +17,13 @@ using Telerik.Web.UI;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.Utility.Page.BasePage
 {
+    string TKBUFILENAME = null;
+    string TBSALESEVENTSMAXID = null;
+    string TBSALESEVENTSCOMMENTSMAXID = null;
+
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {      
+
         string ACCOUNT = null;
         string NAME = null;
         ACCOUNT = Current.Account;
@@ -68,8 +73,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
-        
-        ADD_HJ_BM_DB_tb_NOTE(DropDownList2.Text);
+
+        ADD_HJ_BM_DB_tb_NOTE(DropDownList2.Text, TBSALESEVENTSMAXID);
 
         Dialog.Close(this);
 
@@ -82,8 +87,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
-        
-        ADD_HJ_BM_DB_tb_NOTE(DropDownList2.Text);
+
+        ADD_HJ_BM_DB_tb_NOTE(DropDownList2.Text, TBSALESEVENTSMAXID);
 
 
     }
@@ -339,6 +344,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
             m_db.ExecuteNonQuery(cmdTxt);
 
             Label8.Text = "成功";
+
+            TBSALESEVENTSMAXID = SEARCHTBSALESEVENTSID(SALES + CLIENTS + PROJECTS + EVENTS + COMMENTS);
         }
         catch
         {
@@ -353,7 +360,37 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
 
     }
 
-    public void ADD_HJ_BM_DB_tb_NOTE(string KIND)
+    public string SEARCHTBSALESEVENTSID(string SERACHKEYS)
+    {
+        DataTable dt = new DataTable();
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                           SELECT TOP 1 MAX([ID]) ID
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            WHERE [SALES]+[CLIENTS]+[PROJECTS]+[EVENTS]+[COMMENTS]=@SERACHKEYS
+                                ");
+
+        m_db.AddParameter("@SERACHKEYS", SERACHKEYS);
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows[0]["ID"].ToString();
+
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void ADD_HJ_BM_DB_tb_NOTE(string KIND, string TBSALESEVENTSMAXID)
     {
         string NOTE_CONTENT = null;
 
@@ -373,6 +410,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         string SALES_STAGE = null;
         string CREATE_DATETIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string CREATE_USER_ID = SEARCHCREATE_USER_ID(DropDownList1.Text);
+        string TBSALESEVENTSID = TBSALESEVENTSMAXID;
 
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -425,6 +463,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
                                
                                 ,[CREATE_DATETIME]
                                 ,[CREATE_USER_ID]
+                                ,[TBSALESEVENTSID]
                                 )
                                 VALUES
                                 (                              
@@ -440,6 +479,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
                                
                                 ,@CREATE_DATETIME
                                 ,@CREATE_USER_ID
+                                ,@TBSALESEVENTSID
                                 )
                                  
                                 ";
@@ -459,7 +499,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
                 //m_db.AddParameter("@SALES_STAGE", SALES_STAGE);
                 m_db.AddParameter("@CREATE_DATETIME", CREATE_DATETIME);
                 m_db.AddParameter("@CREATE_USER_ID", CREATE_USER_ID);
-
+                m_db.AddParameter("@TBSALESEVENTSID", TBSALESEVENTSID);
 
 
 
