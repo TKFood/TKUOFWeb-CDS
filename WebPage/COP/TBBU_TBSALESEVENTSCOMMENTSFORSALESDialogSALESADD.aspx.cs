@@ -353,12 +353,14 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSFORSALESDialogSALESAD
         string cmdTxt = @"  UPDATE [TKBUSINESS].[dbo].[TBSALESEVENTS]
                             SET [COMMENTS]=@COMMENTS
                             ,[FILENAME]=@FILENAME
+                            ,[UPDATEDATES]=@UPDATEDATES
                             WHERE [ID]=@ID
                             ";
 
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@COMMENTS", COMMENTS);
         m_db.AddParameter("@FILENAME", FILENAME);
+        m_db.AddParameter("@UPDATEDATES", Convert.ToDateTime(DateTime.Now));
 
         m_db.ExecuteNonQuery(cmdTxt);
 
