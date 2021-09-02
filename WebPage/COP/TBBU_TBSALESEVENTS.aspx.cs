@@ -198,6 +198,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         {
             QUERYS.AppendFormat(@" AND [PROJECTS] LIKE '%{0}%'", TextBox2.Text);
         }
+        //新增日期+更新日期
+        if (RadDatePicker1.SelectedDate != null && RadDatePicker2.SelectedDate != null)
+        {
+            QUERYS.AppendFormat(@" AND (CONVERT(NVARCHAR,[ADDDATES],112)>='{0}' AND CONVERT(NVARCHAR,[ADDDATES],112)<='{1}' OR CONVERT(NVARCHAR,[UPDATEDATES],112)>='{2}' AND CONVERT(NVARCHAR,[UPDATEDATES],112)<='{3}' )", RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"));
+
+        }
 
 
 
@@ -217,6 +223,9 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
                             ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
                             ,[ISCLOSE]
                             ,[FILENAME]
+                            ,CONVERT(NVARCHAR,[ADDDATES],111) AS [ADDDATES]
+                            ,CONVERT(NVARCHAR,[UPDATEDATES],111) AS [UPDATEDATES] 
+
                             FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
                             WHERE 1=1
                             {0}
@@ -237,6 +246,230 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
         Grid1.DataSource = dt;
         Grid1.DataBind();
     }
+
+    private void BindGridOVER()
+    {
+        RadDatePicker1.SelectedDate = DateTime.Now.AddYears(-1);
+        RadDatePicker2.SelectedDate = DateTime.Now.AddDays(-9);
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        //是否結案
+        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        {
+            if (DropDownList1.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [ISCLOSE] LIKE '%{0}%'", DropDownList1.Text);
+            }
+
+        }
+        //業務員
+        if (!string.IsNullOrEmpty(DropDownList2.Text))
+        {
+            if (DropDownList2.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [SALES] LIKE '%{0}%'", DropDownList2.Text);
+            }
+
+        }
+        //是否結案
+        if (!string.IsNullOrEmpty(DropDownList3.Text))
+        {
+            if (DropDownList3.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [KINDS] LIKE '%{0}%'", DropDownList3.Text);
+            }
+
+        }
+        //客戶
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%'", TextBox1.Text);
+        }
+        //專案
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND [PROJECTS] LIKE '%{0}%'", TextBox2.Text);
+        }
+        //新增日期+更新日期
+        if (RadDatePicker1.SelectedDate != null && RadDatePicker2.SelectedDate != null)
+        {
+            QUERYS.AppendFormat(@" AND (CONVERT(NVARCHAR,[ADDDATES],112)>='{0}' AND CONVERT(NVARCHAR,[ADDDATES],112)<='{1}' OR CONVERT(NVARCHAR,[UPDATEDATES],112)>='{2}' AND CONVERT(NVARCHAR,[UPDATEDATES],112)<='{3}' )", RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"));
+
+        }
+
+
+
+
+
+
+        cmdTxt.AppendFormat(@"                          
+                            SELECT 
+                            [ID]
+                            ,[SALES]
+                            ,[KINDS]
+                            ,[CLIENTS]
+                            ,[PROJECTS]
+                            ,[EVENTS]
+                            ,[SDAYS]
+                            ,[EDAYS]
+                            ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
+                            ,[ISCLOSE]
+                            ,[FILENAME]
+                            ,CONVERT(NVARCHAR,[ADDDATES],111) AS [ADDDATES]
+                            ,CONVERT(NVARCHAR,[UPDATEDATES],111) AS [UPDATEDATES] 
+
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            WHERE 1=1
+                            {0}
+                            AND CONVERT(NVARCHAR,[UPDATEDATES],112)<='{1}'
+
+                            ORDER BY [SALES],[CLIENTS],[PROJECTS],[EDAYS]
+                              
+                            ", QUERYS.ToString(),DateTime.Now.AddDays(-8).ToString("yyyyMMdd"));
+
+
+
+
+
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+    private void BindGridIN()
+    {
+        RadDatePicker1.SelectedDate = DateTime.Now.AddDays(-8);
+        RadDatePicker2.SelectedDate = DateTime.Now;
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        //是否結案
+        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        {
+            if (DropDownList1.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [ISCLOSE] LIKE '%{0}%'", DropDownList1.Text);
+            }
+
+        }
+        //業務員
+        if (!string.IsNullOrEmpty(DropDownList2.Text))
+        {
+            if (DropDownList2.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [SALES] LIKE '%{0}%'", DropDownList2.Text);
+            }
+
+        }
+        //是否結案
+        if (!string.IsNullOrEmpty(DropDownList3.Text))
+        {
+            if (DropDownList3.Text.Equals("全部"))
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" AND [KINDS] LIKE '%{0}%'", DropDownList3.Text);
+            }
+
+        }
+        //客戶
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%'", TextBox1.Text);
+        }
+        //專案
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND [PROJECTS] LIKE '%{0}%'", TextBox2.Text);
+        }
+        //新增日期+更新日期
+        if (RadDatePicker1.SelectedDate != null && RadDatePicker2.SelectedDate != null)
+        {
+            QUERYS.AppendFormat(@" AND (CONVERT(NVARCHAR,[ADDDATES],112)>='{0}' AND CONVERT(NVARCHAR,[ADDDATES],112)<='{1}' OR CONVERT(NVARCHAR,[UPDATEDATES],112)>='{2}' AND CONVERT(NVARCHAR,[UPDATEDATES],112)<='{3}' )", RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"));
+            
+        }
+      
+
+
+
+
+
+        cmdTxt.AppendFormat(@"                          
+                            SELECT 
+                            [ID]
+                            ,[SALES]
+                            ,[KINDS]
+                            ,[CLIENTS]
+                            ,[PROJECTS]
+                            ,[EVENTS]
+                            ,[SDAYS]
+                            ,[EDAYS]
+                            ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
+                            ,[ISCLOSE]
+                            ,[FILENAME]
+                            ,CONVERT(NVARCHAR,[ADDDATES],111) AS [ADDDATES]
+                            ,CONVERT(NVARCHAR,[UPDATEDATES],111) AS [UPDATEDATES] 
+
+                            FROM [TKBUSINESS].[dbo].[TBSALESEVENTS]
+                            WHERE 1=1
+                            {0}
+
+                            ORDER BY [SALES],[CLIENTS],[PROJECTS],[EDAYS]
+                              
+                            ", QUERYS.ToString());
+
+
+
+
+
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
 
     protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
     {
@@ -1054,6 +1287,17 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
     {
 
         ADDtb_NOTE();
+    }
+    protected void Button6_Click(object sender, EventArgs e)
+    {
+
+        BindGridOVER();
+    }
+
+    protected void Button7_Click(object sender, EventArgs e)
+    {
+
+        BindGridIN();
     }
     #endregion
 }

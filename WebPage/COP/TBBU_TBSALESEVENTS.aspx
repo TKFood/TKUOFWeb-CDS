@@ -77,7 +77,7 @@
             </telerik:RadTab>
             <telerik:RadTab Text="客情資料查詢">
             </telerik:RadTab>
-             <telerik:RadTab Text="新增客情資料回寫">
+            <telerik:RadTab Text="新增客情資料回寫">
             </telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -142,10 +142,42 @@
 
                     </tr>
                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label9" runat="server" Text="新增日期"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="120px"></telerik:RadDatePicker>
+                            <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
+                            <telerik:RadDatePicker ID="RadDatePicker2" runat="server" Width="120px"></telerik:RadDatePicker>
+                            <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
+                        </td>
+                        <td class="PopTableRightTD">
+
+                            <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn1_Click"
                                 meta:resourcekey="btn5Resource1" />
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button7" runat="server" Text=" 7天內更新-查詢 " OnClick="Button7_Click"
+                                meta:resourcekey="btn7Resource1" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button6" runat="server" Text=" 7天以上未更新-查詢 " OnClick="Button6_Click"
+                                meta:resourcekey="btn6Resource1" />
                         </td>
 
                     </tr>
@@ -215,6 +247,12 @@
                                                 <asp:Button ID="Button3" runat="server" Text="結案" CommandName="Button3" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:BoundField HeaderText="新增時間" DataField="ADDDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="最新更新時間" DataField="UPDATEDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
                                     </Columns>
                                 </Fast:Grid>
                             </div>
@@ -280,7 +318,7 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                     <%--   <asp:BoundField HeaderText="日期" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <%--   <asp:BoundField HeaderText="日期" DataField="NOTE_CONTENT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>--%>
                                     </Columns>
@@ -291,7 +329,7 @@
                 </table>
             </div>
         </telerik:RadPageView>
-         <telerik:RadPageView ID="RadPageView4" runat="server">
+        <telerik:RadPageView ID="RadPageView4" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">
                     <tr>
