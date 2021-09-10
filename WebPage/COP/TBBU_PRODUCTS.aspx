@@ -174,6 +174,9 @@
                                         <asp:BoundField HeaderText="銷售通路" DataField="SALESFOCUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="實際MOQ" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:TemplateField HeaderText="照片" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Image ID="Image1" runat="server" HorizontalAlign="Center" Length="100px" Width="100px" />
