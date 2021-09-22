@@ -284,7 +284,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
 
 
-        if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) && !string.IsNullOrEmpty(COMMENTS))
+        if ( !string.IsNullOrEmpty(SALES) && !string.IsNullOrEmpty(KINDS) )
         {
 
             ADDTBSALESEVENTS(SALES, KINDS, PROJECTS, EVENTS, CLIENTS, SDAYS, EDAYS, COMMENTS, ISCLOSE, FILENAME);
