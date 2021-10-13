@@ -80,14 +80,7 @@
                 <asp:TextBox ID="TextBox7" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
             </td>
         </tr>
-        <tr>
-            <td class="PopTableLeftTD">
-                <asp:Label ID="Label9" runat="server" Text="成本"></asp:Label>
-            </td>
-            <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox8" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
-            </td>
-        </tr>
+
         <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label10" runat="server" Text="預估銷量"></asp:Label>
@@ -106,10 +99,18 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
+                <asp:Label ID="Label9" runat="server" Text="總成本"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox8" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
                 <asp:Label ID="Label12" runat="server" Text="預估總費用"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox11" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}" ></asp:TextBox>
+                <asp:TextBox ID="TextBox11" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -117,7 +118,7 @@
                 <asp:Label ID="Label13" runat="server" Text="毛利比"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" ></asp:TextBox>
+                <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
             </td>
         </tr>
     </table>
@@ -146,7 +147,7 @@
                         <asp:BoundField HeaderText="促銷價" DataField="SPRICES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField HeaderText="成本" DataField="COSTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                        <asp:BoundField HeaderText="總成本" DataField="COSTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
                         <asp:BoundField HeaderText="預估銷量" DataField="NUMS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
