@@ -3,7 +3,7 @@
 <%@ Register Src="~/Common/HtmlEditor/UC_HtmlEditor.ascx" TagPrefix="uc1" TagName="UC_HtmlEditor" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  
+
 
     <script>
         $(function () {
@@ -70,7 +70,7 @@
                 <asp:Label ID="Label5" runat="server" Text="類別"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                 <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
                 <%--<asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
@@ -79,7 +79,7 @@
                 <asp:Label ID="Label6" runat="server" Text="方式"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                  <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
                 <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
@@ -88,7 +88,7 @@
                 <asp:Label ID="Label7" runat="server" Text="搭贈方式"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                  <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
                 <%--<asp:TextBox ID="TextBox6" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
@@ -126,13 +126,28 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label13" runat="server" Text="總業績"></asp:Label>
+                <asp:Label ID="Label13" runat="server" Text="總收入"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox11" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
             </td>
         </tr>
-
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label18" runat="server" Text="總成本"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label19" runat="server" Text="總費用"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox5" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
         <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label14" runat="server" Text="利潤預估"></asp:Label>

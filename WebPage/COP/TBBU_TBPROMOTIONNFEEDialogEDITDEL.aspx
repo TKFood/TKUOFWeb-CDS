@@ -71,7 +71,7 @@
                 <asp:Label ID="Label6" runat="server" Text="類別"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                 <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
                 <%--<asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
@@ -127,10 +127,27 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label13" runat="server" Text="總業績"></asp:Label>
+                <asp:Label ID="Label13" runat="server" Text="總收入"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox11" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label18" runat="server" Text="總成本"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label19" runat="server" Text="總費用"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox5" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
             </td>
         </tr>
 
