@@ -105,6 +105,11 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             ,[FEEMONEYS]
                             ,[PROFITS]
                             ,[COMMENTS]
+                            ,[ACTSALESMONEYS]
+                            ,[ACTCOSTMONEYS]
+                            ,[ACTFEEMONEYS]
+                            ,[ACTPROFITS]
+
                             ,ISNULL( (     
                             SELECT CASE
                             WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''

@@ -169,6 +169,41 @@
             </td>
         </tr>
 
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label20" runat="server" Text="實際總收入"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox6" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label21" runat="server" Text="實際總成本"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox16" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label22" runat="server" Text="實際總費用"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox17" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label23" runat="server" Text="實際利潤"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox18" runat="server" Text="" Width="100%" Row="1" Style="height: 20px;"></asp:TextBox>
+            </td>
+        </tr>
     </table>
 
     <table>

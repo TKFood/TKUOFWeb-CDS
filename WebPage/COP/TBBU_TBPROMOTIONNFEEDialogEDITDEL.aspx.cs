@@ -178,7 +178,10 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
 
         string cmdTxt = @"   
                         SELECT  
-                        [YEARS],[DEPNAME],[TITLES],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS],[COSTMONEYS],[FEEMONEYS],[PROFITS],[COMMENTS]
+                        [YEARS],[DEPNAME],[TITLES],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS],[COSTMONEYS],[FEEMONEYS],[PROFITS],[COMMENTS],[ACTSALESMONEYS]
+                        ,[ACTCOSTMONEYS]
+                        ,[ACTFEEMONEYS]
+                        ,[ACTPROFITS]
                         FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
                         WHERE [ID]=@ID
                         ";
@@ -207,6 +210,10 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
             TextBox15.Text = dt.Rows[0]["TITLES"].ToString();
             TextBox4.Text = dt.Rows[0]["COSTMONEYS"].ToString();
             TextBox5.Text = dt.Rows[0]["FEEMONEYS"].ToString();
+            TextBox6.Text = dt.Rows[0]["ACTSALESMONEYS"].ToString();
+            TextBox16.Text = dt.Rows[0]["ACTCOSTMONEYS"].ToString();
+            TextBox17.Text = dt.Rows[0]["ACTFEEMONEYS"].ToString();
+            TextBox18.Text = dt.Rows[0]["ACTPROFITS"].ToString();
 
 
 
@@ -239,18 +246,23 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         string TITLES = TextBox15.Text;
         string COSTMONEYS = TextBox4.Text;
         string FEEMONEYS = TextBox5.Text;
+        string ACTSALESMONEYS = TextBox6.Text;
+        string ACTCOSTMONEYS = TextBox16.Text;
+        string ACTFEEMONEYS = TextBox17.Text;
+        string ACTPROFITS = TextBox18.Text;
 
+      
 
 
 
         if (!string.IsNullOrEmpty(ID) )
         {       
-            UPDATETBPROMOTIONNFEE(ID, YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES);
+            UPDATETBPROMOTIONNFEE(ID, YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTSALESMONEYS, ACTCOSTMONEYS, ACTFEEMONEYS, ACTPROFITS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES)
+    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES, string ACTSALESMONEYS, string ACTCOSTMONEYS, string ACTFEEMONEYS, string ACTPROFITS)
     {
 
 
@@ -277,6 +289,10 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
                         ,[COMMENTS]=@COMMENTS
                          ,[COSTMONEYS]=@COSTMONEYS
                          ,[FEEMONEYS]=@FEEMONEYS
+                          ,[ACTSALESMONEYS]=@ACTSALESMONEYS
+                          ,[ACTCOSTMONEYS]=@ACTCOSTMONEYS
+                          ,[ACTFEEMONEYS]=@ACTFEEMONEYS
+                          ,[ACTPROFITS]=@ACTPROFITS
 
                         WHERE  [ID]= @ID
                    
@@ -301,7 +317,10 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         m_db.AddParameter("@COMMENTS", COMMENTS);
         m_db.AddParameter("@COSTMONEYS", COSTMONEYS);
         m_db.AddParameter("@FEEMONEYS", FEEMONEYS);
-
+        m_db.AddParameter("@ACTSALESMONEYS", ACTSALESMONEYS);
+        m_db.AddParameter("@ACTCOSTMONEYS", ACTCOSTMONEYS);
+        m_db.AddParameter("@ACTFEEMONEYS", ACTFEEMONEYS);
+        m_db.AddParameter("@ACTPROFITS", ACTPROFITS);
         m_db.ExecuteNonQuery(cmdTxt);
 
 
