@@ -100,15 +100,15 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             ,[CLIENTS]
                             ,[STORES]
                             ,[SALESNUMS]
-                            ,[SALESMONEYS]
-                            ,[COSTMONEYS]
-                            ,[FEEMONEYS]
-                            ,[PROFITS]
+                            ,ROUND([SALESMONEYS],0) AS SALESMONEYS
+                            ,ROUND([COSTMONEYS],0) AS COSTMONEYS
+                            ,ROUND([FEEMONEYS],0) AS FEEMONEYS
+                            ,ROUND([PROFITS],0) AS PROFITS
                             ,[COMMENTS]
-                            ,[ACTSALESMONEYS]
-                            ,[ACTCOSTMONEYS]
-                            ,[ACTFEEMONEYS]
-                            ,[ACTPROFITS]
+                            ,ROUND([ACTSALESMONEYS],0) AS ACTSALESMONEYS
+                            ,ROUND([ACTCOSTMONEYS],0) AS ACTCOSTMONEYS
+                            ,ROUND([ACTFEEMONEYS],0) AS ACTFEEMONEYS
+                            ,ROUND([ACTPROFITS],0) AS ACTPROFITS
 
                             ,ISNULL( (     
                             SELECT CASE

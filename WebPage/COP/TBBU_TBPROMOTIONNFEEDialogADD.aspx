@@ -162,7 +162,7 @@
                 <asp:Label ID="Label15" runat="server" Text="說明"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox13" runat="server" Text="" Width="100%" Row="5" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="TextBox13" runat="server" Text="" Width="100%" Row="5" TextMode="MultiLine"  Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
     </table>
