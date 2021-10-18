@@ -249,8 +249,8 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
     private void BindGridOVER()
     {
-        RadDatePicker1.SelectedDate = DateTime.Now.AddYears(-1);
-        RadDatePicker2.SelectedDate = DateTime.Now.AddDays(-9);
+        RadDatePicker1.SelectedDate = DateTime.Now.AddYears(-1).AddDays(-9);
+        RadDatePicker2.SelectedDate = DateTime.Now.AddDays(-8);
 
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -361,7 +361,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
     private void BindGridIN()
     {
-        RadDatePicker1.SelectedDate = DateTime.Now.AddDays(-8);
+        RadDatePicker1.SelectedDate = DateTime.Now.AddDays(-7);
         RadDatePicker2.SelectedDate = DateTime.Now;
 
 
