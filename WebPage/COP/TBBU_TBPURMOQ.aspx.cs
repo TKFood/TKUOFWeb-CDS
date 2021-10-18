@@ -921,76 +921,47 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     #endregion
 
     #region BUTTON
-    protected void btn_Click(object sender, EventArgs e)
-    {
-
-
-        //開窗後回傳參數
-        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        {
-            //txtReturnValue.Text = Dialog.GetReturnValue();
-        }
-
-
-    }
-
-
     protected void btn1_Click(object sender, EventArgs e)
     {
-        //this.Session["SDATE"] = txtDate1.Text.Trim();
-        //this.Session["EDATE"] = txtDate2.Text.Trim();
+        BindGrid();
     }
-
     protected void btn2_Click(object sender, EventArgs e)
     {
-        SETEXCEL();
+        BindGrid2();
     }
     protected void btn3_Click(object sender, EventArgs e)
     {
-        //Response.ClearContent();
-        //Response.AddHeader("content-disposition", "attachment; filename=test.xls");
-        //Response.ContentEncoding = System.Text.Encoding.GetEncoding("big5");
-        //HttpContext.Current.Response.Write("<meta http-equiv=Content-Type content=text/html;charset=big5>");
-        //HttpContext.Current.Response.Write("<head><meta http-equiv=Content-Type content=text/html;charset=big5></head>");
-        //Response.Charset = "big5";
-        //Response.ContentType = "application/excel";
-
-
-        //System.IO.StringWriter sw = new System.IO.StringWriter();
-        //HtmlTextWriter htw = new HtmlTextWriter(sw);
-        //Grid1.RenderControl(htw);
-        //Response.Write(sw.ToString());
-        //Response.End();
+        BindGrid3();
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void btn4_Click(object sender, EventArgs e)
     {
-      
-
+        BindGrid4();
     }
-
     protected void btn5_Click(object sender, EventArgs e)
     {
-
-        ////this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
-        //ViewState["TextBox1"] = TextBox1.Text.ToString();
-        //ViewState["TextBox2"] = TextBox2.Text.ToString();
-       
-
-        //BindGrid("");
-
-        //TextBox1.Text = ViewState["TextBox1"].ToString();
-        //TextBox2.Text = ViewState["TextBox2"].ToString();
-        
-     
-
-        //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        //{
-        //    if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-        //    {
-
-        //    }
-
-        //}
+        BindGrid5();
     }
+    protected void btn6_Click(object sender, EventArgs e)
+    {
+        BindGrid6();
+    }
+    protected void btn7_Click(object sender, EventArgs e)
+    {
+        BindGrid7();
+    }
+    protected void btn8_Click(object sender, EventArgs e)
+    {
+        BindGrid8();
+    }
+    protected void btn9_Click(object sender, EventArgs e)
+    {
+        BindGrid9();
+    }
+    protected void btn10_Click(object sender, EventArgs e)
+    {
+        BindGrid10();
+    }
+
+
     #endregion
 }

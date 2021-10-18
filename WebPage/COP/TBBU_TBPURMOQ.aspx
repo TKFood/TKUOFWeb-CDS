@@ -114,7 +114,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn2_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -154,7 +154,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button3" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button3" runat="server" Text=" 查詢 " OnClick="btn3_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -195,7 +195,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button4" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button4" runat="server" Text=" 查詢 " OnClick="btn4_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -236,7 +236,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button5" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button5" runat="server" Text=" 查詢 " OnClick="btn5_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -277,7 +277,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button6" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button6" runat="server" Text=" 查詢 " OnClick="btn6_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -318,7 +318,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button7" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button7" runat="server" Text=" 查詢 " OnClick="btn7_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -359,7 +359,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button8" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button8" runat="server" Text=" 查詢 " OnClick="btn8_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -400,7 +400,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button9" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button9" runat="server" Text=" 查詢 " OnClick="btn9_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -441,7 +441,7 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button10" runat="server" Text=" 查詢 " OnClick="btn1_Click"
+                            <asp:Button ID="Button10" runat="server" Text=" 查詢 " OnClick="btn10_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
