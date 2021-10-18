@@ -508,19 +508,21 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSCOMMENTSDialogSALESADD : Ede.
 
             if (KIND.Equals("拜訪"))
             {
+                NOTE_CONTENT = NOTE_CONTENT + "記錄日:" + DateTime.Now.ToString("yyyy/MM/dd") + "<br>";
 
-                if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
-                {
-                    NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
-                }
+                //if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
+                //{                    
+                //    NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
+                //}
             }
             else
             {
+                NOTE_CONTENT = NOTE_CONTENT + "記錄日:" + DateTime.Now.ToString("yyyy/MM/dd") + "<br>";
 
-                if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
-                {
-                    NOTE_CONTENT = NOTE_CONTENT + "結案日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
-                }
+                //if (!string.IsNullOrEmpty(dt.Rows[0]["EDAYS"].ToString()))
+                //{
+                //    NOTE_CONTENT = NOTE_CONTENT + "結案日:" + dt.Rows[0]["EDAYS"].ToString() + "<br>";
+                //}
             }
             if (!string.IsNullOrEmpty(COMMENTS))
             {

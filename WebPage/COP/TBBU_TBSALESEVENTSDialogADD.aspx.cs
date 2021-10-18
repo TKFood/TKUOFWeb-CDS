@@ -422,17 +422,21 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
 
         if (KIND.Equals("拜訪"))
         {
-            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
-            {
-                NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
-            }
+            NOTE_CONTENT = NOTE_CONTENT + "記錄日:" + DateTime.Now.ToString("yyyy/MM/dd") + "<br>";
+
+            //if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+            //{
+            //    NOTE_CONTENT = NOTE_CONTENT + "拜訪日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+            //}
         }
         else
         {
-            if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
-            {
-                NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
-            }
+            NOTE_CONTENT = NOTE_CONTENT + "記錄日:" + DateTime.Now.ToString("yyyy/MM/dd") + "<br>";
+
+            //if (!string.IsNullOrEmpty(RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd")))
+            //{
+            //    NOTE_CONTENT = NOTE_CONTENT + "結案日:" + RadDatePicker2.SelectedDate.Value.ToString("yyyy/MM/dd") + "<br>";
+            //}
         }
 
         if (!string.IsNullOrEmpty(TextBox6.Text))
