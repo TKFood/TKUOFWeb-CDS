@@ -113,7 +113,7 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
 
         string cmdTxt = @"   
                         SELECT 
-                        [ID],[KINDS],[NAMES],[MOQS],[INDAYS]
+                        [ID],[KINDS],[NAMES],[MOQS],[INDAYS],[COMMENTS]
                         FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                         WHERE [ID]=@ID
                         ";
@@ -129,7 +129,8 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
             TextBox1.Text = dt.Rows[0]["NAMES"].ToString();
             TextBox2.Text = dt.Rows[0]["MOQS"].ToString();
             TextBox3.Text = dt.Rows[0]["INDAYS"].ToString();
-           
+            TextBox4.Text = dt.Rows[0]["COMMENTS"].ToString();
+
 
         }
 
@@ -145,16 +146,17 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
         string NAMES = TextBox1.Text.Trim();
         string MOQS = TextBox2.Text.Trim();
         string INDAYS = TextBox3.Text.Trim();
+        string COMMENTS = TextBox4.Text.Trim();
 
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATETBPURMOQ(ID, KINDS, NAMES, MOQS, INDAYS);
+            UPDATETBPURMOQ(ID, KINDS, NAMES, MOQS, INDAYS, COMMENTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBPURMOQ(string ID, string KINDS, string NAMES, string MOQS, string INDAYS)
+    public void UPDATETBPURMOQ(string ID, string KINDS, string NAMES, string MOQS, string INDAYS,string COMMENTS)
     {
 
 
@@ -168,6 +170,7 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
                         ,[NAMES]=@NAMES
                         ,[MOQS]=@MOQS
                         ,[INDAYS]=@INDAYS
+                        ,[COMMENTS]=@COMMENTS
                         WHERE [ID]=@ID
                    
                             ";
@@ -178,6 +181,7 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
         m_db.AddParameter("@NAMES", NAMES);
         m_db.AddParameter("@MOQS", MOQS);
         m_db.AddParameter("@INDAYS", INDAYS);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
 
 
 

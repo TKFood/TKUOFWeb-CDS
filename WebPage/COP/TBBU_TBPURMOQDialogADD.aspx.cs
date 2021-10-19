@@ -108,17 +108,18 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogADD : Ede.Uof.Utility.Page.B
         string NAMES = TextBox1.Text.Trim();
         string MOQS = TextBox2.Text.Trim();
         string INDAYS = TextBox3.Text.Trim();
+        string COMMENTS=TextBox4.Text.Trim();
 
         if ( !string.IsNullOrEmpty(KINDS))
         {
 
-            ADDTBPURMOQ(KINDS, NAMES, MOQS, INDAYS);
+            ADDTBPURMOQ(KINDS, NAMES, MOQS, INDAYS, COMMENTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBPURMOQ(string KINDS, string NAMES, string MOQS, string INDAYS)
+    public void ADDTBPURMOQ(string KINDS, string NAMES, string MOQS, string INDAYS,string COMMENTS)
     {
       
 
@@ -129,9 +130,9 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogADD : Ede.Uof.Utility.Page.B
         {
             string cmdTxt = @"  
                             INSERT INTO [TKBUSINESS].[dbo].[TBPURMOQ]
-                            ([KINDS],[NAMES],[MOQS],[INDAYS])
+                            ([KINDS],[NAMES],[MOQS],[INDAYS],[COMMENTS])
                             VALUES
-                            (@KINDS,@NAMES,@MOQS,@INDAYS)
+                            (@KINDS,@NAMES,@MOQS,@INDAYS,@COMMENTS)
 
                             ";
 
@@ -141,6 +142,7 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogADD : Ede.Uof.Utility.Page.B
             m_db.AddParameter("@NAMES", NAMES);
             m_db.AddParameter("@MOQS", MOQS);
             m_db.AddParameter("@INDAYS", INDAYS);
+            m_db.AddParameter("@COMMENTS", COMMENTS);
 
             m_db.ExecuteNonQuery(cmdTxt);
 

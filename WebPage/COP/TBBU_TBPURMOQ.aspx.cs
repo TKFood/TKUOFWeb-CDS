@@ -96,6 +96,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -211,6 +212,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -298,6 +300,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -387,6 +390,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -476,6 +480,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -565,6 +570,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -654,6 +660,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -742,6 +749,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -830,6 +838,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -919,6 +928,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[NAMES]
                             ,[MOQS]
                             ,[INDAYS]
+                            ,[COMMENTS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
