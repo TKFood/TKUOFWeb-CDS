@@ -87,7 +87,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         StringBuilder QUERYS = new StringBuilder();
 
 
-        //END +ISNULL([NAMES],'')+'<br>'+ISNULL([DAYS],'')+'<br>'+ISNULL([TARGETS],'')+'<br> '+ISNULL([FEES],'')+'<br> '+ISNULL([ITEMS],'') AS 'data()'
+        //END +ISNULL([NAMES],'')+'<br>'+ISNULL([INDAYS],'')+'<br>'+ISNULL([TARGETS],'')+'<br> '+ISNULL([FEES],'')+'<br> '+ISNULL([ITEMS],'') AS 'data()'
 
         cmdTxt.AppendFormat(@" 
                             SELECT 
@@ -95,7 +95,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -175,7 +175,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -246,7 +246,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -318,7 +318,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -390,7 +390,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -462,7 +462,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -534,7 +534,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -606,7 +606,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -678,7 +678,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]
@@ -750,7 +750,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
                             ,[KINDS]
                             ,[NAMES]
                             ,[MOQS]
-                            ,[DAYS]
+                            ,[INDAYS]
                             FROM [TKBUSINESS].[dbo].[TBPURMOQ]
                             WHERE [KINDS]=@KINDS
                             ORDER BY [ID]

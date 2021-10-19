@@ -13,7 +13,7 @@
             //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
             //OpenDialogResult為關閉視後會執行的JS Function
             //參數使用JSON格式傳遞
-            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_TBPURMOQDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
             return false;
 
@@ -97,7 +97,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -137,7 +137,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -177,7 +177,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -218,7 +218,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -259,7 +259,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -300,7 +300,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -341,7 +341,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -382,7 +382,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -423,7 +423,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -464,7 +464,7 @@
                                         <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="叫貨天數" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
