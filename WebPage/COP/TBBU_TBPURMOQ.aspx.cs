@@ -1157,6 +1157,20 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         BindGrid10();
     }
 
+    protected void btnADD_Click(object sender, EventArgs e)
+    {
+        BindGrid();
+        BindGrid2();
+        BindGrid3();
+        BindGrid4();
+        BindGrid5();
+        BindGrid6();
+        BindGrid7();
+        BindGrid8();
+        BindGrid9();
+        BindGrid10();
+    }
+
 
     #endregion
 }

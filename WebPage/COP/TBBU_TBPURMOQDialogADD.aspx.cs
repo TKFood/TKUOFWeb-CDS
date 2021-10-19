@@ -78,7 +78,7 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogADD : Ede.Uof.Utility.Page.B
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
+        Dialog.SetReturnValue2("ADD");
 
         ADD();
 
@@ -90,7 +90,7 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogADD : Ede.Uof.Utility.Page.B
     void Button2OnClick()
     {
         //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
+        Dialog.SetReturnValue2("ADD");
 
         ADD();
 
@@ -116,8 +116,8 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogADD : Ede.Uof.Utility.Page.B
             ADDTBPURMOQ(KINDS, NAMES, MOQS, INDAYS, COMMENTS);
         }
 
-        Dialog.SetReturnValue2("NeedPostBack");
-        Dialog.Close(this);
+        //Dialog.SetReturnValue2("ADD");
+        //Dialog.Close(this);
     }
     public void ADDTBPURMOQ(string KINDS, string NAMES, string MOQS, string INDAYS,string COMMENTS)
     {

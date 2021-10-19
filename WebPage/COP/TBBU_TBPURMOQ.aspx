@@ -7,7 +7,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <script>    
-        function btn4_Click(sender) {
+        function btnADD_Click(sender) {
             //從前端開始視窗
             //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
             //OpenDialogResult為關閉視後會執行的JS Function
@@ -573,7 +573,7 @@
                             <asp:Label ID="Label3" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
+                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btnADD_Click(this)"  onclick="btnADD_Click" meta:resourcekey="btn4Resource1" />
 
                         </td>
                     </tr>
