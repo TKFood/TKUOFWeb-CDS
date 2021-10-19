@@ -100,6 +100,12 @@
                                         <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
+
+                                          <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </Fast:Grid>
                             </div>
