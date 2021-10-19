@@ -30,11 +30,11 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
         {
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
-
+            BindDropDownList();
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
-                SEARCHTPRODUCTS(lblParam.Text);
+                SEARCHTBPURMOQ(lblParam.Text);
             }
 
         }
@@ -50,7 +50,7 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
-        UPDATE();
+        UPDATE(lblParam.Text);
 
         Dialog.Close(this);
 
@@ -62,50 +62,74 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
-        UPDATE();
+        UPDATE(lblParam.Text);
 
-        SEARCHTPRODUCTS(lblParam.Text);
+        SEARCHTBPURMOQ(lblParam.Text);
     }
     protected void btn1_Click(object sender, EventArgs e)
     {
-        DELCOPCOPMACLIENT(lblParam.Text);
+        DELTBPURMOQ(lblParam.Text);
     }
 
 
     #endregion
 
     #region FUNCTION
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [ID],[KINDS] FROM [TKBUSINESS].[dbo].[TBPURMOQKINDS] ORDER BY [ID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "KINDS";
+            DropDownList1.DataValueField = "KINDS";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
 
 
-    public void SEARCHTPRODUCTS(string ID)
+
+    }
+
+    public void SEARCHTBPURMOQ(string ID)
     {
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"   
-                      SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
-                        ,[PRICES1],[PRICES2],[PRICES3]
-                        ,[MB002],[MOQS]
-                        FROM [TKBUSINESS].[dbo].[PRODUCTS]
-                        LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
-                        WHERE [PRODUCTS].[MB001]=@MB001
+                        SELECT 
+                        [ID],[KINDS],[NAMES],[MOQS],[INDAYS]
+                        FROM [TKBUSINESS].[dbo].[TBPURMOQ]
+                        WHERE [ID]=@ID
                         ";
-        m_db.AddParameter("@MB001", ID);
+        m_db.AddParameter("@ID", ID);
 
         DataTable dt = new DataTable();
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
         if (dt.Rows.Count > 0)
-        {           
-            TextBox1.Text = dt.Rows[0]["MB002"].ToString();
-            TextBox2.Text = dt.Rows[0]["PRODUCTSFEATURES"].ToString();
-            TextBox3.Text = dt.Rows[0]["SALESFOCUS"].ToString();
-            TextBox4.Text = dt.Rows[0]["PRICES1"].ToString();
-            TextBox5.Text = dt.Rows[0]["PRICES2"].ToString();
-            TextBox6.Text = dt.Rows[0]["PRICES3"].ToString();
-            TextBox7.Text = dt.Rows[0]["MOQS"].ToString();
+        {
+            DropDownList1.SelectedValue= dt.Rows[0]["KINDS"].ToString();
+            TextBox1.Text = dt.Rows[0]["NAMES"].ToString();
+            TextBox2.Text = dt.Rows[0]["MOQS"].ToString();
+            TextBox3.Text = dt.Rows[0]["INDAYS"].ToString();
+           
 
         }
 
@@ -114,27 +138,23 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
 
     }
 
-    public void UPDATE()
+    public void UPDATE(string MID)
     {
-        string ID = lblParam.Text;
-        string MB002 = TextBox1.Text;
-        string PRODUCTSFEATURES = TextBox2.Text;
-        string SALESFOCUS = TextBox3.Text;
-        string COPYWRITINGS = "";
-        string PRICES1 = TextBox4.Text;
-        string PRICES2 = TextBox5.Text;
-        string PRICES3 = TextBox6.Text;
-        string MOQS= TextBox7.Text;
+        string ID = MID;
+        string KINDS = DropDownList1.SelectedValue.ToString();
+        string NAMES = TextBox1.Text.Trim();
+        string MOQS = TextBox2.Text.Trim();
+        string INDAYS = TextBox3.Text.Trim();
 
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATEPRODUCTS(ID, PRODUCTSFEATURES, SALESFOCUS, COPYWRITINGS, PRICES1, PRICES2, PRICES3, MOQS);
+            UPDATETBPURMOQ(ID, KINDS, NAMES, MOQS, INDAYS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATEPRODUCTS(string ID, string PRODUCTSFEATURES, string SALESFOCUS, string COPYWRITINGS, string PRICES1, string PRICES2, string PRICES3,string MOQS)
+    public void UPDATETBPURMOQ(string ID, string KINDS, string NAMES, string MOQS, string INDAYS)
     {
 
 
@@ -142,28 +162,22 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        UPDATE [TKBUSINESS].[dbo].[PRODUCTS]
-                        SET 
-                        [PRODUCTSFEATURES]=@PRODUCTSFEATURES
-                        ,[SALESFOCUS]=@SALESFOCUS
-                        ,[COPYWRITINGS]=@COPYWRITINGS
-                        ,[PRICES1]=@PRICES1
-                        ,[PRICES2]=@PRICES2
-                        ,[PRICES3]=@PRICES3
+                        UPDATE [TKBUSINESS].[dbo].[TBPURMOQ]
+                        SET
+                        [KINDS]=@KINDS
+                        ,[NAMES]=@NAMES
                         ,[MOQS]=@MOQS
-                        WHERE [MB001]=@ID
+                        ,[INDAYS]=@INDAYS
+                        WHERE [ID]=@ID
                    
                             ";
 
 
         m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@PRODUCTSFEATURES", PRODUCTSFEATURES);
-        m_db.AddParameter("@SALESFOCUS", SALESFOCUS);
-        m_db.AddParameter("@COPYWRITINGS", COPYWRITINGS);
-        m_db.AddParameter("@PRICES1", PRICES1);
-        m_db.AddParameter("@PRICES2", PRICES2);
-        m_db.AddParameter("@PRICES3", PRICES3);
+        m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@NAMES", NAMES);
         m_db.AddParameter("@MOQS", MOQS);
+        m_db.AddParameter("@INDAYS", INDAYS);
 
 
 
@@ -175,12 +189,12 @@ public partial class CDS_WebPage_TBBU_TBPURMOQDialogEDITDEL : Ede.Uof.Utility.Pa
 
 
 
-    public void DELCOPCOPMACLIENT(string ID)
+    public void DELTBPURMOQ(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  DELETE [TKBUSINESS].[dbo].[PRODUCTS] WHERE [MB001]=@ID
+        string cmdTxt = @"  DELETE [TKBUSINESS].[dbo].[TBPURMOQ] WHERE [ID]=@ID
                             ";
 
         m_db.AddParameter("@ID", ID);

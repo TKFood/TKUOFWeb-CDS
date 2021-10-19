@@ -143,6 +143,23 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         }
     }
 
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button1")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
+    }
+
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         SETEXCEL();
@@ -221,27 +238,43 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button2");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button2");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
     }
 
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button2")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
+    }
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         SETEXCEL();
@@ -292,25 +325,42 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button3");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button3");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid3_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button3")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
     }
 
     public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -364,25 +414,42 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button4");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button4");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button4")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
     }
 
     public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -436,25 +503,42 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid5_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button5");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button5");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid5_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button5")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
     }
 
     public void OnBeforeExport5(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -508,25 +592,42 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid6_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button6");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button6");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid6_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button6")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
     }
 
     public void OnBeforeExport6(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -580,27 +681,43 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid7_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button7");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button7");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
     }
 
+    protected void Grid7_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button7")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
+    }
     public void OnBeforeExport7(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         SETEXCEL();
@@ -652,27 +769,43 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid8_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button8");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button8");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
     }
 
+    protected void Grid8_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button8")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
+    }
     public void OnBeforeExport8(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         SETEXCEL();
@@ -724,25 +857,42 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid9_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button9");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button9");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid9_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button9")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
     }
 
     public void OnBeforeExport9(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -796,25 +946,42 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     }
     protected void Grid10_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button10");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button10");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid10_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button10")
+        {
+            BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
+            BindGrid7();
+            BindGrid8();
+            BindGrid9();
+            BindGrid10();
+        }
     }
 
     public void OnBeforeExport10(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)

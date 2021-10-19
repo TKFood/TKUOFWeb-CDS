@@ -28,62 +28,36 @@
     <table>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label2" runat="server" Text="品名"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text="類別"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
             </td>
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label3" runat="server" Text="銷售重點"></asp:Label>
+                <asp:Label ID="Label3" runat="server" Text="品名"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox2" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Text=" " Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label5" runat="server" Text="銷售通路"></asp:Label>
+                <asp:Label ID="Label5" runat="server" Text="最低量"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox3" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox2" runat="server" Text=" " Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label6" runat="server" Text="建議售價"></asp:Label>
+                <asp:Label ID="Label6" runat="server" Text="叫貨天數"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox4" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox3" runat="server" Text=" " Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
-        <tr>
-            <td class="PopTableLeftTD">
-                <asp:Label ID="Label7" runat="server" Text="IP價"></asp:Label>
-            </td>
-            <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td class="PopTableLeftTD">
-                <asp:Label ID="Label8" runat="server" Text="DM價"></asp:Label>
-            </td>
-            <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox6" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td class="PopTableLeftTD">
-                <asp:Label ID="Label9" runat="server" Text="實際MOQ"></asp:Label>
-            </td>
-            <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="1" Style="height: 120px;"></asp:TextBox>
-            </td>
-        </tr>
-
-
 
     </table>
 
@@ -94,7 +68,7 @@
             </td>
             <td class="PopTableRightTD">
                 <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="red"
-                    OnClick="btn1_Click" meta:resourcekey="btn1Resource1"   onclientclick="return confirm('是否刪除? ');"  />
+                    OnClick="btn1_Click" meta:resourcekey="btn1Resource1" OnClientClick="return confirm('是否刪除? ');" />
             </td>
         </tr>
     </table>
