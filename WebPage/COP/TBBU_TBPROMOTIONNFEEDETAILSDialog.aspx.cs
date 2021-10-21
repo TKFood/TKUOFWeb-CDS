@@ -54,7 +54,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
-        if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text) )
+        if(!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(TextBox1.Text)  )
         {
             ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text, TextBox4.Text);
 
@@ -69,7 +69,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
 
     void Button2OnClick()
     {
-        if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox3.Text))
+        if (!string.IsNullOrEmpty(lblParam.Text) && !string.IsNullOrEmpty(TextBox1.Text) )
         {
             ADDTBPROMOTIONNFEEDETAILS(lblParam.Text, TextBox1.Text.Trim(), TextBox3.Text, TextBox4.Text);
 

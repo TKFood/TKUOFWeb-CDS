@@ -257,6 +257,8 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEPRODUCTSDialog : Ede.Uof.Ut
 
         m_db.ExecuteNonQuery(cmdTxt);
 
+        int i = 0;
+
         
     }
 
