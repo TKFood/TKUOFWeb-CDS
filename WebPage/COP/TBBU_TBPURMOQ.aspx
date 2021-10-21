@@ -42,6 +42,8 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
+            <telerik:RadTab Text="數位樣">
+            </telerik:RadTab>
             <telerik:RadTab Text="新版">
             </telerik:RadTab>
             <telerik:RadTab Text="原料">
@@ -71,6 +73,57 @@
 
     <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
 
+        <telerik:RadPageView ID="RadPageView13" runat="server">
+            <div id="tabs-2">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button12" runat="server" Text=" 查詢 " OnClick="btn12_Click"
+                                meta:resourcekey="btn12Resource1" />
+                        </td>
+
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                                <Fast:Grid ID="Grid12" OnRowDataBound="Grid12_RowDataBound" OnRowCommand="Grid12_RowCommand" runat="server" OnBeforeExport="OnBeforeExport11" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource12" OnPageIndexChanging="grid_PageIndexChanging12">
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                    <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
+                                    <Columns>
+                                        <asp:BoundField HeaderText="ID" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="品名" DataField="NAMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="最低量" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="叫貨天數" DataField="INDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="備註" DataField="COMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+
+                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="Button12" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' CommandName="Button12" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </Fast:Grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+
+       
          <telerik:RadPageView ID="RadPageView12" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">

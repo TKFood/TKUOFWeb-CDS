@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DocumentFormat.OpenXml.Drawing;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
@@ -23,7 +24,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
-        {         
+        {
 
             BindGrid();
             BindGrid2();
@@ -36,6 +37,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
             BindGrid9();
             BindGrid10();
             BindGrid11();
+            BindGrid12();
 
         }
         else
@@ -79,6 +81,23 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
 
 
     }
+
+    public void SEARCHALL()
+    {
+        BindGrid();
+        BindGrid2();
+        BindGrid3();
+        BindGrid4();
+        BindGrid5();
+        BindGrid6();
+        BindGrid7();
+        BindGrid8();
+        BindGrid9();
+        BindGrid10();
+        BindGrid11();
+        BindGrid12();
+    }
+
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -149,16 +168,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button1")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
 
@@ -266,16 +276,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button2")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -354,16 +355,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button3")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
 
@@ -444,16 +436,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button4")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
 
@@ -534,16 +517,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button5")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
 
@@ -624,16 +598,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button6")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
 
@@ -714,16 +679,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button7")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
     public void OnBeforeExport7(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -803,16 +759,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button8")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
     public void OnBeforeExport8(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -892,16 +839,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button9")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
 
@@ -982,16 +920,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button10")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
+            SEARCHALL();
         }
     }
 
@@ -1071,17 +1000,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
     {
         if (e.CommandName == "Button11")
         {
-            BindGrid();
-            BindGrid2();
-            BindGrid3();
-            BindGrid4();
-            BindGrid5();
-            BindGrid6();
-            BindGrid7();
-            BindGrid8();
-            BindGrid9();
-            BindGrid10();
-            BindGrid11();
+            SEARCHALL();
         }
     }
 
@@ -1092,6 +1011,85 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
 
     }
 
+    private void BindGrid12()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT 
+                            [ID]
+                            ,[KINDS]
+                            ,[NAMES]
+                            ,[MOQS]
+                            ,[INDAYS]
+                            ,[COMMENTS]
+                            FROM [TKBUSINESS].[dbo].[TBPURMOQ]
+                            WHERE [KINDS]=@KINDS
+                            ORDER BY [ID]
+                            ");
+
+
+
+
+
+        m_db.AddParameter("@KINDS", "數位樣");
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid12.DataSource = dt;
+        Grid12.DataBind();
+    }
+
+    protected void grid_PageIndexChanging12(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid("");
+    }
+    protected void Grid12_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button12");
+
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button12");
+
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid12_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button12")
+        {
+            SEARCHALL();
+        }
+    }
+
+    public void OnBeforeExport12(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+
+
+    }
 
     public override void VerifyRenderingInServerForm(Control control) 
     { 
@@ -1251,6 +1249,11 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         BindGrid11();
     }
 
+    protected void btn12_Click(object sender, EventArgs e)
+    {
+        BindGrid12();
+    }
+
     protected void btnADD_Click(object sender, EventArgs e)
     {
         BindGrid();
@@ -1264,6 +1267,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         BindGrid9();
         BindGrid10();
         BindGrid11();
+        BindGrid12();
     }
 
 
