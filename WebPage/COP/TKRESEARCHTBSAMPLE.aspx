@@ -39,11 +39,11 @@
     <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
             <div id="tabs-1">
-                <table class="PopTable">                    
+                <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn5_Click"
+                            <asp:Button ID="Button5" runat="server" Text=" 查詢 " OnClick="btn5_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
 
@@ -60,23 +60,37 @@
                                         <asp:BoundField HeaderText="ID" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
-                                          <asp:BoundField HeaderText="表單編號" DataField="FORMID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="表單編號" DataField="FORMID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
-                                          <asp:BoundField HeaderText="申請類別" DataField="DV01" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="申請類別" DataField="DV01" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
-                                          <asp:BoundField HeaderText="產品名稱" DataField="DVV01" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="產品名稱" DataField="DVV01" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
-                                           <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="進度內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="100px" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="100px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField HeaderText="更新日期" DataField="UPDATEDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
-                                        
 
-                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+
+                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="Button2" runat="server" Text="增加備註" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

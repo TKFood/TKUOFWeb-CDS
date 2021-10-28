@@ -30,7 +30,7 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
         else
         {
 
-            BindGrid("");
+          
 
             //if (ViewState["TextBox1"] != null)
             //{
@@ -102,7 +102,9 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
                             ,[FORMID]
                             ,[DV01]
                             ,[DVV01]
-                            ,[ISCLOSE]
+                            ,[ISCLOSE] 
+                            ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
+                             ,CONVERT(NVARCHAR, [UPDATEDATES],112) AS UPDATEDATES 
                             FROM [TKRESEARCH].[dbo].[TBSAMPLE]
                             WHERE 1=1
                             {0}
@@ -148,6 +150,26 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
 
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSAMPLEDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button2");
+
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button2");
+
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSAMPLERECORDSDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
 
@@ -533,8 +555,8 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
 
     protected void btn5_Click(object sender, EventArgs e)
     {
+        BindGrid("");
 
-     
 
         //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
         //{
