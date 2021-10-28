@@ -71,7 +71,7 @@
     </table>
 
     <table>
-        <tr>
+      <%--  <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label4" runat="server" Text="是否刪除"></asp:Label>
             </td>
@@ -79,7 +79,7 @@
                 <asp:Button ID="Button1" runat="server" Text="刪除" ForeColor="red"
                     OnClick="btn1_Click" meta:resourcekey="btn1Resource1" />
             </td>
-        </tr>
+        </tr>--%>
     </table>
 
 </asp:Content>
