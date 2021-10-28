@@ -176,7 +176,18 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
 
 
     }
-
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button1")
+        {
+            BindGrid("");
+        }
+        if (e.CommandName == "Button2")
+        {
+            BindGrid("");
+        }
+      
+    }
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         SETEXCEL();
