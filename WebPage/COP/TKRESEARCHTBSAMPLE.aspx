@@ -69,6 +69,12 @@
                                         <asp:BoundField HeaderText="產品名稱" DataField="DVV01" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="核單日期" DataField="FORMDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="預計生產日期" DataField="PURDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:TemplateField HeaderText="進度內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="100px" ItemStyle-HorizontalAlign="Left"></asp:Label>
@@ -85,12 +91,12 @@
 
                                         <asp:TemplateField HeaderText="BTN" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandName="Button1" CommandArgument='<%# Eval("ID") %>' />
+                                                <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandName="Button1" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="BTN" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Button2" runat="server" Text="增加備註" ForeColor="Red" CommandName="Button2"  CommandArgument='<%# Eval("ID") %>' />
+                                                <asp:Button ID="Button2" runat="server" Text="增加備註" ForeColor="Red" CommandName="Button2" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

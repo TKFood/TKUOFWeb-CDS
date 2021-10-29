@@ -97,14 +97,16 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
         //    QUERYS.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
         //}
         cmdTxt.AppendFormat(@" 
-                             SELECT 
+                            SELECT 
                             [ID]
-                            ,[FORMID]
-                            ,[DV01]
-                            ,[DVV01]
-                            ,[ISCLOSE] 
+                            ,[FORMID],[DV01],[DV02],[DV03],[DV04],[DV05],[DV06],[DV07],[DV08],[DV09],[DV10]
+                            ,[DVV01],[DVV02],[DVV03],[DVV04],[DVV05],[DVV06],[DVV07],[DVV08]
+                            ,[ISCLOSE]
                             ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS] 
-                             ,CONVERT(NVARCHAR, [UPDATEDATES],112) AS UPDATEDATES 
+                            ,CONVERT(NVARCHAR, [UPDATEDATES],112) AS UPDATEDATES 
+                            ,CONVERT(NVARCHAR, [FORMDATES],112) AS FORMDATES 
+                            ,CONVERT(NVARCHAR, [PURDATES],112) AS PURDATES 
+
                             FROM [TKRESEARCH].[dbo].[TBSAMPLE]
                             WHERE 1=1
                             {0}
