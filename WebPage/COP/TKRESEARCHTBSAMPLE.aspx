@@ -66,9 +66,13 @@
                                         <asp:BoundField HeaderText="申請類別" DataField="DV01" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="申請人" DataField="DV10" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="產品名稱" DataField="DVV01" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                         </asp:BoundField>
+
                                         <asp:BoundField HeaderText="核單日期" DataField="FORMDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
@@ -110,7 +114,7 @@
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">
-                    <tr>
+                    <%--<tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
@@ -118,7 +122,7 @@
                             <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
 
                         </td>
-                    </tr>
+                    </tr>--%>
                 </table>
             </div>
         </telerik:RadPageView>
