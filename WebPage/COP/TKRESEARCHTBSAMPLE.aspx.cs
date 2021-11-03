@@ -26,6 +26,7 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
         {          
 
             BindGrid("");
+            BindDropDownList();
         }
         else
         {
@@ -54,48 +55,50 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
     #region FUNCTION
     private void BindDropDownList()
     {
-        //DataTable dt = new DataTable();
-        //dt.Columns.Add("SALESFOCUS", typeof(String));
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
 
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='TKRESEARCHTBSAMPLE' ORDER BY [PARAID] ";
 
-        //string cmdTxt = @" SELECT '全部' AS SALESFOCUS UNION ALL SELECT SALESFOCUS  FROM  [TKBUSINESS].[dbo].[PRODUCTS]  GROUP BY SALESFOCUS ";
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        //dt.Load(m_db.ExecuteReader(cmdTxt));
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARANAME";
+            DropDownList1.DataValueField = "PARANAME";
+            DropDownList1.DataBind();
 
-        //if (dt.Rows.Count > 0)
-        //{
-        //    DropDownList1.DataSource = dt;
-        //    DropDownList1.DataTextField = "SALESFOCUS";
-        //    DropDownList1.DataValueField = "SALESFOCUS";
-        //    DropDownList1.DataBind();
+        }
+        else
+        {
 
-        //}
-        //else
-        //{
-
-        //}
-
+        }
 
 
     }
+
     private void BindGrid(string SALESFOCUS)
     {
+        string ISCLOSE = DropDownList1.SelectedValue.ToString();
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
-      
+
 
         //是否結案
-        //if (!string.IsNullOrEmpty(TextBox9.Text))
-        //{
-        //    QUERYS.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
-        //}
+        if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSE] LIKE '%{0}%'", DropDownList1.SelectedValue.ToString());
+        }
+        
         cmdTxt.AppendFormat(@" 
                             SELECT 
                             [ID]

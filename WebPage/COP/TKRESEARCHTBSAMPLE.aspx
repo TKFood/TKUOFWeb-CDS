@@ -41,6 +41,16 @@
             <div id="tabs-1">
                 <table class="PopTable">
                     <tr>
+                        <td class="PopTableLeftTD">
+                             <asp:Label ID="Label1" runat="server" Text="是否結案 "></asp:Label>
+
+                        </td>
+                        <td>
+                              <asp:DropDownList ID="DropDownList1" runat="server" Width = "100px"></asp:DropDownList>
+                        </td>
+
+                    </tr>
+                    <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Button ID="Button5" runat="server" Text=" 查詢 " OnClick="btn5_Click"
