@@ -188,7 +188,7 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
                             LEFT JOIN [UOF].dbo.TB_EB_USER USER2 ON USER2.USER_GUID=EXECUTE_USER
                             WHERE 1=1
                                 {0}
-                            ORDER BY CREATE_TIME DESC
+                            ORDER BY SUBJECT,CREATE_TIME DESC
                              
                               
                                 ", QUERYS.ToString());
