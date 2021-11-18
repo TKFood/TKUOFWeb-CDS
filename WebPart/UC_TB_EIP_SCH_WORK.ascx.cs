@@ -28,10 +28,10 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
             txtDate1.SelectedDate = FirstDay;
             txtDate2.SelectedDate = LastDay;
         }
-        else
-        {
-            BindGrid(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
-        }
+        //else
+        //{
+        //    BindGrid(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
+        //}
 
            
     }
@@ -233,6 +233,7 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
     }
     protected void btn1_Click(object sender, EventArgs e)
     {
+        BindGrid(txtDate1.SelectedDate.Value.ToString("yyyy/MM/dd"), txtDate2.SelectedDate.Value.ToString("yyyy/MM/dd"));
     }
 
     protected void btn5_Click(object sender, EventArgs e)
