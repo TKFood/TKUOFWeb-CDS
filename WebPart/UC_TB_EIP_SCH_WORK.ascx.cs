@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,6 +16,10 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
     {
         if (!IsPostBack)
         {
+            BindDropDownList();
+
+            BindGrid2("");
+
             DateTime FirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime LastDay = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1).AddDays(-1);
          //   DateTime.DaysInMonth()
@@ -31,6 +36,45 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
            
     }
     #region FUNCTION
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        DataRow row;
+        dt.Columns.Add("KINDS", typeof(String));
+
+        row = dt.NewRow();
+        row["KINDS"] = "N";
+        dt.Rows.Add(row);
+
+        row = dt.NewRow();
+        row["KINDS"] = "Y";
+        dt.Rows.Add(row);
+
+
+
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        //string cmdTxt = @" SELECT '全部' AS SALESFOCUS UNION ALL SELECT SALESFOCUS  FROM  [TKBUSINESS].[dbo].[PRODUCTS]  GROUP BY SALESFOCUS ";
+
+        //dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "KINDS";
+            DropDownList1.DataValueField = "KINDS";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
 
     private void BindGrid(string SDATE, string EDATE)
     {
@@ -104,9 +148,65 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
         
     }
 
-    private void BindGrid2(string SDATE, string EDATE)
+    private void BindGrid2(string SALESFOCUS)
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+
+        //狀態
+        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        {
+            if (DropDownList1.Text.Equals("Y"))
+            {
+                QUERYS.AppendFormat(@" AND WORK_STATE  IN ('Completed') ");
+            }
+            else if (DropDownList1.Text.Equals("N"))
+            {
+                QUERYS.AppendFormat(@"  AND WORK_STATE NOT IN ('Completed') ");
+            }
+        }
+
+        //校稿名稱
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND SUBJECT LIKE  '%'+@SUBJECT+'%' ");
+
+        }
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT SUBJECT,CASE WHEN WORK_STATE='Completed' THEN '已完成'  WHEN WORK_STATE='NotYetBegin' THEN '尚未開始' WHEN WORK_STATE='Audit' THEN '交付人審查中' WHEN WORK_STATE='Proceeding' THEN '進行中' ELSE WORK_STATE END  WORK_STATE
+                            ,USER1.NAME AS '交付者',USER2.NAME AS '執行者',CONVERT(nvarchar,CREATE_TIME,112 ) CREATE_TIME,CONVERT(nvarchar,END_TIME,112 ) END_TIME
+                            ,(SELECT TOP 1 DESCRIPTION FROM  [UOF].dbo.TB_EIP_SCH_WORK_RECORD WHERE TB_EIP_SCH_WORK_RECORD.WORK_GUID=TB_EIP_SCH_WORK.WORK_GUID ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
+                            ,WORK_GUID,CREATE_USER,EXECUTE_USER
+                            FROM [UOF].dbo.TB_EIP_SCH_WORK
+                            LEFT JOIN [UOF].dbo.TB_EB_USER USER1 ON USER1.USER_GUID=CREATE_USER
+                            LEFT JOIN [UOF].dbo.TB_EB_USER USER2 ON USER2.USER_GUID=EXECUTE_USER
+                            WHERE 1=1
+                                {0}
+                            ORDER BY CREATE_TIME DESC
+                             
+                              
+                                ", QUERYS.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        m_db.AddParameter("@SUBJECT", TextBox1.Text);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
     }
 
     protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -133,6 +233,21 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
     }
     protected void btn1_Click(object sender, EventArgs e)
     {
+    }
+
+    protected void btn5_Click(object sender, EventArgs e)
+    {
+        BindGrid2("");
+
+
+        //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        //{
+        //    if (Dialog.GetReturnValue().Equals("NeedPostBack"))
+        //    {
+
+        //    }
+
+        //}
     }
 
     #endregion
