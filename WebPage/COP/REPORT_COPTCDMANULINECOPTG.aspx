@@ -96,12 +96,12 @@
                                     </Columns>
                                     <Columns>
                                         <asp:BoundField HeaderText="品號" DataField="TD004" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
                                     <Columns>
                                         <asp:BoundField HeaderText="品名" DataField="TD005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
                                     <Columns>
