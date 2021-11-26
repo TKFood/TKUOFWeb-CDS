@@ -51,7 +51,7 @@
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label9" runat="server" Text="查詢年月"></asp:Label>
+                            <asp:Label ID="Label9" runat="server" Text="查詢預交日"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="120px"></telerik:RadDatePicker>
