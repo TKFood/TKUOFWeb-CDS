@@ -48,7 +48,7 @@ public partial class CDS_WebPage_SIGN_COPTCCOPTD : Ede.Uof.Utility.Page.BasePage
                             SELECT CASE
                                         WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
                                         ELSE '<br />'
-                                    END +'序號-'+CONVERT(NVARCHAR,TD003)+' '+CONVERT(NVARCHAR,TD005)+'-訂單數量'+CONVERT(NVARCHAR,CONVERT(int,TD008))+'-單價'+CONVERT(NVARCHAR,CONVERT(decimal(16,3),TD011))+'-贈品量'+CONVERT(NVARCHAR,CONVERT(INT,TD024)) AS 'data()'
+                                    END +'是否生產:'+COPTD.UDF01+'  序號:'+CONVERT(NVARCHAR,TD003)+' '+CONVERT(NVARCHAR,TD005)+'-訂單數量'+CONVERT(NVARCHAR,CONVERT(int,TD008))+'-單價'+CONVERT(NVARCHAR,CONVERT(decimal(16,3),TD011))+'-贈品量'+CONVERT(NVARCHAR,CONVERT(INT,TD024)) AS 'data()'
                             FROM  [TK].dbo.COPTD WHERE TD001=TC001 AND TD002=TC002 
                             FOR XML PATH(''), TYPE  
                         ).value('.','nvarchar(max)')  As DETAILS 
