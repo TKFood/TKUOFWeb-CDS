@@ -88,6 +88,8 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogEDITDEL : Ede.Uof.Util
                         ,[MA001]
                         ,[MA002]
                         ,[CLIENTS]
+                        ,[OPERATIONS]
+                        ,[COMMENTS]
                         FROM [TKBUSINESS].[dbo].[COPCOPMACLIENT]
                         WHERE [ID]=@ID
                         ORDER BY MA001
@@ -103,6 +105,8 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogEDITDEL : Ede.Uof.Util
             TextBox1.Text = dt.Rows[0]["MA001"].ToString();
             TextBox2.Text = dt.Rows[0]["MA002"].ToString();
             TextBox3.Text = dt.Rows[0]["CLIENTS"].ToString();
+            TextBox4.Text = dt.Rows[0]["OPERATIONS"].ToString();
+            TextBox5.Text = dt.Rows[0]["COMMENTS"].ToString();
 
 
         }
@@ -118,16 +122,17 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogEDITDEL : Ede.Uof.Util
         string MA001 = TextBox1.Text;
         string MA002 = TextBox2.Text;
         string CLIENTS = TextBox3.Text;
-
+        string OPERATIONS = TextBox4.Text;
+        string COMMENTS = TextBox5.Text;
 
         if (!string.IsNullOrEmpty(ID) )
         {
-          UPDATECOPCOPMACLIENT(ID, MA001, MA002, CLIENTS);
+          UPDATECOPCOPMACLIENT(ID, MA001, MA002, CLIENTS, OPERATIONS, COMMENTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATECOPCOPMACLIENT(string ID, string MA001, string MA002, string CLIENTS)
+    public void UPDATECOPCOPMACLIENT(string ID, string MA001, string MA002, string CLIENTS, string OPERATIONS, string COMMENTS)
     {
 
 
@@ -140,6 +145,8 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogEDITDEL : Ede.Uof.Util
                         [MA001]=@MA001
                         ,[MA002]=@MA002
                         ,[CLIENTS]=@CLIENTS
+                        ,[OPERATIONS]=@OPERATIONS
+                        ,[COMMENTS]=@COMMENTS
                         WHERE [ID]=@ID
                    
                             ";
@@ -149,7 +156,8 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogEDITDEL : Ede.Uof.Util
         m_db.AddParameter("@MA001", MA001);
         m_db.AddParameter("@MA002", MA002);
         m_db.AddParameter("@CLIENTS", CLIENTS);
-       
+        m_db.AddParameter("@OPERATIONS", OPERATIONS);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
 
         m_db.ExecuteNonQuery(cmdTxt);
 

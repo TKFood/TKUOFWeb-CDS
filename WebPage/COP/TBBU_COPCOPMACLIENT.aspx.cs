@@ -37,6 +37,8 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
                         ,[MA001]
                         ,[MA002]
                         ,[CLIENTS]
+                        ,[OPERATIONS]
+                        ,[COMMENTS]
                         FROM [TKBUSINESS].[dbo].[COPCOPMACLIENT]
                         ORDER BY [MA001],[CLIENTS]
                         ";
@@ -94,6 +96,8 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
                         ,[MA001]
                         ,[MA002]
                         ,[CLIENTS]
+                        ,[OPERATIONS]
+                        ,[COMMENTS]
                         FROM [TKBUSINESS].[dbo].[COPCOPMACLIENT]
                         ORDER BY [MA001],[CLIENTS]
                         ";
@@ -110,6 +114,8 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
             dt.Columns[1].Caption = "客戶代號";
             dt.Columns[2].Caption = "客戶";
             dt.Columns[3].Caption = "客戶的賣家(渠道)";
+            dt.Columns[4].Caption = "通路操作";
+            dt.Columns[5].Caption = "備註";
 
 
             e.Datasource = dt;

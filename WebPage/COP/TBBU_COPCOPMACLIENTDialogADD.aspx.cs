@@ -79,7 +79,8 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogADD : Ede.Uof.Utility.
         string MA001 = TextBox1.Text;
         string MA002 = TextBox2.Text;
         string CLIENTS = TextBox3.Text;
-     
+        string OPERATIONS = TextBox4.Text;
+        string COMMENTS = TextBox5.Text;
 
         int ID = FINDMAXSERNO();
       
@@ -87,22 +88,22 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogADD : Ede.Uof.Utility.
         if ( !string.IsNullOrEmpty(MA001) && !string.IsNullOrEmpty(MA002))
         {
 
-            ADDCOPCOPMACLIENT(ID.ToString(), MA001, MA002, CLIENTS);
+            ADDCOPCOPMACLIENT(ID.ToString(), MA001, MA002, CLIENTS, OPERATIONS, COMMENTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDCOPCOPMACLIENT(string ID,string MA001, string MA002, string CLIENTS)
+    public void ADDCOPCOPMACLIENT(string ID,string MA001, string MA002, string CLIENTS, string OPERATIONS, string COMMENTS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
                         INSERT INTO [TKBUSINESS].[dbo].[COPCOPMACLIENT]
-                        ([ID],[MA001],[MA002],[CLIENTS])
+                        ([ID],[MA001],[MA002],[CLIENTS],[OPERATIONS],[COMMENTS])
                         VALUES
-                        (@ID,@MA001,@MA002,@CLIENTS)
+                        (@ID,@MA001,@MA002,@CLIENTS,@OPERATIONS,@COMMENTS)
                        
                             ";
 
@@ -112,8 +113,8 @@ public partial class CDS_WebPage_TBBU_COPCOPMACLIENTDialogADD : Ede.Uof.Utility.
         m_db.AddParameter("@MA001", MA001);
         m_db.AddParameter("@MA002", MA002);
         m_db.AddParameter("@CLIENTS", CLIENTS);
-
-
+        m_db.AddParameter("@OPERATIONS", OPERATIONS);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
