@@ -80,7 +80,7 @@
                                             <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="產品名稱" DataField="DVV01" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
 
                                         <asp:BoundField HeaderText="核單日期" DataField="FORMDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">

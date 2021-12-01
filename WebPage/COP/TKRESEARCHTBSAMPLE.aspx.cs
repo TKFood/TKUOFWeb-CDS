@@ -23,10 +23,11 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
-        {          
+        {
+            BindDropDownList();
 
             BindGrid("");
-            BindDropDownList();
+           
         }
         else
         {
