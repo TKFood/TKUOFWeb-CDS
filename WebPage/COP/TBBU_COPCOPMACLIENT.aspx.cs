@@ -37,8 +37,8 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
                         ,[MA001]
                         ,[MA002]
                         ,[CLIENTS]
-                        ,[OPERATIONS]
-                        ,[COMMENTS]
+                        ,REPLACE([OPERATIONS],char(10),'<br/>') AS [OPERATIONS]
+                        ,REPLACE([COMMENTS],char(10),'<br/>') AS [COMMENTS]
                         FROM [TKBUSINESS].[dbo].[COPCOPMACLIENT]
                         ORDER BY [MA001],[CLIENTS]
                         ";
