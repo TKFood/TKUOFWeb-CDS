@@ -69,17 +69,17 @@
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
                                         <asp:BoundField HeaderText="派車日期" DataField="EVENTDATE" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
                                      <Columns>
                                         <asp:BoundField HeaderText="車號" DataField="CAR" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
                                       <Columns>
                                         <asp:BoundField HeaderText="送貨客戶/目的地" DataField="EVENT" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
                                 </Fast:Grid>
