@@ -103,7 +103,8 @@ public partial class CDS_WebPage_PUR_REPORT_INVMBPURTHINVLA : Ede.Uof.Utility.Pa
             cmdTxt.AppendFormat(@"
                                 SELECT MB001,MB002,MB003,MB004,MB017,MB039,MB032,MA002
                                 ,LA009,LA016,LA005LA011
-                                ,TH117,TH036
+                                ,(SELECT TOP 1 TH117 FROM [TK].dbo.PURTH WHERE TH004=MB001 AND TH010=LA016 ORDER BY TH003 DESC) TH117
+                                ,(SELECT TOP 1 TH036 FROM [TK].dbo.PURTH WHERE TH004=MB001 AND TH010=LA016 ORDER BY TH003 DESC) TH036
 
                                 ,(SELECT TOP 1 TH007 FROM [TK].dbo.PURTG,[TK].dbo.PURTH WHERE TG001=TH001 AND TG002=TH002 AND TH004=MB001 ORDER BY TG003 DESC) AS 'TH007'
                                 ,(SELECT TOP 1 CONVERT(decimal(16,3),ISNULL(TH018,0)) FROM [TK].dbo.PURTG,[TK].dbo.PURTH WHERE TG001=TH001 AND TG002=TH002 AND TH004=MB001 ORDER BY TG003 DESC) AS 'TH018'
@@ -111,13 +112,13 @@ public partial class CDS_WebPage_PUR_REPORT_INVMBPURTHINVLA : Ede.Uof.Utility.Pa
                                 ,(SELECT CONVERT(decimal(16,3),ISNULL(SUM(TH048),0)) FROM [TK].dbo.PURTG,[TK].dbo.PURTH WHERE TG001=TH001 AND TG002=TH002 AND TH004=MB001 AND TH010=LA016 ) AS 'TH048'
                                 ,(SELECT TOP 1 TG003 FROM [TK].dbo.PURTG,[TK].dbo.PURTH WHERE TG001=TH001 AND TG002=TH002 AND TH004=MB001 ORDER BY TG003 DESC) AS 'TG003'
                                 ,(SELECT TOP 1 TC003 FROM [TK].dbo.PURTC,[TK].dbo.PURTD WHERE TC001=TD001 AND TC002=TD002 AND TD004=MB001 ORDER BY TC003 DESC) AS 'TC003' 
-                                FROM [TK].dbo.INVMB,[TK].dbo.PURTH,[TK].dbo.PURMA
+                                FROM [TK].dbo.INVMB,[TK].dbo.PURMA
                                 ,(SELECT LA001,LA009,LA016,SUM(LA005*LA011) AS LA005LA011
-                                FROM [TK].dbo.INVLA
+                                FROM [TK].dbo.INVLA WITH(NOLOCK)
+                             
                                 GROUP BY  LA001,LA009,LA016
                                 HAVING SUM(LA005*LA011)>0) AS TEMP
-                                WHERE TEMP.LA001=MB001
-                                AND TH004=MB001 AND TH010=LA016
+                                WHERE TEMP.LA001=MB001 
                                 AND MB032=MA001
                                 AND (MB001 LIKE '1%' OR MB001 LIKE '2%')
                                 {0}
@@ -136,7 +137,7 @@ public partial class CDS_WebPage_PUR_REPORT_INVMBPURTHINVLA : Ede.Uof.Utility.Pa
 
 
 
-        m_db.AddParameter("@MB001", TextBox1.Text);
+        m_db.AddParameter("@MB001", TextBox1.Text.Trim());
 
 
         DataTable dt = new DataTable();
