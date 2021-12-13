@@ -91,32 +91,38 @@ public partial class CDS_WebPage_COP_REPORT_COPTCDMANULINECOPTG : Ede.Uof.Utilit
 
 
 
-        //單別
+        //TC001
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
             QUERYS.AppendFormat(@" AND TC001 LIKE '%{0}%'", TextBox1.Text);
         }
-        //單別
+        //TD013
         if (!string.IsNullOrEmpty(RadDatePicker1.SelectedDate.Value.ToString("yyyyMM")))
         {
             QUERYS.AppendFormat(@" AND (TD013 LIKE '{0}%' )", RadDatePicker1.SelectedDate.Value.ToString("yyyyMM"));
+        }
+        //MA002
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND MA002 LIKE '%{0}%'", TextBox2.Text);
         }
 
 
         cmdTxt.AppendFormat(@"
 
-                        SELECT TD013,TD001,TD002,TD003,TD004,TD005,(TD008+TD024) TD008
+                        SELECT TD013,MA002,TD001,TD002,TD003,TD004,TD005,(TD008+TD024) TD008
                         ,CONVERT(NVARCHAR,[OUTDATE],112) [OUTDATE],([PACKAGE]+[NUM]) NUMS,[MOCMANULINE].[ID]
                         ,[MOCTA001],[MOCTA002]
                         ,TG011
                         ,TF003
-                        FROM [TK].dbo.COPTC,[TK].dbo.COPTD
+                        FROM [TK].dbo.COPMA,[TK].dbo.COPTC,[TK].dbo.COPTD
                         LEFT JOIN [TKMOC].[dbo].[MOCMANULINE] ON  [COPTD001]=TD001 AND [COPTD002]=TD002 AND [COPTD003]=TD003 AND MB001=TD004
                         LEFT JOIN [TKMOC].[dbo].[MOCMANULINERESULT] ON [MOCMANULINERESULT].[SID]=[MOCMANULINE].[ID]
                         LEFT JOIN [TK].dbo.MOCTG ON TG014=[MOCTA001] AND TG015=[MOCTA002] AND TG004=TD004 AND TG010='21001'
                         LEFT JOIN [TK].dbo.MOCTF ON TF001=TG001 AND TF002=TG002 
                         WHERE TC001=TD001 
                         AND TC002=TD002
+                        AND MA001=TC004
                         AND (TD004 LIKE '4%' OR TD004 LIKE '5%')                     
                         {0}
                         ORDER BY TD013,TD001,TD002,TD003,TD004,TD005
