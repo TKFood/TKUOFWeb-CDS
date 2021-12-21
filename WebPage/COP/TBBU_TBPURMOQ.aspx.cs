@@ -38,7 +38,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
             BindGrid10();
             BindGrid11();
             BindGrid12();
-
+            BindGrid13();
         }
         else
         {
@@ -1091,6 +1091,86 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
 
     }
 
+    private void BindGrid13()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT 
+                            [ID]
+                            ,[KINDS]
+                            ,[NAMES]
+                            ,[MOQS]
+                            ,[INDAYS]
+                            ,[COMMENTS]
+                            FROM [TKBUSINESS].[dbo].[TBPURMOQ]
+                            WHERE [KINDS]=@KINDS
+                            ORDER BY [ID]
+                            ");
+
+
+
+
+
+        m_db.AddParameter("@KINDS", "外購品");
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid13.DataSource = dt;
+        Grid13.DataBind();
+    }
+
+    protected void grid_PageIndexChanging13(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid("");
+    }
+    protected void Grid13_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button13");
+
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button13");
+
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBPURMOQDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+    }
+
+    protected void Grid13_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button13")
+        {
+            SEARCHALL();
+        }
+    }
+
+    public void OnBeforeExport13(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+
+
+    }
+
     public override void VerifyRenderingInServerForm(Control control) 
     { 
 
@@ -1254,6 +1334,12 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         BindGrid12();
     }
 
+    protected void btn13_Click(object sender, EventArgs e)
+    {
+        BindGrid13();
+    }
+
+
     protected void btnADD_Click(object sender, EventArgs e)
     {
         BindGrid();
@@ -1268,6 +1354,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         BindGrid10();
         BindGrid11();
         BindGrid12();
+        BindGrid13();
     }
 
 
