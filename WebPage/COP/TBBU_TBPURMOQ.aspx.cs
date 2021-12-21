@@ -1037,7 +1037,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
 
 
 
-        m_db.AddParameter("@KINDS", "數位樣");
+        m_db.AddParameter("@KINDS", "樣品");
         //m_db.AddParameter("@EDATE", EDATE);
 
         DataTable dt = new DataTable();

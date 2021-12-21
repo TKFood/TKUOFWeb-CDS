@@ -42,7 +42,7 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
-            <telerik:RadTab Text="數位樣">
+            <telerik:RadTab Text="樣品">
             </telerik:RadTab>
             <telerik:RadTab Text="新版">
             </telerik:RadTab>
