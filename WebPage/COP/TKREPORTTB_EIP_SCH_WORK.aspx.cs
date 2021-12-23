@@ -29,12 +29,15 @@ public partial class CDS_WebPage_TKREPORTTB_EIP_SCH_WORK : Ede.Uof.Utility.Page.
 
         if (!IsPostBack)
         {
+            SETRadDatePicker();
+            BindDropDownList1();
+
             BindGrid();
 
         }
         else
         {
-            BindGrid();
+           
         }
 
 
@@ -42,28 +45,105 @@ public partial class CDS_WebPage_TKREPORTTB_EIP_SCH_WORK : Ede.Uof.Utility.Page.
     }
 
     #region FUNCTION
-    
+    public void SETRadDatePicker()
+    {
+        DateTime Current = DateTime.Today;
+        RadDatePicker1.SelectedDate= new DateTime(Current.Year, Current.Month, 1);
+        RadDatePicker2.SelectedDate = new DateTime(Current.Year, Current.Month, DateTime.DaysInMonth(Current.Year, Current.Month));
+    }
+    private void BindDropDownList1()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ISCLOSES", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT [ID],[ISCLOSES] FROM [TKBUSINESS].[dbo].[TBSALESCLOSES] ORDER BY [ID]";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "ISCLOSES";
+            DropDownList1.DataValueField = "ISCLOSES";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        string cmdTxt = null;
 
-        string cmdTxt = @" SELECT 
+        if (DropDownList1.Text.ToString().Equals("N"))
+        {
+            cmdTxt = @" 
+                        SELECT 
                         USER1.[NAME] AS 'NAME1',[TB_EIP_SCH_WORK].[SUBJECT]
                         ,(SELECT TOP 1 ISNULL([DESCRIPTION],'') FROM [UOF].[dbo].[TB_EIP_SCH_WORK_RECORD] WHERE [TB_EIP_SCH_WORK_RECORD].[WORK_GUID]=[TB_EIP_SCH_WORK].[WORK_GUID] ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
                         ,CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
-                        ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' ELSE '進行中' END AS 'STATUS'
+                        ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Proceeding' THEN  '進行中' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Audit' THEN  '交付中' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Completed' THEN  '完成'  END AS 'STATUS'
                         ,[TB_EIP_SCH_WORK].[WORK_STATE],[TB_EIP_SCH_WORK].[EXECUTE_USER],[TB_EIP_SCH_WORK].[SOURCE_USER]
                         FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
                         WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
                         AND DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE())>=0
+                        AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)>=@DATESTART AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)<=@DATEEND
                         ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
 
                         ";
+        }
+        else if(DropDownList1.Text.ToString().Equals("Y"))
+        {
+            cmdTxt = @" 
+                        SELECT 
+                        USER1.[NAME] AS 'NAME1',[TB_EIP_SCH_WORK].[SUBJECT]
+                        ,(SELECT TOP 1 ISNULL([DESCRIPTION],'') FROM [UOF].[dbo].[TB_EIP_SCH_WORK_RECORD] WHERE [TB_EIP_SCH_WORK_RECORD].[WORK_GUID]=[TB_EIP_SCH_WORK].[WORK_GUID] ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
+                        ,CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
+                        ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Proceeding' THEN  '進行中' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Audit' THEN  '交付中' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Completed' THEN  '完成'  END AS 'STATUS'
+                        ,[TB_EIP_SCH_WORK].[WORK_STATE],[TB_EIP_SCH_WORK].[EXECUTE_USER],[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        WHERE [WORK_STATE] IN ('Completed')                       
+                        AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)>=@DATESTART AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)<=@DATEEND
+                        ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
 
-    
+                        ";
+        }
+        else
+        {
+            cmdTxt = @" 
+                        SELECT 
+                        USER1.[NAME] AS 'NAME1',[TB_EIP_SCH_WORK].[SUBJECT]
+                        ,(SELECT TOP 1 ISNULL([DESCRIPTION],'') FROM [UOF].[dbo].[TB_EIP_SCH_WORK_RECORD] WHERE [TB_EIP_SCH_WORK_RECORD].[WORK_GUID]=[TB_EIP_SCH_WORK].[WORK_GUID] ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
+                        ,CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111)  AS END_TIME,DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE()) AS DIFFDATES,USER2.[NAME]  AS 'NAME2'
+                        ,CASE WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='NotYetBegin' THEN '當未開始' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Proceeding' THEN  '進行中' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Audit' THEN  '交付中' WHEN [TB_EIP_SCH_WORK].[WORK_STATE]='Completed' THEN  '完成'  END AS 'STATUS'
+                        ,[TB_EIP_SCH_WORK].[WORK_STATE],[TB_EIP_SCH_WORK].[EXECUTE_USER],[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        FROM [UOF].[dbo].[TB_EIP_SCH_WORK]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
+                        LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
+                        WHERE CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)>=@DATESTART AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)<=@DATEEND
+                        ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
+
+                        ";
+        }
+
+
+        m_db.AddParameter("@DATESTART", ((DateTime)RadDatePicker1.SelectedDate).ToString("yyyyMMdd"));
+        m_db.AddParameter("@DATEEND", ((DateTime)RadDatePicker2.SelectedDate).ToString("yyyyMMdd"));
 
         DataTable dt = new DataTable();
 
@@ -153,6 +233,7 @@ public partial class CDS_WebPage_TKREPORTTB_EIP_SCH_WORK : Ede.Uof.Utility.Page.
 
     protected void btn1_Click(object sender, EventArgs e)
     {
+        BindGrid();
         //this.Session["SDATE"] = txtDate1.Text.Trim();
         //this.Session["EDATE"] = txtDate2.Text.Trim();
     }
