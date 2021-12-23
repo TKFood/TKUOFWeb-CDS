@@ -123,6 +123,7 @@ public partial class CDS_WebPage_COP_REPORT_COPTCDMANULINECOPTG : Ede.Uof.Utilit
                         WHERE TC001=TD001 
                         AND TC002=TD002
                         AND MA001=TC004
+                        AND TC027 IN ('Y','N')
                         AND (TD004 LIKE '4%' OR TD004 LIKE '5%')                     
                         {0}
                         ORDER BY TD013,TD001,TD002,TD003,TD004,TD005
