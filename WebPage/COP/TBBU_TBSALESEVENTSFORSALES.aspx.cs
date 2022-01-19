@@ -193,7 +193,7 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         //string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME]  ORDER BY [ID]";
-        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME] WHERE ([NAME]=@NAME OR [LEADER] LIKE '%'+@NAME+'%'  ) ORDER BY [ID]";
+        string cmdTxt = @"SELECT  [ID],[NAME] FROM [TKBUSINESS].[dbo].[TBSALESNAME]  ORDER BY [ID]";
 
         m_db.AddParameter("@NAME", NAME);
 
