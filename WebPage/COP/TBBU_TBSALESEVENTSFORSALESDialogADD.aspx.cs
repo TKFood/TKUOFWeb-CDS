@@ -14,6 +14,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using Telerik.Web.UI.Calendar;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.Utility.Page.BasePage
 {
@@ -61,8 +62,11 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALESDialogADD : Ede.Uof.U
         
     }
 
-  
 
+    protected void RadDatePicker1_SelectedDateChanged(object sender, SelectedDateChangedEventArgs e)
+    {
+        RadDatePicker2.SelectedDate = RadDatePicker1.SelectedDate;
+    }
 
 
 

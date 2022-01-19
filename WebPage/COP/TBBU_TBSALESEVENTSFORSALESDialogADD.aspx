@@ -96,7 +96,7 @@
                 <asp:Label ID="Label7" runat="server" Text="起始日"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="120px"></telerik:RadDatePicker>
+                <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="120px" OnSelectedDateChanged="RadDatePicker1_SelectedDateChanged"  AutoPostBack="true" ></telerik:RadDatePicker>
                 <%--<asp:TextBox ID="TextBox4" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
             </td>
         </tr>
