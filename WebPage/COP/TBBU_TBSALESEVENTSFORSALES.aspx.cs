@@ -65,7 +65,6 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSFORSALES : Ede.Uof.Utility.Pa
     {
         RadDatePicker2.SelectedDate = RadDatePicker1.SelectedDate;
     }
-
     private void BindDropDownList1()
     {
         DataTable dt = new DataTable();
