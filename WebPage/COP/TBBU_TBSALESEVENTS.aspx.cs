@@ -18,6 +18,7 @@ using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
+using Telerik.Web.UI.Calendar;
 using Image = System.Web.UI.WebControls.Image;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BasePage
@@ -60,6 +61,10 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
 
     }
     #region FUNCTION
+    protected void RadDatePicker3_SelectedDateChanged(object sender, SelectedDateChangedEventArgs e)
+    {
+        RadDatePicker4.SelectedDate = RadDatePicker3.SelectedDate;
+    }
     private void BindDropDownList1()
     {
         DataTable dt = new DataTable();
