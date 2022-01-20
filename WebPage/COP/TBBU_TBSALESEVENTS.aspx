@@ -145,12 +145,27 @@
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label9" runat="server" Text="新增日期"></asp:Label>
+                            <asp:Label ID="Label9" runat="server" Text="新增/更新日期"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="120px"></telerik:RadDatePicker>
                             <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
                             <telerik:RadDatePicker ID="RadDatePicker2" runat="server" Width="120px"></telerik:RadDatePicker>
+                            <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
+                        </td>
+                        <td class="PopTableRightTD">
+
+                            <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label18" runat="server" Text="起始日/結案日"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <telerik:RadDatePicker ID="RadDatePicker5" runat="server" Width="120px"></telerik:RadDatePicker>
+                            <asp:Label ID="Label19" runat="server" Text="~"></asp:Label>
+                            <telerik:RadDatePicker ID="RadDatePicker6" runat="server" Width="120px"></telerik:RadDatePicker>
                             <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
                         </td>
                         <td class="PopTableRightTD">

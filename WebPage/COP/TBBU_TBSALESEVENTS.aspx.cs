@@ -307,6 +307,12 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTS : Ede.Uof.Utility.Page.BaseP
             QUERYS.AppendFormat(@" AND (CONVERT(NVARCHAR,[ADDDATES],112)>='{0}' AND CONVERT(NVARCHAR,[ADDDATES],112)<='{1}' OR CONVERT(NVARCHAR,[UPDATEDATES],112)>='{2}' AND CONVERT(NVARCHAR,[UPDATEDATES],112)<='{3}' )", RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker1.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker2.SelectedDate.Value.ToString("yyyyMMdd"));
 
         }
+        //起始日/結案日
+        if (RadDatePicker5.SelectedDate != null && RadDatePicker6.SelectedDate != null)
+        {
+            QUERYS.AppendFormat(@" AND (REPLACE([SDAYS],'/','')>='{0}' AND REPLACE([SDAYS],'/','')<='{1}' OR REPLACE([EDAYS],'/','')>='{2}' AND REPLACE([EDAYS],'/','')<='{3}' )", RadDatePicker5.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker6.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker5.SelectedDate.Value.ToString("yyyyMMdd"), RadDatePicker6.SelectedDate.Value.ToString("yyyyMMdd"));
+
+        }
 
 
 
