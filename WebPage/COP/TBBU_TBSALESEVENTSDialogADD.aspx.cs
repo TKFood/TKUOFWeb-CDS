@@ -15,6 +15,7 @@ using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using Ede.Uof.Utility.Page.Common;
 using System.IO;
+using Telerik.Web.UI.Calendar;
 
 public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.Page.BasePage
 {
@@ -62,12 +63,18 @@ public partial class CDS_WebPage_TBBU_TBSALESEVENTSDialogADD : Ede.Uof.Utility.P
         
     }
 
-  
+    protected void RadDatePicker1_SelectedDateChanged(object sender, SelectedDateChangedEventArgs e)
+    {
+        RadDatePicker2.SelectedDate = RadDatePicker1.SelectedDate;
+    }
+
+
 
 
 
 
     #region BUTTON
+
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
