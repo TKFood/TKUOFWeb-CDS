@@ -52,7 +52,7 @@
             </telerik:RadTab>
             <telerik:RadTab Text="外箱">
             </telerik:RadTab>
-            <telerik:RadTab Text="內袋">
+            <telerik:RadTab Text="袋子">
             </telerik:RadTab>
             <telerik:RadTab Text="內襯">
             </telerik:RadTab>
