@@ -88,6 +88,8 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         ,(SELECT TOP 1 [PURCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKDATES'
                         ,(SELECT TOP 1 [PURCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKS'
                         ,(SELECT TOP 1 [PURCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
+                        ,(SELECT TOP 1 [SALESCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
+
                         FROM [TK].dbo.COPTC,[TK].dbo.COPTD
 
                         WHERE TC001=TD001 AND TC002=TD002
@@ -114,13 +116,15 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             TextBox10.Text = dt.Rows[0]["TD013"].ToString();
             //TextBox11.Text = dt.Rows[0]["MOCCHECKDATES"].ToString();
             TextBox11.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-            TextBox12.Text = dt.Rows[0]["MOCCHECKS"].ToString();
+            //TextBox12.Text = dt.Rows[0]["MOCCHECKS"].ToString();
+            DropDownList1.SelectedValue= dt.Rows[0]["MOCCHECKS"].ToString();
             TextBox13.Text = dt.Rows[0]["MOCCHECKSCOMMENTS"].ToString();
             //TextBox14.Text = dt.Rows[0]["PURCHECKDATES"].ToString();
             TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-            TextBox15.Text = dt.Rows[0]["PURCHECKS"].ToString();
+            //TextBox15.Text = dt.Rows[0]["PURCHECKS"].ToString();
+            DropDownList2.SelectedValue = dt.Rows[0]["PURCHECKS"].ToString();
             TextBox16.Text = dt.Rows[0]["PURCHECKSCOMMENTS"].ToString();
-
+            TextBox17.Text = dt.Rows[0]["SALESCHECKSCOMMENTS"].ToString();
         }
 
 

@@ -119,7 +119,11 @@
                 <asp:Label ID="Label13" runat="server" Text="生管是否核準"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" ></asp:TextBox>
+                <%--<asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" ></asp:TextBox>--%>
+                <asp:DropDownList ID="DropDownList1" runat="server" values="">
+                    <asp:ListItem Selected="True" Value="N">N</asp:ListItem>
+                    <asp:ListItem Value="Y">Y</asp:ListItem>
+                </asp:DropDownList>
             </td>
         </tr>
         <tr>
@@ -143,7 +147,11 @@
                 <asp:Label ID="Label16" runat="server" Text="採購是否核準"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox15" runat="server" Text="" Width="100%"></asp:TextBox>
+                <%-- <asp:TextBox ID="TextBox15" runat="server" Text="" Width="100%"></asp:TextBox>--%>
+                <asp:DropDownList ID="DropDownList2" runat="server" values="">
+                    <asp:ListItem Selected="True" Value="N">N</asp:ListItem>
+                    <asp:ListItem Value="Y">Y</asp:ListItem>
+                </asp:DropDownList>
             </td>
         </tr>
         <tr>
@@ -154,6 +162,15 @@
                 <asp:TextBox ID="TextBox16" runat="server" Text="" Width="100%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label18" runat="server" Text="業務備註"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox17" runat="server" Text="" Width="100%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+            </td>
+        </tr>
+
 
 
 
