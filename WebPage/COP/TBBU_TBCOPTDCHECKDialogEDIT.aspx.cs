@@ -1,4 +1,5 @@
-﻿using Ede.Uof.Utility.Data;
+﻿using Ede.Uof.EIP.SystemInfo;
+using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,25 @@ using System.Web.UI.WebControls;
 
 public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Page.BasePage
 {
+    string ACCOUNT = null;
+    string NAME = null;
     protected void Page_Load(object sender, EventArgs e)
     {
+        
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+
+        ACCOUNTLabel.Text = ACCOUNT+ NAME;
+
+        if (ACCOUNT.Equals("160115"))
+	    {
+            Button1.Enabled = true;
+        }
+        else
+        {
+            Button1.Enabled = false;
+        }
+
         ((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
         ((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
 
@@ -172,7 +190,73 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         string ADDPURCHECKSCOMMENTS = PURCHECKSCOMMENTS;
         string ADDSALESCHECKSCOMMENTS = SALESCHECKSCOMMENTS;
 
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        string cmdTxt = @"  
+                        INSERT INTO [TKBUSINESS].[dbo].[TBCOPTDCHECK]
+                        ([TD001]
+                        ,[TD002]
+                        ,[TD003]
+                        ,[TD004]
+                        ,[TD005]
+                        ,[TD008]
+                        ,[TD010]
+                        ,[TD011]
+                        ,[TD012]
+                        ,[TD013]
+                        ,[MOCCHECKDATES]
+                        ,[MOCCHECKS]
+                        ,[MOCCHECKSCOMMENTS]
+                        ,[PURCHECKDATES]
+                        ,[PURCHECKS]
+                        ,[PURCHECKSCOMMENTS]
+                        ,[SALESCHECKSCOMMENTS]
+             
+                        )
+                        VALUES
+                        (@TD001
+                        ,@TD002
+                        ,@TD003
+                        ,@TD004
+                        ,@TD005
+                        ,@TD008
+                        ,@TD010
+                        ,@TD011
+                        ,@TD012
+                        ,@TD013
+                        ,@MOCCHECKDATES
+                        ,@MOCCHECKS
+                        ,@MOCCHECKSCOMMENTS
+                        ,@PURCHECKDATES
+                        ,@PURCHECKS
+                        ,@PURCHECKSCOMMENTS
+                        ,@SALESCHECKSCOMMENTS
+                        )
+                   
+                            ";
+
+
+        m_db.AddParameter("@TD001", TD001);
+        m_db.AddParameter("@TD002", TD002);
+        m_db.AddParameter("@TD003", TD003);
+        m_db.AddParameter("@TD004", TD004);
+        m_db.AddParameter("@TD005", TD005);
+        m_db.AddParameter("@TD008", Convert.ToDecimal(TD008));
+        m_db.AddParameter("@TD010", TD010);
+        m_db.AddParameter("@TD011", Convert.ToDecimal(TD011));
+        m_db.AddParameter("@TD012", Convert.ToDecimal(TD012));
+        m_db.AddParameter("@TD013", TD013);
+        m_db.AddParameter("@MOCCHECKDATES", MOCCHECKDATES);
+        m_db.AddParameter("@MOCCHECKS", MOCCHECKS);
+        m_db.AddParameter("@MOCCHECKSCOMMENTS", MOCCHECKSCOMMENTS);
+        m_db.AddParameter("@PURCHECKDATES", PURCHECKDATES);
+        m_db.AddParameter("@PURCHECKS", PURCHECKS);
+        m_db.AddParameter("@PURCHECKSCOMMENTS", PURCHECKSCOMMENTS);
+        m_db.AddParameter("@SALESCHECKSCOMMENTS", SALESCHECKSCOMMENTS);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
 
     }
 
@@ -182,7 +266,26 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
     #region BUTTON 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        Button1.Text = "OK";
+        //Button1.Text = "OK";
+        ADDTBCOPTDCHECK(
+                        TextBox1.Text,
+                        TextBox2.Text,
+                        TextBox3.Text,
+                        TextBox4.Text,
+                        TextBox5.Text,
+                        TextBox6.Text,
+                        TextBox7.Text,
+                        TextBox8.Text,
+                        TextBox9.Text,
+                        TextBox10.Text,
+                        TextBox11.Text,
+                        DropDownList1.SelectedValue,
+                        TextBox13.Text,
+                        TextBox14.Text,
+                        DropDownList2.SelectedValue,
+                        TextBox16.Text,
+                        TextBox17.Text
+                        );
     }
     #endregion
 

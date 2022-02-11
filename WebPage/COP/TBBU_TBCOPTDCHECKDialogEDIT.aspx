@@ -23,6 +23,14 @@
                 <asp:Label ID="lblParam" runat="server" Text=""></asp:Label>
             </td>
         </tr>
+        <tr><td class="PopTableLeftTD">
+                <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
+            </td>
+            <td class="PopTableRightTD" colspan="2">
+                <asp:Label ID="ACCOUNTLabel" runat="server" Text=""></asp:Label>
+            </td>
+
+        </tr>
 
     </table>
     <div>
@@ -141,12 +149,12 @@
                 </td>
             </tr>
             <tr>
-                 <td class="PopTableLeftTD">
+                <td class="PopTableLeftTD">
                     <asp:Label ID="Label2" runat="server" Text="更新:"></asp:Label>
                 </td>
                 <td class="PopTableRightTD">
-                     <asp:Button ID="Button1" runat="server" Text="更新" ForeColor="red"
-                    OnClick="Button1_Click" meta:resourcekey="btn1Resource1"   onclientclick="return confirm('是否更新? ');"  />
+                    <asp:Button ID="Button1" runat="server" Text="更新" ForeColor="red"
+                        OnClick="Button1_Click" meta:resourcekey="btn1Resource1" OnClientClick="return confirm('是否更新? ');" />
                 </td>
             </tr>
 
