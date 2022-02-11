@@ -40,7 +40,7 @@
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
             <div id="tabs-1">
                 <table class="PopTable">
-                     <tr>
+                    <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Label ID="Label1" runat="server" Text="年度: "></asp:Label>
@@ -73,10 +73,38 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
+                                        <asp:BoundField HeaderText="單別" DataField="TD001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="單號" DataField="TD002" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="序號" DataField="TD003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="品號" DataField="TD004" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="品名" DataField="TD005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="訂單數量" DataField="TD008"  DataFormatString="{0:N0}" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="單位" DataField="TD010" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="單價" DataField="TD011"  DataFormatString="{0:N2}" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="金額" DataField="TD012"  DataFormatString="{0:N0}" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="預交日" DataField="TD013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
                                         
+
                                     </Columns>
                                 </Fast:Grid>
                             </div>
@@ -88,7 +116,7 @@
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">
-                   <%-- <tr>
+                    <%-- <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
