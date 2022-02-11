@@ -40,9 +40,18 @@
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
             <div id="tabs-1">
                 <table class="PopTable">
+                     <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label1" runat="server" Text="年度: "></asp:Label>
+                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
+                            <asp:Label ID="Label2" runat="server" Text="是否確認: "></asp:Label>
                             <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
                         </td>
 
@@ -64,7 +73,7 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
-                                        <asp:BoundField HeaderText="品號" DataField="MB001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="品號" DataField="TD004" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
                                         

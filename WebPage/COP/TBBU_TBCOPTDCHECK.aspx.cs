@@ -24,13 +24,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     {
         if (!IsPostBack)
         {
+            SETDATES();
             BindDropDownList();
             BindGrid("");
         }
         else
         {
-            BindGrid("");
-
 
         }
 
@@ -39,6 +38,10 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     }
     #region FUNCTION
+    public void SETDATES()
+    {
+        TextBox1.Text = DateTime.Now.ToString("yyyy");
+    }
     private void BindDropDownList()
     {
         DataTable dt = new DataTable();
@@ -76,24 +79,37 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
-      
+        //日期
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+           
+            QUERYS.AppendFormat(@" AND TD002 LIKE '2022%'");
+            
+        }
 
-        //狀態
+        //核單
         if (!string.IsNullOrEmpty(DropDownList1.Text))
         {
             if (DropDownList1.Text.Equals("未核單"))
             {
-                QUERYS.AppendFormat(@" ");
+                QUERYS.AppendFormat(@" AND TD021='N'");
             }
             else if(!DropDownList1.Text.Equals("已核單"))
             {
-                QUERYS.AppendFormat(@"  ");
+                QUERYS.AppendFormat(@"  AND TD021='Y'");
             }
         }
 
        
         cmdTxt.AppendFormat(@" 
-                               
+                               SELECT *
+                                FROM [TK].dbo.COPTC,[TK].dbo.COPTD
+                                WHERE TC001=TD001 AND TC002=TD002
+                                AND 1=1
+                                {0}
+
+                                ORDER BY TD001,TD002,TD003
+
                                 ", QUERYS.ToString());
 
        
