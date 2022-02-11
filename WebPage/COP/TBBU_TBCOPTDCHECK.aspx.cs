@@ -41,6 +41,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     public void SETDATES()
     {
         TextBox1.Text = DateTime.Now.ToString("yyyy");
+        TextBox2.Text = DateTime.Now.ToString("MM");
     }
     private void BindDropDownList()
     {
@@ -80,10 +81,13 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder QUERYS = new StringBuilder();
 
         //日期
-        if (!string.IsNullOrEmpty(TextBox1.Text))
+        if (!string.IsNullOrEmpty(TextBox1.Text)&& !string.IsNullOrEmpty(TextBox2.Text) )
         {
-           
-            QUERYS.AppendFormat(@" AND TD002 LIKE '2022%'");
+           if(TextBox2.Text.Length==1)
+            {
+                TextBox2.Text = "0"+TextBox2.Text;
+            }
+            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox1.Text.Trim()+ TextBox2.Text.Trim());
             
         }
 
@@ -102,7 +106,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
        
         cmdTxt.AppendFormat(@" 
-                                SELECT *
+                                SELECT  LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))+LTRIM(RTRIM(TD003)) AS 'TD123',*
                                 ,(SELECT TOP 1 ISNULL([MOCCHECKDATES],'0') FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKDATES'
                                 ,(SELECT TOP 1 [MOCCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKS'
                                 ,(SELECT TOP 1 [MOCCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
@@ -140,25 +144,25 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    //Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("Button1");
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("Button1");
 
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
 
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("Button1");
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("Button1");
 
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-        //    //Grid開窗是用RowDataBound事件再開窗
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-        //}
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
 
 
 
