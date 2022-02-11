@@ -33,7 +33,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         }
 
-       
+
 
 
     }
@@ -81,14 +81,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder QUERYS = new StringBuilder();
 
         //日期
-        if (!string.IsNullOrEmpty(TextBox1.Text)&& !string.IsNullOrEmpty(TextBox2.Text) )
+        if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
         {
-           if(TextBox2.Text.Length==1)
+            if (TextBox2.Text.Length == 1)
             {
-                TextBox2.Text = "0"+TextBox2.Text;
+                TextBox2.Text = "0" + TextBox2.Text;
             }
-            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox1.Text.Trim()+ TextBox2.Text.Trim());
-            
+            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox1.Text.Trim() + TextBox2.Text.Trim());
+
         }
 
         //核單
@@ -98,13 +98,13 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             {
                 QUERYS.AppendFormat(@" AND TD021='N'");
             }
-            else if(!DropDownList1.Text.Equals("已核單"))
+            else if (!DropDownList1.Text.Equals("已核單"))
             {
                 QUERYS.AppendFormat(@"  AND TD021='Y'");
             }
         }
 
-       
+
         cmdTxt.AppendFormat(@" 
                                 SELECT  LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))+LTRIM(RTRIM(TD003)) AS 'TD123',*
                                 ,(SELECT TOP 1 ISNULL([MOCCHECKDATES],'') FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKDATES'
@@ -124,7 +124,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
                                 ", QUERYS.ToString());
 
-       
+
 
 
         //m_db.AddParameter("@SDATE", SDATE);
@@ -272,14 +272,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     //    return mtus;
     //}
 
-    public override void VerifyRenderingInServerForm(Control control) 
-    { 
+    public override void VerifyRenderingInServerForm(Control control)
+    {
 
     }
 
     public void SETEXCEL()
     {
-       
+
 
     }
 
@@ -325,9 +325,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         Response.Write(sw.ToString());
         Response.End();
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void MyButtonClick(object sender, System.EventArgs e)
     {
-      
+
 
     }
 

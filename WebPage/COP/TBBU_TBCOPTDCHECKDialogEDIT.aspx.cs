@@ -34,10 +34,11 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             Button1.Enabled = false;
         }
 
+        //不顯示子視窗的按鈕
         //((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
         //((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
         //((Master_DialogMasterPage)this.Master).Button3Text = string.Empty;
-       
+
 
         //設定回傳值
         Dialog.SetReturnValue2("");
@@ -86,8 +87,30 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
         SEARCHCOPTD(lblParam.Text);
     }
-  
 
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        //Button1.Text = "OK";
+        ADDTBCOPTDCHECK(
+                        TextBox1.Text,
+                        TextBox2.Text,
+                        TextBox3.Text,
+                        TextBox4.Text,
+                        TextBox5.Text,
+                        TextBox6.Text,
+                        TextBox7.Text,
+                        TextBox8.Text,
+                        TextBox9.Text,
+                        TextBox10.Text,
+                        TextBox11.Text,
+                        DropDownList1.SelectedValue,
+                        TextBox13.Text,
+                        TextBox14.Text,
+                        DropDownList2.SelectedValue,
+                        TextBox16.Text,
+                        TextBox17.Text
+                        );
+    }
 
     #endregion
 
@@ -265,31 +288,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
     #endregion
 
-    #region BUTTON 
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        //Button1.Text = "OK";
-        ADDTBCOPTDCHECK(
-                        TextBox1.Text,
-                        TextBox2.Text,
-                        TextBox3.Text,
-                        TextBox4.Text,
-                        TextBox5.Text,
-                        TextBox6.Text,
-                        TextBox7.Text,
-                        TextBox8.Text,
-                        TextBox9.Text,
-                        TextBox10.Text,
-                        TextBox11.Text,
-                        DropDownList1.SelectedValue,
-                        TextBox13.Text,
-                        TextBox14.Text,
-                        DropDownList2.SelectedValue,
-                        TextBox16.Text,
-                        TextBox17.Text
-                        );
-    }
-    #endregion
+
 
 
 }
