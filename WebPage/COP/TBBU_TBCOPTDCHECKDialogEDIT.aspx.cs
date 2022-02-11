@@ -16,6 +16,8 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        ((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
+        ((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
 
         //設定回傳值
         Dialog.SetReturnValue2("");
@@ -50,7 +52,6 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
-        UPDATE();
 
         Dialog.Close(this);
 
@@ -62,7 +63,6 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
-        UPDATE();
 
         SEARCHCOPTD(lblParam.Text);
     }
@@ -132,55 +132,58 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
     }
 
-    public void UPDATE()
-    {
-        string ID = lblParam.Text;
-
-        if (!string.IsNullOrEmpty(ID) )
-        {
-            ADDTBCOPTDCHECK(ID);
-        }
-
-        Dialog.SetReturnValue2("NeedPostBack");
-    }
-    public void ADDTBCOPTDCHECK(string ID)
-    {
-
-
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        string cmdTxt = @"  
-                        UPDATE [TKBUSINESS].[dbo].[PRODUCTS]
-                        SET 
-                        [PRODUCTSFEATURES]=@PRODUCTSFEATURES
-                        ,[SALESFOCUS]=@SALESFOCUS
-                        ,[COPYWRITINGS]=@COPYWRITINGS
-                        ,[PRICES1]=@PRICES1
-                        ,[PRICES2]=@PRICES2
-                        ,[PRICES3]=@PRICES3
-                        ,[MOQS]=@MOQS
-                        WHERE [MB001]=@ID
-                   
-                            ";
-
-
-        m_db.AddParameter("@ID", ID);
    
 
 
 
-        m_db.ExecuteNonQuery(cmdTxt);
+    public void ADDTBCOPTDCHECK(string TD001,
+                                string TD002,
+                                string TD003,
+                                string TD004,
+                                string TD005,
+                                string TD008,
+                                string TD010,
+                                string TD011,
+                                string TD012,
+                                string TD013,
+                                string MOCCHECKDATES,
+                                string MOCCHECKS,
+                                string MOCCHECKSCOMMENTS,
+                                string PURCHECKDATES,
+                                string PURCHECKS,
+                                string PURCHECKSCOMMENTS,
+                                string SALESCHECKSCOMMENTS)
+    {
+        string ADDTD001 = TD001;
+        string ADDTD002 = TD002;
+        string ADDTD003 = TD003;
+        string ADDTD004 = TD004;
+        string ADDTD005 = TD005;
+        string ADDTD008 = TD008;
+        string ADDTD010 = TD010;
+        string ADDTD011 = TD011;
+        string ADDTD012 = TD012;
+        string ADDTD013 = TD013;
+        string ADDMOCCHECKDATES = MOCCHECKDATES;
+        string ADDMOCCHECKS = MOCCHECKS;
+        string ADDMOCCHECKSCOMMENTS = MOCCHECKSCOMMENTS;
+        string ADDPURCHECKDATES = PURCHECKDATES;
+        string ADDPURCHECKS = PURCHECKS;
+        string ADDPURCHECKSCOMMENTS = PURCHECKSCOMMENTS;
+        string ADDSALESCHECKSCOMMENTS = SALESCHECKSCOMMENTS;
 
 
 
     }
 
 
+    #endregion
 
-  
-
-    
+    #region BUTTON 
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Button1.Text = "OK";
+    }
     #endregion
 
 
