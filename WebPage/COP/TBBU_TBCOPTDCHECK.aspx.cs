@@ -161,7 +161,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 800, Dialog.PostBackType.AfterReturn, param);
         }
 
 

@@ -102,7 +102,24 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
         if (dt.Rows.Count > 0)
         {           
-            TextBox1.Text = dt.Rows[0]["TD123"].ToString();          
+            TextBox1.Text = dt.Rows[0]["TD001"].ToString();
+            TextBox2.Text = dt.Rows[0]["TD002"].ToString();
+            TextBox3.Text = dt.Rows[0]["TD003"].ToString();
+            TextBox4.Text = dt.Rows[0]["TD004"].ToString();
+            TextBox5.Text = dt.Rows[0]["TD005"].ToString();
+            TextBox6.Text = Convert.ToDecimal(dt.Rows[0]["TD008"].ToString()).ToString("N0");
+            TextBox7.Text = dt.Rows[0]["TD010"].ToString();
+            TextBox8.Text = Convert.ToDecimal(dt.Rows[0]["TD011"].ToString()).ToString("N2");
+            TextBox9.Text = Convert.ToDecimal(dt.Rows[0]["TD012"].ToString()).ToString("N0");
+            TextBox10.Text = dt.Rows[0]["TD013"].ToString();
+            //TextBox11.Text = dt.Rows[0]["MOCCHECKDATES"].ToString();
+            TextBox11.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+            TextBox12.Text = dt.Rows[0]["MOCCHECKS"].ToString();
+            TextBox13.Text = dt.Rows[0]["MOCCHECKSCOMMENTS"].ToString();
+            //TextBox14.Text = dt.Rows[0]["PURCHECKDATES"].ToString();
+            TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+            TextBox15.Text = dt.Rows[0]["PURCHECKS"].ToString();
+            TextBox16.Text = dt.Rows[0]["PURCHECKSCOMMENTS"].ToString();
 
         }
 
@@ -114,8 +131,6 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
     public void UPDATE()
     {
         string ID = lblParam.Text;
-      
-
 
         if (!string.IsNullOrEmpty(ID) )
         {
