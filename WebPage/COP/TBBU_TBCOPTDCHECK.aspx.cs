@@ -138,7 +138,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         Grid1.DataBind();
     }
 
-    protected void grid1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
     {
         //Grid1.PageIndex = e.NewPageIndex;
         //BindGrid();
@@ -147,20 +147,15 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            //Get the button that raised the event
+            ///Get the button that raised the event
             Button btn = (Button)e.Row.FindControl("Button1");
-
             //Get the row that contains this button
             GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-
             //string cellvalue = gvr.Cells[2].Text.Trim();
             string Cellvalue = btn.CommandArgument;
-
             DataRowView row = (DataRowView)e.Row.DataItem;
             Button lbtnName = (Button)e.Row.FindControl("Button1");
-
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
@@ -209,6 +204,16 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
 
     }
+
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button1")
+        {
+            BindGrid("");
+        }
+
+    }
+
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {

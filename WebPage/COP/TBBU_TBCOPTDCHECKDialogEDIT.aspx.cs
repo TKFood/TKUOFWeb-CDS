@@ -34,8 +34,10 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             Button1.Enabled = false;
         }
 
-        ((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
-        ((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
+        //((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
+        //((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
+        //((Master_DialogMasterPage)this.Master).Button3Text = string.Empty;
+       
 
         //設定回傳值
         Dialog.SetReturnValue2("");
