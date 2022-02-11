@@ -103,6 +103,24 @@
                                         <asp:BoundField HeaderText="預交日" DataField="TD013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                         </asp:BoundField>
+                                          <asp:BoundField HeaderText="生管更新日期" DataField="MOCCHECKDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                         <asp:BoundField HeaderText="生管是否核準" DataField="MOCCHECKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                         <asp:BoundField HeaderText="生管備註" DataField="MOCCHECKSCOMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                         <asp:BoundField HeaderText="採購更新日期" DataField="PURCHECKDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                         <asp:BoundField HeaderText="採購是否核準" DataField="PURCHECKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                         <asp:BoundField HeaderText="採購備註" DataField="PURCHECKSCOMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
                                         
 
                                     </Columns>
