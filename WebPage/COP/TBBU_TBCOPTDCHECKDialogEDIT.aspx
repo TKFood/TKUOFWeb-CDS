@@ -126,7 +126,7 @@
                     <asp:Label ID="Label12" runat="server" Text="生管更新日期"></asp:Label>
                 </td>
                 <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox11" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+                    <asp:TextBox ID="TextBox11" runat="server" Text="" Width="100%" ReadOnly="True" Enabled="false"></asp:TextBox>
                 </td>
             </tr>
             <tr>
@@ -174,7 +174,7 @@
                     <asp:Label ID="Label15" runat="server" Text="採購更新日期"></asp:Label>
                 </td>
                 <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox14" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+                    <asp:TextBox ID="TextBox14" runat="server" Text="" Width="100%" ReadOnly="True" Enabled="false"></asp:TextBox>
                 </td>
             </tr>
             <tr>
@@ -216,7 +216,7 @@
                     <asp:Label ID="Label6" runat="server" Text="業務更新日期"></asp:Label>
                 </td>
                 <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+                    <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" ReadOnly="True" Enabled="false"></asp:TextBox>
                 </td>
             </tr>
               <tr>

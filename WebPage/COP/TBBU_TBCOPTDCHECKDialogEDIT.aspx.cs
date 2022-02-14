@@ -57,13 +57,13 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             Button3.Enabled = true;
         }
 
-       
-       
+
+
 
         //不顯示子視窗的按鈕
-        //((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
-        //((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
-        //((Master_DialogMasterPage)this.Master).Button3Text = string.Empty;
+        ((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
+        ((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
+        ((Master_DialogMasterPage)this.Master).Button3Text = string.Empty;
 
 
         //設定回傳值
