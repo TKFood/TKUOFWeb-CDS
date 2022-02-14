@@ -23,7 +23,8 @@
                 <asp:Label ID="lblParam" runat="server" Text=""></asp:Label>
             </td>
         </tr>
-        <tr><td class="PopTableLeftTD">
+        <tr>
+            <td class="PopTableLeftTD">
                 <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
             </td>
             <td class="PopTableRightTD" colspan="2">
@@ -196,17 +197,43 @@
                     <asp:TextBox ID="TextBox16" runat="server" Text="" Width="100%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
                 </td>
             </tr>
+            <tr>
+                <td class="PopTableLeftTD">
+                    <asp:Label ID="Label4" runat="server" Text="更新:"></asp:Label>
+                </td>
+                <td class="PopTableRightTD">
+                    <asp:Button ID="Button2" runat="server" Text="更新" ForeColor="red"
+                        OnClick="Button2_Click" meta:resourcekey="btn2Resource1" OnClientClick="return confirm('是否更新? ');" />
+                </td>
+            </tr>
         </table>
     </div>
     <div style="background-color: #30FFFF; padding: 10px; 5">
         業務區
           <table>
+               <tr>
+                <td class="PopTableLeftTD">
+                    <asp:Label ID="Label6" runat="server" Text="業務更新日期"></asp:Label>
+                </td>
+                <td class="PopTableRightTD">
+                    <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+                </td>
+            </tr>
               <tr>
                   <td class="PopTableLeftTD">
                       <asp:Label ID="Label18" runat="server" Text="業務備註"></asp:Label>
                   </td>
                   <td class="PopTableRightTD">
                       <asp:TextBox ID="TextBox17" runat="server" Text="" Width="100%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+                  </td>
+              </tr>
+              <tr>
+                  <td class="PopTableLeftTD">
+                      <asp:Label ID="Label5" runat="server" Text="更新:"></asp:Label>
+                  </td>
+                  <td class="PopTableRightTD">
+                      <asp:Button ID="Button3" runat="server" Text="更新" ForeColor="red"
+                          OnClick="Button3_Click" meta:resourcekey="btn3Resource1" OnClientClick="return confirm('是否更新? ');" />
                   </td>
               </tr>
           </table>

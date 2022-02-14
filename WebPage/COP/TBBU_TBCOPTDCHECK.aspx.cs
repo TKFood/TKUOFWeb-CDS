@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Ede.Uof.EIP.SystemInfo;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
@@ -20,8 +21,11 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.BasePage
 {
+
+
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {       
+
         if (!IsPostBack)
         {
             SETDATES();
@@ -72,6 +76,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
 
     }
+
+   
     private void BindGrid(string SALESFOCUS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();

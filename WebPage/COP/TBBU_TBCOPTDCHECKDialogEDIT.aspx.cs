@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel.Activation;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,22 +18,47 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 {
     string ACCOUNT = null;
     string NAME = null;
+    String ROLES = null;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+       
         ACCOUNT = Current.Account;
         NAME = Current.User.Name;
+        ROLES = SEARCHROLES(ACCOUNT.Trim());
 
-        ACCOUNTLabel.Text = ACCOUNT+ NAME;
+        SETBUTTON();     
 
-        if (ACCOUNT.Equals("160115"))
-	    {
+        ACCOUNTLabel.Text = ACCOUNT + NAME;
+
+        if (ROLES.Equals("ADMIN"))
+        {
             Button1.Enabled = true;
+            Button2.Enabled = true;
+            Button3.Enabled = true;
         }
-        else
+     
+        else if (ROLES.Equals("MOC"))
+        {
+            Button1.Enabled = true;
+            Button2.Enabled = false;
+            Button3.Enabled = false;
+        }
+        else if (ROLES.Equals("PUR"))
         {
             Button1.Enabled = false;
+            Button2.Enabled = true;
+            Button3.Enabled = false;
         }
+        else if (ROLES.Equals("SLAES"))
+        {
+            Button1.Enabled = false;
+            Button2.Enabled = false;
+            Button3.Enabled = true;
+        }
+
+       
+       
 
         //不顯示子視窗的按鈕
         //((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
@@ -111,12 +137,101 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox17.Text
                         );
     }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        //Button1.Text = "OK";
+        ADDTBCOPTDCHECK(
+                        TextBox1.Text,
+                        TextBox2.Text,
+                        TextBox3.Text,
+                        TextBox4.Text,
+                        TextBox5.Text,
+                        TextBox6.Text,
+                        TextBox7.Text,
+                        TextBox8.Text,
+                        TextBox9.Text,
+                        TextBox10.Text,
+                        TextBox11.Text,
+                        DropDownList1.SelectedValue,
+                        TextBox13.Text,
+                        TextBox14.Text,
+                        DropDownList2.SelectedValue,
+                        TextBox16.Text,
+                        TextBox17.Text
+                        );
+    }
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        //Button1.Text = "OK";
+        ADDTBCOPTDCHECK(
+                        TextBox1.Text,
+                        TextBox2.Text,
+                        TextBox3.Text,
+                        TextBox4.Text,
+                        TextBox5.Text,
+                        TextBox6.Text,
+                        TextBox7.Text,
+                        TextBox8.Text,
+                        TextBox9.Text,
+                        TextBox10.Text,
+                        TextBox11.Text,
+                        DropDownList1.SelectedValue,
+                        TextBox13.Text,
+                        TextBox14.Text,
+                        DropDownList2.SelectedValue,
+                        TextBox16.Text,
+                        TextBox17.Text
+                        );
+    }
 
     #endregion
 
     #region FUNCTION
+    public void SETBUTTON()
+    {
+        Button1.Enabled = false;
+        Button2.Enabled = false;
+        Button3.Enabled = false;
+    }
+
+    public string SEARCHROLES(string ACCOUNT)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT  
+                            [ID]
+                            ,[ROLES]
+                            ,[MV001]
+                            ,[MV002]
+                            FROM [TKBUSINESS].[dbo].[TBCOPTDCHECKROLES]
+                            WHERE MV001 ='{0}'
+
+                              ", ACCOUNT);
 
 
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows[0]["ROLES"].ToString();
+        }
+        else
+        {
+            return "NOROLES";
+        }
+
+    }
     public void SEARCHCOPTD(string ID)
     {
 
@@ -167,6 +282,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             //TextBox15.Text = dt.Rows[0]["PURCHECKS"].ToString();
             DropDownList2.SelectedValue = dt.Rows[0]["PURCHECKS"].ToString();
             TextBox16.Text = dt.Rows[0]["PURCHECKSCOMMENTS"].ToString();
+            TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             TextBox17.Text = dt.Rows[0]["SALESCHECKSCOMMENTS"].ToString();
         }
 
