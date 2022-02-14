@@ -62,7 +62,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
         //不顯示子視窗的按鈕
         //((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
-        //((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
+        ((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
         //((Master_DialogMasterPage)this.Master).Button3Text = string.Empty;
 
 
@@ -99,7 +99,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
-
+        Dialog.SetReturnValue2("OK");
         Dialog.Close(this);
 
     }
@@ -108,10 +108,10 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
     void Button2OnClick()
     {
         //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
+        Dialog.SetReturnValue2("OK");
 
-
-        SEARCHCOPTD(lblParam.Text);
+        Dialog.Close(this);
+        //SEARCHCOPTD(lblParam.Text);
     }
 
     //生管
