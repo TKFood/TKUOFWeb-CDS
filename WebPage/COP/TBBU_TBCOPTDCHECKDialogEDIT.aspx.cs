@@ -134,6 +134,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox14.Text,
                         DropDownList2.SelectedValue,
                         TextBox16.Text,
+                        TextBox12.Text,
                         TextBox17.Text
                         );
     }
@@ -157,6 +158,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox14.Text,
                         DropDownList2.SelectedValue,
                         TextBox16.Text,
+                        TextBox12.Text,
                         TextBox17.Text
                         );
     }
@@ -180,6 +182,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox14.Text,
                         DropDownList2.SelectedValue,
                         TextBox16.Text,
+                        TextBox12.Text,
                         TextBox17.Text
                         );
     }
@@ -224,7 +227,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
         if (dt.Rows.Count > 0)
         {
-            return dt.Rows[0]["ROLES"].ToString();
+            return dt.Rows[0]["ROLES"].ToString().Trim();
         }
         else
         {
@@ -311,25 +314,9 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                                 string PURCHECKDATES,
                                 string PURCHECKS,
                                 string PURCHECKSCOMMENTS,
+                                string SALESCHECKDATES,
                                 string SALESCHECKSCOMMENTS)
-    {
-        string ADDTD001 = TD001;
-        string ADDTD002 = TD002;
-        string ADDTD003 = TD003;
-        string ADDTD004 = TD004;
-        string ADDTD005 = TD005;
-        string ADDTD008 = TD008;
-        string ADDTD010 = TD010;
-        string ADDTD011 = TD011;
-        string ADDTD012 = TD012;
-        string ADDTD013 = TD013;
-        string ADDMOCCHECKDATES = MOCCHECKDATES;
-        string ADDMOCCHECKS = MOCCHECKS;
-        string ADDMOCCHECKSCOMMENTS = MOCCHECKSCOMMENTS;
-        string ADDPURCHECKDATES = PURCHECKDATES;
-        string ADDPURCHECKS = PURCHECKS;
-        string ADDPURCHECKSCOMMENTS = PURCHECKSCOMMENTS;
-        string ADDSALESCHECKSCOMMENTS = SALESCHECKSCOMMENTS;
+    {        
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -352,6 +339,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         ,[PURCHECKDATES]
                         ,[PURCHECKS]
                         ,[PURCHECKSCOMMENTS]
+                        ,[SALESCHECKDATES]
                         ,[SALESCHECKSCOMMENTS]
              
                         )
@@ -372,6 +360,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         ,@PURCHECKDATES
                         ,@PURCHECKS
                         ,@PURCHECKSCOMMENTS
+                        ,@SALESCHECKDATES
                         ,@SALESCHECKSCOMMENTS
                         )
                    
@@ -394,6 +383,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         m_db.AddParameter("@PURCHECKDATES", PURCHECKDATES);
         m_db.AddParameter("@PURCHECKS", PURCHECKS);
         m_db.AddParameter("@PURCHECKSCOMMENTS", PURCHECKSCOMMENTS);
+        m_db.AddParameter("@SALESCHECKDATES", SALESCHECKDATES);
         m_db.AddParameter("@SALESCHECKSCOMMENTS", SALESCHECKSCOMMENTS);
 
 
