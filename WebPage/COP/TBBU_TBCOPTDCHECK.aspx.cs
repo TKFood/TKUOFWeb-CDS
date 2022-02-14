@@ -164,7 +164,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             Button lbtnName = (Button)e.Row.FindControl("Button1");
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            // Dialog.PostBackType.AfterReturn
+            //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+            // Dialog.PostBackType.Allows
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.Allows, param);
 
 
             //Button2
@@ -235,8 +239,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         if (e.CommandName == "Button1")
         {
-            MsgBox("Button1", this.Page, this);
-            //BindGrid("");
+            //MsgBox("Button1", this.Page, this);
+            BindGrid("");
         }
         else if (e.CommandName == "Button2")
         {
