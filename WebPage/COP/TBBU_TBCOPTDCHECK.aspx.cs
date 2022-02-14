@@ -166,6 +166,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
+
             //Button2
             //Get the button that raised the event
             Button btn2 = (Button)e.Row.FindControl("Button2");
@@ -234,11 +235,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         if (e.CommandName == "Button1")
         {
+            MsgBox("Button1", this.Page, this);
             //BindGrid("");
         }
         else if (e.CommandName == "Button2")
         {
-            MsgBox("CHECK", this.Page, this);
+            MsgBox("Button2", this.Page, this);
         }
 
     }
