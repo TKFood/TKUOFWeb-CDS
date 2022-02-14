@@ -114,8 +114,10 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         SEARCHCOPTD(lblParam.Text);
     }
 
+    //生管
     protected void Button1_Click(object sender, EventArgs e)
     {
+        TextBox11.Text= DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         //Button1.Text = "OK";
         ADDTBCOPTDCHECK(
                         TextBox1.Text,
@@ -138,8 +140,10 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox17.Text
                         );
     }
+    //採購
     protected void Button2_Click(object sender, EventArgs e)
     {
+        TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         //Button1.Text = "OK";
         ADDTBCOPTDCHECK(
                         TextBox1.Text,
@@ -162,8 +166,10 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox17.Text
                         );
     }
+    //業務
     protected void Button3_Click(object sender, EventArgs e)
     {
+        TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         //Button1.Text = "OK";
         ADDTBCOPTDCHECK(
                         TextBox1.Text,
@@ -249,6 +255,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         ,(SELECT TOP 1 [PURCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKDATES'
                         ,(SELECT TOP 1 [PURCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKS'
                         ,(SELECT TOP 1 [PURCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
+                        ,(SELECT TOP 1 [SALESCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'SALESCHECKDATES'
                         ,(SELECT TOP 1 [SALESCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
 
                         FROM [TK].dbo.COPTC,[TK].dbo.COPTD
@@ -275,17 +282,18 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             TextBox8.Text = Convert.ToDecimal(dt.Rows[0]["TD011"].ToString()).ToString("N2");
             TextBox9.Text = Convert.ToDecimal(dt.Rows[0]["TD012"].ToString()).ToString("N0");
             TextBox10.Text = dt.Rows[0]["TD013"].ToString();
-            //TextBox11.Text = dt.Rows[0]["MOCCHECKDATES"].ToString();
-            TextBox11.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+            TextBox11.Text = dt.Rows[0]["MOCCHECKDATES"].ToString();
+            //TextBox11.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             //TextBox12.Text = dt.Rows[0]["MOCCHECKS"].ToString();
             DropDownList1.SelectedValue= dt.Rows[0]["MOCCHECKS"].ToString();
             TextBox13.Text = dt.Rows[0]["MOCCHECKSCOMMENTS"].ToString();
-            //TextBox14.Text = dt.Rows[0]["PURCHECKDATES"].ToString();
-            TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+            TextBox14.Text = dt.Rows[0]["PURCHECKDATES"].ToString();
+            //TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             //TextBox15.Text = dt.Rows[0]["PURCHECKS"].ToString();
             DropDownList2.SelectedValue = dt.Rows[0]["PURCHECKS"].ToString();
             TextBox16.Text = dt.Rows[0]["PURCHECKSCOMMENTS"].ToString();
-            TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+            TextBox12.Text = dt.Rows[0]["SALESCHECKDATES"].ToString();
+            //TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             TextBox17.Text = dt.Rows[0]["SALESCHECKSCOMMENTS"].ToString();
         }
 
