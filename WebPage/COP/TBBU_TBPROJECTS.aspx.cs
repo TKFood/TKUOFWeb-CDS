@@ -33,8 +33,7 @@ public partial class CDS_WebPage_COP_TBPROJECTS : Ede.Uof.Utility.Page.BasePage
         else
         {
 
-            BindGrid();
-            BindGrid2();
+           
 
 
         }
