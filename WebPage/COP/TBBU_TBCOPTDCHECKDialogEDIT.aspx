@@ -94,6 +94,30 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
+                <asp:Label ID="Label8" runat="server" Text="贈品量"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox18" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label9" runat="server" Text="已交數量"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox19" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label10" runat="server" Text="贈品已交"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox20" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
                 <asp:Label ID="Label25" runat="server" Text="單位"></asp:Label>
             </td>
             <td class="PopTableRightTD">
@@ -122,6 +146,22 @@
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox10" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label11" runat="server" Text="單頭備註"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox21" runat="server" Text="" Width="100%" ReadOnly="True" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label29" runat="server" Text="單身備註"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox22" runat="server" Text="" Width="100%" ReadOnly="True" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
     </table>

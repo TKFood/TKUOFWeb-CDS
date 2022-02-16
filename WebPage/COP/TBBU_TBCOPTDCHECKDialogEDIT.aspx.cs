@@ -127,10 +127,16 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox4.Text,
                         TextBox5.Text,
                         TextBox6.Text,
+                        TextBox19.Text,
                         TextBox7.Text,
                         TextBox8.Text,
                         TextBox9.Text,
                         TextBox10.Text,
+                        TextBox18.Text,
+                        TextBox20.Text,
+                        TextBox21.Text,
+                        TextBox22.Text,
+
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
                         TextBox13.Text,
@@ -153,10 +159,16 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox4.Text,
                         TextBox5.Text,
                         TextBox6.Text,
+                        TextBox19.Text,
                         TextBox7.Text,
                         TextBox8.Text,
                         TextBox9.Text,
                         TextBox10.Text,
+                        TextBox18.Text,
+                        TextBox20.Text,
+                        TextBox21.Text,
+                        TextBox22.Text,
+
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
                         TextBox13.Text,
@@ -179,10 +191,16 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox4.Text,
                         TextBox5.Text,
                         TextBox6.Text,
+                        TextBox19.Text,
                         TextBox7.Text,
                         TextBox8.Text,
                         TextBox9.Text,
                         TextBox10.Text,
+                        TextBox18.Text,
+                        TextBox20.Text,
+                        TextBox21.Text,
+                        TextBox22.Text,
+
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
                         TextBox13.Text,
@@ -191,7 +209,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         TextBox16.Text,
                         TextBox12.Text,
                         TextBox17.Text
-                        );
+                        ); 
     }
 
     #endregion
@@ -297,6 +315,11 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             //TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             TextBox17.Text = dt.Rows[0]["SALESCHECKSCOMMENTS"].ToString();
             TextBox15.Text = dt.Rows[0]["TC053"].ToString();
+            TextBox18.Text = dt.Rows[0]["TD024"].ToString();
+            TextBox19.Text = dt.Rows[0]["TD009"].ToString();
+            TextBox20.Text = dt.Rows[0]["TD025"].ToString();
+            TextBox21.Text = dt.Rows[0]["TC015"].ToString();
+            TextBox22.Text = dt.Rows[0]["TD020"].ToString();
         }
 
 
@@ -314,10 +337,15 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                                 string TD004,
                                 string TD005,
                                 string TD008,
+                                string TD009,
                                 string TD010,
                                 string TD011,
                                 string TD012,
                                 string TD013,
+                                string TD024,
+                                string TD025,
+                                string TC015,
+                                string TD020,
                                 string MOCCHECKDATES,
                                 string MOCCHECKS,
                                 string MOCCHECKSCOMMENTS,
@@ -339,10 +367,15 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         ,[TD004]
                         ,[TD005]
                         ,[TD008]
+                        ,[TD009]
                         ,[TD010]
                         ,[TD011]
                         ,[TD012]
                         ,[TD013]
+                        ,[TD024]
+                        ,[TD025]
+                        ,[TC015]
+                        ,[TD020]
                         ,[MOCCHECKDATES]
                         ,[MOCCHECKS]
                         ,[MOCCHECKSCOMMENTS]
@@ -360,10 +393,15 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
                         ,@TD004
                         ,@TD005
                         ,@TD008
+                        ,@TD009
                         ,@TD010
                         ,@TD011
                         ,@TD012
                         ,@TD013
+                        ,@TD024
+                        ,@TD025
+                        ,@TC015
+                        ,@TD020
                         ,@MOCCHECKDATES
                         ,@MOCCHECKS
                         ,@MOCCHECKSCOMMENTS
@@ -383,10 +421,15 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
         m_db.AddParameter("@TD004", TD004);
         m_db.AddParameter("@TD005", TD005);
         m_db.AddParameter("@TD008", Convert.ToDecimal(TD008));
+        m_db.AddParameter("@TD009", Convert.ToDecimal(TD009));
         m_db.AddParameter("@TD010", TD010);
         m_db.AddParameter("@TD011", Convert.ToDecimal(TD011));
         m_db.AddParameter("@TD012", Convert.ToDecimal(TD012));
         m_db.AddParameter("@TD013", TD013);
+        m_db.AddParameter("@TD024", Convert.ToDecimal(TD024));
+        m_db.AddParameter("@TD025", Convert.ToDecimal(TD025));
+        m_db.AddParameter("@TC015", TC015);
+        m_db.AddParameter("@TD020", TD020);
         m_db.AddParameter("@MOCCHECKDATES", MOCCHECKDATES);
         m_db.AddParameter("@MOCCHECKS", MOCCHECKS);
         m_db.AddParameter("@MOCCHECKSCOMMENTS", MOCCHECKSCOMMENTS);
