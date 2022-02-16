@@ -7,18 +7,18 @@
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/trontastic/jquery-ui.css">
 
-  <%--  <script>
+    <script>
         $(function () {
 
         });
 
-    </script>--%>
+    </script>
     <div style="overflow-x: auto; width: 800px">
     </div>
     <table class="PopTable">
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label1" runat="server" Text="CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="TBBU_TBCOPTDCHECKDialogEDIT"></asp:Label>
             </td>
             <td class="PopTableRightTD" colspan="2">
                 <asp:Label ID="lblParam" runat="server" Text=""></asp:Label>
@@ -34,91 +34,98 @@
 
         </tr>
 
+
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label7" runat="server" Text="客戶"></asp:Label>
+
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox15" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label19" runat="server" Text="單別"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label20" runat="server" Text="單號"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox2" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label21" runat="server" Text="序號"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox3" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label22" runat="server" Text="品號"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label23" runat="server" Text="品名"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox5" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label24" runat="server" Text="訂單數量"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox6" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label25" runat="server" Text="單位"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label26" runat="server" Text="單價"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox8" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label27" runat="server" Text="金額"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox9" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label28" runat="server" Text="預交日"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox10" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
     </table>
-    <div>
-        <table>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label19" runat="server" Text="單別"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label20" runat="server" Text="單號"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox2" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label21" runat="server" Text="序號"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox3" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label22" runat="server" Text="品號"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label23" runat="server" Text="品名"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox5" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label24" runat="server" Text="訂單數量"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox6" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label25" runat="server" Text="單位"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox7" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label26" runat="server" Text="單價"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox8" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label27" runat="server" Text="金額"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox9" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label28" runat="server" Text="預交日"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox10" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
-                </td>
-            </tr>
-        </table>
-    </div>
+
     <div style="background-color: #FFD382; padding: 10px; margin-bottom: 5px;">
         生管區
         <table>
@@ -212,14 +219,14 @@
     <div style="background-color: #30FFFF; padding: 10px; 5">
         業務區
           <table>
-               <tr>
-                <td class="PopTableLeftTD">
-                    <asp:Label ID="Label6" runat="server" Text="業務更新日期"></asp:Label>
-                </td>
-                <td class="PopTableRightTD">
-                    <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" ReadOnly="True" Enabled="false"></asp:TextBox>
-                </td>
-            </tr>
+              <tr>
+                  <td class="PopTableLeftTD">
+                      <asp:Label ID="Label6" runat="server" Text="業務更新日期"></asp:Label>
+                  </td>
+                  <td class="PopTableRightTD">
+                      <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%" ReadOnly="True" Enabled="false"></asp:TextBox>
+                  </td>
+              </tr>
               <tr>
                   <td class="PopTableLeftTD">
                       <asp:Label ID="Label18" runat="server" Text="業務備註"></asp:Label>

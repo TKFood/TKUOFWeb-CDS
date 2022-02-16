@@ -296,6 +296,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
             TextBox12.Text = dt.Rows[0]["SALESCHECKDATES"].ToString();
             //TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             TextBox17.Text = dt.Rows[0]["SALESCHECKSCOMMENTS"].ToString();
+            TextBox15.Text = dt.Rows[0]["TC053"].ToString();
         }
 
 
