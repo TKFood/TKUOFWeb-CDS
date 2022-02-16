@@ -25,6 +25,10 @@ using OfficeOpenXml.Style;
 public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.BasePage
 {
     string DBNAME = "UOF";
+    //string DBNAME = "UOFTEST";
+
+    string TC001 = "";
+    string TC002 = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {       
@@ -428,7 +432,13 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             {
                 string TD001 = dt.Rows[0]["TD001"].ToString().Trim();
                 string TD002 = dt.Rows[0]["TD002"].ToString().Trim();
-                MsgBox("OK "+ TD001+ TD002, this.Page, this);
+
+                TC001 = TD001;
+                TC002 = TD002;
+
+                ADDTB_WKF_EXTERNAL_TASK_COPTCCOPTD(TD001, TD002);
+
+                //MsgBox("OK "+ TD001+ TD002, this.Page, this);
             }
             else
             {
@@ -437,7 +447,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         }
         catch
         {
-            MsgBox("NG", this.Page, this);
+            MsgBox("catch NG", this.Page, this);
         }
         finally
         {
@@ -492,6 +502,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         //正式的id
         string  COPID = SEARCHFORM_VERSION_ID("訂單");
+        //string COPID = "24c10c88-32ff-4db1-8900-abf7e4f61471";
 
         if (!string.IsNullOrEmpty(COPID))
         {
@@ -1394,23 +1405,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         ADDTACK(Form);
 
         ////ADD TO DB
-        ////string connectionString = ConfigurationManager.ConnectionStrings["dbUOF"].ToString();
-
-        ////connectionString = ConfigurationManager.ConnectionStrings["dberp"].ConnectionString;
-        ////sqlConn = new SqlConnection(connectionString);
-
-        ////20210902密
-        //Class1 TKID = new Class1();//用new 建立類別實體
-        //SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["dbUOF"].ConnectionString);
-
-        ////資料庫使用者密碼解密
-        //sqlsb.Password = TKID.Decryption(sqlsb.Password);
-        //sqlsb.UserID = TKID.Decryption(sqlsb.UserID);
-
-        //String connectionString;
-        //sqlConn = new SqlConnection(sqlsb.ConnectionString);
-        //connectionString = sqlConn.ConnectionString.ToString();
-
+        //string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
+        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        
         //StringBuilder queryString = new StringBuilder();
 
 
@@ -1452,15 +1449,18 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         string status = "";
         string formNBR = "";
         string error = "";
+       
         string NEWTASK_ID = "";
 
         if (resultXE.Element("Status").Value == "1")
         {
             status = "起單成功!";
-            formNBR = resultXE.Element("FormNumber").Value;
+            formNBR = resultXE.Element("FormNumber").Value;           
+
             NEWTASK_ID = formNBR;
 
             Logger.Write("TEST", status + formNBR);
+            MsgBox("起單成功 "  +TC001 + TC002 + " > " + formNBR , this.Page, this);
 
         }
         else
@@ -1470,10 +1470,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
             Logger.Write("TEST", status + error + "\r\n" + Form.OuterXml);
 
+            MsgBox("起單失敗 " + error + "\r\n" + Form.OuterXml, this.Page, this);
+
             throw new Exception(status + error + "\r\n" + Form.OuterXml);
 
         }
     }
+
+   
 
     public DataTable SEARCHCOPTCCOPTD(string TC001, string TC002)
     {
