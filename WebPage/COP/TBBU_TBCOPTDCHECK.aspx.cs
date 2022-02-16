@@ -185,7 +185,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         DataTable dt = new DataTable();
 
-        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));      
+
+        
 
         Grid1.DataSource = dt;
         Grid1.DataBind();
@@ -232,7 +234,6 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         }
 
-      
 
 
 
