@@ -67,6 +67,14 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
+                            <asp:Label ID="Label4" runat="server" Text="是否生產: "></asp:Label>
+                            <asp:DropDownList ID="DropDownList2" runat="server" ></asp:DropDownList>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
                             <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn5_Click"
                                 meta:resourcekey="btn5Resource1" />
                         </td>
@@ -140,7 +148,7 @@
                                                 <asp:Button ID="Button1" runat="server" Text="更新" ForeColor="Red" CommandName="Button1" CommandArgument='<%# Eval("TD123") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                         <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button2" runat="server" Text="送簽" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Eval("TD123") %>' />
                                             </ItemTemplate>

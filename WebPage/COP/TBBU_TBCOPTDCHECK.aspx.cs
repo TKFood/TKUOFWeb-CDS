@@ -30,6 +30,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         {
             SETDATES();
             BindDropDownList();
+            BindDropDownList2();
             BindGrid("");
         }
         else
@@ -50,7 +51,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     private void BindDropDownList()
     {
         DataTable dt = new DataTable();
-        dt.Columns.Add("SALESFOCUS", typeof(String));
+        dt.Columns.Add("STATUS", typeof(String));
 
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -77,7 +78,37 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     }
 
-   
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT 'Y' AS 'STATUS' UNION ALL SELECT 'N' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "STATUS";
+            DropDownList2.DataValueField = "STATUS";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+
     private void BindGrid(string SALESFOCUS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -104,9 +135,23 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             {
                 QUERYS.AppendFormat(@" AND TD021='N'");
             }
-            else if (!DropDownList1.Text.Equals("已核單"))
+            else if (DropDownList1.Text.Equals("已核單"))
             {
                 QUERYS.AppendFormat(@"  AND TD021='Y'");
+            }
+        }
+
+
+        //是否生產
+        if (!string.IsNullOrEmpty(DropDownList2.Text))
+        {
+            if (DropDownList2.Text.Equals("Y"))
+            {
+                QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+            }
+            else if (DropDownList2.Text.Equals("N"))
+            {
+                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
             }
         }
 
@@ -125,6 +170,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
                                 FROM [TK].dbo.COPTC,[TK].dbo.COPTD
                                 WHERE TC001=TD001 AND TC002=TD002
                                 AND 1=1
+                                
                                 {0}
 
                                 ORDER BY TD001,TD002,TD003
