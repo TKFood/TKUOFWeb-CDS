@@ -2009,24 +2009,27 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         string TD002 = null;
         string TD003 = null;
         string MOCCHECKSCOMMENTS = null;
+        string MOCCHECKS = null;
 
         foreach (GridViewRow gvr in this.Grid2.Rows)
         {
             Control ctl = gvr.FindControl("CheckBox");
             CheckBox ck = (CheckBox)ctl;
             var GRIDVIEWTextBox1 = (TextBox)gvr.FindControl("GRIDVIEWTextBox1");
+            var GRIDVIEWDropDownList1 = (DropDownList)gvr.FindControl("GRIDVIEWDropDownList1");
 
             TableCellCollection cell = gvr.Cells;
             TD001 = cell[1].Text.Trim();
             TD002 = cell[2].Text.Trim();
             TD003 = cell[3].Text.Trim();
             MOCCHECKSCOMMENTS = GRIDVIEWTextBox1.Text.ToString();
+            MOCCHECKS = GRIDVIEWDropDownList1.SelectedValue.ToString();
 
 
 
             if (!string.IsNullOrEmpty(MOCCHECKSCOMMENTS))
             {
-                MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS, this.Page, this);
+                MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS+" "+MOCCHECKS, this.Page, this);
             }
 
            

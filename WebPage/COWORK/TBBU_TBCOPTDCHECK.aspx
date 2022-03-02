@@ -306,9 +306,19 @@
                                             <asp:BoundField HeaderText="業務備註" DataField="SALESCHECKSCOMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                             </asp:BoundField>
-                                            <asp:TemplateField>                                               
+                                            <asp:TemplateField HeaderText="生管備註填寫">
                                                 <ItemTemplate>
                                                     <asp:TextBox ID="GRIDVIEWTextBox1" runat="server" Text="" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="生管核準填寫">
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="GRIDVIEWDropDownList1" runat="server">
+                                                        <asp:ListItem>N</asp:ListItem>
+                                                        <asp:ListItem>Y</asp:ListItem>
+
+
+                                                    </asp:DropDownList>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <%--  <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
