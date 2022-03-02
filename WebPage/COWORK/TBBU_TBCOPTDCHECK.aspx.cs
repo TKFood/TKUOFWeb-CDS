@@ -36,9 +36,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         if (!IsPostBack)
         {
             SETDATES();
+
             BindDropDownList();
             BindDropDownList2();
             BindGrid("");
+
+            BindDropDownList3();
+            BindDropDownList4();
+            BindGrid2("");
         }
         else
         {
@@ -54,6 +59,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     {
         TextBox1.Text = DateTime.Now.ToString("yyyy");
         TextBox2.Text = DateTime.Now.ToString("MM");
+        TextBox3.Text = DateTime.Now.ToString("yyyy");
+        TextBox4.Text = DateTime.Now.ToString("MM");
     }
     private void BindDropDownList()
     {
@@ -104,6 +111,66 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             DropDownList2.DataTextField = "STATUS";
             DropDownList2.DataValueField = "STATUS";
             DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "STATUS";
+            DropDownList3.DataValueField = "STATUS";
+            DropDownList3.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    private void BindDropDownList4()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT 'Y' AS 'STATUS' UNION ALL SELECT 'N' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList4.DataSource = dt;
+            DropDownList4.DataTextField = "STATUS";
+            DropDownList4.DataValueField = "STATUS";
+            DropDownList4.DataBind();
 
         }
         else
@@ -364,6 +431,206 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     //    int mtus = pixels * 9525;
     //    return mtus;
     //}
+
+    private void BindGrid2(string SALESFOCUS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        //日期
+        if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
+        {
+            if (TextBox4.Text.Length == 1)
+            {
+                TextBox4.Text = "0" + TextBox4.Text;
+            }
+            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox3.Text.Trim() + TextBox4.Text.Trim());
+
+        }
+
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList3.Text))
+        {
+            if (DropDownList3.Text.Equals("未核單"))
+            {
+                QUERYS.AppendFormat(@" AND TD021='N'");
+            }
+            else if (DropDownList3.Text.Equals("已核單"))
+            {
+                QUERYS.AppendFormat(@"  AND TD021='Y'");
+            }
+        }
+
+
+        //是否生產
+        if (!string.IsNullOrEmpty(DropDownList4.Text))
+        {
+            if (DropDownList4.Text.Equals("Y"))
+            {
+                QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+            }
+            else if (DropDownList4.Text.Equals("N"))
+            {
+                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+            }
+        }
+
+
+        cmdTxt.AppendFormat(@" 
+                                SELECT  
+                                LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))+LTRIM(RTRIM(TD003)) AS 'TD123'
+                                ,LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002)) AS 'TD12'
+                                ,*
+                                ,(SELECT TOP 1 ISNULL([MOCCHECKDATES],'') FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKDATES'
+                                ,(SELECT TOP 1 [MOCCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKS'
+                                ,(SELECT TOP 1 [MOCCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 [PURCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKDATES'
+                                ,(SELECT TOP 1 [PURCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKS'
+                                ,(SELECT TOP 1 [PURCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 [SALESCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'SALESCHECKDATES'
+                                ,(SELECT TOP 1 [SALESCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
+
+                                FROM [TK].dbo.COPTC,[TK].dbo.COPTD
+                                WHERE TC001=TD001 AND TC002=TD002
+                                AND 1=1
+                                
+                                {0}
+
+                                ORDER BY TD001,TD002,TD003
+
+                                ", QUERYS.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+        //    ///Get the button that raised the event
+        //    Button btn = (Button)e.Row.FindControl("Button3");
+        //    //Get the row that contains this button
+        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+        //    //string cellvalue = gvr.Cells[2].Text.Trim();
+        //    string Cellvalue = btn.CommandArgument;
+        //    DataRowView row = (DataRowView)e.Row.DataItem;
+        //    Button lbtnName = (Button)e.Row.FindControl("Button3");
+        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+        //    //Grid開窗是用RowDataBound事件再開窗
+        //    // Dialog.PostBackType.AfterReturn
+        //    //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+        //    // Dialog.PostBackType.Allows
+        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.Allows, param);
+
+
+        //    //Button2
+        //    //Get the button that raised the event
+        //    Button btn2 = (Button)e.Row.FindControl("Button4");
+        //    //Get the row that contains this button
+        //    GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+        //    //string cellvalue = gvr.Cells[2].Text.Trim();
+        //    string Cellvalue2 = btn2.CommandArgument;
+        //    DataRowView row2 = (DataRowView)e.Row.DataItem;
+        //    Button lbtnName2 = (Button)e.Row.FindControl("Button4");
+        //    ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
+
+
+
+        }
+
+
+
+
+
+        //StringBuilder PATH = new StringBuilder();
+
+        //System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    DataRowView row = (DataRowView)e.Row.DataItem;
+        //    System.Web.UI.WebControls.Image img1 = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
+
+
+
+        //    if (!string.IsNullOrEmpty(row["PHOTO_GUID"].ToString()))
+        //    {
+        //        //img.ImageUrl = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
+
+
+        //        //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
+        //        //                ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
+
+        //        PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
+        //                        ", row["RESIZE_FILE_ID"].ToString());
+        //        img.ImageUrl = PATH.ToString();
+
+        //        //img.ImageUrl  = Request.ApplicationPath + "/Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
+
+        //        //img.ImageUrl = string.Format("~/Common/FileCenter/Downloadfile.ashx?id={0}", row["THUMBNAIL_FILE_ID"].ToString());
+
+        //        //e.Row.Cells[0].Text = row["THUMBNAIL_FILE_ID"].ToString();
+        //        ////獲取當前行的圖片路徑
+        //        //string ImgUrl = img.ImageUrl;
+        //        ////給帶圖片的單元格添加點擊事件
+        //        //e.Row.Cells[3].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
+        //        //    + ".checked=true;CellClick('" + ImgUrl + "')");
+
+        //        //  img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
+        //    }
+
+
+        //}
+
+
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Button3")
+        {
+            //MsgBox("Button1", this.Page, this);
+            BindGrid2("");
+        }
+        else if (e.CommandName == "Button4")
+        {
+            CHECKTBCOPTDCHECK(e.CommandArgument.ToString());
+            //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
+        }
+
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+
+        
+    }
+
 
     public override void VerifyRenderingInServerForm(Control control)
     {
@@ -1736,6 +2003,35 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         }
     }
 
+    public void ADDMOC()
+    {
+        string TD001 = null;
+        string TD002 = null;
+        string TD003 = null;
+        string MOCCHECKSCOMMENTS = null;
+
+        foreach (GridViewRow gvr in this.Grid2.Rows)
+        {
+            Control ctl = gvr.FindControl("CheckBox");
+            CheckBox ck = (CheckBox)ctl;
+            var GRIDVIEWTextBox1 = (TextBox)gvr.FindControl("GRIDVIEWTextBox1");
+
+            TableCellCollection cell = gvr.Cells;
+            TD001 = cell[1].Text.Trim();
+            TD002 = cell[2].Text.Trim();
+            TD003 = cell[3].Text.Trim();
+            MOCCHECKSCOMMENTS = GRIDVIEWTextBox1.Text.ToString();
+
+
+
+            if (!string.IsNullOrEmpty(MOCCHECKSCOMMENTS))
+            {
+                MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS, this.Page, this);
+            }
+
+
+        }
+    }
     #endregion
 
     #region BUTTON
@@ -1786,6 +2082,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     protected void btn5_Click(object sender, EventArgs e)
     {
+        BindGrid("");
+    }
+
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        ADDMOC();
         BindGrid("");
     }
     #endregion
