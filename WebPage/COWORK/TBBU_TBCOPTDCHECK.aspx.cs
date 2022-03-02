@@ -2029,8 +2029,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
                 MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS, this.Page, this);
             }
 
-
+           
         }
+
+        foreach (GridViewRow row in this.Grid2.Rows)
+        {
+            ((TextBox)row.FindControl("GRIDVIEWTextBox1")).Text = "";
+        }
+
     }
     #endregion
 
