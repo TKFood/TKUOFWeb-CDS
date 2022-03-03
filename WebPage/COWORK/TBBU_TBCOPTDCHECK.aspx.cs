@@ -49,6 +49,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         {
             Button4.Enabled = true;
             Button6.Enabled = true;
+            Button8.Enabled = true;
 
         }
 
@@ -56,18 +57,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         {
             Button4.Enabled = true;
             Button6.Enabled = false;
+            Button8.Enabled = false;
 
         }
         else if (ROLES.Equals("PUR"))
         {
             Button4.Enabled = false;
             Button6.Enabled = true;
+            Button8.Enabled = false;
 
         }
         else if (ROLES.Equals("SLAES"))
         {
             Button4.Enabled = false;
             Button6.Enabled = false;
+            Button8.Enabled = true;
 
         }
 
@@ -403,6 +407,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
         }
 
+        //訂單單號
+        if (!string.IsNullOrEmpty(TextBox9.Text))
+        {            
+            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox9.Text.Trim());
+
+        }
 
         cmdTxt.AppendFormat(@" 
                                 SELECT  
@@ -652,6 +662,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
         }
 
+        //訂單單號
+        if (!string.IsNullOrEmpty(TextBox10.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox10.Text.Trim());
+
+        }
 
         cmdTxt.AppendFormat(@" 
                                 SELECT  
@@ -851,6 +867,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
         }
 
+        //訂單單號
+        if (!string.IsNullOrEmpty(TextBox11.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox11.Text.Trim());
+
+        }
 
         cmdTxt.AppendFormat(@" 
                                 SELECT  
@@ -1050,6 +1072,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
         }
 
+        //訂單單號
+        if (!string.IsNullOrEmpty(TextBox12.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox12.Text.Trim());
+
+        }
 
         cmdTxt.AppendFormat(@" 
                                 SELECT  

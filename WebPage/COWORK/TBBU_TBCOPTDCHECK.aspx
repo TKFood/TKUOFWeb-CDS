@@ -81,6 +81,14 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
+                            <asp:Label ID="Label17" runat="server" Text="訂單單號: "></asp:Label>
+                            <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
                             <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
                                 meta:resourcekey="btn1Resource1" />
                         </td>
@@ -214,6 +222,14 @@
                             <td>
                                 <asp:Label ID="Label8" runat="server" Text="是否生產: "></asp:Label>
                                 <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label18" runat="server" Text="訂單單號: "></asp:Label>
+                                <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
                             </td>
 
                         </tr>
@@ -383,6 +399,14 @@
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
+                                <asp:Label ID="Label19" runat="server" Text="訂單單號: "></asp:Label>
+                                <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
                                 <asp:Button ID="Button5" runat="server" Text=" 查詢 " OnClick="Button5_Click"
                                     meta:resourcekey="btn5Resource1" />
                             </td>
@@ -507,7 +531,7 @@
                 </table>
             </div>
         </telerik:RadPageView>
-         <telerik:RadPageView ID="RadPageView4" runat="server">
+        <telerik:RadPageView ID="RadPageView4" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">
                     <table class="PopTable">
@@ -540,6 +564,14 @@
                             <td>
                                 <asp:Label ID="Label16" runat="server" Text="是否生產: "></asp:Label>
                                 <asp:DropDownList ID="DropDownList8" runat="server"></asp:DropDownList>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label20" runat="server" Text="訂單單號: "></asp:Label>
+                                <asp:TextBox ID="TextBox12" runat="server"></asp:TextBox>
                             </td>
 
                         </tr>
@@ -641,11 +673,11 @@
                                                     <asp:TextBox ID="GRIDVIEW4TextBox1" runat="server" Text="" TextMode="MultiLine" Rows="3"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                           <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemTemplate>
-                                                <asp:Button ID="GRIDVIEW4Button1" runat="server" Text="送簽" CommandName="GRIDVIEW4Button1" ForeColor="Red" CommandArgument='<%# Eval("TD12") %>' />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="GRIDVIEW4Button1" runat="server" Text="送簽" CommandName="GRIDVIEW4Button1" ForeColor="Red" CommandArgument='<%# Eval("TD12") %>' />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <%--  <asp:TemplateField HeaderText="更新進度" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
                                                     <asp:Button ID="Button3" runat="server" Text="更新" ForeColor="Red" CommandName="Button3" CommandArgument='<%# Eval("TD123") %>' />
