@@ -24,6 +24,10 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.BasePage
 {
+    string ACCOUNT = null;
+    string NAME = null;
+    String ROLES = null;
+
     string DBNAME = "UOF";
     //string DBNAME = "UOFTEST";
 
@@ -31,7 +35,37 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     string TC002 = "";
 
     protected void Page_Load(object sender, EventArgs e)
-    {       
+    {
+
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+        ROLES = SEARCHROLES(ACCOUNT.Trim());
+
+        SETBUTTON();
+
+       
+
+        if (ROLES.Equals("ADMIN"))
+        {
+            Button4.Enabled = true;
+        
+        }
+
+        else if (ROLES.Equals("MOC"))
+        {
+            Button4.Enabled = true;
+           
+        }
+        else if (ROLES.Equals("PUR"))
+        {
+            Button4.Enabled = false;
+            
+        }
+        else if (ROLES.Equals("SLAES"))
+        {
+            Button4.Enabled = false;
+           
+        }
 
         if (!IsPostBack)
         {
@@ -55,6 +89,10 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     }
     #region FUNCTION
+    public void SETBUTTON()
+    {
+        Button4.Enabled = false;      
+    }
     public void SETDATES()
     {
         TextBox1.Text = DateTime.Now.ToString("yyyy");
@@ -2012,9 +2050,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         string MOCCHECKS = null;
 
         foreach (GridViewRow gvr in this.Grid2.Rows)
-        {
-            Control ctl = gvr.FindControl("CheckBox");
-            CheckBox ck = (CheckBox)ctl;
+        {           
             var GRIDVIEWTextBox1 = (TextBox)gvr.FindControl("GRIDVIEWTextBox1");
             var GRIDVIEWDropDownList1 = (DropDownList)gvr.FindControl("GRIDVIEWDropDownList1");
 
@@ -2026,10 +2062,10 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             MOCCHECKS = GRIDVIEWDropDownList1.SelectedValue.ToString();
 
 
-
             if (!string.IsNullOrEmpty(MOCCHECKSCOMMENTS))
             {
-                MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS+" "+MOCCHECKS, this.Page, this);
+                ADDTBCOPTDCHECK(TD001, TD002, TD003,null, MOCCHECKS, MOCCHECKSCOMMENTS);
+                //MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS+" "+MOCCHECKS, this.Page, this);
             }
 
            
@@ -2041,6 +2077,131 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         }
 
     }
+
+
+    public string SEARCHROLES(string ACCOUNT)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT  
+                            [ID]
+                            ,[ROLES]
+                            ,[MV001]
+                            ,[MV002]
+                            FROM [TKBUSINESS].[dbo].[TBCOPTDCHECKROLES]
+                            WHERE MV001 LIKE '{0}%'
+
+                              ", ACCOUNT);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows[0]["ROLES"].ToString().Trim();
+        }
+        else
+        {
+            return "NOROLES";
+        }
+
+    }
+
+    public void ADDTBCOPTDCHECK(string TD001,
+                                string TD002,
+                                string TD003,                               
+                                string MOCCHECKDATES,
+                                string MOCCHECKS,
+                                string MOCCHECKSCOMMENTS
+                               )
+    {
+        MOCCHECKDATES= DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        INSERT INTO [TKBUSINESS].[dbo].[TBCOPTDCHECK]
+                        ([TD001]
+                        ,[TD002]
+                        ,[TD003]
+                        ,[TD004]
+                        ,[TD005]
+                        ,[TD008]
+                        ,[TD009]
+                        ,[TD010]
+                        ,[TD011]
+                        ,[TD012]
+                        ,[TD013]
+                        ,[TD024]
+                        ,[TD025]
+                        ,[TC015]
+                        ,[TD020]
+                        ,[MOCCHECKDATES]
+                        ,[MOCCHECKS]
+                        ,[MOCCHECKSCOMMENTS]
+                        ,[PURCHECKDATES]
+                        ,[PURCHECKS]
+                        ,[PURCHECKSCOMMENTS]
+                        ,[SALESCHECKDATES]
+                        ,[SALESCHECKSCOMMENTS]
+             
+                        )
+                        SELECT 
+                        [TD001]
+                        ,[TD002]
+                        ,[TD003]
+                        ,[TD004]
+                        ,[TD005]
+                        ,[TD008]
+                        ,[TD009]
+                        ,[TD010]
+                        ,[TD011]
+                        ,[TD012]
+                        ,[TD013]
+                        ,[TD024]
+                        ,[TD025]
+                        ,[TC015]
+                        ,[TD020]
+                        ,@MOCCHECKDATES AS [MOCCHECKDATES]
+                        ,@MOCCHECKS AS [MOCCHECKS]
+                        ,@MOCCHECKSCOMMENTS AS [MOCCHECKSCOMMENTS]
+                        ,NULL AS[PURCHECKDATES]
+                        ,NULL AS[PURCHECKS]
+                        ,NULL AS[PURCHECKSCOMMENTS]
+                        ,NULL AS[SALESCHECKDATES]
+                        ,NULL AS [SALESCHECKSCOMMENTS]
+                        FROM [TK].dbo.COPTD,[TK].dbo.COPTC
+                        WHERE TC001=TD001 AND TC002=TD002
+                        AND TD001=@TD001 AND TD002=@TD002 AND TD003=@TD003
+                   
+                            ";
+
+
+        m_db.AddParameter("@TD001", TD001);
+        m_db.AddParameter("@TD002", TD002);
+        m_db.AddParameter("@TD003", TD003);       
+        m_db.AddParameter("@MOCCHECKDATES", MOCCHECKDATES);
+        m_db.AddParameter("@MOCCHECKS", MOCCHECKS);
+        m_db.AddParameter("@MOCCHECKSCOMMENTS", MOCCHECKSCOMMENTS);
+      
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+    }
+
     #endregion
 
     #region BUTTON
@@ -2092,12 +2253,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     protected void btn5_Click(object sender, EventArgs e)
     {
         BindGrid("");
+        BindGrid2("");
     }
 
     protected void Button4_Click(object sender, EventArgs e)
     {
         ADDMOC();
         BindGrid("");
+        BindGrid2("");
     }
     #endregion
 }
