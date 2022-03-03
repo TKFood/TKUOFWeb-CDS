@@ -2329,11 +2329,48 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
             if (!string.IsNullOrEmpty(MOCCHECKSCOMMENTS))
             {
-                ADDTBCOPTDCHECK(TD001, TD002, TD003,null, MOCCHECKS, MOCCHECKSCOMMENTS);
+                ADDTBCOPTDCHECKMOC(TD001, TD002, TD003,null, MOCCHECKS, MOCCHECKSCOMMENTS);
                 //MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS+" "+MOCCHECKS, this.Page, this);
             }
 
            
+        }
+
+        foreach (GridViewRow row in this.Grid2.Rows)
+        {
+            ((TextBox)row.FindControl("GRIDVIEWTextBox1")).Text = "";
+        }
+
+    }
+
+    public void ADDPUR()
+    {
+        string TD001 = null;
+        string TD002 = null;
+        string TD003 = null;
+        string PURCHECKSCOMMENTS = null;
+        string PURCHECKS = null;
+
+        foreach (GridViewRow gvr in this.Grid3.Rows)
+        {
+            var GRIDVIEW2TextBox1 = (TextBox)gvr.FindControl("GRIDVIEW2TextBox1");
+            var GRIDVIEW2DropDownList1 = (DropDownList)gvr.FindControl("GRIDVIEW2DropDownList1");
+
+            TableCellCollection cell = gvr.Cells;
+            TD001 = cell[1].Text.Trim();
+            TD002 = cell[2].Text.Trim();
+            TD003 = cell[3].Text.Trim();
+            PURCHECKSCOMMENTS = GRIDVIEW2TextBox1.Text.ToString();
+            PURCHECKS = GRIDVIEW2DropDownList1.SelectedValue.ToString();
+
+
+            if (!string.IsNullOrEmpty(PURCHECKSCOMMENTS))
+            {
+                ADDTBCOPTDCHECKPUR(TD001, TD002, TD003, null, PURCHECKS, PURCHECKSCOMMENTS);
+                //MsgBox(TD001 + TD002 + TD003 + " " + MOCCHECKSCOMMENTS+" "+MOCCHECKS, this.Page, this);
+            }
+
+
         }
 
         foreach (GridViewRow row in this.Grid2.Rows)
@@ -2383,7 +2420,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     }
 
-    public void ADDTBCOPTDCHECK(string TD001,
+    public void ADDTBCOPTDCHECKMOC(string TD001,
                                 string TD002,
                                 string TD003,                               
                                 string MOCCHECKDATES,
@@ -2442,11 +2479,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
                         ,@MOCCHECKDATES AS [MOCCHECKDATES]
                         ,@MOCCHECKS AS [MOCCHECKS]
                         ,@MOCCHECKSCOMMENTS AS [MOCCHECKSCOMMENTS]
-                        ,NULL AS[PURCHECKDATES]
-                        ,NULL AS[PURCHECKS]
-                        ,NULL AS[PURCHECKSCOMMENTS]
-                        ,NULL AS[SALESCHECKDATES]
-                        ,NULL AS [SALESCHECKSCOMMENTS]
+                        ,(SELECT TOP 1 [PURCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC) AS [PURCHECKDATES]
+                        ,(SELECT TOP 1 [PURCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC) AS [PURCHECKS]
+                        ,(SELECT TOP 1 [PURCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC) AS [PURCHECKSCOMMENTS]
+                        ,(SELECT TOP 1 [SALESCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC) AS [SALESCHECKDATES]
+                        ,(SELECT TOP 1 [SALESCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC) AS [SALESCHECKSCOMMENTS]
                         FROM [TK].dbo.COPTD,[TK].dbo.COPTC
                         WHERE TC001=TD001 AND TC002=TD002
                         AND TD001=@TD001 AND TD002=@TD002 AND TD003=@TD003
@@ -2461,6 +2498,91 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         m_db.AddParameter("@MOCCHECKS", MOCCHECKS);
         m_db.AddParameter("@MOCCHECKSCOMMENTS", MOCCHECKSCOMMENTS);
       
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+    }
+
+    public void ADDTBCOPTDCHECKPUR(string TD001,
+                               string TD002,
+                               string TD003,
+                               string PURCHECKDATES,
+                               string PURCHECKS,
+                               string PURCHECKSCOMMENTS
+                              )
+    {
+        PURCHECKDATES = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        INSERT INTO [TKBUSINESS].[dbo].[TBCOPTDCHECK]
+                        ([TD001]
+                        ,[TD002]
+                        ,[TD003]
+                        ,[TD004]
+                        ,[TD005]
+                        ,[TD008]
+                        ,[TD009]
+                        ,[TD010]
+                        ,[TD011]
+                        ,[TD012]
+                        ,[TD013]
+                        ,[TD024]
+                        ,[TD025]
+                        ,[TC015]
+                        ,[TD020]
+                        ,[MOCCHECKDATES]
+                        ,[MOCCHECKS]
+                        ,[MOCCHECKSCOMMENTS]
+                        ,[PURCHECKDATES]
+                        ,[PURCHECKS]
+                        ,[PURCHECKSCOMMENTS]
+                        ,[SALESCHECKDATES]
+                        ,[SALESCHECKSCOMMENTS]
+             
+                        )
+                        SELECT 
+                        [TD001]
+                        ,[TD002]
+                        ,[TD003]
+                        ,[TD004]
+                        ,[TD005]
+                        ,[TD008]
+                        ,[TD009]
+                        ,[TD010]
+                        ,[TD011]
+                        ,[TD012]
+                        ,[TD013]
+                        ,[TD024]
+                        ,[TD025]
+                        ,[TC015]
+                        ,[TD020]
+                        ,(SELECT TOP 1 [MOCCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC)  AS [MOCCHECKDATES]
+                        ,(SELECT TOP 1 [MOCCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC)  AS [MOCCHECKS]
+                        ,(SELECT TOP 1 [MOCCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC)  AS [MOCCHECKSCOMMENTS]
+                        ,@PURCHECKDATES AS [PURCHECKDATES]
+                        ,@PURCHECKS AS [PURCHECKS]
+                        ,@PURCHECKSCOMMENTS AS [PURCHECKSCOMMENTS]
+                        ,(SELECT TOP 1 [SALESCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC) AS [SALESCHECKDATES]
+                        ,(SELECT TOP 1 [SALESCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003 ORDER BY ID DESC) AS [SALESCHECKSCOMMENTS]
+
+                        FROM [TK].dbo.COPTD,[TK].dbo.COPTC
+                        WHERE TC001=TD001 AND TC002=TD002
+                        AND TD001=@TD001 AND TD002=@TD002 AND TD003=@TD003
+                   
+                            ";
+
+
+        m_db.AddParameter("@TD001", TD001);
+        m_db.AddParameter("@TD002", TD002);
+        m_db.AddParameter("@TD003", TD003);
+        m_db.AddParameter("@PURCHECKDATES", PURCHECKDATES);
+        m_db.AddParameter("@PURCHECKS", PURCHECKS);
+        m_db.AddParameter("@PURCHECKSCOMMENTS", PURCHECKSCOMMENTS);
+
 
 
         m_db.ExecuteNonQuery(cmdTxt);
@@ -2548,7 +2670,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     protected void Button6_Click(object sender, EventArgs e)
     {
-        
+        ADDPUR();
 
         BindGrid("");
         BindGrid2("");
