@@ -1180,18 +1180,13 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        //int rowIndex = -1;
+        int rowIndex = -1;
 
-        //if (e.CommandName == "Button3")
-        //{
-        //    //MsgBox("Button1", this.Page, this);
-        //    BindGrid3("");
-        //}
-        //else if (e.CommandName == "Button4")
-        //{
-        //    CHECKTBCOPTDCHECK(e.CommandArgument.ToString());
-        //    //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
-        //}
+        if (e.CommandName == "GRIDVIEW4Button1")
+        {
+            CHECKTBCOPTDCHECK(e.CommandArgument.ToString());
+            //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
+        }
 
     }
 
