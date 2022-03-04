@@ -1562,7 +1562,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
             TC001 = TD001TD002.Substring(0, 4);
-            TC002 = TD001TD002.Substring(4, 8);
+            TC002 = TD001TD002.Substring(4, 11);
 
 
             //訂單的單身有需要生產的，需經生管、採購同意
@@ -1637,7 +1637,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
             TC001 = TD001TD002.Substring(0,4);
-            TC002 = TD001TD002.Substring(4,8);
+            TC002 = TD001TD002.Substring(4,11);
 
             //訂單的單身有需要生產的，需經生管、採購同意
             //訂單的單身都不需要生產的，直接核單
