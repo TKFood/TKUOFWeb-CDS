@@ -3398,6 +3398,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid2("");
         BindGrid3("");
         BindGrid4("");
+        BindGrid5("");
+
     }
 
     protected void Button3_Click(object sender, EventArgs e)
@@ -3406,6 +3408,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid2("");
         BindGrid3("");
         BindGrid4("");
+        BindGrid5("");
+
     }
 
     protected void Button5_Click(object sender, EventArgs e)
@@ -3414,6 +3418,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid2("");
         BindGrid3("");
         BindGrid4("");
+
     }
 
 
@@ -3425,6 +3430,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid2("");
         BindGrid3("");
         BindGrid4("");
+        BindGrid5("");
+
     }
 
     protected void Button6_Click(object sender, EventArgs e)
@@ -3435,6 +3442,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid2("");
         BindGrid3("");
         BindGrid4("");
+        BindGrid5("");
+
     }
 
     protected void Button7_Click(object sender, EventArgs e)
@@ -3444,6 +3453,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid2("");
         BindGrid3("");
         BindGrid4("");
+        BindGrid5("");
+
     }
 
     protected void Button8_Click(object sender, EventArgs e)
@@ -3454,6 +3465,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid2("");
         BindGrid3("");
         BindGrid4("");
+        BindGrid5("");
+
     }
     #endregion
 }
