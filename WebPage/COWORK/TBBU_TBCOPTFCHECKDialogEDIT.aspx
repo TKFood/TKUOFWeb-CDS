@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DialogMasterPage.master" AutoEventWireup="true" CodeFile="TBBU_TBCOPTDCHECKDialogEDIT.aspx.cs" Inherits="CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DialogMasterPage.master" AutoEventWireup="true" CodeFile="TBBU_TBCOPTFCHECKDialogEDIT.aspx.cs" Inherits="CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT" %>
 
 <%@ Register Src="~/Common/HtmlEditor/UC_HtmlEditor.ascx" TagPrefix="uc1" TagName="UC_HtmlEditor" %>
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>

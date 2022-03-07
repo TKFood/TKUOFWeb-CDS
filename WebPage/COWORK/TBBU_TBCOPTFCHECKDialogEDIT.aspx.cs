@@ -14,7 +14,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
-public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.Page.BasePage
 {
     string ACCOUNT = null;
     string NAME = null;
