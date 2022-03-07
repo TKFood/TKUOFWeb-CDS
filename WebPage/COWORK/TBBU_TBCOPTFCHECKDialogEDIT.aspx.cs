@@ -83,7 +83,7 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
-                SEARCHCOPTD(lblParam.Text);
+                //SEARCHCOPTD(lblParam.Text);
             }
 
         }
