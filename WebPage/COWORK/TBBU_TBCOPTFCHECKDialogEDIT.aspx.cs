@@ -83,7 +83,7 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
-                //SEARCHCOPTD(lblParam.Text);
+                SEARCHCOPTF(lblParam.Text);
             }
 
         }
@@ -260,28 +260,34 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
         }
 
     }
-    public void SEARCHCOPTD(string ID)
+    public void SEARCHCOPTF(string ID)
     {
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"   
-                        SELECT LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))+LTRIM(RTRIM(TD003)) AS 'TD123',*
-                        ,(SELECT TOP 1 ISNULL([MOCCHECKDATES],'0') FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKDATES'
-                        ,(SELECT TOP 1 [MOCCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKS'
-                        ,(SELECT TOP 1 [MOCCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
-                        ,(SELECT TOP 1 [PURCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKDATES'
-                        ,(SELECT TOP 1 [PURCHECKS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKS'
-                        ,(SELECT TOP 1 [PURCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
-                        ,(SELECT TOP 1 [SALESCHECKDATES] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'SALESCHECKDATES'
-                        ,(SELECT TOP 1 [SALESCHECKSCOMMENTS] FROM [TKBUSINESS].[dbo].[TBCOPTDCHECK] WHERE [TBCOPTDCHECK].TD001=COPTD.TD001 AND [TBCOPTDCHECK].TD002=COPTD.TD002 AND [TBCOPTDCHECK].TD003=COPTD.TD003  ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
+                        SELECT 
+                        LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
+                        ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003)) AS 'TF123'
+                        ,*
+                        ,(SELECT TOP 1 ISNULL([MOCCHECKDATES],'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'MOCCHECKDATES'
+                        ,(SELECT TOP 1 ISNULL(MOCCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'MOCCHECKS'
+                        ,(SELECT TOP 1 ISNULL(MOCCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'MOCCHECKSCOMMENTS'
+                        ,(SELECT TOP 1 ISNULL(PURCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'PURCHECKDATES'
+                        ,(SELECT TOP 1 ISNULL(PURCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'PURCHECKS'
+                        ,(SELECT TOP 1 ISNULL(PURCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'PURCHECKSCOMMENTS'
+                        ,(SELECT TOP 1 ISNULL(SALESCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'SALESCHECKDATES'
+                        ,(SELECT TOP 1 ISNULL(SALESCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'SALESCHECKSCOMMENTS'
 
-                        FROM [TK].dbo.COPTC,[TK].dbo.COPTD
+                        FROM [TK].dbo.COPTE,[TK].dbo.COPTF
+                        LEFT JOIN [TK].dbo.COPTC ON TC001=TF001 AND TC002=TF002
+                        LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
+                        WHERE TE001=TF001 AND TE002=TF002
+                        AND 1=1
+                        AND LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004))=@ID
 
-                        WHERE TC001=TD001 AND TC002=TD002
-                        AND  LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))+LTRIM(RTRIM(TD003))=@ID
-                        ORDER BY TD001,TD002,TD003
+                        ORDER BY TE001,TE002,TE003,TF004
                         ";
         m_db.AddParameter("@ID", ID);
 
@@ -291,20 +297,20 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
 
         if (dt.Rows.Count > 0)
         {           
-            TextBox1.Text = dt.Rows[0]["TD001"].ToString();
-            TextBox2.Text = dt.Rows[0]["TD002"].ToString();
-            TextBox3.Text = dt.Rows[0]["TD003"].ToString();
-            TextBox4.Text = dt.Rows[0]["TD004"].ToString();
-            TextBox5.Text = dt.Rows[0]["TD005"].ToString();
-            TextBox6.Text = Convert.ToDecimal(dt.Rows[0]["TD008"].ToString()).ToString("N0");
-            TextBox7.Text = dt.Rows[0]["TD010"].ToString();
-            TextBox8.Text = Convert.ToDecimal(dt.Rows[0]["TD011"].ToString()).ToString("N2");
-            TextBox9.Text = Convert.ToDecimal(dt.Rows[0]["TD012"].ToString()).ToString("N0");
-            TextBox10.Text = dt.Rows[0]["TD013"].ToString();
+            TextBox1.Text = dt.Rows[0]["TF001"].ToString();
+            TextBox2.Text = dt.Rows[0]["TF002"].ToString();
+            TextBox3.Text = dt.Rows[0]["TF104"].ToString();
+            TextBox4.Text = dt.Rows[0]["TF005"].ToString();
+            TextBox5.Text = dt.Rows[0]["TF006"].ToString();
+            TextBox6.Text = Convert.ToDecimal(dt.Rows[0]["TF009"].ToString()).ToString("N0");
+            TextBox7.Text = dt.Rows[0]["TF010"].ToString();
+            TextBox8.Text = Convert.ToDecimal(dt.Rows[0]["TF013"].ToString()).ToString("N2");
+            TextBox9.Text = Convert.ToDecimal(dt.Rows[0]["TF014"].ToString()).ToString("N0");
+            TextBox10.Text = dt.Rows[0]["TF015"].ToString();
             TextBox11.Text = dt.Rows[0]["MOCCHECKDATES"].ToString();
             //TextBox11.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             //TextBox12.Text = dt.Rows[0]["MOCCHECKS"].ToString();
-            DropDownList1.SelectedValue= dt.Rows[0]["MOCCHECKS"].ToString();
+            DropDownList1.SelectedValue = dt.Rows[0]["MOCCHECKS"].ToString();
             TextBox13.Text = dt.Rows[0]["MOCCHECKSCOMMENTS"].ToString();
             TextBox14.Text = dt.Rows[0]["PURCHECKDATES"].ToString();
             //TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
@@ -315,11 +321,13 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
             //TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             TextBox17.Text = dt.Rows[0]["SALESCHECKSCOMMENTS"].ToString();
             TextBox15.Text = dt.Rows[0]["TC053"].ToString();
-            TextBox18.Text = dt.Rows[0]["TD024"].ToString();
-            TextBox19.Text = dt.Rows[0]["TD009"].ToString();
-            TextBox20.Text = dt.Rows[0]["TD025"].ToString();
-            TextBox21.Text = dt.Rows[0]["TC015"].ToString();
-            TextBox22.Text = dt.Rows[0]["TD020"].ToString();
+            TextBox18.Text = Convert.ToDecimal(dt.Rows[0]["TF020"].ToString()).ToString("N0");
+            //TextBox19.Text = dt.Rows[0]["TD009"].ToString();
+            //TextBox20.Text = dt.Rows[0]["TD025"].ToString();
+            TextBox21.Text = dt.Rows[0]["TE050"].ToString();
+            TextBox22.Text = dt.Rows[0]["TF032"].ToString();
+            TextBox23.Text = dt.Rows[0]["TF004"].ToString();
+            TextBox24.Text = dt.Rows[0]["TE003"].ToString();
         }
 
 

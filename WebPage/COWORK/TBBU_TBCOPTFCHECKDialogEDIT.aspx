@@ -62,10 +62,26 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label21" runat="server" Text="序號"></asp:Label>
+                <asp:Label ID="Label21" runat="server" Text="原序號"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox3" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+             <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label30" runat="server" Text="新序號"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox23" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+             <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label31" runat="server" Text="變更版次"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox24" runat="server" Text="" Width="100%" ReadOnly="True"></asp:TextBox>
             </td>
         </tr>
         <tr>
