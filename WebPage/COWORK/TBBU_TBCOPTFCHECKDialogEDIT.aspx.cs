@@ -120,22 +120,11 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
     {
         TextBox11.Text= DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         //Button1.Text = "OK";
-        ADDTBCOPTDCHECK(
+        ADDTBCOPTFCHECK(
                         TextBox1.Text,
                         TextBox2.Text,
-                        TextBox3.Text,
-                        TextBox4.Text,
-                        TextBox5.Text,
-                        TextBox6.Text,
-                        TextBox19.Text,
-                        TextBox7.Text,
-                        TextBox8.Text,
-                        TextBox9.Text,
-                        TextBox10.Text,
-                        TextBox18.Text,
-                        TextBox20.Text,
-                        TextBox21.Text,
-                        TextBox22.Text,
+                        TextBox24.Text,
+                        TextBox23.Text,                       
 
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
@@ -152,22 +141,11 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
     {
         TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         //Button1.Text = "OK";
-        ADDTBCOPTDCHECK(
+        ADDTBCOPTFCHECK(
                         TextBox1.Text,
                         TextBox2.Text,
-                        TextBox3.Text,
-                        TextBox4.Text,
-                        TextBox5.Text,
-                        TextBox6.Text,
-                        TextBox19.Text,
-                        TextBox7.Text,
-                        TextBox8.Text,
-                        TextBox9.Text,
-                        TextBox10.Text,
-                        TextBox18.Text,
-                        TextBox20.Text,
-                        TextBox21.Text,
-                        TextBox22.Text,
+                        TextBox24.Text,
+                        TextBox23.Text,
 
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
@@ -184,22 +162,11 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
     {
         TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         //Button1.Text = "OK";
-        ADDTBCOPTDCHECK(
+        ADDTBCOPTFCHECK(
                         TextBox1.Text,
                         TextBox2.Text,
-                        TextBox3.Text,
-                        TextBox4.Text,
-                        TextBox5.Text,
-                        TextBox6.Text,
-                        TextBox19.Text,
-                        TextBox7.Text,
-                        TextBox8.Text,
-                        TextBox9.Text,
-                        TextBox10.Text,
-                        TextBox18.Text,
-                        TextBox20.Text,
-                        TextBox21.Text,
-                        TextBox22.Text,
+                        TextBox24.Text,
+                        TextBox23.Text,
 
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
@@ -209,7 +176,7 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
                         TextBox16.Text,
                         TextBox12.Text,
                         TextBox17.Text
-                        ); 
+                        );
     }
 
     #endregion
@@ -271,19 +238,19 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
                         LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
                         ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003)) AS 'TF123'
                         ,*
-                        ,(SELECT TOP 1 ISNULL([MOCCHECKDATES],'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'MOCCHECKDATES'
-                        ,(SELECT TOP 1 ISNULL(MOCCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'MOCCHECKS'
-                        ,(SELECT TOP 1 ISNULL(MOCCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'MOCCHECKSCOMMENTS'
-                        ,(SELECT TOP 1 ISNULL(PURCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'PURCHECKDATES'
-                        ,(SELECT TOP 1 ISNULL(PURCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'PURCHECKS'
-                        ,(SELECT TOP 1 ISNULL(PURCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'PURCHECKSCOMMENTS'
-                        ,(SELECT TOP 1 ISNULL(SALESCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'SALESCHECKDATES'
-                        ,(SELECT TOP 1 ISNULL(SALESCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTD.TD001 AND TBCOPTFCHECK.TF002=COPTD.TD002 AND  TBCOPTFCHECK.TF104=COPTD.TD003) AS 'SALESCHECKSCOMMENTS'
+                        ,(SELECT TOP 1 ISNULL(MOCCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKDATES'
+                        ,(SELECT TOP 1 ISNULL(MOCCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKS'
+                        ,(SELECT TOP 1 ISNULL(MOCCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
+                        ,(SELECT TOP 1 ISNULL(PURCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKDATES'
+                        ,(SELECT TOP 1 ISNULL(PURCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKS'
+                        ,(SELECT TOP 1 ISNULL(PURCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
+                        ,(SELECT TOP 1 ISNULL(SALESCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKDATES'
+                        ,(SELECT TOP 1 ISNULL(SALESCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
 
                         FROM [TK].dbo.COPTE,[TK].dbo.COPTF
                         LEFT JOIN [TK].dbo.COPTC ON TC001=TF001 AND TC002=TF002
                         LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
-                        WHERE TE001=TF001 AND TE002=TF002
+                        WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
                         AND 1=1
                         AND LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004))=@ID
 
@@ -339,21 +306,10 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
 
 
 
-    public void ADDTBCOPTDCHECK(string TD001,
-                                string TD002,
-                                string TD003,
-                                string TD004,
-                                string TD005,
-                                string TD008,
-                                string TD009,
-                                string TD010,
-                                string TD011,
-                                string TD012,
-                                string TD013,
-                                string TD024,
-                                string TD025,
-                                string TC015,
-                                string TD020,
+    public void ADDTBCOPTFCHECK(string TF001,
+                                string TF002,
+                                string TF003,
+                                string TF004,                               
                                 string MOCCHECKDATES,
                                 string MOCCHECKS,
                                 string MOCCHECKSCOMMENTS,
@@ -368,22 +324,26 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        INSERT INTO [TKBUSINESS].[dbo].[TBCOPTDCHECK]
-                        ([TD001]
-                        ,[TD002]
-                        ,[TD003]
-                        ,[TD004]
-                        ,[TD005]
-                        ,[TD008]
-                        ,[TD009]
-                        ,[TD010]
-                        ,[TD011]
-                        ,[TD012]
-                        ,[TD013]
-                        ,[TD024]
-                        ,[TD025]
-                        ,[TC015]
-                        ,[TD020]
+                        INSERT INTO [TKBUSINESS].[dbo].[TBCOPTFCHECK]
+                        (
+                        [TF001]
+                        ,[TF002]
+                        ,[TF003]
+                        ,[TF004]
+                        ,[TF005]
+                        ,[TF006]
+                        ,[TF007]
+                        ,[TF009]
+                        ,[TF010]
+                        ,[TF013]
+                        ,[TF014]
+                        ,[TF015]
+                        ,[TF018]
+                        ,[TF032]
+                        ,[TF045]
+                        ,[TF104]
+                        ,[TE006]
+                        ,[TE050]
                         ,[MOCCHECKDATES]
                         ,[MOCCHECKS]
                         ,[MOCCHECKSCOMMENTS]
@@ -392,24 +352,27 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
                         ,[PURCHECKSCOMMENTS]
                         ,[SALESCHECKDATES]
                         ,[SALESCHECKSCOMMENTS]
-             
                         )
-                        VALUES
-                        (@TD001
-                        ,@TD002
-                        ,@TD003
-                        ,@TD004
-                        ,@TD005
-                        ,@TD008
-                        ,@TD009
-                        ,@TD010
-                        ,@TD011
-                        ,@TD012
-                        ,@TD013
-                        ,@TD024
-                        ,@TD025
-                        ,@TC015
-                        ,@TD020
+
+                        SELECT 
+                        [TF001]
+                        ,[TF002]
+                        ,[TF003]
+                        ,[TF004]
+                        ,[TF005]
+                        ,[TF006]
+                        ,[TF007]
+                        ,[TF009]
+                        ,[TF010]
+                        ,[TF013]
+                        ,[TF014]
+                        ,[TF015]
+                        ,[TF018]
+                        ,[TF032]
+                        ,[TF045]
+                        ,[TF104]
+                        ,[TE006]
+                        ,[TE050]
                         ,@MOCCHECKDATES
                         ,@MOCCHECKS
                         ,@MOCCHECKSCOMMENTS
@@ -418,26 +381,22 @@ public partial class CDS_WebPage_TBBU_TBCOPTFCHECKDialogEDIT : Ede.Uof.Utility.P
                         ,@PURCHECKSCOMMENTS
                         ,@SALESCHECKDATES
                         ,@SALESCHECKSCOMMENTS
-                        )
+                        FROM [TK].dbo.COPTE,[TK].dbo.COPTF
+                        LEFT JOIN [TK].dbo.COPTC ON TC001=TF001 AND TC002=TF002
+                        LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
+                        WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
+                        AND LTRIM(RTRIM(TF001))=@TF001
+                        AND LTRIM(RTRIM(TF002))=@TF002
+                        AND LTRIM(RTRIM(TF003))=@TF003
+                        AND LTRIM(RTRIM(TF004))=@TF004
                    
                             ";
 
 
-        m_db.AddParameter("@TD001", TD001);
-        m_db.AddParameter("@TD002", TD002);
-        m_db.AddParameter("@TD003", TD003);
-        m_db.AddParameter("@TD004", TD004);
-        m_db.AddParameter("@TD005", TD005);
-        m_db.AddParameter("@TD008", Convert.ToDecimal(TD008));
-        m_db.AddParameter("@TD009", Convert.ToDecimal(TD009));
-        m_db.AddParameter("@TD010", TD010);
-        m_db.AddParameter("@TD011", Convert.ToDecimal(TD011));
-        m_db.AddParameter("@TD012", Convert.ToDecimal(TD012));
-        m_db.AddParameter("@TD013", TD013);
-        m_db.AddParameter("@TD024", Convert.ToDecimal(TD024));
-        m_db.AddParameter("@TD025", Convert.ToDecimal(TD025));
-        m_db.AddParameter("@TC015", TC015);
-        m_db.AddParameter("@TD020", TD020);
+        m_db.AddParameter("@TF001", TF001);
+        m_db.AddParameter("@TF002", TF002);
+        m_db.AddParameter("@TF003", TF003);
+        m_db.AddParameter("@TF004", TF004);      
         m_db.AddParameter("@MOCCHECKDATES", MOCCHECKDATES);
         m_db.AddParameter("@MOCCHECKS", MOCCHECKS);
         m_db.AddParameter("@MOCCHECKSCOMMENTS", MOCCHECKSCOMMENTS);
