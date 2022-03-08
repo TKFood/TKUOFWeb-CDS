@@ -36,6 +36,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
     string TF002 = "";
     string TF003 = "";
     string COPTCUDF01 = "N";
+    string COPCALL1 = "N";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1719,8 +1720,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         int rowscounts = 0;
 
+        //如果COPTCUDF01需要生產，需簽到生管
         COPTCUDF01 = "N";
-
         foreach (DataRow od in DT.Rows)
         {
             if (od["COPTDUDF01"].ToString().Equals("Y"))
@@ -1731,6 +1732,27 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             else
             {
                 COPTCUDF01 = "N";
+            }
+        }
+
+        //如果 新訂單數量TF009<原訂單數量TF009、新訂單金額TF014<原訂單金額TF114
+        //COPCALL1通知主管簽
+        COPCALL1 = "N";
+        foreach (DataRow od in DT.Rows)
+        {
+            decimal TF009 = Convert.ToDecimal(od["TF009"].ToString());
+            decimal TF109 = Convert.ToDecimal(od["TF109"].ToString());
+            decimal TF014 = Convert.ToDecimal(od["TF014"].ToString());
+            decimal TF114 = Convert.ToDecimal(od["TF114"].ToString());
+
+            if (TF009< TF109 || TF014< TF114)
+            {
+                COPCALL1 = "Y";
+                break;
+            }
+            else
+            {
+                COPCALL1 = "N";
             }
         }
 
@@ -1845,6 +1867,20 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "COPTCUDF01");
         FieldItem.SetAttribute("fieldValue", COPTCUDF01);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //COPCALL1 
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "COPCALL1");
+        FieldItem.SetAttribute("fieldValue", COPCALL1);
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
