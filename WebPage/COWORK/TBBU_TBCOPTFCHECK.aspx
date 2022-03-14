@@ -56,14 +56,14 @@
                         </td>
 
                     </tr>
-                    <tr>
+                    <%--<tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Label ID="Label3" runat="server" Text="月份: "></asp:Label>
                             <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                         </td>
 
-                    </tr>
+                    </tr>--%>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -211,14 +211,14 @@
                             </td>
 
                         </tr>
-                        <tr>
+              <%--          <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
                                 <asp:Label ID="Label6" runat="server" Text="月份: "></asp:Label>
                                 <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                             </td>
 
-                        </tr>
+                        </tr>--%>
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
@@ -390,14 +390,14 @@
                             </td>
 
                         </tr>
-                        <tr>
+      <%--                  <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
                                 <asp:Label ID="Label10" runat="server" Text="月份: "></asp:Label>
                                 <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                             </td>
 
-                        </tr>
+                        </tr>--%>
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
@@ -569,14 +569,14 @@
                             </td>
 
                         </tr>
-                        <tr>
+ <%--                       <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
                                 <asp:Label ID="Label14" runat="server" Text="月份: "></asp:Label>
                                 <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
                             </td>
 
-                        </tr>
+                        </tr>--%>
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
@@ -743,14 +743,14 @@
                             </td>
 
                         </tr>
-                        <tr>
+   <%--                     <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
                                 <asp:Label ID="Label22" runat="server" Text="月份: "></asp:Label>
                                 <asp:TextBox ID="TextBox14" runat="server"></asp:TextBox>
                             </td>
 
-                        </tr>
+                        </tr>--%>
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>

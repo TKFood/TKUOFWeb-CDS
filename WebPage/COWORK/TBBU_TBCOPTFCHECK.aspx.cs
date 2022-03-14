@@ -120,15 +120,15 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
     public void SETDATES()
     {
         TextBox1.Text = DateTime.Now.ToString("yyyy");
-        TextBox2.Text = DateTime.Now.ToString("MM");
+        //TextBox2.Text = DateTime.Now.ToString("MM");
         TextBox3.Text = DateTime.Now.ToString("yyyy");
-        TextBox4.Text = DateTime.Now.ToString("MM");
+        //TextBox4.Text = DateTime.Now.ToString("MM");
         TextBox5.Text = DateTime.Now.ToString("yyyy");
-        TextBox6.Text = DateTime.Now.ToString("MM");
+        //TextBox6.Text = DateTime.Now.ToString("MM");
         TextBox7.Text = DateTime.Now.ToString("yyyy");
-        TextBox8.Text = DateTime.Now.ToString("MM");
+        //TextBox8.Text = DateTime.Now.ToString("MM");
         TextBox13.Text = DateTime.Now.ToString("yyyy");
-        TextBox14.Text = DateTime.Now.ToString("MM");
+        //TextBox14.Text = DateTime.Now.ToString("MM");
     }
     private void BindDropDownList()
     {
@@ -439,14 +439,22 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        ////日期
+        //if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
+        //{
+        //    if (TextBox2.Text.Length == 1)
+        //    {
+        //        TextBox2.Text = "0" + TextBox2.Text;
+        //    }
+        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%' ", TextBox1.Text.Trim() + TextBox2.Text.Trim());
+
+        //}
+
         //日期
-        if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
+        if (!string.IsNullOrEmpty(TextBox1.Text) )
         {
-            if (TextBox2.Text.Length == 1)
-            {
-                TextBox2.Text = "0" + TextBox2.Text;
-            }
-            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%' ", TextBox1.Text.Trim() + TextBox2.Text.Trim());
+           
+            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%' ", TextBox1.Text.Trim() );
 
         }
 
@@ -696,14 +704,22 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        ////日期
+        //if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
+        //{
+        //    if (TextBox4.Text.Length == 1)
+        //    {
+        //        TextBox4.Text = "0" + TextBox4.Text;
+        //    }
+        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox3.Text.Trim() + TextBox4.Text.Trim());
+
+        //}
+
         //日期
-        if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
+        if (!string.IsNullOrEmpty(TextBox3.Text) )
         {
-            if (TextBox4.Text.Length == 1)
-            {
-                TextBox4.Text = "0" + TextBox4.Text;
-            }
-            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox3.Text.Trim() + TextBox4.Text.Trim());
+           
+            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox3.Text.Trim() );
 
         }
 
@@ -905,14 +921,22 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        ////日期
+        //if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
+        //{
+        //    if (TextBox6.Text.Length == 1)
+        //    {
+        //        TextBox6.Text = "0" + TextBox6.Text;
+        //    }
+        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox5.Text.Trim() + TextBox6.Text.Trim());
+
+        //}
+
         //日期
-        if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
+        if (!string.IsNullOrEmpty(TextBox5.Text) )
         {
-            if (TextBox5.Text.Length == 1)
-            {
-                TextBox5.Text = "0" + TextBox5.Text;
-            }
-            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox5.Text.Trim() + TextBox6.Text.Trim());
+          
+            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox5.Text.Trim());
 
         }
 
@@ -1113,14 +1137,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        ////日期
+        //if (!string.IsNullOrEmpty(TextBox7.Text) && !string.IsNullOrEmpty(TextBox8.Text))
+        //{
+        //    if (TextBox8.Text.Length == 1)
+        //    {
+        //        TextBox8.Text = "0" + TextBox8.Text;
+        //    }
+        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox7.Text.Trim() + TextBox8.Text.Trim());
+
+        //}
+
         //日期
-        if (!string.IsNullOrEmpty(TextBox7.Text) && !string.IsNullOrEmpty(TextBox8.Text))
+        if (!string.IsNullOrEmpty(TextBox7.Text) )
         {
-            if (TextBox7.Text.Length == 1)
-            {
-                TextBox7.Text = "0" + TextBox7.Text;
-            }
-            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox7.Text.Trim() + TextBox8.Text.Trim());
+            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox7.Text.Trim() );
 
         }
 
@@ -1316,14 +1347,22 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        ////日期
+        //if (!string.IsNullOrEmpty(TextBox13.Text) && !string.IsNullOrEmpty(TextBox14.Text))
+        //{
+        //    if (TextBox14.Text.Length == 1)
+        //    {
+        //        TextBox14.Text = "0" + TextBox14.Text;
+        //    }
+        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox13.Text.Trim() + TextBox14.Text.Trim());
+
+        //}
+
         //日期
-        if (!string.IsNullOrEmpty(TextBox13.Text) && !string.IsNullOrEmpty(TextBox14.Text))
+        if (!string.IsNullOrEmpty(TextBox13.Text) )
         {
-            if (TextBox14.Text.Length == 1)
-            {
-                TextBox14.Text = "0" + TextBox14.Text;
-            }
-            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox13.Text.Trim() + TextBox14.Text.Trim());
+          
+            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox13.Text.Trim());
 
         }
 
