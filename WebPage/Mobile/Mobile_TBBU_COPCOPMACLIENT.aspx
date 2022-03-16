@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="TBBU_COPCOPMACLIENT.aspx.cs" Inherits="CDS_WebPage_COP_TBBU_COPCOPMACLIENT" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_TBBU_COPCOPMACLIENT.aspx.cs" Inherits="CDS_WebPage_Mobile_Mobile_TBBU_COPCOPMACLIENT" %>
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
@@ -39,7 +39,7 @@
     <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
             <div id="tabs-1">
-                 <table class="PopTable">                   
+                <table class="PopTable">                   
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -53,7 +53,7 @@
                     <tr>
                         <td colspan="2" class="PopTableRightTD">
                             <div style="overflow-x: auto; width: 100%">
-                                <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid2Resource1" OnPageIndexChanging="grid1_PageIndexChanging">
+                                <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" EnableTheming="true" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid2Resource1" OnPageIndexChanging="grid1_PageIndexChanging">
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
@@ -66,7 +66,7 @@
                                         <asp:BoundField HeaderText="客戶的賣家(渠道)" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="400px"></ItemStyle>
                                         </asp:BoundField>
-                           <%--             <asp:BoundField HeaderText="通路操作" DataField="OPERATIONS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <%--             <asp:BoundField HeaderText="通路操作" DataField="OPERATIONS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="400px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="備註" DataField="COMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -87,11 +87,11 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <%--<asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
-                                        </asp:TemplateField>
+                                        </asp:TemplateField>--%>
                                     </Columns>
                                 </Fast:Grid>
                             </div>
@@ -103,7 +103,7 @@
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">
-                    <tr>
+                   <%-- <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
@@ -111,11 +111,12 @@
                             <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
 
                         </td>
-                    </tr>
+                    </tr>--%>
                 </table>
             </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>​
+
 
 </asp:Content>
 
