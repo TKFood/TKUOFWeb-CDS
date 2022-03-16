@@ -79,7 +79,7 @@
                 <asp:Label ID="Label9" runat="server" Text="實際MOQ"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="1" Style="height: 120px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="200%" TextMode="MultiLine" Row="1" Style="height: 120px;" ></asp:TextBox>
             </td>
         </tr>
 
