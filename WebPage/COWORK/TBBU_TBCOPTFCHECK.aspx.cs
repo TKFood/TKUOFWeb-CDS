@@ -514,7 +514,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
                                 {0}
 
-                                ORDER BY TE001,TE002,TE003,TF004
+                                ORDER BY TE002,TE001,TE003,TF004
 
                                 ", QUERYS.ToString());
 
@@ -781,7 +781,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
                                 {0}
 
-                                ORDER BY TE001,TE002,TE003,TF004
+                                ORDER BY TE002,TE001,TE003,TF004
 
                                 ", QUERYS.ToString());
 
@@ -997,7 +997,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
                                 {0}
 
-                                ORDER BY TE001,TE002,TE003,TF004
+                                ORDER BY TE002,TE001,TE003,TF004
 
                                 ", QUERYS.ToString());
 
@@ -1212,7 +1212,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
                                 {0}
 
-                                ORDER BY TE001,TE002,TE003,TF004
+                                ORDER BY TE002,TE001,TE003,TF004
 
                                 ", QUERYS.ToString());
 
@@ -1423,7 +1423,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
                                 {0}
 
-                                ORDER BY TE001,TE002,TE003,TF004
+                                ORDER BY TE002,TE001,TE003,TF004
 
                                 ", QUERYS.ToString());
 
