@@ -17,6 +17,11 @@ public partial class CDS_WebPage_Mobile_MobileTKREPORTtb_NOTE : Ede.Uof.Utility.
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        //不顯示子視窗的按鈕
+        ((Master_MobileMasterPage)this.Master).Button1Text = string.Empty;
+        ((Master_MobileMasterPage)this.Master).Button2Text = string.Empty;
+        ((Master_MobileMasterPage)this.Master).Button3Text = string.Empty;
+
         //用ExpandoObject物件傳遞參數
         //ExpandoObject param = new { Name = "asd" }.ToExpando();
         //ExpandoObject param = new { Name = txtParam.Text }.ToExpando();

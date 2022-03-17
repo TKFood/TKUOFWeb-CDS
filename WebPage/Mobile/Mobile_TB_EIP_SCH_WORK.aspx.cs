@@ -18,6 +18,11 @@ public partial class CDS_WebPage_Mobile_Mobile_TB_EIP_SCH_WORK : Ede.Uof.Utility
     protected void Page_Load(object sender, EventArgs e)
     {
 
+        //不顯示子視窗的按鈕
+        ((Master_MobileMasterPage)this.Master).Button1Text = string.Empty;
+        ((Master_MobileMasterPage)this.Master).Button2Text = string.Empty;
+        ((Master_MobileMasterPage)this.Master).Button3Text = string.Empty;
+
         if (!IsPostBack)
         {
             DateTime FirstDay = DateTime.Now.AddDays(-DateTime.Now.Day + 1);
