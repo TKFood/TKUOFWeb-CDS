@@ -57,33 +57,33 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
-                                        <asp:BoundField HeaderText="客戶代號" DataField="MA001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        <asp:BoundField HeaderText="客戶代號" DataField="MA001" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemStyle  HorizontalAlign="Center" Width="10%"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="客戶" DataField="MA002" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        <asp:BoundField HeaderText="客戶" DataField="MA002" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemStyle HorizontalAlign="Left" Width="20%"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="客戶的賣家(渠道)" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="400px"></ItemStyle>
+                                        <asp:BoundField HeaderText="客戶的賣家(渠道)" DataField="CLIENTS" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemStyle HorizontalAlign="Left" Width="20%"></ItemStyle>
                                         </asp:BoundField>
-                           <%--             <asp:BoundField HeaderText="通路操作" DataField="OPERATIONS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <%--             <asp:BoundField HeaderText="通路操作" DataField="OPERATIONS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="400px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="備註" DataField="COMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="400px"></ItemStyle>
                                         </asp:BoundField>--%>
 
-                                        <asp:TemplateField HeaderText="通路操作" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="通路操作" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" >
                                             <ItemTemplate>
-                                                <asp:Label ID="OPERATIONS" runat="server" Text='<%# Bind("OPERATIONS") %>' Style="text-align: left" HorizontalAlign="Left" Width="300px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                                <itemstyle horizontalalign="Left" width="300px"></itemstyle>
+                                                <asp:Label ID="OPERATIONS" runat="server" Text='<%# Bind("OPERATIONS") %>' style="word-break:break-all"></asp:Label>
+                                                <itemstyle HorizontalAlign="Left" width="25%" Wrap="true" ></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="備註" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="備註" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="COMMENTS" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="300px" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                                <itemstyle horizontalalign="Left" width="300px"></itemstyle>
+                                                <asp:Label ID="COMMENTS" runat="server" Text='<%# Bind("COMMENTS") %>'  style="word-break:break-all" ></asp:Label>
+                                                <itemstyle HorizontalAlign="Left" width="25%" Wrap="true"></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
