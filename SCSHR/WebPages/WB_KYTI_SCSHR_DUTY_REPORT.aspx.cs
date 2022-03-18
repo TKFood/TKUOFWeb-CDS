@@ -87,18 +87,6 @@ using System.Web.UI.WebControls;
 /// </summary>
 public partial class WB_KYTI_SCSHR_DUTY_REPORT : BasePage
 {
-    public class ConstructorCommonSettings
-    {
-
-        public static void setCommonSettings()
-        {
-
-        }
-        public static SCSServicesProxy setSCSSServiceProxDefault(string SCSURL = "", string SCSCompanyId = "", string SCSAccount = "", string SCSPassword = "")
-        {
-            return null;
-        }
-    }
 
     private string ConnectionString;
 

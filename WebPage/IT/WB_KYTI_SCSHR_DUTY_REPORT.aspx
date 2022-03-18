@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="WB_KYTI_SCSHR_DUTY_REPORT.aspx.cs" MasterPageFile="~/Master/DefaultMasterPage.master" Inherits="WB_KYTI_SCSHR_DUTY_REPORT" %>
+
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
 
@@ -83,6 +84,7 @@
             $(".limitHeight").css("height", "calc(100vh - " + $("#MasterHeader").css("height") + " - " + $("#MasterFooter").css("height"));
         }
     </script>
+
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
@@ -337,140 +339,9 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="RadPageView2" runat="server">
-            <div id="tabs-1">
-                <table class="PopTable">
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <div>
-                                <div>
-                                    開始時間:
-                                </div>
-                                <div>
-                                    <td class="PopTableRightTD">
-                                        <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="200px">
-                                            <DateInput DateFormat="yyyy/MM/dd" DisplayDateFormat="yyyy/MM/dd" />
-                                        </telerik:RadDatePicker>
 
-                                    </td>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <div>
-                                <div>
-                                    結束時間:
-                                </div>
-                                <div>
-                                    <td class="PopTableRightTD">
-                                        <telerik:RadDatePicker ID="RadDatePicker2" runat="server" Width="200px">
-                                            <DateInput DateFormat="yyyy/MM/dd" DisplayDateFormat="yyyy/MM/dd" />
-                                        </telerik:RadDatePicker>
-
-                                    </td>
-                                </div>
-                            </div>
-                        </td>
-
-
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <div>
-                                <div>
-                                    <asp:Button runat="server" ID="btnDB" Text="轉入DB" OnClick="btnDB_Click" />
-                                </div>
-                            </div>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <div>
-                                <div>
-                                    <asp:Label ID="Label1" runat="server" Text="拋轉狀態"></asp:Label>
-                                </div>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="PopTableLeftTD"></td>
-                        <td>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click"
-                                meta:resourcekey="btn1Resource1" />
-                        </td>
-
-                    </tr>
-                </table>
-                <table class="PopTable" style="">
-                    <tr>
-                        <td colspan="2" class="PopTableRightTD">
-                            <div style="overflow-x: auto; width: 100%">
-                                <fast:grid id="Grid1" style="overflow-x: auto; width: 100%" onrowdatabound="Grid1_RowDataBound" runat="server" a onbeforeexport="OnBeforeExport1" allowpaging="true" autogeneratecheckboxcolumn="False" allowsorting="True" autogeneratecolumns="False" customdropdownlistpage="False" datakeyonclientwithcheckbox="False" defaultsortdirection="Ascending" emptydatatext="No data found" enhancepager="True" keepselectedrows="False" pagesize="1000" selectedrowcolor="" unselectedrowcolor="" meta:resourcekey="GridResource1" onpageindexchanging="grid1_PageIndexChanging">
-                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
-                                    <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
-                                    <Columns>
-                                        <asp:BoundField HeaderText="工號" DataField="EMPLOYEEVIEWID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>     
-                                          <asp:BoundField HeaderText="姓名" DataField="EMPLOYEENAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField> 
-                                          <asp:BoundField HeaderText="部門" DataField="DEPARTNAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField> 
-                                          <asp:BoundField HeaderText="總工時" DataField="SUMWORKHRS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField> 
-                                          <asp:BoundField HeaderText="請假總時數" DataField="LEAHOURS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField> 
-                                          <asp:BoundField HeaderText="加班總時數" DataField="OT_TIMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField> 
-                                     
-                                    </Columns>
-                                </fast:grid>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <%-- <table>
-                     <div class="row">
-                            <!--gvItems-->
-                            <div class="col-md-12 GridViewNormal">
-                                <asp:GridView runat="server" ID="GridView1"
-                                    CssClass="tsGridView2 SGridView horzFull"
-                                    AutoGenerateColumns="false"
-                                    ShowHeader="true"
-                                    ShowHeaderWhenEmpty="false"
-                                    HeaderStyle-CssClass="multipleHeader"
-                                    >
-                                    <EmptyDataRowStyle HorizontalAlign="Center" />
-                                    <EmptyDataTemplate>
-                                        <asp:Label ID="lblTip" runat="server" ForeColor="Red" Font-Bold="true" Text="無資料"></asp:Label>
-                                    </EmptyDataTemplate>
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="員工工號">
-                                            <ItemTemplate>
-                                                <asp:Label runat="server" ID="lblEMPLOYEEVIEWID" Text='<%#Bind("EMPLOYEEVIEWID")%>' />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                      
-                                    </Columns>
-                                </asp:GridView>
-                            </div>
-                            <!--gvItems-->
-                        </div>
-
-                </table>--%>
-            </div>
         </telerik:RadPageView>
+
+
     </telerik:RadMultiPage>​
 </asp:Content>
