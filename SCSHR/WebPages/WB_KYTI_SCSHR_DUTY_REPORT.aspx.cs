@@ -87,14 +87,28 @@ using System.Web.UI.WebControls;
 /// </summary>
 public partial class WB_KYTI_SCSHR_DUTY_REPORT : BasePage
 {
+    public class ConstructorCommonSettings
+    {
+
+        public static void setCommonSettings()
+        {
+
+        }
+        public static SCSServicesProxy setSCSSServiceProxDefault(string SCSURL = "", string SCSCompanyId = "", string SCSAccount = "", string SCSPassword = "")
+        {
+            return null;
+        }
+    }
+
     private string ConnectionString;
 
     SCSServicesProxy service = null;
+  
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ConnectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ConnectionString;
-        //service = ConstructorCommonSettings.setSCSSServiceProxDefault();
+        ConnectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
+        service = ConstructorCommonSettings.setSCSSServiceProxDefault();
 
         if (!Page.IsPostBack) // 網頁首次載入
         {

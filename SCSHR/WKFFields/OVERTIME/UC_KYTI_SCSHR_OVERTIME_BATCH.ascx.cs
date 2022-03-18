@@ -21,6 +21,17 @@ using UOFAssist.WKF;
 
 
 /**
+* 修改時間：2021/12/27
+* 修改人員：梁夢慈
+* 修改項目：
+    * 1.當按下清空班別時，空清空計算旗標(hidAPIResult)，申請時數(ktxtApplyHours)、加班時數(ktxtOverTimeHours)歸0
+* 修改原因：
+    * 1.BUG修正，
+* 修改位置： 
+    * 1.「btnClearOT_CLASSTYPE_Click()」中，新增「hidAPIResult.Value = "";ktxtApplyHours.Text = "0";ktxtOverTimeHours.Text = "0";」
+* **/
+
+/**
 * 修改時間：2021/12/02
 * 修改人員：梁夢慈
 * 修改項目：
@@ -1928,6 +1939,9 @@ public partial class WKF_OptionalFields_UC_KYTI_SCSHR_OVERTIME_BATCH : WKF_FormM
     {
         ktxtOT_CLASSTYPE_NAME.Text = ""; // 班別名稱
         hidOT_CLASSTYPE.Value = ""; // 班別代號
+        hidAPIResult.Value = "";
+        ktxtApplyHours.Text = "0"; // 申請時數
+        ktxtOverTimeHours.Text = "0"; // 加班時數
     }
 
 }

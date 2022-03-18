@@ -28,6 +28,17 @@ using System.Web.UI.WebControls;
  * **/
 
 /**
+* 修改時間：2022/03/09
+* 修改人員：高常昇
+* 修改項目：
+    * 過濾被銷假的請假單
+* 修改原因：
+    * 規格缺陷，導致已經被銷假的請假單沒有排除(A)
+* 修改位置：
+    * 「getLVHList」中，SQL更新(SH)
+* **/
+
+/**
 * 修改時間：2021/04/19
 * 修改人員：高常昇
 * 修改項目：
@@ -72,76 +83,77 @@ public partial class CDS_SCSHR_WebPages_WebPart_ShowTodayLVHList : System.Web.UI
         isShowChecked = false;
         DataTable dtReturn = new DataTable();
         using (SqlDataAdapter sda = new SqlDataAdapter(@"
-            SET NOCOUNT ON;
-	     	DECLARE @ALLGROUP TABLE ( -- 建立收納所有部門的虛擬表
-	            GROUP_ID NVARCHAR(50)
-            )
-            IF (@IS_SHOW_SUB = '1')
-                BEGIN
-                    INSERT INTO @ALLGROUP(GROUP_ID) -- 加進收納的虛擬表中
-	                     SELECT GROUP_ID 
-	                       FROM TB_EB_EMPL_FUNC
-	                      WHERE USER_GUID = @USER_GUID
-                            AND FUNC_ID = 'Superior' -- 如果登入者是部門主管
+             SET NOCOUNT ON;
+               DECLARE @ALLGROUP TABLE ( -- 建立收納所有部門的虛擬表
+                     GROUP_ID NVARCHAR(50)
+                    )
+                    IF (@IS_SHOW_SUB = '1')
+                        BEGIN
+                            INSERT INTO @ALLGROUP(GROUP_ID) -- 加進收納的虛擬表中
+                              SELECT GROUP_ID 
+                                FROM TB_EB_EMPL_FUNC
+                               WHERE USER_GUID = @USER_GUID
+                                    AND FUNC_ID = 'Superior' -- 如果登入者是部門主管
 
-	                    WHILE(@@ROWCOUNT > 0) 
-		                    BEGIN
-			                    INSERT INTO @ALLGROUP(GROUP_ID)
-			                         SELECT GROUP_ID 
-				                       FROM TB_EB_GROUP 
-				                      WHERE PARENT_GROUP_ID IN (SELECT GROUP_ID -- 找到所有上層部門存在於收納的虛擬表中的部門
-											                      FROM @ALLGROUP)
-					                    AND GROUP_ID NOT IN (SELECT GROUP_ID -- 同時不找已經存在的部門
-										                       FROM @ALLGROUP)
-		                    END
-                  END
-	        SELECT ISNULL((SELECT [NAME] + '(' + ACCOUNT + ')'  -- 找到請假人
-					         FROM TB_EB_USER 
-					        WHERE USER_GUID = LVH.LEAEMP), '') AS 'NAME',
-		           CONVERT(VARCHAR, LVH.STARTTIME, 120) + ' ~ ' + CONVERT(VARCHAR, LVH.ENDTIME, 120) AS 'LVHTIME', -- 請假單請假時間
-		           '' AS 'TRAVELTIME' -- 出差單出差時間
-	          FROM Z_SCSHR_LEAVE AS LVH
-	         WHERE (LEAEMP IN  (SELECT USER_GUID 
-							           FROM TB_EB_EMPL_DEP
-							          WHERE GROUP_ID IN (SELECT GROUP_ID FROM @ALLGROUP)) -- 而且要顯示子部門
-			        OR LEAEMP IN (SELECT USER_GUID -- 或者只找自己部門內所有人
-							          FROM TB_EB_EMPL_DEP
-							         WHERE GROUP_ID IN (SELECT GROUP_ID 
-											             FROM TB_EB_EMPL_DEP 
-												        WHERE USER_GUID = @USER_GUID)))
-	           AND CONVERT(VARCHAR(10), GETDATE(), 111) BETWEEN CONVERT(VARCHAR(10), STARTTIME, 111)  -- 今天的日期介於 請假單請假起始日期
-													        AND CONVERT(VARCHAR(10), ENDTIME, 111)  -- 和請假單請假結束日期
-	           AND TASK_STATUS = 2 -- 同意
-	           AND TASK_RESULT = 0 -- 且結案
-         UNION ALL -- 合併
-	        SELECT ISNULL((SELECT [NAME] + '(' + ACCOUNT + ')'  -- 找到出差人
-					         FROM TB_EB_USER 
-					        WHERE USER_GUID = TRAVEL.TRAVEL_MEN), '') AS 'NAME',
-		           '' AS 'LVHTIME', -- 請假單請假時間
-		           CONVERT(VARCHAR, TRAVEL.STARTTIME, 120) + ' ~ ' + CONVERT(VARCHAR, TRAVEL.ENDTIME, 120) AS 'TRAVELTIME' -- 出差單出差時間
-	          FROM Z_SCSHR_TRAVEL AS TRAVEL
-	         WHERE (TRAVEL_MEN IN (SELECT USER_GUID 
-							          FROM TB_EB_EMPL_DEP
-							         WHERE GROUP_ID IN (SELECT GROUP_ID 
-												          FROM TB_EB_EMPL_FUNC
-												         WHERE USER_GUID = @USER_GUID
-												           AND FUNC_ID = 'Superior' -- 如果登入者是部門主管
-												           AND @IS_SHOW_SUB = '1')) -- 而且要顯示子部門
-		           OR TRAVEL_MEN IN (SELECT USER_GUID -- 或者只找自己部門內所有人
-							          FROM TB_EB_EMPL_DEP
-							         WHERE GROUP_ID IN (SELECT GROUP_ID 
-											             FROM TB_EB_EMPL_DEP 
-												        WHERE USER_GUID = @USER_GUID)))
-	           AND CONVERT(VARCHAR(10), GETDATE(), 111) BETWEEN CONVERT(VARCHAR(10), STARTTIME, 111) -- 今天的日期介於 出差單出差起始日期
-													        AND CONVERT(VARCHAR(10), ENDTIME, 111)  -- 和出差單出差結束日期
-	           AND TASK_STATUS = 2 -- 同意
-	           AND TASK_RESULT = 0 -- 且結案
-
-	           -- 回傳擔任多少部門的部門主管職務
-	        SELECT COUNT(*) AS 'SUPERIOR'
-	          FROM TB_EB_EMPL_FUNC
-	         WHERE USER_GUID = @USER_GUID
-	           AND FUNC_ID = 'Superior'
+                             WHILE(@@ROWCOUNT > 0) 
+                              BEGIN
+                               INSERT INTO @ALLGROUP(GROUP_ID)
+                                    SELECT GROUP_ID 
+                                   FROM TB_EB_GROUP 
+                                  WHERE PARENT_GROUP_ID IN (SELECT GROUP_ID -- 找到所有上層部門存在於收納的虛擬表中的部門
+                                         FROM @ALLGROUP)
+                                 AND GROUP_ID NOT IN (SELECT GROUP_ID -- 同時不找已經存在的部門
+                                         FROM @ALLGROUP)
+                              END
+                          END
+                 SELECT ISNULL((SELECT [NAME] + '(' + ACCOUNT + ')'  -- 找到請假人
+                      FROM TB_EB_USER 
+                     WHERE USER_GUID = LVH.LEAEMP), '') AS 'NAME',
+                     CONVERT(VARCHAR, LVH.STARTTIME, 120) + ' ~ ' + CONVERT(VARCHAR, LVH.ENDTIME, 120) AS 'LVHTIME', -- 請假單請假時間
+                     '' AS 'TRAVELTIME' -- 出差單出差時間
+                   FROM Z_SCSHR_LEAVE AS LVH
+                  WHERE (LEAEMP IN  (SELECT USER_GUID 
+                          FROM TB_EB_EMPL_DEP
+                         WHERE GROUP_ID IN (SELECT GROUP_ID FROM @ALLGROUP)) -- 而且要顯示子部門
+                   OR LEAEMP IN (SELECT USER_GUID -- 或者只找自己部門內所有人
+                         FROM TB_EB_EMPL_DEP
+                        WHERE GROUP_ID IN (SELECT GROUP_ID 
+                                FROM TB_EB_EMPL_DEP 
+                            WHERE USER_GUID = @USER_GUID)))
+                    AND CONVERT(VARCHAR(10), GETDATE(), 111) BETWEEN CONVERT(VARCHAR(10), STARTTIME, 111)  -- 今天的日期介於 請假單請假起始日期
+                             AND CONVERT(VARCHAR(10), ENDTIME, 111)  -- 和請假單請假結束日期
+                    AND TASK_STATUS = 2 -- 同意
+                    AND TASK_RESULT = 0 -- 且結案
+              AND CANCEL_DOC_NBR NOT IN (SELECT DOC_NBR 
+                      FROM Z_SCSHR_CLEAVE 
+                     WHERE CONVERT(VARCHAR(10), GETDATE(), 111) BETWEEN CONVERT(VARCHAR(10), STARTTIME, 111)  -- 今天的日期介於 請假單請假起始日期
+                             AND CONVERT(VARCHAR(10), ENDTIME, 111)  -- 和請假單請假結束日期
+                     AND TASK_STATUS = 2 -- 同意
+                     AND TASK_RESULT = 0 -- 且結案
+              )
+                 UNION ALL -- 合併
+                 SELECT ISNULL((SELECT [NAME] + '(' + ACCOUNT + ')'  -- 找到出差人
+                      FROM TB_EB_USER 
+                     WHERE USER_GUID = TRAVEL.TRAVEL_MEN), '') AS 'NAME',
+                     '' AS 'LVHTIME', -- 請假單請假時間
+                     CONVERT(VARCHAR, TRAVEL.STARTTIME, 120) + ' ~ ' + CONVERT(VARCHAR, TRAVEL.ENDTIME, 120) AS 'TRAVELTIME' -- 出差單出差時間
+                   FROM Z_SCSHR_TRAVEL AS TRAVEL
+                  WHERE (TRAVEL_MEN IN (SELECT USER_GUID 
+                         FROM TB_EB_EMPL_DEP
+                        WHERE GROUP_ID IN (SELECT GROUP_ID 
+                              FROM TB_EB_EMPL_FUNC
+                             WHERE USER_GUID = @USER_GUID
+                               AND FUNC_ID = 'Superior' -- 如果登入者是部門主管
+                               AND @IS_SHOW_SUB = '1')) -- 而且要顯示子部門
+                     OR TRAVEL_MEN IN (SELECT USER_GUID -- 或者只找自己部門內所有人
+                         FROM TB_EB_EMPL_DEP
+                        WHERE GROUP_ID IN (SELECT GROUP_ID 
+                                FROM TB_EB_EMPL_DEP 
+                            WHERE USER_GUID = @USER_GUID)))
+                    AND CONVERT(VARCHAR(10), GETDATE(), 111) BETWEEN CONVERT(VARCHAR(10), STARTTIME, 111) -- 今天的日期介於 出差單出差起始日期
+                             AND CONVERT(VARCHAR(10), ENDTIME, 111)  -- 和出差單出差結束日期
+                    AND TASK_STATUS = 2 -- 同意
+                    AND TASK_RESULT = 0 -- 且結案
             ", ConnectionString))
         using (DataSet ds = new DataSet())
         {
