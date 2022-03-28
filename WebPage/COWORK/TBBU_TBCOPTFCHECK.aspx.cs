@@ -1389,7 +1389,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             }
             else if (DropDownList10.Text.Equals("N"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+                //QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
             }
         }
 
