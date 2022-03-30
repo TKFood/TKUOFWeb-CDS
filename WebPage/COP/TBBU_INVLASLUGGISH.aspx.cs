@@ -29,7 +29,7 @@ public partial class CDS_WebPage_COP_TBBU_INVLASLUGGISH : Ede.Uof.Utility.Page.B
             BindDropDownList();
             BindDropDownList2();
 
-            BindGrid("");
+            //BindGrid("");
         }
         else
         {
@@ -139,6 +139,15 @@ public partial class CDS_WebPage_COP_TBBU_INVLASLUGGISH : Ede.Uof.Utility.Page.B
             QUERYS.AppendFormat(@" AND ( SUBSTRING(TC003,1,8) <='{0}' OR  ISNULL(SUBSTRING(TC003,1,8),'')='' ) ", DT.ToString("yyyyMMdd"));
         }
 
+
+        //品號/品名
+        if(!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND (LA001 LIKE '{0}%' OR  MB002  LIKE '{0}%' )   ",TextBox1.Text.Trim());
+        }
+
+
+
         //排序方式
         if (!string.IsNullOrEmpty(DropDownList2.Text))
         {
@@ -166,16 +175,17 @@ public partial class CDS_WebPage_COP_TBBU_INVLASLUGGISH : Ede.Uof.Utility.Page.B
                             ,TA006,TA034,TA035
                             FROM (
                             SELECT LA009,LA001,SUM(LA005*LA011) AS 'NUMS'
-                            ,(SELECT TOP 1 TC003+' '+TE011+TE012 FROM [TK].dbo.MOCTC,[TK].dbo.MOCTE WHERE TC001=TE001 AND TC002=TE002 AND  TE004=LA001 ORDER BY TC003 DESC) AS 'TC003'
-                            FROM [TK].dbo.INVLA
+                            ,(SELECT TOP 1 TC003+' '+TE011+TE012 FROM [TK].dbo.MOCTC  WITH(NOLOCK),[TK].dbo.MOCTE  WITH(NOLOCK) WHERE TC001=TE001 AND TC002=TE002 AND  TE004=LA001 ORDER BY TC003 DESC) AS 'TC003'
+                            FROM [TK].dbo.INVLA  WITH(NOLOCK)
                             WHERE (LA009 IN ('20004','20006','20019')  OR LA009 LIKE '1%')
                             AND LA001 NOT IN (SELECT [MB001] FROM [TKBUSINESS].[dbo].[TBINVLANOTCAL])
                             GROUP BY LA009,LA001
-                            HAVING SUM(LA005*LA011)>0) 
+                            HAVING SUM(LA005*LA011)>0
+                            ) 
                             AS TEMP 
-                            LEFT JOIN [TK].dbo.CMSMC ON MC001=LA009
-                            LEFT JOIN [TK].dbo.INVMB ON MB001=LA001
-                            LEFT JOIN [TK].dbo.MOCTA ON TA001+TA002=SUBSTRING(TC003,10,15)
+                            LEFT JOIN [TK].dbo.CMSMC  WITH(NOLOCK) ON MC001=LA009
+                            LEFT JOIN [TK].dbo.INVMB  WITH(NOLOCK) ON MB001=LA001
+                            LEFT JOIN [TK].dbo.MOCTA  WITH(NOLOCK) ON TA001+TA002=SUBSTRING(TC003,10,15)
                             WHERE 1=1
 
                             {0}
@@ -309,11 +319,11 @@ public partial class CDS_WebPage_COP_TBBU_INVLASLUGGISH : Ede.Uof.Utility.Page.B
             {
                 QUERYS.AppendFormat(@" ");
             }
-            else if (!DropDownList1.Text.Equals("原料"))
+            else if (DropDownList1.Text.Equals("原料"))
             {
                 QUERYS.AppendFormat(@" AND LA001 LIKE '1%' ");
             }
-            else if (!DropDownList1.Text.Equals("物料"))
+            else if (DropDownList1.Text.Equals("物料"))
             {
                 QUERYS.AppendFormat(@" AND LA001 LIKE '2%' ");
             }
