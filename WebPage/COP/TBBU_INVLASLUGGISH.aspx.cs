@@ -119,11 +119,11 @@ public partial class CDS_WebPage_COP_TBBU_INVLASLUGGISH : Ede.Uof.Utility.Page.B
             {
                 QUERYS.AppendFormat(@" ");
             }
-            else if(!DropDownList1.Text.Equals("原料"))
+            else if(DropDownList1.Text.Equals("原料"))
             {
                 QUERYS.AppendFormat(@" AND LA001 LIKE '1%' ");
             }
-            else if (!DropDownList1.Text.Equals("物料"))
+            else if (DropDownList1.Text.Equals("物料"))
             {
                 QUERYS.AppendFormat(@" AND LA001 LIKE '2%' ");
             }
@@ -146,11 +146,11 @@ public partial class CDS_WebPage_COP_TBBU_INVLASLUGGISH : Ede.Uof.Utility.Page.B
             {
                 QUERYS.AppendFormat(@" ORDER BY (CASE WHEN MB064>0 AND MB065>0 THEN NUMS*(MB065/MB064) ELSE 0 END) DESC ");
             }
-            else if (!DropDownList2.Text.Equals("依該庫別的數量"))
+            else if (DropDownList2.Text.Equals("依該庫別的數量"))
             {
                 QUERYS.AppendFormat(@" ORDER BY NUMS DESC ");
             }
-            else if (!DropDownList2.Text.Equals("依品號"))
+            else if (DropDownList2.Text.Equals("依品號"))
             {
                 QUERYS.AppendFormat(@" ORDER BY LA001 ");
             }
