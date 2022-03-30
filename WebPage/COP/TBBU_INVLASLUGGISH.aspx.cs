@@ -143,7 +143,7 @@ public partial class CDS_WebPage_COP_TBBU_INVLASLUGGISH : Ede.Uof.Utility.Page.B
         //品號/品名
         if(!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND (LA001 LIKE '{0}%' OR  MB002  LIKE '{0}%' )   ",TextBox1.Text.Trim());
+            QUERYS.AppendFormat(@" AND (LA001 LIKE '{0}%' OR  MB002  LIKE '%{0}%' )   ", TextBox1.Text.Trim());
         }
 
 
