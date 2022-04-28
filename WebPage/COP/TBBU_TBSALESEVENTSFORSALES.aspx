@@ -272,10 +272,7 @@
                             <telerik:RadDatePicker ID="RadDatePicker2" runat="server" Width="120px"></telerik:RadDatePicker>
                             <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
                         </td>
-                        <td class="PopTableRightTD">
-
-                            <%--<asp:TextBox ID="TextBox5" runat="server" Text="" Width="200%"  Style="height: 20px;"></asp:TextBox>--%>
-                        </td>
+                    
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
