@@ -1930,6 +1930,22 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         //加入至members節點底下
         FormFieldValue.AppendChild(FieldItem);
 
+
+        //建立節點FieldItem
+        //CHECKMOC	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "CHECKMOC");
+        FieldItem.SetAttribute("fieldValue", "生產");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("customValue", "@null");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
         //建立節點FieldItem
         //TE006 	
         FieldItem = xmlDoc.CreateElement("FieldItem");
