@@ -43,7 +43,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         SETBUTTON();
 
-        TextBox15.Text = DateTime.Now.ToString("yyyyMMdd");
+       
 
         if (ROLES.Equals("ADMIN"))
         {
@@ -98,6 +98,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             BindDropDownList9();
             BindDropDownList10();
             BindGrid5("");
+
+            TextBox15.Text = DateTime.Now.ToString("yyyyMMdd");
         }
         else
         {
