@@ -77,6 +77,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         if (!IsPostBack)
         {
+            TextBox15.Text = DateTime.Now.ToString("yyyyMMdd");
+
             SETDATES();
 
             BindDropDownList();
@@ -99,7 +101,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             BindDropDownList10();
             BindGrid5("");
 
-            TextBox15.Text = DateTime.Now.ToString("yyyyMMdd");
+           
         }
         else
         {
