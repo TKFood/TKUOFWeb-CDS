@@ -727,14 +727,7 @@
                             </td>
 
                         </tr>
-                        <tr>
-                            <td class="PopTableLeftTD"></td>
-                            <td>
-                                <asp:Label ID="Label24" runat="server" Text="是否生產: "></asp:Label>
-                                <asp:DropDownList ID="DropDownList10" runat="server"></asp:DropDownList>
-                            </td>
-
-                        </tr>
+               
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>

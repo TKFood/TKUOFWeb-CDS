@@ -398,29 +398,29 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     private void BindDropDownList10()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("STATUS", typeof(String));
+        //DataTable dt = new DataTable();
+        //dt.Columns.Add("STATUS", typeof(String));
 
 
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT 'N' AS 'STATUS' ";
+        //string cmdTxt = @" SELECT 'N' AS 'STATUS' ";
 
-        dt.Load(m_db.ExecuteReader(cmdTxt));
+        //dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        if (dt.Rows.Count > 0)
-        {
-            DropDownList10.DataSource = dt;
-            DropDownList10.DataTextField = "STATUS";
-            DropDownList10.DataValueField = "STATUS";
-            DropDownList10.DataBind();
+        //if (dt.Rows.Count > 0)
+        //{
+        //    DropDownList10.DataSource = dt;
+        //    DropDownList10.DataTextField = "STATUS";
+        //    DropDownList10.DataValueField = "STATUS";
+        //    DropDownList10.DataBind();
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-        }
+        //}
 
 
 
@@ -1326,17 +1326,17 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
 
         //是否生產
-        if (!string.IsNullOrEmpty(DropDownList10.Text))
-        {
-            if (DropDownList10.Text.Equals("Y"))
-            {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
-            }
-            else if (DropDownList10.Text.Equals("N"))
-            {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
-            }
-        }
+        //if (!string.IsNullOrEmpty(DropDownList10.Text))
+        //{
+        //    if (DropDownList10.Text.Equals("Y"))
+        //    {
+        //        QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+        //    }
+        //    else if (DropDownList10.Text.Equals("N"))
+        //    {
+        //        QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+        //    }
+        //}
 
         //訂單單號
         if (!string.IsNullOrEmpty(TextBox15.Text))
