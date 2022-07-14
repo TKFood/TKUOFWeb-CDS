@@ -46,14 +46,16 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         ROLES = SEARCHROLES(ACCOUNT.Trim());
 
         SETBUTTON();
+        RadPageView6.Visible = false;
 
-       
 
         if (ROLES.Equals("ADMIN"))
         {
             Button4.Enabled = true;
             Button6.Enabled = true;
             Button8.Enabled = true;
+
+            RadPageView6.Visible = true;
 
         }
 
@@ -82,6 +84,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         if (!IsPostBack)
         {
             TextBox15.Text = DateTime.Now.ToString("yyyyMMdd");
+            
 
             SETDATES();
 
@@ -102,7 +105,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             //BindGrid4("");
 
             BindDropDownList9();
-            BindDropDownList10();
+         
             //BindGrid5("");
         }
         else
@@ -131,6 +134,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         //TextBox8.Text = DateTime.Now.ToString("MM");
         TextBox13.Text = DateTime.Now.ToString("yyyy");
         //TextBox14.Text = DateTime.Now.ToString("MM");
+       
     }
     private void BindDropDownList()
     {
@@ -402,35 +406,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
     }
 
-    private void BindDropDownList10()
-    {
-        //DataTable dt = new DataTable();
-        //dt.Columns.Add("STATUS", typeof(String));
-
-
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        //string cmdTxt = @" SELECT 'N' AS 'STATUS' ";
-
-        //dt.Load(m_db.ExecuteReader(cmdTxt));
-
-        //if (dt.Rows.Count > 0)
-        //{
-        //    DropDownList10.DataSource = dt;
-        //    DropDownList10.DataTextField = "STATUS";
-        //    DropDownList10.DataValueField = "STATUS";
-        //    DropDownList10.DataBind();
-
-        //}
-        //else
-        //{
-
-        //}
-
-
-
-    }
+  
 
 
     private void BindGrid(string SALESFOCUS)
@@ -1637,6 +1613,174 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
     }
 
+    private void BindGrid6(string SALESFOCUS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+       
+
+        //訂單單號
+        if (!string.IsNullOrEmpty(TextBox4.Text))
+        {
+            QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox4.Text.Trim());
+
+        }
+
+        cmdTxt.AppendFormat(@" 
+                                SELECT 
+                                LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
+                                ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003)) AS 'TF123'
+                                ,*
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL([MOCCHECKDATES],'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKS'
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKS'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 ISNULL(SALESCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(SALESCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
+
+                                FROM [TK].dbo.COPTE,[TK].dbo.COPTF
+                                LEFT JOIN [TK].dbo.COPTC ON TC001=TF001 AND TC002=TF002
+                                LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
+                                WHERE TE001=TF001 AND TE002=TF002  AND TE003=TF003
+                                AND 1=1
+
+                                {0}
+
+                               
+
+                                ", QUERYS.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid6.DataSource = dt;
+        Grid6.DataBind();
+    }
+
+    protected void grid_PageIndexChanging6(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid6_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //    ///Get the button that raised the event
+            //    Button btn = (Button)e.Row.FindControl("Button3");
+            //    //Get the row that contains this button
+            //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //    //string cellvalue = gvr.Cells[2].Text.Trim();
+            //    string Cellvalue = btn.CommandArgument;
+            //    DataRowView row = (DataRowView)e.Row.DataItem;
+            //    Button lbtnName = (Button)e.Row.FindControl("Button3");
+            //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            //    //Grid開窗是用RowDataBound事件再開窗
+            //    // Dialog.PostBackType.AfterReturn
+            //    //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+            //    // Dialog.PostBackType.Allows
+            //    Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.Allows, param);
+
+
+            //    //Button2
+            //    //Get the button that raised the event
+            //    Button btn2 = (Button)e.Row.FindControl("Button4");
+            //    //Get the row that contains this button
+            //    GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+            //    //string cellvalue = gvr.Cells[2].Text.Trim();
+            //    string Cellvalue2 = btn2.CommandArgument;
+            //    DataRowView row2 = (DataRowView)e.Row.DataItem;
+            //    Button lbtnName2 = (Button)e.Row.FindControl("Button4");
+            //    ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
+
+
+
+        }
+
+
+
+
+
+        //StringBuilder PATH = new StringBuilder();
+
+        //System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    DataRowView row = (DataRowView)e.Row.DataItem;
+        //    System.Web.UI.WebControls.Image img1 = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
+
+
+
+        //    if (!string.IsNullOrEmpty(row["PHOTO_GUID"].ToString()))
+        //    {
+        //        //img.ImageUrl = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
+
+
+        //        //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
+        //        //                ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
+
+        //        PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
+        //                        ", row["RESIZE_FILE_ID"].ToString());
+        //        img.ImageUrl = PATH.ToString();
+
+        //        //img.ImageUrl  = Request.ApplicationPath + "/Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
+
+        //        //img.ImageUrl = string.Format("~/Common/FileCenter/Downloadfile.ashx?id={0}", row["THUMBNAIL_FILE_ID"].ToString());
+
+        //        //e.Row.Cells[0].Text = row["THUMBNAIL_FILE_ID"].ToString();
+        //        ////獲取當前行的圖片路徑
+        //        //string ImgUrl = img.ImageUrl;
+        //        ////給帶圖片的單元格添加點擊事件
+        //        //e.Row.Cells[3].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
+        //        //    + ".checked=true;CellClick('" + ImgUrl + "')");
+
+        //        //  img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
+        //    }
+
+
+        //}
+
+
+    }
+
+    protected void Grid6_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "GRIDVIEW6Button1")
+        {
+            CHECKTBCOPTFCHECK3(e.CommandArgument.ToString());
+            //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
+        }
+
+    }
+
+
+    public void OnBeforeExport6(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+
+
+    }
+
 
     public override void VerifyRenderingInServerForm(Control control)
     {
@@ -1821,6 +1965,85 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
 
     }
+
+    public void CHECKTBCOPTFCHECK3(string TF001002003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        try
+        {
+
+            //WHERE COPTDUDF01 IN ('Y','y')，訂單單身中，含有要生產的
+            //如果有要生產的，就不可以產生表單
+            cmdTxt.AppendFormat(@"                              
+                                SELECT *
+                                FROM 
+                                (
+                                SELECT 
+                                COPTD.UDF01 AS 'COPTDUDF01'
+                                ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
+                                ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003)) AS 'TF123'
+                                ,TF001,TF002,TF003,TF004
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKS'
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKS'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 ISNULL(SALESCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(SALESCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
+
+                                FROM [TK].dbo.COPTE,[TK].dbo.COPTF
+                                LEFT JOIN [TK].dbo.COPTC ON TC001=TF001 AND TC002=TF002
+                                LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
+                                WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
+                                AND 1=1
+                                ) AS TEMP 
+                                WHERE  LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))='{0}'
+
+                                ", TF001002003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            TF001 = TF001002003.Substring(0, 4);
+            TF002 = TF001002003.Substring(4, 11);
+            TF003 = TF001002003.Substring(15, 4);
+
+            //訂單的單身有需要生產的，需經生管、採購同意
+            //在admin強制執行，不用等生管、採購同意
+
+            if (dt.Rows.Count > 0)
+            {
+                ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(TF001, TF002, TF003);
+                //MsgBox("OK" + TF001 + TF002 + TF003, this.Page, this);
+            }
+         
+        }
+        catch
+        {
+            MsgBox("catch NG", this.Page, this);
+        }
+        finally
+        {
+
+        }
+
+
+
+    }
+
 
 
     public void ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(string TE001, string TE002, string TE003)
@@ -3681,6 +3904,13 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid3("");
         BindGrid4("");
         BindGrid5("");
+
+    }
+
+    protected void Button10_Click(object sender, EventArgs e)
+    {
+
+        BindGrid6("");      
 
     }
     #endregion
