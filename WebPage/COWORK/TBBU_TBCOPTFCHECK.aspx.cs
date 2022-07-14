@@ -455,11 +455,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             if (DropDownList2.Text.Equals("Y"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 IN ('Y','y') ");
             }
             else if (DropDownList2.Text.Equals("N"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 NOT IN ('Y','y')  ");
             }
         }
 
@@ -740,11 +740,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             if (DropDownList4.Text.Equals("Y"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 IN ('Y','y') ");
             }
             else if (DropDownList4.Text.Equals("N"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 NOT IN ('Y','y')  ");
             }
         }
 
@@ -979,11 +979,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             if (DropDownList6.Text.Equals("Y"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 IN ('Y','y') ");
             }
             else if (DropDownList6.Text.Equals("N"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 NOT IN ('Y','y')  ");
             }
         }
 
@@ -1216,11 +1216,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             if (DropDownList8.Text.Equals("Y"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 IN ('Y','y') ");
             }
             else if (DropDownList8.Text.Equals("N"))
             {
-                QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+                QUERYS.AppendFormat(@" AND COPTF.UDF01 NOT IN ('Y','y')  ");
             }
         }
 
@@ -1448,11 +1448,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         //{
         //    if (DropDownList10.Text.Equals("Y"))
         //    {
-        //        QUERYS.AppendFormat(@" AND COPTD.UDF01 IN ('Y','y') ");
+        //        QUERYS.AppendFormat(@" AND COPTF.UDF01 IN ('Y','y') ");
         //    }
         //    else if (DropDownList10.Text.Equals("N"))
         //    {
-        //        //QUERYS.AppendFormat(@" AND COPTD.UDF01 NOT IN ('Y','y')  ");
+        //        //QUERYS.AppendFormat(@" AND COPTF.UDF01 NOT IN ('Y','y')  ");
         //    }
         //}
 
@@ -1483,7 +1483,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
                                 WHERE TE001=TF001 AND TE002=TF002  AND TE003=TF003
                                 AND 1=1
-
+                                AND COPTF.UDF01 NOT IN ('Y','y')
                                 {0}
 
                                
@@ -1811,7 +1811,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         try
         {
-            // WHERE   COPTDUDF01 IN ('Y','y')
+            // WHERE   COPTFUDF01 IN ('Y','y')
             // AND ([MOCCHECKS] NOT IN ('Y') OR [PURCHECKS] NOT IN ('Y') )
             // 訂單單身中，如果有要生產的，就一定要經生管、採購核準後，才能產生表單
 
@@ -1820,7 +1820,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 FROM 
                                 (
                                 SELECT 
-                                COPTD.UDF01 AS 'COPTDUDF01'
+                                COPTF.UDF01 AS 'COPTFUDF01'
                                 ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
                                 ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003)) AS 'TF123'
                                 ,TF001,TF002,TF003,TF004
@@ -1839,7 +1839,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
                                 AND 1=1
                                 ) AS TEMP 
-                                WHERE COPTDUDF01 IN ('Y','y')  
+                                WHERE COPTFUDF01 IN ('Y','y')  
                                 AND (ISNULL(MOCCHECKS,'') NOT IN ('Y') OR ISNULL(PURCHECKS,'') NOT IN ('Y') )
                                 AND LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))='{0}'
 
@@ -1896,14 +1896,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         try
         {
 
-            //WHERE COPTDUDF01 IN ('Y','y')，訂單單身中，含有要生產的
+            //WHERE COPTFUDF01 IN ('Y','y')，訂單單身中，含有要生產的
             //如果有要生產的，就不可以產生表單
             cmdTxt.AppendFormat(@"                              
                                 SELECT *
                                 FROM 
                                 (
                                 SELECT 
-                                COPTD.UDF01 AS 'COPTDUDF01'
+                                COPTF.UDF01 AS 'COPTFUDF01'
                                 ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
                                 ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003)) AS 'TF123'
                                 ,TF001,TF002,TF003,TF004
@@ -1922,7 +1922,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
                                 AND 1=1
                                 ) AS TEMP 
-                                WHERE COPTDUDF01 IN ('Y','y')  
+                                WHERE COPTFUDF01 IN ('Y','y')  
                                 AND LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))='{0}'
 
                                 ", TF001002003);
@@ -1977,14 +1977,14 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         try
         {
 
-            //WHERE COPTDUDF01 IN ('Y','y')，訂單單身中，含有要生產的
+            //WHERE COPTFUDF01 IN ('Y','y')，訂單單身中，含有要生產的
             //如果有要生產的，就不可以產生表單
             cmdTxt.AppendFormat(@"                              
                                 SELECT *
                                 FROM 
                                 (
                                 SELECT 
-                                COPTD.UDF01 AS 'COPTDUDF01'
+                                COPTF.UDF01 AS 'COPTFUDF01'
                                 ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
                                 ,LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003)) AS 'TF123'
                                 ,TF001,TF002,TF003,TF004
@@ -2073,7 +2073,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         COPTCUDF01 = "N";
         foreach (DataRow od in DT.Rows)
         {
-            if (od["COPTDUDF01"].ToString().Equals("Y"))
+            if (od["COPTFUDF01"].ToString().Equals("Y"))
             {
                 COPTCUDF01 = "Y";
                 break;
@@ -3119,7 +3119,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE009) AS 'CMSMV002A'
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE109) AS 'CMSMV002B'
                                     ,(SELECT TOP 1 COPTC.UDF05 FROM [TK].dbo.COPTC WHERE TC001=TE001 AND TC002=TE002) AS 'COPTCUDF05'
-                                    ,ISNULL((SELECT TOP 1 COPTD.UDF01 FROM [TK].dbo.COPTD WHERE TD001=TE001 AND TD002=TE002 AND COPTD.UDF01='Y'),'N') AS 'COPTDUDF01'
+                                    ,ISNULL(COPTFUDF01,'N') AS 'COPTFUDF01'
                                     ,BA
                                     ,BANAME
                                     ,(SELECT TOP 1 [USER_GUID] FROM [192.168.1.223].[UOF].[dbo].[TB_EB_USER] WHERE [ACCOUNT]=BA COLLATE Chinese_Taiwan_Stroke_BIN) AS 'BA_USER_GUID'
