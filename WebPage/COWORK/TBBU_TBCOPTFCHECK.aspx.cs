@@ -2069,11 +2069,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         int rowscounts = 0;
 
-        //如果COPTCUDF01需要生產，需簽到生管
+        //COPTFUDF01CHECK，需簽到生管
         COPTCUDF01 = "N";
         foreach (DataRow od in DT.Rows)
         {
-            if (od["COPTFUDF01"].ToString().Equals("Y"))
+            if (od["COPTFUDF01CHECK"].ToString().Equals("Y"))
             {
                 COPTCUDF01 = "Y";
                 break;
@@ -3119,7 +3119,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE009) AS 'CMSMV002A'
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE109) AS 'CMSMV002B'
                                     ,(SELECT TOP 1 COPTC.UDF05 FROM [TK].dbo.COPTC WHERE TC001=TE001 AND TC002=TE002) AS 'COPTCUDF05'
-                                    ,ISNULL(COPTFUDF01,'N') AS 'COPTFUDF01'
+                                    ,CASE WHEN COPTFUDF01 IN ('N','n','') AND (SELECT TOP 1 UDF01 FROM  [TK].dbo.COPTD WHERE TD001=TF001 AND TD002=TF002 AND TD003=TF104) IN ('N','n','') THEN 'N' ELSE 'Y' END AS 'COPTFUDF01CHECK'
                                     ,BA
                                     ,BANAME
                                     ,(SELECT TOP 1 [USER_GUID] FROM [192.168.1.223].[UOF].[dbo].[TB_EB_USER] WHERE [ACCOUNT]=BA COLLATE Chinese_Taiwan_Stroke_BIN) AS 'BA_USER_GUID'
