@@ -3119,7 +3119,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE009) AS 'CMSMV002A'
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE109) AS 'CMSMV002B'
                                     ,(SELECT TOP 1 COPTC.UDF05 FROM [TK].dbo.COPTC WHERE TC001=TE001 AND TC002=TE002) AS 'COPTCUDF05'
-                                    ,CASE WHEN COPTFUDF01 IN ('N','n','') AND (SELECT TOP 1 UDF01 FROM  [TK].dbo.COPTD WHERE TD001=TF001 AND TD002=TF002 AND TD003=TF104) IN ('N','n','') THEN 'N' ELSE 'Y' END AS 'COPTFUDF01CHECK'
+                                    ,,CASE WHEN COPTFUDF01 IN ('N','n','') AND ISNULL((SELECT TOP 1 UDF01 FROM  [TK].dbo.COPTD WHERE TD001=TF001 AND TD002=TF002 AND TD003=TF104),'N') IN ('N','n','') THEN 'N' ELSE 'Y' END AS 'COPTFUDF01CHECK'
                                     ,BA
                                     ,BANAME
                                     ,(SELECT TOP 1 [USER_GUID] FROM [192.168.1.223].[UOF].[dbo].[TB_EB_USER] WHERE [ACCOUNT]=BA COLLATE Chinese_Taiwan_Stroke_BIN) AS 'BA_USER_GUID'
