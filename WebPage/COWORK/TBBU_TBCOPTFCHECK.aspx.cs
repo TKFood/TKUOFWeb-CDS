@@ -2668,6 +2668,22 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
             //Row	TF004
             XmlElement Cell = xmlDoc.CreateElement("Cell");
+            Cell.SetAttribute("fieldId", "COTTDUDF01");
+            Cell.SetAttribute("fieldValue", od["COTTDUDF01"].ToString());
+            Cell.SetAttribute("realValue", "");
+            Cell.SetAttribute("customValue", "");
+            Cell.SetAttribute("enableSearch", "True");
+            Row.AppendChild(Cell);
+            //Row	TF004
+            Cell = xmlDoc.CreateElement("Cell");
+            Cell.SetAttribute("fieldId", "COPTFUDF01");
+            Cell.SetAttribute("fieldValue", od["COPTFUDF01"].ToString());
+            Cell.SetAttribute("realValue", "");
+            Cell.SetAttribute("customValue", "");
+            Cell.SetAttribute("enableSearch", "True");
+            Row.AppendChild(Cell);
+            //Row	TF004
+            Cell = xmlDoc.CreateElement("Cell");
             Cell.SetAttribute("fieldId", "TF004");
             Cell.SetAttribute("fieldValue", od["TF004"].ToString());
             Cell.SetAttribute("realValue", "");
@@ -3004,7 +3020,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
             cmdTxt.AppendFormat(@"  
                                     SELECT 
-                                    [COMPANY],[CREATOR],[USR_GROUP],[CREATE_DATE],[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME]
+                                    ISNULL((SELECT TOP 1 UDF01 FROM  [TK].dbo.COPTD WHERE TD001=TF001 AND TD002=TF002 AND TD003=TF104),'') AS COTTDUDF01
+                                    ,COPTFUDF01 AS COPTFUDF01
+                                    ,CASE WHEN COPTFUDF01 IN ('N','n','') AND ISNULL((SELECT TOP 1 UDF01 FROM  [TK].dbo.COPTD WHERE TD001=TF001 AND TD002=TF002 AND TD003=TF104),'N') IN ('N','n','') THEN 'N' ELSE 'Y' END AS 'COPTFUDF01CHECK'
+
+                                    ,[COMPANY],[CREATOR],[USR_GROUP],[CREATE_DATE],[MODIFIER],[MODI_DATE],[FLAG],[CREATE_TIME],[MODI_TIME],[TRANS_TYPE],[TRANS_NAME]
                                     ,[sync_date],[sync_time],[sync_mark],[sync_count],[DataUser],[DataGroup]
                                     ,[TE001],[TE002],[TE003],[TE004],[TE005],[TE006],[TE007],[TE008],[TE009],[TE010]
                                     ,[TE011],[TE012],[TE013],[TE014],[TE015],[TE016],[TE017],[TE018],[TE019],[TE020]
@@ -3056,7 +3076,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE009) AS 'CMSMV002A'
                                     ,(SELECT TOP 1 MV002 FROM [TK].dbo.CMSMV WHERE MV001=TE109) AS 'CMSMV002B'
                                     ,(SELECT TOP 1 COPTC.UDF05 FROM [TK].dbo.COPTC WHERE TC001=TE001 AND TC002=TE002) AS 'COPTCUDF05'
-                                    ,CASE WHEN COPTFUDF01 IN ('N','n','') AND ISNULL((SELECT TOP 1 UDF01 FROM  [TK].dbo.COPTD WHERE TD001=TF001 AND TD002=TF002 AND TD003=TF104),'N') IN ('N','n','') THEN 'N' ELSE 'Y' END AS 'COPTFUDF01CHECK'
+                                    
                                     ,BA
                                     ,BANAME
                                     ,(SELECT TOP 1 [USER_GUID] FROM [192.168.1.223].[UOF].[dbo].[TB_EB_USER] WHERE [ACCOUNT]=BA COLLATE Chinese_Taiwan_Stroke_BIN) AS 'BA_USER_GUID'
