@@ -36,4 +36,12 @@
 		<Resource Name="vi" Value="Quẹt thẻ trực tuyến" />
 		<Resource Name="id" Value="absensi swipe kartu" />
 	</CustomControl>
+
+	<CustomControl ControlType="CDS_WebPart_UC_TBBU_TBSALESEVENTSFORSALES" ControlPath="~/CDS/WebPart/UC_TBBU_TBSALESEVENTSFORSALES.ascx" DefaultTitle="業務客情" TitleStyle="h" ZoneIndex="0">
+		<Resource Name="zh-CN" Value="業務客情" />
+		<Resource Name="zh-TW" Value="業務客情" />
+		<Resource Name="en-US" Value="Online Punch" />
+		<Resource Name="vi" Value="Quẹt thẻ trực tuyến" />
+		<Resource Name="id" Value="absensi swipe kartu" />
+	</CustomControl>
 </CustomControls>
