@@ -1,48 +1,72 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Mobile_Test3.aspx.cs" Inherits="CDS_WebPage_Mobile_Mobile_Test3" %>
 
-<html>
-  <head>
-    <title>Instascan &ndash; Demo</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
-  
-    <script src="../../instascan.min/IOS15instascan.min.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>QR Code Scanner Example</title>
 
-  </head>
-  <body>
-    <a href="https://github.com/schmich/instascan"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 1" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
-    <div id="app">
-      <div class="sidebar">
-        <section class="cameras">
-          <h2>Cameras</h2>
-          <ul>
-            <li v-if="cameras.length === 0" class="empty">No cameras found</li>
-            <li v-for="camera in cameras">
-              <span v-if="camera.id == activeCameraId" :title="formatName(camera.name)" class="active">{{ formatName(camera.name) }}</span>
-              <span v-if="camera.id != activeCameraId" :title="formatName(camera.name)">
-                <a @click.stop="selectCamera(camera)">{{ formatName(camera.name) }}</a>
-              </span>
-            </li>
-          </ul>
+
+</head>
+
+<body class="cont">
+
+    <h3 class="txt-cntr mar-top-2">Simple QR Code Scanner Example</h3>
+
+    <article class="pad-2">
+        <section>
+            <div>
+                <input type="text" id="myTextcontent" value="">
+            </div>
+            <div class="frm-grp txt-cntr">
+                <label class="disp-blck">Choose camera:</label>
+                <select id="webcameraChanger" onchange="cameraChange($(this).val());" class="frm-ctrl mar-btm-2"></select>
+            </div>
+            <!-- webcamera view component -->
+            <video id="webcameraPreview" playsinline autoplay controls muted loop style="width: 100px; height: 100px"></video>
         </section>
-        <section class="scans">
-          <h2>Scans</h2>
-          <ul v-if="scans.length === 0">
-            <li class="empty">No scans yet</li>
-          </ul>
-          <transition-group name="scans" tag="ul">
-            <li v-for="scan in scans" :key="scan.date" :title="scan.content">{{ scan.content }}</li>
-          </transition-group>
-        </section>
-      </div>
-      <div class="preview-container">
-        <video id="preview"></video>
-      </div>
-    </div>
+    </article>
 
-    <script type="text/javascript" src="../../instascan.min/IOS15app.js"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="IOS11SRC/adapter.min.js"></script>
+    <script src="IOS11SRC/instascan.js"></script>
+    <script src="IOS11SRC/jquery.min.js"></script>
+    <script src="IOS11SRC/QrCodeScanner.js"></script>
+    <script type="text/javascript">
+        document.getElementById("myTextcontent").value = null;
+        //HTML video component for web camera
+        var videoComponent = $("#webcameraPreview");
+        //HTML select component for cameras change
+        var webcameraChanger = $("#webcameraChanger");
+        var options = {};
+        //init options for scanner
+        options = initVideoObjectOptions("webcameraPreview");
+        var cameraId = 0;
 
+        initScanner(options);
+
+        initAvaliableCameras(
+            webcameraChanger,
+            function () {
+                cameraId = parseInt(getSelectedCamera(webcameraChanger));
+            }
+        );
+
+        initCamera(cameraId);
+
+
+        scanStart(function (data) {
+           
+
+            document.getElementById("myTextcontent").value = data;
+            scanner.stop();
+
+            //alert(data);
+        });
+
+    </script>
+
+</body>
 </html>

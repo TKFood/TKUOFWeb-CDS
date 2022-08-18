@@ -1711,7 +1711,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         XmlElement Form = xmlDoc.CreateElement("Form");
 
         //正式的id
-        string  COPID = SEARCHFORM_VERSION_ID("訂單");
+        string  COPID = SEARCHFORM_VERSION_ID("COP10.訂單");
         //string COPID = "24c10c88-32ff-4db1-8900-abf7e4f61471";
 
         if (!string.IsNullOrEmpty(COPID))

@@ -2047,7 +2047,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         XmlElement Form = xmlDoc.CreateElement("Form");
 
         //正式的id
-        COPCHANGEID = SEARCHFORM_VERSION_ID("訂單變更");
+        COPCHANGEID = SEARCHFORM_VERSION_ID("COP20.訂單變更單");
 
         if (!string.IsNullOrEmpty(COPCHANGEID))
         {

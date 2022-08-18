@@ -6,23 +6,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
     <title>instascan：純前端掃描 QR Code</title>
     <%--    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>--%>
-        
+
     <script src="../../instascan.min/instascan.js"></script>
-<%--    <script src="../../instascan.min/instascan.min.js"></script>--%>
+    <%--<script src="../../instascan.min/instascan.min.js"></script>--%>
     <%--<script src="../../instascan.min/IOS15instascan.min.js"></script>--%>
 </head>
 
 <body>
-    <input type="text" id="myText" value="">
-
-    <input type="text" id="myTextcontent" value="">
-
-    <button onclick="myFunction()">Try it</button>
-    <button onclick="myFunctionQR()">Try 鏡頭</button>
-
-    <video id="preview"  width="100" height="100"></video>
+    <div>
+        <input type="text" id="myText" value="">
+    </div>    
+    <div>
+        <input type="text" id="myTextcontent" value="">
+    </div>
+    <div>
+        <button onclick="myFunction()">Try it</button>
+        <button onclick="myFunctionQR()">Try 鏡頭</button>
+    </div>
+    <div >
+        <video id="preview" style="width: 100px; height: 100px"></video>
+    </div>
 
     <script type="text/javascript">
         function myFunction() {
@@ -35,14 +42,14 @@
 
 
         }
-       
+
 
         function myFunctionQR() {
 
-            document.getElementById("myTextcontent").value = null;  
+            document.getElementById("myTextcontent").value = null;
 
             let scanner = new Instascan.Scanner({
-                scanPeriod: 4, 
+                scanPeriod: 2,
                 continuous: true, // 連續掃描
                 mirror: false,
                 captureImage: true,
@@ -57,7 +64,7 @@
 
                 //console.log(content);                
                 //alert(content);
-                document.getElementById("myTextcontent").value = content;  
+                document.getElementById("myTextcontent").value = content;
                 scanner.stop()
 
                 //getConfirmation();
@@ -100,7 +107,7 @@
                     //{
                     //    scanner.start(cameras[0]);
                     //}
-                    
+
                 }
                 else {
                     //console.error('沒有找到相機');
