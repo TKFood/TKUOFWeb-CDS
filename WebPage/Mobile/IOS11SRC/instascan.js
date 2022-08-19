@@ -30888,8 +30888,11 @@ var Analyzer = function () {
 
         this.sensorWidth = videoWidth;
         this.sensorHeight = videoHeight;
-        this.sensorLeft = Math.floor(videoWidth / 2 - this.sensorWidth / 2);
-        this.sensorTop = Math.floor(videoHeight / 2 - this.sensorHeight / 2);
+        //this.sensorLeft = Math.floor(videoWidth / 2 - this.sensorWidth / 2);
+        //this.sensorTop = Math.floor(videoHeight / 2 - this.sensorHeight / 2);
+
+          this.sensorLeft = Math.floor((videoWidth / 2) - (this.sensorWidth / 2));
+          this.sensorTop = Math.floor((videoHeight / 2) - (this.sensorHeight / 2));
 
         this.canvas.width = this.sensorWidth;
         this.canvas.height = this.sensorHeight;
