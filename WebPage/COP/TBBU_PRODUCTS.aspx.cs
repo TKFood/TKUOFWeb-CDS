@@ -31,7 +31,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         else
         {
 
-            BindGrid("");
+           
 
             //if (ViewState["TextBox1"] != null)
             //{
@@ -168,17 +168,18 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
 
         cmdTxt.AppendFormat(@" 
-                                SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
+                               SELECT 
+                                [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
                                 ,[PRICES1],[PRICES2],[PRICES3]
                                 ,[MOQS]
-                                ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
+                                ,MB1.MB002,MB1.MB003,MB1.MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB1.MB023)+(CASE WHEN MB1.MB198='1' THEN '天' ELSE (CASE WHEN MB1.MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB1.MB047,0)) AS MB047,MB1.MB013
                                 ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
                                 FROM [TKBUSINESS].[dbo].[PRODUCTS]
-                                LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
+                                LEFT JOIN [TK].dbo.[INVMB] MB1 ON [PRODUCTS].[MB001]=MB1.[MB001]
                                 LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
-                                LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
+                                LEFT JOIN (SELECT MD001,MD003,MD007,MB002 FROM [TK].dbo.BOMMD,[TK].dbo.INVMB MB2 WHERE MD003=MB2.MB001) AS TEMP1 ON TEMP1.MD001=[PRODUCTS].[MB001] AND MD003 LIKE '201%' AND TEMP1.MB002 NOT  LIKE '%回收%' 
                                 LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
-                                WHERE 1=1 
+                                WHERE 1=1
                                 
                                 {0}
                                 ORDER BY [PRODUCTS].[MB001]
@@ -729,7 +730,6 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
     protected void btn5_Click(object sender, EventArgs e)
     {
-
         //this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
         ViewState["TextBox1"] = TextBox1.Text.ToString();
         ViewState["TextBox2"] = TextBox2.Text.ToString();
