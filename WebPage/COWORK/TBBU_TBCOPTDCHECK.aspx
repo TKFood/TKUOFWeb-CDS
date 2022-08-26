@@ -91,6 +91,22 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
+                            <asp:Label ID="Label24" runat="server" Text="客戶名稱: "></asp:Label>
+                            <asp:TextBox ID="TextBox16" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label26" runat="server" Text="品名: "></asp:Label>
+                            <asp:TextBox ID="TextBox17" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
                             <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
                                 meta:resourcekey="btn1Resource1" />
                         </td>
@@ -232,6 +248,22 @@
                             <td>
                                 <asp:Label ID="Label18" runat="server" Text="訂單單號: "></asp:Label>
                                 <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label27" runat="server" Text="客戶名稱: "></asp:Label>
+                                <asp:TextBox ID="TextBox18" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label28" runat="server" Text="品名: "></asp:Label>
+                                <asp:TextBox ID="TextBox19" runat="server"></asp:TextBox>
                             </td>
 
                         </tr>
@@ -409,6 +441,22 @@
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
+                                <asp:Label ID="Label29" runat="server" Text="客戶名稱: "></asp:Label>
+                                <asp:TextBox ID="TextBox20" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label30" runat="server" Text="品名: "></asp:Label>
+                                <asp:TextBox ID="TextBox21" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
                                 <asp:Button ID="Button5" runat="server" Text=" 查詢 " OnClick="Button5_Click"
                                     meta:resourcekey="btn5Resource1" />
                             </td>
@@ -580,6 +628,22 @@
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
+                                <asp:Label ID="Label31" runat="server" Text="客戶名稱: "></asp:Label>
+                                <asp:TextBox ID="TextBox22" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label32" runat="server" Text="品名: "></asp:Label>
+                                <asp:TextBox ID="TextBox23" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
                                 <asp:Button ID="Button7" runat="server" Text=" 查詢 " OnClick="Button7_Click"
                                     meta:resourcekey="btn7Resource1" />
                             </td>
@@ -699,7 +763,7 @@
                 </table>
             </div>
         </telerik:RadPageView>
-         <telerik:RadPageView ID="RadPageView5" runat="server">
+        <telerik:RadPageView ID="RadPageView5" runat="server">
             <div id="tabs-2">
                 <table class="PopTable">
                     <table class="PopTable">
@@ -727,12 +791,28 @@
                             </td>
 
                         </tr>
-               
+
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
                                 <asp:Label ID="Label25" runat="server" Text="訂單單號: "></asp:Label>
                                 <asp:TextBox ID="TextBox15" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label33" runat="server" Text="客戶名稱: "></asp:Label>
+                                <asp:TextBox ID="TextBox24" runat="server"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Label ID="Label34" runat="server" Text="品名: "></asp:Label>
+                                <asp:TextBox ID="TextBox25" runat="server"></asp:TextBox>
                             </td>
 
                         </tr>
@@ -745,7 +825,7 @@
 
                         </tr>
                     </table>
-                 
+
                     <table class="PopTable">
                         <tr>
                             <td colspan="2" class="PopTableRightTD">
@@ -819,7 +899,7 @@
                                             </asp:BoundField>
                                             <asp:BoundField HeaderText="業務備註" DataField="SALESCHECKSCOMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                            </asp:BoundField>                                   
+                                            </asp:BoundField>
                                             <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
                                                     <asp:Button ID="GRIDVIEW5Button1" runat="server" Text="送簽" CommandName="GRIDVIEW5Button1" ForeColor="Red" CommandArgument='<%# Eval("TD12") %>' />

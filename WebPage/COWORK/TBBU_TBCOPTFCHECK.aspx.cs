@@ -470,6 +470,20 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         }
 
+        //客戶名稱
+        if (!string.IsNullOrEmpty(TextBox24.Text))
+        {
+            QUERYS.AppendFormat(@" AND TC053 LIKE '%{0}%'", TextBox24.Text.Trim());
+
+        }
+
+        //品名     
+        if (!string.IsNullOrEmpty(TextBox25.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox25.Text.Trim());
+
+        }
+
         cmdTxt.AppendFormat(@" 
                                 SELECT 
                                 LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
@@ -755,6 +769,20 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         }
 
+        //客戶名稱
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND TC053 LIKE '%{0}%'", TextBox2.Text.Trim());
+
+        }
+
+        //品名     
+        if (!string.IsNullOrEmpty(TextBox6.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox6.Text.Trim());
+
+        }
+
         cmdTxt.AppendFormat(@" 
                                 
                                 SELECT 
@@ -970,6 +998,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         if (!string.IsNullOrEmpty(TextBox11.Text))
         {
             QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox11.Text.Trim());
+
+        }
+
+
+        //客戶名稱
+        if (!string.IsNullOrEmpty(TextBox8.Text))
+        {
+            QUERYS.AppendFormat(@" AND TC053 LIKE '%{0}%'", TextBox8.Text.Trim());
+
+        }
+
+        //品名     
+        if (!string.IsNullOrEmpty(TextBox14.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox14.Text.Trim());
 
         }
 
@@ -1189,6 +1232,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         }
 
+
+        //客戶名稱
+        if (!string.IsNullOrEmpty(TextBox16.Text))
+        {
+            QUERYS.AppendFormat(@" AND TC053 LIKE '%{0}%'", TextBox16.Text.Trim());
+
+        }
+
+        //品名     
+        if (!string.IsNullOrEmpty(TextBox17.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox17.Text.Trim());
+
+        }
+
         cmdTxt.AppendFormat(@" 
                                  SELECT 
                                 LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
@@ -1397,6 +1455,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         if (!string.IsNullOrEmpty(TextBox15.Text))
         {
             QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox15.Text.Trim());
+
+        }
+
+
+        //客戶名稱
+        if (!string.IsNullOrEmpty(TextBox18.Text))
+        {
+            QUERYS.AppendFormat(@" AND TC053 LIKE '%{0}%'", TextBox18.Text.Trim());
+
+        }
+
+        //品名     
+        if (!string.IsNullOrEmpty(TextBox19.Text))
+        {
+            QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox19.Text.Trim());
 
         }
 
