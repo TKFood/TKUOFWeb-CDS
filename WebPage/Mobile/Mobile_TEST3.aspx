@@ -4,21 +4,53 @@
 
     <html>
     <head>
-        <title>Html-Qrcode Demo</title>
+        <title>Html-Qrcode</title>
         <body>
-            <div id="qr-reader" style="width: 500px"></div>
-            <div id="qr-reader-results"></div>
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <div id="qr-reader" style="width: 500px"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="Label1" runat="server" Text="檢查點: "></asp:Label>
+                            <asp:TextBox ID="myTextcontent" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button onclick="myFunction()">重拍</button>
+                        </td>
+                    </tr>         
+                    <tr>
+                        <td>
+                            <asp:Label ID="Label2" runat="server" Text="現在日期時間: "></asp:Label>
+                            <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
+                        </td>
+                    </tr>
+                               <tr>
+                        <td>
+                            <asp:Button ID="Button1" runat="server" Text="打卡存檔" OnClick="Button1_Click" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="qr-reader-results"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
 
             <div>
                 <%--<input type="text" id="myTextcontent" runat="server" value="">--%>
-                <asp:TextBox id="myTextcontent" runat="server"></asp:TextBox>
             </div>
 
             <div>
-                <button onclick="myFunction()">重拍</button>
             </div>
             <div>
-                <asp:Button ID="Button1" runat="server" Text="Button" onclick="Button1_Click" />
             </div>
         </body>
 

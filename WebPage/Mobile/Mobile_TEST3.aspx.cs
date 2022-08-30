@@ -24,7 +24,7 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-      
+        Label3.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
         if (!IsPostBack)
         {
@@ -32,7 +32,11 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         }
     }
 
-    public void ADDTKGAFFAIRSCHECKSPOOINT()
+    #region FUNCTION
+
+
+
+    public void ADDTKGAFFAIRSCHECKSPOOINT(string CHECKSPOINT, string CHECKSTIME)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -45,8 +49,8 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
                             ";
 
 
-        m_db.AddParameter("@CHECKSPOINT", "1");
-        m_db.AddParameter("@CHECKSTIME", "2022/8/30");
+        m_db.AddParameter("@CHECKSPOINT", CHECKSPOINT);
+        m_db.AddParameter("@CHECKSTIME", CHECKSTIME);
 
 
         m_db.ExecuteNonQuery(cmdTxt);
@@ -54,10 +58,16 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
     }
 
 
+    #endregion
+
+    #region BUTTON
+
     protected void Button1_Click(object sender, EventArgs e)
     {
-        ADDTKGAFFAIRSCHECKSPOOINT();
+        string CHECKSPOINT = myTextcontent.Text.ToString();
+        string CHECKSTIME = Label3.Text.ToString();
 
-        Button1.Text = "AAS";
+        ADDTKGAFFAIRSCHECKSPOOINT(CHECKSPOINT, CHECKSTIME);       
     }
+    #endregion
 }
