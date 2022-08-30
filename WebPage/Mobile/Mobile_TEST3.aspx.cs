@@ -55,6 +55,8 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 
         m_db.ExecuteNonQuery(cmdTxt);
 
+        Label4.Text = CHECKSPOINT+" "+ CHECKSTIME+ " 完成" +
+            "";
     }
 
 

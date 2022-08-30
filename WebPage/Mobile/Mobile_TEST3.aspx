@@ -23,14 +23,14 @@
                         <td>
                             <button onclick="myFunction()">重拍</button>
                         </td>
-                    </tr>         
+                    </tr>
                     <tr>
                         <td>
                             <asp:Label ID="Label2" runat="server" Text="現在日期時間: "></asp:Label>
                             <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
                         </td>
                     </tr>
-                               <tr>
+                    <tr>
                         <td>
                             <asp:Button ID="Button1" runat="server" Text="打卡存檔" OnClick="Button1_Click" />
                         </td>
@@ -38,6 +38,11 @@
                     <tr>
                         <td>
                             <div id="qr-reader-results"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="Label4" runat="server" Text=""></asp:Label>
                         </td>
                     </tr>
                 </table>
