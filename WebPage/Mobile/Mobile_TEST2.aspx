@@ -9,10 +9,11 @@
 
      <div>
         <input type="text" id="myTextcontent" value="">
+        <%--<asp:TextBox ID="myTextcontent" runat="server"></asp:TextBox>--%>
     </div>
 
      <div>     
-        <button onclick="myFunction()">Try 鏡頭</button>
+        <button onclick="myFunction()">重拍</button>
     </div>
 </body>
 
@@ -21,12 +22,8 @@
 
 <script>
     function myFunction() {
-        document.getElementById("myTextcontent").value = null;
-
         var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
-
-
         function onScanSuccess(decodedText, decodedResult) {
             if (decodedText !== lastResult) {
                 ++countResults;
@@ -34,12 +31,16 @@
                 // Handle on success condition with the decoded message.
                 //console.log(`Scan result ${decodedText}`, decodedResult);
                 document.getElementById("myTextcontent").value = decodedText;
+
+                html5QrcodeScanner.clear();
             }
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "qr-reader", { fps: 10, qrbox: 250 });
         html5QrcodeScanner.render(onScanSuccess);
+
+        document.getElementById("myTextcontent").value = null;
     }
 
     function docReady(fn) {
@@ -67,6 +68,7 @@
                 //console.log(`Scan result ${decodedText}`, decodedResult);
                 document.getElementById("myTextcontent").value = decodedText;
 
+                html5QrcodeScanner.clear();
             }
         }
 
