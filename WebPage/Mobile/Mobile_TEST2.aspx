@@ -18,7 +18,7 @@
             <button onclick="myFunction()">重拍</button>
         </div>
         <div>
-            <Button ID="Button1" runat="server" Text="Button" />
+          
         </div>
     </body>
 
