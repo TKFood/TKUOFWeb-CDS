@@ -10,7 +10,7 @@
         <div id="qr-reader-results"></div>
 
         <div>
-            <input type="text" id="myTextcontent"   runat="server"  value="">
+            <input type="text" id="myTextcontent" runat="server" value="">
             <%--<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>--%>
         </div>
 
@@ -18,7 +18,6 @@
             <button onclick="myFunction()">重拍</button>
         </div>
         <div>
-          
         </div>
     </body>
 
@@ -85,3 +84,4 @@
         });
     </script>
 </head>
+</html>
