@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_TEST3.aspx.cs" Inherits="CDS_WebPage_Mobile_Mobile_TEST3" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_TEST3.aspx.cs" Inherits="CDS_WebPage_Mobile_Mobile_TEST3" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -18,6 +18,7 @@
                 <button onclick="myFunction()">重拍</button>
             </div>
             <div>
+                <asp:Button ID="Button1" runat="server" Text="Button" onclick="Button1_Click" />
             </div>
         </body>
 
