@@ -3,7 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <html>
+
     <head>
+
         <title>Html-Qrcode</title>
         <body>
             <div>
@@ -42,7 +44,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="Label4" runat="server" Text=""></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="AA1"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <asp:Button ID="Button2" runat="server" Text="Get Name" OnClientClick='GetName();return false;' /> </div> 
                         </td>
                     </tr>
                 </table>
@@ -74,7 +81,12 @@
                         //console.log(`Scan result ${decodedText}`, decodedResult);
 
                         //alert(decodedText);
+                        
+                        GetName();
+
                         document.getElementById('<%=myTextcontent.ClientID%>').value = decodedText;
+
+
 
                         html5QrcodeScanner.clear();
                     }
@@ -112,6 +124,8 @@
                         //console.log(`Scan result ${decodedText}`, decodedResult);
 
                         //alert(decodedText);
+                        GetName();
+
                         document.getElementById('<%=myTextcontent.ClientID%>').value = decodedText;
 
                         html5QrcodeScanner.clear();
@@ -124,6 +138,18 @@
 
                 document.getElementById('<%=myTextcontent.ClientID%>').value = null;
             });
+
+            function GetName() {
+                PageMethods.Name(Success, Failure);
+            }
+
+            function Success(result) {
+                alert(result);
+            }
+
+            function Failure(error) {
+                alert(error);
+            } 
         </script>
     </head>
     </html>

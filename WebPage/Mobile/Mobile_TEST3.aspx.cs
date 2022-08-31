@@ -19,6 +19,7 @@ using System.Text;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
+using System.Web.Services;
 
 public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 {
@@ -59,7 +60,14 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
             "";
     }
 
+  
 
+    [WebMethod]
+    public static string Name()
+    {
+        string MESSAGE = "OK";
+        return MESSAGE;
+    }
     #endregion
 
     #region BUTTON
