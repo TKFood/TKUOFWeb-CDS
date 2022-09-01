@@ -1493,7 +1493,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
                                 WHERE TE001=TF001 AND TE002=TF002  AND TE003=TF003
                                 AND 1=1
-                                AND COPTF.UDF01 NOT IN ('Y','y')
+                               
                                 {0}
 
                                
