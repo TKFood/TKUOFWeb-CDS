@@ -25,6 +25,8 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        //頁面開啟時，顯示目前的時間
         Label3.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
         if (!IsPostBack)
@@ -35,8 +37,12 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 
     #region FUNCTION
 
-
-
+    
+    /// <summary>
+    /// 手動新增打卡記錄
+    /// </summary>
+    /// <param name="CHECKSPOINT"></param>
+    /// <param name="CHECKSTIME"></param>
     public void ADDTKGAFFAIRSCHECKSPOOINT(string CHECKSPOINT, string CHECKSTIME)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -59,6 +65,12 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         Label4.Text = CHECKSPOINT+" "+ CHECKSTIME+ " 完成" +"";
     }
 
+    /// <summary>
+    /// 宣告static給WebMethod用
+    /// 在到qrcode後，就自動打卡記錄
+    /// </summary>
+    /// <param name="CHECKSPOINT"></param>
+    /// <param name="CHECKSTIME"></param>
     public static void STATICADDTKGAFFAIRSCHECKSPOOINT(string CHECKSPOINT, string CHECKSTIME)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -87,7 +99,11 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         string MESSAGE = "OK";
         return MESSAGE;
     }
-
+    /// <summary>
+    /// 呼叫WebMethod的TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
+    /// </summary>
+    /// <param name="myTextcontent"></param>
+    /// <returns></returns>
     [WebMethod]
     public static string TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(string myTextcontent)
     {
@@ -101,6 +117,11 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 
     #region BUTTON
 
+    /// <summary>
+    /// 手動打卡
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected  void Button1_Click(object sender, EventArgs e)
     {
         string CHECKSPOINT = myTextcontent.Text.ToString();

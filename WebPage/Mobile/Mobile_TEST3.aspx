@@ -66,6 +66,7 @@
             </div>
         </body>
 
+        <%-- 呼叫https://unpkg.com/html5-qrcode 來開啟手機相機 打卡 QR CODE --%>
         <%--<script src="https://unpkg.com/html5-qrcode"></script>--%>
         <script src="HTML5/html5-qrcode.min.js"></script>
 
@@ -81,17 +82,17 @@
                         //console.log(`Scan result ${decodedText}`, decodedResult);
 
                         //alert(decodedText);
-                        
+                        //呼叫JS的GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
                         GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT();
 
+                        //SET ASP.NET的myTextcontent值=QR CODE打卡點
                         document.getElementById('<%=myTextcontent.ClientID%>').value = decodedText;
-
-
 
                         html5QrcodeScanner.clear();
                     }
                 }
 
+                //拍照的畫面大小
                 var html5QrcodeScanner = new Html5QrcodeScanner(
                     "qr-reader", { fps: 10, qrbox: 250 });
                 html5QrcodeScanner.render(onScanSuccess);
@@ -99,6 +100,7 @@
                 document.getElementById('<%=myTextcontent.ClientID%>').value = null;
             }
 
+            ///dom docReady
             function docReady(fn) {
                 // see if DOM is already available
                 if (document.readyState === "complete"
@@ -112,6 +114,7 @@
                 }
             }
 
+            //dom docReady後，開啟相機掃QR CODE
             docReady(function () {
 
                 var resultContainer = document.getElementById('qr-reader-results');
@@ -142,20 +145,24 @@
                 document.getElementById('<%=myTextcontent.ClientID%>').value = null;
             });
 
+            //JS GetName
             function GetName() {
                 PageMethods.Name(Success, Failure);
             }
 
-            function GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent ) { 
 
+            //JS GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
+            function GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent ) { 
                 //alert(myTextcontent);
+                //把QR CODE的值傳入到C#的TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
                 PageMethods.TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent,Success, Failure);
             }
 
+            //JS執行成功Success
             function Success(result) {
                 alert(result);
             }
-
+            //JS執行失敗
             function Failure(error) {
                 alert(error);
             } 
