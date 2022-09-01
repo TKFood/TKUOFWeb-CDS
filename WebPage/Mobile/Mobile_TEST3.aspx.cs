@@ -56,11 +56,30 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 
         m_db.ExecuteNonQuery(cmdTxt);
 
-        Label4.Text = CHECKSPOINT+" "+ CHECKSTIME+ " 完成" +
-            "";
+        Label4.Text = CHECKSPOINT+" "+ CHECKSTIME+ " 完成" +"";
     }
 
-  
+    public static void STATICADDTKGAFFAIRSCHECKSPOOINT(string CHECKSPOINT, string CHECKSTIME)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                       INSERT INTO [TKGAFFAIRS].[dbo].[CHECKSPOOINT]
+                        ([CHECKSPOINT],[CHECKSTIME])
+                        VALUES
+                        (@CHECKSPOINT,@CHECKSTIME)
+                            ";
+
+
+        m_db.AddParameter("@CHECKSPOINT", CHECKSPOINT);
+        m_db.AddParameter("@CHECKSTIME", CHECKSTIME);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+        
+    }
+
 
     [WebMethod]
     public static string Name()
@@ -68,13 +87,25 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         string MESSAGE = "OK";
         return MESSAGE;
     }
+
+    [WebMethod]
+    public static string TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(string myTextcontent)
+    {
+        string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+        STATICADDTKGAFFAIRSCHECKSPOOINT(myTextcontent, NOWTIMES);
+
+        string MESSAGE = myTextcontent+" "+ NOWTIMES + "打卡成功";
+        return MESSAGE;
+    }
     #endregion
 
     #region BUTTON
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected  void Button1_Click(object sender, EventArgs e)
     {
         string CHECKSPOINT = myTextcontent.Text.ToString();
+
+        Label3.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         string CHECKSTIME = Label3.Text.ToString();
 
         ADDTKGAFFAIRSCHECKSPOOINT(CHECKSPOINT, CHECKSTIME);       

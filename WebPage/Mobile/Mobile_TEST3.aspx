@@ -82,7 +82,7 @@
 
                         //alert(decodedText);
                         
-                        GetName();
+                        GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT();
 
                         document.getElementById('<%=myTextcontent.ClientID%>').value = decodedText;
 
@@ -124,7 +124,10 @@
                         //console.log(`Scan result ${decodedText}`, decodedResult);
 
                         //alert(decodedText);
-                        GetName();
+                        var myTextcontent = decodedText;                      
+                        //alert(myTextcontent);      
+
+                        GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent);
 
                         document.getElementById('<%=myTextcontent.ClientID%>').value = decodedText;
 
@@ -141,6 +144,12 @@
 
             function GetName() {
                 PageMethods.Name(Success, Failure);
+            }
+
+            function GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent ) { 
+
+                //alert(myTextcontent);
+                PageMethods.TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent,Success, Failure);
             }
 
             function Success(result) {
