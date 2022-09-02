@@ -2079,11 +2079,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         int rowscounts = 0;
 
-        //COPTFUDF01CHECK，需簽到生管
+        //COPTFUDF01，如果在變更單要生產的，需簽到生管
         COPTCUDF01 = "N";
         foreach (DataRow od in DT.Rows)
         {
-            if (od["COPTFUDF01CHECK"].ToString().Equals("Y"))
+            if (od["COPTFUDF01"].ToString().Equals("Y"))
             {
                 COPTCUDF01 = "Y";
                 break;
