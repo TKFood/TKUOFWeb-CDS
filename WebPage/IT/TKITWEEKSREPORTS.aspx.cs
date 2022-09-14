@@ -26,6 +26,8 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         if (!IsPostBack)
         {
             SETYEARSWEEKS();
+            BindDropDownList();
+
             BindGrid1("");
            
         }
@@ -43,10 +45,42 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
     public void SETYEARSWEEKS()
     {
         //計算日期為第幾週
-        GregorianCalendar gc = new GregorianCalendar();        
+        System.Globalization.Calendar TW = new System.Globalization.CultureInfo("zh-TW").Calendar;
+
 
         TextBox1.Text = DateTime.Now.Year.ToString();
-        TextBox2.Text = gc.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday).ToString();
+        TextBox2.Text = TW.GetWeekOfYear(DateTime.Now, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday).ToString();
+        TextBox3.Text = DateTime.Now.Year.ToString();
+        TextBox4.Text = TW.GetWeekOfYear(DateTime.Now, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday).ToString();
+
+    }
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("NAMES", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT [ID] ,[NAMES]  FROM [TKIT].[dbo].[ITWEEKSREPORTSNAMES] ORDER BY ID ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "NAMES";
+            DropDownList1.DataValueField = "NAMES";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
 
     }
 
@@ -324,6 +358,11 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         BindGrid1("");
     }
 
- 
+    protected void btn2_Click(object sender, EventArgs e)
+    {
+     
+    }
+
+
     #endregion
 }

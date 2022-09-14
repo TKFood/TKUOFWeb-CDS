@@ -42,7 +42,7 @@
         <Tabs>
             <telerik:RadTab Text="週報">
             </telerik:RadTab>
-            <telerik:RadTab Text="資料">
+            <telerik:RadTab Text="新增週報">
             </telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -98,22 +98,22 @@
                                         <asp:BoundField HeaderText="姓名" DataField="NAMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
-                                                  <asp:BoundField HeaderText="年度" DataField="WYEARS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="年度" DataField="WYEARS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
-                                                  <asp:BoundField HeaderText="週別" DataField="WEEKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="週別" DataField="WEEKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
-                                                  <asp:BoundField HeaderText="開始日" DataField="SDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="開始日" DataField="SDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
-                                                  <asp:BoundField HeaderText="結束日" DataField="EDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="結束日" DataField="EDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
-                                                  <asp:BoundField HeaderText="週報" DataField="COMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="週報" DataField="COMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
-                                                  <asp:BoundField HeaderText="ID" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="ID" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
@@ -126,7 +126,64 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="RadPageView2" runat="server">
-            <div id="tabs-3">
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label2" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label4" runat="server" Text="週別:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label5" runat="server" Text="姓名:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label6" runat="server" Text="週報:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox5" runat="server" TextMode="MultiLine" Rows="20" Width="100%"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label7" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                        </td>                    
+
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <p id="demo"></p>
+                            <asp:Button ID="Button2" runat="server" Text=" 新增 " OnClick="btn2_Click"
+                                meta:resourcekey="btn2Resource1" />
+                        </td>
+
+                    </tr>
+                </table>
             </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>​
