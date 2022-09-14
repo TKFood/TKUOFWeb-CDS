@@ -432,6 +432,49 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         //SETEXCEL();
 
     }
+
+    public void ADDITWEEKSREPORTS(string NAMES, string WYEARS, string WEEKS, string SDATES, string EDATES, string COMMENTS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        INSERT INTO [TKIT].[dbo].[ITWEEKSREPORTS]
+                        (
+                        NAMES
+                        ,WYEARS
+                        ,WEEKS
+                        ,SDATES
+                        ,EDATES
+                        ,COMMENTS
+                        )
+                        VALUES
+                        (
+                        @NAMES
+                        ,@WYEARS
+                        ,@WEEKS
+                        ,@SDATES
+                        ,@EDATES
+                        ,@COMMENTS
+                        )
+                   
+                            ";
+
+
+        m_db.AddParameter("@NAMES", NAMES);
+        m_db.AddParameter("@WYEARS", WYEARS);
+        m_db.AddParameter("@WEEKS", WEEKS);
+        m_db.AddParameter("@SDATES", SDATES);
+        m_db.AddParameter("@EDATES", EDATES);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+
+
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+
     #endregion
 
     #region BUTTON
@@ -443,6 +486,11 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
     protected void btn2_Click(object sender, EventArgs e)
     {
+
+        ADDITWEEKSREPORTS(DropDownList1.Text.ToString(), TextBox3.Text.ToString(), TextBox4.Text.ToString(), TextBox6.Text.ToString(), TextBox7.Text.ToString(), TextBox5.Text.ToString());
+        BindGrid1("");
+
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('完成')", true);
 
     }
 
