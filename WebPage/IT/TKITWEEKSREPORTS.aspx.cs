@@ -29,7 +29,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
             BindDropDownList();
 
             BindGrid1("");
-           
+
         }
         else
         {
@@ -37,22 +37,28 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
         }
 
-       
+
 
 
     }
     #region FUNCTION
     public void SETYEARSWEEKS()
     {
+        int YEARS = DateTime.Now.Year;
         //計算日期為第幾週
         System.Globalization.Calendar TW = new System.Globalization.CultureInfo("zh-TW").Calendar;
+        int WEEKS= TW.GetWeekOfYear(DateTime.Now, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+        DateTime startDate, lastDate;
+
+        TextBox1.Text = YEARS.ToString();
+        TextBox2.Text = WEEKS.ToString();
+        TextBox3.Text = YEARS.ToString();
+        TextBox4.Text = WEEKS.ToString();
 
 
-        TextBox1.Text = DateTime.Now.Year.ToString();
-        TextBox2.Text = TW.GetWeekOfYear(DateTime.Now, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday).ToString();
-        TextBox3.Text = DateTime.Now.Year.ToString();
-        TextBox4.Text = TW.GetWeekOfYear(DateTime.Now, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday).ToString();
-
+        GetDaysOfWeeks(DateTime.Now.Year, WEEKS, out startDate, out lastDate);
+        TextBox6.Text = startDate.ToString("yyyy/MM/dd");
+        TextBox7.Text = lastDate.ToString("yyyy/MM/dd");
     }
     private void BindDropDownList()
     {
@@ -83,6 +89,83 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
 
     }
+    protected void TextBox3_TextChanged(object sender, EventArgs e)
+    {
+        int YEARS = Convert.ToInt32(TextBox3.Text.ToString());
+        int WEEKS = Convert.ToInt32(TextBox4.Text.ToString());
+        DateTime startDate, lastDate;
+
+        GetDaysOfWeeks(YEARS, WEEKS, out startDate, out lastDate);
+        TextBox6.Text = startDate.ToString("yyyy/MM/dd");
+        TextBox7.Text = lastDate.ToString("yyyy/MM/dd");
+    }
+    protected void TextBox4_TextChanged(object sender, EventArgs e)
+    {
+        int YEARS = Convert.ToInt32(TextBox3.Text.ToString());
+        int WEEKS = Convert.ToInt32(TextBox4.Text.ToString());
+        DateTime startDate, lastDate;
+
+        GetDaysOfWeeks(YEARS, WEEKS, out startDate, out lastDate);
+        TextBox6.Text = startDate.ToString("yyyy/MM/dd");
+        TextBox7.Text = lastDate.ToString("yyyy/MM/dd");
+    }
+    /// <summary>
+    /// 查詢 年度 周次的起、迄日 
+    /// </summary>
+    /// <param name="year"></param>
+    /// <param name="index"></param>
+    /// <param name="first"></param>
+    /// <param name="last"></param>
+    /// <returns></returns>
+    public static bool GetDaysOfWeeks(int year, int index, out DateTime first, out DateTime last)
+    {
+        first = DateTime.MinValue;
+        last = DateTime.MinValue;
+        if (year < 1700 || year > 9999)
+        {
+            //"年份超限"
+            return false;
+        }
+        if (index < 1 || index > 53)
+        {
+            //"週數錯誤"
+            return false;
+        }
+        DateTime startDay = new DateTime(year, 1, 1); //該年第一天
+        DateTime endDay = new DateTime(year + 1, 1, 1).AddMilliseconds(-1);
+        int dayOfWeek = 0;
+        if (Convert.ToInt32(startDay.DayOfWeek.ToString("d")) > 0)
+            dayOfWeek = Convert.ToInt32(startDay.DayOfWeek.ToString("d")); //該年第一天為星期幾
+        if (dayOfWeek == 0) { dayOfWeek = 7; }
+        if (index == 1)
+        {
+            first = startDay.AddDays(7 - dayOfWeek - 6);
+            if (dayOfWeek == 6)
+            {
+                last = first;
+            }
+            else
+            {
+                last = startDay.AddDays((7 - dayOfWeek));
+            }
+        }
+        else
+        {
+            first = startDay.AddDays((8 - dayOfWeek) + (index - 2) * 7); //index周的起始日期
+            last = first.AddDays(6);
+            //if (last > endDay)
+            //{
+            //  last = endDay;
+            //}
+        }
+        if (first > endDay) //startDayOfWeeks不在該年範圍內
+        {
+            //"輸入週數大於本年最大週數";
+            return false;
+        }
+        return true;
+    }
+   
 
     private void BindGrid1(string SALESFOCUS)
     {
@@ -92,9 +175,9 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
-      
 
-   
+
+
         //查詢條件
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
@@ -123,7 +206,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                                
                                 ", QUERYS.ToString());
 
-       
+
 
 
         //m_db.AddParameter("@SDATE", SDATE);
@@ -137,7 +220,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         Grid1.DataBind();
     }
 
-  
+
 
 
     protected void grid1_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -147,12 +230,12 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
+
 
 
     }
 
-   
+
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
@@ -205,7 +288,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         //                    1=1  AND  TASK_STATUS NOT IN ('2')
         //                        {0}
         //                    ORDER BY HRS DESC,usr2.NAME,form.FORM_NAME,DOC_NBR
-                               
+
         //                        ", QUERYS.ToString());
 
 
@@ -250,7 +333,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                                
                                 ", QUERYS.ToString());
 
-        
+
 
         DataTable dt = new DataTable();
 
@@ -283,14 +366,14 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                 ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-             
+
 
                 foreach (DataRow od in dt.Rows)
                 {
                     ws.Cells[ROWS, 1].Value = od["NAME"].ToString();
                     ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                   
+
 
                     ROWS++;
                 }
@@ -360,7 +443,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
     protected void btn2_Click(object sender, EventArgs e)
     {
-     
+
     }
 
 
