@@ -279,7 +279,12 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
            
         }
-       
+      
+        if (e.CommandName == "GWButton2")
+        {
+            BindGrid1("");
+            MsgBox(e.CommandArgument.ToString() + " 已更新", this.Page, this);
+        }
 
     }
 

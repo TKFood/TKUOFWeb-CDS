@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DialogMasterPage.master" AutoEventWireup="true" CodeFile="TKITWEEKSREPORTSDialogEDIT.aspx.cs" Inherits="CDS_WebPage_IT_TKITWEEKSREPORTSDialogEDIT" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DialogMasterPage.master" AutoEventWireup="true" CodeFile="TKITWEEKSREPORTSDialogEDIT.aspx.cs" Inherits="CDS_WebPage_TKITWEEKSREPORTSDialogEDIT" %>
 
 <%@ Register Src="~/Common/HtmlEditor/UC_HtmlEditor.ascx" TagPrefix="uc1" TagName="UC_HtmlEditor" %>
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
@@ -27,17 +27,13 @@
      
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label1" runat="server" Text="週報"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text="週報"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" ReadOnly="True" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%"  TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
     </table>
-
-
-
-
 
 </asp:Content>
 
