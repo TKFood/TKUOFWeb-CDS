@@ -48,6 +48,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         //計算日期為第幾週
         System.Globalization.Calendar TW = new System.Globalization.CultureInfo("zh-TW").Calendar;
         int WEEKS= TW.GetWeekOfYear(DateTime.Now, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+
         DateTime startDate, lastDate;
 
         TextBox1.Text = YEARS.ToString();
@@ -264,7 +265,11 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
         if (e.CommandName == "GWButton1")
         {
-            MsgBox(e.CommandArgument.ToString(), this.Page, this);
+            DELETEITWEEKSREPORTS(e.CommandArgument.ToString());
+
+            BindGrid1("");
+            MsgBox(e.CommandArgument.ToString()+" 已刪除", this.Page, this);
+
            
         }
        
@@ -504,6 +509,23 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         m_db.AddParameter("@COMMENTS", COMMENTS);
 
 
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+    public void DELETEITWEEKSREPORTS(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        DELETE [TKIT].[dbo].[ITWEEKSREPORTS]
+                        WHERE ID=@ID
+                            ";
+
+
+        m_db.AddParameter("@ID", ID);
 
 
         m_db.ExecuteNonQuery(cmdTxt);

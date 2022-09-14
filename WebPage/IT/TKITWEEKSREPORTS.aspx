@@ -96,33 +96,33 @@
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
                                         <asp:BoundField HeaderText="姓名" DataField="NAMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="年度" DataField="WYEARS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="30px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="週別" DataField="WEEKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="開始日" DataField="SDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="30px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="結束日" DataField="EDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="30px"></ItemStyle>
                                         </asp:BoundField>
                                    
-                                        <asp:TemplateField HeaderText="週報" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="週報" ItemStyle-Width="600px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="100%" ItemStyle-HorizontalAlign="Left"></asp:Label>
-                                                <itemstyle horizontalalign="Left" width="200px"></itemstyle>
+                                                <itemstyle horizontalalign="Left" width="600px"></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField HeaderText="ID" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Center" Width="30px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                         <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="GWButton1" runat="server" Text="刪除" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                                <asp:Button ID="GWButton1" runat="server" Text="刪除" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>'  onclientclick="return confirm('是否刪除')"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
