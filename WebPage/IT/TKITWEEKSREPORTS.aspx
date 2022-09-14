@@ -110,7 +110,7 @@
                                         <asp:BoundField HeaderText="結束日" DataField="EDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="30px"></ItemStyle>
                                         </asp:BoundField>
-                                   
+
                                         <asp:TemplateField HeaderText="週報" ItemStyle-Width="600px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="100%" ItemStyle-HorizontalAlign="Left"></asp:Label>
@@ -120,9 +120,14 @@
                                         <asp:BoundField HeaderText="ID" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="30px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="GWButton1" runat="server" Text="刪除" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>'  onclientclick="return confirm('是否刪除')"/>
+                                                <asp:Button ID="GWButton1" runat="server" Text="刪除" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('是否刪除')" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="修改週報" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="GWButton2" runat="server" Text="修改" CommandName="GWButton2" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

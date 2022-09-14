@@ -233,8 +233,6 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-
-
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             ///Get the button that raised the event
@@ -250,7 +248,16 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
             // Dialog.PostBackType.AfterReturn
             //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
-            
+            ///Get the button that raised the event
+            Button btn2 = (Button)e.Row.FindControl("GWButton2");
+            //Get the row that contains this button
+            GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue2 = btn2.CommandArgument;
+            DataRowView row2 = (DataRowView)e.Row.DataItem;
+            Button lbtnName2 = (Button)e.Row.FindControl("GWButton2");
+            ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
+            Dialog.Open2(lbtnName2, "~/CDS/WebPage/IT/TKITWEEKSREPORTSDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
 
 
 
