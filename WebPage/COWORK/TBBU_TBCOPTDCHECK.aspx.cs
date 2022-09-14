@@ -3486,29 +3486,30 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     protected void Button1_Click(object sender, EventArgs e)
     {
         BindGrid("");
-        BindGrid2("");
-        BindGrid3("");
-        BindGrid4("");
-        BindGrid5("");
+        //BindGrid2("");
+        //BindGrid3("");
+        //BindGrid4("");
+        //BindGrid5("");
 
     }
 
     protected void Button3_Click(object sender, EventArgs e)
     {
-        BindGrid("");
+        //BindGrid("");
         BindGrid2("");
-        BindGrid3("");
-        BindGrid4("");
-        BindGrid5("");
+        //BindGrid3("");
+        //BindGrid4("");
+        //BindGrid5("");
 
     }
 
     protected void Button5_Click(object sender, EventArgs e)
     {
-        BindGrid("");
-        BindGrid2("");
+        //BindGrid("");
+        //BindGrid2("");
         BindGrid3("");
-        BindGrid4("");
+        //BindGrid4("");
+        //BindGrid5("");
 
     }
 
@@ -3517,11 +3518,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     {
         ADDMOC();
 
-        BindGrid("");
+        //BindGrid("");
         BindGrid2("");
-        BindGrid3("");
-        BindGrid4("");
-        BindGrid5("");
+        //BindGrid3("");
+        //BindGrid4("");
+        //BindGrid5("");
 
     }
 
@@ -3529,21 +3530,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     {
         ADDPUR();
 
-        BindGrid("");
-        BindGrid2("");
+        //BindGrid("");
+        //BindGrid2("");
         BindGrid3("");
-        BindGrid4("");
-        BindGrid5("");
+        //BindGrid4("");
+        //BindGrid5("");
 
     }
 
     protected void Button7_Click(object sender, EventArgs e)
     {
        
-        BindGrid("");
-        BindGrid2("");
-        BindGrid3("");
-        BindGrid4("");
+        //BindGrid("");
+        //BindGrid2("");
+        //BindGrid3("");
+        //BindGrid4("");
         BindGrid5("");
 
     }
@@ -3552,11 +3553,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
     {
         ADDSALES();
 
-        BindGrid("");
-        BindGrid2("");
-        BindGrid3("");
+        //BindGrid("");
+        //BindGrid2("");
+        //BindGrid3("");
         BindGrid4("");
-        BindGrid5("");
+        //BindGrid5("");
 
     }
     #endregion
