@@ -110,9 +110,13 @@
                                         <asp:BoundField HeaderText="結束日" DataField="EDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="週報" DataField="COMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                        </asp:BoundField>
+                                   
+                                        <asp:TemplateField HeaderText="週報" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="CONTENT" runat="server" Text='<%# Bind("COMMENTS") %>' Style="text-align: left" HorizontalAlign="Left" Width="100%" ItemStyle-HorizontalAlign="Left"></asp:Label>
+                                                <itemstyle horizontalalign="Left" width="200px"></itemstyle>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:BoundField HeaderText="ID" DataField="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
@@ -133,15 +137,15 @@
                             <asp:Label ID="Label2" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox ID="TextBox3" runat="server" AutoPostBack="True" OnTextChanged="TextBox3_TextChanged" ></asp:TextBox>
+                            <asp:TextBox ID="TextBox3" runat="server" AutoPostBack="True" OnTextChanged="TextBox3_TextChanged"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label4" runat="server" Text="週別:" meta:resourcekey="Label4Resource1" ></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="週別:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox ID="TextBox4" runat="server" AutoPostBack="True" OnTextChanged="TextBox4_TextChanged" ></asp:TextBox>
+                            <asp:TextBox ID="TextBox4" runat="server" AutoPostBack="True" OnTextChanged="TextBox4_TextChanged"></asp:TextBox>
                         </td>
 
                     </tr>
@@ -170,7 +174,7 @@
                         <td>
                             <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                             <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
-                        </td>                    
+                        </td>
 
                     </tr>
                     <tr>

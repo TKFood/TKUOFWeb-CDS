@@ -197,7 +197,9 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                             ,[WEEKS]
                             ,CONVERT(NVARCHAR,[SDATES],111) AS SDATES
                             ,CONVERT(NVARCHAR,[EDATES],111) AS EDATES
-                            ,[COMMENTS]
+                            
+                            ,REPLACE([COMMENTS] ,char(10),'<br/>') AS [COMMENTS] 
+
                             FROM [TKIT].[dbo].[ITWEEKSREPORTS]
                             WHERE  1=1
                             {0}
@@ -474,7 +476,13 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
-
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
     #endregion
 
     #region BUTTON
@@ -490,7 +498,11 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         ADDITWEEKSREPORTS(DropDownList1.Text.ToString(), TextBox3.Text.ToString(), TextBox4.Text.ToString(), TextBox6.Text.ToString(), TextBox7.Text.ToString(), TextBox5.Text.ToString());
         BindGrid1("");
 
-        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('完成')", true);
+        MsgBox("完成", this.Page, this);
+
+        
+
+
 
     }
 
