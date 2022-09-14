@@ -234,9 +234,42 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
     {
 
 
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            ///Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("GWButton1");
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("GWButton1");
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            // Dialog.PostBackType.AfterReturn
+            //Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_TBCOPTDCHECKDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+            
+
+
+
+
+
+        }
 
     }
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
 
+        if (e.CommandName == "GWButton1")
+        {
+            MsgBox(e.CommandArgument.ToString(), this.Page, this);
+           
+        }
+       
+
+    }
 
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
