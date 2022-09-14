@@ -561,9 +561,15 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
     protected void btn2_Click(object sender, EventArgs e)
     {
+        RadTabStrip1.SelectedIndex = 0;
+
+        RadPageView1.Selected = true;
+
+
 
         ADDITWEEKSREPORTS(DropDownList1.Text.ToString(), TextBox3.Text.ToString(), TextBox4.Text.ToString(), TextBox6.Text.ToString(), TextBox7.Text.ToString(), TextBox5.Text.ToString());
         BindGrid1("");
+     
 
         MsgBox("完成", this.Page, this);
 

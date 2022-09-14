@@ -155,7 +155,8 @@
                             <asp:Label ID="Label4" runat="server" Text="週別:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox ID="TextBox4" runat="server" AutoPostBack="True" OnTextChanged="TextBox4_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="TextBox4" runat="server" AutoPostBack="True" OnTextChanged="TextBox4_TextChanged" ></asp:TextBox>
+                        
                         </td>
 
                     </tr>
