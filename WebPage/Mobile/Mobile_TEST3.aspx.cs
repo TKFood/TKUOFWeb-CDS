@@ -151,9 +151,10 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
         ORI = imageBytes.Length.ToString();
 
-        byte[] imageBytes2 = CutImage(imageBytes,100,100);
+        byte[] imageBytes2 = CutImage(imageBytes,50, 50);
         COM = imageBytes2.Length.ToString();
-        //STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(myTextcontent, NOWTIMES, imageBytes);
+
+        STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(myTextcontent, NOWTIMES, imageBytes2);
 
         ////Save the Byte Array as Image File.
         //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
