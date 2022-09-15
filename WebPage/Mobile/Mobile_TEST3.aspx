@@ -151,6 +151,11 @@
                         //console.log(`Scan result ${decodedText}`, decodedResult);
 
                         //alert(decodedText);
+                        Webcam.snap(function (data_uri) {
+                            $("#imgCapture")[0].src = data_uri;
+
+                        });
+
                         var myTextcontent = decodedText;
                         //alert(myTextcontent);      
 
@@ -202,7 +207,7 @@
                 $("#btnCapture").click(function () {
                     Webcam.snap(function (data_uri) {
                         $("#imgCapture")[0].src = data_uri;
-                        $("#btnUpload").removeAttr("disabled");
+                        
                     });
                 });
                 $("#btnUpload").click(function () {
