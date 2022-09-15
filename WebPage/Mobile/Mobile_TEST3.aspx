@@ -211,8 +211,8 @@
                     });
                 });
                 $("#btnUpload").click(function () {
-
-                    PageMethods.SaveCapturedImage($("#imgCapture")[0].src, Success, Failure);
+                    var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;
+                    PageMethods.SaveCapturedImage(myTextcontent,$("#imgCapture")[0].src, Success, Failure);
 
                     //$.ajax({
                     //    type: "POST",

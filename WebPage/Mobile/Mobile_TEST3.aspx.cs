@@ -92,6 +92,28 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         
     }
 
+    public static void STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(string CHECKSPOINT, string CHECKSTIME, byte[] PHOTOS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                       INSERT INTO [TKGAFFAIRS].[dbo].[CHECKSPOOINTPHOTO]
+                        ([CHECKSPOINT],[CHECKSTIME],[PHOTOS])
+                        VALUES
+                        (@CHECKSPOINT,@CHECKSTIME,@PHOTOS)
+                            ";
+
+
+        m_db.AddParameter("@CHECKSPOINT", CHECKSPOINT);
+        m_db.AddParameter("@CHECKSTIME", CHECKSTIME);
+        m_db.AddParameter("@PHOTOS", PHOTOS);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+    }
+
 
     [WebMethod]
     public static string Name()
@@ -116,12 +138,16 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
 
 
     [WebMethod()]
-    public static string SaveCapturedImage(string data)
+    public static string SaveCapturedImage(string myTextcontent,string data)
     {
+        string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+      
         string fileName = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         ////Convert Base64 Encoded string to Byte Array.
         byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
+
+        STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(myTextcontent, NOWTIMES, imageBytes);
 
         ////Save the Byte Array as Image File.
         //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
