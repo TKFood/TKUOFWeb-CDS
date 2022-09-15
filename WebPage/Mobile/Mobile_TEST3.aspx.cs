@@ -113,6 +113,25 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         string MESSAGE = myTextcontent+" "+ NOWTIMES + "打卡成功";
         return MESSAGE;
     }
+
+
+    [WebMethod()]
+    public static string SaveCapturedImage(string data)
+    {
+        string fileName = DateTime.Now.ToString("dd-MM-yy hh-mm-ss");
+
+        ////Convert Base64 Encoded string to Byte Array.
+        byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
+
+        ////Save the Byte Array as Image File.
+        //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
+        //File.WriteAllBytes(filePath, imageBytes);
+        //return true;
+
+        string MESSAGE = imageBytes.Length.ToString()+ fileName + " 拍照成功";
+        return MESSAGE;
+    }
+
     #endregion
 
     #region BUTTON

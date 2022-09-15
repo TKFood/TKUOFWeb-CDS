@@ -91,6 +91,8 @@
         <%-- 呼叫https://unpkg.com/html5-qrcode 來開啟手機相機 打卡 QR CODE --%>
         <%--<script src="https://unpkg.com/html5-qrcode"></script>--%>
         <script src="HTML5/html5-qrcode.min.js"></script>
+        
+        <script src="WebCam/WebCam.js"></script>
 
         <script>
             function myFunction() {
@@ -188,6 +190,35 @@
             function Failure(error) {
                 alert(error);
             }
+
+            $(function () {
+                Webcam.set({
+                    width: 160,
+                    height: 120,
+                    image_format: 'jpeg',
+                    jpeg_quality: 90
+                });
+                Webcam.attach('#webcam');
+                $("#btnCapture").click(function () {
+                    Webcam.snap(function (data_uri) {
+                        $("#imgCapture")[0].src = data_uri;
+                        $("#btnUpload").removeAttr("disabled");
+                    });
+                });
+                $("#btnUpload").click(function () {
+
+                    PageMethods.SaveCapturedImage($("#imgCapture")[0].src, Success, Failure);
+
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: "Mobile_Test3.aspx/SaveCapturedImage",
+                    //    data: "{data: '" + $("#imgCapture")[0].src + "'}",
+                    //    contentType: "application/json; charset=utf-8",
+                    //    dataType: "json",
+                    //    success: function (r) { }
+                    //});
+                });
+            });
         </script>
     </head>
     </html>
