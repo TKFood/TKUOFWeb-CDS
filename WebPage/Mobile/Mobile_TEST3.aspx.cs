@@ -142,8 +142,7 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
     [WebMethod()]
     public static string SaveCapturedImage(string myTextcontent,string data)
     {
-        string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");      
-        string fileName = DateTime.Now.ToString("yyyyMMddHHmmss");
+        string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");  
 
         string ORI1="";
         string ORI2="";
@@ -154,18 +153,18 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         //加上浮水印
         byte[] imageBytes2 = GetWatermarkPic(imageBytes, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")); 
         ORI2 = imageBytes2.Length.ToString();
-        //壓縮圖片
-        byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
-        ORI3 = imageBytes3.Length.ToString();
+        ////壓縮圖片
+        //byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
+        //ORI3 = imageBytes3.Length.ToString();
 
-        STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(myTextcontent, NOWTIMES, imageBytes3);
+        STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(myTextcontent, NOWTIMES, imageBytes2);
 
         ////Save the Byte Array as Image File.
         //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
         //File.WriteAllBytes(filePath, imageBytes);
         //return true;
 
-        string MESSAGE = ORI1 + " / "+ ORI2+" / "+ ORI3 + " "+ fileName + " 拍照成功";
+        string MESSAGE = NOWTIMES + " 拍照成功";
         return MESSAGE;
     }
 
@@ -229,7 +228,7 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
         Graphics grap = Graphics.FromImage(bmp);
         grap.DrawImage(pic, 0, 0, pic.Width, pic.Height);
         //計算字體大小
-        int fontSize = 22;
+        int fontSize = 40;
         if (pic.Width <= txt.Length * fontSize)
         {
             while (pic.Width <= (txt.Length * fontSize + 10))
@@ -238,7 +237,7 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST3 : System.Web.UI.Page
             }
         }
         //浮水印寬度
-        int txtWidth = txt.Length * fontSize * 2;
+        int txtWidth = txt.Length * fontSize ;
         //字體
         var font = new Font("黑體", fontSize);
         Brush brush = new SolidBrush(Color.FromArgb(120, 193, 143, 8));
