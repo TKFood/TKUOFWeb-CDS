@@ -212,7 +212,8 @@
                 });
                 $("#btnUpload").click(function () {
                     var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;
-                    PageMethods.SaveCapturedImage(myTextcontent,$("#imgCapture")[0].src, Success, Failure);
+                    var imgCapture = $("#imgCapture")[0].src;
+                    PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
 
                     //$.ajax({
                     //    type: "POST",
