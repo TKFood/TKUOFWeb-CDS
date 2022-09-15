@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_TEST3.aspx.cs" Inherits="CDS_WebPage_Mobile_Mobile_TEST3" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_TEST3 - 複製.aspx.cs" Inherits="CDS_WebPage_Mobile_Mobile_TEST3" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -49,9 +49,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Button ID="Button2" runat="server" Text="Get Name" OnClientClick='GetName();return false;' />
-            </div>
-            </td>
+                             <asp:Button ID="Button2" runat="server" Text="Get Name" OnClientClick='GetName();return false;' /> </div> 
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -64,27 +63,6 @@
             <div>
             </div>
             <div>
-                <table border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <th align="center"><u>Live Camera</u></th>
-                        <th align="center"><u>Captured Picture</u></th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div id="webcam"></div>
-                        </td>
-                        <td>
-                            <img id="imgCapture" /></td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <input type="button" id="btnCapture" value="Capture" />
-                        </td>
-                        <td align="center">
-                            <input type="button" id="btnUpload" value="Upload" />
-                        </td>
-                    </tr>
-                </table>
             </div>
         </body>
 
@@ -149,7 +127,7 @@
                         //console.log(`Scan result ${decodedText}`, decodedResult);
 
                         //alert(decodedText);
-                        var myTextcontent = decodedText;
+                        var myTextcontent = decodedText;                      
                         //alert(myTextcontent);      
 
                         GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent);
@@ -174,10 +152,10 @@
 
 
             //JS GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
-            function GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent) {
+            function GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent ) { 
                 //alert(myTextcontent);
                 //把QR CODE的值傳入到C#的TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
-                PageMethods.TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent, Success, Failure);
+                PageMethods.TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent,Success, Failure);
             }
 
             //JS執行成功Success
@@ -187,7 +165,7 @@
             //JS執行失敗
             function Failure(error) {
                 alert(error);
-            }
+            } 
         </script>
     </head>
     </html>
