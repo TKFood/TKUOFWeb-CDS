@@ -257,6 +257,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
             DataRowView row2 = (DataRowView)e.Row.DataItem;
             Button lbtnName2 = (Button)e.Row.FindControl("GWButton2");
             ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
+                    
             Dialog.Open2(lbtnName2, "~/CDS/WebPage/IT/TKITWEEKSREPORTSDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
 
 
