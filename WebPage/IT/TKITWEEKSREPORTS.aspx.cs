@@ -52,7 +52,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         DateTime startDate, lastDate;
 
         TextBox1.Text = YEARS.ToString();
-        TextBox2.Text = WEEKS.ToString();
+        //TextBox2.Text = WEEKS.ToString();
         TextBox3.Text = YEARS.ToString();
         TextBox4.Text = WEEKS.ToString();
 
@@ -175,7 +175,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
-
+        
 
 
 
@@ -184,10 +184,10 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         {
             QUERYS.AppendFormat(@" AND [WYEARS]='{0}'", TextBox1.Text);
         }
-        if (!string.IsNullOrEmpty(TextBox2.Text))
-        {
-            QUERYS.AppendFormat(@" AND [WEEKS]='{0}' ", TextBox2.Text);
-        }
+        //if (!string.IsNullOrEmpty(TextBox2.Text))
+        //{
+        //    QUERYS.AppendFormat(@" AND [WEEKS]='{0}' ", TextBox2.Text);
+        //}
 
 
         cmdTxt.AppendFormat(@" 
@@ -260,7 +260,15 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                     
             Dialog.Open2(lbtnName2, "~/CDS/WebPage/IT/TKITWEEKSREPORTSDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
 
-
+            if(Cellvalue2.Equals("11"))
+            {
+                btn2.Enabled = false;
+            }
+            else
+            {
+                btn2.Enabled = true;
+            }
+           
 
 
 

@@ -59,7 +59,7 @@
                         </td>
 
                     </tr>
-                    <tr>
+              <%--      <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label1" runat="server" Text="週別:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
@@ -67,7 +67,7 @@
                             <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                         </td>
 
-                    </tr>
+                    </tr>--%>
 
                     <tr>
                         <td class="PopTableLeftTD"></td>
