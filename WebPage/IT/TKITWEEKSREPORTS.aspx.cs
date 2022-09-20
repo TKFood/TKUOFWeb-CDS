@@ -27,6 +27,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         {
             SETYEARSWEEKS();
             BindDropDownList();
+            BindDropDownList2();
 
             BindGrid1("");
 
@@ -86,9 +87,33 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         {
 
         }
+    }
 
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("STATUS", typeof(String));
 
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        string cmdTxt = @"SELECT [ID],[FORM],[STATUS] FROM [TKIT].[dbo].[ITPARAS] WHERE [FORM]='週報' ORDER BY ID";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "STATUS";
+            DropDownList2.DataValueField = "STATUS";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
     }
     protected void TextBox3_TextChanged(object sender, EventArgs e)
     {
@@ -188,7 +213,22 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         //{
         //    QUERYS.AppendFormat(@" AND [WEEKS]='{0}' ", TextBox2.Text);
         //}
-
+        if (!string.IsNullOrEmpty(DropDownList2.Text.ToString()))
+        {
+            if(DropDownList2.Text.ToString().Equals("未核準"))
+            {
+                QUERYS.AppendFormat(@" AND [ADMITCHECKS]='{0}'", DropDownList2.Text.ToString());
+            }
+            else if (DropDownList2.Text.ToString().Equals("已核準"))
+            {
+                QUERYS.AppendFormat(@" AND [ADMITCHECKS]='{0}'", DropDownList2.Text.ToString());
+            }
+            else
+            {
+                QUERYS.AppendFormat(@" ");
+            }
+            
+        }
 
         cmdTxt.AppendFormat(@" 
                             SELECT 
@@ -497,7 +537,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
     }
 
-    public void ADDITWEEKSREPORTS(string NAMES, string WYEARS, string WEEKS, string SDATES, string EDATES, string COMMENTS)
+    public void ADDITWEEKSREPORTS(string NAMES, string WYEARS, string WEEKS, string SDATES, string EDATES, string COMMENTS,string NOTFINISHEDS, string PLANWORKS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -511,6 +551,9 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                         ,SDATES
                         ,EDATES
                         ,COMMENTS
+                        ,NOTFINISHEDS
+                        ,PLANWORKS
+                        ,ADMITCHECKS
                         )
                         VALUES
                         (
@@ -520,6 +563,9 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                         ,@SDATES
                         ,@EDATES
                         ,@COMMENTS
+                        ,@NOTFINISHEDS
+                        ,@PLANWORKS
+                        ,@ADMITCHECKS
                         )
                    
                             ";
@@ -531,9 +577,9 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         m_db.AddParameter("@SDATES", SDATES);
         m_db.AddParameter("@EDATES", EDATES);
         m_db.AddParameter("@COMMENTS", COMMENTS);
-
-
-
+        m_db.AddParameter("@NOTFINISHEDS", NOTFINISHEDS);
+        m_db.AddParameter("@PLANWORKS", PLANWORKS);
+        m_db.AddParameter("@ADMITCHECKS", "未核準");
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
@@ -579,7 +625,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
 
 
-        ADDITWEEKSREPORTS(DropDownList1.Text.ToString(), TextBox3.Text.ToString(), TextBox4.Text.ToString(), TextBox6.Text.ToString(), TextBox7.Text.ToString(), TextBox5.Text.ToString());
+        ADDITWEEKSREPORTS(DropDownList1.Text.ToString(), TextBox3.Text.ToString(), TextBox4.Text.ToString(), TextBox6.Text.ToString(), TextBox7.Text.ToString(), TextBox5.Text.ToString(),TextBox2.Text.ToString(), TextBox8.Text.ToString());
         BindGrid1("");
      
 

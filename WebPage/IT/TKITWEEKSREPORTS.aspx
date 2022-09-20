@@ -59,6 +59,16 @@
                         </td>
 
                     </tr>
+                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label9" runat="server" Text="核準:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                        </td>
+
+                    </tr>
+
                     <%--      <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label1" runat="server" Text="週別:" meta:resourcekey="Label4Resource1"></asp:Label>
@@ -178,6 +188,16 @@
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
+                            <asp:Label ID="Label7" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
                             <asp:Label ID="Label5" runat="server" Text="姓名:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
@@ -196,20 +216,29 @@
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label7" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="當週未完成工作:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox2" runat="server" TextMode="MultiLine" Rows="20" Width="100%"></asp:TextBox>
                         </td>
 
                     </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label8" runat="server" Text="預計工作:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox8" runat="server" TextMode="MultiLine" Rows="20" Width="100%"></asp:TextBox>
+                        </td>
+
+                    </tr>
+
                     <tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <p id="demo"></p>
-                            <asp:Button ID="Button2" runat="server" Text=" 新增 " OnClick="btn2_Click"
+                            <asp:Button ID="Button2" runat="server" Text=" 新增週報 " OnClick="btn2_Click"   style="background-color: lightgreen; font-size : 40px ; width: 50%; height: 100px;"
                                 meta:resourcekey="btn2Resource1" />
                         </td>
 
