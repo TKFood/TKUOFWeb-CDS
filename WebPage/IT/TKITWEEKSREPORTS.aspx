@@ -156,6 +156,11 @@
                                                 <asp:Button ID="GWButton2" runat="server" Text="修改" CommandName="GWButton2" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="是否核準" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="GWButton3" runat="server" Text="核準" CommandName="GWButton3" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('是否核準')" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </Fast:Grid>
                             </div>

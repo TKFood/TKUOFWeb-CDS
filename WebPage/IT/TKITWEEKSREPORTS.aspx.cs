@@ -303,12 +303,25 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                     
             Dialog.Open2(lbtnName2, "~/CDS/WebPage/IT/TKITWEEKSREPORTSDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
 
-            if(Cellvalue2.Equals("11"))
+            ///Get the button that raised the event
+            Button btn3 = (Button)e.Row.FindControl("GWButton3");
+            //Get the row that contains this button
+            GridViewRow gvr3 = (GridViewRow)btn3.NamingContainer;
+          
+            string Cellvalue3 = btn3.CommandArgument;
+            DataRowView row3 = (DataRowView)e.Row.DataItem;
+            Button lbtnName3 = (Button)e.Row.FindControl("GWButton3");
+            ExpandoObject param3 = new { ID = Cellvalue3 }.ToExpando();
+
+            string ADMITCHECKS = gvr.Cells[8].Text.Trim();
+            if (ADMITCHECKS.Equals("已核準"))
             {
+                btn.Enabled = false;
                 btn2.Enabled = false;
             }
             else
             {
+                btn.Enabled = true;
                 btn2.Enabled = true;
             }
            
@@ -338,6 +351,15 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
             MsgBox(e.CommandArgument.ToString() + " 已更新", this.Page, this);
         }
 
+        if (e.CommandName == "GWButton3")
+        {
+            UPDATEITWEEKSREPORTSADMITCHECKS(e.CommandArgument.ToString());
+
+            BindGrid1("");
+            MsgBox(e.CommandArgument.ToString() + " 已核準", this.Page, this);
+
+
+        }
     }
 
 
@@ -601,6 +623,23 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
+    public void UPDATEITWEEKSREPORTSADMITCHECKS(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        UPDATE [TKIT].[dbo].[ITWEEKSREPORTS]
+                        SET [ADMITCHECKS]='已核準'
+                        WHERE ID=@ID
+                            ";
+
+
+        m_db.AddParameter("@ID", ID);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
