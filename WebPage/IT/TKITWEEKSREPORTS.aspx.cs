@@ -200,6 +200,9 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
                             ,CONVERT(NVARCHAR,[EDATES],111) AS EDATES
                             
                             ,REPLACE([COMMENTS] ,char(10),'<br/>') AS [COMMENTS] 
+                            ,REPLACE([NOTFINISHEDS] ,char(10),'<br/>') AS [NOTFINISHEDS]  
+                            ,REPLACE([PLANWORKS] ,char(10),'<br/>')  AS [PLANWORKS]
+                            ,[ADMITCHECKS] 
 
                             FROM [TKIT].[dbo].[ITWEEKSREPORTS]
                             WHERE  1=1

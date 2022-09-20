@@ -68,7 +68,7 @@ public partial class CDS_WebPage_TKITWEEKSREPORTSDialogEDIT : Ede.Uof.Utility.Pa
     #region BUTTON
     void CDS_WebPage_Dialog_Button1OnClick()
     {
-        UPDATEITWEEKSREPORTS(lblParam.Text.ToString(), TextBox1.Text.ToString());
+        UPDATEITWEEKSREPORTS(lblParam.Text.ToString(), TextBox1.Text.ToString(), TextBox2.Text.ToString(), TextBox3.Text.ToString());
 
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
@@ -82,7 +82,7 @@ public partial class CDS_WebPage_TKITWEEKSREPORTSDialogEDIT : Ede.Uof.Utility.Pa
 
     void Button2OnClick()
     {
-        UPDATEITWEEKSREPORTS(lblParam.Text.ToString(), TextBox1.Text.ToString());
+        UPDATEITWEEKSREPORTS(lblParam.Text.ToString(), TextBox1.Text.ToString(), TextBox2.Text.ToString(), TextBox3.Text.ToString());
         //設定回傳值並關閉視窗
         Dialog.SetReturnValue2("OK");
 
@@ -149,6 +149,8 @@ public partial class CDS_WebPage_TKITWEEKSREPORTSDialogEDIT : Ede.Uof.Utility.Pa
                         ,[SDATES]
                         ,[EDATES]
                         ,[COMMENTS]
+                        ,[NOTFINISHEDS]
+                        ,[PLANWORKS]
                         FROM [TKIT].[dbo].[ITWEEKSREPORTS]
                         WHERE [ID]=@ID
                         ";
@@ -161,7 +163,9 @@ public partial class CDS_WebPage_TKITWEEKSREPORTSDialogEDIT : Ede.Uof.Utility.Pa
         if (dt.Rows.Count > 0)
         {           
             TextBox1.Text = dt.Rows[0]["COMMENTS"].ToString();
-            
+            TextBox2.Text = dt.Rows[0]["NOTFINISHEDS"].ToString();
+            TextBox3.Text = dt.Rows[0]["PLANWORKS"].ToString();
+
         }
 
 
@@ -173,7 +177,7 @@ public partial class CDS_WebPage_TKITWEEKSREPORTSDialogEDIT : Ede.Uof.Utility.Pa
 
 
 
-    public void UPDATEITWEEKSREPORTS(string ID, string COMMENTS)
+    public void UPDATEITWEEKSREPORTS(string ID, string COMMENTS,string NOTFINISHEDS, string PLANWORKS)
     {        
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -182,13 +186,15 @@ public partial class CDS_WebPage_TKITWEEKSREPORTSDialogEDIT : Ede.Uof.Utility.Pa
         string cmdTxt = @"  
                        
                         UPDATE [TKIT].[dbo].[ITWEEKSREPORTS]
-                        SET [COMMENTS]=@COMMENTS
+                        SET [COMMENTS]=@COMMENTS,[NOTFINISHEDS]=@NOTFINISHEDS,[PLANWORKS]=@PLANWORKS
                         WHERE [ID]=@ID  
                         ";
 
 
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@NOTFINISHEDS", NOTFINISHEDS);
+        m_db.AddParameter("@PLANWORKS", PLANWORKS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);

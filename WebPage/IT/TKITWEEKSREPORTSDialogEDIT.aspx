@@ -24,13 +24,29 @@
                 <asp:Label ID="lblParam" runat="server" Text=""></asp:Label>
             </td>
         </tr>
-     
+
         <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label2" runat="server" Text="週報"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%"  TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label3" runat="server" Text="當週未完成工作"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox2" runat="server" Text="" Width="100%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label4" runat="server" Text="預計工作"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox3" runat="server" Text="" Width="100%" TextMode="MultiLine" Row="5" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>
     </table>
