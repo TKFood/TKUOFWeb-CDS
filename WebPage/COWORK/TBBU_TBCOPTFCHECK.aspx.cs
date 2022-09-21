@@ -645,6 +645,28 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         else if (e.CommandName == "Button2")
         {
             CHECKTBCOPTFCHECK(e.CommandArgument.ToString());
+
+            //用訂單變更找出客代TC004
+            DataTable DTCOPTE = FINDCOPTE(e.CommandArgument.ToString());
+            string TC004 = DTCOPTE.Rows[0]["TE007"].ToString();
+            //訂單金額
+            decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTCMONEYS"].ToString());
+            int INTCOPTCMONEYS = Convert.ToInt32(COPTCMONEYS);
+            //訂單變更金額
+            decimal COPTEMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTEMONEYS"].ToString());
+            int INTCOPTEMONEYS = Convert.ToInt32(COPTEMONEYS);
+            //用客代找出信用額度設定上限
+            decimal TOTALLIMITS = FINDCOPMATOTALLIMITS(TC004);
+            int INTTOTALLIMITS = Convert.ToInt32(TOTALLIMITS);
+            //用客代找出目前已用的信用額度
+            decimal TOTALCREDITS = FINDCREDITS(TC004);
+            int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
+
+            if (INTTOTALLIMITS < (INTCOPTEMONEYS+(-1*INTTOTALCREDITS) + INTCOPTCMONEYS))
+            {
+                MsgBox(e.CommandArgument.ToString() + " 訂單變更金額=" + INTCOPTEMONEYS.ToString("0,0") + " 原訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " 客代:" + TC004 + " 目前設定的信用額度=" + INTTOTALLIMITS.ToString("0,0") + " 已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
+            }
+
             //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
         }
 
@@ -3810,7 +3832,239 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         m_db.ExecuteNonQuery(cmdTxt);
 
     }
+    public DataTable FINDCOPTCTC004(string TC001TC002)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT TOP 1 TC004
+                            ,SUM(TC029+TC030) AS COPTCMONEYS 
+                            FROM [TK].dbo.COPTC 
+                            WHERE TC001+TC002='{0}' 
+                            GROUP BY TC004
+
+                              ", TC001TC002);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public decimal FINDCREDITS(string MA001)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                           
+                            SELECT MA001,ISNULL(SUM(NOT_TC_SUMFINAL),0) AS 'TOTALSUM'
+                            FROM 
+                            (
+                            SELECT MA001,'未兌現應收票據' AS KIND
+                            ,ISNULL(SUM(ROUND(ISNULL(TC003,0)*ISNULL(TC027,0),0)),0) AS NOT_TC_SUM  
+                            ,ISNULL(SUM(ROUND(ISNULL(TC003,0)*ISNULL(TC027,0),0)),0)*MA091 AS NOT_TC_SUMFINAL  
+                            FROM [TK].dbo.NOTTC AS NOTTC 
+                            INNER JOIN [TK].dbo.COPMA AS COPMA ON TC013=MA001  
+                            WHERE TC012 IN ('1','2','3','5','9','A')  
+                            AND TC003 IS NOT NULL AND TC027 IS NOT NULL  
+                            AND (MA065='{0}' OR MA001='{0}') 
+                            GROUP BY MA001,MA091
+
+                            UNION ALL
+                            SELECT  MA001,'應收帳款'
+                            ,ISNULL(SUM((TA041+TA042-TA058)*ISNULL(MQ010,0)),0)  AS ACR_TA_SUM  
+                            ,ISNULL(SUM((TA041+TA042-TA058)*ISNULL(MQ010,0)),0)*MA092  AS ACR_TA_SUMFINAL  
+                            FROM [TK].dbo.ACRTA AS ACRTA  
+                            INNER JOIN [TK].dbo.COPMA AS COPMA ON TA004=MA001  
+                            LEFT JOIN [TK].dbo.CMSMQ AS CMSMQ ON MQ001=TA001  
+                            WHERE TA027='N' AND TA025='Y'  
+                            AND (MA065='{0}' OR MA001='{0}') 
+                            GROUP BY MA001,MA092
+
+                            UNION ALL
+                            SELECT  MA001,'未結帳銷貨'
+                            ,ISNULL(SUM(ISNULL(TH037,0)+ISNULL(TH038,0)),0) AS TH013A 
+                            ,ISNULL(SUM(ISNULL(TH037,0)+ISNULL(TH038,0)),0)*MA093 AS TH013AFINAL   
+                            FROM [TK].dbo.COPTG AS COPTG 
+                            INNER JOIN [TK].dbo.COPTH AS COPTH ON TG001=TH001 AND TG002=TH002  
+                            INNER JOIN [TK].dbo.COPMA AS COPMA ON TG004=MA001  
+                            WHERE TG023='Y' AND TH026='N' 
+                            AND (MA065='{0}' OR MA001='{0}') 
+                            AND TG034<>'Y'
+                            GROUP BY MA001,MA093
+
+                            UNION ALL
+                            SELECT MA001,'未結帳銷退1'
+                            ,ISNULL(SUM(ISNULL(TJ033,0)+ISNULL(TJ034,0)),0) AS TJ012A 
+                            ,ISNULL(SUM(ISNULL(TJ033,0)+ISNULL(TJ034,0)),0)*MA093*-1 AS TJ012AFINAL   
+                            FROM [TK].dbo.COPTI AS COPTI 
+                            INNER JOIN [TK].dbo.COPTJ AS COPTJ ON TI001=TJ001 AND TI002=TJ002  
+                            INNER JOIN [TK].dbo.COPTG AS COPTG ON TG001=TJ015 AND TG002=TJ016  
+                            INNER JOIN [TK].dbo.COPMA AS COPMA ON MA001=TI004  
+                            WHERE TI019='Y' AND TJ024='N' 
+                            AND (MA065='{0}' OR MA001='{0}') 
+                            AND TG034<>'Y'
+                            GROUP BY MA001,MA093 
+
+                            UNION ALL  
+                            SELECT MA001,'未結帳銷退2'
+                            ,ISNULL(SUM(ISNULL(TJ033,0)+ISNULL(TJ034,0)),0) AS TJ012A 
+                            ,ISNULL(SUM(ISNULL(TJ033,0)+ISNULL(TJ034,0)),0)*MA093*-1 AS TJ012AFINAL    
+                            FROM [TK].dbo.COPTI AS COPTI 
+                            INNER JOIN [TK].dbo.COPTJ AS COPTJ ON TI001=TJ001 AND TI002=TJ002  
+                            INNER JOIN [TK].dbo.COPMA AS COPMA ON MA001=TI004  
+                            WHERE TI019='Y' AND TJ024='N' 
+                            AND (MA065='{0}' OR MA001='{0}') 
+                            AND (TJ015+TJ016='')  
+                            GROUP BY MA001,MA093
+
+                            UNION ALL
+                            SELECT MA001,'未出貨訂單'
+                            ,ISNULL(SUM(ROUND(ISNULL(TD011,0)*ISNULL(TC009,0)*(ISNULL(TD008,0)-ISNULL(TD009,0))*ISNULL(TD026,0),0)),0) AS TD011A  
+                            ,ISNULL(SUM(ROUND(ISNULL(TD011,0)*ISNULL(TC009,0)*(ISNULL(TD008,0)-ISNULL(TD009,0))*ISNULL(TD026,0),0)),0)*MA094 AS TD011AFINAL   
+                            FROM [TK].dbo.COPTC AS COPTC 
+                            INNER JOIN [TK].dbo.COPTD AS COPTD ON TC001=TD001 AND TC002=TD002  
+                            INNER JOIN [TK].dbo.COPMA AS COPMA ON TC004=MA001  
+                            WHERE TC027='Y' AND TD016='N' 
+                            AND (MA065='{0}' OR MA001='{0}') 
+                            GROUP BY MA001,MA094
+
+                            UNION ALL
+                            SELECT MA001,'未歸還暫出'
+                            ,ISNULL(SUM(ISNULL(TG012,0)*ISNULL(TF012,0)*(ISNULL(TG009,0)-ISNULL(TG021,0)-ISNULL(TG020,0))),0) AS TG012A  
+                            ,ISNULL(SUM(ISNULL(TG012,0)*ISNULL(TF012,0)*(ISNULL(TG009,0)-ISNULL(TG021,0)-ISNULL(TG020,0))),0)*MA132 AS TG012AFINAL  
+                            FROM [TK].dbo.INVTF INVTF 
+                            INNER JOIN [TK].dbo.INVTG INVTG ON TF001=TG001 AND TG002=TF002  
+                            INNER JOIN [TK].dbo.COPMA AS COPMA ON TF005=MA001  
+                            INNER JOIN [TK].dbo.CMSMQ CMSMQ ON MQ001=TG001  
+                            WHERE TF020='Y' AND TF004='1' AND TG024='N' 
+                            AND (MA065='{0}' OR MA001='{0}') 
+                            AND MQ003='13'  and (TG014='' AND TG015='' AND TG016='')
+                            GROUP BY MA001,MA132
+                            ) AS TEMP
+                            GROUP BY MA001
+
+                              ", MA001);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return Convert.ToDecimal(dt.Rows[0]["TOTALSUM"].ToString());
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public decimal FINDCOPMATOTALLIMITS(string MA001)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT 
+                            MA033 信用額度
+                            ,MA034 可超出率
+                            ,MA091 未兌現應收票據比率
+                            ,MA092 應收帳款比率
+                            ,MA093 未結帳銷貨金額比率
+                            ,MA094 未出貨訂單金額比率
+                            ,MA132 未歸還暫出金額比率
+                            ,MA033*(1+MA034) AS 'TOTALLIMITS'
+                            FROM [TK].dbo.COPMA
+                            WHERE MA001='{0}'
+                           
+
+                              ", MA001);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return Convert.ToDecimal(dt.Rows[0]["TOTALLIMITS"].ToString());
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public DataTable FINDCOPTE(string TE001002003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT TE007
+                            ,ISNULL((SELECT SUM(TF014) FROM [TK].dbo.COPTF WHERE TF001=TE001 AND TF002=TE002 AND TF003=TE003),0) AS COPTEMONEYS
+                            ,ISNULL((SELECT SUM(TC029+TC030) FROM [TK].dbo.COPTC WHERE TC001=TE001 AND TC002=TE002),0) AS COPTCMONEYS
+                            FROM [TK].dbo.COPTE
+                            WHERE TE001+TE002+TE003='{0}'
+                           
+
+                              ", TE001002003);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+    }
     #endregion
 
     #region BUTTON

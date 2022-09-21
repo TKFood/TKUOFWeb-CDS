@@ -640,6 +640,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             //用訂單找出客代TC004
             DataTable DTCOPTC = FINDCOPTCTC004(e.CommandArgument.ToString());
             string TC004 = DTCOPTC.Rows[0]["TC004"].ToString();
+            //訂單金額
             decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTC.Rows[0]["COPTCMONEYS"].ToString());
             int INTCOPTCMONEYS= Convert.ToInt32(COPTCMONEYS);
             //用客代找出信用額度設定上限
