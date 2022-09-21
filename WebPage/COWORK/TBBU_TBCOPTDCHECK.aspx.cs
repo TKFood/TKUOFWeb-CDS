@@ -637,10 +637,23 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         else if (e.CommandName == "Button2")
         {
             CHECKTBCOPTDCHECK(e.CommandArgument.ToString());
-            string TC001 = FINDCOPTCTC004(e.CommandArgument.ToString());
-            decimal TOTALCREDITS = FINDCREDITS(TC001);
+            //用訂單找出客代TC004
+            DataTable DTCOPTC = FINDCOPTCTC004(e.CommandArgument.ToString());
+            string TC004 = DTCOPTC.Rows[0]["TC004"].ToString();
+            decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTC.Rows[0]["COPTCMONEYS"].ToString());
+            int INTCOPTCMONEYS= Convert.ToInt32(COPTCMONEYS);
+            //用客代找出信用額度設定上限
+            decimal TOTALLIMITS = FINDCOPMATOTALLIMITS(TC004);
+            int INTTOTALLIMITS = Convert.ToInt32(TOTALLIMITS);
+            //用客代找出目前已用的信用額度
+            decimal TOTALCREDITS = FINDCREDITS(TC004);
+            int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
 
-            MsgBox(e.CommandArgument.ToString()+"客代:"+ TC001 + " 信用額度="+ TOTALCREDITS.ToString(), this.Page, this);           
+            if (TOTALLIMITS< TOTALCREDITS)
+            {
+                MsgBox(e.CommandArgument.ToString()+"訂單金額="+ INTCOPTCMONEYS.ToString() + " 客代:" + TC004 + " 目前設定的信用額度="+ INTTOTALLIMITS + " 已花費的信用額度=" + INTTOTALCREDITS.ToString(), this.Page, this);
+            }
+            
         }
 
     }
@@ -3438,7 +3451,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
     }
 
-    public string FINDCOPTCTC004(string TC001TC002)
+    public DataTable FINDCOPTCTC004(string TC001TC002)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -3446,9 +3459,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
 
         cmdTxt.AppendFormat(@" 
-                            SELECT TOP 1 TC004 
+                            SELECT TOP 1 TC004
+                            ,SUM(TC029+TC030) AS COPTCMONEYS 
                             FROM [TK].dbo.COPTC 
-                            WHERE TC001+TC002='{0}'
+                            WHERE TC001+TC002='{0}' 
+                            GROUP BY TC004
 
                               ", TC001TC002);
 
@@ -3464,7 +3479,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         if (dt.Rows.Count > 0)
         {
-            return dt.Rows[0]["TC004"].ToString().Trim();
+            return dt;
         }
         else
         {
@@ -3583,6 +3598,49 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         if (dt.Rows.Count > 0)
         {
             return Convert.ToDecimal(dt.Rows[0]["TOTALSUM"].ToString());
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public decimal FINDCOPMATOTALLIMITS(string MA001)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT 
+                            MA033 信用額度
+                            ,MA034 可超出率
+                            ,MA091 未兌現應收票據比率
+                            ,MA092 應收帳款比率
+                            ,MA093 未結帳銷貨金額比率
+                            ,MA094 未出貨訂單金額比率
+                            ,MA132 未歸還暫出金額比率
+                            ,MA033*(1+MA034) AS 'TOTALLIMITS'
+                            FROM [TK].dbo.COPMA
+                            WHERE MA001='{0}'
+                           
+
+                              ", MA001);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return Convert.ToDecimal(dt.Rows[0]["TOTALLIMITS"].ToString());
         }
         else
         {
