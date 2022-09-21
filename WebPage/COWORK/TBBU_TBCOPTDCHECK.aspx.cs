@@ -649,7 +649,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             decimal TOTALCREDITS = FINDCREDITS(TC004);
             int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
 
-            if (TOTALLIMITS< TOTALCREDITS)
+            if (INTTOTALLIMITS < (INTTOTALCREDITS + INTCOPTCMONEYS))
             {
                 MsgBox(e.CommandArgument.ToString()+ " 訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " 客代:" + TC004 + " 目前設定的信用額度="+ INTTOTALLIMITS.ToString("0,0") + " 已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
             }
