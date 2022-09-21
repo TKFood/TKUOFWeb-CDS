@@ -651,7 +651,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
             if (TOTALLIMITS< TOTALCREDITS)
             {
-                MsgBox(e.CommandArgument.ToString()+"訂單金額="+ INTCOPTCMONEYS.ToString() + " 客代:" + TC004 + " 目前設定的信用額度="+ INTTOTALLIMITS + " 已花費的信用額度=" + INTTOTALCREDITS.ToString(), this.Page, this);
+                MsgBox(e.CommandArgument.ToString()+ " 訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " 客代:" + TC004 + " 目前設定的信用額度="+ INTTOTALLIMITS.ToString("0,0") + " 已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
             }
             
         }
