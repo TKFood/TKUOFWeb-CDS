@@ -61,7 +61,7 @@
                     </tr>
                      <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label9" runat="server" Text="核準:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label9" runat="server" Text="核准:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
@@ -139,7 +139,7 @@
                                                 <itemstyle horizontalalign="Left" width="600px"></itemstyle>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField HeaderText="核準" DataField="ADMITCHECKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="核准" DataField="ADMITCHECKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="30px"></ItemStyle>
                                         </asp:BoundField>
 
@@ -156,9 +156,9 @@
                                                 <asp:Button ID="GWButton2" runat="server" Text="修改" CommandName="GWButton2" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                             <asp:TemplateField HeaderText="是否核準" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                             <asp:TemplateField HeaderText="是否核准" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="GWButton3" runat="server" Text="核準" CommandName="GWButton3" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('是否核準')" />
+                                                <asp:Button ID="GWButton3" runat="server" Text="核准" CommandName="GWButton3" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('是否核准')" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

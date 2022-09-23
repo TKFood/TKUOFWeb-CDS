@@ -215,11 +215,11 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         //}
         if (!string.IsNullOrEmpty(DropDownList2.Text.ToString()))
         {
-            if(DropDownList2.Text.ToString().Equals("未核準"))
+            if(DropDownList2.Text.ToString().Equals("未核准"))
             {
                 QUERYS.AppendFormat(@" AND [ADMITCHECKS]='{0}'", DropDownList2.Text.ToString());
             }
-            else if (DropDownList2.Text.ToString().Equals("已核準"))
+            else if (DropDownList2.Text.ToString().Equals("已核准"))
             {
                 QUERYS.AppendFormat(@" AND [ADMITCHECKS]='{0}'", DropDownList2.Text.ToString());
             }
@@ -314,7 +314,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
             ExpandoObject param3 = new { ID = Cellvalue3 }.ToExpando();
 
             string ADMITCHECKS = gvr.Cells[8].Text.Trim();
-            if (ADMITCHECKS.Equals("已核準"))
+            if (ADMITCHECKS.Equals("已核准"))
             {
                 btn.Enabled = false;
                 btn2.Enabled = false;
@@ -356,7 +356,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
             UPDATEITWEEKSREPORTSADMITCHECKS(e.CommandArgument.ToString());
 
             BindGrid1("");
-            MsgBox(e.CommandArgument.ToString() + " 已核準", this.Page, this);
+            MsgBox(e.CommandArgument.ToString() + " 已核准", this.Page, this);
 
 
         }
@@ -601,7 +601,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         m_db.AddParameter("@COMMENTS", COMMENTS);
         m_db.AddParameter("@NOTFINISHEDS", NOTFINISHEDS);
         m_db.AddParameter("@PLANWORKS", PLANWORKS);
-        m_db.AddParameter("@ADMITCHECKS", "未核準");
+        m_db.AddParameter("@ADMITCHECKS", "未核准");
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
@@ -630,7 +630,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
 
         string cmdTxt = @"  
                         UPDATE [TKIT].[dbo].[ITWEEKSREPORTS]
-                        SET [ADMITCHECKS]='已核準'
+                        SET [ADMITCHECKS]='已核准'
                         WHERE ID=@ID
                             ";
 
