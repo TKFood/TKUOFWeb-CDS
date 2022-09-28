@@ -209,7 +209,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             //Get the button that raised the event
-            Button btn = (Button)e.Row.FindControl("Button1");
+            Button btn = (Button)e.Row.FindControl("GVButton1");
 
             //Get the row that contains this button
             GridViewRow gvr = (GridViewRow)btn.NamingContainer;
@@ -218,7 +218,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             string Cellvalue = btn.CommandArgument;
 
             DataRowView row = (DataRowView)e.Row.DataItem;
-            Button lbtnName = (Button)e.Row.FindControl("Button1");
+            Button lbtnName = (Button)e.Row.FindControl("GVButton1");
 
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
@@ -268,6 +268,19 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
         }
 
+
+    }
+
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "GVButton1")
+        {          
+            BindGrid("");
+            MsgBox(e.CommandArgument.ToString() + " 已更新", this.Page, this);
+
+        }
 
     }
 
@@ -327,6 +340,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
     //    int mtus = pixels * 9525;
     //    return mtus;
     //}
+
 
     public override void VerifyRenderingInServerForm(Control control) 
     { 
@@ -677,7 +691,13 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         }
 
     }
-
+     public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
     #endregion
 
     #region BUTTON
@@ -730,29 +750,31 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
     protected void btn5_Click(object sender, EventArgs e)
     {
-        //this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
-        ViewState["TextBox1"] = TextBox1.Text.ToString();
-        ViewState["TextBox2"] = TextBox2.Text.ToString();
-        ViewState["TextBox3"] = TextBox3.Text.ToString();
-        ViewState["TextBox4"] = TextBox4.Text.ToString();
-        ViewState["TextBox5"] = TextBox5.Text.ToString();
-        ViewState["TextBox6"] = TextBox6.Text.ToString();
-        ViewState["TextBox7"] = TextBox7.Text.ToString();
-        ViewState["TextBox8"] = TextBox8.Text.ToString();
-        ViewState["TextBox9"] = TextBox9.Text.ToString();
-
         BindGrid("");
 
-        TextBox1.Text = ViewState["TextBox1"].ToString();
-        TextBox2.Text = ViewState["TextBox2"].ToString();
-        TextBox3.Text = ViewState["TextBox3"].ToString();
-        TextBox4.Text = ViewState["TextBox4"].ToString();
-        TextBox5.Text = ViewState["TextBox5"].ToString();
-        TextBox6.Text = ViewState["TextBox6"].ToString();
-        TextBox7.Text = ViewState["TextBox7"].ToString();
-        TextBox8.Text = ViewState["TextBox8"].ToString();
-        TextBox9.Text = ViewState["TextBox9"].ToString();
-     
+        //this.Session["STATUS"] = DropDownList1.SelectedItem.Text ;
+        //ViewState["TextBox1"] = TextBox1.Text.ToString();
+        //ViewState["TextBox2"] = TextBox2.Text.ToString();
+        //ViewState["TextBox3"] = TextBox3.Text.ToString();
+        //ViewState["TextBox4"] = TextBox4.Text.ToString();
+        //ViewState["TextBox5"] = TextBox5.Text.ToString();
+        //ViewState["TextBox6"] = TextBox6.Text.ToString();
+        //ViewState["TextBox7"] = TextBox7.Text.ToString();
+        //ViewState["TextBox8"] = TextBox8.Text.ToString();
+        //ViewState["TextBox9"] = TextBox9.Text.ToString();
+
+
+
+        //TextBox1.Text = ViewState["TextBox1"].ToString();
+        //TextBox2.Text = ViewState["TextBox2"].ToString();
+        //TextBox3.Text = ViewState["TextBox3"].ToString();
+        //TextBox4.Text = ViewState["TextBox4"].ToString();
+        //TextBox5.Text = ViewState["TextBox5"].ToString();
+        //TextBox6.Text = ViewState["TextBox6"].ToString();
+        //TextBox7.Text = ViewState["TextBox7"].ToString();
+        //TextBox8.Text = ViewState["TextBox8"].ToString();
+        //TextBox9.Text = ViewState["TextBox9"].ToString();
+
 
         //if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
         //{
