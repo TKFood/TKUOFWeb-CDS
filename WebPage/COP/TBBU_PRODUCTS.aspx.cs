@@ -165,6 +165,13 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             QUERYS.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
         }
 
+
+        //銷售重點
+        if (!string.IsNullOrEmpty(TextBox10.Text))
+        {
+            QUERYS.AppendFormat(@" AND MB1.MB002 LIKE '%{0}%'", TextBox10.Text);
+        }
+
         //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
 
         cmdTxt.AppendFormat(@" 
@@ -433,7 +440,14 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         {
             QUERYS.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
         }
-       cmdTxt.AppendFormat(@" 
+
+        //銷售重點
+        if (!string.IsNullOrEmpty(TextBox10.Text))
+        {
+            QUERYS.AppendFormat(@" AND [INVMB].MB002 LIKE '%{0}%'", TextBox10.Text);
+        }
+
+        cmdTxt.AppendFormat(@" 
                                 SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
                                 ,[PRICES1],[PRICES2],[PRICES3]
                                 ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
@@ -448,6 +462,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                                 WHERE 1=1
                                 {0}
                                 ORDER BY [PRODUCTS].[MB001]
+
                                 ", QUERYS.ToString());
 
         //string cmdTxt = @" 
