@@ -57,6 +57,8 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         TextBox3.Text = YEARS.ToString();
         TextBox4.Text = WEEKS.ToString();
 
+        TextBox9.Text = WEEKS.ToString();
+
 
         GetDaysOfWeeks(DateTime.Now.Year, WEEKS, out startDate, out lastDate);
         TextBox6.Text = startDate.ToString("yyyy/MM/dd");
@@ -209,10 +211,13 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         {
             QUERYS.AppendFormat(@" AND [WYEARS]='{0}'", TextBox1.Text);
         }
-        //if (!string.IsNullOrEmpty(TextBox2.Text))
-        //{
-        //    QUERYS.AppendFormat(@" AND [WEEKS]='{0}' ", TextBox2.Text);
-        //}
+
+        //週別
+        if (!string.IsNullOrEmpty(TextBox9.Text))
+        {
+            QUERYS.AppendFormat(@" AND [WEEKS]='{0}' ", TextBox9.Text);
+        }
+
         if (!string.IsNullOrEmpty(DropDownList2.Text.ToString()))
         {
             if(DropDownList2.Text.ToString().Equals("未核准"))
