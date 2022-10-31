@@ -17,7 +17,8 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
     {
         if (!IsPostBack)
         {
-            BindGrid();
+            BindGrid(); 
+
         }
         else
         {
@@ -64,7 +65,7 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             //Get the button that raised the event
-            Button btn = (Button)e.Row.FindControl("Button1");
+            Button btn = (Button)e.Row.FindControl("GVButton1");
 
             //Get the row that contains this button
             GridViewRow gvr = (GridViewRow)btn.NamingContainer;
@@ -73,7 +74,7 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
             string Cellvalue = btn.CommandArgument;
 
             DataRowView row = (DataRowView)e.Row.DataItem;
-            Button lbtnName = (Button)e.Row.FindControl("Button1");
+            Button lbtnName = (Button)e.Row.FindControl("GVButton1");
 
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
@@ -122,10 +123,30 @@ public partial class CDS_WebPage_COP_TBBU_COPCOPMACLIENT : Ede.Uof.Utility.Page.
         }
     }
 
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "GVButton1")
+        {
+            BindGrid();
+            MsgBox(e.CommandArgument.ToString() + " 已更新", this.Page, this);
+
+        }
+
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
     #endregion
 
     #region BUTTON
-  
+
     protected void MyButtonClick(object sender, System.EventArgs e)
     {
 
