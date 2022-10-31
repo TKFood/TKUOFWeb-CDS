@@ -70,7 +70,7 @@
                     </tr>
                        <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label10" runat="server" Text="本週 週別:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label10" runat="server" Text="本週 週別(空白=全部):" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox9" runat="server" AutoPostBack="True" ></asp:TextBox>

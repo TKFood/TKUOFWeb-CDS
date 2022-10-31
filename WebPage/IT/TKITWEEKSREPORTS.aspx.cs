@@ -217,6 +217,10 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         {
             QUERYS.AppendFormat(@" AND [WEEKS]='{0}' ", TextBox9.Text);
         }
+        else if (string.IsNullOrEmpty(TextBox9.Text))
+        {
+            QUERYS.AppendFormat(@" ");
+        }
 
         if (!string.IsNullOrEmpty(DropDownList2.Text.ToString()))
         {
