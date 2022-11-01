@@ -109,7 +109,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
                             ,TB_EIP_SCH_WORK.SUBJECT AS '交辨項目'
                             ,TB_EIP_SCH_WORK.EXECUTE_USER AS '交辨'
                             ,TB_EIP_SCH_WORK.WORK_STATE AS 'WORK_STATE'
-                            ,TB_EIP_SCH_WORK.COMPLETE_DESC AS '交辨回覆'
+                            ,(ISNULL(TB_EIP_SCH_WORK.PROCEEDING_DESC,'')+ISNULL(TB_EIP_SCH_WORK.COMPLETE_DESC,''))  AS '交辨回覆'
                             ,TB_EB_USER.NAME AS '交辨人'
                             ,(CASE  WHEN TB_EIP_SCH_WORK.WORK_STATE='Completed' THEN '審稿完成' WHEN TB_EIP_SCH_WORK.WORK_STATE='Audit' THEN '交辨完成' WHEN TB_EIP_SCH_WORK.WORK_STATE='Proceeding' THEN '處理中' WHEN TB_EIP_SCH_WORK.WORK_STATE='NotYetBegin' THEN '未開始' END) AS '交辨狀態'
                             ,TB_EIP_SCH_DEVOLVE_EXAMINE_LOG.*
