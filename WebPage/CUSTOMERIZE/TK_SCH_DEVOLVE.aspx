@@ -59,17 +59,17 @@
                         </td>
 
                     </tr>
-                     <tr>
+                    <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label9" runat="server" Text="是否完成:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label9" runat="server" Text="校稿 是否完成:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
                         </td>
 
                     </tr>
-                   
-            
+
+
 
                     <tr>
                         <td class="PopTableLeftTD"></td>
@@ -81,6 +81,15 @@
 
                     </tr>
 
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label1" runat="server" Text="交辨狀態:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:Label ID="Label2" runat="server" Text="未開始>處理中>交辨完成>審稿完成>校稿才完成 " meta:resourcekey="Label4Resource1"></asp:Label>
+                                                    </td>
+
+                    </tr>
                     <%--<tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -100,22 +109,22 @@
                                         <asp:BoundField HeaderText="交辨開始時間" DataField="交辨開始時間" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:BoundField HeaderText="交辨項目" DataField="交辨項目" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="交辨項目" DataField="交辨項目" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="校稿區內容" DataField="校稿區內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="交辨人" DataField="交辨人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:BoundField HeaderText="校稿區內容" DataField="校稿區內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="交辨狀態" DataField="交辨狀態" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:BoundField HeaderText="交辨人" DataField="交辨人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        <asp:BoundField HeaderText="交辨回覆" DataField="交辨回覆" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:BoundField HeaderText="交辨狀態" DataField="交辨狀態" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                        </asp:BoundField>
-                                         <asp:BoundField HeaderText="交辨回覆" DataField="交辨回覆" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                        </asp:BoundField>
-                                      
+
                                     </Columns>
                                 </Fast:Grid>
                             </div>
@@ -126,7 +135,6 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="RadPageView2" runat="server">
-          
         </telerik:RadPageView>
     </telerik:RadMultiPage>​
 </asp:Content>
