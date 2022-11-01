@@ -108,7 +108,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTS : Ede.Uof.Utility.Page.BasePage
             ExpandoObject param = new { ID = row["NO"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/TKUOFTBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/QC/TKUOFTBPROJECTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -119,7 +119,7 @@ public partial class CDS_WebPage_TKUOFTBPROJECTS : Ede.Uof.Utility.Page.BasePage
             ExpandoObject param = new { ID = row["NO"].ToString() }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(MEMO, "~/CDS/WebPage/TKUOFTBPROJECTSMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(MEMO, "~/CDS/WebPage/QC/TKUOFTBPROJECTSMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
     }
 
