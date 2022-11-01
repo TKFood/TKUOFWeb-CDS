@@ -227,11 +227,22 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
         if (dt.Rows.Count > 0)
-        {           
+        {
+
+            TextBox1.ReadOnly = false;
             TextBox1.Text = dt.Rows[0]["交辨回覆"].ToString();
 
             TextBox2.Text = dt.Rows[0]["SUBJECT"].ToString();
             
+        }
+        else
+        {
+            TextBox1.ReadOnly = true;
+            TextBox1.Text = "交辨事項及交辨人不正確，無法填寫!";
+
+          
+            TextBox2.Text = "交辨事項及交辨人不正確，無法填寫!";
+
         }
 
 
