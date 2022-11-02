@@ -19,7 +19,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
     string ACCOUNT = null;
     string NAME = null;
     string ROLES = null;
-    string EXECUTE_USER = null;
+    string USER_GUID = null;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -27,7 +27,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
         ACCOUNT = Current.Account;
         NAME = Current.User.Name;
         ROLES = SEARCHROLES(ACCOUNT.Trim());
-        EXECUTE_USER = SEARCHTB_EB_USER("iteng");
+        USER_GUID = SEARCHTB_EB_USER(ACCOUNT);
         NAMES.Text = NAME;
 
 
@@ -57,9 +57,9 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
 
             BindDropDownList();
 
-            if (!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(EXECUTE_USER))
+            if (!string.IsNullOrEmpty(lblParam.Text)&& !string.IsNullOrEmpty(USER_GUID))
             {
-                SEARCH_TB_EIP_SCH_WORK(lblParam.Text, EXECUTE_USER);
+                SEARCH_TB_EIP_SCH_WORK(lblParam.Text, USER_GUID);
             }
 
         }
@@ -105,7 +105,31 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
     #region BUTTON
     void CDS_WebPage_Dialog_Button1OnClick()
     {
-        //UPDATEITWEEKSREPORTS(lblParam.Text.ToString(), TextBox1.Text.ToString(), TextBox2.Text.ToString(), TextBox3.Text.ToString());
+
+        string IDEVOLVE_GUIDD = null;
+        string EXECUTE_USER = null;
+        string WORK_STATE = "";
+        string PROCEEDING_DESC = "";
+        string COMPLETE_DESC = "";
+
+        IDEVOLVE_GUIDD = lblParam.Text;
+        EXECUTE_USER = USER_GUID;
+
+        if (DropDownList1.Text.ToString().Equals("進行中"))
+        {
+            WORK_STATE = "Proceeding";
+            PROCEEDING_DESC = TextBox1.Text.ToString();
+            COMPLETE_DESC = "";
+        }
+        else if (DropDownList1.Text.ToString().Equals("已完成"))
+        {
+            WORK_STATE = "Audit";
+            PROCEEDING_DESC = "";
+            COMPLETE_DESC = TextBox1.Text.ToString();
+        }
+
+        UPDATE_TB_EIP_SCH_WORK(IDEVOLVE_GUIDD, EXECUTE_USER, WORK_STATE, PROCEEDING_DESC, COMPLETE_DESC);
+
 
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
@@ -119,7 +143,29 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
 
     void Button2OnClick()
     {
-        //UPDATEITWEEKSREPORTS(lblParam.Text.ToString(), TextBox1.Text.ToString(), TextBox2.Text.ToString(), TextBox3.Text.ToString());
+        string IDEVOLVE_GUIDD = null; 
+        string EXECUTE_USER = null; 
+        string WORK_STATE = ""; 
+        string PROCEEDING_DESC = ""; 
+        string COMPLETE_DESC = "";
+
+        IDEVOLVE_GUIDD = lblParam.Text;
+        EXECUTE_USER = USER_GUID;
+
+        if (DropDownList1.Text.ToString().Equals("進行中"))
+        {
+            WORK_STATE = "Proceeding";
+            PROCEEDING_DESC = TextBox1.Text.ToString();
+            COMPLETE_DESC = "";
+        }
+        else if (DropDownList1.Text.ToString().Equals("已完成"))
+        {
+            WORK_STATE = "Audit";
+            PROCEEDING_DESC = "";
+            COMPLETE_DESC = TextBox1.Text.ToString();
+        }
+
+        UPDATE_TB_EIP_SCH_WORK(IDEVOLVE_GUIDD, EXECUTE_USER, WORK_STATE, PROCEEDING_DESC, COMPLETE_DESC);
         //設定回傳值並關閉視窗
         Dialog.SetReturnValue2("OK");
 
@@ -243,6 +289,8 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
           
             TextBox2.Text = "交辨事項及交辨人不正確，無法填寫!";
 
+            ((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
+
         }
 
 
@@ -254,25 +302,28 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
 
 
 
-    public void UPDATEITWEEKSREPORTS(string ID, string COMMENTS,string NOTFINISHEDS, string PLANWORKS)
+    public void UPDATE_TB_EIP_SCH_WORK(string DEVOLVE_GUID, string EXECUTE_USER, string WORK_STATE, string PROCEEDING_DESC, string COMPLETE_DESC)
     {        
 
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  
-                       
-                        UPDATE [TKIT].[dbo].[ITWEEKSREPORTS]
-                        SET [COMMENTS]=@COMMENTS,[NOTFINISHEDS]=@NOTFINISHEDS,[PLANWORKS]=@PLANWORKS
-                        WHERE [ID]=@ID  
+        string cmdTxt = @"                         
+                        UPDATE [UOF].dbo.TB_EIP_SCH_WORK
+                        SET [WORK_STATE]=@WORK_STATE,PROCEEDING_DESC=@PROCEEDING_DESC, [COMPLETE_DESC]=@COMPLETE_DESC,[COMPLETE_TIME]=@COMPLETE_TIME
+                        WHERE [DEVOLVE_GUID]= @DEVOLVE_GUID AND [EXECUTE_USER]=@EXECUTE_USER
+
+
+
                         ";
 
 
-        m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@COMMENTS", COMMENTS);
-        m_db.AddParameter("@NOTFINISHEDS", NOTFINISHEDS);
-        m_db.AddParameter("@PLANWORKS", PLANWORKS);
-
+        m_db.AddParameter("@WORK_STATE", WORK_STATE);
+        m_db.AddParameter("@PROCEEDING_DESC", PROCEEDING_DESC);
+        m_db.AddParameter("@COMPLETE_DESC", COMPLETE_DESC);
+        m_db.AddParameter("@COMPLETE_TIME", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffffK"));
+        m_db.AddParameter("@DEVOLVE_GUID", DEVOLVE_GUID);
+        m_db.AddParameter("@EXECUTE_USER", EXECUTE_USER);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
