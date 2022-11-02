@@ -124,7 +124,11 @@
                                         <asp:BoundField HeaderText="交辨回覆" DataField="交辨回覆" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-
+                                          <asp:TemplateField HeaderText="填寫交辨" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="GWButton1" runat="server" Text="填寫交辨" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("DEVOLVE_GUID") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </Fast:Grid>
                             </div>

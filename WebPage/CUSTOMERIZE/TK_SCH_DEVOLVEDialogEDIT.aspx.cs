@@ -53,7 +53,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
         {
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
-            lblParam.Text = "f62e152b-c2f6-46af-9b96-267214391665";
+            //lblParam.Text = "f62e152b-c2f6-46af-9b96-267214391665";
 
             BindDropDownList();
 

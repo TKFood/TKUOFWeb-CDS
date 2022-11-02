@@ -155,6 +155,18 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            ///Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("GWButton1");
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("GWButton1");
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗          
+
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/CUSTOMERIZE/TK_SCH_DEVOLVEDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
 
         }
@@ -166,8 +178,9 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
 
         if (e.CommandName == "GWButton1")
         {
-          
-           
+
+            BindGrid1("");
+
         }
       
        
