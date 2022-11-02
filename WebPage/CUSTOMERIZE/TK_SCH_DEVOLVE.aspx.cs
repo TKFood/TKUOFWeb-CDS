@@ -87,7 +87,8 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
         //查詢條件
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@"  AND TB_EIP_FORUM_ARTICLE.SUBJECT  LIKE '%{0}%'", TextBox1.Text);
+            QUERYS.AppendFormat(@"  AND TB_EIP_SCH_WORK.SUBJECT LIKE '%{0}%'", TextBox1.Text);
+            QUERYS.AppendFormat(@"  AND TB_EIP_SCH_DEVOLVE.SUBJECT LIKE  '%{0}%'", TextBox1.Text);
         }
         if (DropDownList1.Text.Equals("未完成"))
         {
@@ -101,10 +102,8 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
 
 
         cmdTxt.AppendFormat(@"
-                            SELECT CONVERT(nvarchar,TB_EIP_SCH_WORK.CREATE_TIME,111) AS '交辨開始時間'
+                           SELECT CONVERT(nvarchar,TB_EIP_SCH_WORK.CREATE_TIME,111) AS '交辨開始時間'
                             ,TB_EIP_SCH_DEVOLVE.SUBJECT AS '校稿區內容'
-                            ,TB_EIP_FORUM_ARTICLE.SUBJECT AS '主題'
-                            ,SUBSTRING(TB_EIP_FORUM_ARTICLE.SUBJECT,14,LEN(TB_EIP_FORUM_ARTICLE.SUBJECT)-14) AS SUBS
                             ,TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID AS 'DEVOLVE_GUID'
                             ,TB_EIP_SCH_WORK.SUBJECT AS '交辨項目'
                             ,TB_EIP_SCH_WORK.EXECUTE_USER AS '交辨'
@@ -115,19 +114,15 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
                             ,TB_EIP_SCH_DEVOLVE_EXAMINE_LOG.*
                             ,TB_EB_USER.ACCOUNT
 
-                            FROM [UOF].dbo.TB_EIP_FORUM_ARTICLE,[UOF].dbo.TB_EIP_SCH_DEVOLVE
+                            FROM [UOF].dbo.TB_EIP_SCH_DEVOLVE
                             LEFT JOIN [UOF].dbo.TB_EIP_SCH_DEVOLVE_EXAMINE_LOG ON TB_EIP_SCH_DEVOLVE_EXAMINE_LOG.DEVOLVE_GUID=TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID
                             LEFT JOIN [UOF].dbo.TB_EIP_SCH_WORK ON TB_EIP_SCH_WORK.DEVOLVE_GUID=TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID
                             LEFT JOIN [UOF].dbo.TB_EB_USER ON TB_EB_USER.USER_GUID=TB_EIP_SCH_WORK.EXECUTE_USER
                             WHERE 1=1
-                            AND TB_EIP_FORUM_ARTICLE.FLOOR=1
-                            AND TB_EIP_FORUM_ARTICLE.SUBJECT LIKE '2%'
-                            AND TB_EIP_FORUM_ARTICLE.SUBJECT NOT LIKE '%會議記錄%'
-                            AND TB_EIP_SCH_DEVOLVE.SUBJECT LIKE '%'+SUBSTRING(TB_EIP_FORUM_ARTICLE.SUBJECT,14,LEN(TB_EIP_FORUM_ARTICLE.SUBJECT)-14)+'%'
-                            
+                            AND TB_EIP_SCH_WORK.SUBJECT  LIKE '%校稿%'
                             {0}
 
-                            ORDER BY TB_EIP_SCH_DEVOLVE.CREATE_TIME,TB_EIP_FORUM_ARTICLE.SUBJECT
+                            ORDER BY TB_EIP_SCH_DEVOLVE.CREATE_TIME
                                
                                 ", QUERYS.ToString());
 
