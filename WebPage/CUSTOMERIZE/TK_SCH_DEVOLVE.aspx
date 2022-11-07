@@ -87,7 +87,7 @@
                         </td>
                         <td>
                             <asp:Label ID="Label2" runat="server" Text="未開始>處理中>交辨完成>審稿完成>校稿才完成 " meta:resourcekey="Label4Resource1"></asp:Label>
-                                                    </td>
+                        </td>
 
                     </tr>
                     <%--<tr>
@@ -111,7 +111,7 @@
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="交辨項目" DataField="交辨項目" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                        </asp:BoundField>                                       
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="被交辨人" DataField="交辨人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
@@ -121,7 +121,10 @@
                                         <asp:BoundField HeaderText="交辨回覆" DataField="交辨回覆" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                          <asp:TemplateField HeaderText="填寫交辨" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="回覆時間" DataField="回覆時間" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="填寫交辨" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="GWButton1" runat="server" Text="填寫交辨" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("DEVOLVE_GUID") %>' />
                                             </ItemTemplate>
