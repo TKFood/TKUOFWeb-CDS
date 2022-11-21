@@ -52,24 +52,25 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label3" runat="server" Text="校稿項目:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="txtDate1" runat="server" Width="100px"></asp:TextBox>
+                            <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
+                            <asp:TextBox ID="txtDate2" runat="server" Width="100px"></asp:TextBox>
+                            <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="品號/品名:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                         </td>
 
                     </tr>
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <asp:Label ID="Label9" runat="server" Text="校稿 是否完成:" meta:resourcekey="Label4Resource1"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-                        </td>
-
-                    </tr>
-
-
 
                     <tr>
                         <td class="PopTableLeftTD"></td>
@@ -81,7 +82,7 @@
 
                     </tr>
 
-                  
+
                     <%--<tr>
                         <td class="PopTableLeftTD"></td>
                         <td>

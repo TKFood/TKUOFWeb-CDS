@@ -25,7 +25,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
     {
         if (!IsPostBack)
         {
-
+            SETYEARSWEEKS();
             BindGrid1("");
 
         }
@@ -41,35 +41,39 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
     }
     #region FUNCTION
   
-    private void BindDropDownList()
+    //private void BindDropDownList()
+    //{
+    //    DataTable dt = new DataTable();
+    //    dt.Columns.Add("ID", typeof(String));
+    //    dt.Columns.Add("NAMES", typeof(String));
+
+    //    string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+    //    Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+    //    string cmdTxt = @"SELECT '未完成' AS KINDS UNION ALL SELECT '全部' ";
+
+    //    dt.Load(m_db.ExecuteReader(cmdTxt));
+
+    //    if (dt.Rows.Count > 0)
+    //    {
+    //        DropDownList1.DataSource = dt;
+    //        DropDownList1.DataTextField = "KINDS";
+    //        DropDownList1.DataValueField = "KINDS";
+    //        DropDownList1.DataBind();
+
+    //    }
+    //    else
+    //    {
+
+    //    }
+    //}
+
+
+    public void SETYEARSWEEKS()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("NAMES", typeof(String));
-
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        string cmdTxt = @"SELECT '未完成' AS KINDS UNION ALL SELECT '全部' ";
-
-        dt.Load(m_db.ExecuteReader(cmdTxt));
-
-        if (dt.Rows.Count > 0)
-        {
-            DropDownList1.DataSource = dt;
-            DropDownList1.DataTextField = "KINDS";
-            DropDownList1.DataValueField = "KINDS";
-            DropDownList1.DataBind();
-
-        }
-        else
-        {
-
-        }
+        txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
+        txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
     }
-
-  
-   
 
     private void BindGrid1(string SALESFOCUS)
     {
@@ -78,8 +82,10 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
-        
 
+        DateTime SDATES = Convert.ToDateTime(txtDate1.Text);
+        DateTime EDATES = Convert.ToDateTime(txtDate2.Text);
+        string MB001 = TextBox1.Text;
 
 
         //查詢條件
@@ -93,8 +99,9 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
         //    QUERYS.AppendFormat(@"  ");
         //}
 
-
-        cmdTxt.AppendFormat(@"
+        if(!string.IsNullOrEmpty(MB001))
+        {
+            cmdTxt.AppendFormat(@"
                             SELECT 品號,品名,規格,單位,年月,最近進貨價,SUM(FILEDS1) AS '1進貨/入庫',SUM(FILEDS2) AS '2銷貨',SUM(FILEDS3) AS '3領用',SUM(FILEDS4) AS '4組合領用',SUM(FILEDS5) AS '5組合生產'
                             FROM
                             (
@@ -109,13 +116,14 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
                             FROM 
                             (
                             SELECT MQ001,MQ002,MQ008,LA001,LA004,LA005,LA006,LA007,LA008,LA011,MB002,MB003,MB004
-                            ,CASE  WHEN MQ001 IN ('A421','A422','A431') AND LA005=-1 THEN '4組合領用' WHEN MQ001 IN ('A421','A422','A431') AND LA005=1 THEN '5組合生產'  WHEN MQ008='1' THEN '1進貨/入庫'  WHEN MQ008='2' THEN '2銷貨'  WHEN MQ008='3' THEN '3領用' END NEWMQ008 
-                            FROM [TK].dbo.INVLA WITH(NOLOCK),[TK].dbo.CMSMQ WITH(NOLOCK),[TK].dbo.INVMB WITH(NOLOCK)
-                            WHERE LA006=MQ001
-                            AND LA001=MB001
-                            AND LA004>='20220101' AND LA004<='20221121'
-                            AND MQ008 IN ('','1','2','3')
-                            AND (LA001 LIKE  '%草莓%' OR MB002 LIKE '%草莓%')
+                            ,CASE  WHEN MQ001 IN ('A421','A422','A431') AND LA005=-1 THEN '4組合領用' WHEN MQ001 IN ('A421','A422','A431') AND LA005=1 THEN '5組合生產'  WHEN MQ008='1' THEN '1進貨/入庫'  WHEN (MQ008='2' OR (ISNULL(MQ008,'')='' AND LA005=-1))THEN '2銷貨'  WHEN MQ008='3' THEN '3領用' END NEWMQ008 
+                            FROM [TK].dbo.INVLA WITH(NOLOCK)
+                            LEFT JOIN [TK].dbo.CMSMQ WITH(NOLOCK) ON LA006=MQ001
+                            ,[TK].dbo.INVMB WITH(NOLOCK)
+                            WHERE LA001=MB001
+                            AND LA004>='{1}' AND LA004<='{2}'
+
+                            AND (LA001 LIKE  '%{0}%' OR MB002 LIKE '%{0}%')
                             ) AS TEMP,[TK].dbo.INVMB
                             WHERE LA001=MB001
 
@@ -126,8 +134,16 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
 
 
                                
-                                ", QUERYS.ToString());
+                                ", MB001, SDATES.ToString("yyyyMMdd"), EDATES.ToString("yyyyMMdd"));
 
+
+        }
+        else
+        {
+            cmdTxt.AppendFormat(@"
+
+                                ");
+        }
 
 
 
@@ -202,10 +218,10 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
         StringBuilder QUERYS = new StringBuilder();
 
         //
-        if (!string.IsNullOrEmpty(TextBox1.Text))
-        {
-            QUERYS.AppendFormat(@"", TextBox1.Text);
-        }
+        //if (!string.IsNullOrEmpty(TextBox1.Text))
+        //{
+        //    QUERYS.AppendFormat(@"", TextBox1.Text);
+        //}
 
 
         cmdTxt.AppendFormat(@" 
