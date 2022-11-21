@@ -81,15 +81,7 @@
 
                     </tr>
 
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <asp:Label ID="Label1" runat="server" Text="交辨狀態:" meta:resourcekey="Label4Resource1"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:Label ID="Label2" runat="server" Text="未開始>處理中>交辨完成>審稿完成>校稿才完成 " meta:resourcekey="Label4Resource1"></asp:Label>
-                        </td>
-
-                    </tr>
+                  
                     <%--<tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -110,10 +102,10 @@
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="品名" DataField="品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="規格" DataField="規格" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="單位" DataField="單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>

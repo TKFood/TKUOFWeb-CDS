@@ -95,13 +95,16 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
 
 
         cmdTxt.AppendFormat(@"
+                            SELECT 品號,品名,規格,單位,年月,最近進貨價,SUM(FILEDS1) AS '1進貨/入庫',SUM(FILEDS2) AS '2銷貨',SUM(FILEDS3) AS '3領用',SUM(FILEDS4) AS '4組合領用',SUM(FILEDS5) AS '5組合生產'
+                            FROM
+                            (
                             SELECT NEWMQ008 AS '分類',LA001 AS '品號',SUBSTRING(LA004,1,6)  AS '年月',SUM(LA005*LA011)  AS '數量',INVMB.MB002 AS '品名',INVMB.MB003 AS '規格',INVMB.MB004 AS '單位'
                             ,CONVERT(DECIMAL(16,2),INVMB.MB050) AS '最近進貨價'
-                            ,(CASE WHEN NEWMQ008 IN ('1進貨/入庫') THEN SUM(LA005*LA011) ELSE 0 END ) AS '1進貨/入庫'
-                            ,(CASE WHEN NEWMQ008 IN ('2銷貨') THEN SUM(LA005*LA011) ELSE 0 END ) AS '2銷貨'
-                            ,(CASE WHEN NEWMQ008 IN ('3領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS '3領用'
-                            ,(CASE WHEN NEWMQ008 IN ('4組合領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS '4組合領用'
-                            ,(CASE WHEN NEWMQ008 IN ('5組合生產') THEN SUM(LA005*LA011) ELSE 0 END ) AS '5組合生產'
+                            ,(CASE WHEN NEWMQ008 IN ('1進貨/入庫') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS1'
+                            ,(CASE WHEN NEWMQ008 IN ('2銷貨') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS2'
+                            ,(CASE WHEN NEWMQ008 IN ('3領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS3'
+                            ,(CASE WHEN NEWMQ008 IN ('4組合領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS4'
+                            ,(CASE WHEN NEWMQ008 IN ('5組合生產') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS5'
 
                             FROM 
                             (
@@ -117,7 +120,10 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.P
                             WHERE LA001=MB001
 
                             GROUP BY LA001,NEWMQ008,SUBSTRING(LA004,1,6),INVMB.MB002,INVMB.MB003,INVMB.MB004,INVMB.MB050
-                            ORDER BY LA001,NEWMQ008,SUBSTRING(LA004,1,6),INVMB.MB002,INVMB.MB003,INVMB.MB004,INVMB.MB050
+                            ) AS TMPE2
+                            GROUP BY 品號,品名,規格,單位,年月,最近進貨價
+                            ORDER BY 品號,品名,規格,單位,年月,最近進貨價
+
 
                                
                                 ", QUERYS.ToString());
