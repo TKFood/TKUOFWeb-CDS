@@ -16,7 +16,13 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
+        //不顯示子視窗的按鈕
+        //((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
+        ((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
+        //((Master_DialogMasterPage)this.Master).Button3Text = string.Empty;
+
+
         //設定回傳值
         Dialog.SetReturnValue2("");
 
@@ -226,8 +232,8 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
                         ,[SDATES]=@SDATES
                         ,[PRODUCTS]=@PRODUCTS
                         ,[CLIENTS]=@CLIENTS
-                        ,[SALES]=@CLIENTS
-                        ,[NUMS]=@SALES
+                        ,[SALES]=@SALES
+                        ,[NUMS]=@NUMS
                         ,[TESTDATES]=@TESTDATES
                         ,[TESTMEMO]=@TESTMEMO
                         WHERE[SERNO]=@SERNO

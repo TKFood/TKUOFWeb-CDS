@@ -28,20 +28,14 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         if (!IsPostBack)
         {
             BindGrid("進行中");
+
+            BindDropDownList();
         }
         else
         {
-            BindGrid(DropDownList1.Text);
+           
         }
-        
 
-        BindDropDownList();
-
-        if (this.Session["STATUS"] != null)
-        {
-            DropDownList1.Text = this.Session["STATUS"].ToString();
-
-        }
 
     }
 
@@ -55,7 +49,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' ORDER BY [PARAID] ";
+        string cmdTxt = @" SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='MEMOSTATUS' UNION ALL SELECT  '0','0','全部','全部' ";
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
@@ -82,8 +76,28 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         this.Session["STATUS"] = STATUS;
+        string cmdTxt = null;
 
-        string cmdTxt = @" SELECT 
+        if (STATUS.Equals("全部"))
+        {
+            cmdTxt = @" SELECT 
+                            [SERNO]
+                            ,[STATUS]
+                            ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
+                            ,[PRODUCTS]
+                            ,[CLIENTS]
+                            ,[SALES]
+                            ,[NUMS]
+                            ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
+                            ,[TESTMEMO]
+                            FROM [TKRESEARCH].[dbo].[TBDEVNEW]
+                            WHERE 1=1
+                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
+                            ";
+        }
+        else
+        {
+             cmdTxt = @" SELECT 
                             [SERNO]
                             ,[STATUS]
                             ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
@@ -95,8 +109,10 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[TESTMEMO]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                             WHERE STATUS=@STATUS 
-                            ORDER BY [SALES],[CLIENTS],[PRODUCTS]                            
+                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
                             ";
+        }
+       
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -146,7 +162,18 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
 
 
     }
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
 
+        if (e.CommandName == "Button1")
+        {
+            //MsgBox("Button1", this.Page, this);
+            BindGrid(DropDownList1.Text);
+        }
+       
+
+    }
     public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -212,7 +239,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
 
     protected void btn6_Click(object sender, EventArgs e)
     {
-        this.Session["STATUS"] = DropDownList1.Text.Trim();
+        BindGrid(DropDownList1.Text);
     }
 
     #endregion

@@ -54,7 +54,7 @@
             </td>
             <td class="PopTableRightTD"> 
                    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-                <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClientClick="return btn5_Click(this)" 
+                <asp:Button ID="Button1" runat="server" Text=" 查詢 " 
                     onclick="btn6_Click" meta:resourcekey="btn4Resource1" />                
             </td>            
         </tr>
@@ -63,7 +63,7 @@
          <tr >
             <td colspan="2" class="PopTableRightTD" >
                 <div style="overflow-x:auto;width:100%">
-                     <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
+                     <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound"  OnRowCommand="Grid1_RowCommand" runat="server" OnBeforeExport="OnBeforeExport" AllowPaging="true"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" >
                      <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                  
                         <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource" ></ExportExcelSettings>
@@ -99,12 +99,12 @@
                       
                             <asp:TemplateField HeaderText="修改明細" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center"  ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("SERNO") %>'/>
+                                    <asp:Button ID="Button1" runat="server" Text="修改" ForeColor="Red" CommandName="Button1"  CommandArgument='<%# Eval("SERNO") %>'/>
                                 </ItemTemplate>
                             </asp:TemplateField>
                               <asp:TemplateField HeaderText="更新試做進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" >                
                                   <ItemTemplate>
-                                    <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red"  CommandArgument='<%# Eval("SERNO") %>'/>
+                                    <asp:Button ID="Button2" runat="server" Text="修改" ForeColor="Red" CommandName="Button2"  CommandArgument='<%# Eval("SERNO") %>'/>
                                 </ItemTemplate>                                
                             </asp:TemplateField> 
                             
