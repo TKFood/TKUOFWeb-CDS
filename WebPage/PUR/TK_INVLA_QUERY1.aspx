@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="TK_INVLA_QUERY1.aspx.cs" Inherits="CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="TK_INVLA_QUERY1.aspx.cs" Inherits="CDS_WebPage_PUR_TK_INVLA_QUERY1" %>
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 

@@ -1666,7 +1666,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
-                MsgBox("訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!!   訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
@@ -1740,7 +1740,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {                
-                MsgBox("訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!!   訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
@@ -2767,23 +2767,23 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         if (resultXE.Element("Status").Value == "1")
         {
-            status = "起單成功!";
+            status = "送單成功!";
             formNBR = resultXE.Element("FormNumber").Value;           
 
             NEWTASK_ID = formNBR;
 
-            Logger.Write("TEST", status + formNBR);
-            MsgBox("起單成功 "  +TC001 + TC002 + " > " + formNBR , this.Page, this);
+            Logger.Write("起單", status + formNBR);
+            MsgBox("送單成功 "  +TC001 + TC002 + " > " + formNBR , this.Page, this);
 
         }
         else
         {
-            status = "起單失敗!";
+            status = "送單失敗!";
             error = resultXE.Element("Exception").Element("Message").Value;
 
-            Logger.Write("TEST", status + error + "\r\n" + Form.OuterXml);
+            Logger.Write("起單", status + error + "\r\n" + Form.OuterXml);
 
-            MsgBox("起單失敗 " + error + "\r\n" + Form.OuterXml, this.Page, this);
+            MsgBox("送單失敗!!!!    " + error + "\r\n" + Form.OuterXml, this.Page, this);
 
             throw new Exception(status + error + "\r\n" + Form.OuterXml);
 

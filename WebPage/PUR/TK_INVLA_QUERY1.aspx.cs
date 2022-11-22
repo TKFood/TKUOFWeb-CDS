@@ -19,7 +19,7 @@ using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Globalization;
 
-public partial class CDS_WebPage_CUSTOMERIZE_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
