@@ -103,6 +103,13 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
         {
             cmdTxt.AppendFormat(@"
                             SELECT 品號,品名,規格,單位,年月,最近進貨價,SUM(FILEDS1) AS '1進貨/入庫',SUM(FILEDS2) AS '2銷貨',SUM(FILEDS3) AS '3領用',SUM(FILEDS4) AS '4組合領用',SUM(FILEDS5) AS '5組合生產'
+                            ,MB047  AS '標準售價' ,MB051 AS '零售價'
+                            ,(CASE WHEN SUM(FILEDS2)<0 THEN 
+                            (SELECT ISNULL(CONVERT(DECIMAL(16,2),SUM(LA017-LA020-LA021-LA022-LA023)/SUM(LA016+LA025-LA019)),0)
+                            FROM [TK].dbo.SASLA
+                            WHERE LA005=品號
+                            AND SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)=年月
+                            GROUP BY  SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)) ELSE 0 END) AS '平均售價'
                             FROM
                             (
                             SELECT NEWMQ008 AS '分類',LA001 AS '品號',SUBSTRING(LA004,1,6)  AS '年月',SUM(LA005*LA011)  AS '數量',INVMB.MB002 AS '品名',INVMB.MB003 AS '規格',INVMB.MB004 AS '單位'
@@ -128,8 +135,10 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                             WHERE LA001=MB001
 
                             GROUP BY LA001,NEWMQ008,SUBSTRING(LA004,1,6),INVMB.MB002,INVMB.MB003,INVMB.MB004,INVMB.MB050
+
                             ) AS TMPE2
-                            GROUP BY 品號,品名,規格,單位,年月,最近進貨價
+                            LEFT JOIN [TK].dbo.INVMB  ON MB001=品號
+                            GROUP BY 品號,品名,規格,單位,年月,最近進貨價,MB047,MB051
                             ORDER BY 品號,品名,規格,單位,年月,最近進貨價
 
 
