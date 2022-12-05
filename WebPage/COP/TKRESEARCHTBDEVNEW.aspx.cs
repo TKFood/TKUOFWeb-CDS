@@ -191,7 +191,12 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
             //MsgBox("Button1", this.Page, this);
             BindGrid(DropDownList1.Text);
         }
-       
+        if (e.CommandName == "Button2")
+        {
+            //MsgBox("Button1", this.Page, this);
+            BindGrid(DropDownList1.Text);
+        }
+
 
     }
     public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
