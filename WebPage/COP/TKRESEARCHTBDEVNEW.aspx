@@ -13,14 +13,16 @@
             //參數使用JSON格式傳遞
             $uof.dialog.open2("~/CDS/WebPage/COP/TKRESEARCHTBDEVNEWVDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
 
+            
+
             return false;
 
         }
 
         //如果有設定回傳值則執行sender Event
         function OpenDialogResult(returnValue) {
-            if (typeof (returnValue) == "undefined")
-                return false;
+            if (typeof (returnValue) == "REFRESH")
+                document.getElementById('<%= Button1.ClientID %>').click();
             else
                 return true;
         }
@@ -79,7 +81,7 @@
                                 <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                             </asp:BoundField>
                             <asp:BoundField HeaderText="樣品試作/試吃結果" DataField="TESTMEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                             </asp:BoundField>
                             <asp:BoundField HeaderText="口味確認" DataField="TASTESMEMO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
