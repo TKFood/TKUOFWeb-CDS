@@ -18,7 +18,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWVDialogADD : Ede.Uof.Utility.
     {
        
         //設定回傳值
-        Dialog.SetReturnValue2("");
+        Dialog.SetReturnValue2("REFRESH");
 
         //不顯示子視窗的按鈕
         //((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
@@ -48,9 +48,12 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWVDialogADD : Ede.Uof.Utility.
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
-
+        
         ADD();
+
+
+        Dialog.SetReturnValue2("REFRESH");
+        Dialog.Close(this);
     }
 
     void Button2OnClick()
@@ -59,6 +62,10 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWVDialogADD : Ede.Uof.Utility.
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
+
+
+        Dialog.SetReturnValue2("REFRESH");
+        Dialog.Close(this);
     }
 
     #endregion
@@ -127,7 +134,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWVDialogADD : Ede.Uof.Utility.
         string TESTPRODS = TextBox9.Text;
         string PRODS = TextBox10.Text;
         string REMARKS = TextBox12.Text;
-        string CLOSEDDATES= "";
+        string CLOSEDDATES= TextBox13.Text;
 
 
         if (!string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(PRODUCTS))
@@ -158,8 +165,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWVDialogADD : Ede.Uof.Utility.
           
                 
 
-        Dialog.SetReturnValue2("REFRESH");
-        Dialog.Close(this);
+      
     }
 
 

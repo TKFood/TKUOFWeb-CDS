@@ -242,7 +242,14 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
 
     protected void btn4_Click(object sender, EventArgs e)
     {
+        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        {
+            if (Dialog.GetReturnValue().Equals("REFRESH"))
+            {
+                BindGrid(DropDownList1.Text);
+            }
 
+        }
     }
 
     protected void btn5_Click(object sender, EventArgs e)
@@ -250,8 +257,8 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         if(!string.IsNullOrEmpty(Dialog.GetReturnValue()))
         {
             if (Dialog.GetReturnValue().Equals("NeedPostBack"))
-            {                
-                this.Session["STATUS"] = DropDownList1.Text.Trim();
+            {
+                BindGrid(DropDownList1.Text);
             }
 
         }

@@ -145,7 +145,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                       SELECT 
+                        SELECT 
                         [SERNO]
                         ,[STATUS]
                         ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
@@ -155,6 +155,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
                         ,[NUMS]
                         ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
                         ,[TESTMEMO]
+                        ,[TASTESMEMO]
+                        ,[PACKAGES]
+                        ,[FEASIBILITYS]
+                        ,[DESINGS]
+                        ,[COSTS]
+                        ,[PROOFREADINGS]
+                        ,[TESTPRODS]
+                        ,[PRODS]
+                        ,[REMARKS]
+                        ,[CLOSEDDATES]
+
                         FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                         WHERE [SERNO]=@SERNO 
                         ";
@@ -169,14 +180,20 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
         if (dt.Rows.Count > 0)
         {
             DropDownList1.Text = dt.Rows[0]["STATUS"].ToString();
-            RadDatePicker1.SelectedDate = Convert.ToDateTime(dt.Rows[0]["SDATES"].ToString());
 
             TextBox1.Text = dt.Rows[0]["PRODUCTS"].ToString();
-            TextBox2.Text = dt.Rows[0]["CLIENTS"].ToString();
-            TextBox3.Text = dt.Rows[0]["SALES"].ToString();
-            TextBox4.Text = dt.Rows[0]["NUMS"].ToString();           
-            RadDatePicker2.SelectedDate = Convert.ToDateTime(dt.Rows[0]["TESTDATES"].ToString());
-            TextBox5.Text = dt.Rows[0]["TESTMEMO"].ToString();
+            TextBox2.Text = dt.Rows[0]["TESTMEMO"].ToString();
+            TextBox3.Text = dt.Rows[0]["TASTESMEMO"].ToString();
+            TextBox4.Text = dt.Rows[0]["PACKAGES"].ToString();
+            TextBox5.Text = dt.Rows[0]["FEASIBILITYS"].ToString();
+            TextBox6.Text = dt.Rows[0]["DESINGS"].ToString();
+            TextBox7.Text = dt.Rows[0]["COSTS"].ToString();
+            TextBox8.Text = dt.Rows[0]["PROOFREADINGS"].ToString();
+            TextBox9.Text = dt.Rows[0]["TESTPRODS"].ToString();
+            TextBox10.Text = dt.Rows[0]["PRODS"].ToString();
+            TextBox11.Text = dt.Rows[0]["SALES"].ToString();
+            TextBox12.Text = dt.Rows[0]["REMARKS"].ToString();
+            TextBox13.Text = dt.Rows[0]["CLOSEDDATES"].ToString();
 
 
 
@@ -189,28 +206,75 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
 
     public void UPDATE(string ID)
     {
-        //string ID = "";
-        string SERNO = ID;
+        string SERNO = lblParam.Text;
         string STATUS = DropDownList1.SelectedValue.ToString().Trim();
-        string SDATES = RadDatePicker1.SelectedDate.Value.ToString("yyy/MM/dd");
-        //string SDATES = TDATES1.Text.ToString().Trim();
-        string PRODUCTS = TextBox1.Text.ToString().Trim();
-        string CLIENTS = TextBox2.Text.ToString().Trim();
-        string SALES = TextBox3.Text.ToString().Trim();
-        string NUMS = TextBox4.Text.ToString().Trim();
-        string TESTDATES = RadDatePicker2.SelectedDate.Value.ToString("yyy/MM/dd");
-        //string TESTDATES = TDATES2.Text.ToString().Trim();
-        string TESTMEMO = TextBox5.Text.ToString().Trim();
+        string SDATES = DateTime.Now.ToString("yyyy/MM/dd");
+        string PRODUCTS = TextBox1.Text;
+        string CLIENTS = "";
+        string SALES = TextBox11.Text;
+        string NUMS = "";
+        string TESTDATES = "";
+        string TESTMEMO = TextBox2.Text;
+        string TASTESMEMO = TextBox3.Text;
+        string PACKAGES = TextBox4.Text;
+        string FEASIBILITYS = TextBox5.Text;
+        string DESINGS = TextBox6.Text;
+        string COSTS = TextBox7.Text;
+        string PROOFREADINGS = TextBox8.Text;
+        string TESTPRODS = TextBox9.Text;
+        string PRODS = TextBox10.Text;
+        string REMARKS = TextBox12.Text;
+        string CLOSEDDATES = TextBox13.Text;
 
 
         if (!string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(PRODUCTS))
         {
-            UPDATETBDEVNEW(SERNO, STATUS, SDATES, PRODUCTS, CLIENTS, SALES, NUMS, TESTDATES, TESTMEMO);
+            UPDATETBDEVNEW(
+                        SERNO
+                        , STATUS
+                        , SDATES
+                        , PRODUCTS
+                        , CLIENTS
+                        , SALES
+                        , NUMS
+                        , TESTDATES
+                        , TESTMEMO
+                        , TASTESMEMO
+                        , PACKAGES
+                        , FEASIBILITYS
+                        , DESINGS
+                        , COSTS
+                        , PROOFREADINGS
+                        , TESTPRODS
+                        , PRODS
+                        , REMARKS
+                        , CLOSEDDATES
+                        );
         }
 
-        Dialog.SetReturnValue2("NeedPostBack");
+        Dialog.SetReturnValue2("REFRESH");
     }
-    public void UPDATETBDEVNEW(string SERNO, string STATUS, string SDATES, string PRODUCTS, string CLIENTS, string SALES, string NUMS, string TESTDATES, string TESTMEMO)
+    public void UPDATETBDEVNEW(
+                              string SERNO
+                            , string STATUS
+                            , string SDATES
+                            , string PRODUCTS
+                            , string CLIENTS
+                            , string SALES
+                            , string NUMS
+                            , string TESTDATES
+                            , string TESTMEMO
+                            , string TASTESMEMO
+                            , string PACKAGES
+                            , string FEASIBILITYS
+                            , string DESINGS
+                            , string COSTS
+                            , string PROOFREADINGS
+                            , string TESTPRODS
+                            , string PRODS
+                            , string REMARKS
+                            , string CLOSEDDATES
+                                )
     {
 
         if (string.IsNullOrEmpty(SDATES))
@@ -228,7 +292,8 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
 
         string cmdTxt = @"  
                         UPDATE [TKRESEARCH].[dbo].[TBDEVNEW]
-                        SET [STATUS]=@STATUS
+                        SET 
+                        [STATUS]=@STATUS
                         ,[SDATES]=@SDATES
                         ,[PRODUCTS]=@PRODUCTS
                         ,[CLIENTS]=@CLIENTS
@@ -236,6 +301,16 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
                         ,[NUMS]=@NUMS
                         ,[TESTDATES]=@TESTDATES
                         ,[TESTMEMO]=@TESTMEMO
+                        ,[TASTESMEMO]=@TASTESMEMO
+                        ,[PACKAGES]=@PACKAGES
+                        ,[FEASIBILITYS]=@FEASIBILITYS
+                        ,[DESINGS]=@DESINGS
+                        ,[COSTS]=@COSTS
+                        ,[PROOFREADINGS]=@PROOFREADINGS
+                        ,[TESTPRODS]=@TESTPRODS
+                        ,[PRODS]=@PRODS
+                        ,[REMARKS]=@REMARKS
+                        ,[CLOSEDDATES]=@CLOSEDDATES
                         WHERE[SERNO]=@SERNO
                             ";
 
@@ -248,6 +323,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWDialogEDITDEL : Ede.Uof.Utili
         m_db.AddParameter("@NUMS", NUMS);
         m_db.AddParameter("@TESTDATES", TESTDATES);
         m_db.AddParameter("@TESTMEMO", TESTMEMO);
+        m_db.AddParameter("@TASTESMEMO", TASTESMEMO);
+        m_db.AddParameter("@PACKAGES", PACKAGES);
+        m_db.AddParameter("@FEASIBILITYS", FEASIBILITYS);
+        m_db.AddParameter("@DESINGS", DESINGS);
+        m_db.AddParameter("@COSTS", COSTS);
+        m_db.AddParameter("@PROOFREADINGS", PROOFREADINGS);
+        m_db.AddParameter("@TESTPRODS", TESTPRODS);
+        m_db.AddParameter("@PRODS", PRODS);
+        m_db.AddParameter("@REMARKS", REMARKS);
+        m_db.AddParameter("@CLOSEDDATES", CLOSEDDATES);
+
 
         m_db.ExecuteNonQuery(cmdTxt);
 

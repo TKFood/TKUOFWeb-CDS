@@ -39,7 +39,7 @@
                 <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%"></asp:TextBox>
             </td>
         </tr>
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label2" runat="server" Text="樣品試作/試吃結果"></asp:Label>
             </td>
@@ -48,7 +48,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label4" runat="server" Text="口味確認"></asp:Label>
             </td>
@@ -57,7 +57,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label5" runat="server" Text="包裝型式重量"></asp:Label>
             </td>
@@ -66,7 +66,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label6" runat="server" Text="可行性"></asp:Label>
             </td>
@@ -75,7 +75,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label7" runat="server" Text="設計需求"></asp:Label>
             </td>
@@ -84,7 +84,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label9" runat="server" Text="成本試算"></asp:Label>
             </td>
@@ -93,7 +93,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label10" runat="server" Text="校稿完成"></asp:Label>
             </td>
@@ -102,7 +102,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label11" runat="server" Text="試量產日期"></asp:Label>
             </td>
@@ -111,7 +111,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label12" runat="server" Text="正式量產日期"></asp:Label>
             </td>
@@ -120,7 +120,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label13" runat="server" Text="負責業務"></asp:Label>
             </td>
@@ -129,7 +129,7 @@
             </td>
         </tr>
 
-          <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label14" runat="server" Text="備註"></asp:Label>
             </td>
@@ -137,7 +137,14 @@
                 <asp:TextBox ID="TextBox12" runat="server" Text="" Width="100%"></asp:TextBox>
             </td>
         </tr>
-
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label15" runat="server" Text="結案日期"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox13" runat="server" Text="" Width="100%"></asp:TextBox>
+            </td>
+        </tr>
 
 
     </table>
