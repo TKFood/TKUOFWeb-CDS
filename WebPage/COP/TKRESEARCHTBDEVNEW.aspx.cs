@@ -90,6 +90,16 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[NUMS]
                             ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
                             ,[TESTMEMO]
+                            ,[TASTESMEMO]
+                            ,[PACKAGES]
+                            ,[FEASIBILITYS]
+                            ,[DESINGS]
+                            ,[COSTS]
+                            ,[PROOFREADINGS]
+                            ,[TESTPRODS]
+                            ,[PRODS]
+                            ,[REMARKS]
+                            ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                             WHERE 1=1
                             ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
@@ -107,6 +117,16 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[NUMS]
                             ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
                             ,[TESTMEMO]
+                            ,[TASTESMEMO]
+                            ,[PACKAGES]
+                            ,[FEASIBILITYS]
+                            ,[DESINGS]
+                            ,[COSTS]
+                            ,[PROOFREADINGS]
+                            ,[TESTPRODS]
+                            ,[PRODS]
+                            ,[REMARKS]
+                            ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                             WHERE STATUS=@STATUS 
                             ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
