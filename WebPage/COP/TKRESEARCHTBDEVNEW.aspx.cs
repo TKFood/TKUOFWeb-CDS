@@ -205,9 +205,57 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string STATUS = DropDownList1.Text;
+        string cmdTxt = null;
 
-        string cmdTxt = @" 
+        if (STATUS.Equals("全部"))
+        {
+            cmdTxt = @" SELECT 
+                            [SERNO]
+                             ,[STATUS]
+                             ,[PRODUCTS]
+                             ,[TESTMEMO]
+                             ,[TASTESMEMO]
+                             ,[PACKAGES]
+                            ,[FEASIBILITYS]
+                            ,[DESINGS]
+                            ,[COSTS]
+                            ,[PROOFREADINGS]
+                            ,[TESTPRODS]
+                            ,[PRODS]
+                            ,[SALES]
+                            ,[REMARKS]
+                            ,[CLOSEDDATES]
+                            FROM [TKRESEARCH].[dbo].[TBDEVNEW]
+                            WHERE 1=1
+                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
                             ";
+        }
+        else
+        {
+            cmdTxt = @" SELECT 
+                            [SERNO]
+                             ,[STATUS]
+                             ,[PRODUCTS]
+                             ,[TESTMEMO]
+                             ,[TASTESMEMO]
+                             ,[PACKAGES]
+                            ,[FEASIBILITYS]
+                            ,[DESINGS]
+                            ,[COSTS]
+                            ,[PROOFREADINGS]
+                            ,[TESTPRODS]
+                            ,[PRODS]
+                            ,[SALES]
+                            ,[REMARKS]
+                            ,[CLOSEDDATES]
+                            
+                           
+                            FROM [TKRESEARCH].[dbo].[TBDEVNEW]
+                            WHERE STATUS=@STATUS 
+                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
+                            ";
+        }
+
 
         m_db.AddParameter("@STATUS", STATUS);
 
@@ -219,7 +267,22 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         if (dt.Rows.Count > 0)
         {
             dt.Columns[0].Caption = "編號";
-           
+            dt.Columns[1].Caption = "狀態";
+            dt.Columns[2].Caption = "產品品項";
+            dt.Columns[3].Caption = "樣品試作/試吃結果";
+            dt.Columns[4].Caption = "口味確認";
+            dt.Columns[5].Caption = "包裝型式重量";
+            dt.Columns[6].Caption = "可行性";
+            dt.Columns[7].Caption = "設計需求";
+            dt.Columns[8].Caption = "成本試算";
+            dt.Columns[9].Caption = "校稿完成";
+            dt.Columns[10].Caption = "試量產日期";
+            dt.Columns[11].Caption = "正式量產日期";
+            dt.Columns[12].Caption = "負責業務";
+            dt.Columns[13].Caption = "備註";
+            dt.Columns[14].Caption = "結案日期";
+
+
 
             e.Datasource = dt;
         }
