@@ -102,15 +102,16 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
         if(!string.IsNullOrEmpty(MB001))
         {
             cmdTxt.AppendFormat(@"
+                            
                             SELECT 品號,品名,規格,單位,年月,最近進貨價,SUM(FILEDS1) AS '1進貨/入庫',SUM(FILEDS2) AS '2銷貨',SUM(FILEDS3) AS '3領用',SUM(FILEDS4) AS '4組合領用',SUM(FILEDS5) AS '5組合生產'
-                            ,MB047  AS '標準售價' ,MB051 AS '零售價'
+                            ,CONVERT(decimal(16,2),MB047)  AS '標準售價' ,CONVERT(decimal(16,2),MB051) AS '零售價'
                             ,(CASE WHEN SUM(FILEDS2)<0 THEN 
                             (SELECT ISNULL(CONVERT(DECIMAL(16,2),SUM(LA017-LA020-LA021-LA022-LA023)/SUM(LA016+LA025-LA019)),0)
                             FROM [TK].dbo.SASLA
                             WHERE LA005=品號
                             AND SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)=年月
                             GROUP BY  SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)) ELSE 0 END) AS '平均售價'
-                            ,ISNULL((SELECT MB050
+                            ,(SELECT CONVERT(NVARCHAR,ISNULL(CONVERT(decimal(16,2),MB050),0))+' /'+MB004 
                             FROM [TK].dbo.INVMB
                             WHERE MB050>0
                             AND MB001 IN (
@@ -118,7 +119,19 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                             FROM [TK].dbo.BOMMD
                             WHERE MD003 LIKE '3%'
                             AND MD001=品號) 
-                            ),0)  AS '半成品進價'
+                            ) AS '半成品進價'
+                            ,(SELECT TOP 1 (CASE WHEN NUMS>0 AND TOTALCOSTS>0 THEN CONVERT(DECIMAL(16,2),TOTALCOSTS/NUMS) ELSE 0 END ) AS 'AVGCOSTS'
+                            FROM
+                            (
+                            SELECT ME001,ME002,ME003,ME004,ME005,ME007,ME008,ME009,ME010
+                            ,(ME003+ME004+ME005) AS 'NUMS'
+                            ,(ME007+ME008+ME009+ME010) AS 'TOTALCOSTS'
+                            FROM [TK].dbo.CSTME
+                            WHERE  ME001=品號
+                            ) AS TEMP
+                            ORDER BY ME002 DESC
+                            ) AS '最近成本'
+
 
                             FROM
                             (
