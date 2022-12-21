@@ -110,6 +110,16 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                             WHERE LA005=品號
                             AND SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)=年月
                             GROUP BY  SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)) ELSE 0 END) AS '平均售價'
+                            ,ISNULL((SELECT MB050
+                            FROM [TK].dbo.INVMB
+                            WHERE MB050>0
+                            AND MB001 IN (
+                            SELECT MD003
+                            FROM [TK].dbo.BOMMD
+                            WHERE MD003 LIKE '3%'
+                            AND MD001=品號) 
+                            ),0)  AS '半成品進價'
+
                             FROM
                             (
                             SELECT NEWMQ008 AS '分類',LA001 AS '品號',SUBSTRING(LA004,1,6)  AS '年月',SUM(LA005*LA011)  AS '數量',INVMB.MB002 AS '品名',INVMB.MB003 AS '規格',INVMB.MB004 AS '單位'
