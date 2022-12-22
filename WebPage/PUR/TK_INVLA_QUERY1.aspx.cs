@@ -131,7 +131,7 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                             ) AS TEMP
                             ORDER BY ME002 DESC
                             ) AS '最近成本'
-
+                            ,員購數量
 
                             FROM
                             (
@@ -142,6 +142,13 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                             ,(CASE WHEN NEWMQ008 IN ('3領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS3'
                             ,(CASE WHEN NEWMQ008 IN ('4組合領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS4'
                             ,(CASE WHEN NEWMQ008 IN ('5組合生產') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS5'
+                            ,(
+                            SELECT SUM(TB019)*-1 AS NUMS
+                            FROM [TK].dbo.POSTA,[TK].dbo.POSTB
+                            WHERE TA001=TB001 AND TA002=TB002 AND TA003=TB003 AND TA006=TB006
+                            AND TA002='100000'
+                            AND TB010=LA001
+                            AND TA001 LIKE SUBSTRING(LA004,1,6)+'%') AS '員購數量'
 
                             FROM 
                             (
@@ -161,7 +168,7 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
 
                             ) AS TMPE2
                             LEFT JOIN [TK].dbo.INVMB  ON MB001=品號
-                            GROUP BY 品號,品名,規格,單位,年月,最近進貨價,MB047,MB051
+                            GROUP BY 品號,品名,規格,單位,年月,最近進貨價,MB047,MB051,員購數量
                             ORDER BY 品號,品名,規格,單位,年月,最近進貨價
 
 

@@ -116,7 +116,7 @@
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="半成品進價" DataField="半成品進價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                        </asp:BoundField>                                  
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="最近成本" DataField="最近成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
@@ -142,6 +142,9 @@
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="5組合生產" DataField="5組合生產" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="員購數量" DataField="員購數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
                                     </Columns>
