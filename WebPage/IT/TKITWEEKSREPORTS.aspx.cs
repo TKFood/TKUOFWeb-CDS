@@ -73,7 +73,7 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"SELECT [ID] ,[NAMES]  FROM [TKIT].[dbo].[ITWEEKSREPORTSNAMES] ORDER BY ID ";
+        string cmdTxt = @"SELECT [ID] ,[NAMES]  FROM [TKIT].[dbo].[ITWEEKSREPORTSNAMES] WHERE ISUSED='Y' ORDER BY ID ";
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
