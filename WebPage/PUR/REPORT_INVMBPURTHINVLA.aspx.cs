@@ -101,7 +101,7 @@ public partial class CDS_WebPage_PUR_REPORT_INVMBPURTHINVLA : Ede.Uof.Utility.Pa
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
             cmdTxt.AppendFormat(@"
-                                SELECT MB001,MB002,MB003,MB004,MB017,MB039,MB032,MA002
+                                SELECT MB001,MB002,MB003,MB004,MB017,MB039,MB032,MA002,MB039
                                 ,LA009,LA016,LA005LA011
                                 ,(SELECT TOP 1 TH117 FROM [TK].dbo.PURTH WHERE TH004=MB001 AND TH010=LA016 ORDER BY TH003 DESC) TH117
                                 ,(SELECT TOP 1 TH036 FROM [TK].dbo.PURTH WHERE TH004=MB001 AND TH010=LA016 ORDER BY TH003 DESC) TH036
