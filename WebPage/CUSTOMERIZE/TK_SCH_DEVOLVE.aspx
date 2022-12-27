@@ -61,10 +61,19 @@
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label9" runat="server" Text="校稿 是否完成:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label9" runat="server" Text="校稿項目 是否完成:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                        </td>
+
+                    </tr>
+                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label4" runat="server" Text="校稿人員 是否完成:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
                         </td>
 
                     </tr>

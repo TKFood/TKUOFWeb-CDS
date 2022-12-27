@@ -26,7 +26,8 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
         if (!IsPostBack)
         {
     
-            BindDropDownList();           
+            BindDropDownList();
+            BindDropDownList2();
 
             BindGrid1("");
 
@@ -70,8 +71,35 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
         }
     }
 
-  
-   
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("NAMES", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT '未完成' AS KINDS UNION ALL SELECT '全部' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "KINDS";
+            DropDownList2.DataValueField = "KINDS";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+
+
+
 
     private void BindGrid1(string SALESFOCUS)
     {
@@ -90,12 +118,23 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
             QUERYS.AppendFormat(@"  AND TB_EIP_SCH_WORK.SUBJECT LIKE '%{0}%'", TextBox1.Text);
             QUERYS.AppendFormat(@"  AND TB_EIP_SCH_DEVOLVE.SUBJECT LIKE  '%{0}%'", TextBox1.Text);
         }
+        //校稿項目 是否完成
         if (DropDownList1.Text.Equals("未完成"))
         {
             QUERYS.AppendFormat(@"  AND ISNULL(TB_EIP_SCH_DEVOLVE_EXAMINE_LOG.STATUS,'') NOT IN ('Approve')");
             QUERYS.AppendFormat(@"  AND TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID NOT IN (SELECT [DEVOLVE_GUID]  FROM [UOF].[dbo].[Z_TB_EIP_SCH_DEVOLVE_IGNORES])");
         }
-        if (DropDownList1.Text.Equals("全部"))
+        else if (DropDownList1.Text.Equals("全部"))
+        {
+            QUERYS.AppendFormat(@"  ");
+        }
+        //校稿人員 是否完成
+        if (DropDownList2.Text.Equals("未完成"))
+        {
+            QUERYS.AppendFormat(@"  AND TB_EIP_SCH_WORK.WORK_STATE NOT IN ('Completed','Audit')");
+            
+        }
+        else if (DropDownList2.Text.Equals("全部"))
         {
             QUERYS.AppendFormat(@"  ");
         }
