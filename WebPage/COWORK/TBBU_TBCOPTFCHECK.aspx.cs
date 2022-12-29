@@ -5319,6 +5319,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 LEFT JOIN [TK].dbo.COPTC ON TC001=TE001 AND TC002=TE002
                                 LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
                                 WHERE 1=1
+                                AND ISNULL(TF004,'')=''
                                 {0}
                                
                                 
