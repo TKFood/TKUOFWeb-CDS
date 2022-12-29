@@ -105,7 +105,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             //BindGrid4("");
 
             BindDropDownList9();
-         
+            BindDropDownList10();
+
             //BindGrid5("");
         }
         else
@@ -134,7 +135,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         //TextBox8.Text = DateTime.Now.ToString("MM");
         TextBox13.Text = DateTime.Now.ToString("yyyy");
         //TextBox14.Text = DateTime.Now.ToString("MM");
-       
+
+        TextBox26.Text = DateTime.Now.ToString("yyyy");
+
     }
     private void BindDropDownList()
     {
@@ -406,7 +409,37 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
     }
 
-  
+    private void BindDropDownList10()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList10.DataSource = dt;
+            DropDownList10.DataTextField = "STATUS";
+            DropDownList10.DataValueField = "STATUS";
+            DropDownList10.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+
 
 
     private void BindGrid(string SALESFOCUS)
@@ -4065,6 +4098,160 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             return null;
         }
     }
+
+    private void BindGrid7(string SALESFOCUS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+       
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList10.Text))
+        {
+            if (DropDownList10.Text.Equals("未核單"))
+            {
+                QUERYS.AppendFormat(@" AND TE029='N' ");
+            }
+            else if (DropDownList10.Text.Equals("已核單"))
+            {
+                QUERYS.AppendFormat(@"  AND TE029='Y' ");
+            }
+        }
+
+        //年度
+        if (!string.IsNullOrEmpty(TextBox26.Text))
+        {
+            QUERYS.AppendFormat(@" AND TE002 LIKE '{0}%'", TextBox26.Text.Trim());
+
+        }
+
+        //訂單單號
+        if (!string.IsNullOrEmpty(TextBox22.Text))
+        {
+            QUERYS.AppendFormat(@" AND TE002 LIKE '{0}%'", TextBox22.Text.Trim());
+
+        }
+
+        //客戶名稱
+        if (!string.IsNullOrEmpty(TextBox23.Text))
+        {
+            QUERYS.AppendFormat(@" AND TC053 LIKE '%{0}%'", TextBox23.Text.Trim());
+
+        }
+
+
+        cmdTxt.AppendFormat(@" 
+                                SELECT 
+                                LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
+                                ,LTRIM(RTRIM(TE001))+LTRIM(RTRIM(TE002))+LTRIM(RTRIM(TE003)) AS 'TF123'
+                                ,*
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKS'
+                                ,(SELECT TOP 1 ISNULL(MOCCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKS'
+                                ,(SELECT TOP 1 ISNULL(PURCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
+                                ,(SELECT TOP 1 ISNULL(SALESCHECKDATES,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKDATES'
+                                ,(SELECT TOP 1 ISNULL(SALESCHECKSCOMMENTS,'') FROM [TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001=COPTF.TF001 AND TBCOPTFCHECK.TF002=COPTF.TF002 AND TBCOPTFCHECK.TF003=COPTF.TF003 AND  TBCOPTFCHECK.TF004=COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
+
+                                FROM [TK].dbo.COPTE
+                                LEFT JOIN [TK].dbo.COPTF ON TE001=TF001 AND TE002=TF002 AND TE003=TF003 AND ISNULL(TF001,'')=''
+                                LEFT JOIN [TK].dbo.COPTC ON TC001=TE001 AND TC002=TE002
+                                LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
+                                WHERE 1=1
+                                {0}
+                               
+                                
+
+                                ", QUERYS.ToString());
+
+
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid7.DataSource = dt;
+        Grid7.DataBind();
+    }
+
+    protected void grid_PageIndexChanging7(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid7_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            ///Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("GRIDVIEW7Button1");
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("GRIDVIEW7Button1");
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando(); 
+
+
+        }
+
+
+
+
+
+
+
+    }
+
+    protected void Grid7_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "GRIDVIEW7Button1")
+        {
+            CHECKTBCOPTFCHECK(e.CommandArgument.ToString());
+
+            //用訂單變更找出客代TC004
+            DataTable DTCOPTE = FINDCOPTE(e.CommandArgument.ToString());
+            string TC004 = DTCOPTE.Rows[0]["TE007"].ToString();
+            //訂單金額
+            decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTCMONEYS"].ToString());
+            int INTCOPTCMONEYS = Convert.ToInt32(COPTCMONEYS);
+            //訂單變更金額
+            decimal COPTEMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTEMONEYS"].ToString());
+            int INTCOPTEMONEYS = Convert.ToInt32(COPTEMONEYS);
+            //用客代找出信用額度設定上限
+            decimal TOTALLIMITS = FINDCOPMATOTALLIMITS(TC004);
+            int INTTOTALLIMITS = Convert.ToInt32(TOTALLIMITS);
+            //用客代找出目前已用的信用額度
+            decimal TOTALCREDITS = FINDCREDITS(TC004);
+            int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
+
+            if (INTTOTALLIMITS < (INTCOPTEMONEYS + (-1 * INTTOTALCREDITS) + INTCOPTCMONEYS))
+            {
+                MsgBox(e.CommandArgument.ToString() + " 訂單變更金額=" + INTCOPTEMONEYS.ToString("0,0") + " 原訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " 客代:" + TC004 + " 目前設定的信用額度=" + INTTOTALLIMITS.ToString("0,0") + " 已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
+            }
+
+            //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
+        }
+
+    }
+
+
+    public void OnBeforeExport7(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+
+    }
+
     #endregion
 
     #region BUTTON
@@ -4197,5 +4384,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         BindGrid6("");      
 
     }
+    protected void Button11_Click(object sender, EventArgs e)
+    {
+
+        BindGrid7("");
+
+    }
+
     #endregion
 }
