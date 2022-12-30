@@ -94,10 +94,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
+                            ,[DESINGSDATES]
                             ,[COSTS]
+                            ,[COSTSDATES]
                             ,[PROOFREADINGS]
+                            ,[PROOFREADINGSDATES]
                             ,[TESTPRODS]
                             ,[PRODS]
+                            ,[ORICHECKS]
+                            ,[ORICHECKSDATES]
+                            ,[NUTRICHECKS]
+                            ,[NUTRICHECKSDATES]
                             ,[REMARKS]
                             ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
@@ -121,10 +128,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
+                            ,[DESINGSDATES]
                             ,[COSTS]
+                            ,[COSTSDATES]
                             ,[PROOFREADINGS]
+                            ,[PROOFREADINGSDATES]
                             ,[TESTPRODS]
                             ,[PRODS]
+                            ,[ORICHECKS]
+                            ,[ORICHECKSDATES]
+                            ,[NUTRICHECKS]
+                            ,[NUTRICHECKSDATES]
                             ,[REMARKS]
                             ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
@@ -218,10 +232,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                              ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
+                            ,[DESINGSDATES]
                             ,[COSTS]
+                            ,[COSTSDATES]
                             ,[PROOFREADINGS]
+                            ,[PROOFREADINGSDATES]
                             ,[TESTPRODS]
                             ,[PRODS]
+                            ,[ORICHECKS]
+                            ,[ORICHECKSDATES]
+                            ,[NUTRICHECKS]
+                            ,[NUTRICHECKSDATES]
                             ,[SALES]
                             ,[REMARKS]
                             ,[CLOSEDDATES]
@@ -241,10 +262,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                              ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
+                            ,[DESINGSDATES]
                             ,[COSTS]
+                            ,[COSTSDATES]
                             ,[PROOFREADINGS]
+                            ,[PROOFREADINGSDATES]
                             ,[TESTPRODS]
                             ,[PRODS]
+                            ,[ORICHECKS]
+                            ,[ORICHECKSDATES]
+                            ,[NUTRICHECKS]
+                            ,[NUTRICHECKSDATES]
                             ,[SALES]
                             ,[REMARKS]
                             ,[CLOSEDDATES]
@@ -278,9 +306,11 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
             dt.Columns[9].Caption = "校稿完成";
             dt.Columns[10].Caption = "試量產日期";
             dt.Columns[11].Caption = "正式量產日期";
-            dt.Columns[12].Caption = "負責業務";
-            dt.Columns[13].Caption = "備註";
-            dt.Columns[14].Caption = "結案日期";
+            dt.Columns[12].Caption = "原料驗收作業";
+            dt.Columns[13].Caption = "營養標示作業";
+            dt.Columns[14].Caption = "負責業務";
+            dt.Columns[15].Caption = "備註";
+            dt.Columns[16].Caption = "結案日期";
 
 
 
