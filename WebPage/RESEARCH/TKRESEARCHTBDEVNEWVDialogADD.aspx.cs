@@ -408,7 +408,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEWVDialogADD : Ede.Uof.Utility.
         string TESTDATES = "";
         string TESTMEMO = TextBox2.Text;
         string TASTESMEMO = DropDownList2.SelectedValue.ToString().Trim();
-        string PACKAGES = "";
+        string PACKAGES = TextBox4.Text;
         string FEASIBILITYS = DropDownList3.SelectedValue.ToString().Trim();
         string DESINGS = DropDownList4.SelectedValue.ToString().Trim();
         string DESINGSDATES = TextBox5.Text;
