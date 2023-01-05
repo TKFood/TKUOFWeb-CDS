@@ -96,7 +96,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[DESINGS]
                             ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
-                            ,[COSTSDATES]
+                            ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
                             ,[PROOFREADINGS]
                             ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
@@ -130,7 +130,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[DESINGS]
                             ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
-                            ,[COSTSDATES]
+                           ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
                             ,[PROOFREADINGS]
                             ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
@@ -239,7 +239,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[DESINGS]
                             ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
-                            ,[COSTSDATES]
+                            ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
                             ,[PROOFREADINGS]
                             ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
@@ -273,7 +273,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[DESINGS]
                             ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
-                            ,[COSTSDATES]
+                            ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
                             ,[PROOFREADINGS]
                             ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
