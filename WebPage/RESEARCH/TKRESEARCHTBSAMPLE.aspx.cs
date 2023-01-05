@@ -155,7 +155,7 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSAMPLEDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCHTBSAMPLEDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -175,7 +175,7 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBSAMPLERECORDSDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCHTBSAMPLERECORDSDialogSALESADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
 

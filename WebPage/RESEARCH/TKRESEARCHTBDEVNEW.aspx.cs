@@ -94,17 +94,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
-                            ,[DESINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
                             ,[COSTSDATES]
                             ,[PROOFREADINGS]
-                            ,[PROOFREADINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
                             ,[PRODS]
                             ,[ORICHECKS]
-                            ,[ORICHECKSDATES]
+                            , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
                             ,[NUTRICHECKS]
-                            ,[NUTRICHECKSDATES]
+                            , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
                             ,[REMARKS]
                             ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
@@ -115,7 +115,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         else
         {
              cmdTxt = @" SELECT 
-                            [SERNO]
+                          [SERNO]
                             ,[STATUS]
                             ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
                             ,[PRODUCTS]
@@ -128,17 +128,17 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
-                            ,[DESINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
                             ,[COSTSDATES]
                             ,[PROOFREADINGS]
-                            ,[PROOFREADINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
                             ,[PRODS]
                             ,[ORICHECKS]
-                            ,[ORICHECKSDATES]
+                            , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
                             ,[NUTRICHECKS]
-                            ,[NUTRICHECKSDATES]
+                            , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
                             ,[REMARKS]
                             ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
@@ -176,7 +176,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
             Button lbtnName = (Button)e.Row.FindControl("Button1");
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TKRESEARCHTBDEVNEWDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCHTBDEVNEWDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
             //Button2
             //Get the button that raised the event
@@ -189,7 +189,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
             Button lbtnName2 = (Button)e.Row.FindControl("Button2");
             ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName2, "~/CDS/WebPage/COP/TKRESEARCHTBDEVNEWDialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
+            Dialog.Open2(lbtnName2, "~/CDS/WebPage/RESEARCH/TKRESEARCHTBDEVNEWDialogMEMOADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param2);
 
 
         }
@@ -225,25 +225,29 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         {
             cmdTxt = @" SELECT 
                             [SERNO]
-                             ,[STATUS]
-                             ,[PRODUCTS]
-                             ,[TESTMEMO]
-                             ,[TASTESMEMO]
-                             ,[PACKAGES]
+                            ,[STATUS]
+                            ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
+                            ,[PRODUCTS]
+                            ,[CLIENTS]
+                            ,[SALES]
+                            ,[NUMS]
+                            ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
+                            ,[TESTMEMO]
+                            ,[TASTESMEMO]
+                            ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
-                            ,[DESINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
                             ,[COSTSDATES]
                             ,[PROOFREADINGS]
-                            ,[PROOFREADINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
                             ,[PRODS]
                             ,[ORICHECKS]
-                            ,[ORICHECKSDATES]
+                            , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
                             ,[NUTRICHECKS]
-                            ,[NUTRICHECKSDATES]
-                            ,[SALES]
+                            , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
                             ,[REMARKS]
                             ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
@@ -254,26 +258,30 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         else
         {
             cmdTxt = @" SELECT 
-                            [SERNO]
-                             ,[STATUS]
-                             ,[PRODUCTS]
-                             ,[TESTMEMO]
-                             ,[TASTESMEMO]
-                             ,[PACKAGES]
+                           [SERNO]
+                            ,[STATUS]
+                            ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
+                            ,[PRODUCTS]
+                            ,[CLIENTS]
+                            ,[SALES]
+                            ,[NUMS]
+                            ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
+                            ,[TESTMEMO]
+                            ,[TASTESMEMO]
+                            ,[PACKAGES]
                             ,[FEASIBILITYS]
                             ,[DESINGS]
-                            ,[DESINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
                             ,[COSTS]
                             ,[COSTSDATES]
                             ,[PROOFREADINGS]
-                            ,[PROOFREADINGSDATES]
+                            ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
                             ,[TESTPRODS]
                             ,[PRODS]
                             ,[ORICHECKS]
-                            ,[ORICHECKSDATES]
+                            , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
                             ,[NUTRICHECKS]
-                            ,[NUTRICHECKSDATES]
-                            ,[SALES]
+                            , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
                             ,[REMARKS]
                             ,[CLOSEDDATES]
                             
