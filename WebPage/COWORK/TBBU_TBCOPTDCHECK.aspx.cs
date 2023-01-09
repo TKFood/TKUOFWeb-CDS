@@ -3003,7 +3003,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         try
         {
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
             Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
             StringBuilder cmdTxt = new StringBuilder();
@@ -3012,11 +3012,15 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
 
             cmdTxt.AppendFormat(@" 
-                                   SELECT 
-                                   RTRIM(LTRIM([FORM_VERSION_ID])) AS FORM_VERSION_ID
-                                   ,[FORM_NAME]
-                                   FROM [TKIT].[dbo].[UOF_FORM_VERSION_ID]
-                                   WHERE [FORM_NAME]='{0}'
+                                 SELECT TOP 1 RTRIM(LTRIM(TB_WKF_FORM_VERSION.FORM_VERSION_ID)) FORM_VERSION_ID,TB_WKF_FORM_VERSION.FORM_ID,TB_WKF_FORM_VERSION.VERSION,TB_WKF_FORM_VERSION.ISSUE_CTL
+                                    ,TB_WKF_FORM.FORM_NAME
+                                    FROM [UOF].dbo.TB_WKF_FORM_VERSION,[UOF].dbo.TB_WKF_FORM
+                                    WHERE 1=1
+                                    AND TB_WKF_FORM_VERSION.FORM_ID=TB_WKF_FORM.FORM_ID
+                                    AND TB_WKF_FORM_VERSION.ISSUE_CTL=1
+                                    AND FORM_NAME='{0}'
+                                    ORDER BY TB_WKF_FORM_VERSION.FORM_ID,TB_WKF_FORM_VERSION.VERSION DESC
+
                                    ", FORM_NAME);
 
 
