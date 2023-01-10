@@ -464,20 +464,102 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    private DataTable SEARCHFORMCURRENT(string DOC_NBR)
     {
-        MsgBox("通知申請人", this.Page, this);
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT
+                            usr2.NAME AS 'CURRENTNAME'
+                            ,[TB_EB_JOB_TITLE].TITLE_NAME AS 'CURRENTTITLENAME'
+                            ,(CASE WHEN  usr.IS_SUSPENDED = 1 THEN  usr.NAME + '(x)' WHEN  ISNULL(usr.ACCOUNT,'''') = '' THEN  'unknown user' ELSE usr.NAME END) AS APPLICANT_NAME
+                            ,form.FORM_NAME
+                            ,DOC_NBR
+                            ,CONVERT(NVARCHAR,NODES.START_TIME,111) AS 'START_TIME'
+                            ,DATEDIFF(HOUR,START_TIME,GETDATE()) AS 'HRS'
+                            ,CONVERT(NVARCHAR,BEGIN_TIME,111) AS BEGIN_TIME
+                            ,task.TASK_ID
+                            ,END_TIME
+                            ,TASK_RESULT
+                            ,TASK_STATUS
+                            ,task.USER_GUID
+                            ,formVer.FORM_VERSION_ID
+                            ,formVer.FORM_ID
+                            ,CURRENT_SITE_ID
+                            ,MESSAGE_CONTENT
+                            ,LOCK_STATUS
+                            ,ISNULL(formVer.DISPLAY_TITLE,'') AS VERSION_TITLE
+                            ,ISNULL(task.JSON_DISPLAY,'') AS JSON_DISPLAY
+                            ,[NODES].SIGN_STATUS
+                            FROM dbo.TB_WKF_TASK task
+                            INNER JOIN dbo.TB_WKF_FORM_VERSION formVer ON task.FORM_VERSION_ID = formVer.FORM_VERSION_ID
+                            INNER JOIN dbo.TB_WKF_FORM form  ON  formVer.FORM_ID = form.FORM_ID 
+                            LEFT JOIN dbo.TB_EB_USER [usr]  ON task.USER_GUID = usr.USER_GUID
+                            LEFT JOIN dbo.TB_WKF_TASK_NODE [NODES] ON NODES.SITE_ID=task.CURRENT_SITE_ID 
+                            LEFT JOIN dbo.TB_EB_USER [usr2]  ON NODES.ORIGINAL_SIGNER = [usr2].USER_GUID
+                            LEFT JOIN dbo.[TB_EB_EMPL_DEP] ON [TB_EB_EMPL_DEP].USER_GUID=[usr2].USER_GUID
+                            LEFT JOIN dbo.[TB_EB_JOB_TITLE] ON [TB_EB_EMPL_DEP].TITLE_ID=[TB_EB_JOB_TITLE].TITLE_ID
+
+                            WHERE
+                            1=1  
+                            AND  TASK_STATUS NOT IN ('2')
+                            AND ISNULL([NODES].SIGN_STATUS,999)<>0
+                            AND DOC_NBR LIKE '%{0}%'
+                            ORDER BY HRS DESC,usr2.NAME,form.FORM_NAME,DOC_NBR
+                               
+                                ", DOC_NBR);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if(dt.Rows.Count>=1)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+     
     }
 
-    public void MsgBox(String ex, Page pg, Object obj)
-    {
+    protected void Button1_Click(object sender, EventArgs e)
+    {      
         string FormId = base.taskObj.FormId;
         string FormNumber = base.taskObj.FormNumber;
         string TaskId = base.taskObj.TaskId;
         string ApplicantGuid = base.ApplicantGuid;
-
-        ADDToUOF_TB_EIP_PRIV_MESS(ApplicantGuid, "c24e7a6a-3699-4e18-9e11-a90e09fd0ac1", "總經理呼叫 表單 -測試通知: "+ FormNumber, "總經理呼叫 表單-測試通知: " + FormNumber + "請找總經理說明");
+        string CURRENTNAME = "";
         
+        DataTable DT = SEARCHFORMCURRENT(FormNumber);
+        
+        if(DT.Rows.Count>=1 && DT!=null)
+        {
+            CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString()+" "+ DT.Rows[0]["CURRENTTITLENAME"].ToString();
+        }
+      
+
+        ADDToUOF_TB_EIP_PRIV_MESS(ApplicantGuid, ApplicantGuid, CURRENTNAME+" 呼叫表單申請人，表單: " + FormNumber, CURRENTNAME + "呼叫表單申請人，表單:" + FormNumber + "請找 "+ CURRENTNAME + " 說明");
+
+        MsgBox("已通知申請人", this.Page, this);
+
+
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+       
         string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
         Type cstype = obj.GetType();
         ClientScriptManager cs = pg.ClientScript;
