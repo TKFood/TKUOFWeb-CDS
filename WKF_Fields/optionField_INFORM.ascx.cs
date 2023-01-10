@@ -18,6 +18,9 @@ using System.Xml;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
+using System.Net.Mail;
+using System.IO;
+using System.Net;
 
 public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_VersionFieldUserControl_VersionFieldUC
 {
@@ -477,6 +480,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                             usr2.NAME AS 'CURRENTNAME'
                             ,[TB_EB_JOB_TITLE].TITLE_NAME AS 'CURRENTTITLENAME'
                             ,(CASE WHEN  usr.IS_SUSPENDED = 1 THEN  usr.NAME + '(x)' WHEN  ISNULL(usr.ACCOUNT,'''') = '' THEN  'unknown user' ELSE usr.NAME END) AS APPLICANT_NAME
+                            ,usr.[EMAIL] AS 'APPLICANT_EMAIL'
                             ,form.FORM_NAME
                             ,DOC_NBR
                             ,CONVERT(NVARCHAR,NODES.START_TIME,111) AS 'START_TIME'
@@ -534,23 +538,123 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
      
     }
 
+    /// <summary>
+    /// 完整的寄信函數
+    /// </summary>
+    /// <param name="MailFrom">寄信人Email Address</param>
+    /// <param name="MailTos">收信人Email Address</param>
+    /// <param name="Ccs">副本Email Address</param>
+    /// <param name="MailSub">主旨</param>
+    /// <param name="MailBody">內文</param>
+    /// <param name="isBodyHtml">是否為Html格式</param>
+    /// <param name="files">要夾帶的附檔</param>
+    /// <returns>回傳寄信是否成功(true:成功,false:失敗)</returns>
+    public bool Mail_Send(string MailFrom, string[] MailTos, string MailSub, string MailBody, bool isBodyHtml, Dictionary<string, Stream> files)
+    {
+        /// <summary>
+        /// 寄信標題
+        /// </summary>
+        string mailTitle = "寄信標題";
+        /// <summary>
+        /// 寄信人Email
+        /// </summary>
+        MailFrom = "tk290@tkfood.com.tw";
+        /// <summary>
+        /// 收信人Email(多筆用逗號隔開)
+        /// </summary>
+        string receiveMails = "";
+        /// <summary>
+        /// 寄信smtp server
+        /// </summary>
+        string smtpServer = ConfigurationManager.AppSettings["smtpServer"].Trim();
+        /// <summary>
+        /// 寄信smtp server的Port，預設25
+        /// </summary>
+        int smtpPort = Convert.ToInt32(ConfigurationManager.AppSettings["smtpPort"].Trim());
+        /// <summary>
+        /// 寄信帳號
+        /// </summary>
+        string mailAccount = ConfigurationManager.AppSettings["mailAccount"].Trim();
+        /// <summary>
+        /// 寄信密碼
+        /// </summary>
+        string mailPwd = ConfigurationManager.AppSettings["mailPwd"].Trim();
+
+
+        try
+        {
+            //命名空間： System.Web.Mail已過時，http://msdn.microsoft.com/zh-tw/library/system.web.mail.mailmessage(v=vs.80).aspx
+            //建立MailMessage物件
+            MailMessage mms = new MailMessage();
+            //指定一位寄信人MailAddress
+            mms.From = new MailAddress(MailFrom);
+            //信件主旨
+            mms.Subject = MailSub;
+            //信件內容
+            mms.Body = MailBody;
+            //信件內容 是否採用Html格式
+            mms.IsBodyHtml = isBodyHtml;
+
+            if (MailTos != null)//防呆
+            {
+                for (int i = 0; i < MailTos.Length; i++)
+                {
+                    //加入信件的收信人(們)address
+                    if (!string.IsNullOrEmpty(MailTos[i].Trim()))
+                    {
+                        mms.Bcc.Add(new MailAddress(MailTos[i].Trim()));
+                    }
+
+                }
+            }//End if (MailTos !=null)//防呆
+           
+
+            using (SmtpClient client = new SmtpClient(smtpServer, smtpPort))//或公司、客戶的smtp_server
+            {
+                if (!string.IsNullOrEmpty(mailAccount) && !string.IsNullOrEmpty(mailPwd))//.config有帳密的話
+                {
+                    client.Credentials = new NetworkCredential(mailAccount, mailPwd);//寄信帳密
+                }
+                client.Send(mms);//寄出一封信
+            }
+
+            return true;//成功
+        }
+        catch (Exception ex)
+        {         
+            return false;
+        }
+    }//End 寄信
+
     protected void Button1_Click(object sender, EventArgs e)
     {      
         string FormId = base.taskObj.FormId;
         string FormNumber = base.taskObj.FormNumber;
         string TaskId = base.taskObj.TaskId;
         string ApplicantGuid = base.ApplicantGuid;
+        string APPLICANT_NAME = "";
         string CURRENTNAME = "";
-        
+        string APPLICANT_EMAIL = "";
+
+
         DataTable DT = SEARCHFORMCURRENT(FormNumber);
         
         if(DT.Rows.Count>=1 && DT!=null)
         {
+            APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
             CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString()+" "+ DT.Rows[0]["CURRENTTITLENAME"].ToString();
+            APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
+
+            string SUBJECTMESSAGES = CURRENTNAME + " 呼叫表單申請人 "+ APPLICANT_NAME + " ，表單: " + FormNumber;
+            string CONTEXTMESSAGES = CURRENTNAME + "呼叫表單申請人"+ APPLICANT_NAME +" ，表單:" + FormNumber + "請找 " + CURRENTNAME + " 說明";
+
+            ADDToUOF_TB_EIP_PRIV_MESS(ApplicantGuid, ApplicantGuid, SUBJECTMESSAGES, CONTEXTMESSAGES);
+
+            this.Mail_Send("", new string[] { "tk290@tkfood.com.tw" }, SUBJECTMESSAGES, CONTEXTMESSAGES, true, null);
         }
       
 
-        ADDToUOF_TB_EIP_PRIV_MESS(ApplicantGuid, ApplicantGuid, CURRENTNAME+" 呼叫表單申請人，表單: " + FormNumber, CURRENTNAME + "呼叫表單申請人，表單:" + FormNumber + "請找 "+ CURRENTNAME + " 說明");
+       
 
         MsgBox("已通知申請人", this.Page, this);
 
