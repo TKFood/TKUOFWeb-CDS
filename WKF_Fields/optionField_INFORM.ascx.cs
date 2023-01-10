@@ -471,7 +471,12 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
-        ADDToUOF_TB_EIP_PRIV_MESS("c24e7a6a-3699-4e18-9e11-a90e09fd0ac1", "c24e7a6a-3699-4e18-9e11-a90e09fd0ac1", "總經理呼叫 表單 -測試通知", "總經理呼叫 表單-測試通知");
+        string FormId = base.taskObj.FormId;
+        string FormNumber = base.taskObj.FormNumber;
+        string TaskId = base.taskObj.TaskId;
+        string ApplicantGuid = base.ApplicantGuid;
+
+        ADDToUOF_TB_EIP_PRIV_MESS(ApplicantGuid, "c24e7a6a-3699-4e18-9e11-a90e09fd0ac1", "總經理呼叫 表單 -測試通知: "+ FormNumber, "總經理呼叫 表單-測試通知: " + FormNumber + "請找總經理說明");
         
         string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
         Type cstype = obj.GetType();
