@@ -24,10 +24,22 @@ using System.Net;
 
 public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_VersionFieldUserControl_VersionFieldUC
 {
+    string FormId = "";
+    string FormNumber = "";
+    string TaskId = "";
+    string ApplicantGuid = "";
+    string APPLICANT_NAME = "";
+    string CURRENTNAME = "";
+    string CURRENTTITLENAME = "";
+    string CURRENTRANK = "";
+    string APPLICANT_EMAIL = "";
+    string FORM_NAME = "";
 
-	#region ==============公開方法及屬性==============
+    int CHECK_CURRENTRANK = 999;
+
+    #region ==============公開方法及屬性==============
     //表單設計時
-	//如果為False時,表示是在表單設計時
+    //如果為False時,表示是在表單設計時
     private bool m_ShowGetValueButton = true;
     public bool ShowGetValueButton
     {
@@ -39,9 +51,58 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		//這裡不用修改
-		//欄位的初始化資料都到SetField Method去做
+        try
+        {
+
+            FormId = base.taskObj.FormId;
+            FormNumber = base.taskObj.FormNumber;
+            TaskId = base.taskObj.TaskId;
+            ApplicantGuid = base.ApplicantGuid;
+
+            if (!string.IsNullOrEmpty(FormNumber))
+            {
+                DataTable DT = SEARCHFORMCURRENT(FormNumber);
+
+                if (DT.Rows.Count >= 1 && DT != null)
+                {
+                    APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
+                    CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
+                    CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
+                    APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
+                    FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
+                    CURRENTRANK = DT.Rows[0]["CURRENTRANK"].ToString();
+
+                    CHECK_CURRENTRANK = Convert.ToInt32(CURRENTRANK);
+                }
+            }
+
+            if (CHECK_CURRENTRANK <= 11)
+            {
+                Button1.Visible = true;
+            }
+            else
+            {
+                Button1.Visible = false;
+
+            }
+        }
+
+        catch
+        {
+
+        }
+       
+
+
+
+        
+
+        //這裡不用修改
+        //欄位的初始化資料都到SetField Method去做
         SetField(m_versionField);
+        
+        //檢查職級，要大於課長，才能按呼叫
+       
     }    
 
     /// <summary>
@@ -327,7 +388,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
             StringBuilder queryString = new StringBuilder();
             queryString.AppendFormat(@"
 
-                                    INSERT [UOFTEST].[dbo].TB_EIP_PRIV_MESS
+                                    INSERT [dbo].TB_EIP_PRIV_MESS
                                     ( 
                                     MESSAGE_GUID
                                     , TOPIC
@@ -354,7 +415,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                                     , @MASTER_GUID
                                     )
 
-                                    INSERT [UOFTEST].[dbo].TB_EIP_PRIV_MESS_MASTER
+                                    INSERT [dbo].TB_EIP_PRIV_MESS_MASTER
                                     ( 
                                     MASTER_GUID
                                     , TOPIC
@@ -383,7 +444,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                                     ,@MODIFY_DATE
                                     )
 
-                                    INSERT [UOFTEST].[dbo].TB_EIP_PUSH_QUEUE
+                                    INSERT [dbo].TB_EIP_PUSH_QUEUE
                                     ( 
                                     [NOTIFY_ID]
                                     , [USER_GUID]
@@ -447,6 +508,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                 command.Connection.Open();
 
                 int count = command.ExecuteNonQuery();
+                //MsgBox("MESSAGE "+ count, this.Page, this);
 
                 connection.Close();
                 connection.Dispose();
@@ -479,6 +541,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                             SELECT
                             usr2.NAME AS 'CURRENTNAME'
                             ,[TB_EB_JOB_TITLE].TITLE_NAME AS 'CURRENTTITLENAME'
+                            ,[TB_EB_JOB_TITLE].RANK AS 'CURRENTRANK'
                             ,(CASE WHEN  usr.IS_SUSPENDED = 1 THEN  usr.NAME + '(x)' WHEN  ISNULL(usr.ACCOUNT,'''') = '' THEN  'unknown user' ELSE usr.NAME END) AS APPLICANT_NAME
                             ,usr.[EMAIL] AS 'APPLICANT_EMAIL'
                             ,form.FORM_NAME
@@ -580,7 +643,11 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
         /// </summary>
         string mailPwd = ConfigurationManager.AppSettings["mailPwd"].Trim();
 
-
+        //MsgBox("smtpServer:"+ smtpServer, this.Page, this);
+        //MsgBox("smtpPort:" + smtpPort, this.Page, this);
+        //MsgBox("mailAccount:" +mailAccount , this.Page, this);
+        //MsgBox("mailPwd:" + mailPwd, this.Page, this);
+  
         try
         {
             //命名空間： System.Web.Mail已過時，http://msdn.microsoft.com/zh-tw/library/system.web.mail.mailmessage(v=vs.80).aspx
@@ -618,45 +685,61 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                 client.Send(mms);//寄出一封信
             }
 
+            //MsgBox("MAILS true", this.Page, this);
             return true;//成功
         }
         catch (Exception ex)
-        {         
+        {
+            //MsgBox("MAILS false " + ex.ToString() , this.Page, this);
             return false;
         }
     }//End 寄信
 
-    protected void Button1_Click(object sender, EventArgs e)
+    public void SENDMESSAGE(string ApplicantGuid,string SUBJECTMESSAGES,string CONTEXTMESSAGES)
+    {
+        ADDToUOF_TB_EIP_PRIV_MESS(ApplicantGuid, ApplicantGuid, SUBJECTMESSAGES, CONTEXTMESSAGES);
+
+    }
+
+    public void SENDEMAIL(string[] MAILTO,string SUBJECTMESSAGES,string CONTEXTMESSAGES)
     {      
-        string FormId = base.taskObj.FormId;
-        string FormNumber = base.taskObj.FormNumber;
-        string TaskId = base.taskObj.TaskId;
-        string ApplicantGuid = base.ApplicantGuid;
-        string APPLICANT_NAME = "";
-        string CURRENTNAME = "";
-        string APPLICANT_EMAIL = "";
+        this.Mail_Send("", MAILTO, SUBJECTMESSAGES, CONTEXTMESSAGES, true, null);
+    }
 
-
-        DataTable DT = SEARCHFORMCURRENT(FormNumber);
-        
-        if(DT.Rows.Count>=1 && DT!=null)
-        {
-            APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
-            CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString()+" "+ DT.Rows[0]["CURRENTTITLENAME"].ToString();
-            APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
-
-            string SUBJECTMESSAGES = CURRENTNAME + " 呼叫表單申請人 "+ APPLICANT_NAME + " ，表單: " + FormNumber;
-            string CONTEXTMESSAGES = CURRENTNAME + "呼叫表單申請人"+ APPLICANT_NAME +" ，表單:" + FormNumber + "請找 " + CURRENTNAME + " 說明";
-
-            ADDToUOF_TB_EIP_PRIV_MESS(ApplicantGuid, ApplicantGuid, SUBJECTMESSAGES, CONTEXTMESSAGES);
-
-            this.Mail_Send("", new string[] { "tk290@tkfood.com.tw" }, SUBJECTMESSAGES, CONTEXTMESSAGES, true, null);
-        }
-      
-
+    protected void Button1_Click(object sender, EventArgs e)
+    {
        
 
-        MsgBox("已通知申請人", this.Page, this);
+        if (!string.IsNullOrEmpty(FormNumber))
+        {
+            DataTable DT = SEARCHFORMCURRENT(FormNumber);
+
+            if (DT.Rows.Count >= 1 && DT != null)
+            {
+                APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
+                CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
+                CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
+                APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
+                FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
+
+                string SUBJECTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫表單申請人 [" + APPLICANT_NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+                string CONTEXTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫表單申請人 [" + APPLICANT_NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+           
+
+                SENDMESSAGE(ApplicantGuid, SUBJECTMESSAGES, CONTEXTMESSAGES);
+                SENDEMAIL(new string[] { APPLICANT_EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
+            }
+
+
+
+
+            MsgBox(FormNumber+" 已通知申請人", this.Page, this);
+
+        }
+
+     
+
+
 
 
     }

@@ -13,7 +13,7 @@
     <table width="100%" class="" cellspacing="1">
         <tr>
             <td>
-                <asp:Button ID="Button1" runat="server" Text="通知申請人" OnClick="Button1_Click" />
+                <asp:Button ID="Button1" runat="server" Text="簽核人呼叫表單申請人 " OnClick="Button1_Click"  OnClientClick="this.disabled = true; this.value = '已通知';" UseSubmitBehavior="false" />
             </td>
         </tr>
     </table>
