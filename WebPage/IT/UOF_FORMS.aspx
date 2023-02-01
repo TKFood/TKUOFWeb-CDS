@@ -4,38 +4,6 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    
-
-    <script>    
-        function btn4_Click(sender) {
-            //從前端開始視窗
-            //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
-            //OpenDialogResult為關閉視後會執行的JS Function
-            //參數使用JSON格式傳遞
-            //$uof.dialog.open2("~/CDS/WebPage/COP/TBBU_PRODUCTSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
-
-            //return false;
-
-        }
-
-        //如果有設定回傳值則執行sender Event
-        function OpenDialogResult(returnValue) {
-            if (typeof (returnValue) == "undefined")
-                return false;
-            else
-                return true;
-        }
-
-        function myFunction() {
-            //document.getElementById("demo").innerHTML = "Hello World";
-          
-        }
-     
-
-
-    </script>
-   
-
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
@@ -66,20 +34,26 @@
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <p id="demo"></p>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click" 
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click"
                                 meta:resourcekey="btn1Resource1" />
                         </td>
 
                     </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="button" id="create_pdf" value="Generate PDF">
+                        </td>
 
-                   <%--<tr>
+                    </tr>
+
+                    <%--<tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                              <button onclick="myFunction()">Click me</button>
                         </td>
 
                     </tr>--%>
-
                 </table>
                 <table class="PopTable">
                     <tr>
@@ -176,5 +150,70 @@
             </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>​
+
+  
+  <%--  <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            background-color: #111;
+            color: white;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #dddddd;
+        }
+    </style>--%>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var form = $('.form'),
+                cache_width = form.width(),
+                a4 = [595.28, 841.89]; // for a4 size paper width and height
+
+            $('#create_pdf').on('click', function () {
+                $('body').scrollTop(0);
+                createPDF();
+            });
+
+            function createPDF() {
+                getCanvas().then(function (canvas) {
+                    var
+                        img = canvas.toDataURL("image/png"),
+                        doc = new jsPDF({
+                            unit: 'px',
+                            format: 'a4'
+                        });
+                    doc.addImage(img, 'JPEG', 20, 20);
+                    doc.save('Bhavdip-html-to-pdf.pdf');
+                    form.width(cache_width);
+                });
+            }
+
+            function getCanvas() {
+                form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+                return html2canvas(form, {
+                    imageTimeout: 2000,
+                    removeContainer: true
+                });
+            }
+        });
+    </script>
 </asp:Content>
 
