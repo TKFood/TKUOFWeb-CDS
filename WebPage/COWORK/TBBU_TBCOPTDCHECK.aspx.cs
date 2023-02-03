@@ -652,7 +652,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
             if (INTTOTALLIMITS < (INTTOTALCREDITS + INTCOPTCMONEYS))
             {
-                MsgBox(e.CommandArgument.ToString()+ " 訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " 客代:" + TC004 + " 目前設定的信用額度="+ INTTOTALLIMITS.ToString("0,0") + " 已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
+                MsgBox(e.CommandArgument.ToString()+ " 訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " \r\n客代:" + TC004 + " \r\n目前設定的信用額度=" + INTTOTALLIMITS.ToString("0,0") + " \r\n已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
             }
             
         }
@@ -1666,7 +1666,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
-                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!!  訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!! \r\n \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
@@ -1740,7 +1740,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {                
-                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!!  訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!!  \r\n  \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
@@ -2773,7 +2773,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             NEWTASK_ID = formNBR;
 
             Logger.Write("起單", status + formNBR);
-            MsgBox("送單成功 "  +TC001 + TC002 + " > " + formNBR , this.Page, this);
+            MsgBox("送單成功 \r\n" + TC001 + TC002 + " > " + formNBR , this.Page, this);
 
         }
         else
