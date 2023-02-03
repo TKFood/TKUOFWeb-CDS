@@ -1666,7 +1666,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
-                MsgBox("送單失敗!!!!   訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!!  訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
@@ -1740,7 +1740,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {                
-                MsgBox("送單失敗!!!!   訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!!  訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
