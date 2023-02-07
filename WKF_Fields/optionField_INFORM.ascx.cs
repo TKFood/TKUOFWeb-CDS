@@ -757,9 +757,9 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                             ,[ISUSED]
                             ,[USER_GUID]
                             ,[EMAIL]
-                            FROM [UOF].[dbo].[Z_UOF_optionField_INFORM],[dbo].[TB_EB_USER]
-                            WHERE [Z_UOF_optionField_INFORM].[ACCOUNT]=[TB_EB_USER].[ACCOUNT]
-                            ORDER BY [ID]                          
+                            FROM [UOF].[dbo].[Z_UOF_optionField_INFORM]
+                            LEFT JOIN [dbo].[TB_EB_USER] ON [Z_UOF_optionField_INFORM].[ACCOUNT]=[TB_EB_USER].[ACCOUNT]
+                            ORDER BY [ID]                         
                                
                                 ");
 
