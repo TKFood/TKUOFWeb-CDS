@@ -79,6 +79,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
             if (CHECK_CURRENTRANK <= 11)
             {
                 Button1.Visible = true;
+                Button1.Text = "呼叫表單申請人"+ APPLICANT_NAME;
             }
             else
             {
@@ -91,7 +92,15 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
         {
 
         }
-       
+
+        try
+        {
+            SETDropDownList1();
+        }
+        catch
+        {
+
+        }
 
 
 
@@ -348,6 +357,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
         }
     }
 
+    #region FUNCTION
     public void ADDToUOF_TB_EIP_PRIV_MESS(string MESSAGE_TO, string MESSAGE_FROM, string TOPIC, string CONTENT)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
@@ -705,7 +715,172 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
     {      
         this.Mail_Send("", MAILTO, SUBJECTMESSAGES, CONTEXTMESSAGES, true, null);
     }
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
 
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
+    public void SETDropDownList1()
+    {
+        DataTable dt = SEARCH_MANAGER();
+
+        DropDownList1.DataSource = dt;
+        DropDownList1.DataTextField = "NAME";
+        DropDownList1.DataValueField = "NAME";
+        DropDownList1.DataBind();
+
+        APPLICANT_NAME = "AAABB";
+
+        if (!string.IsNullOrEmpty(APPLICANT_NAME))
+        {
+            DropDownList1.Items.Add("表單申請人:"+APPLICANT_NAME);
+        }
+
+
+    }
+    private DataTable SEARCH_MANAGER()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [ID]
+                            ,[Z_UOF_optionField_INFORM].[ACCOUNT]
+                            ,[Z_UOF_optionField_INFORM].[NAME]
+                            ,[ISUSED]
+                            ,[USER_GUID]
+                            ,[EMAIL]
+                            FROM [UOF].[dbo].[Z_UOF_optionField_INFORM],[dbo].[TB_EB_USER]
+                            WHERE [Z_UOF_optionField_INFORM].[ACCOUNT]=[TB_EB_USER].[ACCOUNT]
+                            ORDER BY [ID]                          
+                               
+                                ");
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count >= 1)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+
+    private DataTable SEARCH_UOF_USERS(string NAME)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+
+                            SELECT 
+                            [USER_GUID]
+                            ,[ACCOUNT]
+                            ,[NAME]
+                            ,[EMAIL]
+                            ,[PASSWORD]
+                            ,[IS_PASSWORD_RESET]
+                            ,[CREATE_DATE]
+                            ,[IS_LOCKED_OUT]
+                            ,[LAST_ACTIVITY_DATE]
+                            ,[LAST_LOCKED_OUT_DATE]
+                            ,[LAST_LOGIN_DATE]
+                            ,[LAST_PASSWORD_CHANGE_DATE]
+                            ,[USER_TYPE]
+                            ,[EXPIRE_DATE]
+                            ,[THEME]
+                            ,[MSG_TYPE]
+                            ,[IS_AD_AUTH]
+                            ,[EMAIL_A]
+                            ,[EMAIL_B]
+                            ,[EMAIL_C]
+                            ,[EMAIL_D]
+                            ,[PASSWORD_INVALID_ATTEMPTS]
+                            ,[PW_RESET_REASON]
+                            ,[IS_USB_AUTH]
+                            ,[USB_KEY]
+                            ,[IS_SUSPENDED]
+                            ,[LAST_SUSPENDED_DATE]
+                            ,[SID]
+                            ,[OPTION1]
+                            ,[OPTION2]
+                            ,[OPTION3]
+                            ,[OPTION4]
+                            ,[OPTION5]
+                            ,[OPTION6]
+                            ,[PERSONAL1]
+                            ,[PERSONAL2]
+                            ,[PERSONAL3]
+                            ,[PERSONAL4]
+                            ,[PERSONAL5]
+                            ,[PERSONAL6]
+                            ,[NICKNAME]
+                            ,[CA_SERIAL_NUM]
+                            ,[PROXY]
+                            ,[DOMAIN]
+                            ,[ACCOUNT_MAPPING]
+                            ,[IS_UPDATE_PERSONAL_INFO]
+                            ,[LAST_UPDATE_PERSONAL_INFO_DATE]
+                            ,[TIMEZONE_TEXT]
+                            ,[LOCATION_ID]
+                            ,[DISPLAY_TIMEZONE]
+                            ,[COMPANY_UNIFIED_ID]
+                            ,[COMPANY_NO]
+                            ,[AFTER_TRANS_MAIL_MODE]
+                            ,[SCHEME_ID]
+                            FROM [UOF].[dbo].[TB_EB_USER]
+                            WHERE EMAIL LIKE '%tkfood%'
+                            AND NAME='{0}'
+
+                          
+                               
+                                ", NAME);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count >= 1)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+
+    #endregion
+
+    #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
     {
        
@@ -743,13 +918,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
 
     }
+    #endregion
 
-    public void MsgBox(String ex, Page pg, Object obj)
-    {
-       
-        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
-        Type cstype = obj.GetType();
-        ClientScriptManager cs = pg.ClientScript;
-        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
-    }
+   
 }
