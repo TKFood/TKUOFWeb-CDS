@@ -262,11 +262,17 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                 {
                     //有填寫權限的處理
                     EnabledControl(true);
+
+                    DropDownList1.Visible = false;
+                    Button1.Visible = false;
                 }
                 else
                 {
                     //沒填寫權限的處理
                     EnabledControl(false);
+
+                    DropDownList1.Visible = false;
+                    Button1.Visible = false;
                 }
             }
             else
@@ -285,11 +291,18 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                         {
                             //有填寫權限的處理
                             EnabledControl(true);
+
+                            DropDownList1.Visible = true;
+                            Button1.Visible = true;
                         }
                         else
                         {
                             //沒填寫權限的處理
                             EnabledControl(false);
+
+
+                            DropDownList1.Visible = false;
+                            Button1.Visible = false;
                         }
                     }
                     else
@@ -299,11 +312,17 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                         {
                             //有修改權限的處理
                             EnabledControl(true);
+
+                            DropDownList1.Visible = true;
+                            Button1.Visible = true;
                         }
                         else
                         {
                             //沒修改權限的處理
                             EnabledControl(false);
+
+                            DropDownList1.Visible = false;
+                            Button1.Visible = false;
                         }
 
                     }
@@ -315,11 +334,18 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                     {
                         //有填寫權限的處理
                         EnabledControl(true);
+
+                        DropDownList1.Visible = true;
+                        Button1.Visible = true;
                     }
                     else
                     {
                         //沒填寫權限的處理
                         EnabledControl(false);
+
+
+                        DropDownList1.Visible = false;
+                        Button1.Visible = false;
                     }
 
                 }
