@@ -16,11 +16,11 @@
         </tr>
         <tr>
             <td style="font-size:20pt">
-                <asp:DropDownList ID="DropDownList1" runat="server" ></asp:DropDownList>
+                <asp:DropDownList style="padding: 0;" ID="DropDownList1" runat="server" ></asp:DropDownList>
             </td>
             <tr>
                 <td style="padding: 8px;font-size:20pt;">
-                    <asp:Button ID="Button1" runat="server" Style="width: 200px; height: 50px; background-color: palevioletred;" Text="傳送通知 " OnClick="Button1_Click" OnClientClick="this.disabled = true; this.value = '已通知';" UseSubmitBehavior="false" />
+                    <asp:Button ID="Button1" runat="server" Style="width: 200px; height: 50px; background-color: palevioletred;" Text="傳送通知" OnClick="Button1_Click" OnClientClick="this.disabled = true; this.value = '已通知';" UseSubmitBehavior="false" />
                 </td>
             </tr>          
         <tr>

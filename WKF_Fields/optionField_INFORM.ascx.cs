@@ -51,47 +51,47 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        try
-        {
+        //找出表單申請人
+        //try
+        //{
 
-            FormId = base.taskObj.FormId;
-            FormNumber = base.taskObj.FormNumber;
-            TaskId = base.taskObj.TaskId;
-            ApplicantGuid = base.ApplicantGuid;
+        //    FormId = base.taskObj.FormId;
+        //    FormNumber = base.taskObj.FormNumber;
+        //    TaskId = base.taskObj.TaskId;
+        //    ApplicantGuid = base.ApplicantGuid;
 
-            if (!string.IsNullOrEmpty(FormNumber))
-            {
-                DataTable DT = SEARCHFORMCURRENT(FormNumber);
+        //    if (!string.IsNullOrEmpty(FormNumber))
+        //    {
+        //        DataTable DT = SEARCHFORMCURRENT(FormNumber);
 
-                if (DT.Rows.Count >= 1 && DT != null)
-                {
-                    APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
-                    CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
-                    CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
-                    APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
-                    FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
-                    CURRENTRANK = DT.Rows[0]["CURRENTRANK"].ToString();
+        //        if (DT.Rows.Count >= 1 && DT != null)
+        //        {
+        //            APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
+        //            CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
+        //            CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
+        //            APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
+        //            FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
+        //            CURRENTRANK = DT.Rows[0]["CURRENTRANK"].ToString();
 
-                    CHECK_CURRENTRANK = Convert.ToInt32(CURRENTRANK);
-                }
-            }
+        //            CHECK_CURRENTRANK = Convert.ToInt32(CURRENTRANK);
+        //        }
+        //    }
 
-            if (CHECK_CURRENTRANK <= 11)
-            {
-                Button1.Visible = true;
-                Button1.Text = "呼叫表單申請人"+ APPLICANT_NAME;
-            }
-            else
-            {
-                Button1.Visible = false;
+        //    if (CHECK_CURRENTRANK <= 11)
+        //    {
+        //        Button1.Visible = true;               
+        //    }
+        //    else
+        //    {
+        //        Button1.Visible = false;
 
-            }
-        }
+        //    }
+        //}
 
-        catch
-        {
+        //catch
+        //{
 
-        }
+        //}
 
         try
         {
@@ -883,36 +883,51 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
     #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
     {
-       
+        string NAME = DropDownList1.SelectedValue.ToString();
 
-        if (!string.IsNullOrEmpty(FormNumber))
+        if(!string.IsNullOrEmpty(NAME))
         {
-            DataTable DT = SEARCHFORMCURRENT(FormNumber);
+            DataTable DT = SEARCH_UOF_USERS(NAME);
+            string USER_GUID = DT.Rows[0]["USER_GUID"].ToString();           
+            string EMAIL = DT.Rows[0]["EMAIL"].ToString();
 
-            if (DT.Rows.Count >= 1 && DT != null)
-            {
-                APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
-                CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
-                CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
-                APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
-                FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
+            string SUBJECTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+            string CONTEXTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
 
-                string SUBJECTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫表單申請人 [" + APPLICANT_NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
-                string CONTEXTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫表單申請人 [" + APPLICANT_NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
-           
+            SENDMESSAGE(USER_GUID, SUBJECTMESSAGES, CONTEXTMESSAGES);
+            SENDEMAIL(new string[] { EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
 
-                SENDMESSAGE(ApplicantGuid, SUBJECTMESSAGES, CONTEXTMESSAGES);
-                SENDEMAIL(new string[] { APPLICANT_EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
-            }
-
-
-
-
-            MsgBox(FormNumber+" 已通知申請人", this.Page, this);
-
+            MsgBox(FormNumber + " 已通知:"+ NAME, this.Page, this);
         }
 
-     
+        //if (!string.IsNullOrEmpty(FormNumber))
+        //{
+        //    DataTable DT = SEARCHFORMCURRENT(FormNumber);
+
+        //    if (DT.Rows.Count >= 1 && DT != null)
+        //    {
+        //        APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
+        //        CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
+        //        CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
+        //        APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
+        //        FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
+
+        //        string SUBJECTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫表單申請人 [" + APPLICANT_NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+        //        string CONTEXTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫表單申請人 [" + APPLICANT_NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+
+
+        //        SENDMESSAGE(ApplicantGuid, SUBJECTMESSAGES, CONTEXTMESSAGES);
+        //        SENDEMAIL(new string[] { APPLICANT_EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
+        //    }
+
+
+
+
+        //    MsgBox(FormNumber+" 已通知申請人", this.Page, this);
+
+        //}
+
+
 
 
 
