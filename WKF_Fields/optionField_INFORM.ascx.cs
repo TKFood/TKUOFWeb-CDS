@@ -584,7 +584,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
                             WHERE
                             1=1  
-                            AND  TASK_STATUS NOT IN ('2')
+                           
                             AND ISNULL([NODES].SIGN_STATUS,999)<>0
                             AND DOC_NBR LIKE '%{0}%'
                             ORDER BY HRS DESC,usr2.NAME,form.FORM_NAME,DOC_NBR
