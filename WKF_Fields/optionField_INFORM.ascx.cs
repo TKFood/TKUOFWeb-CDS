@@ -51,47 +51,48 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //找出表單申請人
-        //try
-        //{
+        //找出表單申請人員
+        //找出目前的簽核人員
+        try
+        {
 
-        //    FormId = base.taskObj.FormId;
-        //    FormNumber = base.taskObj.FormNumber;
-        //    TaskId = base.taskObj.TaskId;
-        //    ApplicantGuid = base.ApplicantGuid;
+            FormId = base.taskObj.FormId;
+            FormNumber = base.taskObj.FormNumber;
+            TaskId = base.taskObj.TaskId;
+            ApplicantGuid = base.ApplicantGuid;
 
-        //    if (!string.IsNullOrEmpty(FormNumber))
-        //    {
-        //        DataTable DT = SEARCHFORMCURRENT(FormNumber);
+            if (!string.IsNullOrEmpty(FormNumber))
+            {
+                DataTable DT = SEARCHFORMCURRENT(FormNumber);
 
-        //        if (DT.Rows.Count >= 1 && DT != null)
-        //        {
-        //            APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
-        //            CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
-        //            CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
-        //            APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
-        //            FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
-        //            CURRENTRANK = DT.Rows[0]["CURRENTRANK"].ToString();
+                if (DT.Rows.Count >= 1 && DT != null)
+                {
+                    APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
+                    CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
+                    CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
+                    APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
+                    FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
+                    CURRENTRANK = DT.Rows[0]["CURRENTRANK"].ToString();
 
-        //            CHECK_CURRENTRANK = Convert.ToInt32(CURRENTRANK);
-        //        }
-        //    }
+                    CHECK_CURRENTRANK = Convert.ToInt32(CURRENTRANK);
+                }
+            }
 
-        //    if (CHECK_CURRENTRANK <= 11)
-        //    {
-        //        Button1.Visible = true;               
-        //    }
-        //    else
-        //    {
-        //        Button1.Visible = false;
+            //if (CHECK_CURRENTRANK <= 11)
+            //{
+            //    Button1.Visible = true;
+            //}
+            //else
+            //{
+            //    Button1.Visible = false;
 
-        //    }
-        //}
+            //}
+        }
 
-        //catch
-        //{
+        catch
+        {
 
-        //}
+        }
 
         try
         {
@@ -731,8 +732,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
         DropDownList1.DataTextField = "NAME";
         DropDownList1.DataValueField = "NAME";
         DropDownList1.DataBind();
-
-        APPLICANT_NAME = "AAABB";
+      
 
         if (!string.IsNullOrEmpty(APPLICANT_NAME))
         {
@@ -884,6 +884,10 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
     protected void Button1_Click(object sender, EventArgs e)
     {
         string NAME = DropDownList1.SelectedValue.ToString();
+        if(NAME.Contains("表單申請人"))
+        {
+            NAME = APPLICANT_NAME;
+        }
 
         if(!string.IsNullOrEmpty(NAME))
         {
