@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Dynamic;
 using System.Linq;
 using System.Web;
@@ -157,7 +158,18 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         Grid1.DataSource = dt;
         Grid1.DataBind();
 
-       
+        for (int i = 0; i < Grid1.Rows.Count; i++)
+        {
+            for (int j = 0; j < Grid1.Rows[i].Cells.Count; j++)
+            {
+                if (Grid1.Rows[i].Cells[j].Text.Equals("進行中"))
+                {
+                    Grid1.Rows[i].Cells[j].ForeColor = Color.Red;
+                }
+               
+            }
+        }
+
     }
 
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -194,6 +206,26 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
 
         }
 
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+
+            //string STATUS = e.Row.Cells[1].Text.ToString();
+
+            //if(STATUS.Contains("進行中"))
+            //{
+            //    e.Row.ForeColor = Color.Red;
+            //}
+
+            //if (e.Row.RowIndex % 2 == 0)
+            //{
+            //    e.Row.BackColor = Color.Blue;  //Color.Blue; 
+            //}
+            //else
+            //{
+            //    e.Row.BackColor = Color.Red;
+            //}
+        }
+
 
     }
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -213,6 +245,13 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
 
 
     }
+
+    protected void Grid1_OnItemDataBound(object sender, GridViewCommandEventArgs e)
+    {
+        
+    }
+
+
     public void OnBeforeExport(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
