@@ -23,6 +23,10 @@
                     <asp:Button ID="Button1" runat="server" Style="width: 200px; height: 50px; background-color: palevioletred;" Text="傳送通知 " OnClick="Button1_Click" OnClientClick="this.disabled = true; this.value = '已通知';" UseSubmitBehavior="false" />
                 </td>
             </tr>          
+        <tr>
+            <td style="padding: 8px;font-size:20pt;">
 
+            </td>
+        </tr>
     </table>
 </div>
