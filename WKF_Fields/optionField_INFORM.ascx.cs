@@ -29,7 +29,9 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
     string TaskId = "";
     string ApplicantGuid = "";
     string APPLICANT_NAME = "";
+    string APPLICANT_ACCOUNT = "";
     string CURRENTNAME = "";
+    string CURRENTACCOUNT = "";
     string CURRENTTITLENAME = "";
     string CURRENTRANK = "";
     string APPLICANT_EMAIL = "";
@@ -68,7 +70,9 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                 if (DT.Rows.Count >= 1 && DT != null)
                 {
                     APPLICANT_NAME = DT.Rows[0]["APPLICANT_NAME"].ToString();
+                    APPLICANT_ACCOUNT = DT.Rows[0]["APPLICANT_ACCOUNT"].ToString();
                     CURRENTNAME = DT.Rows[0]["CURRENTNAME"].ToString();
+                    CURRENTACCOUNT = DT.Rows[0]["CURRENTACCOUNT"].ToString();
                     CURRENTTITLENAME = DT.Rows[0]["CURRENTTITLENAME"].ToString();
                     APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
                     FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
@@ -577,9 +581,11 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
         cmdTxt.AppendFormat(@" 
                             SELECT
                             usr2.NAME AS 'CURRENTNAME'
+                            , usr2.ACCOUNT AS 'CURRENTACCOUNT'
                             ,[TB_EB_JOB_TITLE].TITLE_NAME AS 'CURRENTTITLENAME'
                             ,[TB_EB_JOB_TITLE].RANK AS 'CURRENTRANK'
                             ,(CASE WHEN  usr.IS_SUSPENDED = 1 THEN  usr.NAME + '(x)' WHEN  ISNULL(usr.ACCOUNT,'''') = '' THEN  'unknown user' ELSE usr.NAME END) AS APPLICANT_NAME
+                            ,(CASE WHEN  usr.IS_SUSPENDED = 1 THEN  usr.NAME + '(x)' WHEN  ISNULL(usr.ACCOUNT,'''') = '' THEN  'unknown user' ELSE usr.ACCOUNT END) AS APPLICANT_ACCOUNT
                             ,usr.[EMAIL] AS 'APPLICANT_EMAIL'
                             ,form.FORM_NAME
                             ,DOC_NBR
@@ -756,7 +762,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
         DropDownList1.DataSource = dt;
         DropDownList1.DataTextField = "NAME";
-        DropDownList1.DataValueField = "NAME";
+        DropDownList1.DataValueField = "ACCOUNT";
         DropDownList1.DataBind();
       
 
@@ -810,7 +816,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
 
     }
 
-    private DataTable SEARCH_UOF_USERS(string NAME)
+    private DataTable SEARCH_UOF_USERS(string ACCOUNT)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -877,11 +883,11 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                             ,[SCHEME_ID]
                             FROM [UOF].[dbo].[TB_EB_USER]
                             WHERE EMAIL LIKE '%tkfood%'
-                            AND NAME='{0}'
+                            AND [ACCOUNT]='{0}'
 
                           
                                
-                                ", NAME);
+                                ", ACCOUNT);
 
 
 
@@ -909,25 +915,39 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
     #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
     {
-        string NAME = DropDownList1.SelectedValue.ToString();
-        if(NAME.Contains("表單申請人"))
+        string NAME = DropDownList1.SelectedItem.Text.ToString();
+        string ACCOUNT = DropDownList1.SelectedValue.ToString();
+
+        if (NAME.Contains("表單申請人"))
         {
-            NAME = APPLICANT_NAME;
+            ACCOUNT = APPLICANT_ACCOUNT;
         }
 
-        if(!string.IsNullOrEmpty(NAME))
+        if(!string.IsNullOrEmpty(ACCOUNT))
         {
-            DataTable DT = SEARCH_UOF_USERS(NAME);
-            string USER_GUID = DT.Rows[0]["USER_GUID"].ToString();           
-            string EMAIL = DT.Rows[0]["EMAIL"].ToString();
+            DataTable DT = SEARCH_UOF_USERS(ACCOUNT);
+            try
+            {
+                if (DT != null)
+                {
+                    string USER_GUID = DT.Rows[0]["USER_GUID"].ToString();
+                    string EMAIL = DT.Rows[0]["EMAIL"].ToString();
 
-            string SUBJECTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
-            string CONTEXTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+                    string SUBJECTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+                    string CONTEXTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
 
-            SENDMESSAGE(USER_GUID, SUBJECTMESSAGES, CONTEXTMESSAGES);
-            SENDEMAIL(new string[] { EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
+                    SENDMESSAGE(USER_GUID, SUBJECTMESSAGES, CONTEXTMESSAGES);
+                    SENDEMAIL(new string[] { EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
 
-            MsgBox(FormNumber + " 已通知:"+ NAME, this.Page, this);
+                    MsgBox(FormNumber + " 已通知:" + NAME + " " + ACCOUNT, this.Page, this);
+                }
+            }
+            catch
+            {
+
+            }
+           
+          
         }
 
         //if (!string.IsNullOrEmpty(FormNumber))
