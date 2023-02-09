@@ -104,6 +104,12 @@
                             <asp:BoundField HeaderText="成本試算預計完成日" DataField="COSTSDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField>
+                              <asp:BoundField HeaderText="原料驗收作業" DataField="ORICHECKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                            </asp:BoundField>
+                            <asp:BoundField HeaderText="原料驗收作業預計完成日" DataField="ORICHECKSDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                            </asp:BoundField>
                             <asp:BoundField HeaderText="校稿完成" DataField="PROOFREADINGS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField>
@@ -116,12 +122,7 @@
                             <asp:BoundField HeaderText="正式量產日期" DataField="PRODS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField>
-                            <asp:BoundField HeaderText="原料驗收作業" DataField="ORICHECKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                            </asp:BoundField>
-                            <asp:BoundField HeaderText="原料驗收作業預計完成日" DataField="ORICHECKSDATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                            </asp:BoundField>
+                          
                             <asp:BoundField HeaderText="營養標示作業" DataField="NUTRICHECKS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                             </asp:BoundField>

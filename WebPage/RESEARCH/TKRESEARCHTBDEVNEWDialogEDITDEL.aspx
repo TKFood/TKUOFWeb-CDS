@@ -115,6 +115,24 @@
 
             </td>
         </tr>
+          <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label16" runat="server" Text="原料驗收作業"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <%--<asp:TextBox ID="TextBox10" runat="server" Text="" Width="100%"></asp:TextBox>--%>
+                <asp:DropDownList ID="DropDownList9" runat="server"></asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label21" runat="server" Text="原料驗收日期 D+5"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="100%"></asp:TextBox>
+
+            </td>
+        </tr>
         <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label10" runat="server" Text="校稿完成"></asp:Label>
@@ -152,24 +170,7 @@
                 <asp:DropDownList ID="DropDownList8" runat="server"></asp:DropDownList>
             </td>
         </tr>
-        <tr>
-            <td class="PopTableLeftTD">
-                <asp:Label ID="Label16" runat="server" Text="原料驗收作業"></asp:Label>
-            </td>
-            <td class="PopTableRightTD">
-                <%--<asp:TextBox ID="TextBox10" runat="server" Text="" Width="100%"></asp:TextBox>--%>
-                <asp:DropDownList ID="DropDownList9" runat="server"></asp:DropDownList>
-            </td>
-        </tr>
-        <tr>
-            <td class="PopTableLeftTD">
-                <asp:Label ID="Label21" runat="server" Text="原料驗收日期 D+5"></asp:Label>
-            </td>
-            <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="100%"></asp:TextBox>
-
-            </td>
-        </tr>
+      
         <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label17" runat="server" Text="營養標示作業"></asp:Label>
