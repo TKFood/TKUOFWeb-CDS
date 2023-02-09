@@ -110,7 +110,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                             WHERE 1=1
-                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
+                            ORDER BY [SALES],[PRODUCTS]                            
                             ";
         }
         else
@@ -144,7 +144,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                             ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                             WHERE STATUS=@STATUS 
-                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
+                            ORDER BY [SALES],[PRODUCTS]                                 
                             ";
         }
        
@@ -286,9 +286,10 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                         ,[SALES]
                         ,[REMARKS]
                         ,[CLOSEDDATES]
+
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                             WHERE 1=1
-                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
+                            ORDER BY [SALES],[PRODUCTS]                                 
                             ";
         }
         else
@@ -320,7 +321,7 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
                           
                         FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                         WHERE STATUS=@STATUS 
-                        ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]     
+                        ORDER BY [SALES],[PRODUCTS]           
 
                         ";
         }
