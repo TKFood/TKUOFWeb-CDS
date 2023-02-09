@@ -258,37 +258,34 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string STATUS = DropDownList1.Text;
-        string cmdTxt = null;
+        string cmdTxt = null;      
 
         if (STATUS.Equals("全部"))
         {
-            cmdTxt = @" SELECT 
-                            [SERNO]
-                            ,[STATUS]
-                            ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
-                            ,[PRODUCTS]
-                            ,[CLIENTS]
-                            ,[SALES]
-                            ,[NUMS]
-                            ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
-                            ,[TESTMEMO]
-                            ,[TASTESMEMO]
-                            ,[PACKAGES]
-                            ,[FEASIBILITYS]
-                            ,[DESINGS]
-                            ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
-                            ,[COSTS]
-                            ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
-                            ,[PROOFREADINGS]
-                            ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
-                            ,[TESTPRODS]
-                            ,[PRODS]
-                            ,[ORICHECKS]
-                            , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
-                            ,[NUTRICHECKS]
-                            , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
-                            ,[REMARKS]
-                            ,[CLOSEDDATES]
+            cmdTxt = @"    
+                        SELECT 
+                        [SERNO]
+                        ,[STATUS]
+                        ,[PRODUCTS]
+                        ,[TESTMEMO]
+                        ,[TASTESMEMO]
+                        ,[PACKAGES]
+                        ,[FEASIBILITYS]
+                        ,[DESINGS]
+                        ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
+                        ,[COSTS]
+                        ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
+                        ,[ORICHECKS]
+                         , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
+                        ,[PROOFREADINGS]
+                          ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
+                        ,[TESTPRODS]
+                        ,[PRODS]
+                        ,[NUTRICHECKS]
+                        , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
+                        ,[SALES]
+                        ,[REMARKS]
+                        ,[CLOSEDDATES]
                             FROM [TKRESEARCH].[dbo].[TBDEVNEW]
                             WHERE 1=1
                             ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
@@ -296,44 +293,40 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
         }
         else
         {
-            cmdTxt = @" SELECT 
-                           [SERNO]
-                            ,[STATUS]
-                            ,CONVERT(NVARCHAR(10),[SDATES],111) AS SDATES
-                            ,[PRODUCTS]
-                            ,[CLIENTS]
-                            ,[SALES]
-                            ,[NUMS]
-                            ,CONVERT(NVARCHAR(10),[TESTDATES],111) AS TESTDATES
-                            ,[TESTMEMO]
-                            ,[TASTESMEMO]
-                            ,[PACKAGES]
-                            ,[FEASIBILITYS]
-                            ,[DESINGS]
-                            ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
-                            ,[COSTS]
-                            ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
-                            ,[PROOFREADINGS]
-                            ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
-                            ,[TESTPRODS]
-                            ,[PRODS]
-                            ,[ORICHECKS]
-                            , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
-                            ,[NUTRICHECKS]
-                            , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
-                            ,[REMARKS]
-                            ,[CLOSEDDATES]
-                            
-                           
-                            FROM [TKRESEARCH].[dbo].[TBDEVNEW]
-                            WHERE STATUS=@STATUS 
-                            ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]                            
-                            ";
+            cmdTxt = @" 
+                        SELECT 
+                        [SERNO]
+                        ,[STATUS]
+                        ,[PRODUCTS]
+                        ,[TESTMEMO]
+                        ,[TASTESMEMO]
+                        ,[PACKAGES]
+                        ,[FEASIBILITYS]
+                        ,[DESINGS]
+                        ,CONVERT(NVARCHAR(10),[DESINGSDATES] ,111) AS DESINGSDATES
+                        ,[COSTS]
+                        ,CONVERT(NVARCHAR(10),[COSTSDATES] ,111) AS COSTSDATES 
+                        ,[ORICHECKS]
+                         , CONVERT(NVARCHAR(10),[ORICHECKSDATES],111) AS ORICHECKSDATES
+                        ,[PROOFREADINGS]
+                          ,CONVERT(NVARCHAR(10),[PROOFREADINGSDATES] ,111) AS PROOFREADINGSDATES
+                        ,[TESTPRODS]
+                        ,[PRODS]
+                        ,[NUTRICHECKS]
+                        , CONVERT(NVARCHAR(10),[NUTRICHECKSDATES],111) AS NUTRICHECKSDATES
+                        ,[SALES]
+                        ,[REMARKS]
+                        ,[CLOSEDDATES]
+                          
+                        FROM [TKRESEARCH].[dbo].[TBDEVNEW]
+                        WHERE STATUS=@STATUS 
+                        ORDER BY CONVERT(NVARCHAR(10),[SDATES],111),[SALES],[CLIENTS],[PRODUCTS]     
+
+                        ";
         }
 
 
         m_db.AddParameter("@STATUS", STATUS);
-
 
         DataTable dt = new DataTable();
 
@@ -349,15 +342,22 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
             dt.Columns[5].Caption = "包裝型式重量";
             dt.Columns[6].Caption = "可行性";
             dt.Columns[7].Caption = "設計需求";
-            dt.Columns[8].Caption = "成本試算";
-            dt.Columns[9].Caption = "校稿完成";
-            dt.Columns[10].Caption = "試量產日期";
-            dt.Columns[11].Caption = "正式量產日期";
-            dt.Columns[12].Caption = "原料驗收作業";
-            dt.Columns[13].Caption = "營養標示作業";
-            dt.Columns[14].Caption = "負責業務";
-            dt.Columns[15].Caption = "備註";
-            dt.Columns[16].Caption = "結案日期";
+            dt.Columns[8].Caption = "設計需求預計完成日";
+            dt.Columns[9].Caption = "成本試算";
+            dt.Columns[10].Caption = "成本試算預計完成日";
+            dt.Columns[11].Caption = "原料驗收作業";
+            dt.Columns[12].Caption = "原料驗收作業預計完成日";
+            dt.Columns[13].Caption = "校稿完成";
+            dt.Columns[14].Caption = "校稿完成預計完成日";
+            dt.Columns[15].Caption = "試量產日期";
+            dt.Columns[16].Caption = "正式量產日期";
+            dt.Columns[17].Caption = "營養標示作業";
+            dt.Columns[18].Caption = "營養標示作業預計完成日";
+            dt.Columns[19].Caption = "負責業務";
+            dt.Columns[20].Caption = "備註";
+            dt.Columns[21].Caption = "結案日期";
+         
+
 
 
 
