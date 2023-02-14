@@ -238,7 +238,8 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         {
             cmdTxt.AppendFormat(@"
                                  SELECT *
-                                ,(CASE WHEN 總成品平均成本>0 THEN 分攤成本/總成品平均成本 ELSE 0 END) AS '各百分比' 
+                                ,CONVERT(NVARCHAR,CONVERT(DECIMAL(16,4),(CASE WHEN 總成品平均成本>0 THEN 分攤成本/總成品平均成本 ELSE 0 END))*100)+'%' AS '各百分比' 
+                                ,CONVERT(DECIMAL(16,2),分攤成本) AS 分攤成本
                                 FROM 
                                 (
                                 SELECT '{0}'AS '年度',MC001 AS '成品品號',MB1.MB002  AS '成品品名' ,MC004,MD003  AS '使用品號',MB2.MB002  AS '使用品名',MD006,MD007
@@ -316,6 +317,22 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                 FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
                                 WHERE  MC001=MB001
                                 AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+
+                                UNION ALL
+                                SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                ,'9合計' AS '分類'
+                                FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                                WHERE  MC001=MB001
+                                AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
                                 ) AS TEMP2
                                 WHERE 1=1
                                 {1}
@@ -332,6 +349,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
             Grid2.DataSource = dt;
             Grid2.DataBind();
+
 
         }
         else
@@ -350,23 +368,14 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    ///Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("GWButton1");
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("GWButton1");
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-        //    //Grid開窗是用RowDataBound事件再開窗          
-
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/CUSTOMERIZE/TK_SCH_DEVOLVEDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-
-
-        //}
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+           string KINDS= e.Row.Cells[5].Text.ToString();
+            if (KINDS.Equals("9合計"))
+            {
+                e.Row.BackColor = System.Drawing.Color.LightPink;
+            }
+        }
 
     }
     protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
