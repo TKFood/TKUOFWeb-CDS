@@ -75,6 +75,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTSCOST : Ede.Uof.Utility.Page.Ba
                                 ,((CASE WHEN (ME007>0 AND (ME003+ME004+ME005)>0 ) THEN CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) ELSE 0 END)+(CASE WHEN (ME008>0 AND (ME003+ME004+ME006)>0 ) THEN CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006)) ELSE 0 END)+(CASE WHEN (ME009>0 AND (ME003+ME004+ME006)>0 ) THEN CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006)) ELSE 0 END)+(CASE WHEN (ME010>0 AND (ME003+ME004+ME014)>0 ) THEN CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)) ELSE 0 END)) AS '單位成本'
                                 FROM [TK].dbo.CSTME,[TK].dbo.INVMB
                                 WHERE ME001=MB001
+                                AND (ME003+ME003) >0 
                                 AND ( ME001 LIKE '4%' OR ME001 LIKE '5%')
                                 AND ME002>='{1}'  AND ME002<='{2}'  
                                  AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')
@@ -87,6 +88,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTSCOST : Ede.Uof.Utility.Page.Ba
                                 ,AVG((CASE WHEN (ME007>0 AND (ME003+ME004+ME005)>0 ) THEN CONVERT(DECIMAL(16,4),ME007/(ME003+ME004+ME005)) ELSE 0 END)+(CASE WHEN (ME008>0 AND (ME003+ME004+ME006)>0 ) THEN CONVERT(DECIMAL(16,4),ME008/(ME003+ME004+ME006)) ELSE 0 END)+(CASE WHEN (ME009>0 AND (ME003+ME004+ME006)>0 ) THEN CONVERT(DECIMAL(16,4),ME009/(ME003+ME004+ME006)) ELSE 0 END)+(CASE WHEN (ME010>0 AND (ME003+ME004+ME014)>0 ) THEN CONVERT(DECIMAL(16,4),ME010/(ME003+ME004+ME014)) ELSE 0 END)) AS '單位成本'
                                 FROM [TK].dbo.CSTME,[TK].dbo.INVMB
                                 WHERE ME001=MB001
+                                AND (ME003+ME003) >0 
                                 AND ( ME001 LIKE '4%' OR ME001 LIKE '5%')
                                 AND ME002>='{1}'  AND ME002<='{2}'  
                                 AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')

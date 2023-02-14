@@ -13,6 +13,8 @@
 
     <input type="text" x-webkit-speech onwebkitspeechchange="foo()"/>
 
+    <input type="text" x-webkit-speech /> 
+
     <script>
         if (document.createElement("input").webkitSpeech === undefined) {
                 alert("Speech input is not supported in your browser.");           
