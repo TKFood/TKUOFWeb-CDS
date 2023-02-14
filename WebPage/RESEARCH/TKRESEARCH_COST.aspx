@@ -157,20 +157,20 @@
                                         <asp:BoundField HeaderText="年度" DataField="年度" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                         </asp:BoundField>
-                                         <asp:BoundField HeaderText="成品品號" DataField="成品品號" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                         <asp:BoundField HeaderText="成品品號" DataField="成品品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                       
-                                         <asp:BoundField HeaderText="成品品名" DataField="成品品名" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                         <asp:BoundField HeaderText="成品品名" DataField="成品品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                       
-                                         <asp:BoundField HeaderText="使用品號" DataField="使用品號" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                         <asp:BoundField HeaderText="使用品號" DataField="使用品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                       
-                                         <asp:BoundField HeaderText="使用品名" DataField="使用品名" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                         <asp:BoundField HeaderText="使用品名" DataField="使用品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                       
                                          <asp:BoundField HeaderText="分類" DataField="分類" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
