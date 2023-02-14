@@ -26,7 +26,8 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         if (!IsPostBack)
         {
             SETYEARSWEEKS();
-            BindGrid1("","","");
+            //BindGrid1("","","");
+            //BindGrid2("", "", "");
 
         }
         else
@@ -108,7 +109,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         {
             cmdTxt.AppendFormat(@"
                                SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
-                                ,((ME007+ME008+ME009+ME010)/(生產入庫數+ME005)) 單位成本, ((ME007)/(生產入庫數+ME005)) 單位材料成本, ((ME008)/(生產入庫數+ME005)) 單位人工成本,((ME009)/(生產入庫數+ME005)) 單位製造成本,((ME010)/(生產入庫數+ME005)) 單位加工成本
+                                ,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本, CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本
                                 ,MB068
                                 ,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本
                                 ,(CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均包裝製造費用
@@ -133,6 +134,16 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
                                     ", YM, SQUERY.ToString());
 
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            Grid1.DataSource = dt;
+            Grid1.DataBind();
+
         }
         else
         {
@@ -140,15 +151,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         }
 
 
-        //m_db.AddParameter("@SDATE", SDATE);
-        //m_db.AddParameter("@EDATE", EDATE);
-
-        DataTable dt = new DataTable();
-
-        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
-
-        Grid1.DataSource = dt;
-        Grid1.DataBind();
+    
     }
 
 
@@ -201,6 +204,185 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         SETEXCEL();
 
     }
+
+    private void BindGrid2(string YM, string MB001, string MB002)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder SQUERY = new StringBuilder();
+
+
+
+        //查詢條件
+        if (!string.IsNullOrEmpty(MB001))
+        {
+            SQUERY.AppendFormat(@"   AND 成品品號 LIKE '%{0}%'", MB001);
+        }
+        else
+        {
+            SQUERY.AppendFormat(@"");
+        }
+
+        if (!string.IsNullOrEmpty(MB002))
+        {
+            SQUERY.AppendFormat(@"  AND 成品品名 LIKE '%{0}%'", MB002);
+        }
+        else
+        {
+            SQUERY.AppendFormat(@"");
+        }
+
+        if (!string.IsNullOrEmpty(YM) && !string.IsNullOrEmpty(SQUERY.ToString()))
+        {
+            cmdTxt.AppendFormat(@"
+                                 SELECT *
+                                ,(CASE WHEN 總成品平均成本>0 THEN 分攤成本/總成品平均成本 ELSE 0 END) AS '各百分比' 
+                                FROM 
+                                (
+                                SELECT '{0}'AS '年度',MC001 AS '成品品號',MB1.MB002  AS '成品品名' ,MC004,MD003  AS '使用品號',MB2.MB002  AS '使用品名',MD006,MD007
+                                ,總成品平均成本
+                                ,材料平均成本
+                                ,人工平均成本
+                                ,製造平均成本
+                                ,加工平均成本
+                                ,各採購單位成本
+                                ,總採購單位成本
+                                ,總半成品重
+                                ,(CASE WHEN 總成品平均成本>0 THEN (CASE WHEN (MB2.MB001 LIKE '3%' OR MB2.MB001 LIKE '4%')THEN ((材料平均成本-總採購單位成本)*MD006/MD007/總半成品重) ELSE 各採購單位成本 END) ELSE 0 END) AS '分攤成本' 
+                                ,(CASE WHEN MD003 LIKE '1%' THEN '1原料'  WHEN MD003 LIKE '2%' THEN '2物料' WHEN (MD003 LIKE '3%' OR MD003 LIKE '4%') THEN '3半成品'END ) AS '分類'
+                                FROM
+                                (
+                                SELECT MC001,MC004,MD003,MD006,MD007
+                                ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                ,ISNULL((SELECT AVG((ME007)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '材料平均成本'
+                                ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '人工平均成本'
+                                ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '製造平均成本'
+                                ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND ME002 LIKE '{0}%'),0) AS '加工平均成本'
+                                ,(CASE WHEN ( MB2.MB001 LIKE '1%' OR MB2.MB001 LIKE '2%') AND MB2.MB064>0 AND MB2.MB065 >0 THEN MB2.MB065/MB2.MB064*MD006/MD007/MC004 ELSE MB2.MB050 END ) AS '各採購單位成本'
+                                ,(SELECT SUM (CASE WHEN  ( MB001 LIKE '1%' OR MB001 LIKE '2%') AND MB064>0 AND MB065 >0 THEN MB065/MB064*MD006/MD007/MC004 ELSE MB050 END) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001)   AS '總採購單位成本'
+                                ,ISNULL((SELECT SUM (MD006/MD007) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001 AND (MB.MB001 LIKE '3%' OR MB.MB001 LIKE '4%')),0)  AS '總半成品重'
+                                FROM [TK].dbo.BOMMC
+                                LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=BOMMC.MC001
+                                , [TK].dbo.BOMMD
+                                LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=BOMMD.MD003
+                                WHERE MC001=MD001
+                                ) AS TEMP
+                                LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=TEMP.MC001
+                                LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=TEMP.MD003
+                                UNION ALL
+                                SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                ,'4人工' AS '分類'
+                                FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                                WHERE  MC001=MB001
+                                AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                                UNION ALL
+                                SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                ,'5製造' AS '分類'
+                                FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                                WHERE  MC001=MB001
+                                AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                                UNION ALL
+                                SELECT '{0}',MC001 AS '成品品號',MB002  AS '成品品名',0 ,''  AS '使用品號','' AS '使用品名',0,0
+                                ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,0
+                                ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                ,'6加工' AS '分類'
+                                FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
+                                WHERE  MC001=MB001
+                                AND (MC001 LIKE '3%' OR MC001 LIKE '4%' OR MC001 LIKE '5%') 
+                                ) AS TEMP2
+                                WHERE 1=1
+                                {1}
+                                ORDER BY 成品品號,分類,使用品號
+
+                                    ", YM, SQUERY.ToString());
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            Grid2.DataSource = dt;
+            Grid2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    ///Get the button that raised the event
+        //    Button btn = (Button)e.Row.FindControl("GWButton1");
+        //    //Get the row that contains this button
+        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+        //    //string cellvalue = gvr.Cells[2].Text.Trim();
+        //    string Cellvalue = btn.CommandArgument;
+        //    DataRowView row = (DataRowView)e.Row.DataItem;
+        //    Button lbtnName = (Button)e.Row.FindControl("GWButton1");
+        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+        //    //Grid開窗是用RowDataBound事件再開窗          
+
+        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/CUSTOMERIZE/TK_SCH_DEVOLVEDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+
+        //}
+
+    }
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        //if (e.CommandName == "GWButton1")
+        //{
+
+        //    BindGrid1("");
+
+        //}
+
+
+    }
+  
 
     public void SETEXCEL()
     {
@@ -336,6 +518,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     protected void btn1_Click(object sender, EventArgs e)
     {
         BindGrid1(txtDate1.Text.ToString(), TextBox1.Text.ToString(), TextBox2.Text.ToString());
+        BindGrid2(txtDate1.Text.ToString(), TextBox1.Text.ToString(), TextBox2.Text.ToString());
     }
 
    
