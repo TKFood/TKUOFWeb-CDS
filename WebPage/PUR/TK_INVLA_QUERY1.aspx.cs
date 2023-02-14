@@ -101,6 +101,8 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
 
         if(!string.IsNullOrEmpty(MB001))
         {
+            string NEWMB001 = MB001.ToUpper();
+
             cmdTxt.AppendFormat(@"
                                
                                 SELECT 品號,品名,規格,單位  
@@ -169,7 +171,7 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                                 WHERE LA001=MB001
                                 AND LA004>='{1}' AND LA004<='{2}'
 
-                                AND (LA001 LIKE  '%{0}%' OR MB002 LIKE '%{0}%')
+                                AND (LA001 LIKE  '%{0}%' OR UPPER(MB002) LIKE '%{0}%')
                                 ) AS TEMP,[TK].dbo.INVMB
                                 WHERE LA001=MB001
 
@@ -182,7 +184,7 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
 
 
                                
-                                ", MB001, SDATES.ToString("yyyyMMdd"), EDATES.ToString("yyyyMMdd"));
+                                ", NEWMB001, SDATES.ToString("yyyyMMdd"), EDATES.ToString("yyyyMMdd"));
 
 
         }
