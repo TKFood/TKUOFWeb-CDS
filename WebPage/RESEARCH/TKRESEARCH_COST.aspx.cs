@@ -108,7 +108,10 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         if (!string.IsNullOrEmpty(YM) && !string.IsNullOrEmpty(SQUERY.ToString()))
         {
             cmdTxt.AppendFormat(@"
-                               SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
+                              SELECT *
+                                FROM 
+                                (
+                                SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
                                 ,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本, CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本
                                 ,MB068
                                 ,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本
@@ -127,10 +130,42 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                 LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
                                 LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
                                 WHERE 1=1
-                               {1} 
+                                {1}
 
-                                    AND (生產入庫數+ME005)>0
-                                    ORDER BY TA001,TA002   
+                                AND (生產入庫數+ME005)>0
+                                UNION ALL
+
+                                SELECT '小計' AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',SUM(生產入庫數),AVG(ME005) 在製約量_材料,AVG(本階人工成本),AVG(本階製造費用),AVG(ME007) 材料成本,AVG(ME008) 人工成本,AVG(ME009) 製造費用,AVG(ME010) 加工費用
+                                ,AVG(CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005)))) 單位成本
+                                ,AVG(CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005)))) 單位材料成本
+                                ,AVG(CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005)))) 單位人工成本
+                                ,AVG(CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005)))) 單位製造成本
+                                ,AVG(CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005)))) 單位加工成本
+                                ,MB068
+                                ,AVG((CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END )) 平均包裝人工成本
+                                ,AVG((CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END )) 平均包裝製造費用
+                                ,AVG((CASE WHEN MB068 IN ('03') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END )) 平均小線人工成本
+                                ,AVG((CASE WHEN MB068 IN ('03') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END )) 平均小線製造費用
+                                ,AVG((CASE WHEN MB068 IN ('02') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END )) 平均大線人工成本
+                                ,AVG((CASE WHEN MB068 IN ('02') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END )) 平均大線製造費用
+                                FROM 
+                                (
+                                SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'
+                                FROM [TK].dbo.CSTTA
+                                WHERE TA002 LIKE '{0}%'
+                                GROUP BY TA002,TA001
+                                ) AS TEMP
+                                LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
+                                LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
+                                WHERE 1=1
+                                {1}
+
+                                AND (生產入庫數+ME005)>0
+                                GROUP BY TA001,MB002,MB003,MB068
+                                ) AS TEMP2
+                                ORDER BY  品號,年月
+
+ 
 
                                     ", YM, SQUERY.ToString());
 
@@ -164,23 +199,14 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    ///Get the button that raised the event
-        //    Button btn = (Button)e.Row.FindControl("GWButton1");
-        //    //Get the row that contains this button
-        //    GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-        //    //string cellvalue = gvr.Cells[2].Text.Trim();
-        //    string Cellvalue = btn.CommandArgument;
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    Button lbtnName = (Button)e.Row.FindControl("GWButton1");
-        //    ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-        //    //Grid開窗是用RowDataBound事件再開窗          
-
-        //    Dialog.Open2(lbtnName, "~/CDS/WebPage/CUSTOMERIZE/TK_SCH_DEVOLVEDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-
-
-        //}
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string KINDS = e.Row.Cells[0].Text.ToString();
+            if (KINDS.Equals("小計"))
+            {
+                e.Row.BackColor = System.Drawing.Color.LightPink;
+            }
+        }
 
     }
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
