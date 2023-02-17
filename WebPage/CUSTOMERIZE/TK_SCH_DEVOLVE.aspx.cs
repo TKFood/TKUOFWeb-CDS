@@ -166,7 +166,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
                             AND TB_EIP_SCH_WORK.SUBJECT  LIKE '%校稿%'
                             {0}
 
-                            ORDER BY TB_EIP_SCH_DEVOLVE.CREATE_TIME
+                            ORDER BY TB_EIP_SCH_DEVOLVE.CREATE_TIME DESC
                                
                                 ", QUERYS.ToString());
 
