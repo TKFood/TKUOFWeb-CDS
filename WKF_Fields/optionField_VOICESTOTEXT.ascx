@@ -82,7 +82,8 @@
     </script>
     <br />
     <%--最後結果：<input id="textBox" type="text" size="60" value="" /><br />--%>
-    總經理意見：<input id="tempBox" type="text" size="60" value="" /><br />
+    <%--總經理意見：<input id="tempBox" type="text" size="60" value="" /><br />--%>
+    總經理意見：<textarea id="tempBox" name="tempBox" rows="5" cols="100"></textarea><br />
     辨識語言：
     <select id="langCombo">
 
