@@ -108,11 +108,11 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                                 SELECT 品號,品名,規格,單位  
                                 ,(SELECT SUM(LA005*LA011) FROM TK.dbo.INVLA WHERE LA001=品號) AS '目前庫存量'
                             ,   年月,最近進貨價,最低補量
-                                ,(CASE WHEN SUM(FILEDS1)>0 THEN SUM(FILEDS1) ELSE NULL END ) AS '1進貨/入庫'
-                                ,(CASE WHEN SUM(FILEDS2)>0 THEN SUM(FILEDS2) ELSE NULL END ) AS '2銷貨'
-                                ,(CASE WHEN SUM(FILEDS3)>0 THEN SUM(FILEDS3) ELSE NULL END ) AS '3領用'
-                                ,(CASE WHEN SUM(FILEDS4)>0 THEN SUM(FILEDS4) ELSE NULL END ) AS '4組合領用'
-                                ,(CASE WHEN SUM(FILEDS5)>0 THEN SUM(FILEDS5) ELSE NULL END ) AS '5組合生產'
+                                ,(CASE WHEN SUM(FILEDS1)<>0 THEN SUM(FILEDS1) ELSE NULL END ) AS '1進貨/入庫'
+                                ,(CASE WHEN SUM(FILEDS2)<>0 THEN SUM(FILEDS2) ELSE NULL END ) AS '2銷貨'
+                                ,(CASE WHEN SUM(FILEDS3)<>0 THEN SUM(FILEDS3) ELSE NULL END ) AS '3領用'
+                                ,(CASE WHEN SUM(FILEDS4)<>0 THEN SUM(FILEDS4) ELSE NULL END ) AS '4組合領用'
+                                ,(CASE WHEN SUM(FILEDS5)<>0 THEN SUM(FILEDS5) ELSE NULL END ) AS '5組合生產'
 
                                 ,CONVERT(decimal(16,2),MB047)  AS '標準售價' ,CONVERT(decimal(16,2),MB051) AS '零售價'
                                 ,(CASE WHEN SUM(FILEDS2)<0 THEN 
