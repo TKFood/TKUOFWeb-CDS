@@ -120,6 +120,8 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                                 FROM [TK].dbo.SASLA
                                 WHERE LA005=品號
                                 AND SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)=年月
+                                AND (LA017-LA020-LA021-LA022-LA023)>0
+                                AND (LA016+LA025-LA019)>0
                                 GROUP BY  SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)) ELSE 0 END) AS '平均售價'
                                 ,(SELECT CONVERT(NVARCHAR,ISNULL(CONVERT(decimal(16,2),MB050),0))+' /'+MB004 
                                 FROM [TK].dbo.INVMB
@@ -153,13 +155,14 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                                 ,(CASE WHEN NEWMQ008 IN ('3領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS3'
                                 ,(CASE WHEN NEWMQ008 IN ('4組合領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS4'
                                 ,(CASE WHEN NEWMQ008 IN ('5組合生產') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS5'
-                                ,(
-                                SELECT SUM(TB019)*-1 AS NUMS
-                                FROM [TK].dbo.POSTA,[TK].dbo.POSTB
-                                WHERE TA001=TB001 AND TA002=TB002 AND TA003=TB003 AND TA006=TB006
-                                AND TA002='100000'
-                                AND TB010=LA001
-                                AND TA001 LIKE SUBSTRING(LA004,1,6)+'%') AS '員購數量'
+                               ,(
+                                SELECT SUM(LA016)
+                                FROM [TK].dbo.SASLA
+                                WHERE SASLA.LA043 IN (SELECT  [SASLA_LA043]  FROM [TKPUR].[dbo].[TK_SASLA_LA043])
+                                AND SASLA.LA005=TEMP.LA001
+                                AND SUBSTRING(CONVERT(NVARCHAR,SASLA.LA015,112),1,6)=SUBSTRING(TEMP.LA004,1,6)
+
+                                ) AS '員購數量'
 
                                 FROM 
                                 (
