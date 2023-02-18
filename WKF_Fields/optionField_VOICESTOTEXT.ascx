@@ -36,7 +36,7 @@
             } else { // 否則就開始辨識
                 //textBox.value = ''; // 清除最終的辨識訊息
                 tempBox.value = ''; // 清除中間的辨識訊息
-                ctl00_ContentPlaceHolder1_txtComment, value = '';
+                ctl00_ContentPlaceHolder1_txtComment.value = '';
 
                 final_transcript = ''; // 最終的辨識訊息變數
                 recognition.lang = langCombo.value; // 設定辨識語言
