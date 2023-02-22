@@ -495,7 +495,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
             cmdTxt.AppendFormat(@"
                                SELECT MC001 AS '成品品號',MB1.MB002 AS '成品品名',MD003 AS '組件品號',MB2.MB002 AS '組件品名',MB2.MB004 AS '組件單位',CONVERT(decimal(16,4),MB2.MB050) AS '最近進價',MB2.MB102  AS '進價是否含稅',MC004 AS '標準批量',MD006 AS '組成用量',MD007 AS '底數',MD008 AS '損秏率'
                                 ,(SELECT TOP 1 '最近進貨日:'+TG003+' 廠商:'+TG005+' '+MA002 FROM [TK].dbo.PURTG,[TK].dbo.PURTH,[TK].dbo.PURMA WHERE TG001=TH001 AND TG002=TH002 AND TG005=MA001 AND TH004=MD003 ORDER BY TG003 DESC) AS 'MA002'
-                                , CONVERT(decimal(16,4),MB2.MB050*MD006/MD007*(1+MD008)/MC004) AS '單位進貨成本'
+                                , CONVERT(decimal(16,4),MB2.MB050*MD006/MD007*(1+MD008)/MC004) AS '分攤單位進貨成本'
                                 ,CONVERT(decimal(16,4),(SELECT SUM(MB050*MD006/MD007*(1+MD008)/MC004) FROM [TK].dbo.BOMMC MC,[TK].dbo.BOMMD MD,[TK].dbo.INVMB MB WHERE MC.MC001=MD.MD001 AND MB.MB001=MD.MD003 AND MD.MD001=BOMMC.MC001 ))  AS '成品單位進貨成本'
 
                                 FROM [TK].dbo.BOMMC

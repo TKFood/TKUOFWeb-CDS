@@ -251,7 +251,7 @@
                                     <asp:BoundField HeaderText="組件品名" DataField="組件品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="200px"></ItemStyle>
                                     </asp:BoundField>
-                                     <asp:BoundField HeaderText="單位進貨成本" DataField="單位進貨成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                     <asp:BoundField HeaderText="分攤單位進貨成本" DataField="分攤單位進貨成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="組件單位" DataField="組件單位" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
