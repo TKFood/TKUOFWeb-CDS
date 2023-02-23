@@ -13,8 +13,12 @@
         var startStopButton; // 「辨識/停止」按鈕
         var final_transcript = ''; // 最終的辨識訊息的變數
         var recognizing = false; // 是否辨識中
+        var infoBoxTEMP; // 訊息 label
 
-        function startButton(event) {
+        function startButton(event) {     
+            infoBoxTEMP = document.getElementById("infoBoxTEMP"); // 取得訊息控制項 infoBox
+            infoBoxTEMP.innerText = "startButton";
+
             infoBox = document.getElementById("infoBox"); // 取得訊息控制項 infoBox
             textBox = document.getElementById("textBox"); // 取得最終的辨識訊息控制項 textBox
             tempBox = document.getElementById("tempBox"); // 取得中間的辨識訊息控制項 tempBox
@@ -22,12 +26,15 @@
             langCombo = document.getElementById("langCombo"); // 取得「辨識語言」這個選擇控制項
             if (recognizing) { // 如果正在辨識，則停止。
                 recognition.stop();
+
+                infoBoxTEMP.innerText = "如果正在辨識";
             } else { // 否則就開始辨識
                 textBox.value = ''; // 清除最終的辨識訊息
                 tempBox.value = ''; // 清除中間的辨識訊息
                 final_transcript = ''; // 最終的辨識訊息變數
                 recognition.lang = langCombo.value; // 設定辨識語言
                 recognition.start(); // 開始辨識
+                infoBoxTEMP.innerText = "否則就開始辨識";
             }
         }
 
@@ -77,6 +84,8 @@
 
     </select>
     <input id="startStopButton" type="button" value="辨識" onclick="startButton(event)" /><br />
-    <label id="infoBox"></label>
+    <label id="infoBox" runat="server" text="INFO"></label><br />
+
+    <label id="infoBoxTEMP" runat="server" text="infoBoxTEMP"></label><br />
 </body>
 </html>
