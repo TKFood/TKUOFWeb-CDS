@@ -7,6 +7,10 @@
 </head>
 <body>
     <script type="text/javascript">
+        //設定全域環境的SpeechRecognition
+        window.webkitSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+       
+
         var infoBox; // 訊息 label
         var textBox; // 最終的辨識訊息 text input
         var tempBox; // 中間的辨識訊息 text input
@@ -76,13 +80,34 @@
             //    recognition.interimResults = true;
             //}
 
-            recognition.onresult = function (event) { // 辨識有任何結果時
-                var interim_transcript = ''; // 中間結果
-                for (var i = event.resultIndex; i < event.results.length; ++i) { // 對於每一個辨識結果
-                    if (event.results[i].isFinal) { // 如果是最終結果
-                        final_transcript += event.results[i][0].transcript; // 將其加入最終結果中
-                    } else { // 否則
-                        interim_transcript += event.results[i][0].transcript; // 將其加入中間結果中
+            //recognition.onresult = function (event) { // 辨識有任何結果時
+            //    var interim_transcript = ''; // 中間結果
+            //    for (var i = event.resultIndex; i < event.results.length; ++i) { // 對於每一個辨識結果
+            //        if (event.results[i].isFinal) { // 如果是最終結果
+            //            final_transcript += event.results[i][0].transcript; // 將其加入最終結果中
+            //        } else { // 否則
+            //            interim_transcript += event.results[i][0].transcript; // 將其加入中間結果中
+            //        }
+            //    }
+            //    if (final_transcript.trim().length > 0) // 如果有最終辨識文字
+            //        textBox.value = final_transcript; // 顯示最終辨識文字
+            //    if (interim_transcript.trim().length > 0) // 如果有中間辨識文字
+            //        tempBox.value = interim_transcript; // 顯示中間辨識文字
+            //};
+
+            recognition.onresult = function (event) {
+                var interim_transcript = '';
+                if (typeof (event.results) == 'undefined') {
+                    recognition.onend = null;
+                    recognition.stop();
+                    upgrade();
+                    return;
+                }
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        final_transcript += event.results[i][0].transcript;
+                    } else {
+                        interim_transcript += event.results[i][0].transcript;
                     }
                 }
                 if (final_transcript.trim().length > 0) // 如果有最終辨識文字
