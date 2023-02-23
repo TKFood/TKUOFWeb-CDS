@@ -37,11 +37,17 @@
                 infoBoxTEMP.innerText = "否則就開始辨識";
             }
         }
+               
 
         if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitSpeechRecognition 這個屬性
             // 就是不支援語音辨識，要求使用者更新瀏覽器。 
             infoBox.innerText = "本瀏覽器不支援語音辨識，請更換瀏覽器！(Chrome 25 版以上才支援語音辨識)";
+
+            infoBoxTEMP.innerText = "本瀏覽器不支援語音辨識";
         } else {
+        
+           
+
             var recognition = new webkitSpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
             recognition.continuous = true; // 設定連續辨識模式
             recognition.interimResults = true; // 設定輸出中先結果。
@@ -50,13 +56,25 @@
                 recognizing = true; // 設定為辨識中
                 startStopButton.value = "按此停止"; // 辨識中...按鈕改為「按此停止」。  
                 infoBox.innerText = "辨識中...";  // 顯示訊息為「辨識中」...
+
+                infoBoxTEMP.innerText = "本瀏覽器支援語音辨識";
             };
 
             recognition.onend = function () { // 辨識完成
                 recognizing = false; // 設定為「非辨識中」
                 startStopButton.value = "開始辨識";  // 辨識完成...按鈕改為「開始辨識」。
                 infoBox.innerText = ""; // 不顯示訊息
+
+                infoBoxTEMP.innerText = "本瀏覽器支援語音辨識";
             };
+
+            //x_mobileFlg = window.navigator.userAgentData.mobile
+            //if (x_mobileFlg) {
+            //    recognition.interimResults = false;
+            //}
+            //else {
+            //    recognition.interimResults = true;
+            //}
 
             recognition.onresult = function (event) { // 辨識有任何結果時
                 var interim_transcript = ''; // 中間結果
@@ -72,6 +90,7 @@
                 if (interim_transcript.trim().length > 0) // 如果有中間辨識文字
                     tempBox.value = interim_transcript; // 顯示中間辨識文字
             };
+         
         }
     </script>
     <br />
