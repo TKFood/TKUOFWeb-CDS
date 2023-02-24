@@ -7,13 +7,17 @@
 </head>
 <body>
     <script type="text/javascript">
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed);
+
         //設定全域環境的SpeechRecognition
-        window.webkitSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
        
 
         var infoBox; // 訊息 label
         var textBox; // 最終的辨識訊息 text input
         var tempBox; // 中間的辨識訊息 text input
+        var textBoxTIme;
         var startStopButton; // 「辨識/停止」按鈕
         var final_transcript = ''; // 最終的辨識訊息的變數
         var recognizing = false; // 是否辨識中
@@ -26,8 +30,12 @@
             infoBox = document.getElementById("infoBox"); // 取得訊息控制項 infoBox
             textBox = document.getElementById("textBox"); // 取得最終的辨識訊息控制項 textBox
             tempBox = document.getElementById("tempBox"); // 取得中間的辨識訊息控制項 tempBox
+            textBoxTIme = document.getElementById("textBoxTIme"); // 取得中間的辨識訊息控制項 tempBox
             startStopButton = document.getElementById("startStopButton"); // 取得「辨識/停止」這個按鈕控制項
             langCombo = document.getElementById("langCombo"); // 取得「辨識語言」這個選擇控制項
+
+            textBoxTIme.value =today.toISOString();
+
             if (recognizing) { // 如果正在辨識，則停止。
                 recognition.stop();
 
@@ -43,7 +51,7 @@
         }
 
 
-        if (!('webkitSpeechRecognition' in window)) {  // 如果找不到 window.webkitSpeechRecognition 這個屬性
+        if (!('SpeechRecognition' in window)) {  // 如果找不到 window.webkitSpeechRecognition 這個屬性
             // 就是不支援語音辨識，要求使用者更新瀏覽器。 
             infoBox.innerText = "本瀏覽器不支援語音辨識，請更換瀏覽器！(Chrome 25 版以上才支援語音辨識)";
 
@@ -52,7 +60,7 @@
 
 
 
-            var recognition = new webkitSpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
+            var recognition = new SpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
             recognition.continuous = true; // 設定連續辨識模式
             recognition.interimResults = true; // 設定輸出中先結果。
 
@@ -119,6 +127,7 @@
         }
     </script>
     <br />
+    時間：<input id="textBoxTIme" type="text" size="60" value="" /><br />
     最後結果：<input id="textBox" type="text" size="60" value="" /><br />
     中間結果：<input id="tempBox" type="text" size="60" value="" /><br />
     辨識語言：
