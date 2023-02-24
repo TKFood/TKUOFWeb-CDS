@@ -36,9 +36,11 @@
         var recognizing = false; // 是否辨識中
         var infoBoxTEMP; // 訊息 label
 
-        function startButton(event) {
-            infoBoxTEMP = document.getElementById("infoBoxTEMP"); // 取得訊息控制項 infoBox
-            infoBoxTEMP.innerText = "startButton";
+     
+
+
+        function startButton(event) {    
+            infoBoxTEMP = document.getElementById("infoBoxTEMP"); // 取得訊息控制項 infoBox    
 
             infoBox = document.getElementById("infoBox"); // 取得訊息控制項 infoBox
             textBox = document.getElementById("textBox"); // 取得最終的辨識訊息控制項 textBox
@@ -47,42 +49,52 @@
             startStopButton = document.getElementById("startStopButton"); // 取得「辨識/停止」這個按鈕控制項
             langCombo = document.getElementById("langCombo"); // 取得「辨識語言」這個選擇控制項
 
+            infoBoxTEMP.innerText = "startButton";
+
             textBoxTIme.value = today.toISOString() + ' ' + SPEECHTYPE;
 
             if (recognizing) { // 如果正在辨識，則停止。
                 recognition.stop();
 
-                infoBoxTEMP.innerText = "如果正在辨識";
+                infoBoxTEMP.innerText = "正在辨識";
             } else { // 否則就開始辨識
                 textBox.value = ''; // 清除最終的辨識訊息
                 tempBox.value = ''; // 清除中間的辨識訊息
                 final_transcript = ''; // 最終的辨識訊息變數
                 recognition.lang = langCombo.value; // 設定辨識語言
                 recognition.start(); // 開始辨識
-                infoBoxTEMP.innerText = "否則就開始辨識";
+                infoBoxTEMP.innerText = "開始辨識";
             }
         }
 
+        infoBox = document.getElementById("infoBox"); // 取得訊息控制項 infoBox
+        infoBoxTEMP = document.getElementById("infoBoxTEMP"); // 取得訊息控制項 infoBox    
 
         if (!('SpeechRecognition' in window)) {  // 如果找不到 window.webkitSpeechRecognition 這個屬性
-            // 就是不支援語音辨識，要求使用者更新瀏覽器。 
-            infoBox.innerText = "本瀏覽器不支援語音辨識，請更換瀏覽器！(Chrome 25 版以上才支援語音辨識)";
+            // 就是不支援語音辨識，要求使用者更新瀏覽器。       
 
+            infoBox.innerText = "本瀏覽器不支援語音辨識，請更換瀏覽器！(Chrome 25 版以上才支援語音辨識)";
             infoBoxTEMP.innerText = "本瀏覽器不支援語音辨識";
         } else {
-
-
+            //console.log("new SpeechRecognition");
+            //alert("new SpeechRecognition");
 
             var recognition = new SpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
             recognition.continuous = true; // 設定連續辨識模式
             recognition.interimResults = true; // 設定輸出中先結果。
+            //recognition.interimResults = false;// 設定不輸出中先結果。
+
+            //console.log("SpeechRecognition onstart");
+            //alert("SpeechRecognition onstart");
 
             recognition.onstart = function () { // 開始辨識
+                infoBoxTEMP.innerText = " SpeechRecognition onstart ING";
+
                 recognizing = true; // 設定為辨識中
                 startStopButton.value = "按此停止"; // 辨識中...按鈕改為「按此停止」。  
                 infoBox.innerText = "辨識中...";  // 顯示訊息為「辨識中」...
 
-                infoBoxTEMP.innerText = "本瀏覽器支援語音辨識";
+                infoBoxTEMP.innerText = "辨識中";
             };
 
             recognition.onend = function () { // 辨識完成
@@ -90,7 +102,7 @@
                 startStopButton.value = "開始辨識";  // 辨識完成...按鈕改為「開始辨識」。
                 infoBox.innerText = ""; // 不顯示訊息
 
-                infoBoxTEMP.innerText = "本瀏覽器支援語音辨識";
+                infoBoxTEMP.innerText = "onend";
             };
 
             //x_mobileFlg = window.navigator.userAgentData.mobile
