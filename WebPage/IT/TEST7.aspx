@@ -11,7 +11,7 @@
         const today = new Date(timeElapsed);
         var  SPEECHTYPE = "";
         //設定全域環境的SpeechRecognition
-        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition|| mozSpeechRecognition || msSpeechRecognition || oSpeechRecognition; 
+        var SpeechRecognition = webkitSpeechRecognition || SpeechRecognition || mozSpeechRecognition || msSpeechRecognition || oSpeechRecognition; 
 
         if (typeof SpeechRecognition !== 'undefined') {
             SPEECHTYPE = 'SpeechRecognition';
