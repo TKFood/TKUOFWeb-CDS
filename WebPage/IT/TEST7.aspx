@@ -9,10 +9,23 @@
     <script type="text/javascript">
         const timeElapsed = Date.now();
         const today = new Date(timeElapsed);
-
+        var  SPEECHTYPE = "";
         //設定全域環境的SpeechRecognition
         var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition|| mozSpeechRecognition || msSpeechRecognition || oSpeechRecognition; 
-        
+
+        if (typeof SpeechRecognition !== 'undefined') {
+            SPEECHTYPE = 'SpeechRecognition';
+        } else if (typeof webkitSpeechRecognition !== 'undefined') {
+            SPEECHTYPE = 'webkitSpeechRecognition';
+        } else if (typeof mozSpeechRecognition !== 'undefined') {
+            SPEECHTYPE = 'mozSpeechRecognition';
+        } else if (typeof msSpeechRecognition !== 'undefined') {
+            SPEECHTYPE = 'msSpeechRecognition';
+        } else if (typeof oSpeechRecognition !== 'undefined') {
+            SPEECHTYPE = 'oSpeechRecognition';
+        } else {
+            SPEECHTYPE = '浏览器不支持语音识别API';
+        }
 
         var infoBox; // 訊息 label
         var textBox; // 最終的辨識訊息 text input
@@ -34,7 +47,7 @@
             startStopButton = document.getElementById("startStopButton"); // 取得「辨識/停止」這個按鈕控制項
             langCombo = document.getElementById("langCombo"); // 取得「辨識語言」這個選擇控制項
 
-            textBoxTIme.value =today.toISOString();
+            textBoxTIme.value = today.toISOString() + ' ' ;
 
             if (recognizing) { // 如果正在辨識，則停止。
                 recognition.stop();
