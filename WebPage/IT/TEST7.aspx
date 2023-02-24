@@ -47,7 +47,7 @@
             startStopButton = document.getElementById("startStopButton"); // 取得「辨識/停止」這個按鈕控制項
             langCombo = document.getElementById("langCombo"); // 取得「辨識語言」這個選擇控制項
 
-            textBoxTIme.value = today.toISOString() + ' ' ;
+            textBoxTIme.value = today.toISOString() + ' ' + SPEECHTYPE;
 
             if (recognizing) { // 如果正在辨識，則停止。
                 recognition.stop();
