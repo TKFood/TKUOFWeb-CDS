@@ -11,8 +11,8 @@
         const today = new Date(timeElapsed);
 
         //設定全域環境的SpeechRecognition
-        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-       
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition|| mozSpeechRecognition || msSpeechRecognition || oSpeechRecognition; 
+        
 
         var infoBox; // 訊息 label
         var textBox; // 最終的辨識訊息 text input
