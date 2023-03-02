@@ -787,12 +787,12 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     {
         int rowIndex = -1;
 
-        //if (e.CommandName == "GWButton1")
-        //{
+        if (e.CommandName == "GV4Button1")
+        {
 
-        //    BindGrid1("");
+            BindGrid4(TextBox3.Text.ToString(), DropDownList1.Text.ToString());
 
-        //}
+        }
 
 
     }

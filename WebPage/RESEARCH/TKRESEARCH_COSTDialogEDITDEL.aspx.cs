@@ -162,24 +162,30 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
     public void UPDATE(string ID)
     {
         string SERNO = lblParam.Text;
-        string STATUS = lblParam.Text;
-        string PRODUCTS = lblParam.Text;
+        string MB001 = TextBox1.Text;
+        string MB002 = TextBox2.Text;
+        string MB003 = TextBox3.Text;
+        string COSTROW = TextBox4.Text;
+        string COSTHR = TextBox5.Text;
+        string COSTMANU = TextBox6.Text;
+        string COSTPRO = TextBox7.Text;
+        string COMMEMTS = TextBox9.Text;
+        string ISCLOSED = DropDownList1.Text;
 
 
-        if (!string.IsNullOrEmpty(STATUS) && !string.IsNullOrEmpty(PRODUCTS))
+        if (!string.IsNullOrEmpty(MB001))
         {
-            UPDATETBDEVNEW(
-                        SERNO
-                      
-
+            UPDATE_TBCOSTRECORDS(
+                        MB001, MB002, MB003, COSTROW, COSTHR, COSTMANU, COSTPRO, COMMEMTS, ISCLOSED
                         );
         }
 
         Dialog.SetReturnValue2("REFRESH");
     }
-    public void UPDATETBDEVNEW(
-                            string SERNO
-                            
+    public void UPDATE_TBCOSTRECORDS(
+                            string MB001, string MB002, string MB003, string COSTROW, string COSTHR, string COSTMANU, string COSTPRO, string COMMEMTS, string ISCLOSED
+
+
                                 )
     {
 
@@ -190,16 +196,31 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        UPDATE [TKRESEARCH].[dbo].[TBDEVNEW]
+                       UPDATE [TKRESEARCH].[dbo].[TBCOSTRECORDS]
                         SET 
-                        STATUS=@STATUS
-                        , SDATES=@SDATES
+                        MB002=@MB002
+                       ,MB003=@MB003
+                     ,COSTROW=@COSTROW
+                     ,COSTHR=@COSTHR
+                     ,COSTMANU=@COSTMANU
+                     ,COSTPRO=@COSTPRO
+                     ,COMMEMTS=@COMMEMTS
+                     ,ISCLOSED=@ISCLOSED
+              
                        
-                        WHERE[SERNO]=@SERNO
+                        WHERE[MB001]=@MB001
                             ";
 
-        m_db.AddParameter("@SERNO", SERNO);
-      
+        m_db.AddParameter("@MB001", MB001);
+        m_db.AddParameter("@MB002", MB002);
+        m_db.AddParameter("@MB003", MB003);
+        m_db.AddParameter("@COSTROW", COSTROW);
+        m_db.AddParameter("@COSTHR", COSTHR);
+        m_db.AddParameter("@COSTMANU", COSTMANU);
+        m_db.AddParameter("@COSTPRO", COSTPRO);
+        m_db.AddParameter("@COMMEMTS", COMMEMTS);
+        m_db.AddParameter("@ISCLOSED", ISCLOSED);
+
 
         m_db.ExecuteNonQuery(cmdTxt);
 

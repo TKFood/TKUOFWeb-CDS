@@ -369,7 +369,7 @@
                                     </asp:BoundField>
                                     <asp:TemplateField HeaderText="修改明細" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemTemplate>
-                                            <asp:Button ID="GV4Button1" runat="server" Text="修改" ForeColor="Red" CommandName="Button1" CommandArgument='<%# Eval("品號") %>' />
+                                            <asp:Button ID="GV4Button1" runat="server" Text="修改" ForeColor="Red" CommandName="GV4Button1" CommandArgument='<%# Eval("品號") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 

@@ -83,10 +83,10 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label9" runat="server" Text="單位加工成本" OnTextChanged="CAL_TextBox8_TextChanged" AutoPostBack="true"></asp:Label>
+                <asp:Label ID="Label9" runat="server" Text="單位加工成本"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="100%"></asp:TextBox>
+                <asp:TextBox ID="TextBox7" runat="server" Text="" Width="100%"  OnTextChanged="CAL_TextBox8_TextChanged" AutoPostBack="true"></asp:TextBox>
             </td>
         </tr>
         <tr>
