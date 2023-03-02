@@ -70,7 +70,13 @@
             $('.content').hide();
         });
 
-
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
 
     </script>
 
@@ -366,13 +372,60 @@
                     <td>
                         <div class="container">
                             <div class="header">
-                                <span>點擊這裡摺疊</span>
+                                <span>點擊這裡新增資料</span>
                             </div>
                             <div class="content" style="display: none;">
                                 <table>
-                                    <tr>
-                                        <td></td>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label12" runat="server" Text="品名" ></asp:Label>
+                                            <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+                                        </td>
                                     </tr>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label13" runat="server" Text="規格"></asp:Label>
+                                            <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label14" runat="server" Text="單位原料成本"></asp:Label>
+                                            <asp:TextBox ID="TextBox7" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label7" runat="server" Text="單位物料成本"></asp:Label>
+                                            <asp:TextBox ID="TextBox8" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label8" runat="server" Text="單位人工成本"></asp:Label>
+                                            <asp:TextBox ID="TextBox9" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label9" runat="server" Text="單位製造成本"></asp:Label>
+                                            <asp:TextBox ID="TextBox10" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label10" runat="server" Text="單位加工成本"></asp:Label>
+                                            <asp:TextBox ID="TextBox11" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Label ID="Label11" runat="server" Text="備註"></asp:Label>
+                                            <asp:TextBox ID="TextBox12" runat="server" TextMode="MultiLine" Rows="5" Columns="100"></asp:TextBox>
+                                        </td>
+                                    </tr>
+
                                 </table>
                             </div>
                         </div>
