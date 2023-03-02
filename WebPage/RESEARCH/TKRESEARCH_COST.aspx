@@ -46,6 +46,8 @@
             </telerik:RadTab>
             <telerik:RadTab Text="查BOM最近的進貨成本">
             </telerik:RadTab>
+            <telerik:RadTab Text="人工記錄的成本">
+            </telerik:RadTab>
             <telerik:RadTab Text="空白">
             </telerik:RadTab>
         </Tabs>
@@ -251,7 +253,7 @@
                                     <asp:BoundField HeaderText="組件品名" DataField="組件品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="200px"></ItemStyle>
                                     </asp:BoundField>
-                                     <asp:BoundField HeaderText="分攤單位進貨成本" DataField="分攤單位進貨成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                    <asp:BoundField HeaderText="分攤單位進貨成本" DataField="分攤單位進貨成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="組件單位" DataField="組件單位" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -293,6 +295,68 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="RadPageView4" runat="server">
+            <table class="PopTable">
+                <tr>
+                    <td class="PopTableLeftTD">
+                        <asp:Label ID="Label4" runat="server" Text="品名:" meta:resourcekey="Label4Resource1"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="PopTableLeftTD">
+                        <asp:Label ID="Label6" runat="server" Text="是否結案:" meta:resourcekey="Label4Resource1"></asp:Label>
+                    </td>
+                    <td class="PopTableRightTD">
+                        <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="PopTableLeftTD"></td>
+                    <td>
+                        <p id="demo"></p>
+                        <asp:Button ID="Button3" runat="server" Text=" 查詢 " OnClick="btn3_Click"
+                            meta:resourcekey="btn3Resource1" />
+                    </td>
+
+                </tr>
+
+
+                <%--<tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                             <button onclick="myFunction()">Click me</button>
+                        </td>
+
+                    </tr>--%>
+            </table>
+            <table class="PopTable">
+                <tr>
+                    <td colspan="2" class="PopTableRightTD">
+                        <div style="overflow-x: auto; width: 100%">
+                            <Fast:Grid ID="Grid4" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid4_RowDataBound" OnRowCommand="Grid4_RowCommand" runat="server" OnBeforeExport="OnBeforeExport4" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource4" OnPageIndexChanging="grid4_PageIndexChanging">
+                                <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                <Columns>
+                                    <asp:BoundField HeaderText="品號" DataField="品號" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="品名" DataField="品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <ItemStyle HorizontalAlign="left" Width="200px"></ItemStyle>
+                                    </asp:BoundField>
+                                   
+
+
+                                </Columns>
+                            </Fast:Grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView5" runat="server">
         </telerik:RadPageView>
     </telerik:RadMultiPage>​
 </asp:Content>

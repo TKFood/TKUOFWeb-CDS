@@ -26,6 +26,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         if (!IsPostBack)
         {
             SETYEARSWEEKS();
+            BindDropDownList();
             //BindGrid1("","","");
             //BindGrid2("", "", "");
 
@@ -41,33 +42,35 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
     }
     #region FUNCTION
-  
-    //private void BindDropDownList()
-    //{
-    //    DataTable dt = new DataTable();
-    //    dt.Columns.Add("ID", typeof(String));
-    //    dt.Columns.Add("NAMES", typeof(String));
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
 
-    //    string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-    //    Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-    //    string cmdTxt = @"SELECT '未完成' AS KINDS UNION ALL SELECT '全部' ";
+        string cmdTxt = @"SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='人工記錄成本' ORDER BY  [ID] ";
 
-    //    dt.Load(m_db.ExecuteReader(cmdTxt));
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-    //    if (dt.Rows.Count > 0)
-    //    {
-    //        DropDownList1.DataSource = dt;
-    //        DropDownList1.DataTextField = "KINDS";
-    //        DropDownList1.DataValueField = "KINDS";
-    //        DropDownList1.DataBind();
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARANAME";
+            DropDownList1.DataValueField = "PARANAME";
+            DropDownList1.DataBind();
 
-    //    }
-    //    else
-    //    {
+        }
+        else
+        {
 
-    //    }
-    //}
+        }
+
+
+
+    }
 
 
     public void SETYEARSWEEKS()
@@ -679,7 +682,113 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
     }
 
-  
+    private void BindGrid4(string MB002,string ISCLOSED)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder SQUERY = new StringBuilder();
+
+
+
+        //查詢條件
+        if (!string.IsNullOrEmpty(MB002))
+        {
+            SQUERY.AppendFormat(@" AND MB002 LIKE '%{0}%' ", MB002);
+        }
+        else
+        {
+            SQUERY.AppendFormat(@"");
+        }
+
+        if (!string.IsNullOrEmpty(ISCLOSED))
+        {
+            SQUERY.AppendFormat(@" AND [ISCLOSED]='{0}' ", ISCLOSED);
+        }
+        else
+        {
+            SQUERY.AppendFormat(@"");
+        }
+
+        if ( !string.IsNullOrEmpty(SQUERY.ToString()))
+        {
+            cmdTxt.AppendFormat(@"
+                                 SELECT 
+                                [MB001] AS '品號'
+                                ,[MB002] AS '品名'
+                                ,[MB003] AS '規格'
+                                ,[COSTROW] AS '單位材料成本'
+                                ,[COSTHR] AS '單位人工成本'
+                                ,[COSTMANU] AS '單位製造成本'
+                                ,[COSTPRO] AS '單位加工成本'
+                                ,([COSTROW]+[COSTHR]+[COSTMANU]+[COSTPRO])  AS '單位成本'
+                                ,[COMMEMTS] AS '備註'
+                                ,[ISCLOSED] AS '是否結案'
+                                FROM [TKRESEARCH].[dbo].[TBCOSTRECORDS]
+                                WHERE 1=1
+                                {0}
+
+                                ORDER BY [MB001] 
+
+ 
+
+                                    ",  SQUERY.ToString());
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            Grid4.DataSource = dt;
+            Grid4.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+
+
+
+    protected void grid4_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+      
+
+    }
+    protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        //if (e.CommandName == "GWButton1")
+        //{
+
+        //    BindGrid1("");
+
+        //}
+
+
+    }
+
+
+    public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+        //SETEXCEL();
+
+    }
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
@@ -688,6 +797,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         ClientScriptManager cs = pg.ClientScript;
         cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
+
     #endregion
 
     #region BUTTON
@@ -701,6 +811,11 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     protected void btn2_Click(object sender, EventArgs e)
     {
         BindGrid3( TextBox4.Text.ToString());
+    }
+
+    protected void btn3_Click(object sender, EventArgs e)
+    {
+        BindGrid4(TextBox3.Text.ToString(),DropDownList1.Text.ToString());
     }
 
 
