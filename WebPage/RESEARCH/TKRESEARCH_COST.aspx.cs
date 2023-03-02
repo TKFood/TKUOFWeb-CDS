@@ -76,7 +76,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     public void SETYEARSWEEKS()
     {
         txtDate1.Text = DateTime.Now.ToString("yyyy");
-       
+
     }
 
     private void BindGrid1(string YM, string MB001, string MB002)
@@ -107,7 +107,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         {
             SQUERY.AppendFormat(@"");
         }
-      
+
         if (!string.IsNullOrEmpty(YM) && !string.IsNullOrEmpty(SQUERY.ToString()))
         {
             cmdTxt.AppendFormat(@"
@@ -189,7 +189,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         }
 
 
-    
+
     }
 
 
@@ -222,8 +222,8 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         //    BindGrid1("");
 
         //}
-      
-       
+
+
     }
 
 
@@ -442,7 +442,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-           string KINDS= e.Row.Cells[5].Text.ToString();
+            string KINDS = e.Row.Cells[5].Text.ToString();
             if (KINDS.Equals("9合計"))
             {
                 e.Row.BackColor = System.Drawing.Color.LightPink;
@@ -467,7 +467,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
 
-        
+
 
     }
 
@@ -491,7 +491,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         //    SQUERY.AppendFormat(@"");
         //}
 
-       
+
 
         if (!string.IsNullOrEmpty(MB001))
         {
@@ -544,7 +544,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     }
     protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-       
+
 
     }
     protected void Grid3_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -682,7 +682,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
     }
 
-    private void BindGrid4(string MB002,string ISCLOSED)
+    private void BindGrid4(string MB002, string ISCLOSED)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -711,7 +711,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
             SQUERY.AppendFormat(@"");
         }
 
-        if ( !string.IsNullOrEmpty(SQUERY.ToString()))
+        if (!string.IsNullOrEmpty(SQUERY.ToString()))
         {
             cmdTxt.AppendFormat(@"
                                  SELECT 
@@ -733,7 +733,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
  
 
-                                    ",  SQUERY.ToString());
+                                    ", SQUERY.ToString());
 
             //m_db.AddParameter("@SDATE", SDATE);
             //m_db.AddParameter("@EDATE", EDATE);
@@ -765,8 +765,23 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     }
     protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-      
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Button1
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("GV4Button1");
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("GV4Button1");
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCH_COSTDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
+
+        }
     }
     protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -810,12 +825,12 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
     protected void btn2_Click(object sender, EventArgs e)
     {
-        BindGrid3( TextBox4.Text.ToString());
+        BindGrid3(TextBox4.Text.ToString());
     }
 
     protected void btn3_Click(object sender, EventArgs e)
     {
-        BindGrid4(TextBox3.Text.ToString(),DropDownList1.Text.ToString());
+        BindGrid4(TextBox3.Text.ToString(), DropDownList1.Text.ToString());
     }
 
 
