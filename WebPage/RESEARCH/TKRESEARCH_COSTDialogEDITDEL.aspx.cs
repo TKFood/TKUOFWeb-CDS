@@ -114,11 +114,12 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
                         [MB001] AS '品號'
                         ,[MB002] AS '品名'
                         ,[MB003] AS '規格'
-                        ,[COSTROW] AS '單位材料成本'
+                        ,[COSTROW] AS '單位原料成本'
+                        ,[COSTMAT] AS '單位物料成本'
                         ,[COSTHR] AS '單位人工成本'
                         ,[COSTMANU] AS '單位製造成本'
                         ,[COSTPRO] AS '單位加工成本'
-                        ,([COSTROW]+[COSTHR]+[COSTMANU]+[COSTPRO])  AS '單位成本'
+                        ,([COSTROW]+[COSTMAT]+[COSTHR]+[COSTMANU]+[COSTPRO])  AS '單位成本'
                         ,[COMMEMTS] AS '備註'
                         ,[ISCLOSED] AS '是否結案'
                         FROM [TKRESEARCH].[dbo].[TBCOSTRECORDS]
@@ -142,7 +143,8 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
             TextBox1.Text = dt.Rows[0]["品號"].ToString();
             TextBox2.Text = dt.Rows[0]["品名"].ToString();
             TextBox3.Text = dt.Rows[0]["規格"].ToString();
-            TextBox4.Text = dt.Rows[0]["單位材料成本"].ToString();
+            TextBox4.Text = dt.Rows[0]["單位原料成本"].ToString();
+            TextBox10.Text = dt.Rows[0]["單位物料成本"].ToString();
             TextBox5.Text = dt.Rows[0]["單位人工成本"].ToString();
             TextBox6.Text = dt.Rows[0]["單位製造成本"].ToString();
             TextBox7.Text = dt.Rows[0]["單位加工成本"].ToString();
@@ -171,19 +173,19 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
         string COSTPRO = TextBox7.Text;
         string COMMEMTS = TextBox9.Text;
         string ISCLOSED = DropDownList1.Text;
-
+        string COSTMAT = TextBox10.Text;
 
         if (!string.IsNullOrEmpty(MB001))
         {
             UPDATE_TBCOSTRECORDS(
-                        MB001, MB002, MB003, COSTROW, COSTHR, COSTMANU, COSTPRO, COMMEMTS, ISCLOSED
+                        MB001, MB002, MB003, COSTROW, COSTMAT,COSTHR, COSTMANU, COSTPRO, COMMEMTS, ISCLOSED
                         );
         }
 
         Dialog.SetReturnValue2("REFRESH");
     }
     public void UPDATE_TBCOSTRECORDS(
-                            string MB001, string MB002, string MB003, string COSTROW, string COSTHR, string COSTMANU, string COSTPRO, string COMMEMTS, string ISCLOSED
+                            string MB001, string MB002, string MB003, string COSTROW,string COSTMAT, string COSTHR, string COSTMANU, string COSTPRO, string COMMEMTS, string ISCLOSED
 
 
                                 )
@@ -201,6 +203,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
                         MB002=@MB002
                        ,MB003=@MB003
                      ,COSTROW=@COSTROW
+                     ,COSTMAT=@COSTMAT
                      ,COSTHR=@COSTHR
                      ,COSTMANU=@COSTMANU
                      ,COSTPRO=@COSTPRO
@@ -215,6 +218,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
         m_db.AddParameter("@MB002", MB002);
         m_db.AddParameter("@MB003", MB003);
         m_db.AddParameter("@COSTROW", COSTROW);
+        m_db.AddParameter("@COSTMAT", COSTMAT);
         m_db.AddParameter("@COSTHR", COSTHR);
         m_db.AddParameter("@COSTMANU", COSTMANU);
         m_db.AddParameter("@COSTPRO", COSTPRO);
@@ -257,6 +261,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogEDITDEL : Ede.Uof.Utility.
         SUM = SUM + Convert.ToDecimal(TextBox5.Text);
         SUM = SUM + Convert.ToDecimal(TextBox6.Text);
         SUM = SUM + Convert.ToDecimal(TextBox7.Text);
+        SUM = SUM + Convert.ToDecimal(TextBox10.Text);
 
         TextBox8.Text = SUM.ToString();
     }

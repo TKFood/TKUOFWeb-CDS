@@ -59,10 +59,18 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label5" runat="server" Text="單位材料成本"></asp:Label>
+                <asp:Label ID="Label5" runat="server" Text="單位原料成本"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" OnTextChanged="CAL_TextBox8_TextChanged" AutoPostBack="true"></asp:TextBox>
+            </td>
+        </tr>
+             <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label12" runat="server" Text="單位物料成本"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox10" runat="server" Text="" Width="100%" OnTextChanged="CAL_TextBox8_TextChanged" AutoPostBack="true"></asp:TextBox>
             </td>
         </tr>
         <tr>
