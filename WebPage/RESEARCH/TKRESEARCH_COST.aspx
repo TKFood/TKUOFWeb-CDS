@@ -367,6 +367,9 @@
                                     <asp:BoundField HeaderText="備註" DataField="備註" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="200px"></ItemStyle>
                                     </asp:BoundField>
+                                    <asp:BoundField HeaderText="是否結案" DataField="是否結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <ItemStyle HorizontalAlign="left" Width="10px"></ItemStyle>
+                                    </asp:BoundField>
                                     <asp:TemplateField HeaderText="修改明細" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemTemplate>
                                             <asp:Button ID="GV4Button1" runat="server" Text="修改" ForeColor="Red" CommandName="GV4Button1" CommandArgument='<%# Eval("品號") %>' />
