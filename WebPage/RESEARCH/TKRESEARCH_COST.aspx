@@ -5,7 +5,37 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <head>
 
+        <style type="text/css">
+            /* CSS樣式 */
+            .container {
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .header {
+                display: inline-block;
+                background-color: #f5f5f5;
+                color: #333;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                padding: 5px 10px;
+                cursor: pointer;
+                user-select: none;
+            }
+
+                .header:hover {
+                    background-color: #e5e5e5;
+                }
+
+            .content {
+                display: none;
+            }
+        </style>
+    </head>
     <script>    
         function btn4_Click(sender) {
             //從前端開始視窗
@@ -30,6 +60,15 @@
             //document.getElementById("demo").innerHTML = "Hello World";
 
         }
+
+        $(document).ready(function () {
+            $('.header').click(function () {
+                $('.content').slideToggle();
+            });
+
+            // 預設隱藏content區塊
+            $('.content').hide();
+        });
 
 
 
@@ -322,7 +361,25 @@
                     </td>
 
                 </tr>
+                <tr>
+                    <td class="PopTableLeftTD"></td>
+                    <td>
+                        <div class="container">
+                            <div class="header">
+                                <span>點擊這裡摺疊</span>
+                            </div>
+                            <div class="content" style="display: none;">
+                                <table>
+                                    <tr>
+                                        <td>
 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
 
                 <%--<tr>
                         <td class="PopTableLeftTD"></td>
