@@ -805,9 +805,45 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         //SETEXCEL();
 
     }
+    public void ADD_TBCOSTRECORDS(
+                           string MB002, string MB003, string COSTROW, string COSTMAT, string COSTHR, string COSTMANU, string COSTPRO, string COMMEMTS, string ISCLOSED
+                              )
+    {
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                       INSERT [TKRESEARCH].[dbo].[TBCOSTRECORDS]
+                       ([MB002],[MB003],[COSTROW],[COSTMAT],[COSTHR],[COSTMANU],[COSTPRO],[COMMEMTS],[ISCLOSED])
+                        VALUES
+                        (@MB002,@MB003,@COSTROW,@COSTMAT,@COSTHR,@COSTMANU,@COSTPRO,@COMMEMTS,@ISCLOSED)
+              
+                       
+                        
+                            ";
+
+       
+        m_db.AddParameter("@MB002", MB002);
+        m_db.AddParameter("@MB003", MB003);
+        m_db.AddParameter("@COSTROW", COSTROW);
+        m_db.AddParameter("@COSTMAT", COSTMAT);
+        m_db.AddParameter("@COSTHR", COSTHR);
+        m_db.AddParameter("@COSTMANU", COSTMANU);
+        m_db.AddParameter("@COSTPRO", COSTPRO);
+        m_db.AddParameter("@COMMEMTS", COMMEMTS);
+        m_db.AddParameter("@ISCLOSED", ISCLOSED);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+
+    }
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
+        //MsgBox("Button1", this.Page, this);
         string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
         Type cstype = obj.GetType();
         ClientScriptManager cs = pg.ClientScript;
@@ -831,6 +867,24 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
     protected void btn3_Click(object sender, EventArgs e)
     {
+        BindGrid4(TextBox3.Text.ToString(), DropDownList1.Text.ToString());
+    }
+    protected void btn4_Click(object sender, EventArgs e)
+    {
+        //MsgBox("OK", this.Page, this);
+
+        string MB002 = TextBox5.Text;
+        string MB003 = TextBox6.Text;
+        string COSTROW = TextBox7.Text;
+        string COSTMAT = TextBox8.Text;
+        string COSTHR = TextBox9.Text;
+        string COSTMANU = TextBox10.Text;
+        string COSTPRO = TextBox11.Text;
+        string COMMEMTS = TextBox12.Text;
+        string ISCLOSED = "N";
+
+        ADD_TBCOSTRECORDS(MB002, MB003, COSTROW, COSTMAT, COSTHR, COSTMANU, COSTPRO, COMMEMTS, ISCLOSED);
+
         BindGrid4(TextBox3.Text.ToString(), DropDownList1.Text.ToString());
     }
 

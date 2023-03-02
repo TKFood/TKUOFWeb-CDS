@@ -425,6 +425,11 @@
                                             <asp:TextBox ID="TextBox12" runat="server" TextMode="MultiLine" Rows="5" Columns="100"></asp:TextBox>
                                         </td>
                                     </tr>
+                                      <tr style="padding: 10px;">
+                                        <td>
+                                            <asp:Button ID="Button4" runat="server" Text="儲存" OnClick="btn4_Click" style="width: 100px; height: 50px; font-size: 24px !important;  background-color: darkseagreen; color: white;"  />
+                                        </td>
+                                    </tr>
 
                                 </table>
                             </div>
