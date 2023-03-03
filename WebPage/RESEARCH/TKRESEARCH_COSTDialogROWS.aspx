@@ -7,13 +7,16 @@
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/trontastic/jquery-ui.css">
 
-    <script>
-        $(function () {
-
-
-        });
-
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
     </script>
+
     <div style="overflow-x: auto; width: 800px">
 
         <table class="PopTable">
@@ -23,6 +26,34 @@
                 </td>
                 <td class="PopTableRightTD" colspan="2">
                     <asp:Label ID="lblParam" runat="server" Text=""></asp:Label>
+                </td>
+            </tr>
+        </table>
+        <table class="PopTable">
+            <tr>
+                <td class="PopTableLeftTD">
+                      <asp:Label ID="Label10" runat="server" Text="新增原料"></asp:Label>
+                </td>
+                <td class="PopTableRightTD" colspan="2">
+                    <asp:Label ID="Label2" runat="server" Text="原料品名"></asp:Label>
+                    <asp:Label ID="Label7" runat="server" Text="<br>"></asp:Label>
+
+                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    <asp:Label ID="Label5" runat="server" Text="<br>"></asp:Label>
+
+                    <asp:Label ID="Label3" runat="server" Text="原料規格 "></asp:Label>
+                    <asp:Label ID="Label6" runat="server" Text="<br>"></asp:Label>
+
+                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                    <asp:Label ID="Label8" runat="server" Text="<br>"></asp:Label>
+
+                    <asp:Label ID="Label4" runat="server" Text="原料單價 "></asp:Label>
+                    <asp:Label ID="Label9" runat="server" Text="<br>"></asp:Label>
+
+                    <asp:TextBox ID="TextBox3" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
+                     <asp:Label ID="Label11" runat="server" Text="<br>"></asp:Label>
+
+                    <asp:Button ID="Button1" runat="server" Text="新增存檔" onclick="btn1_Click" />
                 </td>
             </tr>
         </table>

@@ -286,9 +286,58 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
 
     protected void btn1_Click(object sender, EventArgs e)
     {
-        DELTBDEVNEW(lblParam.Text);
+        string MMB001 = lblParam.Text;
+        string MB002 = TextBox1.Text;
+        string MB003 = TextBox2.Text;
+        string COSTROW = TextBox3.Text;
+
+        ADD_TBCOSTRECORDSROWS(MMB001,  MB002,  MB003,  COSTROW);
+        UPDATE_TBCOSTRECORDS_AFTER_ADDDEL();
+
+        TextBox1.Text = null;
+        TextBox2.Text = null;
+        TextBox3.Text = null;
+
+        BindGrid1(lblParam.Text);
     }
 
+    public void ADD_TBCOSTRECORDSROWS(string MMB001,  string MB002, string MB003, string COSTROW)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        INSERT INTO [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS]
+                        ([MMB001],[MB002],[MB003],[COSTROW])
+                        VALUES
+                        (@MMB001,@MB002,@MB003,@COSTROW)
+                            ";
+
+        m_db.AddParameter("@MMB001", MMB001);
+        m_db.AddParameter("@MB002", MB002);
+        m_db.AddParameter("@MB003", MB003);
+        m_db.AddParameter("@COSTROW", COSTROW);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+    public void UPDATE_TBCOSTRECORDS_AFTER_ADDDEL()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                        UPDATE [TKRESEARCH].[dbo].[TBCOSTRECORDS]
+                        SET [COSTROW]=(SELECT SUM([COSTROW]) FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS] WHERE [TBCOSTRECORDSROWS].MMB001=[TBCOSTRECORDS].MB001)
+                        WHERE EXISTS (SELECT 1 FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS] WHERE [TBCOSTRECORDSROWS].MMB001=[TBCOSTRECORDS].MB001)
+
+                            ";
+
+    /*    m_db.AddParameter("@MMB001", MMB001)*/;
+       
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
     public void DELTBDEVNEW(string ID)
     {
         //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
