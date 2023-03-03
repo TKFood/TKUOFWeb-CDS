@@ -87,9 +87,9 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogMATS : Ede.Uof.Utility.Pag
         string MMB001 = lblParam.Text;
         string MB002 = TextBox1.Text;
         string MB003 = TextBox2.Text;
-        string COSTROW = TextBox3.Text;
+        string COSTMAT = TextBox3.Text;
 
-        ADD_TBCOSTRECORDSROWS(MMB001, MB002, MB003, COSTROW);
+        ADD_TBCOSTRECORDSMAT(MMB001, MB002, MB003, COSTMAT);
         UPDATE_TBCOSTRECORDS_AFTER_ADDDEL();
 
         TextBox1.Text = null;
@@ -146,8 +146,8 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogMATS : Ede.Uof.Utility.Pag
                                 ,[MB001]
                                 ,[MB002]
                                 ,[MB003]
-                                ,[COSTROW]
-                                FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS]
+                                ,[COSTMAT]
+                                FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSMAT]
                                 WHERE [MMB001]={0}
                                 ORDER BY MB001
  
@@ -213,7 +213,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogMATS : Ede.Uof.Utility.Pag
         if (e.CommandName == "GV1DELETE")
         {           
             string MB002 =(e.CommandArgument).ToString();
-            DELETE_TBCOSTRECORDSROWS(MB002);
+            DELETE_TBCOSTRECORDSMAT(MB002);
             UPDATE_TBCOSTRECORDS_AFTER_ADDDEL();
 
             BindGrid1(lblParam.Text);
@@ -267,71 +267,26 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogMATS : Ede.Uof.Utility.Pag
 
         //Dialog.SetReturnValue2("REFRESH");
     }
-    public void UPDATE_TBCOSTRECORDS(
-                            string MB001, string MB002, string MB003, string COSTROW,string COSTMAT, string COSTHR, string COSTMANU, string COSTPRO, string COMMEMTS, string ISCLOSED
-
-
-                                )
-    {
-
-        
-
-
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        string cmdTxt = @"  
-                       UPDATE [TKRESEARCH].[dbo].[TBCOSTRECORDS]
-                        SET 
-                        MB002=@MB002
-                       ,MB003=@MB003
-                     ,COSTROW=@COSTROW
-                     ,COSTMAT=@COSTMAT
-                     ,COSTHR=@COSTHR
-                     ,COSTMANU=@COSTMANU
-                     ,COSTPRO=@COSTPRO
-                     ,COMMEMTS=@COMMEMTS
-                     ,ISCLOSED=@ISCLOSED
-              
-                       
-                        WHERE[MB001]=@MB001
-                            ";
-
-        m_db.AddParameter("@MB001", MB001);
-        m_db.AddParameter("@MB002", MB002);
-        m_db.AddParameter("@MB003", MB003);
-        m_db.AddParameter("@COSTROW", COSTROW);
-        m_db.AddParameter("@COSTMAT", COSTMAT);
-        m_db.AddParameter("@COSTHR", COSTHR);
-        m_db.AddParameter("@COSTMANU", COSTMANU);
-        m_db.AddParameter("@COSTPRO", COSTPRO);
-        m_db.AddParameter("@COMMEMTS", COMMEMTS);
-        m_db.AddParameter("@ISCLOSED", ISCLOSED);
-
-
-        m_db.ExecuteNonQuery(cmdTxt);
-
-
-    }
+   
 
  
 
-    public void ADD_TBCOSTRECORDSROWS(string MMB001,  string MB002, string MB003, string COSTROW)
+    public void ADD_TBCOSTRECORDSMAT(string MMB001,  string MB002, string MB003, string COSTMAT)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                        INSERT INTO [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS]
-                        ([MMB001],[MB002],[MB003],[COSTROW])
+                        INSERT INTO [TKRESEARCH].[dbo].[TBCOSTRECORDSMAT]
+                        ([MMB001],[MB002],[MB003],[COSTMAT])
                         VALUES
-                        (@MMB001,@MB002,@MB003,@COSTROW)
+                        (@MMB001,@MB002,@MB003,@COSTMAT)
                             ";
 
         m_db.AddParameter("@MMB001", MMB001);
         m_db.AddParameter("@MB002", MB002);
         m_db.AddParameter("@MB003", MB003);
-        m_db.AddParameter("@COSTROW", COSTROW);
+        m_db.AddParameter("@COSTMAT", COSTMAT);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
@@ -343,8 +298,8 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogMATS : Ede.Uof.Utility.Pag
 
         string cmdTxt = @"  
                         UPDATE [TKRESEARCH].[dbo].[TBCOSTRECORDS]
-                        SET [COSTROW]=(SELECT SUM([COSTROW]) FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS] WHERE [TBCOSTRECORDSROWS].MMB001=[TBCOSTRECORDS].MB001)
-                        WHERE EXISTS (SELECT 1 FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS] WHERE [TBCOSTRECORDSROWS].MMB001=[TBCOSTRECORDS].MB001)
+                        SET [COSTMAT]=(SELECT SUM([COSTMAT]) FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSMAT] WHERE [TBCOSTRECORDSMAT].MMB001=[TBCOSTRECORDS].MB001)
+                        WHERE EXISTS (SELECT 1 FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSMAT] WHERE [TBCOSTRECORDSMAT].MMB001=[TBCOSTRECORDS].MB001)
 
                             ";
 
@@ -370,13 +325,13 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogMATS : Ede.Uof.Utility.Pag
         //Dialog.Close(this);
     }
 
-    public void DELETE_TBCOSTRECORDSROWS(string MB002)
+    public void DELETE_TBCOSTRECORDSMAT(string MB002)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                         DELETE [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS]
+                         DELETE [TKRESEARCH].[dbo].[TBCOSTRECORDSMAT]
                          WHERE MB002=@MB002
 
                             ";
