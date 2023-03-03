@@ -12,7 +12,7 @@
         var  SPEECHTYPE = "";
         //設定全域環境的SpeechRecognition
         var SpeechRecognition = webkitSpeechRecognition || SpeechRecognition || mozSpeechRecognition || msSpeechRecognition || oSpeechRecognition; 
-
+         
         if (typeof SpeechRecognition == SpeechRecognition) {
             SPEECHTYPE = 'SpeechRecognition';
         } else if (typeof webkitSpeechRecognition !== 'webkitSpeechRecognition') {
