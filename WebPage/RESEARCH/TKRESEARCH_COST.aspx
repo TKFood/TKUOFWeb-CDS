@@ -505,6 +505,11 @@
                                             <asp:Button ID="GV4Button1" runat="server" Text="修改" ForeColor="Red" CommandName="GV4Button1" CommandArgument='<%# Eval("品號") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="修改原料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <ItemTemplate>
+                                            <asp:Button ID="GV4Button2" runat="server" Text="修改" ForeColor="Red" CommandName="GV4Button2" CommandArgument='<%# Eval("品號") %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
 
                                 </Columns>
                             </Fast:Grid>

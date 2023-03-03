@@ -796,12 +796,37 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
 
         }
+
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Button1
+            //Get the button that raised the event
+            Button btn = (Button)e.Row.FindControl("GV4Button2");
+            //Get the row that contains this button
+            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue = btn.CommandArgument;
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName = (Button)e.Row.FindControl("GV4Button2");
+            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCH_COSTDialogROWS.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+
+        }
     }
     protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
 
         if (e.CommandName == "GV4Button1")
+        {
+
+            BindGrid4(TextBox3.Text.ToString(), DropDownList1.Text.ToString());
+
+        }
+        if (e.CommandName == "GV4Button2")
         {
 
             BindGrid4(TextBox3.Text.ToString(), DropDownList1.Text.ToString());
