@@ -13,15 +13,15 @@
         //設定全域環境的SpeechRecognition
         var SpeechRecognition = webkitSpeechRecognition || SpeechRecognition || mozSpeechRecognition || msSpeechRecognition || oSpeechRecognition; 
 
-        if (typeof SpeechRecognition !== 'undefined') {
+        if (typeof SpeechRecognition == SpeechRecognition) {
             SPEECHTYPE = 'SpeechRecognition';
-        } else if (typeof webkitSpeechRecognition !== 'undefined') {
+        } else if (typeof webkitSpeechRecognition !== 'webkitSpeechRecognition') {
             SPEECHTYPE = 'webkitSpeechRecognition';
-        } else if (typeof mozSpeechRecognition !== 'undefined') {
+        } else if (typeof mozSpeechRecognition !== 'mozSpeechRecognition') {
             SPEECHTYPE = 'mozSpeechRecognition';
-        } else if (typeof msSpeechRecognition !== 'undefined') {
+        } else if (typeof msSpeechRecognition !== 'msSpeechRecognition') {
             SPEECHTYPE = 'msSpeechRecognition';
-        } else if (typeof oSpeechRecognition !== 'undefined') {
+        } else if (typeof oSpeechRecognition !== 'oSpeechRecognition') {
             SPEECHTYPE = 'oSpeechRecognition';
         } else {
             SPEECHTYPE = '浏览器不支持语音识别API';
