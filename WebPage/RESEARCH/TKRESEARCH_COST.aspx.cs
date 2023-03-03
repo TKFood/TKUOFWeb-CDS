@@ -794,26 +794,27 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCH_COSTDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
 
+            //Button1
+            //Get the button that raised the event
+            btn = (Button)e.Row.FindControl("GV4Button2");
+            //Get the row that contains this button
+            gvr = (GridViewRow)btn.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            Cellvalue = btn.CommandArgument;
+            row = (DataRowView)e.Row.DataItem;
+            lbtnName = (Button)e.Row.FindControl("GV4Button2");
+            param = new { ID = Cellvalue }.ToExpando();
+            //Grid開窗是用RowDataBound事件再開窗
+            //Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCH_COSTDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCH_COSTDialogROWS.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
 
         }
 
 
-        if (e.Row.RowType == DataControlRowType.DataRow)
+        else if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            //Button1
-            //Get the button that raised the event
-            Button btn = (Button)e.Row.FindControl("GV4Button2");
-            //Get the row that contains this button
-            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-            //string cellvalue = gvr.Cells[2].Text.Trim();
-            string Cellvalue = btn.CommandArgument;
-            DataRowView row = (DataRowView)e.Row.DataItem;
-            Button lbtnName = (Button)e.Row.FindControl("GV4Button2");
-            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-            //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/RESEARCH/TKRESEARCH_COSTDialogROWS.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-
-
+           
         }
     }
     protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)

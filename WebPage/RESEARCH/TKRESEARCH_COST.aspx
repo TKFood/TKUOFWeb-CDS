@@ -475,7 +475,7 @@
                                     <asp:BoundField HeaderText="單位物料成本" DataField="單位物料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                     </asp:BoundField>
-                                        <asp:TemplateField HeaderText="物料" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                    <asp:TemplateField HeaderText="物料" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                         <ItemTemplate>
                                             <asp:Label runat="server" Text='<%# Eval("TBCOSTRECORDSMAT").ToString().Replace("\n", "<br>") %>'></asp:Label>
                                             <itemstyle horizontalalign="Left" width="25%" wrap="true"></itemstyle>
@@ -505,9 +505,9 @@
                                             <asp:Button ID="GV4Button1" runat="server" Text="修改" ForeColor="Red" CommandName="GV4Button1" CommandArgument='<%# Eval("品號") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="修改原料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                    <asp:TemplateField HeaderText="修改原料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemTemplate>
-                                            <asp:Button ID="GV4Button2" runat="server" Text="修改" ForeColor="Red" CommandName="GV4Button2" CommandArgument='<%# Eval("品號") %>' />
+                                            <asp:Button ID="GV4Button2" runat="server"  Text="修改" ForeColor="Red" CommandName="GV4Button2" CommandArgument='<%# Eval("品號") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 

@@ -53,7 +53,7 @@
                     <asp:TextBox ID="TextBox3" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
                      <asp:Label ID="Label11" runat="server" Text="<br>"></asp:Label>
 
-                    <asp:Button ID="Button1" runat="server" Text="新增存檔" onclick="btn1_Click" />
+                    <asp:Button ID="Button1" runat="server" Text="新增存檔" OnClick="btn1_Click"  />
                 </td>
             </tr>
         </table>

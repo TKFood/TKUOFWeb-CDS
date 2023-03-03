@@ -64,9 +64,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
     void CDS_WebPage_Dialog_Button1OnClick()
     {
         //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
-
-        UPDATE(lblParam.Text);
+        //Dialog.SetReturnValue2(txtReturnValue.Text);        
 
         Dialog.Close(this);
 
@@ -76,9 +74,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
     void Button2OnClick()
     {
         //設定回傳值並關閉視窗
-        //Dialog.SetReturnValue2(txtReturnValue.Text);
-
-        UPDATE(lblParam.Text);
+        //Dialog.SetReturnValue2(txtReturnValue.Text);      
 
         SEARCH_TBCOSTRECORDS(lblParam.Text);
     }
@@ -291,7 +287,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
         string MB003 = TextBox2.Text;
         string COSTROW = TextBox3.Text;
 
-        ADD_TBCOSTRECORDSROWS(MMB001,  MB002,  MB003,  COSTROW);
+        ADD_TBCOSTRECORDSROWS(MMB001, MB002, MB003, COSTROW);
         UPDATE_TBCOSTRECORDS_AFTER_ADDDEL();
 
         TextBox1.Text = null;
