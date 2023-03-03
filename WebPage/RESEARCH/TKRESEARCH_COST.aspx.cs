@@ -726,6 +726,19 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                 ,([COSTROW]+[COSTMAT]+[COSTHR]+[COSTMANU]+[COSTPRO])  AS '單位成本'
                                 ,[COMMEMTS] AS '備註'
                                 ,[ISCLOSED] AS '是否結案'
+                                ,(
+                                SELECT '品名:'+[MB002]+' 規格:'+[MB003]+' 單價:'+CONVERT(nvarchar,[COSTROW])+CHAR(10)
+                                FROM [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS] 
+                                WHERE MMB001=[TKRESEARCH].[dbo].[TBCOSTRECORDS].[MB001]
+                                FOR XML PATH('')
+                                ) AS 'TBCOSTRECORDSROWS'
+                                ,(
+                                SELECT '品名:'+[MB002]+' 規格:'+[MB003]+' 單價:'+CONVERT(nvarchar,[COSTROW])+CHAR(10)
+                                FROM [TKRESEARCH].[dbo].TBCOSTRECORDSMAT 
+                                WHERE MMB001=[TKRESEARCH].[dbo].[TBCOSTRECORDS].[MB001]
+                                FOR XML PATH('')
+                                ) AS 'TBCOSTRECORDSMAT'
+
                                 FROM [TKRESEARCH].[dbo].[TBCOSTRECORDS]
                                 WHERE 1=1
                                 {0}

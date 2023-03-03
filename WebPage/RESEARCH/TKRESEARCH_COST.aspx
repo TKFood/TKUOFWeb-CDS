@@ -378,7 +378,7 @@
                                 <table>
                                     <tr style="padding: 10px;">
                                         <td>
-                                            <asp:Label ID="Label12" runat="server" Text="品名" ></asp:Label>
+                                            <asp:Label ID="Label12" runat="server" Text="品名"></asp:Label>
                                             <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                                         </td>
                                     </tr>
@@ -392,7 +392,7 @@
                                         <td>
                                             <asp:Label ID="Label14" runat="server" Text="單位原料成本"></asp:Label>
                                             <asp:TextBox ID="TextBox7" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
-                                            
+
                                         </td>
                                     </tr>
                                     <tr style="padding: 10px;">
@@ -425,9 +425,9 @@
                                             <asp:TextBox ID="TextBox12" runat="server" TextMode="MultiLine" Rows="5" Columns="100"></asp:TextBox>
                                         </td>
                                     </tr>
-                                      <tr style="padding: 10px;">
+                                    <tr style="padding: 10px;">
                                         <td>
-                                            <asp:Button ID="Button4" runat="server" Text="儲存" OnClick="btn4_Click" style="width: 100px; height: 50px; font-size: 24px !important;  background-color: darkseagreen; color: white;"  />
+                                            <asp:Button ID="Button4" runat="server" Text="儲存" OnClick="btn4_Click" Style="width: 100px; height: 50px; font-size: 24px !important; background-color: darkseagreen; color: white;" />
                                         </td>
                                     </tr>
 
@@ -465,9 +465,23 @@
                                     <asp:BoundField HeaderText="單位原料成本" DataField="單位原料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                     </asp:BoundField>
+                                    <asp:TemplateField HeaderText="原料" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" Text='<%# Eval("TBCOSTRECORDSROWS").ToString().Replace("\n", "<br>") %>'></asp:Label>
+                                            <itemstyle horizontalalign="Left" width="25%" wrap="true"></itemstyle>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
                                     <asp:BoundField HeaderText="單位物料成本" DataField="單位物料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                     </asp:BoundField>
+                                        <asp:TemplateField HeaderText="物料" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" Text='<%# Eval("TBCOSTRECORDSMAT").ToString().Replace("\n", "<br>") %>'></asp:Label>
+                                            <itemstyle horizontalalign="Left" width="25%" wrap="true"></itemstyle>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
                                     <asp:BoundField HeaderText="單位人工成本" DataField="單位人工成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                     </asp:BoundField>
