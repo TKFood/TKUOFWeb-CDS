@@ -32,7 +32,7 @@
         <table class="PopTable">
             <tr>
                 <td class="PopTableLeftTD">
-                    <asp:Label ID="Label10" runat="server" Text="新增原料"></asp:Label>
+                      <asp:Label ID="Label10" runat="server" Text="新增原料"></asp:Label>
                 </td>
                 <td class="PopTableRightTD" colspan="2">
                     <asp:Label ID="Label2" runat="server" Text="原料品名"></asp:Label>
@@ -51,16 +51,16 @@
                     <asp:Label ID="Label9" runat="server" Text="<br>"></asp:Label>
 
                     <asp:TextBox ID="TextBox3" runat="server" onkeypress="return isNumberKey(event)"></asp:TextBox>
-                    <asp:Label ID="Label11" runat="server" Text="<br>"></asp:Label>
+                     <asp:Label ID="Label11" runat="server" Text="<br>"></asp:Label>
 
-                    <asp:Button ID="Button1" runat="server" Text="新增存檔" OnClick="btn1_Click" />
+                    <asp:Button ID="Button1" runat="server" Text="新增存檔" OnClick="btn1_Click"  />
                 </td>
             </tr>
         </table>
         <table class="PopTable">
             <tr>
                 <td colspan="2" class="PopTableRightTD">
-                    <Fast:Grid ID="Grid1"  OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_RowCommand" runat="server"  AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
+                    <Fast:Grid ID="Grid1" runat="server" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="15" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1">
                         <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                         <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
                         <Columns>
@@ -73,11 +73,6 @@
                             <asp:BoundField HeaderText="原料單價" DataField="COSTROW" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                             </asp:BoundField>
-                            <asp:TemplateField HeaderText="刪除原料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                <ItemTemplate>
-                                    <asp:Button ID="GV1DELETE" runat="server" Text="刪除原料" ForeColor="Red" CommandName="GV1DELETE" CommandArgument='<%# Eval("MB002") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
                         </Columns>
                     </Fast:Grid>
                 </td>

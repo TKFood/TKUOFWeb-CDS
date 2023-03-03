@@ -24,8 +24,6 @@ using System.Globalization;
 
 public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Page.BasePage
 {
-    
-
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -67,8 +65,7 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);        
-        
-        Dialog.SetReturnValue2("REFRESH");
+
         Dialog.Close(this);
 
     }
@@ -82,22 +79,6 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
         SEARCH_TBCOSTRECORDS(lblParam.Text);
     }
 
-    protected void btn1_Click(object sender, EventArgs e)
-    {
-        string MMB001 = lblParam.Text;
-        string MB002 = TextBox1.Text;
-        string MB003 = TextBox2.Text;
-        string COSTROW = TextBox3.Text;
-
-        ADD_TBCOSTRECORDSROWS(MMB001, MB002, MB003, COSTROW);
-        UPDATE_TBCOSTRECORDS_AFTER_ADDDEL();
-
-        TextBox1.Text = null;
-        TextBox2.Text = null;
-        TextBox3.Text = null;
-
-        BindGrid1(lblParam.Text);
-    }
     #endregion
 
     #region FUNCTION
@@ -184,41 +165,26 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            //Button1
-            //Get the button that raised the event
-            Button btn = (Button)e.Row.FindControl("GV1DELETE");
-            //Get the row that contains this button
-            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-            //string cellvalue = gvr.Cells[2].Text.Trim();
-            string Cellvalue = btn.CommandArgument;
-            DataRowView row = (DataRowView)e.Row.DataItem;
-            Button lbtnName = (Button)e.Row.FindControl("GV1DELETE");
-            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-            //Grid開窗是用RowDataBound事件再開窗
-            
-
-           
-
-        }
-
-
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    string KINDS = e.Row.Cells[0].Text.ToString();
+        //    if (KINDS.Equals("小計"))
+        //    {
+        //        e.Row.BackColor = System.Drawing.Color.LightPink;
+        //    }
+        //}
 
     }
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
 
-        if (e.CommandName == "GV1DELETE")
-        {           
-            string MB002 =(e.CommandArgument).ToString();
-            DELETE_TBCOSTRECORDSROWS(MB002);
-            UPDATE_TBCOSTRECORDS_AFTER_ADDDEL();
+        //if (e.CommandName == "GWButton1")
+        //{
 
-            BindGrid1(lblParam.Text);
-            //MsgBox("DELETE "+ MB002, this.Page, this);
-        }
+        //    BindGrid1("");
+
+        //}
 
 
     }
@@ -314,7 +280,22 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
 
     }
 
- 
+    protected void btn1_Click(object sender, EventArgs e)
+    {
+        string MMB001 = lblParam.Text;
+        string MB002 = TextBox1.Text;
+        string MB003 = TextBox2.Text;
+        string COSTROW = TextBox3.Text;
+
+        ADD_TBCOSTRECORDSROWS(MMB001, MB002, MB003, COSTROW);
+        UPDATE_TBCOSTRECORDS_AFTER_ADDDEL();
+
+        TextBox1.Text = null;
+        TextBox2.Text = null;
+        TextBox3.Text = null;
+
+        BindGrid1(lblParam.Text);
+    }
 
     public void ADD_TBCOSTRECORDSROWS(string MMB001,  string MB002, string MB003, string COSTROW)
     {
@@ -370,32 +351,8 @@ public partial class CDS_WebPage_TKRESEARCH_COSTDialogROWS : Ede.Uof.Utility.Pag
         //Dialog.Close(this);
     }
 
-    public void DELETE_TBCOSTRECORDSROWS(string MB002)
-    {
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        string cmdTxt = @"  
-                         DELETE [TKRESEARCH].[dbo].[TBCOSTRECORDSROWS]
-                         WHERE MB002=@MB002
-
-                            ";
-
-        m_db.AddParameter("@MB002", MB002);
-      
-
-        m_db.ExecuteNonQuery(cmdTxt);
-    }
-
-    public void MsgBox(String ex, Page pg, Object obj)
-    {
-        //MsgBox("Button1", this.Page, this);
-        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
-        Type cstype = obj.GetType();
-        ClientScriptManager cs = pg.ClientScript;
-        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
-    }
-
+    
+   
     #endregion
 
 
