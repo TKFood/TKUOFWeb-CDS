@@ -22,7 +22,7 @@
     </Tabs>
 </telerik:RadTabStrip>
 
-<telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0" >
+<telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
     <telerik:RadPageView ID="RadPageView3" runat="server" Selected="true">
         <div id="tabs-3">
             <table class="PopTable">
@@ -41,6 +41,22 @@
                     </td>
                     <td class="PopTableRightTD">
                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="PopTableLeftTD">
+                        <asp:Label ID="Label4" runat="server" Text="執行者:" meta:resourcekey="Label4Resource1"></asp:Label>
+                    </td>
+                    <td class="PopTableRightTD">
+                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="PopTableLeftTD">
+                        <asp:Label ID="Label5" runat="server" Text="交付者:" meta:resourcekey="Label4Resource1"></asp:Label>
+                    </td>
+                    <td class="PopTableRightTD">
+                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -89,7 +105,7 @@
             </table>
         </div>
     </telerik:RadPageView>
-    <telerik:RadPageView ID="RadPageView1" runat="server" >
+    <telerik:RadPageView ID="RadPageView1" runat="server">
         <div id="tabs-1">
             <table class="PopTable">
                 <tr>

@@ -178,6 +178,20 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
 
         }
 
+        //執行者
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND USER2.NAME LIKE  '%{0}%' ", TextBox2.Text);
+
+        }
+
+        //交付者
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS.AppendFormat(@" AND USER1.NAME LIKE  '%{0}%' ", TextBox3.Text);
+
+        }
+
         cmdTxt.AppendFormat(@" 
                             SELECT SUBJECT,CASE WHEN WORK_STATE='Completed' THEN '已完成'  WHEN WORK_STATE='NotYetBegin' THEN '尚未開始' WHEN WORK_STATE='Audit' THEN '交付人審查中' WHEN WORK_STATE='Proceeding' THEN '進行中' ELSE WORK_STATE END  WORK_STATE
                             ,USER1.NAME AS '交付者',USER2.NAME AS '執行者',CONVERT(nvarchar,CREATE_TIME,112 ) CREATE_TIME,CONVERT(nvarchar,END_TIME,112 ) END_TIME
