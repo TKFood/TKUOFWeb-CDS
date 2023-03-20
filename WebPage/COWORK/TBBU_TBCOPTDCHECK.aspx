@@ -819,8 +819,8 @@
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
-                                <asp:Button ID="Button9" runat="server" Text=" 查詢 " OnClick="Button7_Click"
-                                    meta:resourcekey="btn7Resource1" />
+                                <asp:Button ID="Button9" runat="server" Text=" 查詢 " OnClick="Button9_Click"
+                                    meta:resourcekey="btn9Resource1" />
                             </td>
 
                         </tr>

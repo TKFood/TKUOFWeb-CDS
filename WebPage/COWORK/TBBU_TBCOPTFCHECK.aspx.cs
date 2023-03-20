@@ -679,28 +679,40 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         }
         else if (e.CommandName == "Button2")
         {
-            CHECKTBCOPTFCHECK(e.CommandArgument.ToString());
+            //檢查是否已送單，簽核中
+            DataTable DT = CHECK_TB_WKF_TASK(e.CommandArgument.ToString());
 
-            //用訂單變更找出客代TC004
-            DataTable DTCOPTE = FINDCOPTE(e.CommandArgument.ToString());
-            string TC004 = DTCOPTE.Rows[0]["TE007"].ToString();
-            //訂單金額
-            decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTCMONEYS"].ToString());
-            int INTCOPTCMONEYS = Convert.ToInt32(COPTCMONEYS);
-            //訂單變更金額
-            decimal COPTEMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTEMONEYS"].ToString());
-            int INTCOPTEMONEYS = Convert.ToInt32(COPTEMONEYS);
-            //用客代找出信用額度設定上限
-            decimal TOTALLIMITS = FINDCOPMATOTALLIMITS(TC004);
-            int INTTOTALLIMITS = Convert.ToInt32(TOTALLIMITS);
-            //用客代找出目前已用的信用額度
-            decimal TOTALCREDITS = FINDCREDITS(TC004);
-            int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
-
-            if (INTTOTALLIMITS < (INTCOPTEMONEYS+(-1*INTTOTALCREDITS) + INTCOPTCMONEYS))
+            if (DT != null && DT.Rows.Count >= 1)
             {
-                MsgBox(e.CommandArgument.ToString() + " 訂單變更金額=" + INTCOPTEMONEYS.ToString("0,0") + " \r\n原訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " \r\n客代:" + TC004 + " \r\n目前設定的信用額度=" + INTTOTALLIMITS.ToString("0,0") + " \r\n已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
+                MsgBox(e.CommandArgument.ToString() + " \r\n 此訂單已送簽核中", this.Page, this);
             }
+            else
+            {
+                CHECKTBCOPTFCHECK(e.CommandArgument.ToString());
+
+                //用訂單變更找出客代TC004
+                DataTable DTCOPTE = FINDCOPTE(e.CommandArgument.ToString());
+                string TC004 = DTCOPTE.Rows[0]["TE007"].ToString();
+                //訂單金額
+                decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTCMONEYS"].ToString());
+                int INTCOPTCMONEYS = Convert.ToInt32(COPTCMONEYS);
+                //訂單變更金額
+                decimal COPTEMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTEMONEYS"].ToString());
+                int INTCOPTEMONEYS = Convert.ToInt32(COPTEMONEYS);
+                //用客代找出信用額度設定上限
+                decimal TOTALLIMITS = FINDCOPMATOTALLIMITS(TC004);
+                int INTTOTALLIMITS = Convert.ToInt32(TOTALLIMITS);
+                //用客代找出目前已用的信用額度
+                decimal TOTALCREDITS = FINDCREDITS(TC004);
+                int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
+
+                if (INTTOTALLIMITS < (INTCOPTEMONEYS + (-1 * INTTOTALCREDITS) + INTCOPTCMONEYS))
+                {
+                    MsgBox(e.CommandArgument.ToString() + " 訂單變更金額=" + INTCOPTEMONEYS.ToString("0,0") + " \r\n原訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " \r\n客代:" + TC004 + " \r\n目前設定的信用額度=" + INTTOTALLIMITS.ToString("0,0") + " \r\n已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
+                }
+
+            }
+
 
             //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
         }
@@ -1931,7 +1943,18 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             //訂單的單身都不需要生產的，直接核單
             if (dt.Rows.Count == 0)
             {
-                ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(TF001, TF002, TF003);
+                //檢查是否已送單，簽核中
+                DataTable DT = CHECK_TB_WKF_TASK(TF001+ TF002);
+
+                if (DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TF001 + TF002 + " \r\n 此訂單已送簽核中", this.Page, this);
+                }
+                else
+                {
+                    ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(TF001, TF002, TF003);
+                }
+               
                 //MsgBox("OK" + TF001 + TF002+ TF003, this.Page, this);
             }
             else
@@ -2012,7 +2035,18 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             //訂單的單身都不需要生產的，直接核單
             if (dt.Rows.Count == 0)
             {
-                ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(TF001, TF002, TF003);
+                //檢查是否已送單，簽核中
+                DataTable DT = CHECK_TB_WKF_TASK(TF001+ TF002);
+
+                if (DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TF001 + TF002 + " \r\n 此訂單已送簽核中", this.Page, this);
+                }
+                else
+                {
+                    ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(TF001, TF002, TF003);
+                }
+               
                 //MsgBox("OK" + TF001 + TF002 + TF003, this.Page, this);
             }
             else
@@ -2093,7 +2127,18 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
             if (dt.Rows.Count > 0)
             {
-                ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(TF001, TF002, TF003);
+                //檢查是否已送單，簽核中
+                DataTable DT = CHECK_TB_WKF_TASK(TF001+ TF002);
+
+                if (DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TF001 + TF002 + " \r\n 此訂單已送簽核中", this.Page, this);
+                }
+                else
+                {
+                    ADDTB_WKF_EXTERNAL_TASK_COPTECOPTF(TF001, TF002, TF003);
+                }
+               
                 //MsgBox("OK" + TF001 + TF002 + TF003, this.Page, this);
             }
          
@@ -5379,28 +5424,40 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         if (e.CommandName == "GRIDVIEW7Button1")
         {
-            CHECKTBCOPTFCHECK7(e.CommandArgument.ToString());
+            //檢查是否已送單，簽核中
+            DataTable DT = CHECK_TB_WKF_TASK(e.CommandArgument.ToString());
 
-            //用訂單變更找出客代TC004
-            DataTable DTCOPTE = FINDCOPTE(e.CommandArgument.ToString());
-            string TC004 = DTCOPTE.Rows[0]["TE007"].ToString();
-            //訂單金額
-            decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTCMONEYS"].ToString());
-            int INTCOPTCMONEYS = Convert.ToInt32(COPTCMONEYS);
-            //訂單變更金額
-            decimal COPTEMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTEMONEYS"].ToString());
-            int INTCOPTEMONEYS = Convert.ToInt32(COPTEMONEYS);
-            //用客代找出信用額度設定上限
-            decimal TOTALLIMITS = FINDCOPMATOTALLIMITS(TC004);
-            int INTTOTALLIMITS = Convert.ToInt32(TOTALLIMITS);
-            //用客代找出目前已用的信用額度
-            decimal TOTALCREDITS = FINDCREDITS(TC004);
-            int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
-
-            if (INTTOTALLIMITS < (INTCOPTEMONEYS + (-1 * INTTOTALCREDITS) + INTCOPTCMONEYS))
+            if (DT != null && DT.Rows.Count >= 1)
             {
-                MsgBox(e.CommandArgument.ToString() + " 訂單變更金額=" + INTCOPTEMONEYS.ToString("0,0") + " \r\n原訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " \r\n客代:" + TC004 + " \r\n目前設定的信用額度=" + INTTOTALLIMITS.ToString("0,0") + " \r\n已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
+                MsgBox(e.CommandArgument.ToString() + " \r\n 此訂單已送簽核中", this.Page, this);
             }
+            else
+            {
+                CHECKTBCOPTFCHECK7(e.CommandArgument.ToString());
+
+                //用訂單變更找出客代TC004
+                DataTable DTCOPTE = FINDCOPTE(e.CommandArgument.ToString());
+                string TC004 = DTCOPTE.Rows[0]["TE007"].ToString();
+                //訂單金額
+                decimal COPTCMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTCMONEYS"].ToString());
+                int INTCOPTCMONEYS = Convert.ToInt32(COPTCMONEYS);
+                //訂單變更金額
+                decimal COPTEMONEYS = Convert.ToDecimal(DTCOPTE.Rows[0]["COPTEMONEYS"].ToString());
+                int INTCOPTEMONEYS = Convert.ToInt32(COPTEMONEYS);
+                //用客代找出信用額度設定上限
+                decimal TOTALLIMITS = FINDCOPMATOTALLIMITS(TC004);
+                int INTTOTALLIMITS = Convert.ToInt32(TOTALLIMITS);
+                //用客代找出目前已用的信用額度
+                decimal TOTALCREDITS = FINDCREDITS(TC004);
+                int INTTOTALCREDITS = Convert.ToInt32(TOTALCREDITS);
+
+                if (INTTOTALLIMITS < (INTCOPTEMONEYS + (-1 * INTTOTALCREDITS) + INTCOPTCMONEYS))
+                {
+                    MsgBox(e.CommandArgument.ToString() + " 訂單變更金額=" + INTCOPTEMONEYS.ToString("0,0") + " \r\n原訂單金額=" + INTCOPTCMONEYS.ToString("0,0") + " \r\n客代:" + TC004 + " \r\n目前設定的信用額度=" + INTTOTALLIMITS.ToString("0,0") + " \r\n已花費的信用額度=" + INTTOTALCREDITS.ToString("0,0"), this.Page, this);
+                }
+            }
+
+           
 
             //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
         }
@@ -5412,6 +5469,46 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
     {
         SETEXCEL();
 
+    }
+
+    public DataTable CHECK_TB_WKF_TASK(string TC001TC002)
+    {
+        string TC001 = TC001TC002.Substring(0, 4);
+        string TC002 = TC001TC002.Substring(4, 11);
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT CURRENT_DOC,*
+                            FROM [UOF].[dbo].TB_WKF_TASK 
+                            WHERE  1=1
+                            AND DISPLAY_TITLE LIKE '%{0}%'
+                            AND DISPLAY_TITLE LIKE '%{1}%'
+                            AND TASK_STATUS='1'
+
+                              ", TC001, TC002);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     #endregion
