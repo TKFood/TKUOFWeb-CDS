@@ -1466,7 +1466,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
                                 FROM [TK].dbo.COPTC,[TK].dbo.COPTD
                                 WHERE TC001=TD001 AND TC002=TD002
                                 AND 1=1
-                                
+                                AND COPTD.UDF01 NOT IN ('Y','y')
+
                                 {0}
 
                                 ORDER BY TD002,TD001,TD003
