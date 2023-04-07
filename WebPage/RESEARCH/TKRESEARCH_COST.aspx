@@ -169,6 +169,9 @@
                                         <asp:BoundField HeaderText="規格" DataField="規格" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="標準售價" DataField="MB047" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="單位材料成本" DataField="單位材料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
