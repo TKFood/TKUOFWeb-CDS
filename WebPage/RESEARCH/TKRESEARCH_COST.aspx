@@ -4,38 +4,6 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <head>
-
-        <style type="text/css">
-            /* CSS樣式 */
-            .container {
-                border: 1px solid #ccc;
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-
-            .header {
-                display: inline-block;
-                background-color: #f5f5f5;
-                color: #333;
-                border: 1px solid #ccc;
-                border-radius: 3px;
-                padding: 5px 10px;
-                cursor: pointer;
-                user-select: none;
-            }
-
-                .header:hover {
-                    background-color: #e5e5e5;
-                }
-
-            .content {
-                display: none;
-            }
-        </style>
-    </head>
     <script>    
         function btn4_Click(sender) {
             //從前端開始視窗
