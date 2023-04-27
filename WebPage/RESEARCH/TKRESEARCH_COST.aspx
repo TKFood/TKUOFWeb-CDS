@@ -197,7 +197,7 @@
                                         <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                     </asp:BoundField>
 
-                                    <asp:BoundField HeaderText="分攤成本" DataField="分攤成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                    <asp:BoundField HeaderText="分攤成本(原料/物料是取最近進價，跟平均不同)" DataField="分攤成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
                                     </asp:BoundField>
 
