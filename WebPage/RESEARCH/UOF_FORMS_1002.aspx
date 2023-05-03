@@ -7,7 +7,7 @@
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
-        <Tabs>           
+        <Tabs>
             <telerik:RadTab Text="未結案的表單-目前簽核人">
             </telerik:RadTab>
             <telerik:RadTab Text="資料">
@@ -57,6 +57,12 @@
                                         <asp:BoundField HeaderText="表單編號" DataField="DOC_NBR" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="產品設計" DataField="產品設計" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="設計需求" DataField="設計需求" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="送簽核者時間" DataField="START_TIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
@@ -79,7 +85,7 @@
             <div id="tabs-3">
             </div>
         </telerik:RadPageView>
-       
+
     </telerik:RadMultiPage>​
 
   

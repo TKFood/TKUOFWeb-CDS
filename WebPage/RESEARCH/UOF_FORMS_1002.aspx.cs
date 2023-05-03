@@ -75,6 +75,8 @@ public partial class CDS_WebPage_RESEARCH_UOF_FORMS_1002 : Ede.Uof.Utility.Page.
                             ,ISNULL(formVer.DISPLAY_TITLE,'') AS VERSION_TITLE
                             ,ISNULL(task.JSON_DISPLAY,'') AS JSON_DISPLAY
                             ,[NODES].SIGN_STATUS
+                            ,task.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""00010""]/@fieldValue)[1]', 'nvarchar(50)') AS '產品設計'
+                            ,task.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm1002PD""]/@fieldValue)[1]', 'nvarchar(50)') AS '設計需求'
 
                             FROM [UOF].dbo.TB_WKF_TASK task
                             INNER JOIN [UOF].dbo.TB_WKF_FORM_VERSION formVer ON task.FORM_VERSION_ID = formVer.FORM_VERSION_ID
