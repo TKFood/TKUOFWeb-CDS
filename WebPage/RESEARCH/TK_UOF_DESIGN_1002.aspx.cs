@@ -23,8 +23,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
-        {            
-
+        {
+            BindDropDownList();
             BindGrid1("");            
         }
         else
@@ -34,7 +34,45 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
 
     }
     #region FUNCTION
-  
+
+    private void BindDropDownList()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"    SELECT 
+                                 [ID]
+                                ,[KIND]
+                                ,[PARAID]
+                                ,[PARANAME]
+                                FROM [TKRESEARCH].[dbo].[TBPARA]
+                                WHERE [KIND]='TK_UOF_RESEARCH_1002'
+                                ORDER BY [ID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARAID";
+            DropDownList1.DataValueField = "PARAID";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+
+
     private void BindGrid1(string SALESFOCUS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -42,12 +80,25 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
 
 
         //查詢條件
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
+            QUERYS.AppendFormat(@" AND [FIELDS10] LIKE '%{0}%' ", TextBox1.Text);
+        }
+        else
+        {
             QUERYS.AppendFormat(@" ");
+        }
+        if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()))
+        {
+            QUERYS2.AppendFormat(@" AND [ISCLOSED]='{0}' ", DropDownList1.SelectedValue.ToString());
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@" ");
         }
 
 
@@ -69,9 +120,12 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
                             ,[INPROCESSING] AS '處理進度'
                             ,[ISCLOSED] AS '是否結案'
                             FROM [TKRESEARCH].[dbo].[TK_UOF_DESIGN_1002]
-                           
+                            WHERE 1=1
+                            {0}
+                            {1}
+                            ORDER BY  [FIELDS1]
                                
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
         //m_db.AddParameter("@SDATE", SDATE);

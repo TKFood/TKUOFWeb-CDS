@@ -20,10 +20,19 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label1" runat="server" Text="表單編號:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="交辦關鍵字:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                      <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label2" runat="server" Text="是否結案:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                             <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
                         </td>
 
                     </tr>
@@ -48,7 +57,42 @@
                                         <asp:BoundField HeaderText="表單編號" DataField="表單編號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="交付人" DataField="交付人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="填表日期" DataField="填表日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="期望交期" DataField="期望交期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="簡述交辦事項" DataField="簡述交辦事項" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="交辦說明" DataField="交辦說明" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="處理進度" DataField="處理進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="是否結案" DataField="是否結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="填寫處理進度" HeaderStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="GRIDVIEWTextBox1" runat="server" Text="" Width="200px" TextMode="MultiLine" Rows="5"></asp:TextBox>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="填寫是否結案" HeaderStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="GRIDVIEWDropDownList1" runat="server">
+                                                    <asp:ListItem>N</asp:ListItem>
+                                                    <asp:ListItem>Y</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         
+
                                     </Columns>
                                 </Fast:Grid>
                             </div>
