@@ -20,6 +20,7 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.Page.BasePage
 {
+    string RowIndex = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -153,15 +154,16 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
 
 
     }
+
+    protected void Grid1_OnRowUpdating(object sender, GridViewUpdateEventArgs e)
+    { 
+        RowIndex = e.RowIndex.ToString();
+    }
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "Button1")
         {
-            //string id = e.CommandArgument.ToString();
-            //TextBox txtName = e.Item.FindControl("txtName") as TextBox;
-            //string name = txtName.Text;
-
-            MsgBox(e.CommandArgument.ToString() + " \r\n OK", this.Page, this);
+            MsgBox(e.CommandArgument.ToString() + " \r\n OK ", this.Page, this);
         }
     }
 
