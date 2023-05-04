@@ -45,34 +45,10 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
-                                        <asp:BoundField HeaderText="目前簽核者" DataField="NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="表單編號" DataField="表單編號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="申請者" DataField="APPLICANT_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="表單" DataField="FORM_NAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="表單編號" DataField="DOC_NBR" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="產品設計" DataField="產品設計" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="設計需求" DataField="設計需求" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="送簽核者時間" DataField="START_TIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="停留時間(天)" DataField="DAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="80px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="申請時間" DataField="BEGIN_TIME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                        </asp:BoundField>
-
+                                        
                                     </Columns>
                                 </Fast:Grid>
                             </div>

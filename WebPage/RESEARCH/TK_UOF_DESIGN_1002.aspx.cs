@@ -37,7 +37,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
   
     private void BindGrid1(string SALESFOCUS)
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
@@ -47,51 +47,28 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
         //查詢條件
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND DOC_NBR LIKE '%{0}%'", TextBox1.Text);
+            QUERYS.AppendFormat(@" ");
         }
 
 
         cmdTxt.AppendFormat(@" 
-
                             SELECT
-                            usr2.NAME
-                            ,(CASE WHEN  usr.IS_SUSPENDED = 1 THEN  usr.NAME + '(x)' WHEN  ISNULL(usr.ACCOUNT,'''') = '' THEN  'unknown user' ELSE usr.NAME END) AS APPLICANT_NAME
-                            ,form.FORM_NAME
-                            ,DOC_NBR
-                            ,CONVERT(NVARCHAR,NODES.START_TIME,111) AS 'START_TIME'
-                            ,DATEDIFF(DAY,START_TIME,GETDATE()) AS 'DAYS'
-                            ,CONVERT(NVARCHAR,BEGIN_TIME,111) AS BEGIN_TIME
-
-                            ,task.TASK_ID
-                            ,END_TIME
-                            ,TASK_RESULT
-                            ,TASK_STATUS
-                            ,task.USER_GUID
-                            ,formVer.FORM_VERSION_ID
-                            ,formVer.FORM_ID
-                            ,CURRENT_SITE_ID
-                            ,MESSAGE_CONTENT
-                            ,LOCK_STATUS
-                            ,ISNULL(formVer.DISPLAY_TITLE,'') AS VERSION_TITLE
-                            ,ISNULL(task.JSON_DISPLAY,'') AS JSON_DISPLAY
-                            ,[NODES].SIGN_STATUS
-                            ,task.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""00010""]/@fieldValue)[1]', 'nvarchar(50)') AS '產品設計'
-                            ,task.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm1002PD""]/@fieldValue)[1]', 'nvarchar(50)') AS '設計需求'
-
-                            FROM [UOF].dbo.TB_WKF_TASK task
-                            INNER JOIN [UOF].dbo.TB_WKF_FORM_VERSION formVer ON task.FORM_VERSION_ID = formVer.FORM_VERSION_ID
-                            INNER JOIN [UOF].dbo.TB_WKF_FORM form  ON  formVer.FORM_ID = form.FORM_ID 
-                            LEFT JOIN [UOF].dbo.TB_EB_USER [usr]  ON task.USER_GUID = usr.USER_GUID
-                            LEFT JOIN [UOF].dbo.TB_WKF_TASK_NODE [NODES] ON NODES.SITE_ID=task.CURRENT_SITE_ID 
-                            LEFT JOIN [UOF].dbo.TB_EB_USER [usr2]  ON NODES.ORIGINAL_SIGNER = [usr2].USER_GUID
-                            WHERE
-                            1=1  
-                            AND  TASK_STATUS NOT IN ('2')
-                            AND ISNULL([NODES].SIGN_STATUS,999)<>0
-                            AND form.FORM_NAME IN ('1002.產品設計申請','1002.設計需求內容清單')
-
-                             {0}
-                            ORDER BY form.FORM_NAME,usr2.NAME,DAYS DESC,DOC_NBR
+                            [FIELDS1] AS '表單編號'
+                            ,[FIELDS2] AS '類別'
+                            ,[FIELDS3] AS '填表日期'
+                            ,[FIELDS4] AS '生產部代簽部門'
+                            ,[FIELDS5] AS '交付人'
+                            ,[FIELDS6] AS '交付部門'
+                            ,[FIELDS7] AS '交付者職級'
+                            ,[FIELDS8] AS '接辦人員'
+                            ,[FIELDS9] AS '期望交期'
+                            ,[FIELDS10] AS '簡述交辦事項'
+                            ,[FIELDS11] AS '交辦說明'
+                            ,[FIELDS12] AS '接辦人處理項目描述'
+                            ,[FIELDS13] AS '完成交辦文件'
+                            ,[INPROCESSING] AS '處理進度'
+                            ,[ISCLOSED] AS '是否結案'
+                            FROM [TKRESEARCH].[dbo].[TK_UOF_DESIGN_1002]
                            
                                
                                 ", QUERYS.ToString());
