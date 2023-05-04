@@ -153,8 +153,17 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
 
 
     }
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Button1")
+        {
+            //string id = e.CommandArgument.ToString();
+            //TextBox txtName = e.Item.FindControl("txtName") as TextBox;
+            //string name = txtName.Text;
 
-  
+            MsgBox(e.CommandArgument.ToString() + " \r\n OK", this.Page, this);
+        }
+    }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
@@ -424,19 +433,20 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
         //SETEXCEL();
 
     }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
     #endregion
 
     #region BUTTON
     protected void btn1_Click(object sender, EventArgs e)
     {
         BindGrid1("");
-
-        //開窗後回傳參數
-        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
-        {
-            //txtReturnValue.Text = Dialog.GetReturnValue();
-        }
-
 
     }
 
