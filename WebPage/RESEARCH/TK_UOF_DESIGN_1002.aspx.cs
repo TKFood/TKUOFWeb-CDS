@@ -163,7 +163,18 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
     {
         if (e.CommandName == "Button1")
         {
-            MsgBox(e.CommandArgument.ToString() + " \r\n OK ", this.Page, this);
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = Grid1.Rows[rowIndex];
+            // 接下來可以從行中取得 TextBox 控制項的值
+            TextBox TextBoxFIELDS1 = (TextBox)row.FindControl("FIELDS1");
+            string FIELDS1 = TextBoxFIELDS1.Text;
+
+
+            TextBox TextBoxGRIDVIEWTextBox1 = (TextBox)row.FindControl("GRIDVIEWTextBox1");
+            string INPROCESSING = TextBoxGRIDVIEWTextBox1.Text;
+
+
+            MsgBox(e.CommandArgument.ToString() + " \r\n OK "+ INPROCESSING+" FIELDS1:"+ FIELDS1, this.Page, this);
         }
     }
 
