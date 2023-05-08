@@ -178,6 +178,18 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
             Label LabelFIELDS1=(Label)row.FindControl("LabelFIELDS1");
             string FIELDS1 = LabelFIELDS1.Text;
 
+            //更新UPDATE_TK_UOF_DESIGN_1002
+            if(!string.IsNullOrEmpty(INPROCESSING))
+            {
+                UPDATE_TK_UOF_DESIGN_1002(FIELDS1, INPROCESSING, ISCLOSED);
+
+                BindGrid1("");
+            }
+            else
+            {
+                MsgBox("表單: " + FIELDS1 + "\r\n" + "未填寫處理進度，不允許更新 ", this.Page, this);
+            }
+            
             //MsgBox(e.CommandArgument.ToString() + "\r\n  "+ " INPROCESSING: " + INPROCESSING + "\r\n  "  + " ISCLOSED: " + ISCLOSED + "\r\n  " + " FIELDS1: " + FIELDS1, this.Page, this);
         }
     }
@@ -458,6 +470,49 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
         ClientScriptManager cs = pg.ClientScript;
         cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
+
+    public void UPDATE_TK_UOF_DESIGN_1002(string FIELDS1,string INPROCESSING ,string ISCLOSED)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        StringBuilder queryString = new StringBuilder();
+        queryString.AppendFormat(@"   
+                                    UPDATE [TKRESEARCH].[dbo].[TK_UOF_DESIGN_1002]
+                                    SET INPROCESSING=@INPROCESSING,ISCLOSED=@ISCLOSED
+                                    WHERE FIELDS1=@FIELDS1
+                                        ");
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                SqlCommand command = new SqlCommand(queryString.ToString(), connection);
+                command.Parameters.Add("@FIELDS1", SqlDbType.NVarChar).Value = FIELDS1;
+                command.Parameters.Add("@INPROCESSING", SqlDbType.NVarChar).Value = INPROCESSING;
+                command.Parameters.Add("@ISCLOSED", SqlDbType.NVarChar).Value = ISCLOSED;
+
+
+                command.Connection.Open();
+
+                int count = command.ExecuteNonQuery();
+
+                connection.Close();
+                connection.Dispose();
+
+            }
+        }
+        catch
+        {
+
+        }
+        finally
+        {
+
+        }
+    }
+
+
     #endregion
 
     #region BUTTON
