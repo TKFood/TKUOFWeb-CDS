@@ -179,19 +179,19 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_RESEARCH_1002 : Ede.Uof.Utility
             DropDownList DropDownListGRIDVIEWDropDownList1=(DropDownList)row.FindControl("GRIDVIEWDropDownList1");
             string ISCLOSED = DropDownListGRIDVIEWDropDownList1.SelectedValue.ToString();
 
-            Label LabelFIELDS1=(Label)row.FindControl("LabelFIELDS1");
-            string FIELDS1 = LabelFIELDS1.Text;
+            Label LabelRDF1002SN = (Label)row.FindControl("LabelRDF1002SN");
+            string RDF1002SN = LabelRDF1002SN.Text;
 
             //更新UPDATE_TK_UOF_DESIGN_1002
             if(!string.IsNullOrEmpty(INPROCESSING))
             {
-                UPDATE_TK_UOF_DESIGN_1002(FIELDS1, INPROCESSING, ISCLOSED);
+                UPDATE_TK_UOF_RESEARCH_1002(RDF1002SN, INPROCESSING, ISCLOSED);
 
                 BindGrid1("");
             }
             else
             {
-                MsgBox("表單: " + FIELDS1 + "\r\n" + "未填寫處理進度，不允許更新 ", this.Page, this);
+                MsgBox("表單: " + RDF1002SN + "\r\n" + "未填寫處理進度，不允許更新 ", this.Page, this);
             }
             
             //MsgBox(e.CommandArgument.ToString() + "\r\n  "+ " INPROCESSING: " + INPROCESSING + "\r\n  "  + " ISCLOSED: " + ISCLOSED + "\r\n  " + " FIELDS1: " + FIELDS1, this.Page, this);
@@ -475,15 +475,15 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_RESEARCH_1002 : Ede.Uof.Utility
         cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
 
-    public void UPDATE_TK_UOF_DESIGN_1002(string FIELDS1,string INPROCESSING ,string ISCLOSED)
+    public void UPDATE_TK_UOF_RESEARCH_1002(string RDF1002SN, string INPROCESSING ,string ISCLOSED)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
         StringBuilder queryString = new StringBuilder();
         queryString.AppendFormat(@"   
-                                    UPDATE [TKRESEARCH].[dbo].[TK_UOF_DESIGN_1002]
+                                    UPDATE [TKRESEARCH].[dbo].[TK_UOF_RESEARCH_1002]
                                     SET INPROCESSING=@INPROCESSING,ISCLOSED=@ISCLOSED
-                                    WHERE FIELDS1=@FIELDS1
+                                    WHERE RDF1002SN=@RDF1002SN
                                         ");
 
         try
@@ -492,7 +492,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_RESEARCH_1002 : Ede.Uof.Utility
             {
 
                 SqlCommand command = new SqlCommand(queryString.ToString(), connection);
-                command.Parameters.Add("@FIELDS1", SqlDbType.NVarChar).Value = FIELDS1;
+                command.Parameters.Add("@RDF1002SN", SqlDbType.NVarChar).Value = RDF1002SN;
                 command.Parameters.Add("@INPROCESSING", SqlDbType.NVarChar).Value = INPROCESSING;
                 command.Parameters.Add("@ISCLOSED", SqlDbType.NVarChar).Value = ISCLOSED;
 
