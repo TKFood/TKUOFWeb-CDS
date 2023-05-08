@@ -56,7 +56,8 @@
                                     <Columns>
                                          <asp:TemplateField HeaderText="表單編號" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="FIELDS1" runat="server" Text='<%# Eval("表單編號") %>' Width="120px" ></asp:TextBox>
+                                                <%--<asp:TextBox ID="FIELDS1" runat="server" Text='<%# Eval("表單編號") %>' Width="120px"  ></asp:TextBox>--%>
+                                                <asp:Label ID="LabelFIELDS1" runat="server"  Text='<%# Eval("表單編號") %>' ></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>                                   
                                         <asp:BoundField HeaderText="交付人" DataField="交付人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">

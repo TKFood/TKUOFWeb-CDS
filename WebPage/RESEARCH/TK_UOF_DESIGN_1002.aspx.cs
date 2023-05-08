@@ -175,7 +175,10 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
             DropDownList DropDownListGRIDVIEWDropDownList1=(DropDownList)row.FindControl("GRIDVIEWDropDownList1");
             string ISCLOSED = DropDownListGRIDVIEWDropDownList1.SelectedValue.ToString();
 
-            MsgBox(e.CommandArgument.ToString() + "\r\n  "+ " INPROCESSING: " + INPROCESSING + "\r\n  "  + " ISCLOSED:" + ISCLOSED, this.Page, this);
+            Label LabelFIELDS1=(Label)row.FindControl("LabelFIELDS1");
+            string FIELDS1 = LabelFIELDS1.Text;
+
+            //MsgBox(e.CommandArgument.ToString() + "\r\n  "+ " INPROCESSING: " + INPROCESSING + "\r\n  "  + " ISCLOSED: " + ISCLOSED + "\r\n  " + " FIELDS1: " + FIELDS1, this.Page, this);
         }
     }
 
