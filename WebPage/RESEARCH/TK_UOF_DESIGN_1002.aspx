@@ -65,7 +65,7 @@
                                          <asp:TemplateField HeaderText="表單編號" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <%--<asp:TextBox ID="FIELDS1" runat="server" Text='<%# Eval("表單編號") %>' Width="120px"  ></asp:TextBox>--%>
-                                                <asp:Label ID="LabelFIELDS1" runat="server"  Text='<%# Eval("表單編號") %>' ></asp:Label>
+                                                <asp:Label ID="LabelFIELDS1" runat="server"  Text='<%# Eval("表單編號") %>' Width="120px" ></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>                                   
                                         <asp:BoundField HeaderText="交付人" DataField="交付人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -80,11 +80,11 @@
                                         <asp:BoundField HeaderText="簡述交辦事項" DataField="簡述交辦事項" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="交辦說明" DataField="交辦說明" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                        <asp:BoundField HeaderText="交辦說明" DataField="交辦說明" ItemStyle-Width="400px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="400px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="處理進度" DataField="處理進度" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        <asp:BoundField HeaderText="處理進度" DataField="處理進度" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="是否結案" DataField="是否結案" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
@@ -96,7 +96,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="填寫是否結案" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="GRIDVIEWDropDownList1" runat="server">
+                                                <asp:DropDownList ID="GRIDVIEWDropDownList1" runat="server"  Width="60px">
                                                     <asp:ListItem>N</asp:ListItem>
                                                     <asp:ListItem>Y</asp:ListItem>
                                                 </asp:DropDownList>
