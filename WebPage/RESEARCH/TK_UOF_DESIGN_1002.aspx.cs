@@ -525,7 +525,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
 
         try
         {         
-            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString);
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString);
            
             sqlConn = new SqlConnection(sqlsb.ConnectionString);
         
@@ -537,6 +537,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
             //核準過TASK_RESULT='0'
             //AND DOC_NBR  LIKE 'QC1002{0}%'
             // 1002.產品設計申請有申請就轉入，不要等核完表單
+            //AND DOC_NBR COLLATE Chinese_Taiwan_Stroke_BIN NOT IN (SELECT  [FIELDS1] FROM [192.168.1.105].[TKRESEARCH].[dbo].[TK_UOF_DESIGN_1002])
+
             sbSql.AppendFormat(@"  
                                         SELECT TB_WKF_FORM.FORM_NAME,DOC_NBR,*
                                         FROM [UOF].dbo.TB_WKF_TASK,[UOF].dbo.TB_WKF_FORM,[UOF].dbo.TB_WKF_FORM_VERSION
@@ -545,7 +547,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
                                         AND TB_WKF_FORM.FORM_ID=TB_WKF_FORM_VERSION.FORM_ID
                                         AND TB_WKF_FORM.FORM_NAME IN ('1002.產品設計申請')
                                         AND TB_WKF_TASK.TASK_STATUS='1'
-                                        AND DOC_NBR COLLATE Chinese_Taiwan_Stroke_BIN NOT IN (SELECT  [FIELDS1] FROM [192.168.1.105].[TKRESEARCH].[dbo].[TK_UOF_DESIGN_1002])
+                                       AND DOC_NBR COLLATE Chinese_Taiwan_Stroke_BIN NOT IN (SELECT  [FIELDS1] FROM [192.168.1.105].[TKRESEARCH].[dbo].[TK_UOF_DESIGN_1002])
+                                        
                                        
                                     ");
 
@@ -585,174 +588,174 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
     //從xmlDoc找出各節點的Attributes
     public void SEARCH_UOF_TK_UOF_DESIGN_1002(string DOC_NBR)
     {
-        //SqlDataAdapter adapter1 = new SqlDataAdapter();
-        //SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
-        //DataSet ds1 = new DataSet();
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
 
-        //try
-        //{
-        //    SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString);
-           
-        //    String connectionString;
-        //    sqlConn = new SqlConnection(sqlsb.ConnectionString);
+        try
+        {
+            SqlConnectionStringBuilder sqlsb = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString);
 
-        //    sbSql.Clear();
-        //    sbSqlQuery.Clear();
+            String connectionString;
+            sqlConn = new SqlConnection(sqlsb.ConnectionString);
 
-        //    //庫存數量看LA009 IN ('20004','20006','20008','20019','20020'
+            sbSql.Clear();
+            sbSqlQuery.Clear();
 
-        //    sbSql.AppendFormat(@"  
-        //                            SELECT * 
-        //                            FROM [UOF].DBO.TB_WKF_TASK 
-        //                            LEFT JOIN [UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].USER_GUID=TB_WKF_TASK.USER_GUID
-        //                            WHERE DOC_NBR LIKE '{0}%'
+            //庫存數量看LA009 IN ('20004','20006','20008','20019','20020'
+
+            sbSql.AppendFormat(@"  
+                                    SELECT * 
+                                    FROM [UOF].DBO.TB_WKF_TASK 
+                                    LEFT JOIN [UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].USER_GUID=TB_WKF_TASK.USER_GUID
+                                    WHERE DOC_NBR LIKE '{0}%'
                               
-        //                            ", DOC_NBR);
+                                    ", DOC_NBR);
 
 
-        //    adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
+            adapter1 = new SqlDataAdapter(@"" + sbSql, sqlConn);
 
-        //    sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
-        //    sqlConn.Open();
-        //    ds1.Clear();
-        //    adapter1.Fill(ds1, "ds1");
-        //    sqlConn.Close();
+            sqlCmdBuilder1 = new SqlCommandBuilder(adapter1);
+            sqlConn.Open();
+            ds1.Clear();
+            adapter1.Fill(ds1, "ds1");
+            sqlConn.Close();
 
-        //    if (ds1.Tables["ds1"].Rows.Count >= 1)
-        //    {
-        //        string FIELDS1 = "";
-        //        string FIELDS2 = "";
-        //        string FIELDS3 = "";
-        //        string FIELDS4 = "";
-        //        string FIELDS5 = "";
-        //        string FIELDS6 = "";
-        //        string FIELDS7 = "";
-        //        string FIELDS8 = "";
-        //        string FIELDS9 = "";
-        //        string FIELDS10 = "";
-        //        string FIELDS11 = "";
-        //        string FIELDS12 = "";
-        //        string FIELDS13 = "";
-
-
-        //        XmlDocument xmlDoc = new XmlDocument();
-
-        //        xmlDoc.LoadXml(ds1.Tables["ds1"].Rows[0]["CURRENT_DOC"].ToString());
+            if (ds1.Tables["ds1"].Rows.Count >= 1)
+            {
+                string FIELDS1 = "";
+                string FIELDS2 = "";
+                string FIELDS3 = "";
+                string FIELDS4 = "";
+                string FIELDS5 = "";
+                string FIELDS6 = "";
+                string FIELDS7 = "";
+                string FIELDS8 = "";
+                string FIELDS9 = "";
+                string FIELDS10 = "";
+                string FIELDS11 = "";
+                string FIELDS12 = "";
+                string FIELDS13 = "";
 
 
+                XmlDocument xmlDoc = new XmlDocument();
 
-        //        //XmlNode node = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='ID']");
-        //        try
-        //        {
-        //            FIELDS1 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00001']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS2 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00000']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS3 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00005']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS4 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00012']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS5 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00002']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS6 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00003']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS7 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00004']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS8 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00011']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS9 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00013']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS10 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00010']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS12 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00014']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
-        //        try
-        //        {
-        //            FIELDS13 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00015']").Attributes["fieldValue"].Value;
-        //        }
-        //        catch { }
+                xmlDoc.LoadXml(ds1.Tables["ds1"].Rows[0]["CURRENT_DOC"].ToString());
 
 
-        //        try
-        //        {
-        //            //把html語法去除 
-        //            //QCFrm002Cmf = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='QCFrm002Cmf']").Attributes["fieldValue"].Value;
 
-        //            string fieldValue1 = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='00009']").Attributes["fieldValue"].Value;
+                //XmlNode node = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='ID']");
+                try
+                {                   
+                    FIELDS1 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00001']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS2 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00000']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS3 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00005']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS4 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00012']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS5 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00002']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS6 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00003']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS7 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00004']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS8 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00011']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS9 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00013']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS10 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00010']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS12 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00014']").Attributes["fieldValue"].Value;
+                }
+                catch { }
+                try
+                {
+                    FIELDS13 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00015']").Attributes["fieldValue"].Value;
+                }
+                catch { }
 
-        //            string fieldValue2 = Regex.Replace(fieldValue1, @"&#xD;", "");
-        //            string fieldValue3 = Regex.Replace(fieldValue2, @"&#xA;", "");
-        //            string fieldValue4 = Regex.Replace(fieldValue3, @"<p>", "");
-        //            string fieldValue5 = Regex.Replace(fieldValue4, @"</p>", "");
 
-        //            FIELDS11 = fieldValue5;
-        //        }
-        //        catch { }
-        //        //string OK = "";
-        //        ADD_TK_UOF_DESIGN_1002(
-        //                                  FIELDS1
-        //                                , FIELDS2
-        //                                , FIELDS3
-        //                                , FIELDS4
-        //                                , FIELDS5
-        //                                , FIELDS6
-        //                                , FIELDS7
-        //                                , FIELDS8
-        //                                , FIELDS9
-        //                                , FIELDS10
-        //                                , FIELDS11
-        //                                , FIELDS12
-        //                                , FIELDS13
+                try
+                {
+                    //把html語法去除 
+                    //QCFrm002Cmf = xmlDoc.SelectSingleNode($"/Form/FormFieldValue/FieldItem[@fieldId='QCFrm002Cmf']").Attributes["fieldValue"].Value;
 
-        //                               );
+                    string fieldValue1 = xmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='00009']").Attributes["fieldValue"].Value;
+
+                    string fieldValue2 = Regex.Replace(fieldValue1, @"&#xD;", "");
+                    string fieldValue3 = Regex.Replace(fieldValue2, @"&#xA;", "");
+                    string fieldValue4 = Regex.Replace(fieldValue3, @"<p>", "");
+                    string fieldValue5 = Regex.Replace(fieldValue4, @"</p>", "");
+
+                    //FIELDS11 = fieldValue5;
+                }
+                catch { }
+                //string OK = "";
+                ADD_TK_UOF_DESIGN_1002(
+                                          FIELDS1
+                                        , FIELDS2
+                                        , FIELDS3
+                                        , FIELDS4
+                                        , FIELDS5
+                                        , FIELDS6
+                                        , FIELDS7
+                                        , FIELDS8
+                                        , FIELDS9
+                                        , FIELDS10
+                                        , FIELDS11
+                                        , FIELDS12
+                                        , FIELDS13
+
+                                       );
 
 
-        //    }
-        //    else
-        //    {
+            }
+            else
+            {
 
-        //    }
+            }
 
-        //}
-        //catch
-        //{
+        }
+        catch
+        {
 
-        //}
-        //finally
-        //{
-        //    sqlConn.Close();
-        //}
+        }
+        finally
+        {
+            sqlConn.Close();
+        }
     }
 
 
@@ -874,6 +877,9 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
     protected void btn2_Click(object sender, EventArgs e)
     {
         NEW_TKRESEARCH_TK_UOF_DESIGN_1002();
+        BindGrid1("");
+
+        MsgBox("完成", this.Page, this);
 
     }
 
