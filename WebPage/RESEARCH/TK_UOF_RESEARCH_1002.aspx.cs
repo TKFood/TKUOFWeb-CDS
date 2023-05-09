@@ -22,6 +22,8 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_RESEARCH_TK_UOF_RESEARCH_1002 : Ede.Uof.Utility.Page.BasePage
 {
+    //1002.設計需求內容清單，表單核完才轉入
+
     string RowIndex = "";
     String connectionString;
     SqlConnection sqlConn = new SqlConnection();
@@ -566,7 +568,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_RESEARCH_1002 : Ede.Uof.Utility
                                     AND TASK_STATUS='2'
                                     AND TASK_RESULT='0'
                                     AND DOC_NBR  LIKE 'RD1002%'
-                                    AND DOC_NBR >='RD1002230400001'
+                                    AND DOC_NBR >='RD1002230100001'
                                     AND DOC_NBR COLLATE Chinese_Taiwan_Stroke_BIN NOT IN (SELECT  [RDF1002SN] FROM [192.168.1.105].[TKRESEARCH].[dbo].[TK_UOF_RESEARCH_1002])
                                        
                                     ");

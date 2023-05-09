@@ -22,6 +22,8 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.Page.BasePage
 {
+    //1002.產品設計申請，表單成立就轉入
+
     string RowIndex = "";
     String connectionString;
     SqlConnection sqlConn = new SqlConnection();
