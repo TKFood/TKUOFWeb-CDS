@@ -45,6 +45,14 @@
                         </td>
 
                     </tr>
+                                       <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button2" runat="server" Text="轉入新資料" OnClick="btn2_Click"
+                                meta:resourcekey="btn2Resource1" />
+                        </td>
+
+                    </tr>
                 </table>
                 <table class="PopTable">
                     <tr>
@@ -83,7 +91,7 @@
                                         </asp:BoundField>
                                         <asp:TemplateField HeaderText="填寫處理進度" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="GRIDVIEWTextBox1" runat="server" Text="" Width="200px" TextMode="MultiLine" Rows="5"></asp:TextBox>
+                                                <asp:TextBox ID="GRIDVIEWTextBox1" runat="server" Text="" Width="300px" TextMode="MultiLine" Rows="5"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="填寫是否結案" HeaderStyle-HorizontalAlign="Center">
