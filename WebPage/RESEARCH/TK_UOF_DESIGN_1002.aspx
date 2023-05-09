@@ -45,7 +45,7 @@
                         </td>
 
                     </tr>
-                                       <tr>
+                    <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Button ID="Button2" runat="server" Text="轉入新資料" OnClick="btn2_Click"
@@ -62,12 +62,12 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
-                                         <asp:TemplateField HeaderText="表單編號" HeaderStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="表單編號" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <%--<asp:TextBox ID="FIELDS1" runat="server" Text='<%# Eval("表單編號") %>' Width="120px"  ></asp:TextBox>--%>
-                                                <asp:Label ID="LabelFIELDS1" runat="server"  Text='<%# Eval("表單編號") %>' Width="120px" ></asp:Label>
+                                                <asp:Label ID="LabelFIELDS1" runat="server" Text='<%# Eval("表單編號") %>' Width="120px"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                   
+                                        </asp:TemplateField>
                                         <asp:BoundField HeaderText="交付人" DataField="交付人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
@@ -96,7 +96,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="填寫是否結案" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="GRIDVIEWDropDownList1" runat="server"  Width="60px">
+                                                <asp:DropDownList ID="GRIDVIEWDropDownList1" runat="server" Width="60px">
                                                     <asp:ListItem>N</asp:ListItem>
                                                     <asp:ListItem>Y</asp:ListItem>
                                                 </asp:DropDownList>
@@ -104,7 +104,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="更新" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Button1" runat="server" Text="更新" ForeColor="Red" CommandName="Button1" CommandArgument='<%# Container.DataItemIndex %>'/>
+                                                <asp:Button ID="Button1" runat="server" Text="更新" ForeColor="Red" CommandName="Button1" CommandArgument='<%# Container.DataItemIndex %>' />
 
                                             </ItemTemplate>
                                         </asp:TemplateField>

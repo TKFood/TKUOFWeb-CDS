@@ -45,6 +45,14 @@
                         </td>
 
                     </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button2" runat="server" Text="轉入新資料" OnClick="btn2_Click"
+                                meta:resourcekey="btn2Resource1" />
+                        </td>
+
+                    </tr>
                 </table>
                 <table class="PopTable">
                     <tr>
@@ -57,7 +65,7 @@
                                         <asp:TemplateField HeaderText="表單編號" HeaderStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <%--<asp:TextBox ID="FIELDS1" runat="server" Text='<%# Eval("表單編號") %>' Width="120px"  ></asp:TextBox>--%>
-                                                <asp:Label ID="LabelRDF1002SN" runat="server" Text='<%# Eval("表單編號") %>' Width="120px" ></asp:Label>
+                                                <asp:Label ID="LabelRDF1002SN" runat="server" Text='<%# Eval("表單編號") %>' Width="120px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField HeaderText="申請人" DataField="申請人" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -77,7 +85,7 @@
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="產品名稱" DataField="產品名稱" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="60px"></ItemStyle>
-                                        </asp:BoundField>                                      
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="產品規格" DataField="產品規格" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
