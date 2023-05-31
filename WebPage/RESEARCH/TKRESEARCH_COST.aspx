@@ -53,11 +53,11 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
-            <telerik:RadTab Text="每年平均成本">
+            <telerik:RadTab Text="每年平均成本-有製令的">
             </telerik:RadTab>
-            <telerik:RadTab Text="分攤的每年平均成本">
+            <telerik:RadTab Text="分攤的每年平均成本-有製令的">
             </telerik:RadTab>
-            <telerik:RadTab Text="查BOM最近的進貨成本">
+            <telerik:RadTab Text="依BOM查詢平均成本-無製令的">
             </telerik:RadTab>
             <telerik:RadTab Text="人工記錄的成本">
             </telerik:RadTab>
@@ -71,7 +71,7 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="txtDate1" runat="server" Width="100px"></asp:TextBox>
@@ -219,6 +219,16 @@
             <table class="PopTable">
                 <tr>
                     <td class="PopTableLeftTD">
+                        <asp:Label ID="Label15" runat="server" Text="年度:" meta:resourcekey="Label4Resource1"></asp:Label>
+                    </td>
+                    <td class="PopTableRightTD">
+                        <asp:TextBox ID="txtDate2" runat="server" Width="100px"></asp:TextBox>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="PopTableLeftTD">
                         <asp:Label ID="Label5" runat="server" Text="品號/品名:" meta:resourcekey="Label4Resource1"></asp:Label>
                     </td>
                     <td>
@@ -260,7 +270,7 @@
                                     <asp:BoundField HeaderText="成品品名" DataField="成品品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="200px"></ItemStyle>
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="成品單位進貨成本" DataField="成品單位進貨成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                    <asp:BoundField HeaderText="單位成本-材料" DataField="單位成本-材料" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="組件品號" DataField="組件品號" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -270,6 +280,9 @@
                                         <ItemStyle HorizontalAlign="left" Width="200px"></ItemStyle>
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="分攤單位進貨成本" DataField="分攤單位進貨成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="非採購單位成本" DataField="非採購單位成本" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="組件單位" DataField="組件單位" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -478,12 +491,12 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="修改原料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemTemplate>
-                                            <asp:Button ID="GV4Button2" runat="server"  Text="修改原料" ForeColor="Red" CommandName="GV4Button2" CommandArgument='<%# Eval("品號") %>' />
+                                            <asp:Button ID="GV4Button2" runat="server" Text="修改原料" ForeColor="Red" CommandName="GV4Button2" CommandArgument='<%# Eval("品號") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="修改物料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                    <asp:TemplateField HeaderText="修改物料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemTemplate>
-                                            <asp:Button ID="GV4Button3" runat="server"  Text="修改物料" ForeColor="Red" CommandName="GV4Button3" CommandArgument='<%# Eval("品號") %>' />
+                                            <asp:Button ID="GV4Button3" runat="server" Text="修改物料" ForeColor="Red" CommandName="GV4Button3" CommandArgument='<%# Eval("品號") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
