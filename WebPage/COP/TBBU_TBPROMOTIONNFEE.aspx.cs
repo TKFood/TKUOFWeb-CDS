@@ -25,8 +25,11 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         if (!IsPostBack)
         {
             TextBox1.Text = DateTime.Now.Year.ToString();
-            TextBox2.Text = "";           
-          
+            TextBox2.Text = DateTime.Now.Year.ToString();
+            TextBox3.Text = "";
+            TextBox4.Text = "";
+            TextBox5.Text = "";
+            TextBox6.Text = "";
         }
         else
         {
@@ -75,12 +78,38 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
-        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+        StringBuilder QUERYS4 = new StringBuilder();
+        StringBuilder QUERYS5 = new StringBuilder();
+        StringBuilder QUERYS6 = new StringBuilder();
 
-        //計劃名稱
-        if (!string.IsNullOrEmpty(TextBox2.Text))
+        //年度
+        if (!string.IsNullOrEmpty(TextBox1.Text)&& !string.IsNullOrEmpty(TextBox2.Text))
         {
-            QUERYS.AppendFormat(@" AND [NAMES] LIKE '%{0}%'", TextBox2.Text);
+            QUERYS1.AppendFormat(@" AND [YEARS]>='{0}'  AND [YEARS]<='{1}'  ", TextBox1.Text, TextBox2.Text);
+        }
+
+        //活動/目的
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS2.AppendFormat(@" AND [NAMES] LIKE '%{0}%'  ", TextBox3.Text);
+        }
+        //對象(經銷商)
+        if (!string.IsNullOrEmpty(TextBox4.Text))
+        {
+            QUERYS3.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%'  ", TextBox4.Text);
+        }
+        //通路
+        if (!string.IsNullOrEmpty(TextBox5.Text))
+        {
+            QUERYS4.AppendFormat(@" AND [STORES] LIKE '%{0}%'  ", TextBox5.Text);
+        }
+        //活動內容
+        if (!string.IsNullOrEmpty(TextBox6.Text))
+        {
+            QUERYS5.AppendFormat(@" AND [ACTIONS] LIKE '%{0}%'  ", TextBox6.Text);
         }
 
 
@@ -126,17 +155,20 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             ).value('.','nvarchar(max)'),'')  As '各項商品' 
 
                             FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
-                            WHERE 1=1
-                            AND [YEARS]=@YEARS    
+                            WHERE 1=1                           
                             {0}
+                            {1}
+                            {2}
+                            {3}
+                            {4}
                           
                               
-                            ", QUERYS.ToString());
+                            ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString());
 
 
 
 
-        m_db.AddParameter("@YEARS", TextBox1.Text.ToString().Trim());
+        //m_db.AddParameter("@YEARS", TextBox1.Text.ToString().Trim());
         //m_db.AddParameter("@EDATE", EDATE);
 
         DataTable dt = new DataTable();
