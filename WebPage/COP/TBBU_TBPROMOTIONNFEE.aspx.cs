@@ -25,9 +25,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         if (!IsPostBack)
         {
             TextBox1.Text = DateTime.Now.Year.ToString();
-            TextBox2.Text = "";
-
-            BindGrid();
+            TextBox2.Text = "";           
           
         }
         else
@@ -109,7 +107,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             ,ROUND([ACTCOSTMONEYS],0) AS ACTCOSTMONEYS
                             ,ROUND([ACTFEEMONEYS],0) AS ACTFEEMONEYS
                             ,ROUND([ACTPROFITS],0) AS ACTPROFITS
-
+                            ,ACTIONS
                             ,ISNULL( (     
                             SELECT CASE
                             WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
@@ -202,26 +200,26 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
 
 
 
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            //Button2
-            //Get the button that raised the event
-            Button btn3 = (Button)e.Row.FindControl("Button3");
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    //Button2
+        //    //Get the button that raised the event
+        //    Button btn3 = (Button)e.Row.FindControl("Button3");
 
-            //Get the row that contains this button
-            GridViewRow gvr3 = (GridViewRow)btn3.NamingContainer;
+        //    //Get the row that contains this button
+        //    GridViewRow gvr3 = (GridViewRow)btn3.NamingContainer;
 
-            //string cellvalue = gvr.Cells[2].Text.Trim();
-            string Cellvalue3 = btn3.CommandArgument;
+        //    //string cellvalue = gvr.Cells[2].Text.Trim();
+        //    string Cellvalue3 = btn3.CommandArgument;
 
-            DataRowView row3 = (DataRowView)e.Row.DataItem;
-            Button lbtnName3 = (Button)e.Row.FindControl("Button3");
+        //    DataRowView row3 = (DataRowView)e.Row.DataItem;
+        //    Button lbtnName3 = (Button)e.Row.FindControl("Button3");
 
-            ExpandoObject param3 = new { ID = Cellvalue3 }.ToExpando();
+        //    ExpandoObject param3 = new { ID = Cellvalue3 }.ToExpando();
 
-            //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName3, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEPRODUCTSDialog.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param3);
-        }
+        //    //Grid開窗是用RowDataBound事件再開窗
+        //    Dialog.Open2(lbtnName3, "~/CDS/WebPage/COP/TBBU_TBPROMOTIONNFEEPRODUCTSDialog.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param3);
+        //}
 
     }
 
@@ -409,8 +407,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
     protected void btn1_Click(object sender, EventArgs e)
     {
         BindGrid();
-        //this.Session["SDATE"] = txtDate1.Text.Trim();
-        //this.Session["EDATE"] = txtDate2.Text.Trim();
+        
     }
 
     protected void btn2_Click(object sender, EventArgs e)

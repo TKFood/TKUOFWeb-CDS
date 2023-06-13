@@ -223,32 +223,44 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDETAILSDialog : Ede.Uof.Uti
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+
         string cmdTxt = @"  
                             DELETE [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS]
                             WHERE MID=@MID AND ID=@ID
                             ";
-
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@ID", ID);
-
-
         m_db.ExecuteNonQuery(cmdTxt);
 
-        
+        //// 在執行刪除前，彈出 JavaScript 的確認對話框
+        //string confirmScript = "return confirm('確定要刪除嗎？');";
+        //Page.ClientScript.RegisterOnSubmitStatement(this.GetType(), "ConfirmDelete", confirmScript);
+
+        //if (Page.IsValid)
+        //{
+          
+
+           
+        //}
     }
     public void UPDATETBPROMOTIONNFEE(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        //UPDATE [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
+        //                  SET[SALESNUMS] = (SELECT SUM([NUMS]) FROM[TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE[MID] = @ID)
+        //                ,[SALESMONEYS]=(SELECT SUM(MONEYS) FROM[TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE[MID]=@ID)
+        //                ,[PROFITS]=(SELECT ISNULL(SUM(MONEYS-COSTS-FEES),0) FROM[TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE[MID]=@ID)-(SELECT ISNULL(SUM([FEEMONEYS]),0) FROM[TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE[MID]=@ID)
+        //                ,[COSTMONEYS]=(SELECT ISNULL(SUM(COSTS),0) FROM[TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE[MID]=@ID)
+        //                ,[FEEMONEYS]=(SELECT ISNULL(SUM(FEES),0) FROM[TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE[MID]=@ID)+(SELECT ISNULL(SUM([FEEMONEYS]),0) FROM[TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE[MID]=@ID)
+        //                WHERE[ID]=@ID
         string cmdTxt = @"  
-                        UPDATE [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
-                        SET [SALESNUMS]=(SELECT SUM([NUMS]) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
-                        ,[SALESMONEYS]=(SELECT SUM(MONEYS) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
-                        ,[PROFITS]=(SELECT ISNULL(SUM(MONEYS-COSTS-FEES),0) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)-(SELECT ISNULL(SUM([FEEMONEYS]),0) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE [MID]=@ID)
-                        ,[COSTMONEYS]=(SELECT ISNULL(SUM(COSTS),0) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)
-                        ,[FEEMONEYS]=(SELECT ISNULL(SUM(FEES),0) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEPRODUCTS] WHERE [MID]=@ID)+(SELECT ISNULL(SUM([FEEMONEYS]),0) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE [MID]=@ID)
-                        WHERE [ID]=@ID
+                            UPDATE [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
+                            SET
+                            [FEEMONEYS]=(SELECT ISNULL(SUM([FEEMONEYS]),0) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE [MID]=@ID)
+                            ,[PROFITS]=[SALESMONEYS]-[COSTMONEYS]-(SELECT ISNULL(SUM([FEEMONEYS]),0) FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE [MID]=@ID)
+                            WHERE [ID]=@ID
                             ";
 
         m_db.AddParameter("@ID", ID);

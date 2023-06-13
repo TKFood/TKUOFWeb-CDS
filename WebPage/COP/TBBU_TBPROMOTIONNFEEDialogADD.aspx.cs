@@ -63,92 +63,83 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
     #region FUNCTION
     private void BindDropDownList()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("KIND", typeof(String));
+        //DataTable dt = new DataTable();
+        //dt.Columns.Add("ID", typeof(String));
+        //dt.Columns.Add("KIND", typeof(String));
 
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"SELECT [ID],[KIND] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEKINDS] ORDER BY [ID] ";
+        //string cmdTxt = @"SELECT [ID],[KIND] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEKINDS] ORDER BY [ID] ";
 
-        dt.Load(m_db.ExecuteReader(cmdTxt));
+        //dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        if (dt.Rows.Count > 0)
-        {
-            DropDownList1.DataSource = dt;
-            DropDownList1.DataTextField = "KIND";
-            DropDownList1.DataValueField = "KIND";
-            DropDownList1.DataBind();
+        //if (dt.Rows.Count > 0)
+        //{
+        //    DropDownList1.DataSource = dt;
+        //    DropDownList1.DataTextField = "KIND";
+        //    DropDownList1.DataValueField = "KIND";
+        //    DropDownList1.DataBind();
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-        }
-
-
-
+        //}
     }
 
     private void BindDropDownList2()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("METHOD", typeof(String));
+        //DataTable dt = new DataTable();
+        //dt.Columns.Add("ID", typeof(String));
+        //dt.Columns.Add("METHOD", typeof(String));
 
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"SELECT  [ID],[METHOD] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODS] ORDER BY [ID]";
+        //string cmdTxt = @"SELECT  [ID],[METHOD] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODS] ORDER BY [ID]";
 
-        dt.Load(m_db.ExecuteReader(cmdTxt));
+        //dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        if (dt.Rows.Count > 0)
-        {
-            DropDownList2.DataSource = dt;
-            DropDownList2.DataTextField = "METHOD";
-            DropDownList2.DataValueField = "METHOD";
-            DropDownList2.DataBind();
+        //if (dt.Rows.Count > 0)
+        //{
+        //    DropDownList2.DataSource = dt;
+        //    DropDownList2.DataTextField = "METHOD";
+        //    DropDownList2.DataValueField = "METHOD";
+        //    DropDownList2.DataBind();
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-        }
-
-
-
+        //}
     }
 
     private void BindDropDownList3()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("METHODWAY", typeof(String));
+        //DataTable dt = new DataTable();
+        //dt.Columns.Add("ID", typeof(String));
+        //dt.Columns.Add("METHODWAY", typeof(String));
 
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"SELECT [ID],[METHODWAY] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODWAYS] ORDER BY [ID]";
+        //string cmdTxt = @"SELECT [ID],[METHODWAY] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEMETHODWAYS] ORDER BY [ID]";
 
-        dt.Load(m_db.ExecuteReader(cmdTxt));
+        //dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        if (dt.Rows.Count > 0)
-        {
-            DropDownList3.DataSource = dt;
-            DropDownList3.DataTextField = "METHODWAY";
-            DropDownList3.DataValueField = "METHODWAY";
-            DropDownList3.DataBind();
+        //if (dt.Rows.Count > 0)
+        //{
+        //    DropDownList3.DataSource = dt;
+        //    DropDownList3.DataTextField = "METHODWAY";
+        //    DropDownList3.DataValueField = "METHODWAY";
+        //    DropDownList3.DataBind();
 
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-        }
-
-
-
+        //}
     }
 
     #endregion
@@ -186,34 +177,40 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         string YEARS = TextBox1.Text;
         string SALES = TextBox2.Text;
         string NAMES = TextBox3.Text;
-        string KINDS = DropDownList1.Text;
-        string PROMOTIONS = DropDownList2.Text;
-        string PROMOTIONSSETS = DropDownList3.Text;
+        //string KINDS = DropDownList1.Text;
+        //string PROMOTIONS = DropDownList2.Text;
+        //string PROMOTIONSSETS = DropDownList3.Text;
+        string KINDS = "";
+        string PROMOTIONS = "";
+        string PROMOTIONSSETS = "";
         string SDATES = TextBox7.Text;
         string CLIENTS = TextBox8.Text;
         string STORES = TextBox9.Text;
-        string SALESNUMS = TextBox10.Text;
+        //string SALESNUMS = TextBox10.Text;
+        string SALESNUMS = "0";
         string SALESMONEYS = TextBox11.Text;
         string PROFITS = TextBox12.Text;
         string COSTMONEYS = TextBox4.Text;
         string FEEMONEYS = TextBox5.Text;
 
-        string COMMENTS = TextBox13.Text;
+        //string COMMENTS = TextBox13.Text;
+        string COMMENTS ="";
         string DEPNAME = TextBox14.Text;
         string TITLES = TextBox15.Text;
+        string ACTIONS = TextBox6.Text;
 
 
 
         if ( !string.IsNullOrEmpty(YEARS)&& !string.IsNullOrEmpty(NAMES))
         {
 
-            ADDTBPROMOTIONNFEE(YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES);
+            ADDTBPROMOTIONNFEE(YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTIONS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBPROMOTIONNFEE(string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES)
+    public void ADDTBPROMOTIONNFEE(string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES,string ACTIONS)
     {
         Label8.Text = "";
 
@@ -224,9 +221,9 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         {
             string cmdTxt = @"  
                             INSERT INTO  [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
-                            ([YEARS],[DEPNAME],[TITLES],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS], [COSTMONEYS], [FEEMONEYS],[PROFITS],[COMMENTS])
+                            ([YEARS],[DEPNAME],[TITLES],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS], [COSTMONEYS], [FEEMONEYS],[PROFITS],[COMMENTS],[ACTIONS])
                             VALUES
-                            (@YEARS,@DEPNAME,@TITLES, @SALES, @NAMES, @KINDS, @PROMOTIONS, @PROMOTIONSSETS, @SDATES, @CLIENTS, @STORES, @SALESNUMS, @SALESMONEYS,@COSTMONEYS,@FEEMONEYS, @PROFITS, @COMMENTS)
+                            (@YEARS,@DEPNAME,@TITLES, @SALES, @NAMES, @KINDS, @PROMOTIONS, @PROMOTIONSSETS, @SDATES, @CLIENTS, @STORES, @SALESNUMS, @SALESMONEYS,@COSTMONEYS,@FEEMONEYS, @PROFITS, @COMMENTS,@ACTIONS)
 
                             ";
 
@@ -249,6 +246,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
             m_db.AddParameter("@FEEMONEYS", FEEMONEYS);
             m_db.AddParameter("@PROFITS", PROFITS);
             m_db.AddParameter("@COMMENTS", COMMENTS);
+            m_db.AddParameter("@ACTIONS", ACTIONS);
 
 
 

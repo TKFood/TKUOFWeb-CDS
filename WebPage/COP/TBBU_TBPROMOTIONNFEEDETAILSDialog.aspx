@@ -24,7 +24,7 @@
     <table class="PopTable">
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label3" runat="server" Text="計劃名稱"></asp:Label>
+                <asp:Label ID="Label3" runat="server" Text="名稱"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox2" runat="server" Text="" Width="100%" ReadOnly="true"></asp:TextBox>
@@ -34,7 +34,7 @@
     <table class="PopTable">
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label2" runat="server" Text="費用名稱"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text="預估-費用名稱"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox1" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
@@ -42,15 +42,15 @@
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label4" runat="server" Text="費用金額"></asp:Label>
+                <asp:Label ID="Label4" runat="server" Text="預估-費用金額"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox3" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}" ></asp:TextBox>
+                <asp:TextBox ID="TextBox3" runat="server" Text="0" Width="100%" TextMode="MultiLine" Rows="1" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}" ></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="PopTableLeftTD">
-                <asp:Label ID="Label5" runat="server" Text="費用計算方式"></asp:Label>
+                <asp:Label ID="Label5" runat="server" Text="預估-費用計算方式"></asp:Label>
             </td>
             <td class="PopTableRightTD">
                 <asp:TextBox ID="TextBox4" runat="server" Text="" Width="100%" TextMode="MultiLine" Rows="1"></asp:TextBox>
@@ -64,13 +64,13 @@
                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                     <ExportExcelSettings AllowExportToExcel="False"></ExportExcelSettings>
                     <Columns>
-                        <asp:BoundField HeaderText="費用名稱" DataField="FEENAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
+                        <asp:BoundField HeaderText="預估-費用名稱" DataField="FEENAME" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" SortExpression="MEMODATES">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField HeaderText="費用金額" DataField="FEEMONEYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                        <asp:BoundField HeaderText="預估-費用金額" DataField="FEEMONEYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
-                        <asp:BoundField HeaderText="費用計算方式" DataField="FEECOUNTMETHOD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                        <asp:BoundField HeaderText="預估-費用計算方式" DataField="FEECOUNTMETHOD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
