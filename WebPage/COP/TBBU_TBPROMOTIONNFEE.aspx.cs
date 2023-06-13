@@ -30,6 +30,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
             TextBox4.Text = "";
             TextBox5.Text = "";
             TextBox6.Text = "";
+
+            BindDropDownList();
         }
         else
         {
@@ -45,29 +47,29 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
     #region FUNCTION
     private void BindDropDownList()
     {
-        //DataTable dt = new DataTable();
-        //dt.Columns.Add("SALESFOCUS", typeof(String));
+        DataTable dt = new DataTable();
+        dt.Columns.Add("VALUE", typeof(String));
 
 
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        //string cmdTxt = @" SELECT '全部' AS SALESFOCUS UNION ALL SELECT SALESFOCUS  FROM  [TKBUSINESS].[dbo].[PRODUCTS]  GROUP BY SALESFOCUS ";
+        string cmdTxt = @" SELECT [ID],[KINDS],[NAMES],[VALUE] FROM [TKBUSINESS].[dbo].[TBPARA] WHERE [KINDS]='是否結案' ";
 
-        //dt.Load(m_db.ExecuteReader(cmdTxt));
+        dt.Load(m_db.ExecuteReader(cmdTxt));
 
-        //if (dt.Rows.Count > 0)
-        //{
-        //    DropDownList1.DataSource = dt;
-        //    DropDownList1.DataTextField = "SALESFOCUS";
-        //    DropDownList1.DataValueField = "SALESFOCUS";
-        //    DropDownList1.DataBind();
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "VALUE";
+            DropDownList1.DataValueField = "VALUE";
+            DropDownList1.DataBind();
 
-        //}
-        //else
-        //{
+        }
+        else
+        {
 
-        //}
+        }
 
 
 
@@ -84,6 +86,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         StringBuilder QUERYS4 = new StringBuilder();
         StringBuilder QUERYS5 = new StringBuilder();
         StringBuilder QUERYS6 = new StringBuilder();
+        StringBuilder QUERYS7 = new StringBuilder();
 
         //年度
         if (!string.IsNullOrEmpty(TextBox1.Text)&& !string.IsNullOrEmpty(TextBox2.Text))
@@ -116,7 +119,16 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         {
             QUERYS6.AppendFormat(@" AND [PRODUCTS] LIKE '%{0}%'  ", TextBox7.Text);
         }
-
+        //是否結案
+        if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString())&& DropDownList1.SelectedValue.ToString().Equals("N"))
+        {
+            QUERYS7.AppendFormat(@" AND [ISCLOSED] LIKE '%{0}%'  ", DropDownList1.SelectedValue.ToString());
+        }
+        else if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()) && DropDownList1.SelectedValue.ToString().Equals("全部"))
+        {
+            QUERYS7.AppendFormat(@" ");
+        }
+       
 
         cmdTxt.AppendFormat(@" 
                            SELECT [ID]
@@ -143,6 +155,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             ,ROUND([ACTPROFITS],0) AS ACTPROFITS
                             ,ACTIONS
                             ,PRODUCTS
+                            ,ISCLOSED
                             ,ISNULL( (     
                             SELECT CASE
                             WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
@@ -168,9 +181,10 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             {3}
                             {4}
                             {5}
+                            {6}
                           
                               
-                            ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString(), QUERYS6.ToString());
+                            ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString(), QUERYS6.ToString(), QUERYS7.ToString());
 
 
 

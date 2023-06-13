@@ -121,10 +121,10 @@
                 <asp:Label ID="Label6" runat="server" Text="活動內容(詳述)"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox6" runat="server" Text="" TextMode="MultiLine" Rows="5" Width="100%" Style="height: 80px;"></asp:TextBox>
+                <asp:TextBox ID="TextBox6" runat="server" Text="" TextMode="MultiLine" Rows="10" Width="100%" Style="height: 200px;"></asp:TextBox>
             </td>
         </tr>
-                <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label20" runat="server" Text="商品"></asp:Label>
             </td>
@@ -132,7 +132,7 @@
                 <asp:TextBox ID="TextBox18" runat="server" Text="" TextMode="MultiLine" Rows="5" Width="100%" Style="height: 80px;"></asp:TextBox>
             </td>
         </tr>
-<%--        <tr>
+        <%--        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label12" runat="server" Text="銷量預估數量"></asp:Label>
             </td>
@@ -181,7 +181,7 @@
                 <asp:TextBox ID="TextBox13" runat="server" Text="" Width="100%" Row="5" TextMode="MultiLine" Style="height: 120px;"></asp:TextBox>
             </td>
         </tr>--%>
-            <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label7" runat="server" Text="實際-總收入"></asp:Label>
             </td>
@@ -189,7 +189,7 @@
                 <asp:TextBox ID="TextBox10" runat="server" Text="0" Width="100%" Row="1" Style="height: 20px;" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
             </td>
         </tr>
-            <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label8" runat="server" Text="實際-總成本"></asp:Label>
             </td>
@@ -197,7 +197,7 @@
                 <asp:TextBox ID="TextBox13" runat="server" Text="0" Width="100%" Row="1" Style="height: 20px;" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
             </td>
         </tr>
-            <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label12" runat="server" Text="實際-總費用"></asp:Label>
             </td>
@@ -205,7 +205,7 @@
                 <asp:TextBox ID="TextBox16" runat="server" Text="0" Width="100%" Row="1" Style="height: 20px;" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
             </td>
         </tr>
-            <tr>
+        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label15" runat="server" Text="實際-利潤"></asp:Label>
             </td>
@@ -213,6 +213,15 @@
                 <asp:TextBox ID="TextBox17" runat="server" Text="0" Width="100%" Row="1" Style="height: 20px;" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
             </td>
         </tr>
+        </tr>
+            <tr>
+                <td class="PopTableLeftTD">
+                    <asp:Label ID="Label21" runat="server" Text="是否結案"></asp:Label>
+                </td>
+                <td class="PopTableRightTD">
+                    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                </td>
+            </tr>
     </table>
 
     <table>

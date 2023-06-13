@@ -82,32 +82,29 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
     #region FUNCTION
     private void BindDropDownList()
     {
-        //DataTable dt = new DataTable();
-        //dt.Columns.Add("ID", typeof(String));
-        //dt.Columns.Add("KIND", typeof(String));
-
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        //string cmdTxt = @"SELECT [ID],[KIND] FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEKINDS] ORDER BY [ID] ";
-
-        //dt.Load(m_db.ExecuteReader(cmdTxt));
-
-        //if (dt.Rows.Count > 0)
-        //{
-        //    DropDownList1.DataSource = dt;
-        //    DropDownList1.DataTextField = "KIND";
-        //    DropDownList1.DataValueField = "KIND";
-        //    DropDownList1.DataBind();
-
-        //}
-        //else
-        //{
-
-        //}
+        DataTable dt = new DataTable();
+        dt.Columns.Add("VALUE", typeof(String));
 
 
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        string cmdTxt = @" SELECT [ID],[KINDS],[NAMES],[VALUE] FROM [TKBUSINESS].[dbo].[TBPARA] WHERE [KINDS]='是否結案' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "VALUE";
+            DropDownList1.DataValueField = "VALUE";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
     }
 
     private void BindDropDownList2()
@@ -184,6 +181,8 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
                         ,[ACTPROFITS]
                         ,[ACTIONS]
                         ,[PRODUCTS]
+                        ,ISCLOSED
+                          
                         FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
                         WHERE [ID]=@ID
                         ";
@@ -214,7 +213,7 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
             TextBox17.Text = dt.Rows[0]["ACTPROFITS"].ToString();
             TextBox6.Text = dt.Rows[0]["ACTIONS"].ToString();
             TextBox18.Text = dt.Rows[0]["PRODUCTS"].ToString();
-
+            DropDownList1.SelectedValue = dt.Rows[0]["ISCLOSED"].ToString();
 
 
 
@@ -258,18 +257,19 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         string ACTFEEMONEYS = TextBox16.Text;
         string ACTPROFITS = TextBox17.Text;
         string PRODUCTS= TextBox18.Text;
+        string ISCLOSED = DropDownList1.SelectedValue.ToString();
 
 
 
 
         if (!string.IsNullOrEmpty(ID) )
         {       
-            UPDATETBPROMOTIONNFEE(ID, YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTSALESMONEYS, ACTCOSTMONEYS, ACTFEEMONEYS, ACTPROFITS, ACTIONS, PRODUCTS);
+            UPDATETBPROMOTIONNFEE(ID, YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTSALESMONEYS, ACTCOSTMONEYS, ACTFEEMONEYS, ACTPROFITS, ACTIONS, PRODUCTS, ISCLOSED);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES, string ACTSALESMONEYS, string ACTCOSTMONEYS, string ACTFEEMONEYS, string ACTPROFITS,string ACTIONS,string PRODUCTS)
+    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES, string ACTSALESMONEYS, string ACTCOSTMONEYS, string ACTFEEMONEYS, string ACTPROFITS,string ACTIONS,string PRODUCTS,string ISCLOSED)
     {
 
 
@@ -302,7 +302,7 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
                         ,[ACTPROFITS]=@ACTPROFITS
                         ,[ACTIONS]=@ACTIONS
                         ,[PRODUCTS]=@PRODUCTS
-
+                        ,[ISCLOSED]=@ISCLOSED
                         WHERE  [ID]= @ID
                    
                             ";
@@ -332,6 +332,7 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         m_db.AddParameter("@ACTPROFITS", ACTPROFITS);
         m_db.AddParameter("@ACTIONS", ACTIONS);
         m_db.AddParameter("@PRODUCTS", PRODUCTS);
+        m_db.AddParameter("@ISCLOSED", ISCLOSED);
 
         m_db.ExecuteNonQuery(cmdTxt);
 
