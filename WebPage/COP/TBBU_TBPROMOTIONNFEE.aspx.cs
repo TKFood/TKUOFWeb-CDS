@@ -124,6 +124,10 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         {
             QUERYS7.AppendFormat(@" AND [ISCLOSED] LIKE '%{0}%'  ", DropDownList1.SelectedValue.ToString());
         }
+        else if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()) && DropDownList1.SelectedValue.ToString().Equals("Y"))
+        {
+            QUERYS7.AppendFormat(@" AND [ISCLOSED] LIKE '%{0}%'  ", DropDownList1.SelectedValue.ToString());
+        }
         else if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()) && DropDownList1.SelectedValue.ToString().Equals("全部"))
         {
             QUERYS7.AppendFormat(@" ");
