@@ -183,6 +183,7 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
                         ,[ACTFEEMONEYS]
                         ,[ACTPROFITS]
                         ,[ACTIONS]
+                        ,[PRODUCTS]
                         FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
                         WHERE [ID]=@ID
                         ";
@@ -212,6 +213,7 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
             TextBox16.Text = dt.Rows[0]["ACTFEEMONEYS"].ToString();
             TextBox17.Text = dt.Rows[0]["ACTPROFITS"].ToString();
             TextBox6.Text = dt.Rows[0]["ACTIONS"].ToString();
+            TextBox18.Text = dt.Rows[0]["PRODUCTS"].ToString();
 
 
 
@@ -255,19 +257,19 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         string ACTCOSTMONEYS = TextBox13.Text;
         string ACTFEEMONEYS = TextBox16.Text;
         string ACTPROFITS = TextBox17.Text;
-
+        string PRODUCTS= TextBox18.Text;
 
 
 
 
         if (!string.IsNullOrEmpty(ID) )
         {       
-            UPDATETBPROMOTIONNFEE(ID, YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTSALESMONEYS, ACTCOSTMONEYS, ACTFEEMONEYS, ACTPROFITS, ACTIONS);
+            UPDATETBPROMOTIONNFEE(ID, YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTSALESMONEYS, ACTCOSTMONEYS, ACTFEEMONEYS, ACTPROFITS, ACTIONS, PRODUCTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES, string ACTSALESMONEYS, string ACTCOSTMONEYS, string ACTFEEMONEYS, string ACTPROFITS,string ACTIONS)
+    public void UPDATETBPROMOTIONNFEE(string ID, string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES, string ACTSALESMONEYS, string ACTCOSTMONEYS, string ACTFEEMONEYS, string ACTPROFITS,string ACTIONS,string PRODUCTS)
     {
 
 
@@ -299,6 +301,7 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
                         ,[ACTFEEMONEYS]=@ACTFEEMONEYS
                         ,[ACTPROFITS]=@ACTPROFITS
                         ,[ACTIONS]=@ACTIONS
+                        ,[PRODUCTS]=@PRODUCTS
 
                         WHERE  [ID]= @ID
                    
@@ -328,6 +331,8 @@ public partial class CDS_WebPage_TBBU_TBBU_TBPROMOTIONNFEEDialogEDITDEL : Ede.Uo
         m_db.AddParameter("@ACTFEEMONEYS", ACTFEEMONEYS);
         m_db.AddParameter("@ACTPROFITS", ACTPROFITS);
         m_db.AddParameter("@ACTIONS", ACTIONS);
+        m_db.AddParameter("@PRODUCTS", PRODUCTS);
+
         m_db.ExecuteNonQuery(cmdTxt);
 
 

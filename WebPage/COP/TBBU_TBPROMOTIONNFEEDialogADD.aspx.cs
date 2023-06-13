@@ -198,19 +198,20 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         string DEPNAME = TextBox14.Text;
         string TITLES = TextBox15.Text;
         string ACTIONS = TextBox6.Text;
+        string PRODUCTS= TextBox10.Text;
 
 
 
         if ( !string.IsNullOrEmpty(YEARS)&& !string.IsNullOrEmpty(NAMES))
         {
 
-            ADDTBPROMOTIONNFEE(YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTIONS);
+            ADDTBPROMOTIONNFEE(YEARS, SALES, NAMES, KINDS, PROMOTIONS, PROMOTIONSSETS, SDATES, CLIENTS, STORES, SALESNUMS, SALESMONEYS, COSTMONEYS, FEEMONEYS, PROFITS, COMMENTS, DEPNAME, TITLES, ACTIONS, PRODUCTS);
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
         Dialog.Close(this);
     }
-    public void ADDTBPROMOTIONNFEE(string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES,string ACTIONS)
+    public void ADDTBPROMOTIONNFEE(string YEARS, string SALES, string NAMES, string KINDS, string PROMOTIONS, string PROMOTIONSSETS, string SDATES, string CLIENTS, string STORES, string SALESNUMS, string SALESMONEYS, string COSTMONEYS, string FEEMONEYS, string PROFITS, string COMMENTS, string DEPNAME, string TITLES,string ACTIONS,string PRODUCTS)
     {
         Label8.Text = "";
 
@@ -221,9 +222,9 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
         {
             string cmdTxt = @"  
                             INSERT INTO  [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
-                            ([YEARS],[DEPNAME],[TITLES],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS], [COSTMONEYS], [FEEMONEYS],[PROFITS],[COMMENTS],[ACTIONS])
+                            ([YEARS],[DEPNAME],[TITLES],[SALES],[NAMES],[KINDS],[PROMOTIONS],[PROMOTIONSSETS],[SDATES],[CLIENTS],[STORES],[SALESNUMS],[SALESMONEYS], [COSTMONEYS], [FEEMONEYS],[PROFITS],[COMMENTS],[ACTIONS],[PRODUCTS])
                             VALUES
-                            (@YEARS,@DEPNAME,@TITLES, @SALES, @NAMES, @KINDS, @PROMOTIONS, @PROMOTIONSSETS, @SDATES, @CLIENTS, @STORES, @SALESNUMS, @SALESMONEYS,@COSTMONEYS,@FEEMONEYS, @PROFITS, @COMMENTS,@ACTIONS)
+                            (@YEARS,@DEPNAME,@TITLES, @SALES, @NAMES, @KINDS, @PROMOTIONS, @PROMOTIONSSETS, @SDATES, @CLIENTS, @STORES, @SALESNUMS, @SALESMONEYS,@COSTMONEYS,@FEEMONEYS, @PROFITS, @COMMENTS,@ACTIONS,@PRODUCTS)
 
                             ";
 
@@ -247,6 +248,7 @@ public partial class CDS_WebPage_TBBU_TBPROMOTIONNFEEDialogADD : Ede.Uof.Utility
             m_db.AddParameter("@PROFITS", PROFITS);
             m_db.AddParameter("@COMMENTS", COMMENTS);
             m_db.AddParameter("@ACTIONS", ACTIONS);
+            m_db.AddParameter("@PRODUCTS", PRODUCTS);
 
 
 

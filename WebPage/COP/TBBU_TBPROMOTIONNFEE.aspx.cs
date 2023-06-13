@@ -111,6 +111,11 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
         {
             QUERYS5.AppendFormat(@" AND [ACTIONS] LIKE '%{0}%'  ", TextBox6.Text);
         }
+        //商品
+        if (!string.IsNullOrEmpty(TextBox7.Text))
+        {
+            QUERYS6.AppendFormat(@" AND [PRODUCTS] LIKE '%{0}%'  ", TextBox7.Text);
+        }
 
 
         cmdTxt.AppendFormat(@" 
@@ -137,6 +142,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             ,ROUND([ACTFEEMONEYS],0) AS ACTFEEMONEYS
                             ,ROUND([ACTPROFITS],0) AS ACTPROFITS
                             ,ACTIONS
+                            ,PRODUCTS
                             ,ISNULL( (     
                             SELECT CASE
                             WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
@@ -161,9 +167,10 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             {2}
                             {3}
                             {4}
+                            {5}
                           
                               
-                            ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString());
+                            ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString(), QUERYS6.ToString());
 
 
 

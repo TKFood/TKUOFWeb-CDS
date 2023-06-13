@@ -123,6 +123,14 @@
                 <asp:TextBox ID="TextBox6" runat="server" Text="" TextMode="MultiLine" Rows="5" Width="100%" Style="height: 80px;"></asp:TextBox>
             </td>
         </tr>
+                <tr>
+            <td class="PopTableLeftTD">
+                <asp:Label ID="Label6" runat="server" Text="商品:"></asp:Label>
+            </td>
+            <td class="PopTableRightTD">
+                <asp:TextBox ID="TextBox10" runat="server" Text="" TextMode="MultiLine" Rows="5" Width="100%" Style="height: 80px;"></asp:TextBox>
+            </td>
+        </tr>
 <%--        <tr>
             <td class="PopTableLeftTD">
                 <asp:Label ID="Label12" runat="server" Text="銷量預估數量"></asp:Label>

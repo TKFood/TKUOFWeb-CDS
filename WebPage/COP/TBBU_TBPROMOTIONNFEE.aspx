@@ -106,6 +106,15 @@
 
                     </tr>
                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label8" runat="server" Text="商品:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click"
@@ -163,6 +172,9 @@
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="活動內容" DataField="ACTIONS" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="商品" DataField="PRODUCTS" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                         <%--  <asp:BoundField HeaderText="銷量預估數量" DataField="SALESNUMS" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
