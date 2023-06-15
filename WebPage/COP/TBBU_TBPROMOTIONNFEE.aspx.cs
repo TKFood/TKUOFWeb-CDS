@@ -159,6 +159,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPROMOTIONNFEE : Ede.Uof.Utility.Page
                             ,ROUND([ACTPROFITS],0) AS ACTPROFITS
                             ,ACTIONS
                             ,PRODUCTS
+                            ,[DOC_NBR]
                             ,ISCLOSED
                             ,ISNULL( (     
                             SELECT CASE
