@@ -59,10 +59,10 @@
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
                                         <asp:BoundField HeaderText="品號" DataField="品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="left" Width="10px"></ItemStyle>
                                         </asp:BoundField>    
                                         <asp:BoundField HeaderText="品名" DataField="品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="left" Width="10px"></ItemStyle>
                                         </asp:BoundField>   
                                         <asp:BoundField HeaderText="批號" DataField="批號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
