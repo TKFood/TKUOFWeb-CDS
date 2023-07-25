@@ -31,7 +31,7 @@ public partial class CDS_WebPage_Mobile_TBBU_INVASELL : Ede.Uof.Utility.Page.Bas
 
         if (!IsPostBack)
         { 
-            BindGrid("");
+            //BindGrid("");
         }
         else
         {
