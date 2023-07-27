@@ -3750,6 +3750,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
                             WHERE  1=1
                             AND DISPLAY_TITLE LIKE '%{0}%'
                             AND DISPLAY_TITLE LIKE '%{1}%'
+                            AND DISPLAY_TITLE NOT LIKE '%請購%'
                             AND TASK_STATUS='1'
 
                               ", TC001,TC002);
