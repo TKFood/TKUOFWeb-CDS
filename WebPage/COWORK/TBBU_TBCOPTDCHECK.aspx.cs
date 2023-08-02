@@ -643,7 +643,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
             if(DT!=null && DT.Rows.Count>=1)
             {
-                MsgBox(e.CommandArgument.ToString() + " \r\n 此訂單已送簽核中", this.Page, this);
+                MsgBox(e.CommandArgument.ToString() + " 重覆送單 \r\n 此訂單已送出簽核了", this.Page, this);
             }
             else
             {
@@ -1692,7 +1692,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
                 if (DT != null && DT.Rows.Count >= 1)
                 {
-                    MsgBox(TD001TD002 + " \r\n 此訂單已送簽核中", this.Page, this);
+                    MsgBox(TD001TD002 + " 重覆送單 \r\n 此訂單已送出簽核了", this.Page, this);
                 }
                 else
                 {
@@ -1702,7 +1702,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
-                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!! \r\n \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!! \r\n  送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
@@ -1778,7 +1778,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
                 if (DT != null && DT.Rows.Count >= 1)
                 {
-                    MsgBox(TD001TD002 + " \r\n 此訂單已送簽核中", this.Page, this);
+                    MsgBox(TD001TD002 + "重覆送單 \r\n 此訂單已送出簽核了", this.Page, this);
                 }
                 else
                 {
@@ -1788,7 +1788,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {                
-                MsgBox("送單失敗!!!!  送單失敗!!!! 送單失敗!!!! 送單失敗!!!! 送單失敗!!!!  \r\n  \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
+                MsgBox("送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!!  \r\n  \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
         catch
@@ -2859,7 +2859,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
             Logger.Write("起單", status + error + "\r\n" + Form.OuterXml);
 
-            MsgBox("送單失敗!!!!    " + error + "\r\n" + Form.OuterXml, this.Page, this);
+            MsgBox("失敗了，無法送單!!!!    " + error + "\r\n" + Form.OuterXml, this.Page, this);
 
             throw new Exception(status + error + "\r\n" + Form.OuterXml);
 
