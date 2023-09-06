@@ -124,7 +124,7 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
 

@@ -94,13 +94,7 @@
             <div id="tabs-2">
                 <table class="PopTable">
                     <tr>
-                        <td class="PopTableLeftTD">
-                            <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
-                        </td>
-                        <td class="PopTableRightTD">
-                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
-
-                        </td>
+                       
                     </tr>
                 </table>
             </div>
