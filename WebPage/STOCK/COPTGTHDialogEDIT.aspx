@@ -52,51 +52,52 @@
     </table>
     <script src="WebCam/WebCam.js"></script>
 
-     <script>    
-         //JS GetName
-         function GetName() {
-             PageMethods.Name(Success, Failure);
-         }
+    <script>    
+        //JS GetName
+        function GetName() {
+            PageMethods.Name(Success, Failure);
+        }
 
-         //JS執行成功Success
-         function Success(result) {
-             alert(result);
-         }
-         //JS執行失敗
-         function Failure(error) {
-             alert(error);
-         }
+        //JS執行成功Success
+        function Success(result) {
+            alert(result);
+        }
+        //JS執行失敗
+        function Failure(error) {
+            alert(error);
+        }
 
-         $(function () {
-             Webcam.set({
-                 width: 160,
-                 height: 120,
-                 image_format: 'jpeg',
-                 jpeg_quality: 90
-             });
-             Webcam.attach('#webcam');
-             $("#btnCapture").click(function () {
-                 Webcam.snap(function (data_uri) {
-                     $("#imgCapture")[0].src = data_uri;
+        $(function () {
+            Webcam.set({
+                width: 160,
+                height: 120,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+            Webcam.attach('#webcam');
+            $("#btnCapture").click(function () {
+                Webcam.snap(function (data_uri) {
+                    $("#imgCapture")[0].src = data_uri;
 
-                 });
-             });
-             $("#btnUpload").click(function () {              
-                    var imgCapture = $("#imgCapture")[0].src;
-                    PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
-
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: "Mobile_Test3.aspx/SaveCapturedImage",
-                    //    data: "{data: '" + $("#imgCapture")[0].src + "'}",
-                    //    contentType: "application/json; charset=utf-8",
-                    //    dataType: "json",
-                    //    success: function (r) { }
-                    //});
                 });
             });
-        </script>
-     
+            $("#btnUpload").click(function () {
+                var ID = document.getElementById('<%=lblParam.ClientID%>').value;
+                 var imgCapture = $("#imgCapture")[0].src;
+                 PageMethods.SaveCapturedImage(ID, imgCapture, Success, Failure);
+
+                 //$.ajax({
+                 //    type: "POST",
+                 //    url: "Mobile_Test3.aspx/SaveCapturedImage",
+                 //    data: "{data: '" + $("#imgCapture")[0].src + "'}",
+                 //    contentType: "application/json; charset=utf-8",
+                 //    dataType: "json",
+                 //    success: function (r) { }
+                 //});
+             });
+         });
+    </script>
+
 
 
 </asp:Content>
