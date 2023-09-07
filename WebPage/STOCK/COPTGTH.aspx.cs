@@ -149,11 +149,12 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
                 //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
                 //                ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
 
-                PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
-                                ", row["TG001TG002"].ToString());
+                //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
+                //                ", row["TG001TG002"].ToString());
+                PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/CDS/WebPage/STOCK/PIC/logo.jpg");
                 img.ImageUrl = PATH.ToString();
 
-                //img.ImageUrl  = Request.ApplicationPath + "/Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
+                //img.ImageUrl  = Request.ApplicationPath + " / Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
 
                 //img.ImageUrl = string.Format("~/Common/FileCenter/Downloadfile.ashx?id={0}", row["THUMBNAIL_FILE_ID"].ToString());
 
