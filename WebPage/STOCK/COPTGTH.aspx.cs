@@ -125,6 +125,7 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
 
             //Grid開窗是用RowDataBound事件再開窗
             Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            //Dialog.Open2(lbtnName, "~/CDS/WebPage/Mobile/Mobile_TEST3.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
 

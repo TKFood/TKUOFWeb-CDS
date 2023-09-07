@@ -54,6 +54,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         {           
             //接收主頁面傳遞之參數
             lblParam.Text = Request["ID"];
+            myTextcontent.Value= Request["ID"];
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
@@ -109,8 +110,8 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         //byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
         //ORI3 = imageBytes3.Length.ToString();
 
-        UploadImage(imageBytes2, "PIC",ID);
-        //STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(myTextcontent, NOWTIMES, imageBytes2);
+        //UploadImage(imageBytes2, "PIC",ID);
+        STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
 
         ////Save the Byte Array as Image File.
         //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
@@ -178,6 +179,28 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
             //Console.WriteLine("上傳圖像時出現錯誤：" + ex.Message);
             return null;
         }
+    }
+
+    public static void STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(string CHECKSPOINT, string CHECKSTIME, byte[] PHOTOS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"  
+                       INSERT INTO [TKGAFFAIRS].[dbo].[CHECKSPOOINTPHOTO]
+                        ([CHECKSPOINT],[CHECKSTIME],[PHOTOS])
+                        VALUES
+                        (@CHECKSPOINT,@CHECKSTIME,@PHOTOS)
+                            ";
+
+
+        m_db.AddParameter("@CHECKSPOINT", CHECKSPOINT);
+        m_db.AddParameter("@CHECKSTIME", CHECKSTIME);
+        m_db.AddParameter("@PHOTOS", PHOTOS);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
     }
 
     #endregion
