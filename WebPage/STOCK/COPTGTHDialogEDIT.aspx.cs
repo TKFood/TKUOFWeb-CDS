@@ -34,7 +34,8 @@ using OfficeOpenXml.Style;
 using System.Web.Services;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-
+using System.Threading.Tasks;
+using System.Net.Http;
 
 public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.BasePage
 {    
@@ -96,28 +97,32 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
     public static string SaveCapturedImage(string ID, string data )
     {      
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+        UPLOAD_TO_PIC();
 
-        string ORI1 = "";
-        string ORI2 = "";
-        string ORI3 = "";
-        ////Convert Base64 Encoded string to Byte Array.       
-        byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
-        ORI1 = imageBytes.Length.ToString();
-        //加上浮水印
-        byte[] imageBytes2 = GetWatermarkPic(imageBytes, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-        ORI2 = imageBytes2.Length.ToString();
-        ////壓縮圖片
-        //byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
-        //ORI3 = imageBytes3.Length.ToString();
+        //string ORI1 = "";
+        //string ORI2 = "";
+        //string ORI3 = "";
+        //////Convert Base64 Encoded string to Byte Array.       
+        //byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
+        //ORI1 = imageBytes.Length.ToString();
+        ////加上浮水印
+        //byte[] imageBytes2 = GetWatermarkPic(imageBytes, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+        //ORI2 = imageBytes2.Length.ToString();
+        //////壓縮圖片
+        ////byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
+        ////ORI3 = imageBytes3.Length.ToString();
 
-        //照片上傳到資料庫
-        STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
+        ////照片上傳到資料庫
+        ////STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
 
-        //照片傳到附件
-        ////Save the Byte Array as Image File.
-        string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/{0}.jpg", ID));
-        File.WriteAllBytes(filePath, imageBytes2);
-        //return true;
+        ////照片傳到附件
+        ////UploadImage();
+        //UPLOAD_TO_PIC();
+        //////Save the Byte Array as Image File.
+        ////string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/{0}.jpg", ID));
+        ////string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/test.jpg"));
+        ////File.WriteAllBytes(filePath, imageBytes2);
+        ////return true;
 
         string MESSAGE = NOWTIMES + " 拍照成功";
         return MESSAGE;
@@ -156,7 +161,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
     }
     public static string UploadImage(byte[] imageBytes, string uploadFolderPath,string ID)
     {
-        uploadFolderPath = "~/PIC/";
+        uploadFolderPath = HttpContext.Current.Server.MapPath("~/PIC/");
         try
         {
             // 將 byte 陣列轉換為圖像
@@ -169,7 +174,8 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
 
                 // 將圖像保存到伺服器上的資料夾中
                 string filePath = Path.Combine(uploadFolderPath, uniqueFileName);
-                image.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                File.WriteAllBytes(filePath, imageBytes);
+                //image.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 return filePath; // 返回保存的文件路徑
             }
@@ -203,7 +209,18 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         m_db.ExecuteNonQuery(cmdTxt);
 
     }
+    public static async Task UPLOAD_TO_PIC()
+    {
+        string imageUrl = "https://eip.tkfood.com.tw/UOF/CDS/WebPage/STOCK/PIC/logo.jpg";
+        using (var webClient = new WebClient())
+        {
+            byte[] imageBytes = webClient.DownloadData(imageUrl);
+            UploadImage(imageBytes, "", "20230907");
+        }
 
+    }
+
+   
     #endregion
 
 
