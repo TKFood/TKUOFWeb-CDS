@@ -110,12 +110,13 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         //byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
         //ORI3 = imageBytes3.Length.ToString();
 
-        //UploadImage(imageBytes2, "PIC",ID);
+        //照片上傳到資料庫
         STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
 
+        //照片傳到附件
         ////Save the Byte Array as Image File.
-        //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
-        //File.WriteAllBytes(filePath, imageBytes);
+        string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/{0}.jpg", ID));
+        File.WriteAllBytes(filePath, imageBytes2);
         //return true;
 
         string MESSAGE = NOWTIMES + " 拍照成功";

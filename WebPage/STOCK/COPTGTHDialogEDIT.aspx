@@ -22,10 +22,21 @@
 
 
         <title>Html-Qrcode</title>
-        <body>           
+        <body>
 
             <div>
-                <input type="text" ID="myTextcontent" runat="server" value="">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <input type="text" id="myTextcontent" runat="server" value="">
+                        </td>
+                    </tr>
+
+                </table>
+               
             </div>
 
             <div>
@@ -53,13 +64,13 @@
                     </tr>
                     <tr>
                         <td></td>
-                    </tr>                  
+                    </tr>
                 </table>
             </div>
         </body>
 
         <%-- 呼叫https://unpkg.com/html5-qrcode 來開啟手機相機 打卡 QR CODE --%>
-      
+
 
         <script src="WebCam/WebCam.js"></script>
 
