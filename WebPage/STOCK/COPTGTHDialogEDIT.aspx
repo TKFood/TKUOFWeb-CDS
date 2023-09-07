@@ -71,10 +71,10 @@
 
 
             //JS GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
-            function GetTAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent) {
+            function GetTAKEPIC_ADDCHECKSPOOINT(myTextcontent) {
                 //alert(myTextcontent);
-                //把QR CODE的值傳入到C#的TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT
-                PageMethods.TAKEPIC_ADDTKGAFFAIRSCHECKSPOOINT(myTextcontent, Success, Failure);
+                //把QR CODE的值傳入到C#的TAKEPIC_ADDCHECKSPOOINT
+                PageMethods.GetTAKEPIC_ADDCHECKSPOOINT(myTextcontent, Success, Failure);
             }
 
             //JS執行成功Success
@@ -91,7 +91,11 @@
                     width: 160,
                     height: 120,
                     image_format: 'jpeg',
-                    jpeg_quality: 90
+                    jpeg_quality: 90,
+                    constraints: {
+                        //開啟後鏡頭
+                        facingMode: 'environment'
+                    }
                 });
                 Webcam.attach('#webcam');
                 $("#btnCapture").click(function () {

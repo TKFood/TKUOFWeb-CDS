@@ -111,7 +111,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         //ORI3 = imageBytes3.Length.ToString();
 
         //UploadImage(imageBytes2, "PIC",ID);
-        STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
+        STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
 
         ////Save the Byte Array as Image File.
         //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
@@ -181,13 +181,13 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         }
     }
 
-    public static void STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(string CHECKSPOINT, string CHECKSTIME, byte[] PHOTOS)
+    public static void STATICADDCHECKSPOOINTPHOTO(string CHECKSPOINT, string CHECKSTIME, byte[] PHOTOS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
-                       INSERT INTO [TKGAFFAIRS].[dbo].[CHECKSPOOINTPHOTO]
+                       INSERT INTO [TKWAREHOUSE].[dbo].[COPTGCOPTHPHOTO]
                         ([CHECKSPOINT],[CHECKSTIME],[PHOTOS])
                         VALUES
                         (@CHECKSPOINT,@CHECKSTIME,@PHOTOS)
