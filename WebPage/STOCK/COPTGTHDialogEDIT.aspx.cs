@@ -109,7 +109,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         //ORI3 = imageBytes3.Length.ToString();
 
         //照片上傳到資料庫
-        //STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
+        STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
 
         //照片傳到附件
         UploadImage(imageBytes2, "", ID);
