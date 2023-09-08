@@ -151,7 +151,7 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
 
                 //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
                 //                ", row["TG001TG002"].ToString());
-                PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/CDS/WebPage/STOCK/PIC/logo.jpg");
+                PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/UPLOAD/COPTGCOPTH/{0}/{1}.jpg", row["TG001TG002"].ToString().Substring(4,4), row["TG001TG002"].ToString());
                 img.ImageUrl = PATH.ToString();
 
                 //img.ImageUrl  = Request.ApplicationPath + " / Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();

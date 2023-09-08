@@ -10,20 +10,9 @@ using System.ServiceModel.Activation;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Dynamic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Security.AntiXss;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Ede.Uof.Utility.Data;
-using Ede.Uof.Utility.Page.Common;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -161,7 +150,20 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
     }
     public static string UploadImage(byte[] imageBytes, string uploadFolderPath,string ID)
     {
-        uploadFolderPath = HttpContext.Current.Server.MapPath("~/PIC/");
+        //DateTime DT = DateTime.Now;
+
+        string FolderPathYEARS = ID.Substring(4, 4);
+        StringBuilder FolderPath = new StringBuilder();
+        FolderPath.AppendFormat(@"~/UPLOAD/COPTGCOPTH/{0}", FolderPathYEARS);
+
+
+        uploadFolderPath = HttpContext.Current.Server.MapPath(FolderPath.ToString());
+
+        // 檢查路徑是否存在，若不存在則建立目錄
+        if (!Directory.Exists(uploadFolderPath))
+        {
+            Directory.CreateDirectory(uploadFolderPath);         
+        }
         try
         {
             // 將 byte 陣列轉換為圖像
@@ -215,7 +217,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         using (var webClient = new WebClient())
         {
             byte[] imageBytes = webClient.DownloadData(imageUrl);
-            UploadImage(imageBytes, "", "20230907");
+            UploadImage(imageBytes, "", "A23020230908003");
         }
 
     }
