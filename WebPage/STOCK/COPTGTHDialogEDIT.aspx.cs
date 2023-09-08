@@ -40,6 +40,8 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         ((Master_DialogMasterPage)this.Master).Button1OnClick += CDS_WebPage_Dialog_Button1OnClick;
         ((Master_DialogMasterPage)this.Master).Button2OnClick += Button2OnClick;
 
+        ((Master_DialogMasterPage)this.Master).Button2Text = string.Empty;
+
         if (!IsPostBack)
         {           
             //接收主頁面傳遞之參數
@@ -64,6 +66,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);      
 
+        Dialog.SetReturnValue2("REFRESH");
         Dialog.Close(this);
 
     }
@@ -73,6 +76,10 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
     {
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);
+
+        Dialog.SetReturnValue2("REFRESH");
+        Dialog.Close(this);
+
 
     }
 
@@ -86,32 +93,32 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.
     public static string SaveCapturedImage(string ID, string data )
     {      
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-        UPLOAD_TO_PIC();
-
-        //string ORI1 = "";
-        //string ORI2 = "";
-        //string ORI3 = "";
-        //////Convert Base64 Encoded string to Byte Array.       
-        //byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
-        //ORI1 = imageBytes.Length.ToString();
-        ////加上浮水印
-        //byte[] imageBytes2 = GetWatermarkPic(imageBytes, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-        //ORI2 = imageBytes2.Length.ToString();
-        //////壓縮圖片
-        ////byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
-        ////ORI3 = imageBytes3.Length.ToString();
-
-        ////照片上傳到資料庫
-        ////STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
-
-        ////照片傳到附件
-        ////UploadImage();
         //UPLOAD_TO_PIC();
-        //////Save the Byte Array as Image File.
-        ////string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/{0}.jpg", ID));
-        ////string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/test.jpg"));
-        ////File.WriteAllBytes(filePath, imageBytes2);
-        ////return true;
+
+        string ORI1 = "";
+        string ORI2 = "";
+        string ORI3 = "";
+        ////Convert Base64 Encoded string to Byte Array.       
+        byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
+        ORI1 = imageBytes.Length.ToString();
+        //加上浮水印
+        byte[] imageBytes2 = GetWatermarkPic(imageBytes, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+        ORI2 = imageBytes2.Length.ToString();
+        ////壓縮圖片
+        //byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
+        //ORI3 = imageBytes3.Length.ToString();
+
+        //照片上傳到資料庫
+        //STATICADDCHECKSPOOINTPHOTO(ID, NOWTIMES, imageBytes2);
+
+        //照片傳到附件
+        UploadImage(imageBytes2, "", ID);
+
+        ////Save the Byte Array as Image File.
+        //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/{0}.jpg", ID));
+        //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/PIC/test.jpg"));
+        //File.WriteAllBytes(filePath, imageBytes2);
+        //return true;
 
         string MESSAGE = NOWTIMES + " 拍照成功";
         return MESSAGE;
