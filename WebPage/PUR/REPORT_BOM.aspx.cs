@@ -253,7 +253,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                             ,MB1.MB002 MAINMB002,MB1.MB003 MAINMB003,MB1.MB004 MAINMB004
                             ,MB2.MB002 DMB002,MB2.MB003 DMB003,MB2.MB004 DMB004
                             ,CONVERT(DECIMAL(16,4),RecursiveCTE.USED) AS NEWUSED
-                            ,(CASE WHEN Level='1'THEN MC004 ELSE NULL END) AS NEWMC004
+                            ,1 AS NEWMC004
 
                             FROM RecursiveCTE
                             LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=RecursiveCTE.MD001
@@ -261,7 +261,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                             ORDER BY RecursiveCTE.Level;  -- 按遞迴的層級排序
 
 
-                            ",MB001);
+                            ", MB001);
 
 
 
