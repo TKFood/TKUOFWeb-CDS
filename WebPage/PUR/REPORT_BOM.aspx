@@ -32,7 +32,7 @@
         <Tabs>
             <telerik:RadTab Text="品號/品名查詢">
             </telerik:RadTab>
-            <telerik:RadTab Text="新增資料">
+            <telerik:RadTab Text="資料">
             </telerik:RadTab>
         </Tabs>
     </telerik:RadTabStrip>
@@ -75,29 +75,7 @@
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="規格" DataField="規格" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="LEFT" Width="200px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="標準售價" DataField="標準售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="零售價" DataField="零售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="最近進價-本幣單價" DataField="最近進價-本幣單價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="庫存量" DataField="庫存量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="庫存單位" DataField="庫存單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="最低補量" DataField="最低補量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="有效天\月\年數" DataField="有效天\月\年數" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                      
+                                        </asp:BoundField>                                       
 
                                     </Columns>
                                 </Fast:Grid>

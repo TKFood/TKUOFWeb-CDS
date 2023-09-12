@@ -104,17 +104,10 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                                 SELECT 
                                 MB001 '品號'
                                 ,MB002 '品名'
-                                ,MB003 '規格'
-                                ,CONVERT(DECIMAL(16,2),MB047) '標準售價'
-                                ,CONVERT(DECIMAL(16,2),MB051) '零售價'
-                                ,CONVERT(DECIMAL(16,2),MB050) '最近進價-本幣單價'
-                                ,(SELECT CONVERT(DECIMAL(16,2),ISNULL(SUM(LA005*LA011),0)) FROM [TK].dbo.INVLA WHERE LA001=MB001) AS '庫存量'
-                                ,MB004 '庫存單位'
-                                ,CONVERT(DECIMAL(16,2),MB039) '最低補量'
-                                ,CONVERT(nvarchar,MB023)+' '+(CASE WHEN MB198 ='1' THEN '天'  WHEN MB198 ='2' THEN '月' WHEN MB198 ='3' THEN ' 年' END)  '有效天\月\年數'  
- 
+                                ,MB003 '規格'                               
                                 FROM [TK].dbo.INVMB
                                 WHERE 1=1
+                                AND (MB001 LIKE '3%' OR MB001 LIKE '4%' OR  MB001 LIKE '5%' )
                                 {0}
                                 ORDER BY MB001
         
