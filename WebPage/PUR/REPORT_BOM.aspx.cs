@@ -142,7 +142,26 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            ////Get the button that raised the event
+            //Button btn = (Button)e.Row.FindControl("GVButton1");
+
+            ////Get the row that contains this button
+            //GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+
+            ////string cellvalue = gvr.Cells[2].Text.Trim();
+            //string Cellvalue = btn.CommandArgument;
+
+            //DataRowView row = (DataRowView)e.Row.DataItem;
+            //Button lbtnName = (Button)e.Row.FindControl("GVButton1");
+
+            //ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            ////Grid開窗是用RowDataBound事件再開窗
+            ////Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+           
+        }
 
 
     }
@@ -204,6 +223,72 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
     //    return mtus;
     //}
 
+    private void BindGrid2(string MB001)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        cmdTxt.AppendFormat(@"
+                            WITH RecursiveCTE AS (
+                                -- 基本查詢，選擇起始點
+                                SELECT  1 AS Level, CAST('主品號' AS NVARCHAR) AS 品號,MD001,MD003,MD006,MD007,MD008,MC004,CAST((((MD006*(1+MD008))/MD007)/MC004) AS FLOAT) AS USED
+                                FROM [TK].dbo.BOMMD -- 請替換YourDatabaseName為實際的數據庫名稱
+	                            INNER JOIN [TK].dbo.BOMMC ON MC001=MD001
+	                            INNER JOIN [TK].dbo.INVMB ON MB001=MC001
+                                WHERE (INVMB.MB001 LIKE  '%{0}%' OR INVMB.MB002 LIKE '%{0}%'  )
+	
+                                UNION ALL
+
+                                -- 遞迴查詢，選擇下一級
+                                SELECT  R.Level + 1,CAST('明細' AS NVARCHAR) AS 品號,D.MD001, D.MD003,D.MD006,D.MD007,D.MD008,C.MC004,CAST((((D.MD006*(1+D.MD008))/D.MD007)/C.MC004) AS FLOAT)*CAST( 1 AS FLOAT)*R.USED AS USED
+                                FROM [TK].dbo.BOMMD D
+	                            INNER JOIN [TK].dbo.BOMMC C ON C.MC001=D.MD001
+                                INNER JOIN RecursiveCTE R ON R.MD003 = D.MD001
+                            )
+                            -- 最終查詢，選擇遞迴結果
+                            SELECT RecursiveCTE.*
+                            ,MB1.MB002 MAINMB002,MB1.MB003 MAINMB003,MB1.MB004 MAINMB004
+                            ,MB2.MB002 DMB002,MB2.MB003 DMB003,MB2.MB004 DMB004
+                            ,CONVERT(DECIMAL(16,4),RecursiveCTE.USED) AS NEWUSED
+                            ,(CASE WHEN Level='1'THEN MC004 ELSE NULL END) AS NEWMC004
+
+                            FROM RecursiveCTE
+                            LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=RecursiveCTE.MD001
+                            LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=RecursiveCTE.MD003
+                            ORDER BY RecursiveCTE.Level;  -- 按遞迴的層級排序
+
+
+                            ",MB001);
+
+
+
+       // m_db.AddParameter("@MB001", MB001);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+       
+    }
     public override void VerifyRenderingInServerForm(Control control) 
     { 
 
@@ -331,6 +416,12 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 
     }
 
+    public void SEARCH_BOMMCBOMMD(string  MB001)
+    {
+       
+        Label3.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+    }
+
     #endregion
 
     #region BUTTON
@@ -386,5 +477,24 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         BindGrid("");
 
     }
+    protected void GVButton1_Click(object sender, EventArgs e)
+    {
+        // 獲取按鈕控制項
+        Button btn = (Button)sender;
+
+        // 獲取 GridView 的行 (Row)
+        GridViewRow row = (GridViewRow)btn.NamingContainer;
+
+        // 獲取行中某個單元格 (Cell) 的值，例如第一個單元格的值
+        string cellValue = row.Cells[0].Text; // 假設您想獲取第一個單元格的值
+
+        // 在這裡您可以處理獲取的值，例如顯示在標籤或執行其他操作
+        // Label1.Text = cellValue;
+        // 其他操作...
+
+        Label3.Text = cellValue;
+        BindGrid2(cellValue);
+    }
+
     #endregion
 }
