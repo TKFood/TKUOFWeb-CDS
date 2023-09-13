@@ -20,6 +20,8 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 {
+    string CHECK_column1Value = "";
+    string column1Value = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -234,7 +236,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         cmdTxt.AppendFormat(@"
                             WITH RecursiveCTE AS (
                                 -- 基本查詢，選擇起始點
-                                SELECT  1 AS Level, CAST('主品號' AS NVARCHAR) AS 品號,MD001,MD003,MD006,MD007,MD008,MC004,CAST((((MD006*(1+MD008))/MD007)/MC004) AS FLOAT) AS USED
+                                SELECT  1 AS Level, CAST('主品號' AS NVARCHAR) AS 品號,MD001,MD003,MD006,MD007,MD008,MC004,CAST((((MD006*(1+MD008))/MD007)/MC004) AS FLOAT) AS USED,CAST( 1 AS FLOAT) AS LASTUSED
                                 FROM [TK].dbo.BOMMD -- 請替換YourDatabaseName為實際的數據庫名稱
 	                            INNER JOIN [TK].dbo.BOMMC ON MC001=MD001
 	                            INNER JOIN [TK].dbo.INVMB ON MB001=MC001
@@ -243,7 +245,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                                 UNION ALL
 
                                 -- 遞迴查詢，選擇下一級
-                                SELECT  R.Level + 1,CAST('明細' AS NVARCHAR) AS 品號,D.MD001, D.MD003,D.MD006,D.MD007,D.MD008,C.MC004,CAST((((D.MD006*(1+D.MD008))/D.MD007)/C.MC004) AS FLOAT)*CAST( 1 AS FLOAT)*R.USED AS USED
+                                SELECT  R.Level + 1,CAST('明細' AS NVARCHAR) AS 品號,D.MD001, D.MD003,D.MD006,D.MD007,D.MD008,C.MC004,CAST((((D.MD006*(1+D.MD008))/D.MD007)/C.MC004) AS FLOAT)*CAST( 1 AS FLOAT)*R.USED AS USED,R.USED AS LASTUSED
                                 FROM [TK].dbo.BOMMD D
 	                            INNER JOIN [TK].dbo.BOMMC C ON C.MC001=D.MD001
                                 INNER JOIN RecursiveCTE R ON R.MD003 = D.MD001
@@ -252,8 +254,8 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                             SELECT RecursiveCTE.*
                             ,MB1.MB002 MAINMB002,MB1.MB003 MAINMB003,MB1.MB004 MAINMB004
                             ,MB2.MB002 DMB002,MB2.MB003 DMB003,MB2.MB004 DMB004
-                            ,CONVERT(DECIMAL(16,4),RecursiveCTE.USED) AS NEWUSED
-                            ,(CASE WHEN Level='1'THEN 1 ELSE NULL END) AS NEWMC004
+                            ,CONVERT(DECIMAL(16,4),RecursiveCTE.USED) AS NEWUSED                           
+                            ,CONVERT(DECIMAL(16,4),RecursiveCTE.LASTUSED) AS NEWLASTUSED
 
                             FROM RecursiveCTE
                             LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=RecursiveCTE.MD001
@@ -282,7 +284,29 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 取得資料綁定到 GridView 的資料物件
+            DataRowView dataItem = (DataRowView)e.Row.DataItem;
 
+            // 假設您要根據某個欄位的值來判斷是否顯示 Column2 的值
+            column1Value = dataItem["MD001"].ToString();
+
+            // 在這裡設定 Column2 的顯示值，您可以根據特定條件決定是否留空白
+            if (CHECK_column1Value.Equals(column1Value))
+            {
+                // 留空白
+                e.Row.Cells[1].Text = string.Empty;
+                e.Row.Cells[2].Text = string.Empty;
+                e.Row.Cells[3].Text = string.Empty;
+                e.Row.Cells[4].Text = string.Empty;
+                e.Row.Cells[5].Text = string.Empty;
+            }
+            else
+            {
+                CHECK_column1Value = column1Value;
+            }
+        }
     }
 
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
