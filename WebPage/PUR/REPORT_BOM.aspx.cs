@@ -255,7 +255,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                             ,MB1.MB002 MAINMB002,MB1.MB003 MAINMB003,MB1.MB004 MAINMB004
                             ,MB2.MB002 DMB002,MB2.MB003 DMB003,MB2.MB004 DMB004
                             ,CONVERT(DECIMAL(16,4),RecursiveCTE.USED) AS NEWUSED                           
-                            ,CONVERT(DECIMAL(16,4),RecursiveCTE.LASTUSED) AS NEWLASTUSED
+                            ,(CASE WHEN Level=1 THEN CONVERT(DECIMAL(16,0),RecursiveCTE.LASTUSED) ELSE  CONVERT(DECIMAL(16,4),RecursiveCTE.LASTUSED) END )AS NEWLASTUSED
 
                             FROM RecursiveCTE
                             LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=RecursiveCTE.MD001
@@ -288,6 +288,17 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         {
             // 取得資料綁定到 GridView 的資料物件
             DataRowView dataItem = (DataRowView)e.Row.DataItem;
+
+            // 把整數1.000改成1
+            if(e.Row.Cells[4].Text.Equals("1.0000"))
+            {
+                e.Row.Cells[4].Text = string.Format("{0:#}", DataBinder.Eval(e.Row.DataItem, "NEWLASTUSED"));
+            }
+            else
+            {
+                e.Row.Cells[4].Text = string.Format("{0:F4}", DataBinder.Eval(e.Row.DataItem, "NEWLASTUSED"));
+            }
+
 
             // 假設您要根據某個欄位的值來判斷是否顯示 Column2 的值
             column1Value = dataItem["MD001"].ToString();
