@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 
 public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.BasePage
-{    
+{  
     protected void Page_Load(object sender, EventArgs e)
     {
        
@@ -50,7 +50,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
 
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
-                ID = Request["ID"];
+                ID = Request["ID"];              
 
                 DataTable dt=SERACH_PACKAGEBOXS(ID);
 
@@ -79,7 +79,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);      
 
-        //ADD();
+        ADD();
         Dialog.SetReturnValue2("REFRESH");
         Dialog.Close(this);
 
@@ -352,7 +352,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
 
     public void ADD()
     {
-        DataTable dt = SERACH_COPTG(ID);
+        DataTable dt = SERACH_COPTG(lblParam.Text);
 
         string NO = "";
         string TG001 = "";
@@ -368,12 +368,13 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
         string PACKAGENAMES = TextBox9.Text;
         string PACKAGEFROM = TextBox10.Text;
 
-        if (dt != null && dt.Rows.Count > 1)
+        if (dt != null && dt.Rows.Count >= 1)
         {
             NO = dt.Rows[0]["TG001"].ToString() + dt.Rows[0]["TG002"].ToString() + "-" + BOXNO;
             TG001 = dt.Rows[0]["TG001"].ToString();
             TG002 = dt.Rows[0]["TG002"].ToString();
         }
+
         PACKAGEBOXS_ADD(
          NO
         , TG001
@@ -410,16 +411,58 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        //string cmdTxt = @"  INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMO]
-        //                    ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO],[FEASIBILITY],[SAMPLETRIAL],[COSTTRIAL],[SENDINSPECTION],[PROOFREADING],[PRODUCTION])
-        //                    VALUES
-        //                    (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO,@FEASIBILITY,@SAMPLETRIAL,@COSTTRIAL,@SENDINSPECTION,@PROOFREADING,@PRODUCTION)
-        //                    ";
+        string cmdTxt = @"  
+                        INSERT INTO [TKWAREHOUSE].[dbo].[PACKAGEBOXS]
+                        (
+                        [NO]
+                        ,[TG001]
+                        ,[TG002]
+                        ,[BOXNO]
+                        ,[ALLWEIGHTS]
+                        ,[PACKWEIGHTS]
+                        ,[PRODUCTWEIGHTS]
+                        ,[PACKRATES]
+                        ,[RATECLASS]
+                        ,[CHECKRATES]
+                        ,[ISVALIDS]
+                        ,[PACKAGENAMES]
+                        ,[PACKAGEFROM]
+                        )
+                        VALUES
+                        (
+                        @NO
+                        ,@TG001
+                        ,@TG002
+                        ,@BOXNO
+                        ,@ALLWEIGHTS
+                        ,@PACKWEIGHTS
+                        ,@PRODUCTWEIGHTS
+                        ,@PACKRATES
+                        ,@RATECLASS
+                        ,@CHECKRATES
+                        ,@ISVALIDS
+                        ,@PACKAGENAMES
+                        ,@PACKAGEFROM
+                        )
+
+                            ";
 
 
-        //m_db.AddParameter("@STATUS", STATUS);    
+        m_db.AddParameter("@NO", NO);
+        m_db.AddParameter("@TG001", TG001);
+        m_db.AddParameter("@TG002", TG002);
+        m_db.AddParameter("@BOXNO", BOXNO);
+        m_db.AddParameter("@ALLWEIGHTS", ALLWEIGHTS);
+        m_db.AddParameter("@PACKWEIGHTS", PACKWEIGHTS);
+        m_db.AddParameter("@PRODUCTWEIGHTS", PRODUCTWEIGHTS);
+        m_db.AddParameter("@PACKRATES", PACKRATES);
+        m_db.AddParameter("@RATECLASS", RATECLASS);
+        m_db.AddParameter("@CHECKRATES", CHECKRATES);
+        m_db.AddParameter("@ISVALIDS", ISVALIDS);
+        m_db.AddParameter("@PACKAGENAMES", PACKAGENAMES);
+        m_db.AddParameter("@PACKAGEFROM", PACKAGEFROM);
 
-        //m_db.ExecuteNonQuery(cmdTxt);
+        m_db.ExecuteNonQuery(cmdTxt);
 
     }
 
