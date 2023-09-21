@@ -79,7 +79,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);      
 
-        ADD();
+        //ADD();
         Dialog.SetReturnValue2("REFRESH");
         Dialog.Close(this);
 
@@ -267,8 +267,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
                                 [NO]
                                 ,[TG001]
                                 ,[TG002]
-                                ,[BOXNO]
-                                ,[COPDATES]
+                                ,[BOXNO]                                
                                 ,[ALLWEIGHTS]
                                 ,[PACKWEIGHTS]
                                 ,[PRODUCTWEIGHTS]
