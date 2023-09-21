@@ -79,6 +79,7 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
         //設定回傳值並關閉視窗
         //Dialog.SetReturnValue2(txtReturnValue.Text);      
 
+        ADD();
         Dialog.SetReturnValue2("REFRESH");
         Dialog.Close(this);
 
@@ -300,6 +301,127 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
 
         return dt;
         
+    }
+
+    private DataTable SERACH_COPTG(string TG001TG002)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+
+        //TextBox1
+        if (!string.IsNullOrEmpty(TG001TG002))
+        {
+            QUERYS.AppendFormat(@" AND TG001+TG002='{0}' ", TG001TG002);
+        }
+
+
+        if (!string.IsNullOrEmpty(TG001TG002))
+        {
+            cmdTxt.AppendFormat(@"
+                                SELECT 
+                                [TG001]
+                                ,[TG002]                            
+                                FROM [TK].[dbo].[COPTG]
+                                WHERE 1=1
+                                {0}
+
+                             ", QUERYS.ToString());
+        }
+        else
+        {
+            cmdTxt.AppendFormat(@"
+                              
+                                ");
+        }
+
+
+
+
+
+
+        DataTable dt = new DataTable();
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        return dt;
+
+    }
+
+    public void ADD()
+    {
+        DataTable dt = SERACH_COPTG(ID);
+
+        string NO = "";
+        string TG001 = "";
+        string TG002 = "";
+        string BOXNO = TextBox1.Text;     
+        string ALLWEIGHTS = TextBox2.Text;
+        string PACKWEIGHTS = TextBox3.Text;
+        string PRODUCTWEIGHTS = TextBox4.Text;
+        string PACKRATES = TextBox5.Text;
+        string RATECLASS = TextBox6.Text;
+        string CHECKRATES = TextBox7.Text;
+        string ISVALIDS = TextBox8.Text;
+        string PACKAGENAMES = TextBox9.Text;
+        string PACKAGEFROM = TextBox10.Text;
+
+        if (dt != null && dt.Rows.Count > 1)
+        {
+            NO = dt.Rows[0]["TG001"].ToString() + dt.Rows[0]["TG002"].ToString() + "-" + BOXNO;
+            TG001 = dt.Rows[0]["TG001"].ToString();
+            TG002 = dt.Rows[0]["TG002"].ToString();
+        }
+        PACKAGEBOXS_ADD(
+         NO
+        , TG001
+        , TG002
+        , BOXNO
+        , ALLWEIGHTS
+        , PACKWEIGHTS
+        , PRODUCTWEIGHTS
+        , PACKRATES
+        , RATECLASS
+        , CHECKRATES
+        , ISVALIDS
+        , PACKAGENAMES
+        , PACKAGEFROM
+        );
+    }
+
+    public void PACKAGEBOXS_ADD(
+        string NO
+        , string TG001
+        , string TG002
+        , string BOXNO       
+        , string ALLWEIGHTS
+        , string PACKWEIGHTS
+        , string PRODUCTWEIGHTS
+        , string PACKRATES
+        , string RATECLASS
+        , string CHECKRATES
+        , string ISVALIDS
+        , string PACKAGENAMES
+        , string PACKAGEFROM
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        //string cmdTxt = @"  INSERT INTO [TKRESEARCH].[dbo].[TBDEVMEMO]
+        //                    ([STATUS],[KIND],[CLIENT],[PROD],[SPEC],[PLACES],[ONSALES],[OWNER],[MEMO],[FEASIBILITY],[SAMPLETRIAL],[COSTTRIAL],[SENDINSPECTION],[PROOFREADING],[PRODUCTION])
+        //                    VALUES
+        //                    (@STATUS,@KIND,@CLIENT,@PROD,@SPEC,@PLACES,@ONSALES,@OWNER,@MEMO,@FEASIBILITY,@SAMPLETRIAL,@COSTTRIAL,@SENDINSPECTION,@PROOFREADING,@PRODUCTION)
+        //                    ";
+
+
+        //m_db.AddParameter("@STATUS", STATUS);    
+
+        //m_db.ExecuteNonQuery(cmdTxt);
+
     }
 
     #endregion

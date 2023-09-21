@@ -40,9 +40,81 @@
                             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label4" runat="server" Text="網購包材重量(KG)A"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label5" runat="server" Text="箱商品總重量(KG)B號"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label6" runat="server" Text="秤總重(A+B)"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label7" runat="server" Text="實際比值"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label8" runat="server" Text="商品總重量比值分類"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label9" runat="server" Text="規定比值"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label10" runat="server" Text="是否符合"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label11" runat="server" Text="使用包材名稱/規格"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label12" runat="server" Text="使用包材來源"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
 
                 </table>
-               
+
             </div>
 
             <div>

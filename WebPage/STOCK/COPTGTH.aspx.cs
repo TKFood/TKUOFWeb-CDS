@@ -85,8 +85,7 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
                             SELECT  [NO]
                             ,[TG001]
                             ,[TG002]
-                            ,[BOXNO]
-                            ,[COPDATES]
+                            ,[BOXNO]                          
                             ,[ALLWEIGHTS]
                             ,[PACKWEIGHTS]
                             ,[PRODUCTWEIGHTS]
@@ -103,8 +102,7 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
                             '' [NO]
                             ,[TG001]
                             ,[TG002]
-                            ,'' [BOXNO]
-                            ,NULL [COPDATES]
+                            ,'' [BOXNO]                      
                             ,0 [ALLWEIGHTS]
                             ,0 [PACKWEIGHTS]
                             ,0 [PRODUCTWEIGHTS]
@@ -185,6 +183,19 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
                 btn_GVButton1.Visible = true;
                 Button btn_GVButton2 = (Button)e.Row.FindControl("GVButton2");
                 btn_GVButton2.Visible = false;
+
+
+                // 留空白
+                e.Row.Cells[3].Text = string.Empty;
+                e.Row.Cells[4].Text = string.Empty;
+                e.Row.Cells[5].Text = string.Empty;
+                e.Row.Cells[6].Text = string.Empty;
+                e.Row.Cells[7].Text = string.Empty;
+                e.Row.Cells[8].Text = string.Empty;
+                e.Row.Cells[9].Text = string.Empty;
+                e.Row.Cells[10].Text = string.Empty;
+                e.Row.Cells[11].Text = string.Empty;
+                
             }
             else
             {
@@ -230,9 +241,7 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-        SETEXCEL();
-
-     
+        SETEXCEL();     
     }
 
    
