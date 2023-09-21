@@ -10,15 +10,13 @@
         <table class="PopTable">
             <tr>
                 <td class="PopTableLeftTD">
-                    <asp:Label ID="Label1" runat="server" Text="銷貨單別-單號"></asp:Label>
+                    <asp:Label ID="Label1" runat="server" Text="ID"></asp:Label>
                 </td>
                 <td class="PopTableRightTD" colspan="2">
                     <asp:Label ID="lblParam" runat="server" Text=""></asp:Label>
                 </td>
             </tr>
-
         </table>
-
 
 
         <title>Html-Qrcode</title>
@@ -28,10 +26,18 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="銷貨單別-單號"></asp:Label>
                         </td>
                         <td class="PopTableRightTD" colspan="2">
                             <input type="text" id="myTextcontent" runat="server" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="箱號"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD" colspan="2">
+                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                         </td>
                     </tr>
 

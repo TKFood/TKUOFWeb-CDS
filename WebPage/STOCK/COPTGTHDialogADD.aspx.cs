@@ -51,6 +51,19 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
             if (!string.IsNullOrEmpty(lblParam.Text))
             {
                 ID = Request["ID"];
+
+                DataTable dt=SERACH_PACKAGEBOXS(ID);
+
+                if(dt!=null&& dt.Rows.Count>=1)
+                {
+                    int num = dt.Rows.Count;
+                    num = num + 1;
+                    TextBox1.Text = num.ToString();
+                }
+                else
+                {
+                    TextBox1.Text = "1";
+                }
             }
 
         }
@@ -229,7 +242,66 @@ public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.B
 
     }
 
-   
+    private DataTable SERACH_PACKAGEBOXS(string TG001TG002)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+
+        //TextBox1
+        if (!string.IsNullOrEmpty(TG001TG002))
+        {
+            QUERYS.AppendFormat(@" AND TG001+TG002='{0}' ", TG001TG002);
+        }
+
+
+        if (!string.IsNullOrEmpty(TG001TG002))
+        {
+            cmdTxt.AppendFormat(@"
+                                SELECT 
+                                [NO]
+                                ,[TG001]
+                                ,[TG002]
+                                ,[BOXNO]
+                                ,[COPDATES]
+                                ,[ALLWEIGHTS]
+                                ,[PACKWEIGHTS]
+                                ,[PRODUCTWEIGHTS]
+                                ,[PACKRATES]
+                                ,[RATECLASS]
+                                ,[CHECKRATES]
+                                ,[ISVALIDS]
+                                ,[PACKAGENAMES]
+                                ,[PACKAGEFROM]
+                                FROM [TKWAREHOUSE].[dbo].[PACKAGEBOXS]
+                                WHERE 1=1
+                                {0}
+
+                             ", QUERYS.ToString());
+        }
+        else
+        {
+            cmdTxt.AppendFormat(@"
+                              
+                                ");
+        }
+
+
+
+     
+
+
+        DataTable dt = new DataTable();
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        return dt;
+        
+    }
+
     #endregion
 
 
