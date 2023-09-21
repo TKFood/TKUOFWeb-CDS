@@ -26,7 +26,7 @@ using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-public partial class CDS_WebPage_STOCK_COPTGTHDialogEDIT : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_STOCK_COPTGTHDialogADD : Ede.Uof.Utility.Page.BasePage
 {    
     protected void Page_Load(object sender, EventArgs e)
     {

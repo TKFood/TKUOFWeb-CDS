@@ -79,11 +79,47 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
         //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
 
         cmdTxt.AppendFormat(@" 
-                            SELECT TG001,TG002,TG001+TG002 AS 'TG001TG002'
-                            FROM [TK].dbo.COPTG
+                            SELECT *
+                            FROM
+                            (
+                            SELECT  [NO]
+                            ,[TG001]
+                            ,[TG002]
+                            ,[BOXNO]
+                            ,[COPDATES]
+                            ,[ALLWEIGHTS]
+                            ,[PACKWEIGHTS]
+                            ,[PRODUCTWEIGHTS]
+                            ,[PACKRATES]
+                            ,[RATECLASS]
+                            ,[CHECKRATES]
+                            ,[ISVALIDS]
+                            ,[PACKAGENAMES]
+                            ,[PACKAGEFROM]
+                            ,TG001+TG002 AS 'TG001TG002'
+                            FROM [TKWAREHOUSE].[dbo].[PACKAGEBOXS]
+                            UNION ALL
+                            SELECT 
+                            '' [NO]
+                            ,[TG001]
+                            ,[TG002]
+                            ,'' [BOXNO]
+                            ,NULL [COPDATES]
+                            ,0 [ALLWEIGHTS]
+                            ,0 [PACKWEIGHTS]
+                            ,0 [PRODUCTWEIGHTS]
+                            ,0 [PACKRATES]
+                            ,'' [RATECLASS]
+                            ,'' [CHECKRATES]
+                            ,'' [ISVALIDS]
+                            ,'' [PACKAGENAMES]
+                            ,'' [PACKAGEFROM]
+                            ,[TG001]+[TG002] AS 'TG001TG002'
+                            FROM [TK].dbo.COPTG                          
+                            ) AS TEMP
                             WHERE 1=1
                             {0}
-                            ORDER BY TG001,TG002
+                            ORDER BY TG001,TG002,BOXNO
                                 ", QUERYS.ToString());
 
        
@@ -110,62 +146,44 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             //Get the button that raised the event
-            Button btn = (Button)e.Row.FindControl("GVButton1");
-
-            //Get the row that contains this button
-            GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-
-            //string cellvalue = gvr.Cells[2].Text.Trim();
-            string Cellvalue = btn.CommandArgument;
-
+            Button btn_GVButton1 = (Button)e.Row.FindControl("GVButton1");
+            string Cellvalue_GVButton1 = btn_GVButton1.CommandArgument;
             DataRowView row = (DataRowView)e.Row.DataItem;
-            Button lbtnName = (Button)e.Row.FindControl("GVButton1");
-
-            ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+            Button lbtnName_GVButton1 = (Button)e.Row.FindControl("GVButton1");
+            ExpandoObject param_GVButton1 = new { ID = Cellvalue_GVButton1 }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            Dialog.Open2(lbtnName_GVButton1, "~/CDS/WebPage/STOCK/COPTGTHDialogADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param_GVButton1);
+            //Dialog.Open2(lbtnName, "~/CDS/WebPage/Mobile/Mobile_TEST3.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Get the button that raised the event
+            Button btn_GVButton2 = (Button)e.Row.FindControl("GVButton2");
+            string Cellvalue_GVButton2 = btn_GVButton2.CommandArgument;
+            DataRowView row = (DataRowView)e.Row.DataItem;
+            Button lbtnName_GVButton2 = (Button)e.Row.FindControl("GVButton2");
+            ExpandoObject param_GVButton2 = new { ID = Cellvalue_GVButton2 }.ToExpando();
+
+            //Grid開窗是用RowDataBound事件再開窗
+            Dialog.Open2(lbtnName_GVButton2, "~/CDS/WebPage/STOCK/COPTGTHDialogADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param_GVButton2);
             //Dialog.Open2(lbtnName, "~/CDS/WebPage/Mobile/Mobile_TEST3.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
 
 
-
         StringBuilder PATH = new StringBuilder();
-
         System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             DataRowView row = (DataRowView)e.Row.DataItem;
             System.Web.UI.WebControls.Image img1 = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
 
-
-
             if (!string.IsNullOrEmpty(row["TG001TG002"].ToString()))
-            {
-                //img.ImageUrl = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
-
-
-                //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
-                //                ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
-
-                //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
-                //                ", row["TG001TG002"].ToString());
+            {               
                 PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/UPLOAD/COPTGCOPTH/{0}/{1}.jpg", row["TG001TG002"].ToString().Substring(4,4), row["TG001TG002"].ToString());
                 img.ImageUrl = PATH.ToString();
-
-                //img.ImageUrl  = Request.ApplicationPath + " / Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
-
-                //img.ImageUrl = string.Format("~/Common/FileCenter/Downloadfile.ashx?id={0}", row["THUMBNAIL_FILE_ID"].ToString());
-
-                //e.Row.Cells[0].Text = row["THUMBNAIL_FILE_ID"].ToString();
-                ////獲取當前行的圖片路徑
-                //string ImgUrl = img.ImageUrl;
-                ////給帶圖片的單元格添加點擊事件
-                //e.Row.Cells[3].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
-                //    + ".checked=true;CellClick('" + ImgUrl + "')");
-
-                //  img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
             }
 
 

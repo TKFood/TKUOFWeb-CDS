@@ -39,7 +39,7 @@
     <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
             <div id="tabs-1">
-                <table class="PopTable">                   
+                <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label12" runat="server" Text="銷貨單號:" meta:resourcekey="Label4Resource1"></asp:Label>
@@ -47,7 +47,7 @@
                         <td>
                             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                         </td>
-                    </tr>                   
+                    </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -70,16 +70,24 @@
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="銷貨單號" DataField="TG002" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
-                                        </asp:BoundField>                                      
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="箱號" DataField="BOXNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:TemplateField HeaderText="照片" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Image ID="Image1" runat="server" HorizontalAlign="Center" Length="100px" Width="100px" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="BTN" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="新增" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="GVButton1" runat="server" CommandName="GVButton1" Text="上傳照片" ForeColor="Red" CommandArgument='<%# Eval("TG001TG002") %>' />
+                                                <asp:Button ID="GVButton1" runat="server" CommandName="GVButton1" Text="新增" ForeColor="Red" CommandArgument='<%# Eval("TG001TG002") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="修改" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="GVButton2" runat="server" CommandName="GVButton2" Text="修改" ForeColor="Red" CommandArgument='<%# Eval("NO") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -94,7 +102,6 @@
             <div id="tabs-2">
                 <table class="PopTable">
                     <tr>
-                       
                     </tr>
                 </table>
             </div>
