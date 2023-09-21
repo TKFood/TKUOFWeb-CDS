@@ -171,9 +171,32 @@ public partial class CDS_WebPage_STOCK_COPTGTH : Ede.Uof.Utility.Page.BasePage
             //Dialog.Open2(lbtnName, "~/CDS/WebPage/Mobile/Mobile_TEST3.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
         }
 
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string column1Value = "";
+            // 取得資料綁定到 GridView 的資料物件
+            DataRowView dataItem = (DataRowView)e.Row.DataItem;
+            column1Value = dataItem["NO"].ToString();
+
+            // 在這裡設定 Column2 的顯示值，您可以根據特定條件決定是否留空白
+            if (string.IsNullOrEmpty(column1Value))
+            {
+                Button btn_GVButton1 = (Button)e.Row.FindControl("GVButton1");
+                btn_GVButton1.Visible = true;
+                Button btn_GVButton2 = (Button)e.Row.FindControl("GVButton2");
+                btn_GVButton2.Visible = false;
+            }
+            else
+            {
+                Button btn_GVButton1 = (Button)e.Row.FindControl("GVButton1");
+                btn_GVButton1.Visible = false;
+                Button btn_GVButton2 = (Button)e.Row.FindControl("GVButton2");
+                btn_GVButton2.Visible = true;
+            }
+        }
 
 
-        StringBuilder PATH = new StringBuilder();
+            StringBuilder PATH = new StringBuilder();
         System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
