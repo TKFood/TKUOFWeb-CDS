@@ -195,9 +195,9 @@
                     });
                 });
                 $("#btnUpload").click(function () {
-                    var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;
-                    var TextBox1 = document.getElementById('<%=TextBox1.ClientID%>').value;
-                    var NO = myTextcontent.value + "-" + TextBox1.value;
+                    var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;                
+                    var NO = document.getElementById('<%=myTextcontent.ClientID%>').value + "-" + document.getElementById('<%=TextBox1.ClientID%>').value;
+
                     var imgCapture = $("#imgCapture")[0].src;
                     PageMethods.SaveCapturedImage(NO, imgCapture, Success, Failure);
 
