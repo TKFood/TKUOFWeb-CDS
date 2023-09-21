@@ -74,6 +74,33 @@
                                         <asp:BoundField HeaderText="箱號" DataField="BOXNO" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="網購包材重量(KG)A" DataField="PACKWEIGHTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="商品總重量(KG)B" DataField="PRODUCTWEIGHTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="秤總重(A+B)" DataField="ALLWEIGHTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="實際比值" DataField="PACKRATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="商品總重量比值分類" DataField="RATECLASS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="規定比值" DataField="CHECKRATES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="是否符合" DataField="ISVALIDS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="使用包材名稱/規格" DataField="PACKAGENAMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="使用包材來源" DataField="PACKAGEFROM" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:TemplateField HeaderText="照片" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Image ID="Image1" runat="server" HorizontalAlign="Center" Length="100px" Width="100px" />
