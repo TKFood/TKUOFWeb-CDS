@@ -688,6 +688,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
+                //檢查並送UOF
                 CHECKTBCOPTFCHECK(e.CommandArgument.ToString());
 
                 //用訂單變更找出客代TC004
@@ -2296,6 +2297,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         //加入至members節點底下
         FormFieldValue.AppendChild(FieldItem);
 
+
+        //建立節點FieldItem
+        //TE001NAMES	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE001NAMES");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MQ002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("customValue", "@null");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
         //CHECKMOC	
@@ -4245,6 +4261,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                     ,BA
                                     ,BANAME
                                     ,(SELECT TOP 1 [USER_GUID] FROM [192.168.1.223].[UOF].[dbo].[TB_EB_USER] WHERE [ACCOUNT]=BA COLLATE Chinese_Taiwan_Stroke_BIN) AS 'BA_USER_GUID'
+                                    ,MQ002
+
                                     FROM 
                                     (
                                     SELECT 
@@ -4294,8 +4312,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                     ,(SELECT TOP 1 MA002 FROM [TK].dbo.COPMA WHERE MA001=TE007) AS 'MA002'
                                     ,(SELECT TOP 1 COPMA.UDF04 FROM [TK].dbo.COPMA,[TK].dbo.CMSMV WHERE COPMA.UDF04=CMSMV.MV001 AND COPMA.MA001=TE007) AS 'BA'
                                     ,(SELECT TOP 1 CMSMV.MV002 FROM [TK].dbo.COPMA,[TK].dbo.CMSMV WHERE COPMA.UDF04=CMSMV.MV001 AND COPMA.MA001=TE007) AS 'BANAME'
+                                    ,MQ002
+
                                     FROM [TK].dbo.COPTF,[TK].dbo.COPTE
                                     LEFT JOIN [192.168.1.223].[{0}].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= TE009 COLLATE Chinese_Taiwan_Stroke_BIN
+                                    LEFT JOIN [TK].dbo.CMSMQ ON TE001=MQ001
+
                                     WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
                                     AND TE001='{1}' AND TE002='{2}' AND TE003='{3}'
                                     ) AS TEMP   

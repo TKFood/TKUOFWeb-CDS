@@ -647,6 +647,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
+                //檢查並送出UOF
                 CHECKTBCOPTDCHECK(e.CommandArgument.ToString());
                 //用訂單找出客代TC004
                 DataTable DTCOPTC = FINDCOPTCTC004(e.CommandArgument.ToString());
@@ -1896,6 +1897,19 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
 
         //建立節點FieldItem
+        //TC001NAMES 表單名	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TC001NAMES");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MQ002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
         //TC001 表單編號	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "TC001");
@@ -2928,7 +2942,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
                                 ,BANAME
                                 ,(SELECT TOP 1 [USER_GUID] FROM [192.168.1.223].[UOF].[dbo].[TB_EB_USER] WHERE [ACCOUNT]=BA COLLATE Chinese_Taiwan_Stroke_BIN) AS 'BA_USER_GUID'
                                 ,ME002
-    
+                                ,MQ002
+
                                 FROM 
                                 (
                                 SELECT [COPTC].[COMPANY],[COPTC].[CREATOR],[COPTC].[USR_GROUP],[COPTC].[CREATE_DATE],[COPTC].[MODIFIER],[COPTC].[MODI_DATE],[COPTC].[FLAG],[COPTC].[CREATE_TIME],[COPTC].[MODI_TIME],[COPTC].[TRANS_TYPE],[COPTC].[TRANS_NAME]
@@ -2968,10 +2983,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
                                 ,(SELECT TOP 1 COPMA.UDF04 FROM [TK].dbo.COPMA,[TK].dbo.CMSMV WHERE COPMA.UDF04=CMSMV.MV001 AND COPMA.MA001=TC004) AS 'BA'
                                 ,(SELECT TOP 1 CMSMV.MV002 FROM [TK].dbo.COPMA,[TK].dbo.CMSMV WHERE COPMA.UDF04=CMSMV.MV001 AND COPMA.MA001=TC004) AS 'BANAME'
                                 ,ME002
+                                ,MQ002
 
                                 FROM [TK].dbo.COPTD,[TK].dbo.COPTC
                                 LEFT JOIN [192.168.1.223].[{0}].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= TC006 COLLATE Chinese_Taiwan_Stroke_BIN
                                 LEFT JOIN [TK].dbo.CMSME ON ME001=TC005
+                                LEFT JOIN [TK].dbo.CMSMQ ON TC001=MQ001
 
                                 WHERE TC001=TD001 AND TC002=TD002
                                 AND TC001='{1}' AND TC002='{2}'
