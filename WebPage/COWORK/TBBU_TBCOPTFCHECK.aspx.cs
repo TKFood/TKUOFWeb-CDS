@@ -5509,6 +5509,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                             WHERE  1=1
                             AND DISPLAY_TITLE LIKE '%{0}%'
                             AND DISPLAY_TITLE LIKE '%{1}%'
+                            AND JSON_DISPLAY NOT LIKE '%TE001%'
                             AND TASK_STATUS='1'
 
                               ", TC001, TC002);
