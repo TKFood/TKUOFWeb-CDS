@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_TEST2.aspx.cs" Inherits="CDS_WebPage_Mobile_Mobile_TEST2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+  
     <html>
 
     <head>
@@ -32,13 +32,13 @@
                 </tr>
                 <tr>
                     <td>
-                        <img id="previewImage" style="max-width: 20%;" />
+                        <img id="previewImage" style="max-width: 50%;" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                          <asp:Label ID="Label1" runat="server" Text="客戶: "></asp:Label>
-                          <asp:TextBox ID="myTextcontent" runat="server"></asp:TextBox>
+                        <asp:Label ID="Label1" runat="server" Text="客戶: "></asp:Label>
+                        <asp:TextBox ID="myTextcontent" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -53,6 +53,7 @@
         </div>
     </body>
 
+    
     <script>
         window.onload = function () {
             var photoInput = document.getElementById("photoInput");
@@ -85,10 +86,11 @@
 
         $(function () {
             $("#btnUpload").click(function () {
-                var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;               
+                var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;
                 var imgCapture = $("#previewImage")[0].src;
-                PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
-                //PageMethods.TEST();
+             
+                //PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
+                PageMethods.TEST(Success, Failure);
 
             });
         });
