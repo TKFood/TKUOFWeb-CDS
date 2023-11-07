@@ -58,6 +58,11 @@ public partial class CDS_WebPage_Mobile_Mobile_TEST2 : System.Web.UI.Page
     }
 
     [WebMethod()]
+    public static void TEST()
+    {
+        string ORI1 = "";
+    }
+    [WebMethod()]
     public static string SaveCapturedImage(string myTextcontent, string data)
     {
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");

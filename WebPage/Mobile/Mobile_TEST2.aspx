@@ -12,12 +12,12 @@
             <table>
                 <tr>
                     <td>
-                         <h2>拜訪拍照</h2>
+                        <h2>拜訪拍照</h2>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                         <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
+                        <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
                     </td>
                 </tr>
                 <tr>
@@ -32,17 +32,23 @@
                 </tr>
                 <tr>
                     <td>
-                         <img id="previewImage" style="max-width: 20%;" />
+                        <img id="previewImage" style="max-width: 20%;" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                         <button type="button" id="btnUpload">上傳存檔</button>
+                          <asp:Label ID="Label1" runat="server" Text="客戶: "></asp:Label>
+                          <asp:TextBox ID="myTextcontent" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" id="btnUpload">上傳存檔</button>
                     </td>
                 </tr>
             </table>
-           
-           
+
+
 
         </div>
     </body>
@@ -68,6 +74,24 @@
             };
         };
 
+        //JS執行成功Success
+        function Success(result) {
+            alert(result);
+        }
+        //JS執行失敗
+        function Failure(error) {
+            alert(error);
+        }
+
+        $(function () {
+            $("#btnUpload").click(function () {
+                var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;               
+                var imgCapture = $("#previewImage")[0].src;
+                PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
+                //PageMethods.TEST();
+
+            });
+        });
     </script>
 
     </html>
