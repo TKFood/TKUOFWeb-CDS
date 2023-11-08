@@ -25,8 +25,8 @@
                  <tr>
                     <td>
                         <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
-                        <asp:DropDownList ID="CLIENTSNAMES" runat="server"></asp:DropDownList>     
-                       
+                        <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged"></asp:DropDownList>     
+                        <asp:Label ID="CLIENTSNAMESID" runat="server" Text=""></asp:Label>
                     </td>
                 </tr>
                 <tr>
