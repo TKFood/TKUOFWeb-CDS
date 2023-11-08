@@ -42,7 +42,7 @@
                             </td>
                             <td>
                                 <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged"></asp:DropDownList>
-                                <asp:Label ID="CLIENTSNAMESID" runat="server" Text=""></asp:Label>
+                                <asp:Label ID="CLIENTSID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
                         <tr>
@@ -152,10 +152,11 @@
                 // 获取 DropDownList 的元素
                 var CLIENTSNAMES = document.getElementById('<%=CLIENTSNAMES.ClientID%>');
                 // 获取选中项的索引
-                var selectedIndex_CLIENTSNAMES = SALESNAMES.selectedIndex;
+                var selectedIndex_CLIENTSNAMES = CLIENTSNAMES.selectedIndex;
                 // 获取选中项的文本
-                var selectedText_CLIENTSNAMES = CLIENTSNAMES.options[selectedIndex_SALESNAMES].text
-             
+                var selectedText_CLIENTSNAMES = CLIENTSNAMES.options[selectedIndex_CLIENTSNAMES].text;
+               
+                var CLIENTSID = document.getElementById('<%=CLIENTSID.ClientID%>').innerHTML;
                 var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
                 var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
                 var RECORDSDATES = document.getElementById('<%=RECORDSDATES.ClientID%>').value;
@@ -185,7 +186,7 @@
                         const compressedBase64 = reader.result;
 
                         // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                        PageMethods.SaveCapturedImage(selectedText_SALESNAMES, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
+                        PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
                     };
                     reader.readAsDataURL(compressedBlob);
                 });

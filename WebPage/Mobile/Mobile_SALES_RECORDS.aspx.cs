@@ -141,12 +141,13 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     {
         // 獲取所選的值
         string selectedValue = CLIENTSNAMES.SelectedValue;
-        CLIENTSNAMESID.Text = selectedValue;
+        CLIENTSID.Text = selectedValue;
 
         // 執行其他操作，例如根據所選值更新頁面或處理伺服器端邏輯
     }
     public static void ADD_TB_SALES_RECORDS(
         string SALESNAMES
+        ,string CLIENTSID
         , string CLIENTSNAMES
         , string NEWCLIENTSNAMES
         , string RECORDS
@@ -160,6 +161,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
                         (
                         [SALESNAMES]
+                        ,[CLIENTSID]
                         ,[CLIENTSNAMES]
                         ,[NEWCLIENTSNAMES]
                         ,[RECORDS]
@@ -169,6 +171,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         VALUES
                         (
                         @SALESNAMES
+                        ,@CLIENTSID
                         ,@CLIENTSNAMES
                         ,@NEWCLIENTSNAMES
                         ,@RECORDS
@@ -179,6 +182,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
 
         m_db.AddParameter("@SALESNAMES", SALESNAMES);
+        m_db.AddParameter("@CLIENTSID", CLIENTSID);
         m_db.AddParameter("@CLIENTSNAMES", CLIENTSNAMES);
         m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
         m_db.AddParameter("@RECORDS", RECORDS);
@@ -199,6 +203,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     [WebMethod()]
     public static string SaveCapturedImage(
         string SALESNAMES
+        ,string CLIENTSID
         , string CLIENTSNAMES
         , string NEWCLIENTSNAMES
         , string RECORDS
@@ -224,6 +229,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         {
             ADD_TB_SALES_RECORDS(
                      SALESNAMES
+                     , CLIENTSID
                      , CLIENTSNAMES
                      , NEWCLIENTSNAMES
                      , RECORDS
