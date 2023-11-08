@@ -18,13 +18,15 @@
                  <tr>
                     <td>
                         <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>
-                        <asp:TextBox ID="SALESNAMES" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged"></asp:DropDownList>   
+                        <asp:Label ID="SALESID" runat="server" Text=""></asp:Label>
                     </td>
                 </tr>
                  <tr>
                     <td>
                         <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
-                        <asp:TextBox ID="CLIENTSNAMES" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="CLIENTSNAMES" runat="server"></asp:DropDownList>     
+                       
                     </td>
                 </tr>
                 <tr>

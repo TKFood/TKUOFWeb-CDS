@@ -22,19 +22,117 @@ using OfficeOpenXml.Style;
 using System.Web.Services;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using Ede.Uof.EIP.SystemInfo;
 
 public partial class CDS_WebPage_Mobile_SALES_RECORDS : System.Web.UI.Page
 {
+    string ACCOUNT = null;
+    string NAME = null;
+    
     protected void Page_Load(object sender, EventArgs e)
-    {        
+    {
         if (!IsPostBack)
         {
             RECORDSDATES.Text = DateTime.Now.ToString("yyyy/MM/dd");
+            BindDropDownList1();
+
+            ACCOUNT = Current.Account;
+            NAME = Current.User.Name;       
+            SALESID.Text = ACCOUNT;
+            // 使用 FindByText 方法來尋找並指定選項
+            ListItem item = SALESNAMES.Items.FindByText(NAME);
+            if (item != null)
+            {
+                // 找到了選項，將其設定為所選
+                SALESNAMES.ClearSelection(); // 清除所有選擇
+                item.Selected = true;
+            }
+            else
+            {
+                // 如果找不到匹配的選項，可以執行適當的處理
+                // 例如，顯示一條錯誤消息或執行其他操作
+            }
         }
+
+     
+        BindDropDownList2(ACCOUNT);
+       
     }
 
     #region FUNCTION
-   
+    private void BindDropDownList1()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("SALESID", typeof(String));
+        dt.Columns.Add("SALESNAMES", typeof(String));      
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT 
+                            [SALESID]
+                            ,[SALESNAMES]
+                            FROM [TKBUSINESS].[dbo].[TB_SALESNAMES] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            SALESNAMES.DataSource = dt;
+            SALESNAMES.DataTextField = "SALESNAMES";
+            SALESNAMES.DataValueField = "SALESID";
+            SALESNAMES.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    protected void SALESNAMES_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // 獲取所選的值
+        string selectedValue = SALESNAMES.SelectedValue;
+        SALESID.Text = selectedValue;
+
+        // 執行其他操作，例如根據所選值更新頁面或處理伺服器端邏輯
+    }
+ 
+    private void BindDropDownList2(string MA016)
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("MA001", typeof(String));
+        dt.Columns.Add("MA002", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT MA001,MA002
+                            FROM [TK].dbo.COPMA
+                            WHERE MA016='{0}'
+                            ORDER BY MA001 
+                            ", MA016);
+
+
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            CLIENTSNAMES.DataSource = dt;
+            CLIENTSNAMES.DataTextField = "MA002";
+            CLIENTSNAMES.DataValueField = "MA001";
+            CLIENTSNAMES.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+
     public static void ADD_TB_SALES_RECORDS(
         string SALESNAMES
         , string CLIENTSNAMES
