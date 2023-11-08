@@ -113,10 +113,17 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         StringBuilder cmdTxt = new StringBuilder();
         cmdTxt.AppendFormat(@"
+                            SELECT *
+                            FROM 
+                            (
+                            SELECT '' MA001,' 請選擇'MA002
+                            UNION ALL
                             SELECT MA001,MA002
                             FROM [TK].dbo.COPMA
                             WHERE MA016='{0}'
                             AND (MA001 LIKE '2%' OR MA001 LIKE '3%' OR MA001 LIKE 'A%' OR MA001 LIKE 'B%')
+                            )
+                            AS TEMP
                             ORDER BY MA002
                             ", MA016);
 
