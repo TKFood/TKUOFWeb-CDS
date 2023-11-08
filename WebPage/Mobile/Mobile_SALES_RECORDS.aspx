@@ -5,7 +5,7 @@
     <html>
 
     <head>
-        <title>拍照範例</title>
+        <title>業務</title>
     </head>
     <body>
         <div>
@@ -15,6 +15,37 @@
                         <h2>拜訪拍照</h2>
                     </td>
                 </tr>
+                 <tr>
+                    <td>
+                        <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>
+                        <asp:TextBox ID="SALESNAMES" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
+                        <asp:TextBox ID="CLIENTSNAMES" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): "></asp:Label>
+                        <asp:TextBox ID="NEWCLIENTSNAMES" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                  <tr>
+                    <td>
+                        <asp:Label ID="Label4" runat="server" Text="客戶拜訪內容: "></asp:Label>
+                        <asp:TextBox ID="RECORDS" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                  <tr>
+                    <td>
+                        <asp:Label ID="Label5" runat="server" Text="客戶拜訪日期 "></asp:Label>
+                        <asp:TextBox ID="RECORDSDATES" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                
                 <tr>
                     <td>
                         <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
@@ -35,12 +66,7 @@
                         <img id="previewImage" style="max-width: 50%;" />
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="Label1" runat="server" Text="客戶: "></asp:Label>
-                        <asp:TextBox ID="myTextcontent" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
+               
                 <tr>
                     <td>
                         <button type="button" id="btnUpload">上傳存檔</button>
@@ -86,7 +112,12 @@
 
         $(function () {
             $("#btnUpload").click(function () {
-                var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;
+                var SALESNAMES = document.getElementById('<%=SALESNAMES.ClientID%>').value;
+                var CLIENTSNAMES = document.getElementById('<%=CLIENTSNAMES.ClientID%>').value;
+                var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
+                var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
+                var RECORDSDATES = document.getElementById('<%=RECORDSDATES.ClientID%>').value;
+               
                 var previewImage = document.getElementById("previewImage");
                 var imgCapture = $("#previewImage")[0].src;
         
@@ -112,7 +143,7 @@
                         const compressedBase64 = reader.result;
 
                         // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                        PageMethods.SaveCapturedImage(myTextcontent, compressedBase64, Success, Failure);
+                        PageMethods.SaveCapturedImage(SALESNAMES, CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
                     };
                     reader.readAsDataURL(compressedBlob);
                 });

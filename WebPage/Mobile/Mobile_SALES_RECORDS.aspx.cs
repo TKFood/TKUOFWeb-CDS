@@ -36,21 +36,45 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : System.Web.UI.Page
     }
 
     #region FUNCTION
-    public static void STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(string CHECKSPOINT, string CHECKSTIME, byte[] PHOTOS)
+   
+    public static void ADD_TB_SALES_RECORDS(
+        string SALESNAMES
+        , string CLIENTSNAMES
+        , string NEWCLIENTSNAMES
+        , string RECORDS
+        , string RECORDSDATES
+        , byte[] PHOTOS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  
-                       INSERT INTO [TKGAFFAIRS].[dbo].[CHECKSPOOINTPHOTO]
-                        ([CHECKSPOINT],[CHECKSTIME],[PHOTOS])
+        string cmdTxt = @"                        
+                        INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
+                        (
+                        [SALESNAMES]
+                        ,[CLIENTSNAMES]
+                        ,[NEWCLIENTSNAMES]
+                        ,[RECORDS]
+                        ,[RECORDSDATES]
+                        ,[PHOTOS]
+                        )
                         VALUES
-                        (@CHECKSPOINT,@CHECKSTIME,@PHOTOS)
+                        (
+                        @SALESNAMES
+                        ,@CLIENTSNAMES
+                        ,@NEWCLIENTSNAMES
+                        ,@RECORDS
+                        ,@RECORDSDATES
+                        ,@PHOTOS
+                        )
                             ";
 
 
-        m_db.AddParameter("@CHECKSPOINT", CHECKSPOINT);
-        m_db.AddParameter("@CHECKSTIME", CHECKSTIME);
+        m_db.AddParameter("@SALESNAMES", SALESNAMES);
+        m_db.AddParameter("@CLIENTSNAMES", CLIENTSNAMES);
+        m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
+        m_db.AddParameter("@RECORDS", RECORDS);
+        m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
         m_db.AddParameter("@PHOTOS", PHOTOS);
 
 
@@ -61,11 +85,17 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : System.Web.UI.Page
     public static string TEST()
     {
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-        string MESSAGE = NOWTIMES + " 拍照成功";
+        string MESSAGE = NOWTIMES + " 成功";
         return MESSAGE;
     }
     [WebMethod()]
-    public static string SaveCapturedImage(string myTextcontent, string data)
+    public static string SaveCapturedImage(
+        string SALESNAMES
+        , string CLIENTSNAMES
+        , string NEWCLIENTSNAMES
+        , string RECORDS
+        , string RECORD2DATES
+        , string data)
     {
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
@@ -82,15 +112,26 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : System.Web.UI.Page
         //byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
         //ORI3 = imageBytes3.Length.ToString();
 
-        STATICADDTKGAFFAIRSCHECKSPOOINTPHOTO(myTextcontent, NOWTIMES, imageBytes2);
+        try
+        {
+            ADD_TB_SALES_RECORDS(
+                     SALESNAMES
+                     , CLIENTSNAMES
+                     , NEWCLIENTSNAMES
+                     , RECORDS
+                     , RECORD2DATES
+                     , imageBytes2);
 
-        ////Save the Byte Array as Image File.
-        //string filePath = HttpContext.Current.Server.MapPath(string.Format("~/Captures/{0}.jpg", fileName));
-        //File.WriteAllBytes(filePath, imageBytes);
-        //return true;
-
-        string MESSAGE = NOWTIMES + " 拍照成功";
-        return MESSAGE;
+            string MESSAGE = NOWTIMES + " 成功 存檔 ";
+            return MESSAGE;
+        }
+        catch
+        {
+            string MESSAGE = " 失敗 存檔";
+            return MESSAGE;
+        }
+        finally { }
+        
     }
     /// <summary>
     /// 生成縮略圖
