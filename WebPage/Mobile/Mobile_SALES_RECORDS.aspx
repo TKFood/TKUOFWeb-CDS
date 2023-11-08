@@ -1,88 +1,125 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_SALES_RECORDS.aspx.cs" Inherits="CDS_WebPage_Mobile_SALES_RECORDS" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  
+
     <html>
 
     <head>
         <title>業務</title>
     </head>
     <body>
-        <div>
-            <table>
-                <tr>
-                    <td>
-                        <h2>拜訪拍照</h2>
-                    </td>
-                </tr>
-                 <tr>
-                    <td>
-                        <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>
-                        <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged"></asp:DropDownList>   
-                        <asp:Label ID="SALESID" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                 <tr>
-                    <td>
-                        <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
-                        <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged"></asp:DropDownList>     
-                        <asp:Label ID="CLIENTSNAMESID" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): "></asp:Label>
-                        <asp:TextBox ID="NEWCLIENTSNAMES" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-                  <tr>
-                    <td>
-                        <asp:Label ID="Label4" runat="server" Text="客戶拜訪內容: "></asp:Label>
-                        <asp:TextBox ID="RECORDS" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-                  <tr>
-                    <td>
-                        <asp:Label ID="Label5" runat="server" Text="客戶拜訪日期 "></asp:Label>
-                        <asp:TextBox ID="RECORDSDATES"  runat="server" Width = "100px"></asp:TextBox>
-                       
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>
-                        <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" id="takePhotoButton">拍照</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <h2>照片</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img id="previewImage" style="max-width: 50%;" />
-                    </td>
-                </tr>
-               
-                <tr>
-                    <td>
-                        <button type="button" id="btnUpload">上傳存檔</button>
-                    </td>
-                </tr>
-            </table>
+        <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
+        <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
+            <Tabs>
+                <telerik:RadTab Text="業務">
+                </telerik:RadTab>
+                <telerik:RadTab Text="資料">
+                </telerik:RadTab>
+            </Tabs>
+        </telerik:RadTabStrip>
+        <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
+            <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
+                <div id="tabs-1">
+                    <table  class="PopTable">
+                        <tr>
+                            <td>
+                                <h2>拜訪拍照</h2>
+                            </td>
+                            <td>
 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>                              
+                            </td>
+                             <td>
+                                   <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged"></asp:DropDownList>
+                                <asp:Label ID="SALESID" runat="server" Text=""></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>                               
+                            </td>
+                             <td>
+                                  <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged"></asp:DropDownList>
+                                <asp:Label ID="CLIENTSNAMESID" runat="server" Text=""></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): "></asp:Label>                               
+                            </td>
+                             <td>
+                                  <asp:TextBox ID="NEWCLIENTSNAMES" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label4" runat="server" Text="客戶拜訪內容: "></asp:Label>                                
+                            </td>
+                            <td>
+                                <asp:TextBox ID="RECORDS" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label5" runat="server" Text="客戶拜訪日期 "></asp:Label>                              
 
+                            </td>
+                             <td>
+                                  <asp:TextBox ID="RECORDSDATES" runat="server" Width="100px"></asp:TextBox>
+                            </td>
+                        </tr>
 
-        </div>
+                        <tr>
+                            <td>
+                                
+                            </td>
+                             <td>
+                                 <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" id="takePhotoButton">拍照</button>
+                            </td>
+                             <td>
+                                
+                            </td>
+                        </tr>                   
+                        <tr>
+                             <td>
+                                照片
+                            </td>
+                            <td>
+                                <img id="previewImage" style="max-width: 50%;" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                             <td>
+                                
+                            </td>
+                            <td>
+                                <button type="button" id="btnUpload">上傳存檔</button>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </telerik:RadPageView>
+            <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false">
+                <div id="tabs-1">
+                </div>
+            </telerik:RadPageView>
+        </telerik:RadMultiPage>​
+            <div>
+            </div>
     </body>
 
-    
+
     <script>
         window.onload = function () {
             var photoInput = document.getElementById("photoInput");
@@ -120,10 +157,10 @@
                 var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
                 var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
                 var RECORDSDATES = document.getElementById('<%=RECORDSDATES.ClientID%>').value;
-               
+
                 var previewImage = document.getElementById("previewImage");
                 var imgCapture = $("#previewImage")[0].src;
-        
+
 
                 // 壓縮圖片的函數
                 function compressImage(image, quality, callback) {
@@ -158,7 +195,7 @@
         });
         $(function () {
             $("#<%= RECORDSDATES.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
-          
+
         });
     </script>
 

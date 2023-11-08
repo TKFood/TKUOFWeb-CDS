@@ -24,7 +24,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using Ede.Uof.EIP.SystemInfo;
 
-public partial class CDS_WebPage_Mobile_SALES_RECORDS : System.Web.UI.Page
+public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.BasePage
 {    
     protected void Page_Load(object sender, EventArgs e)
     {
