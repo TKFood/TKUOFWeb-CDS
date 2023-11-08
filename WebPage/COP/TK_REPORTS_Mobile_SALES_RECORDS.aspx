@@ -6,7 +6,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script>          
-
+        $(function () {
+            $("#<%= txtDate1.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
+            $("#<%= txtDate2.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
+        });
         //如果有設定回傳值則執行sender Event
         function OpenDialogResult(returnValue) {
             if (typeof (returnValue) == "undefined")
@@ -31,14 +34,17 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="年度(起):" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:TextBox ID="TextBox1" runat="server" MaxLength="4"></asp:TextBox>
-
+                            <asp:TextBox ID="txtDate1" runat="server" Width="100px"></asp:TextBox>
+                            <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
+                            <asp:TextBox ID="txtDate2" runat="server" Width="100px"></asp:TextBox>
+                            <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
+                            <asp:Button ID="Button2" runat="server" Text=" 查詢 "
+                                OnClick="btn1_Click" meta:resourcekey="btn4Resource1" />
                         </td>
                     </tr>
-                    
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -47,7 +53,7 @@
                         </td>
 
                     </tr>
-                   
+
                 </table>
                 <table class="PopTable">
                     <tr>
@@ -60,7 +66,7 @@
                                         <asp:BoundField HeaderText="年度" DataField="YEARS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-                                      
+
                                     </Columns>
                                 </Fast:Grid>
                             </div>
@@ -72,7 +78,6 @@
 
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-3">
-                
             </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>​

@@ -24,13 +24,12 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
     {
         if (!IsPostBack)
         {
-           
+            txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
+            txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
         }
         else
         {
 
-           
-           
         }
 
        

@@ -1,7 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_SALES_RECORDS.aspx.cs" Inherits="CDS_WebPage_Mobile_SALES_RECORDS" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+    <!-- 在CSS文件中定义样式 -->
+    <style>
+        .custom-button {
+            background-color: #FF5733;
+            color: #FFFFFF;
+            width: 150px; /* 设置宽度 */
+            height: 40px; /* 设置高度 */
+            font-size: 16px; /* 设置字体大小 */
+        }
+    </style>
     <html>
 
     <head>
@@ -32,7 +41,7 @@
                                 <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged" style="width: 200px;"></asp:DropDownList>
+                                <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
                                 <asp:Label ID="SALESID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
@@ -41,16 +50,16 @@
                                 <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged" style="width: 200px;"></asp:DropDownList>
+                                <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
                                 <asp:Label ID="CLIENTSID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): " ></asp:Label>
+                                <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): "></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="NEWCLIENTSNAMES" runat="server" style="width: 200px;"></asp:TextBox>
+                                <asp:TextBox ID="NEWCLIENTSNAMES" runat="server" Style="width: 200px;"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -58,7 +67,7 @@
                                 <asp:Label ID="Label4" runat="server" Text="客戶拜訪內容: "></asp:Label>
                             </td>
                             <td>
-                               <asp:TextBox ID="RECORDS" runat="server" TextMode="MultiLine" Rows="4" Columns="40"></asp:TextBox>
+                                <asp:TextBox ID="RECORDS" runat="server" TextMode="MultiLine" Rows="4" Columns="40"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -81,7 +90,7 @@
                             <td></td>
                             <td>
                                 <button type="button" id="takePhotoButton">拍照</button>
-                            </td>                   
+                            </td>
                         </tr>
                         <tr>
                             <td>照片
@@ -94,7 +103,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <button type="button" id="btnUpload">上傳存檔</button>
+                                <button type="button" id="btnUpload" class="custom-button">上傳存檔</button>
                             </td>
                         </tr>
                     </table>
@@ -144,7 +153,7 @@
         $(function () {
             $("#btnUpload").click(function () {
                 // 获取 DropDownList 的元素
-                var SALESNAMES = document.getElementById('<%=SALESNAMES.ClientID%>');            
+                var SALESNAMES = document.getElementById('<%=SALESNAMES.ClientID%>');
                 // 获取选中项的索引
                 var selectedIndex_SALESNAMES = SALESNAMES.selectedIndex;
                 // 获取选中项的文本
@@ -155,7 +164,7 @@
                 var selectedIndex_CLIENTSNAMES = CLIENTSNAMES.selectedIndex;
                 // 获取选中项的文本
                 var selectedText_CLIENTSNAMES = CLIENTSNAMES.options[selectedIndex_CLIENTSNAMES].text;
-               
+
                 var CLIENTSID = document.getElementById('<%=CLIENTSID.ClientID%>').innerHTML;
                 var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
                 var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
@@ -196,7 +205,7 @@
                     PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, Success, Failure);
                     reader.readAsDataURL(compressedBlob);
                 }
-               
+
 
                 //PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
                 //PageMethods.TEST(Success, Failure);
