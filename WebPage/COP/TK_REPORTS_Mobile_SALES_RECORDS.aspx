@@ -41,15 +41,12 @@
                             <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
                             <asp:TextBox ID="txtDate2" runat="server" Width="100px"></asp:TextBox>
                             <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
-                            <asp:Button ID="Button2" runat="server" Text=" 查詢 "
-                                OnClick="btn1_Click" meta:resourcekey="btn4Resource1" />
                         </td>
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click"
-                                meta:resourcekey="btn1_Resource1" />
+                            <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click" meta:resourcekey="btn1_Resource1" />
                         </td>
 
                     </tr>
@@ -63,10 +60,14 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
-                                        <asp:BoundField HeaderText="年度" DataField="YEARS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="SALESNAMES" DataField="SALESNAMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
                                         </asp:BoundField>
-
+                                        <asp:TemplateField HeaderText="PHOTOS">
+                                            <ItemTemplate>
+                                                 <asp:Image ID="Image1" runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </Fast:Grid>
                             </div>

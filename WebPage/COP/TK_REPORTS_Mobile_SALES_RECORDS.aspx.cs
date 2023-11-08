@@ -26,6 +26,8 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
         {
             txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
             txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
+
+            BindGrid(txtDate1.Text, txtDate2.Text);
         }
         else
         {
@@ -38,7 +40,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
     }
     #region FUNCTION
   
-    private void BindGrid()
+    private void BindGrid(string SDAYS,string EDAYS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -46,9 +48,22 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
         StringBuilder cmdTxt = new StringBuilder();
 
         cmdTxt.AppendFormat(@" 
-                           
+                            SELECT 
+                            [ID]
+                            ,[CREATDATES]
+                            ,[SALESNAMES]
+                            ,[CLIENTSID]
+                            ,[CLIENTSNAMES]
+                            ,[NEWCLIENTSNAMES]
+                            ,[RECORDS]
+                            ,[RECORDSDATES]
+                            ,[PHOTOS]
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
+                            WHERE CONVERT(nvarchar,[RECORDSDATES],111)>='{0}' AND CONVERT(nvarchar,[RECORDSDATES],111)<='{1}'
+                            ORDER BY [SALESNAMES],[CLIENTSNAMES],[ID]
+
                               
-                            ");
+                            ", SDAYS, EDAYS);
 
    
         //m_db.AddParameter("@EDATE", EDATE);
@@ -68,7 +83,12 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView dr = (DataRowView)e.Row.DataItem;
+            string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])dr["PHOTOS"]);
+            (e.Row.FindControl("Image1") as System.Web.UI.WebControls.Image).ImageUrl = imageUrl;
+        }
 
     }
 
@@ -362,13 +382,10 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
 
     protected void btn1_Click(object sender, EventArgs e)
     {
-        BindGrid();        
+        BindGrid(txtDate1.Text, txtDate2.Text);
     }
 
-    protected void btn2_Click(object sender, EventArgs e)
-    {
-        SETEXCEL();
-    }
+   
    
     #endregion
 }
