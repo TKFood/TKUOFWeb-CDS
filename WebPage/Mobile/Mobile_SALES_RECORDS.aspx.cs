@@ -26,12 +26,10 @@ using System.Drawing.Imaging;
 public partial class CDS_WebPage_Mobile_SALES_RECORDS : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
-    {
-
-
+    {        
         if (!IsPostBack)
         {
-
+            RECORDSDATES.Text = DateTime.Now.ToString("yyyy/MM/dd");
         }
     }
 

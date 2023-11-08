@@ -42,7 +42,8 @@
                   <tr>
                     <td>
                         <asp:Label ID="Label5" runat="server" Text="客戶拜訪日期 "></asp:Label>
-                        <asp:TextBox ID="RECORDSDATES" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="RECORDSDATES"  runat="server" Width = "100px"></asp:TextBox>
+                       
                     </td>
                 </tr>
                 
@@ -152,6 +153,10 @@
                 //PageMethods.TEST(Success, Failure);
 
             });
+        });
+        $(function () {
+            $("#<%= RECORDSDATES.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
+          
         });
     </script>
 
