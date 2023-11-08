@@ -178,18 +178,25 @@
                     }, 'image/jpeg', quality);
                 }
 
-                // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                compressImage(previewImage, 0.5, function (compressedBlob) {
-                    // 將壓縮後的圖片轉換為Base64字串
-                    const reader = new FileReader();
-                    reader.onload = function () {
-                        const compressedBase64 = reader.result;
-
-                        // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                        PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
-                    };
+                //圖片!== ""
+                if (imgCapture !== "" && imgCapture !== undefined) {
+                    // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
+                    compressImage(previewImage, 0.5, function (compressedBlob) {
+                        // 將壓縮後的圖片轉換為Base64字串
+                        const reader = new FileReader();
+                        reader.onload = function () {
+                            const compressedBase64 = reader.result;
+                            // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
+                            PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
+                        };
+                        reader.readAsDataURL(compressedBlob);
+                    });
+                }
+                else {
+                    PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, Success, Failure);
                     reader.readAsDataURL(compressedBlob);
-                });
+                }
+               
 
                 //PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
                 //PageMethods.TEST(Success, Failure);

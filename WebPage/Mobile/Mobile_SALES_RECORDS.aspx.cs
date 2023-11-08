@@ -116,7 +116,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             SELECT MA001,MA002
                             FROM [TK].dbo.COPMA
                             WHERE MA016='{0}'
-                            AND (MA001 LIKE '2%' OR MA001 LIKE 'A%')
+                            AND (MA001 LIKE '2%' OR MA001 LIKE '3%' OR MA001 LIKE 'A%' OR MA001 LIKE 'B%')
                             ORDER BY MA002
                             ", MA016);
 
@@ -157,7 +157,11 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"                        
+        string cmdTxt = @"   ";
+
+        if(PHOTOS!=null)
+        {
+            cmdTxt = @"
                         INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
                         (
                         [SALESNAMES]
@@ -181,13 +185,47 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             ";
 
 
-        m_db.AddParameter("@SALESNAMES", SALESNAMES);
-        m_db.AddParameter("@CLIENTSID", CLIENTSID);
-        m_db.AddParameter("@CLIENTSNAMES", CLIENTSNAMES);
-        m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
-        m_db.AddParameter("@RECORDS", RECORDS);
-        m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
-        m_db.AddParameter("@PHOTOS", PHOTOS);
+            m_db.AddParameter("@SALESNAMES", SALESNAMES);
+            m_db.AddParameter("@CLIENTSID", CLIENTSID);
+            m_db.AddParameter("@CLIENTSNAMES", CLIENTSNAMES);
+            m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
+            m_db.AddParameter("@RECORDS", RECORDS);
+            m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
+            m_db.AddParameter("@PHOTOS", PHOTOS);
+        }
+        else
+        {
+            cmdTxt = @"                        
+                        INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
+                        (
+                        [SALESNAMES]
+                        ,[CLIENTSID]
+                        ,[CLIENTSNAMES]
+                        ,[NEWCLIENTSNAMES]
+                        ,[RECORDS]
+                        ,[RECORDSDATES]              
+                        )
+                        VALUES
+                        (
+                        @SALESNAMES
+                        ,@CLIENTSID
+                        ,@CLIENTSNAMES
+                        ,@NEWCLIENTSNAMES
+                        ,@RECORDS
+                        ,@RECORDSDATES                       
+                        )
+                            ";
+
+
+            m_db.AddParameter("@SALESNAMES", SALESNAMES);
+            m_db.AddParameter("@CLIENTSID", CLIENTSID);
+            m_db.AddParameter("@CLIENTSNAMES", CLIENTSNAMES);
+            m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
+            m_db.AddParameter("@RECORDS", RECORDS);
+            m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
+          
+        }
+       
 
 
         m_db.ExecuteNonQuery(cmdTxt);
@@ -236,7 +274,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                      , RECORD2DATES
                      , imageBytes2);
 
-            string MESSAGE = NOWTIMES + " 成功 存檔 ";
+            string MESSAGE = NOWTIMES + " 成功 照片 存檔 ";
             return MESSAGE;
         }
         catch
@@ -246,6 +284,41 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         }
         finally { }
         
+    }
+
+    [WebMethod()]
+    public static string SaveCapturedImage_NOIMAGE(
+      string SALESNAMES
+      , string CLIENTSID
+      , string CLIENTSNAMES
+      , string NEWCLIENTSNAMES
+      , string RECORDS
+      , string RECORD2DATES
+      )
+    {
+        string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+        try
+        {
+            ADD_TB_SALES_RECORDS(
+                     SALESNAMES
+                     , CLIENTSID
+                     , CLIENTSNAMES
+                     , NEWCLIENTSNAMES
+                     , RECORDS
+                     , RECORD2DATES
+                     , null);
+
+            string MESSAGE = NOWTIMES + " 成功 無照片 存檔 ";
+            return MESSAGE;
+        }
+        catch
+        {
+            string MESSAGE = " 失敗 存檔";
+            return MESSAGE;
+        }
+        finally { }
+
     }
     /// <summary>
     /// 生成縮略圖
