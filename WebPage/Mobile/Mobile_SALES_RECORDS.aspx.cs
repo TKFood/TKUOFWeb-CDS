@@ -25,9 +25,14 @@ using System.Drawing.Imaging;
 using Ede.Uof.EIP.SystemInfo;
 
 public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.BasePage
-{    
+{
     protected void Page_Load(object sender, EventArgs e)
     {
+        //不顯示子視窗的按鈕
+        ((Master_MobileMasterPage)this.Master).Button1Text = string.Empty;
+        ((Master_MobileMasterPage)this.Master).Button2Text = string.Empty;
+        ((Master_MobileMasterPage)this.Master).Button3Text = string.Empty;
+
         if (!IsPostBack)
         {
             ViewState["ACCOUNT"] = null;
@@ -37,7 +42,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             BindDropDownList1();
 
             ViewState["ACCOUNT"] = Current.Account;
-            ViewState["NAME"] = Current.User.Name;       
+            ViewState["NAME"] = Current.User.Name;
             SALESID.Text = ViewState["ACCOUNT"].ToString();
             // 使用 FindByText 方法來尋找並指定選項
             ListItem item = SALESNAMES.Items.FindByText(ViewState["NAME"].ToString());
@@ -56,9 +61,9 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             }
         }
 
-     
-       
-       
+
+
+
     }
 
     #region FUNCTION
@@ -66,7 +71,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("SALESID", typeof(String));
-        dt.Columns.Add("SALESNAMES", typeof(String));      
+        dt.Columns.Add("SALESNAMES", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -101,7 +106,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         // 執行其他操作，例如根據所選值更新頁面或處理伺服器端邏輯
     }
- 
+
     private void BindDropDownList2(string MA016)
     {
         DataTable dt = new DataTable();
@@ -154,7 +159,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     }
     public static void ADD_TB_SALES_RECORDS(
         string SALESNAMES
-        ,string CLIENTSID
+        , string CLIENTSID
         , string CLIENTSNAMES
         , string NEWCLIENTSNAMES
         , string RECORDS
@@ -166,7 +171,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         string cmdTxt = @"   ";
 
-        if(PHOTOS!=null)
+        if (PHOTOS != null)
         {
             cmdTxt = @"
                         INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
@@ -230,9 +235,9 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
             m_db.AddParameter("@RECORDS", RECORDS);
             m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
-          
+
         }
-       
+
 
 
         m_db.ExecuteNonQuery(cmdTxt);
@@ -248,7 +253,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     [WebMethod()]
     public static string SaveCapturedImage(
         string SALESNAMES
-        ,string CLIENTSID
+        , string CLIENTSID
         , string CLIENTSNAMES
         , string NEWCLIENTSNAMES
         , string RECORDS
@@ -290,7 +295,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             return MESSAGE;
         }
         finally { }
-        
+
     }
 
     [WebMethod()]
