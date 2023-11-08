@@ -32,7 +32,7 @@
                                 <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged"></asp:DropDownList>
+                                <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged" style="width: 200px;"></asp:DropDownList>
                                 <asp:Label ID="SALESID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
@@ -41,16 +41,16 @@
                                 <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged"></asp:DropDownList>
+                                <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged" style="width: 200px;"></asp:DropDownList>
                                 <asp:Label ID="CLIENTSID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): "></asp:Label>
+                                <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): " ></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="NEWCLIENTSNAMES" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="NEWCLIENTSNAMES" runat="server" style="width: 200px;"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -58,7 +58,7 @@
                                 <asp:Label ID="Label4" runat="server" Text="客戶拜訪內容: "></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="RECORDS" runat="server"></asp:TextBox>
+                               <asp:TextBox ID="RECORDS" runat="server" TextMode="MultiLine" Rows="4" Columns="40"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
