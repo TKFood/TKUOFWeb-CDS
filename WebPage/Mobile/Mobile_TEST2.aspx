@@ -87,10 +87,38 @@
         $(function () {
             $("#btnUpload").click(function () {
                 var myTextcontent = document.getElementById('<%=myTextcontent.ClientID%>').value;
+                var previewImage = document.getElementById("previewImage");
                 var imgCapture = $("#previewImage")[0].src;
-             
+        
+
+                // 壓縮圖片的函數
+                function compressImage(image, quality, callback) {
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                    canvas.toBlob(function (blob) {
+                        callback(blob);
+                    }, 'image/jpeg', quality);
+                }
+
+                // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
+                compressImage(previewImage, 0.5, function (compressedBlob) {
+                    // 將壓縮後的圖片轉換為Base64字串
+                    const reader = new FileReader();
+                    reader.onload = function () {
+                        const compressedBase64 = reader.result;
+
+                        // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
+                        PageMethods.SaveCapturedImage(myTextcontent, compressedBase64, Success, Failure);
+                    };
+                    reader.readAsDataURL(compressedBlob);
+                });
+
                 //PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
-                PageMethods.TEST(Success, Failure);
+                //PageMethods.TEST(Success, Failure);
 
             });
         });
