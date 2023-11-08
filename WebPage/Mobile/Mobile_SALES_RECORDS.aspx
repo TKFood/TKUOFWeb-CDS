@@ -20,44 +20,42 @@
         <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
             <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
                 <div id="tabs-1">
-                    <table  class="PopTable">
+                    <table class="PopTable">
                         <tr>
                             <td>
                                 <h2>拜訪拍照</h2>
                             </td>
-                            <td>
-
-                            </td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>                              
+                                <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>
                             </td>
-                             <td>
-                                   <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged"></asp:DropDownList>
+                            <td>
+                                <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged"></asp:DropDownList>
                                 <asp:Label ID="SALESID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>                               
+                                <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
                             </td>
-                             <td>
-                                  <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged"></asp:DropDownList>
+                            <td>
+                                <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged"></asp:DropDownList>
                                 <asp:Label ID="CLIENTSNAMESID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): "></asp:Label>                               
+                                <asp:Label ID="Label2" runat="server" Text="新客戶(無客代): "></asp:Label>
                             </td>
-                             <td>
-                                  <asp:TextBox ID="NEWCLIENTSNAMES" runat="server"></asp:TextBox>
+                            <td>
+                                <asp:TextBox ID="NEWCLIENTSNAMES" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label4" runat="server" Text="客戶拜訪內容: "></asp:Label>                                
+                                <asp:Label ID="Label4" runat="server" Text="客戶拜訪內容: "></asp:Label>
                             </td>
                             <td>
                                 <asp:TextBox ID="RECORDS" runat="server"></asp:TextBox>
@@ -65,33 +63,28 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label5" runat="server" Text="客戶拜訪日期 "></asp:Label>                              
+                                <asp:Label ID="Label5" runat="server" Text="客戶拜訪日期 "></asp:Label>
 
                             </td>
-                             <td>
-                                  <asp:TextBox ID="RECORDSDATES" runat="server" Width="100px"></asp:TextBox>
-                            </td>
-                        </tr>
-
-                        <tr>
                             <td>
-                                
+                                <asp:TextBox ID="RECORDSDATES" runat="server" Width="100px"></asp:TextBox>
                             </td>
-                             <td>
-                                 <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
                             </td>
                         </tr>
                         <tr>
+                            <td></td>
                             <td>
                                 <button type="button" id="takePhotoButton">拍照</button>
-                            </td>
-                             <td>
-                                
-                            </td>
-                        </tr>                   
+                            </td>                   
+                        </tr>
                         <tr>
-                             <td>
-                                照片
+                            <td>照片
                             </td>
                             <td>
                                 <img id="previewImage" style="max-width: 50%;" />
@@ -99,9 +92,7 @@
                         </tr>
 
                         <tr>
-                             <td>
-                                
-                            </td>
+                            <td></td>
                             <td>
                                 <button type="button" id="btnUpload">上傳存檔</button>
                             </td>
@@ -152,8 +143,19 @@
 
         $(function () {
             $("#btnUpload").click(function () {
-                var SALESNAMES = document.getElementById('<%=SALESNAMES.ClientID%>').value;
-                var CLIENTSNAMES = document.getElementById('<%=CLIENTSNAMES.ClientID%>').value;
+                // 获取 DropDownList 的元素
+                var SALESNAMES = document.getElementById('<%=SALESNAMES.ClientID%>');            
+                // 获取选中项的索引
+                var selectedIndex_SALESNAMES = SALESNAMES.selectedIndex;
+                // 获取选中项的文本
+                var selectedText_SALESNAMES = SALESNAMES.options[selectedIndex_SALESNAMES].text;
+                // 获取 DropDownList 的元素
+                var CLIENTSNAMES = document.getElementById('<%=CLIENTSNAMES.ClientID%>');
+                // 获取选中项的索引
+                var selectedIndex_CLIENTSNAMES = SALESNAMES.selectedIndex;
+                // 获取选中项的文本
+                var selectedText_CLIENTSNAMES = CLIENTSNAMES.options[selectedIndex_SALESNAMES].text
+             
                 var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
                 var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
                 var RECORDSDATES = document.getElementById('<%=RECORDSDATES.ClientID%>').value;
@@ -183,7 +185,7 @@
                         const compressedBase64 = reader.result;
 
                         // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                        PageMethods.SaveCapturedImage(SALESNAMES, CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
+                        PageMethods.SaveCapturedImage(selectedText_SALESNAMES, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
                     };
                     reader.readAsDataURL(compressedBlob);
                 });
