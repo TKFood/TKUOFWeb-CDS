@@ -18,7 +18,7 @@
 
             /* 表头样式 */
             .fast-grid th {
-                background-color:dodgerblue; /* 背景颜色 */
+                background-color: dodgerblue; /* 背景颜色 */
                 color: white; /* 字体颜色 */
                 font-weight: bold; /* 字体粗体 */
                 border: 2px solid white; /* 边框粗线 */
@@ -171,9 +171,9 @@
                         </tr>
 
                     </table>
-                    <table class="PopTable">
-                        <tr>
-                            <td colspan="2" class="PopTableRightTD">
+                    <table style="width: 100%">
+                        <tr style="width: 100%">
+                            <td colspan="2" style="width: 100%">
                                 <div style="overflow-x: auto; width: 100%">
                                     <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_OnRowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging1" CssClass="fast-grid">
 
@@ -183,21 +183,21 @@
                                             <asp:BoundField HeaderText="業務員" DataField="業務員" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>
-                                            <asp:BoundField HeaderText="客戶" DataField="客戶" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            <asp:BoundField HeaderText="客戶" DataField="客戶" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                             </asp:BoundField>
-                                            <asp:BoundField HeaderText="新客" DataField="新客" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            <asp:BoundField HeaderText="新客" DataField="新客" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                             </asp:BoundField>
-                                            <asp:BoundField HeaderText="拜訪目的" DataField="拜訪目的" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            <asp:BoundField HeaderText="拜訪目的" DataField="拜訪目的" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                             </asp:BoundField>
                                             <asp:TemplateField HeaderText="訪談內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="訪談內容" runat="server" Text='<%# Bind("訪談內容") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    <asp:Label ID="訪談內容" runat="server" Text='<%# Bind("訪談內容") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="50px"></ItemStyle>
                                             </asp:BoundField>
                                             <asp:TemplateField HeaderText="圖片" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -214,8 +214,7 @@
                 </div>
             </telerik:RadPageView>
         </telerik:RadMultiPage>​
-            <div>
-            </div>
+           
     </body>
 
 
