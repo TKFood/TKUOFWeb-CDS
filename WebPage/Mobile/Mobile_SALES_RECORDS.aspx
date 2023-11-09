@@ -205,6 +205,11 @@
                                                     <asp:Image ID="Image1" runat="server" Width="100px" Height="100px" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="Grid1Button1" runat="server" Text="刪除" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>'  OnClientClick="return confirm('確定要刪除嗎？');" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </Fast:Grid>
                                 </div>
@@ -262,7 +267,7 @@
                     // 在这里执行其他操作
                 } else {
                     // SALESNAMES为null或undefined，可以执行其他操作或者不执行任何操作
-                }    
+                }
                 //DropDownListCLIENTSNAMES 获取 DropDownList 的元素
                 var CLIENTSNAMES = document.getElementById('<%=DropDownListCLIENTSNAMES.ClientID%>');
                 if (CLIENTSNAMES) {
@@ -275,8 +280,8 @@
                     // 在这里执行其他操作
                 } else {
                     // SALESNAMES为null或undefined，可以执行其他操作或者不执行任何操作
-                }  
-                
+                }
+
                 //DropDownListKINDS 获取 DropDownList 的元素
                 var KINDS = document.getElementById('<%=DropDownListKINDS.ClientID%>');
                 if (KINDS) {
@@ -287,9 +292,9 @@
                     // 在这里执行其他操作
                 } else {
                     // SALESNAMES为null或undefined，可以执行其他操作或者不执行任何操作
-                }      
-               
-              
+                }
+
+
 
                 var CLIENTSID = document.getElementById('<%=CLIENTSID.ClientID%>').innerHTML;
                 var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;

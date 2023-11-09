@@ -556,6 +556,13 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
     {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid1Button1")
+        {
+            DELETE_TB_SALES_RECORDS(e.CommandArgument.ToString());
+            //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
+        }
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -778,6 +785,25 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                 //package.Save();//這個方法是直接下載到本地
             }
         }
+
+    }
+
+    public void DELETE_TB_SALES_RECORDS(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+    
+        string cmdTxt = @"  
+                        DELETE [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
+                        WHERE [ID]=@ID
+                   
+                            ";
+
+
+        m_db.AddParameter("@ID", ID);
+        m_db.ExecuteNonQuery(cmdTxt);
+
+        BindGrid(txtDate1.Text, txtDate2.Text);
 
     }
     #endregion
