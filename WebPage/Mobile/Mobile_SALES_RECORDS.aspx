@@ -32,16 +32,16 @@
                     <table class="PopTable">
                         <tr>
                             <td>
-                                <h2>拜訪拍照</h2>
+                                <h2>拜訪</h2>
                             </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label3" runat="server" Text="業務"></asp:Label>
+                                <asp:Label ID="Label3" runat="server" Text="業務員"></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="SALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="SALESNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
+                                <asp:DropDownList ID="DropDownListSALESNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownListSALESNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
                                 <asp:Label ID="SALESID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
@@ -52,8 +52,8 @@
                             <td>
                                  <asp:Label ID="Label6" runat="server" Text="關鍵字 "></asp:Label>
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                                <asp:Button ID="Button1" runat="server" Text="查客戶" OnClick="btn1_Click" meta:resourcekey="btn1_Resource1" />
-                                <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
+                                <asp:Button ID="Button1" runat="server" Text="查客戶 " OnClick="btn1_Click" meta:resourcekey="btn1_Resource1" />
+                                <asp:DropDownList ID="DropDownListCLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownListCLIENTSNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
                                 <asp:Label ID="CLIENTSID" runat="server" Text=""></asp:Label>
                             </td>
                         </tr>
@@ -63,6 +63,14 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="NEWCLIENTSNAMES" runat="server" Style="width: 200px;"></asp:TextBox>
+                            </td>
+                        </tr>
+                          <tr>
+                            <td>
+                                <asp:Label ID="Label7" runat="server" Text="拜訪目的: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="DropDownListKINDS" runat="server" AutoPostBack="true"  Style="width: 200px;"></asp:DropDownList>
                             </td>
                         </tr>
                         <tr>
@@ -106,7 +114,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <button type="button" id="btnUpload" class="custom-button">上傳存檔</button>
+                                <button type="button" id="btnUpload" class="custom-button">存檔</button>
                             </td>
                         </tr>
                     </table>
@@ -155,21 +163,29 @@
 
         $(function () {
             $("#btnUpload").click(function () {
-                // 获取 DropDownList 的元素
-                var SALESNAMES = document.getElementById('<%=SALESNAMES.ClientID%>');
+                // DropDownListSALESNAMES获取 DropDownList 的元素
+                var SALESNAMES = document.getElementById('<%=DropDownListSALESNAMES.ClientID%>');
                 // 获取选中项的索引
                 var selectedIndex_SALESNAMES = SALESNAMES.selectedIndex;
                 // 获取选中项的文本
                 var selectedText_SALESNAMES = SALESNAMES.options[selectedIndex_SALESNAMES].text;
-                // 获取 DropDownList 的元素
-                var CLIENTSNAMES = document.getElementById('<%=CLIENTSNAMES.ClientID%>');
+
+                //DropDownListCLIENTSNAMES 获取 DropDownList 的元素
+                var CLIENTSNAMES = document.getElementById('<%=DropDownListCLIENTSNAMES.ClientID%>');
                 // 获取选中项的索引
                 var selectedIndex_CLIENTSNAMES = CLIENTSNAMES.selectedIndex;
                 // 获取选中项的文本
                 var selectedText_CLIENTSNAMES = CLIENTSNAMES.options[selectedIndex_CLIENTSNAMES].text;
 
+                //DropDownListKINDS 获取 DropDownList 的元素
+                var KINDS = document.getElementById('<%=DropDownListKINDS.ClientID%>');
+                // 获取选中项的索引
+                var selectedIndex_KINDS = KINDS.selectedIndex;
+                // 获取选中项的文本
+                var selectedText_KINDS = KINDS.options[selectedIndex_KINDS].text;
+                
                 var CLIENTSID = document.getElementById('<%=CLIENTSID.ClientID%>').innerHTML;
-                var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
+                var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;                
                 var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
                 var RECORDSDATES = document.getElementById('<%=RECORDSDATES.ClientID%>').value;
 
@@ -199,13 +215,13 @@
                         reader.onload = function () {
                             const compressedBase64 = reader.result;
                             // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                            PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
+                            PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
                         };
                         reader.readAsDataURL(compressedBlob);
                     });
                 }
                 else {
-                    PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, RECORDS, RECORDSDATES, Success, Failure);
+                    PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, Success, Failure);
                     reader.readAsDataURL(compressedBlob);
                 }
 

@@ -40,16 +40,17 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
             RECORDSDATES.Text = DateTime.Now.ToString("yyyy/MM/dd");
             BindDropDownList1();
+            BindDropDownList3();
 
             ViewState["ACCOUNT"] = Current.Account;
             ViewState["NAME"] = Current.User.Name;
             SALESID.Text = ViewState["ACCOUNT"].ToString();
             // 使用 FindByText 方法來尋找並指定選項
-            ListItem item = SALESNAMES.Items.FindByText(ViewState["NAME"].ToString());
+            ListItem item = DropDownListSALESNAMES.Items.FindByText(ViewState["NAME"].ToString());
             if (item != null)
             {
                 // 找到了選項，將其設定為所選
-                SALESNAMES.ClearSelection(); // 清除所有選擇
+                DropDownListSALESNAMES.ClearSelection(); // 清除所有選擇
                 item.Selected = true;
 
                 BindDropDownList2("");
@@ -85,10 +86,10 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         if (dt.Rows.Count > 0)
         {
-            SALESNAMES.DataSource = dt;
-            SALESNAMES.DataTextField = "SALESNAMES";
-            SALESNAMES.DataValueField = "SALESID";
-            SALESNAMES.DataBind();
+            DropDownListSALESNAMES.DataSource = dt;
+            DropDownListSALESNAMES.DataTextField = "SALESNAMES";
+            DropDownListSALESNAMES.DataValueField = "SALESID";
+            DropDownListSALESNAMES.DataBind();
 
         }
         else
@@ -96,10 +97,10 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         }
     }
-    protected void SALESNAMES_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DropDownListSALESNAMES_SelectedIndexChanged(object sender, EventArgs e)
     {
         // 獲取所選的值
-        string selectedValue = SALESNAMES.SelectedValue;
+        string selectedValue = DropDownListSALESNAMES.SelectedValue;
         SALESID.Text = selectedValue;
         ViewState["ACCOUNT"] = selectedValue;
         BindDropDownList2(ViewState["ACCOUNT"].ToString());
@@ -139,10 +140,10 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         if (dt.Rows.Count > 0)
         {
-            CLIENTSNAMES.DataSource = dt;
-            CLIENTSNAMES.DataTextField = "MA002";
-            CLIENTSNAMES.DataValueField = "MA001";
-            CLIENTSNAMES.DataBind();
+            DropDownListCLIENTSNAMES.DataSource = dt;
+            DropDownListCLIENTSNAMES.DataTextField = "MA002";
+            DropDownListCLIENTSNAMES.DataValueField = "MA001";
+            DropDownListCLIENTSNAMES.DataBind();
 
         }
         else
@@ -150,19 +151,53 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         }
     }
-    protected void CLIENTSNAMES_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DropDownListCLIENTSNAMES_SelectedIndexChanged(object sender, EventArgs e)
     {
         // 獲取所選的值
-        string selectedValue = CLIENTSNAMES.SelectedValue;
+        string selectedValue = DropDownListCLIENTSNAMES.SelectedValue;
         CLIENTSID.Text = selectedValue;
 
         // 執行其他操作，例如根據所選值更新頁面或處理伺服器端邏輯
     }
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        FROM [TKBUSINESS].[dbo].[TB_SALES_KINDS]
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListKINDS.DataSource = dt;
+            DropDownListKINDS.DataTextField = "KINDS";
+            DropDownListKINDS.DataValueField = "KINDS";
+            DropDownListKINDS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+ 
     public static void ADD_TB_SALES_RECORDS(
         string SALESNAMES
         , string CLIENTSID
         , string CLIENTSNAMES
         , string NEWCLIENTSNAMES
+        , string KINDS
         , string RECORDS
         , string RECORDSDATES
         , byte[] PHOTOS)
@@ -185,6 +220,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,[CLIENTSID]
                         ,[CLIENTSNAMES]
                         ,[NEWCLIENTSNAMES]
+                        ,[KINDS]
                         ,[RECORDS]
                         ,[RECORDSDATES]
                         ,[PHOTOS]
@@ -195,6 +231,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,@CLIENTSID
                         ,@CLIENTSNAMES
                         ,@NEWCLIENTSNAMES
+                        ,@KINDS
                         ,@RECORDS
                         ,@RECORDSDATES
                         ,@PHOTOS
@@ -206,6 +243,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             m_db.AddParameter("@CLIENTSID", CLIENTSID);
             m_db.AddParameter("@CLIENTSNAMES", CLIENTSNAMES);
             m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
+            m_db.AddParameter("@KINDS", KINDS);
             m_db.AddParameter("@RECORDS", RECORDS);
             m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
             m_db.AddParameter("@PHOTOS", PHOTOS);
@@ -261,6 +299,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         , string CLIENTSID
         , string CLIENTSNAMES
         , string NEWCLIENTSNAMES
+        , string KINDS
         , string RECORDS
         , string RECORD2DATES
         , string data)
@@ -287,6 +326,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                      , CLIENTSID
                      , CLIENTSNAMES
                      , NEWCLIENTSNAMES
+                     , KINDS
                      , RECORDS
                      , RECORD2DATES
                      , imageBytes2);
@@ -309,6 +349,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
       , string CLIENTSID
       , string CLIENTSNAMES
       , string NEWCLIENTSNAMES
+      , string KINDS
       , string RECORDS
       , string RECORD2DATES
       )
@@ -322,6 +363,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                      , CLIENTSID
                      , CLIENTSNAMES
                      , NEWCLIENTSNAMES
+                     , KINDS
                      , RECORDS
                      , RECORD2DATES
                      , null);
