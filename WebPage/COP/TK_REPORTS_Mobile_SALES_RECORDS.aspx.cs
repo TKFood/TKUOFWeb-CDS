@@ -130,6 +130,8 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        int imageCounter = 1; // 用于生成唯一图像名称的计数器
+
         QUERYS.AppendFormat(@" ");
 
         cmdTxt.AppendFormat(@" 
@@ -252,13 +254,16 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                             using (MemoryStream ms = new MemoryStream(imageBytes))
                             {
                                 System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
-                                ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(od["PHOTOS"].ToString(), img);
+                                string imageName = od["ID"].ToString() + "_Image" + imageCounter; // 生成唯一的图像名称
+                                ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(imageName, img);
 
                                 picture.From.Row = ROWS;
                                 picture.From.Column = COLUMNS;
 
                                 picture.SetPosition(1 * ROWS - 1, 5, 6, 5);
                                 picture.SetSize(50, 50);
+
+                                imageCounter++; // 递增计数器以确保下一个图像具有唯一的名称
                             }
                         }
                     }
@@ -288,9 +293,6 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
 
                 
                 
-
-                    
-
 
 
 
