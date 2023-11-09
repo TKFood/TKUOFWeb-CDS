@@ -50,6 +50,9 @@
                                 <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
                             </td>
                             <td>
+                                 <asp:Label ID="Label6" runat="server" Text="關鍵字 "></asp:Label>
+                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                <asp:Button ID="Button1" runat="server" Text="查客戶" OnClick="btn1_Click" meta:resourcekey="btn1_Resource1" />
                                 <asp:DropDownList ID="CLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CLIENTSNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
                                 <asp:Label ID="CLIENTSID" runat="server" Text=""></asp:Label>
                             </td>

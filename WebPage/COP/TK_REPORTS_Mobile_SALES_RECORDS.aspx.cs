@@ -53,7 +53,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                             ,CONVERT(nvarchar,[CREATDATES],111) AS '建立日期'
                             ,[SALESNAMES] AS '業務員'
                             ,[CLIENTSID] AS '客戶代號'
-                            ,(CASE WHEN [CLIENTSNAMES] IN ('請選擇') THEN '' ELSE [CLIENTSNAMES] END) AS '客戶'
+                            ,[CLIENTSNAMES] AS '客戶'
                             ,[NEWCLIENTSNAMES] AS '新客'
                             ,[RECORDS] AS '訪談內容'
                             ,CONVERT(nvarchar,[RECORDSDATES],111) AS '訪談日期'

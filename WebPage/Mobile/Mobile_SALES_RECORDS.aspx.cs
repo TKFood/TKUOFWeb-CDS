@@ -52,7 +52,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                 SALESNAMES.ClearSelection(); // 清除所有選擇
                 item.Selected = true;
 
-                BindDropDownList2(ViewState["ACCOUNT"].ToString());
+                BindDropDownList2("");
             }
             else
             {
@@ -107,7 +107,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         // 執行其他操作，例如根據所選值更新頁面或處理伺服器端邏輯
     }
 
-    private void BindDropDownList2(string MA016)
+    private void BindDropDownList2(string MA002)
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("MA001", typeof(String));
@@ -121,16 +121,17 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             SELECT *
                             FROM 
                             (
-                            SELECT '' MA001,' 請選擇'MA002
+                            SELECT '' MA001,'-請選擇'MA002
                             UNION ALL
                             SELECT MA001,MA002
                             FROM [TK].dbo.COPMA
-                            WHERE MA016='{0}'
+                            WHERE MA002 LIKE '%{0}%'
                             AND (MA001 LIKE '2%' OR MA001 LIKE '3%' OR MA001 LIKE 'A%' OR MA001 LIKE 'B%')
+                            AND MA002 NOT LIKE '%停用%'
                             )
                             AS TEMP
                             ORDER BY MA002
-                            ", MA016);
+                            ", MA002);
 
 
 
@@ -171,6 +172,10 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         string cmdTxt = @"   ";
 
+        if (CLIENTSNAMES.Contains("請選擇"))
+        {
+            CLIENTSNAMES = "";
+        }
         if (PHOTOS != null)
         {
             cmdTxt = @"
@@ -309,7 +314,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
       )
     {
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-
+        
         try
         {
             ADD_TB_SALES_RECORDS(
@@ -422,6 +427,11 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     protected void Button1_Click(object sender, EventArgs e)
     {
 
+    }
+    protected void btn1_Click(object sender, EventArgs e)
+    {
+        string MA002 = TextBox1.Text.Trim().ToString();
+        BindDropDownList2(MA002);
     }
 
     #endregion
