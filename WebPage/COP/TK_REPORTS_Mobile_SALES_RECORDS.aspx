@@ -60,12 +60,27 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
-                                        <asp:BoundField HeaderText="SALESNAMES" DataField="SALESNAMES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        <asp:BoundField HeaderText="業務員" DataField="業務員" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="PHOTOS">
+                                        <asp:BoundField HeaderText="客戶" DataField="客戶" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="新客" DataField="新客" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="訪談內容" DataField="訪談內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="建立日期" DataField="建立日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="Image">
                                             <ItemTemplate>
-                                                 <asp:Image ID="Image1" runat="server" />
+                                                <asp:Image ID="Image1" runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

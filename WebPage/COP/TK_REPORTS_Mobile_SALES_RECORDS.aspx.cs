@@ -50,13 +50,13 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
         cmdTxt.AppendFormat(@" 
                             SELECT 
                             [ID]
-                            ,[CREATDATES]
-                            ,[SALESNAMES]
-                            ,[CLIENTSID]
-                            ,[CLIENTSNAMES]
-                            ,[NEWCLIENTSNAMES]
-                            ,[RECORDS]
-                            ,[RECORDSDATES]
+                            ,CONVERT(nvarchar,[CREATDATES],111) AS '建立日期'
+                            ,[SALESNAMES] AS '業務員'
+                            ,[CLIENTSID] AS '客戶代號'
+                            ,(CASE WHEN [CLIENTSNAMES] IN ('請選擇') THEN '' ELSE [CLIENTSNAMES] END) AS '客戶'
+                            ,[NEWCLIENTSNAMES] AS '新客'
+                            ,[RECORDS] AS '訪談內容'
+                            ,CONVERT(nvarchar,[RECORDSDATES],111) AS '訪談日期'
                             ,[PHOTOS]
                             FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
                             WHERE CONVERT(nvarchar,[RECORDSDATES],111)>='{0}' AND CONVERT(nvarchar,[RECORDSDATES],111)<='{1}'
@@ -86,8 +86,20 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             DataRowView dr = (DataRowView)e.Row.DataItem;
-            string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])dr["PHOTOS"]);
-            (e.Row.FindControl("Image1") as System.Web.UI.WebControls.Image).ImageUrl = imageUrl;
+            System.Web.UI.WebControls.Image imgPhoto = e.Row.FindControl("Image1") as System.Web.UI.WebControls.Image;
+
+
+            if (dr["PHOTOS"] != DBNull.Value && dr["PHOTOS"] != null)
+            {
+                string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])dr["PHOTOS"]);
+                imgPhoto.ImageUrl = imageUrl;
+            }
+            else
+            {
+                // 如果PHOTOS字段为空或NULL，您可以设置一个默认图像或其他处理方式
+                //imgPhoto.ImageUrl = "default_image.jpg"; // 设置默认图像路径
+            }
+          
         }
 
     }
