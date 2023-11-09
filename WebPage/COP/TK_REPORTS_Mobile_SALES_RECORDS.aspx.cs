@@ -55,6 +55,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                             ,[CLIENTSID] AS '客戶代號'
                             ,[CLIENTSNAMES] AS '客戶'
                             ,[NEWCLIENTSNAMES] AS '新客'
+                            ,[KINDS] AS '拜訪目的'
                             ,[RECORDS] AS '訪談內容'
                             ,CONVERT(nvarchar,[RECORDSDATES],111) AS '訪談日期'
                             ,[PHOTOS]
