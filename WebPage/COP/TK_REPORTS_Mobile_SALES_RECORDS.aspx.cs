@@ -34,13 +34,13 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
 
         }
 
-       
+
 
 
     }
     #region FUNCTION
-  
-    private void BindGrid(string SDAYS,string EDAYS)
+
+    private void BindGrid(string SDAYS, string EDAYS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -66,7 +66,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                               
                             ", SDAYS, EDAYS);
 
-   
+
         //m_db.AddParameter("@EDATE", EDATE);
 
         DataTable dt = new DataTable();
@@ -100,7 +100,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                 // 如果PHOTOS字段为空或NULL，您可以设置一个默认图像或其他处理方式
                 //imgPhoto.ImageUrl = "default_image.jpg"; // 设置默认图像路径
             }
-          
+
         }
 
     }
@@ -111,269 +111,222 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-        SETEXCEL();
+        SETEXCEL(txtDate1.Text, txtDate2.Text);
 
-       
-    }
-
-   
-    public override void VerifyRenderingInServerForm(Control control) 
-    { 
 
     }
 
-    public void SETEXCEL()
+
+    public override void VerifyRenderingInServerForm(Control control)
     {
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        //StringBuilder cmdTxt = new StringBuilder();
-        //StringBuilder QUERYS1 = new StringBuilder();
-        //StringBuilder QUERYS2 = new StringBuilder();
-        //StringBuilder QUERYS3 = new StringBuilder();
-        //StringBuilder QUERYS4 = new StringBuilder();
-        //StringBuilder QUERYS5 = new StringBuilder();
-        //StringBuilder QUERYS6 = new StringBuilder();
-        //StringBuilder QUERYS7 = new StringBuilder();
+    }
 
-        ////年度
-        //if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
-        //{
-        //    QUERYS1.AppendFormat(@" AND [YEARS]>='{0}'  AND [YEARS]<='{1}'  ", TextBox1.Text, TextBox2.Text);
-        //}
+    public void SETEXCEL(string SDAYS, string EDAYS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        ////活動/目的
-        //if (!string.IsNullOrEmpty(TextBox3.Text))
-        //{
-        //    QUERYS2.AppendFormat(@" AND [NAMES] LIKE '%{0}%'  ", TextBox3.Text);
-        //}
-        ////對象(經銷商)
-        //if (!string.IsNullOrEmpty(TextBox4.Text))
-        //{
-        //    QUERYS3.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%'  ", TextBox4.Text);
-        //}
-        ////通路
-        //if (!string.IsNullOrEmpty(TextBox5.Text))
-        //{
-        //    QUERYS4.AppendFormat(@" AND [STORES] LIKE '%{0}%'  ", TextBox5.Text);
-        //}
-        ////活動內容
-        //if (!string.IsNullOrEmpty(TextBox6.Text))
-        //{
-        //    QUERYS5.AppendFormat(@" AND [ACTIONS] LIKE '%{0}%'  ", TextBox6.Text);
-        //}
-        ////商品
-        //if (!string.IsNullOrEmpty(TextBox7.Text))
-        //{
-        //    QUERYS6.AppendFormat(@" AND [PRODUCTS] LIKE '%{0}%'  ", TextBox7.Text);
-        //}
-        ////是否結案
-        //if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()) && DropDownList1.SelectedValue.ToString().Equals("N"))
-        //{
-        //    QUERYS7.AppendFormat(@" AND [ISCLOSED] LIKE '%{0}%'  ", DropDownList1.SelectedValue.ToString());
-        //}
-        //else if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()) && DropDownList1.SelectedValue.ToString().Equals("Y"))
-        //{
-        //    QUERYS7.AppendFormat(@" AND [ISCLOSED] LIKE '%{0}%'  ", DropDownList1.SelectedValue.ToString());
-        //}
-        //else if (!string.IsNullOrEmpty(DropDownList1.SelectedValue.ToString()) && DropDownList1.SelectedValue.ToString().Equals("全部"))
-        //{
-        //    QUERYS7.AppendFormat(@" ");
-        //}
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
 
+        QUERYS.AppendFormat(@" ");
 
-        //cmdTxt.AppendFormat(@" 
-        //                   SELECT 
-        //                    [ID] AS '編號'
-        //                    ,[YEARS] AS '年度'
-        //                    ,[DEPNAME] AS '申請部門'
-        //                    ,[TITLES] AS '職務'
-        //                    ,[SALES] AS '申請人'
-        //                    ,[NAMES] AS '活動/目的'
-        //                    ,[SDATES] AS '日期:起~迄'
-        //                    ,[CLIENTS] AS '對象(經銷商)'
-        //                    ,[STORES] AS '通路'
-        //                    ,ACTIONS AS '活動內容(詳述)'
-        //                    ,PRODUCTS AS '商品'
-        //                    ,[DOC_NBR] AS '會辨單'
-        //                    ,ROUND([SALESMONEYS],0) AS '實際-總收入'
-        //                    ,ROUND([COSTMONEYS],0) AS '實際-總成本'
-        //                    ,ROUND([FEEMONEYS],0) AS '實際-總費用'
-        //                    ,ROUND([PROFITS],0) AS '實際-利潤'
-        //                    ,ROUND([ACTSALESMONEYS],0) AS '預估-總收入'
-        //                    ,ROUND([ACTCOSTMONEYS],0) AS '預估-總成本'
-        //                    ,ROUND([ACTFEEMONEYS],0) AS '預估-總費用'
-        //                    ,ROUND([ACTPROFITS],0) AS '預估-利潤' 
-        //                    ,ISCLOSED AS '是否結案'
-        //                    ,ISNULL( (     
-        //                    SELECT CASE
-        //                    WHEN ROW_NUMBER() OVER (ORDER BY (SELECT 0)) = 1 THEN ''
-        //                    ELSE '<br />'
-        //                    END +ISNULL([FEENAME],'')+':'+ISNULL(CONVERT(NVARCHAR,(CONVERT(INT,[FEEMONEYS]))),'')+'元' AS 'data()'
-        //                    FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEEDETAILS] WHERE [TBPROMOTIONNFEEDETAILS].[MID]=[TBPROMOTIONNFEE].[ID]
-        //                    FOR XML PATH(''), TYPE  
-        //                    ).value('.','nvarchar(max)'),'')  As '各項費用預估'                            
-        //                    FROM [TKBUSINESS].[dbo].[TBPROMOTIONNFEE]
-        //                    WHERE 1=1                 
-        //                    {0}
-        //                    {1}
-        //                    {2}
-        //                    {3}
-        //                    {4}
-        //                    {5}
-        //                    {6}
-                          
+        cmdTxt.AppendFormat(@" 
+                            SELECT 
+                            [SALESNAMES] AS '業務員'
+                            ,[CLIENTSNAMES] AS '客戶'
+                            ,[NEWCLIENTSNAMES] AS '新客'
+                            ,[KINDS] AS '拜訪目的'
+                            ,[RECORDS] AS '訪談內容'
+                            ,CONVERT(nvarchar,[RECORDSDATES],111) AS '訪談日期'
+                            ,[PHOTOS]
+                            ,[ID]
+                            ,CONVERT(nvarchar,[CREATDATES],111) AS '建立日期'                            
+                            ,[CLIENTSID] AS '客戶代號'
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
+                            WHERE CONVERT(nvarchar,[RECORDSDATES],111)>='{0}' AND CONVERT(nvarchar,[RECORDSDATES],111)<='{1}'
+                            ORDER BY [SALESNAMES],[CLIENTSNAMES],[ID]
+
                               
-        //                    ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString(), QUERYS6.ToString(), QUERYS7.ToString());
+                            ", SDAYS, EDAYS);
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            //檔案名稱
+            var fileName = "拜訪清單" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+
+            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            {
+
+                // 建立分頁
+                var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+
+
+                //預設行高
+                ws.DefaultRowHeight = 60;
+
+                // 寫入資料試試
+                //ws.Cells[2, 1].Value = "測試測試";
+                int ROWS = 2;
+                int COLUMNS = 1;
+
+
+                //excel標題
+                ws.Cells[1, 1].Value = "業務員";
+                ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 2].Value = "客戶";
+                ws.Cells[1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 3].Value = "新客";
+                ws.Cells[1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 4].Value = "拜訪目的";
+                ws.Cells[1, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 5].Value = "訪談內容";
+                ws.Cells[1, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 6].Value = "訪談日期";
+                ws.Cells[1, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 7].Value = "照片";
+                ws.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 8].Value = "ID";
+                ws.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 9].Value = "建立日期";
+                ws.Cells[1, 9].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 10].Value = "客戶代號";
+                ws.Cells[1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+               
+                foreach (DataRow od in dt.Rows)
+                {
+                    ws.Cells[ROWS, 1].Value = od["業務員"].ToString();
+                    ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 2].Value = od["客戶"].ToString();
+                    ws.Cells[ROWS, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 3].Value = od["新客"].ToString();
+                    ws.Cells[ROWS, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 4].Value = od["拜訪目的"].ToString();
+                    ws.Cells[ROWS, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 5].Value = od["訪談內容"].ToString();
+                    ws.Cells[ROWS, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 6].Value = od["訪談日期"].ToString();
+                    ws.Cells[ROWS, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    //ws.Cells[ROWS, 7].Value = od["照片"].ToString();
+                    //ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    try
+                    {
+                        if (od["PHOTOS"] != DBNull.Value && od["PHOTOS"] != null)
+                        {
+                            byte[] imageBytes = (byte[])od["PHOTOS"];
+
+                            using (MemoryStream ms = new MemoryStream(imageBytes))
+                            {
+                                System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+                                ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(od["PHOTOS"].ToString(), img);
+
+                                picture.From.Row = ROWS;
+                                picture.From.Column = COLUMNS;
+
+                                picture.SetPosition(1 * ROWS - 1, 5, 6, 5);
+                                picture.SetSize(50, 50);
+                            }
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    finally
+                    {
+
+                    }
+
+                    ws.Cells[ROWS, 8].Value = od["ID"].ToString();
+                    ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 9].Value = od["建立日期"].ToString();
+                    ws.Cells[ROWS, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 10].Value = od["客戶代號"].ToString();
+                    ws.Cells[ROWS, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
 
 
-        //DataTable dt = new DataTable();
+                    ROWS++;
+                }
 
-        //dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
-
-        //if(dt.Rows.Count>0)
-        //{
-        //    //檔案名稱
-        //    var fileName = "匯出" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
-        //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
-
-        //    using (var excel = new ExcelPackage(new FileInfo(fileName)))
-        //    {              
-
-        //        // 建立分頁
-        //        var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
-
-
-        //        //預設行高
-        //        ws.DefaultRowHeight = 60;
-
-        //        // 寫入資料試試
-        //        //ws.Cells[2, 1].Value = "測試測試";
-        //        int ROWS = 2;
-        //        int COLUMNS = 1;
-
-
-        //        //excel標題
-        //        ws.Cells[1, 1].Value = "編號";
-        //        ws.Cells[1, 2].Value = "年度";
-        //        ws.Cells[1, 3].Value = "申請部門";
-        //        ws.Cells[1, 4].Value = "職務";
-        //        ws.Cells[1, 5].Value = "申請人";
-        //        ws.Cells[1, 6].Value = "活動/目的";
-        //        ws.Cells[1, 7].Value = "日期:起~迄";
-        //        ws.Cells[1, 8].Value = "對象(經銷商)";
-        //        ws.Cells[1, 9].Value = "通路";
-        //        ws.Cells[1, 10].Value = "活動內容(詳述)";
-        //        ws.Cells[1, 11].Value = "商品";
-        //        ws.Cells[1, 12].Value = "會辨單";
-        //        ws.Cells[1, 13].Value = "實際-總收入";
-        //        ws.Cells[1, 14].Value = "實際-總成本";
-        //        ws.Cells[1, 15].Value = "實際-總費用";
-        //        ws.Cells[1, 16].Value = "實際-利潤";
-        //        ws.Cells[1, 17].Value = "預估-總收入";
-        //        ws.Cells[1, 18].Value = "預估-總成本";
-        //        ws.Cells[1, 19].Value = "預估-總費用";
-        //        ws.Cells[1, 20].Value = "預估-利潤";
-        //        ws.Cells[1, 21].Value = "是否結案";
-
-        //        //標題-儲存格框
-        //        for (int i=1; i<=21; i++)
-        //        {
-        //            ws.Cells[1, i].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-        //            ws.Cells[1, i].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-        //            ws.Cells[1, i].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-        //        }
-
-        //        //明細-儲存格框
-        //        ROWS = 2;
-        //        foreach (DataRow od in dt.Rows)
-        //        {
-                    
-        //            for (int i = 1; i <= 21; i++)
-        //            {
-        //                ws.Cells[ROWS, i].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-        //                ws.Cells[ROWS, i].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-        //            }
-
-        //            ROWS = ROWS + 1;
-        //        }
-
-        //        //明細-儲存格
-        //        ROWS = 2;
-        //        foreach (DataRow od in dt.Rows)
-        //        {
-                    
-        //            ws.Cells[ROWS, 1].Value = od["編號"].ToString();
-        //            ws.Cells[ROWS, 2].Value = od["年度"].ToString();
-        //            ws.Cells[ROWS, 3].Value = od["申請部門"].ToString();
-        //            ws.Cells[ROWS, 4].Value = od["職務"].ToString();
-        //            ws.Cells[ROWS, 5].Value = od["申請人"].ToString();
-        //            ws.Cells[ROWS, 6].Value = od["活動/目的"].ToString();
-        //            ws.Cells[ROWS, 7].Value = od["日期:起~迄"].ToString();
-        //            ws.Cells[ROWS, 8].Value = od["對象(經銷商)"].ToString();
-        //            ws.Cells[ROWS, 9].Value = od["通路"].ToString();
-        //            ws.Cells[ROWS, 10].Value = od["活動內容(詳述)"].ToString();
-        //            ws.Cells[ROWS, 11].Value = od["商品"].ToString();
-        //            ws.Cells[ROWS, 12].Value = od["會辨單"].ToString();
-        //            ws.Cells[ROWS, 13].Value = od["實際-總收入"].ToString();
-        //            ws.Cells[ROWS, 14].Value = od["實際-總成本"].ToString();
-        //            ws.Cells[ROWS, 15].Value = od["實際-總費用"].ToString();
-        //            ws.Cells[ROWS, 16].Value = od["實際-利潤"].ToString();
-        //            ws.Cells[ROWS, 17].Value = od["預估-總收入"].ToString();
-        //            ws.Cells[ROWS, 18].Value = od["預估-總成本"].ToString();
-        //            ws.Cells[ROWS, 19].Value = od["預估-總費用"].ToString();
-        //            ws.Cells[ROWS, 20].Value = od["預估-利潤"].ToString();
-        //            ws.Cells[ROWS, 21].Value = od["是否結案"].ToString();
-
-        //            ROWS = ROWS + 1;
-        //        }
                 
-              
-
-
-        //        ////預設列寬、行高
-        //        //sheet.DefaultColWidth = 10; //預設列寬
-        //        //sheet.DefaultRowHeight = 30; //預設行高
-
-        //        //// 遇\n或(char)10自動斷行
-        //        //ws.Cells.Style.WrapText = true;
-
-        //        //自適應寬度設定
-        //        ws.Cells[ws.Dimension.Address].AutoFitColumns();
-
-        //        //自適應高度設定
-        //        ws.Row(1).CustomHeight = true;
-
-
-
-        //        //儲存Excel
-        //        //Byte[] bin = excel.GetAsByteArray();
-        //        //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
-
-        //        //儲存和歸來的Excel檔案作為一個ByteArray
-        //        var data = excel.GetAsByteArray();
-        //        HttpResponse response = HttpContext.Current.Response;
-        //        Response.Clear();
-
-        //        //輸出標頭檔案　　
-        //        Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
-        //        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        //        Response.BinaryWrite(data);
-        //        Response.Flush();
-        //        Response.End();
-        //        //package.Save();//這個方法是直接下載到本地
-        //    }
-        //    //ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
-        //    //                                                            // 沒設置的話會跳出 Please set the excelpackage.licensecontext property
-
-            
-        //    ////var file = new FileInfo(fileName);
-        //    //using (var excel = new ExcelPackage(file))
-        //    //{
                 
-        //    //}
-        //}
+
+                    
+
+
+
+
+                ////預設列寬、行高
+                //sheet.DefaultColWidth = 10; //預設列寬
+                //sheet.DefaultRowHeight = 30; //預設行高
+
+                //// 遇\n或(char)10自動斷行
+                //ws.Cells.Style.WrapText = true;
+
+                //自適應寬度設定
+                ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                //自適應高度設定
+                ws.Row(1).CustomHeight = true;
+
+
+
+                //儲存Excel
+                //Byte[] bin = excel.GetAsByteArray();
+                //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+
+                //儲存和歸來的Excel檔案作為一個ByteArray
+                var data = excel.GetAsByteArray();
+                HttpResponse response = HttpContext.Current.Response;
+                Response.Clear();
+
+                //輸出標頭檔案　　
+                Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.BinaryWrite(data);
+                Response.Flush();
+                Response.End();
+                //package.Save();//這個方法是直接下載到本地
+            }
+        }
 
     }
 
@@ -398,7 +351,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
         BindGrid(txtDate1.Text, txtDate2.Text);
     }
 
-   
-   
+
+
     #endregion
 }
