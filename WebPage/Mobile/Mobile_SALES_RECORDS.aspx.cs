@@ -43,6 +43,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
             RECORDSDATES.Text = DateTime.Now.ToString("yyyy/MM/dd");
             BindDropDownList1();
+            BindDropDownList2("");
             BindDropDownList3();
 
             ViewState["ACCOUNT"] = Current.Account;
@@ -55,8 +56,6 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                 // 找到了選項，將其設定為所選
                 DropDownListSALESNAMES.ClearSelection(); // 清除所有選擇
                 item.Selected = true;
-
-                BindDropDownList2("");
             }
             else
             {
@@ -121,7 +120,9 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
-        cmdTxt.AppendFormat(@"
+        if (!string.IsNullOrEmpty(MA002))
+        {
+            cmdTxt.AppendFormat(@"
                             SELECT *
                             FROM 
                             (
@@ -137,6 +138,22 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             ORDER BY MA002
                             ", MA002);
 
+        }
+        else
+        {
+            cmdTxt.AppendFormat(@"
+                                SELECT *
+                                FROM 
+                                (
+                                SELECT '' MA001,'-請選擇'MA002
+                            
+                                )
+                                AS TEMP
+                                ORDER BY MA002
+                                ");
+        }
+
+
 
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
@@ -151,6 +168,11 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         }
         else
         {
+            // 清空DropDownList中的选项
+            DropDownListCLIENTSNAMES.Items.Clear();
+            // 添加新选项
+            DropDownListCLIENTSNAMES.Items.Add(new ListItem("-請選擇", ""));
+            DropDownListCLIENTSNAMES.SelectedIndex = 0; // 0 表示选择第一个选项
 
         }
     }
@@ -194,7 +216,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         }
     }
- 
+
     public static void ADD_TB_SALES_RECORDS(
         string SALESNAMES
         , string CLIENTSID
@@ -260,6 +282,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,[CLIENTSID]
                         ,[CLIENTSNAMES]
                         ,[NEWCLIENTSNAMES]
+                        ,[KINDS]
                         ,[RECORDS]
                         ,[RECORDSDATES]              
                         )
@@ -269,6 +292,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,@CLIENTSID
                         ,@CLIENTSNAMES
                         ,@NEWCLIENTSNAMES
+                        ,@KINDS
                         ,@RECORDS
                         ,@RECORDSDATES                       
                         )
@@ -279,6 +303,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             m_db.AddParameter("@CLIENTSID", CLIENTSID);
             m_db.AddParameter("@CLIENTSNAMES", CLIENTSNAMES);
             m_db.AddParameter("@NEWCLIENTSNAMES", NEWCLIENTSNAMES);
+            m_db.AddParameter("@KINDS", KINDS);
             m_db.AddParameter("@RECORDS", RECORDS);
             m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
 
@@ -358,7 +383,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
       )
     {
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-        
+
         try
         {
             ADD_TB_SALES_RECORDS(

@@ -252,24 +252,44 @@
             $("#btnUpload").click(function () {
                 // DropDownListSALESNAMES获取 DropDownList 的元素
                 var SALESNAMES = document.getElementById('<%=DropDownListSALESNAMES.ClientID%>');
-                // 获取选中项的索引
-                var selectedIndex_SALESNAMES = SALESNAMES.selectedIndex;
-                // 获取选中项的文本
-                var selectedText_SALESNAMES = SALESNAMES.options[selectedIndex_SALESNAMES].text;
+                if (SALESNAMES) {
+                    // 如果SALESNAMES不为null或undefined，执行以下代码
+                    // 获取选中项的索引              
+                    var selectedIndex_SALESNAMES = SALESNAMES.selectedIndex;
+                    // 获取选中项的文本
+                    var selectedText_SALESNAMES = SALESNAMES.options[selectedIndex_SALESNAMES].text;
 
+                    // 在这里执行其他操作
+                } else {
+                    // SALESNAMES为null或undefined，可以执行其他操作或者不执行任何操作
+                }    
                 //DropDownListCLIENTSNAMES 获取 DropDownList 的元素
                 var CLIENTSNAMES = document.getElementById('<%=DropDownListCLIENTSNAMES.ClientID%>');
-                // 获取选中项的索引
-                var selectedIndex_CLIENTSNAMES = CLIENTSNAMES.selectedIndex;
-                // 获取选中项的文本
-                var selectedText_CLIENTSNAMES = CLIENTSNAMES.options[selectedIndex_CLIENTSNAMES].text;
+                if (CLIENTSNAMES) {
+                    // 如果SALESNAMES不为null或undefined，执行以下代码
+                    // 获取选中项的索引
+                    var selectedIndex_CLIENTSNAMES = CLIENTSNAMES.selectedIndex;
+                    // 获取选中项的文本
+                    var selectedText_CLIENTSNAMES = CLIENTSNAMES.options[selectedIndex_CLIENTSNAMES].text;
 
+                    // 在这里执行其他操作
+                } else {
+                    // SALESNAMES为null或undefined，可以执行其他操作或者不执行任何操作
+                }  
+                
                 //DropDownListKINDS 获取 DropDownList 的元素
                 var KINDS = document.getElementById('<%=DropDownListKINDS.ClientID%>');
-                // 获取选中项的索引
-                var selectedIndex_KINDS = KINDS.selectedIndex;
-                // 获取选中项的文本
-                var selectedText_KINDS = KINDS.options[selectedIndex_KINDS].text;
+                if (KINDS) {
+                    // 获取选中项的索引
+                    var selectedIndex_KINDS = KINDS.selectedIndex;
+                    // 获取选中项的文本
+                    var selectedText_KINDS = KINDS.options[selectedIndex_KINDS].text;
+                    // 在这里执行其他操作
+                } else {
+                    // SALESNAMES为null或undefined，可以执行其他操作或者不执行任何操作
+                }      
+               
+              
 
                 var CLIENTSID = document.getElementById('<%=CLIENTSID.ClientID%>').innerHTML;
                 var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
