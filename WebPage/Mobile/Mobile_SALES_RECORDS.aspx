@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MobileMasterPage.master" AutoEventWireup="true" CodeFile="Mobile_SALES_RECORDS.aspx.cs" Inherits="CDS_WebPage_Mobile_SALES_RECORDS" %>
 
+<%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <!-- 在CSS文件中定义样式 -->
     <style>
@@ -50,7 +52,7 @@
                                 <asp:Label ID="Label1" runat="server" Text="舊客戶(有客代): "></asp:Label>
                             </td>
                             <td>
-                                 <asp:Label ID="Label6" runat="server" Text="關鍵字 "></asp:Label>
+                                <asp:Label ID="Label6" runat="server" Text="關鍵字 "></asp:Label>
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                                 <asp:Button ID="Button1" runat="server" Text="查客戶 " OnClick="btn1_Click" meta:resourcekey="btn1_Resource1" />
                                 <asp:DropDownList ID="DropDownListCLIENTSNAMES" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownListCLIENTSNAMES_SelectedIndexChanged" Style="width: 200px;"></asp:DropDownList>
@@ -65,12 +67,12 @@
                                 <asp:TextBox ID="NEWCLIENTSNAMES" runat="server" Style="width: 200px;"></asp:TextBox>
                             </td>
                         </tr>
-                          <tr>
+                        <tr>
                             <td>
                                 <asp:Label ID="Label7" runat="server" Text="拜訪目的: "></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="DropDownListKINDS" runat="server" AutoPostBack="true"  Style="width: 200px;"></asp:DropDownList>
+                                <asp:DropDownList ID="DropDownListKINDS" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
                             </td>
                         </tr>
                         <tr>
@@ -122,7 +124,73 @@
                 </div>
             </telerik:RadPageView>
             <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false">
-                <div id="tabs-1">
+                <div id="tabs-2">
+                    <table class="PopTable">
+                        <tr>
+                            <td class="PopTableLeftTD">
+                                <asp:Label ID="Label8" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            </td>
+                            <td class="PopTableRightTD">
+                                <asp:TextBox ID="txtDate1" runat="server" Width="100px"></asp:TextBox>
+                                <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
+                                <asp:TextBox ID="txtDate2" runat="server" Width="100px"></asp:TextBox>
+                                <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn2_Click" meta:resourcekey="btn2_Resource1" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Button ID="Button3" runat="server" Text=" 匯出 " OnClick="btn3_Click" meta:resourcekey="btn3_Resource1" />
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table class="PopTable">
+                        <tr>
+                            <td colspan="2" class="PopTableRightTD">
+                                <div style="overflow-x: auto; width: 100%">
+                                    <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_OnRowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging1">
+                                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
+                                        <Columns>
+                                            <asp:BoundField HeaderText="業務員" DataField="業務員" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
+                                            <asp:BoundField HeaderText="客戶" DataField="客戶" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
+                                            <asp:BoundField HeaderText="新客" DataField="新客" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
+                                            <asp:BoundField HeaderText="拜訪目的" DataField="拜訪目的" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
+                                            <asp:BoundField HeaderText="訪談內容" DataField="訪談內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                            </asp:BoundField>
+                                            <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
+                                            <asp:BoundField HeaderText="建立日期" DataField="建立日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
+                                            <asp:TemplateField HeaderText="Image">
+                                                <ItemTemplate>
+                                                    <asp:Image ID="Image1" runat="server" Width="100px" Height="100px" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </telerik:RadPageView>
         </telerik:RadMultiPage>​
@@ -183,9 +251,9 @@
                 var selectedIndex_KINDS = KINDS.selectedIndex;
                 // 获取选中项的文本
                 var selectedText_KINDS = KINDS.options[selectedIndex_KINDS].text;
-                
+
                 var CLIENTSID = document.getElementById('<%=CLIENTSID.ClientID%>').innerHTML;
-                var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;                
+                var NEWCLIENTSNAMES = document.getElementById('<%=NEWCLIENTSNAMES.ClientID%>').value;
                 var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
                 var RECORDSDATES = document.getElementById('<%=RECORDSDATES.ClientID%>').value;
 
