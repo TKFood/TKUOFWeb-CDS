@@ -12,6 +12,26 @@
             height: 40px; /* 设置高度 */
             font-size: 16px; /* 设置字体大小 */
         }
+
+        .fast-grid {
+        }
+
+            /* 表头样式 */
+            .fast-grid th {
+                background-color:dodgerblue; /* 背景颜色 */
+                color: white; /* 字体颜色 */
+                font-weight: bold; /* 字体粗体 */
+                border: 2px solid white; /* 边框粗线 */
+                padding: 5px;
+                text-align: center;
+            }
+
+            /* 单元格框线 */
+            .fast-grid td {
+                border: 1px solid #000;
+                padding: 5px;
+                text-align: left; /* 根据需要更改文本对齐方式 */
+            }
     </style>
     <html>
 
@@ -155,7 +175,8 @@
                         <tr>
                             <td colspan="2" class="PopTableRightTD">
                                 <div style="overflow-x: auto; width: 100%">
-                                    <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_OnRowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging1">
+                                    <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_OnRowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging1" CssClass="fast-grid">
+
                                         <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                         <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                         <Columns>
@@ -171,16 +192,15 @@
                                             <asp:BoundField HeaderText="拜訪目的" DataField="拜訪目的" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>
-                                            <asp:BoundField HeaderText="訪談內容" DataField="訪談內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
-                                            </asp:BoundField>
+                                            <asp:TemplateField HeaderText="訪談內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="訪談內容" runat="server" Text='<%# Bind("訪談內容") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                                <ItemStyle HorizontalAlign="Center" Width="50px"></ItemStyle>
                                             </asp:BoundField>
-                                            <asp:BoundField HeaderText="建立日期" DataField="建立日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                            </asp:BoundField>
-                                            <asp:TemplateField HeaderText="Image">
+                                            <asp:TemplateField HeaderText="圖片" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
                                                     <asp:Image ID="Image1" runat="server" Width="100px" Height="100px" />
                                                 </ItemTemplate>

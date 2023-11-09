@@ -72,9 +72,11 @@
                                         <asp:BoundField HeaderText="拜訪目的" DataField="拜訪目的" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="訪談內容" DataField="訪談內容" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
-                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="訪談內容" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="訪談內容" runat="server" Text='<%# Bind("訪談內容") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>                                       
                                         <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
@@ -83,7 +85,7 @@
                                         </asp:BoundField>
                                         <asp:TemplateField HeaderText="Image">
                                             <ItemTemplate>
-                                                <asp:Image ID="Image1" runat="server" />
+                                                <asp:Image ID="Image1" runat="server" Width="100px" Height="100px" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

@@ -521,8 +521,8 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             }
             else
             {
-                // 如果PHOTOS字段为空或NULL，您可以设置一个默认图像或其他处理方式
-                //imgPhoto.ImageUrl = "default_image.jpg"; // 设置默认图像路径
+                // 如果PHOTOS字段为空或NULL，清空图像
+                imgPhoto.ImageUrl = string.Empty;
             }
 
         }
