@@ -355,6 +355,24 @@
                 var imgCapture = $("#previewImage")[0].src;
 
 
+
+
+                // 取得 photoContainer 中的所有 img 元素
+                var imgElements = $("#photoContainer img");
+                console.log('Image:', imgElements.length);
+
+                // 迴圈處理每個 img 元素
+                imgElements.each(function () {
+                    // 取得圖片的路徑
+                    var imagePath = $(this).attr("src");
+                    // 載入圖片
+                    var image = new Image();
+                    image.src = imagePath;
+                    if (image !== "" && image !== undefined) {
+                        PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
+                    }
+                });
+
                 // 壓縮圖片的函數
                 function compressImage(image, quality, callback) {
                     const canvas = document.createElement('canvas');
@@ -367,46 +385,6 @@
                         callback(blob);
                     }, 'image/jpeg', quality);
                 }
-
-                // 取得 photoContainer 中的所有 img 元素
-                var imgElements = $("#photoContainer img");
-                console.log('Image:', imgElements.length);
-                // 迴圈處理每個 img 元素
-                for (var i = 0; i < imgElements.length; i++) {
-                    // 取得圖片的路徑
-                    var imagePath = imgElements[i].src;
-                    // 呼叫 PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS 方法
-                    PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure);
-                }
-
-                //var imgElements = $("#photoContainer img");
-                //// Iterate over each img element
-                //imgElements.each(function () {
-                //    var imgElement = $(this)[0];
-                //    console.log('Image source:', imgElement.src);
-                //    // Get image source
-                //    var imgCapture = imgElement.src;
-                  
-
-                //    // Check if there is an image
-                //    if (imgCapture) {
-                //        // Call the PageMethod with the image source
-                //        PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imgCapture,
-                //            function (result) {
-                //                // Success callback
-                //                Success(result);
-                //            },
-                //            function (error) {
-                //                // Failure callback
-                //                Failure(error);
-
-                //                // Add alert or console.log to see the error details
-                //                alert('Error saving image: ' + JSON.stringify(error));
-                //                console.error('Error saving image:', error);
-                //            }
-                //        );
-                //    }
-                //});
 
                 ////圖片!== ""
                 //if (imgCapture !== "" && imgCapture !== undefined) {
