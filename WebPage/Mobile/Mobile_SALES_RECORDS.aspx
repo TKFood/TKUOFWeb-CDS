@@ -40,16 +40,18 @@
     </head>
     <body>
         <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
-        <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
+        <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage">
             <Tabs>
-                <telerik:RadTab Text="業務">
+                <telerik:RadTab Text="業務" PageViewID="RadPageView1">
                 </telerik:RadTab>
-                <telerik:RadTab Text="資料">
+                <telerik:RadTab Text="資料" PageViewID="RadPageView2">
+                </telerik:RadTab>
+                <telerik:RadTab Text="多照片" PageViewID="RadPageView3">
                 </telerik:RadTab>
             </Tabs>
         </telerik:RadTabStrip>
         <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
-            <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
+            <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true"  PageViewID="0">
                 <div id="tabs-1">
                     <table class="PopTable">
                         <tr>
@@ -143,7 +145,7 @@
 
                 </div>
             </telerik:RadPageView>
-            <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false">
+            <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false"  PageViewID="1">
                 <div id="tabs-2">
                     <table class="PopTable">
                         <tr>
@@ -207,7 +209,12 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
-                                                    <asp:Button ID="Grid1Button1" runat="server" Text="刪除" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>'  OnClientClick="return confirm('確定要刪除嗎？');" />
+                                                    <asp:Button ID="Grid1Button1" runat="server" Text="刪除" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('確定要刪除嗎？');" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="拍照" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="Grid1Button2" runat="server" Text="拍照" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('確定要拍照嗎？');" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -216,6 +223,10 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+            </telerik:RadPageView>
+            <telerik:RadPageView ID="RadPageView3" runat="server" Selected="false" PageViewID="2">
+                <div id="tabs-3">
                 </div>
             </telerik:RadPageView>
         </telerik:RadMultiPage>​

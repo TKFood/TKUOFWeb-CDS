@@ -23,6 +23,7 @@ using System.Web.Services;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using Ede.Uof.EIP.SystemInfo;
+using Telerik.Web.UI;
 
 public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.BasePage
 {
@@ -562,6 +563,24 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         {
             DELETE_TB_SALES_RECORDS(e.CommandArgument.ToString());
             //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
+        }
+        if (e.CommandName == "Grid1Button2")
+        {
+            // 获取 RadMultiPage 控件
+            RadMultiPage myMultiPage = RadMultiPage; // 用实际的控件ID替换 MyMultiPage
+
+            // 设置当前页的索引
+            int pageIndex = 2; // 设置要显示的页面索引
+            myMultiPage.SelectedIndex = pageIndex;
+
+            // 更新页头上的分页标签
+            RadTabStrip myTabStrip = RadTabStrip2; // 用实际的控件ID替换 MyTabStrip
+            myTabStrip.SelectedIndex = 2;
+       
+
+
+
+
         }
     }
 
