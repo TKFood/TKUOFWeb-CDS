@@ -303,8 +303,24 @@
             alert(error);
         }
 
+        // 壓縮圖片的函數
+        function compressImage(image, quality, callback) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(function (blob) {
+                callback(blob);
+            }, 'image/jpeg', quality);
+        }
+
         $(function () {
             $("#btnUpload").click(function () {
+             
+             
+
                 // DropDownListSALESNAMES获取 DropDownList 的元素
                 var SALESNAMES = document.getElementById('<%=DropDownListSALESNAMES.ClientID%>');
                 if (SALESNAMES) {
@@ -369,22 +385,22 @@
                     var image = new Image();
                     image.src = imagePath;
                     if (image !== "" && image !== undefined) {
-                        PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
+                        //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
+
+                        // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
+                        compressImage(image, 0.5, function (compressedBlob) {
+                            // 將壓縮後的圖片轉換為Base64字串
+                            const reader = new FileReader();
+                            reader.onload = function () {
+                                const compressedBase64 = reader.result;
+                                // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
+                                PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, Success, Failure)
+                            };
+                            reader.readAsDataURL(compressedBlob);
+                        });
                     }
                 });
 
-                // 壓縮圖片的函數
-                function compressImage(image, quality, callback) {
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.width = image.width;
-                    canvas.height = image.height;
-                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-                    canvas.toBlob(function (blob) {
-                        callback(blob);
-                    }, 'image/jpeg', quality);
-                }
 
                 ////圖片!== ""
                 //if (imgCapture !== "" && imgCapture !== undefined) {
