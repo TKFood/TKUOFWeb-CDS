@@ -452,11 +452,13 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
             m_db.ExecuteNonQuery(cmdTxt);
 
-          
+            string MESSAGE = NOWTIMES + " 成功  存檔 ";
+            return MESSAGE;
         }
         catch
         {
-           
+            string MESSAGE = " 失敗 存檔";
+            return MESSAGE;
         }
         finally { }
 
