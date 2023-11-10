@@ -45,9 +45,7 @@
                 <telerik:RadTab Text="業務" PageViewID="RadPageView1">
                 </telerik:RadTab>
                 <telerik:RadTab Text="資料" PageViewID="RadPageView2">
-                </telerik:RadTab>
-                <telerik:RadTab Text="多照片" PageViewID="RadPageView3">
-                </telerik:RadTab>
+                </telerik:RadTab>             
             </Tabs>
         </telerik:RadTabStrip>
         <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
@@ -211,12 +209,7 @@
                                                 <ItemTemplate>
                                                     <asp:Button ID="Grid1Button1" runat="server" Text="刪除" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('確定要刪除嗎？');" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="拍照" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemTemplate>
-                                                    <asp:Button ID="Grid1Button2" runat="server" Text="拍照" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('確定要拍照嗎？');" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>                                         
                                         </Columns>
                                     </Fast:Grid>
                                 </div>
@@ -224,11 +217,7 @@
                         </tr>
                     </table>
                 </div>
-            </telerik:RadPageView>
-            <telerik:RadPageView ID="RadPageView3" runat="server" Selected="false" PageViewID="2">
-                <div id="tabs-3">
-                </div>
-            </telerik:RadPageView>
+            </telerik:RadPageView>        
         </telerik:RadMultiPage>​
            
     </body>
