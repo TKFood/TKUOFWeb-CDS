@@ -45,11 +45,11 @@
                 <telerik:RadTab Text="業務" PageViewID="RadPageView1">
                 </telerik:RadTab>
                 <telerik:RadTab Text="資料" PageViewID="RadPageView2">
-                </telerik:RadTab>             
+                </telerik:RadTab>
             </Tabs>
         </telerik:RadTabStrip>
         <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
-            <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true"  PageViewID="0">
+            <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true" PageViewID="0">
                 <div id="tabs-1">
                     <table class="PopTable">
                         <tr>
@@ -116,13 +116,13 @@
                         <tr>
                             <td></td>
                             <td>
-                                <input type="file" accept="image/*" capture="camera" id="photoInput" style="display: none" />
+                                <input type="file" accept="image/*" capture="camera" id="photoInputold" style="display: none" />
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>
-                                <button type="button" id="takePhotoButton">拍照</button>
+                                <button type="button" id="takePhotoButtonold">拍照</button>
                             </td>
                         </tr>
                         <tr>
@@ -139,11 +139,26 @@
                                 <button type="button" id="btnUpload" class="custom-button">存檔</button>
                             </td>
                         </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div>
+                                    <!-- Button to trigger taking a photo -->
+                                    <input type="file" id="photoInput" style="display: none;" accept="image/*" />
+                                    <button type="button" id="takePhotoButton">Take Photo</button>
+
+                                    <!-- Container to hold the photos -->
+                                    <div id="photoContainer">
+                                        <!-- Dynamic photos will be added here -->
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
 
                 </div>
             </telerik:RadPageView>
-            <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false"  PageViewID="1">
+            <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false" PageViewID="1">
                 <div id="tabs-2">
                     <table class="PopTable">
                         <tr>
@@ -209,7 +224,7 @@
                                                 <ItemTemplate>
                                                     <asp:Button ID="Grid1Button1" runat="server" Text="刪除" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('確定要刪除嗎？');" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>                                         
+                                            </asp:TemplateField>
                                         </Columns>
                                     </Fast:Grid>
                                 </div>
@@ -217,17 +232,37 @@
                         </tr>
                     </table>
                 </div>
-            </telerik:RadPageView>        
+            </telerik:RadPageView>
         </telerik:RadMultiPage>​
            
     </body>
 
 
     <script>
+        //window.onload = function () {
+        //    var photoInput = document.getElementById("photoInput");
+        //    var takePhotoButton = document.getElementById("takePhotoButton");
+        //    var previewImage = document.getElementById("previewImage");
+
+        //    takePhotoButton.onclick = function () {
+        //        photoInput.click();
+        //    };
+
+        //    photoInput.onchange = function () {
+        //        if (photoInput.files && photoInput.files[0]) {
+        //            var reader = new FileReader();
+        //            reader.onload = function (e) {
+        //                previewImage.src = e.target.result;
+        //            };
+        //            reader.readAsDataURL(photoInput.files[0]);
+        //        }
+        //    };
+        //};
+
         window.onload = function () {
             var photoInput = document.getElementById("photoInput");
             var takePhotoButton = document.getElementById("takePhotoButton");
-            var previewImage = document.getElementById("previewImage");
+            var photoContainer = document.getElementById("photoContainer");
 
             takePhotoButton.onclick = function () {
                 photoInput.click();
@@ -237,13 +272,28 @@
                 if (photoInput.files && photoInput.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        previewImage.src = e.target.result;
+                        var photoUrl = e.target.result;
+
+                        // 创建新的行元素
+                        var row = document.createElement("div");
+                        row.style.clear = "both"; // 清除浮动
+
+                        // 创建新的 img 元素
+                        var img = document.createElement("img");
+                        img.src = photoUrl;
+                        img.style.maxWidth = "50%";
+                        img.style.float = "left"; // 设置为左浮动
+
+                        // 将 img 元素添加到行元素中
+                        row.appendChild(img);
+
+                        // 将行元素添加到 photoContainer 中
+                        photoContainer.appendChild(row);
                     };
                     reader.readAsDataURL(photoInput.files[0]);
                 }
             };
         };
-
         //JS執行成功Success
         function Success(result) {
             alert(result);
@@ -318,24 +368,39 @@
                     }, 'image/jpeg', quality);
                 }
 
-                //圖片!== ""
-                if (imgCapture !== "" && imgCapture !== undefined) {
-                    // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                    compressImage(previewImage, 0.5, function (compressedBlob) {
-                        // 將壓縮後的圖片轉換為Base64字串
-                        const reader = new FileReader();
-                        reader.onload = function () {
-                            const compressedBase64 = reader.result;
-                            // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                            PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
-                        };
-                        reader.readAsDataURL(compressedBlob);
-                    });
-                }
-                else {
-                    PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, Success, Failure);
-                    reader.readAsDataURL(compressedBlob);
-                }
+                // 获取所有的 img 元素
+                var imgElements = $("#photoContainer img");
+
+                // Iterate over each img element
+                imgElements.each(function () {
+                    var imgElement = $(this)[0];
+                    // Get image source
+                    var imgCapture = imgElement.src;
+                    // Check if there is an image
+                    if (imgCapture) {
+                        // Call the PageMethod with the image source
+                        PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imgCapture, Success, Failure);
+                    }
+                });
+
+                ////圖片!== ""
+                //if (imgCapture !== "" && imgCapture !== undefined) {
+                //    // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
+                //    compressImage(previewImage, 0.5, function (compressedBlob) {
+                //        // 將壓縮後的圖片轉換為Base64字串
+                //        const reader = new FileReader();
+                //        reader.onload = function () {
+                //            const compressedBase64 = reader.result;
+                //            // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
+                //            PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
+                //        };
+                //        reader.readAsDataURL(compressedBlob);
+                //    });
+                //}
+                //else {
+                //    PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, Success, Failure);
+                //    reader.readAsDataURL(compressedBlob);
+                //}
 
 
                 //PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);

@@ -27,6 +27,8 @@ using Telerik.Web.UI;
 
 public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.BasePage
 {
+    // Counter to track the number of added images
+    private int imageCounter = 1;
     protected void Page_Load(object sender, EventArgs e)
     {
         //不顯示子視窗的按鈕
@@ -408,6 +410,58 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         finally { }
 
     }
+    [WebMethod()]
+    public static string SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(
+        string data
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+        string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+        string ORI1 = "";
+        string ORI2 = "";
+        string ORI3 = "";
+        ////Convert Base64 Encoded string to Byte Array.       
+        byte[] imageBytes = Convert.FromBase64String(data.Split(',')[1]);
+        ORI1 = imageBytes.Length.ToString();
+        //加上浮水印
+        byte[] imageBytes2 = GetWatermarkPic(imageBytes, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+        ORI2 = imageBytes2.Length.ToString();
+        ////壓縮圖片
+        //byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
+        //ORI3 = imageBytes3.Length.ToString();
+
+        try
+        {
+
+            cmdTxt = @"
+                        INSERT INTO  [TKBUSINESS].[dbo].[TB_SALES_RECORDS_PHOTOS]
+                        ([PHOTOS])
+                        VALUES
+                        (@PHOTOS)
+                        
+                            ";
+            m_db.AddParameter("@PHOTOS", imageBytes2);
+
+
+
+
+            m_db.ExecuteNonQuery(cmdTxt);
+
+          
+        }
+        catch
+        {
+           
+        }
+        finally { }
+
+    }
+
     /// <summary>
     /// 生成縮略圖
     /// </summary>
@@ -563,7 +617,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         {
             DELETE_TB_SALES_RECORDS(e.CommandArgument.ToString());
             //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
-        } 
+        }
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -793,7 +847,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-    
+
         string cmdTxt = @"  
                         DELETE [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
                         WHERE [ID]=@ID
@@ -828,6 +882,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     {
         SETEXCEL(txtDate1.Text, txtDate2.Text);
     }
+
 
     #endregion
 
