@@ -897,6 +897,12 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"  
+                        DELETE [TKBUSINESS].[dbo].[TB_SALES_RECORDS_PHOTOS]
+                        WHERE [PHOTOSID] IN (
+                        SELECT [PHOTOSID] FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS] 
+                        WHERE [ID]=@ID
+                        )
+
                         DELETE [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
                         WHERE [ID]=@ID
                    
