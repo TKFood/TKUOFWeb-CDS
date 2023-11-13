@@ -214,10 +214,12 @@
                                             </asp:TemplateField>
                                             <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="50px"></ItemStyle>
-                                            </asp:BoundField>
-                                            <asp:TemplateField HeaderText="圖片" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            </asp:BoundField>                                     
+                                            <asp:TemplateField HeaderText="圖片">
                                                 <ItemTemplate>
-                                                    <asp:Image ID="Image1" runat="server" Width="100px" Height="100px" />
+                                                    <div runat="server" id="ImageContainer" class="image-container">
+                                                        <!-- Images will be added here dynamically -->
+                                                    </div>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -318,8 +320,8 @@
 
         $(function () {
             $("#btnUpload").click(function () {
-             
-             
+
+
 
                 // DropDownListSALESNAMES获取 DropDownList 的元素
                 var SALESNAMES = document.getElementById('<%=DropDownListSALESNAMES.ClientID%>');
