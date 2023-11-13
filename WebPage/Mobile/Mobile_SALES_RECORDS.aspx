@@ -297,6 +297,9 @@
                 }
             };
         };
+
+
+
         //JS執行成功Success
         function Success(result) {
             alert(result);
@@ -422,13 +425,16 @@
                     image.src = imagePath;
                     if (image !== "" && image !== undefined) {
                         //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
-
+                        const originalSizeKB = Math.ceil((image.src.length));
                         // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                        compressImage(image, 0.005, function (compressedBlob) {
+                        compressImage(image, 0.00005, function (compressedBlob) {
                             // 將壓縮後的圖片轉換為Base64字串
                             const reader = new FileReader();
                             reader.onload = function () {
                                 const compressedBase64 = reader.result;
+                                const compressedSizeKB = Math.ceil((compressedBase64.length));
+                                alert(originalSizeKB);
+                                alert(compressedSizeKB);
                                 // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
                                 //alert('BEFORE');
                                 PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, Success, Failure)
