@@ -119,7 +119,7 @@
                                 <input type="file" accept="image/*" capture="camera" id="photoInputold" style="display: none" />
                             </td>
                         </tr>
-                        <tr>
+                     <%--   <tr>
                             <td></td>
                             <td>
                                 <button type="button" id="takePhotoButtonold">拍照</button>
@@ -131,14 +131,9 @@
                             <td>
                                 <img id="previewImage" style="max-width: 50%;" />
                             </td>
-                        </tr>
+                        </tr>--%>
 
-                        <tr>
-                            <td></td>
-                            <td>
-                                <button type="button" id="btnUpload" class="custom-button">存檔</button>
-                            </td>
-                        </tr>
+                     
                         <tr>
                             <td></td>
                             <td>
@@ -152,6 +147,12 @@
                                         <!-- Dynamic photos will be added here -->
                                     </div>
                                 </div>
+                            </td>
+                        </tr>
+                           <tr>
+                            <td></td>
+                            <td>
+                                <button type="button" id="btnUpload" class="custom-button">存檔</button>
                             </td>
                         </tr>
                     </table>
@@ -369,8 +370,8 @@
                 var RECORDS = document.getElementById('<%=RECORDS.ClientID%>').value;
                 var RECORDSDATES = document.getElementById('<%=RECORDSDATES.ClientID%>').value;
 
-                var previewImage = document.getElementById("previewImage");
-                var imgCapture = $("#previewImage")[0].src;
+                //var previewImage = document.getElementById("previewImage");
+                //var imgCapture = $("#previewImage")[0].src;
 
                 //存檔-客戶記錄-SaveCapturedImage_NOIMAGE
                 PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, Success, Failure);
@@ -390,7 +391,7 @@
                         //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
 
                         // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                        compressImage(image, 0.5, function (compressedBlob) {
+                        compressImage(image, 0.3, function (compressedBlob) {
                             // 將壓縮後的圖片轉換為Base64字串
                             const reader = new FileReader();
                             reader.onload = function () {
