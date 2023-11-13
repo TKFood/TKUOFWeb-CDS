@@ -397,7 +397,9 @@
                             reader.onload = function () {
                                 const compressedBase64 = reader.result;
                                 // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
+                                //alert('BEFORE');
                                 PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, Success, Failure)
+                                //alert('AFTER');
                             };
                             reader.readAsDataURL(compressedBlob);
                         });
