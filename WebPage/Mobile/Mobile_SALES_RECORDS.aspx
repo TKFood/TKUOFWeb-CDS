@@ -145,7 +145,7 @@
                                 <div>
                                     <!-- Button to trigger taking a photo -->
                                     <input type="file" id="photoInput" style="display: none;" accept="image/*" />
-                                    <button type="button" id="takePhotoButton">Take Photo</button>
+                                    <button type="button" id="takePhotoButton">拍照</button>
 
                                     <!-- Container to hold the photos -->
                                     <div id="photoContainer">
@@ -370,8 +370,8 @@
                 var previewImage = document.getElementById("previewImage");
                 var imgCapture = $("#previewImage")[0].src;
 
-
-
+                //存檔-客戶記錄-SaveCapturedImage_NOIMAGE
+                PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, Success, Failure);
 
                 // 取得 photoContainer 中的所有 img 元素
                 var imgElements = $("#photoContainer img");

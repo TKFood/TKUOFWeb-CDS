@@ -229,6 +229,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         , string KINDS
         , string RECORDS
         , string RECORDSDATES
+        , string PHOTOSID
         , byte[] PHOTOS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -252,6 +253,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,[KINDS]
                         ,[RECORDS]
                         ,[RECORDSDATES]
+                        ,[PHOTOSID]
                         ,[PHOTOS]
                         )
                         VALUES
@@ -263,6 +265,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,@KINDS
                         ,@RECORDS
                         ,@RECORDSDATES
+                        ,@PHOTOSID
                         ,@PHOTOS
                         )
                             ";
@@ -275,6 +278,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             m_db.AddParameter("@KINDS", KINDS);
             m_db.AddParameter("@RECORDS", RECORDS);
             m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
+            m_db.AddParameter("@PHOTOSID", PHOTOSID);
             m_db.AddParameter("@PHOTOS", PHOTOS);
         }
         else
@@ -288,7 +292,8 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,[NEWCLIENTSNAMES]
                         ,[KINDS]
                         ,[RECORDS]
-                        ,[RECORDSDATES]              
+                        ,[RECORDSDATES]   
+                        ,[PHOTOSID]
                         )
                         VALUES
                         (
@@ -298,7 +303,8 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         ,@NEWCLIENTSNAMES
                         ,@KINDS
                         ,@RECORDS
-                        ,@RECORDSDATES                       
+                        ,@RECORDSDATES     
+                        ,@PHOTOSID
                         )
                             ";
 
@@ -310,6 +316,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             m_db.AddParameter("@KINDS", KINDS);
             m_db.AddParameter("@RECORDS", RECORDS);
             m_db.AddParameter("@RECORDSDATES", RECORDSDATES);
+            m_db.AddParameter("@PHOTOSID", PHOTOSID);
 
         }
 
@@ -361,6 +368,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                      , KINDS
                      , RECORDS
                      , RECORD2DATES
+                     , PHOTOSID
                      , imageBytes2);
 
             string MESSAGE = NOWTIMES + " 成功 照片 存檔 ";
@@ -398,14 +406,15 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                      , KINDS
                      , RECORDS
                      , RECORD2DATES
+                     , PHOTOSID
                      , null);
 
-            string MESSAGE = NOWTIMES + " 成功 無照片 存檔 ";
+            string MESSAGE = NOWTIMES + " 成功  客情存檔 ";
             return MESSAGE;
         }
         catch
         {
-            string MESSAGE = " 失敗 存檔";
+            string MESSAGE = " 失敗 客情存檔";
             return MESSAGE;
         }
         finally { }
@@ -460,12 +469,12 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
             m_db.ExecuteNonQuery(cmdTxt);
 
-            string MESSAGE = NOWTIMES + " 成功  存檔 ";
+            string MESSAGE = NOWTIMES + " 成功  照片存檔 ";
             return MESSAGE;
         }
         catch
         {
-            string MESSAGE = " 失敗 存檔";
+            string MESSAGE = " 失敗  照片存檔";
             return MESSAGE;
         }
         finally { }
