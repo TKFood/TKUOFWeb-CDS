@@ -424,7 +424,7 @@
                         //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
 
                         // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                        compressImage(image, 0.01, function (compressedBlob) {
+                        compressImage(image, 0.005, function (compressedBlob) {
                             // 將壓縮後的圖片轉換為Base64字串
                             const reader = new FileReader();
                             reader.onload = function () {
