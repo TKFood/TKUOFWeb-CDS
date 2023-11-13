@@ -319,6 +319,39 @@
             }, 'image/jpeg', quality);
         }
 
+        function compressImage_size(image, targetSizeKB, callback) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            // 開始的壓縮品質
+            let quality = 1.0;
+
+            // 設定 Blob 大小的目標值（以字節為單位）
+            const targetSizeBytes = targetSizeKB * 1024;
+
+            // 迭代，直到 Blob 大小小於目標值
+            const iterate = function () {
+                canvas.toBlob(function (blob) {
+                    // 如果 Blob 大小小於目標值，則調用回調函數
+                    if (blob.size <= targetSizeBytes || quality <= 0) {
+                        callback(blob);
+                    } else {
+                        // 調整壓縮品質
+                        quality -= 0.1;
+                        // 重新繪製並迭代
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        iterate();
+                    }
+                }, 'image/jpeg', quality);
+            };
+
+            // 開始迭代
+            iterate();
+        }
         $(function () {
             $("#btnUpload").click(function () {
 
@@ -378,7 +411,7 @@
 
                 // 取得 photoContainer 中的所有 img 元素
                 var imgElements = $("#photoContainer img");
-                console.log('Image:', imgElements.length);
+                //console.log('Image:', imgElements.length);
 
                 // 迴圈處理每個 img 元素
                 imgElements.each(function () {
@@ -391,7 +424,7 @@
                         //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
 
                         // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                        compressImage(image, 0.2, function (compressedBlob) {
+                        compressImage(image, 0.01, function (compressedBlob) {
                             // 將壓縮後的圖片轉換為Base64字串
                             const reader = new FileReader();
                             reader.onload = function () {
@@ -399,6 +432,7 @@
                                 // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
                                 //alert('BEFORE');
                                 PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, Success, Failure)
+                                //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS_TEST(Success, Failure)
                                 //alert('AFTER');
                             };
                             reader.readAsDataURL(compressedBlob);
