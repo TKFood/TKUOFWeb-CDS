@@ -29,6 +29,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 {
     // Counter to track the number of added images
     private int imageCounter = 1;
+    public static string PHOTOSID = DateTime.Now.ToString("yyyyMMddHHmmss");
     protected void Page_Load(object sender, EventArgs e)
     {
         //不顯示子視窗的按鈕
@@ -440,11 +441,18 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
             cmdTxt = @"
                         INSERT INTO  [TKBUSINESS].[dbo].[TB_SALES_RECORDS_PHOTOS]
-                        ([PHOTOS])
+                        (
+                        [PHOTOSID]
+                        ,[PHOTOS]
+                        )
                         VALUES
-                        (@PHOTOS)
+                        (
+                        @PHOTOSID
+                        ,@PHOTOS
+                        )
                         
                             ";
+            m_db.AddParameter("@PHOTOSID", PHOTOSID);
             m_db.AddParameter("@PHOTOS", imageBytes2);
 
 
