@@ -443,7 +443,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         byte[] imageBytes2 = GetWatermarkPic(imageBytes, DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
         ORI2 = imageBytes2.Length.ToString();
         //壓縮圖片
-        byte[] imageBytes3 = CutImage(imageBytes2, 50, 50);
+        byte[] imageBytes3 = CutImage(imageBytes2, 100, 100);
         ORI3 = imageBytes3.Length.ToString();
 
         try
