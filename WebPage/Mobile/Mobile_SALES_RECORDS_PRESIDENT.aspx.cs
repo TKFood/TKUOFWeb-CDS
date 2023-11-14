@@ -23,6 +23,7 @@ using System.Web.Services;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using Ede.Uof.EIP.SystemInfo;
+using System.Web.UI.HtmlControls;
 
 public partial class CDS_WebPage_Mobile_SALES_RECORDS_PRESIDENT : Ede.Uof.Utility.Page.BasePage
 {
@@ -68,6 +69,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS_PRESIDENT : Ede.Uof.Utilit
                             ,[RECORDS] AS '訪談內容'
                             ,CONVERT(nvarchar,[RECORDSDATES],111) AS '訪談日期'
                             ,[PHOTOS]
+                            ,[PHOTOSID]
                             FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
                             WHERE CONVERT(nvarchar,[RECORDSDATES],111)>='{0}' AND CONVERT(nvarchar,[RECORDSDATES],111)<='{1}'
                             ORDER BY [SALESNAMES],[CLIENTSNAMES],[ID]
@@ -95,20 +97,49 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS_PRESIDENT : Ede.Uof.Utilit
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            // 找到 Image 容器
+            var imageContainer = (HtmlGenericControl)e.Row.FindControl("ImageContainer");
             DataRowView dr = (DataRowView)e.Row.DataItem;
-            System.Web.UI.WebControls.Image imgPhoto = e.Row.FindControl("Image1") as System.Web.UI.WebControls.Image;
+            DataTable dt = new DataTable();
+            if (dr["PHOTOSID"] != DBNull.Value && dr["PHOTOSID"] != null)
+            {
+                dt = SEARCH_TB_SALES_RECORDS_PHOTOS(dr["PHOTOSID"].ToString());
+                if (dt != null && dt.Rows.Count >= 1)
+                {
+                    // 迴圈處理每張圖片
+                    foreach (DataRow imageRow in dt.Rows)
+                    {
+                        // 創建一個 Image 控制項
+                        System.Web.UI.WebControls.Image img = new System.Web.UI.WebControls.Image();
+                        string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])imageRow["PHOTOS"]);
+                        img.ImageUrl = imageUrl; // 假設你的資料表中有一個 "ImageUrl" 的欄位
+
+                        // 設置寬度和高度
+                        img.Width = Unit.Pixel(100);
+                        img.Height = Unit.Pixel(100);
+                        // 設置靠左對齊
+                        img.Style.Add("float", "left");
+
+                        // 將 Image 控制項加入到容器中
+                        imageContainer.Controls.Add(img);
+                    }
+                }
+            }
+
+            //DataRowView dr = (DataRowView)e.Row.DataItem;
+            //System.Web.UI.WebControls.Image imgPhoto = e.Row.FindControl("Image1") as System.Web.UI.WebControls.Image;
 
 
-            if (dr["PHOTOS"] != DBNull.Value && dr["PHOTOS"] != null)
-            {
-                string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])dr["PHOTOS"]);
-                imgPhoto.ImageUrl = imageUrl;
-            }
-            else
-            {
-                // 如果PHOTOS字段为空或NULL，清空图像
-                imgPhoto.ImageUrl = string.Empty;
-            }
+            //if (dr["PHOTOS"] != DBNull.Value && dr["PHOTOS"] != null)
+            //{
+            //    string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])dr["PHOTOS"]);
+            //    imgPhoto.ImageUrl = imageUrl;
+            //}
+            //else
+            //{
+            //    // 如果PHOTOS字段为空或NULL，清空图像
+            //    imgPhoto.ImageUrl = string.Empty;
+            //}
 
         }
 
@@ -340,6 +371,35 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS_PRESIDENT : Ede.Uof.Utilit
         }
 
     }
+
+    public DataTable SEARCH_TB_SALES_RECORDS_PHOTOS(string PHOTOSID)
+    {
+        DataTable dt = new DataTable();
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [ID]
+                            ,[PHOTOSID]
+                            ,[PHOTOS]
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS_PHOTOS]
+                            WHERE PHOTOSID='{0}'
+                            ", PHOTOSID);
+
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     #endregion
 
 

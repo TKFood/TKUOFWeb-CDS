@@ -642,6 +642,8 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                         // 設置寬度和高度
                         img.Width = Unit.Pixel(100);
                         img.Height = Unit.Pixel(100);
+                        // 設置靠左對齊
+                        img.Style.Add("float", "left");
 
                         // 將 Image 控制項加入到容器中
                         imageContainer.Controls.Add(img);

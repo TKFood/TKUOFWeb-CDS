@@ -76,16 +76,18 @@
                                             <ItemTemplate>
                                                 <asp:Label ID="訪談內容" runat="server" Text='<%# Bind("訪談內容") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                       
+                                        </asp:TemplateField>
                                         <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="建立日期" DataField="建立日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="Image">
+                                        <asp:TemplateField HeaderText="圖片">
                                             <ItemTemplate>
-                                                <asp:Image ID="Image1" runat="server" Width="100px" Height="100px" />
+                                                <div runat="server" id="ImageContainer" class="image-container">
+                                                    <!-- Images will be added here dynamically -->
+                                                </div>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
