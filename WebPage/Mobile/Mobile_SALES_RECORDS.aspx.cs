@@ -30,7 +30,8 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 {
     // Counter to track the number of added images
     private int imageCounter = 1;
-    public static string PHOTOSID = DateTime.Now.ToString("yyyyMMddHHmmss");
+    //public static string PHOTOSID = DateTime.Now.ToString("yyyyMMddHHmmss");
+
     protected void Page_Load(object sender, EventArgs e)
     {
         //不顯示子視窗的按鈕
@@ -342,6 +343,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         , string KINDS
         , string RECORDS
         , string RECORD2DATES
+        , string PHOTOSID
         , string data)
     {
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
@@ -393,6 +395,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
       , string KINDS
       , string RECORDS
       , string RECORD2DATES
+      , string PHOTOSID
       )
     {
         string NOWTIMES = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
@@ -424,13 +427,14 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     [WebMethod()]
     public static void SET_NEW_PHOTOSID()
     {
-        PHOTOSID = DateTime.Now.ToString("yyyyMMddHHmmss");
+        //PHOTOSID = DateTime.Now.ToString("yyyyMMddHHmmss");
 
     }
   
     [WebMethod()]
     public static string SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(
         string data
+        ,string PHOTOSID
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();

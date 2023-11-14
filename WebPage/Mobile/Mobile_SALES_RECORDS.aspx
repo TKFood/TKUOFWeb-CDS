@@ -328,7 +328,26 @@
         $(function () {
             $("#btnUpload").click(function () {
                 //SET_NEW_PHOTOSID
-                PageMethods.SET_NEW_PHOTOSID();
+                //PageMethods.SET_NEW_PHOTOSID();
+                // 取得當前日期時間
+                var currentDate = new Date();
+
+                // 格式化日期時間，例如：yyyyMMddHHmmss
+                var formattedDateTime =
+                    currentDate.getFullYear().toString() +
+                    padZero(currentDate.getMonth() + 1) +
+                    padZero(currentDate.getDate()) +
+                    padZero(currentDate.getHours()) +
+                    padZero(currentDate.getMinutes()) +
+                    padZero(currentDate.getSeconds());
+
+                // 函數：補零，確保單位數的月、日、時、分、秒有兩位數
+                function padZero(number) {
+                    return number < 10 ? "0" + number : number.toString();
+                }
+
+                // 使用 formattedDateTime
+                var PHOTOSID = formattedDateTime;
 
                 // DropDownListSALESNAMES获取 DropDownList 的元素
                 var SALESNAMES = document.getElementById('<%=DropDownListSALESNAMES.ClientID%>');
@@ -380,7 +399,7 @@
                 //var imgCapture = $("#previewImage")[0].src;
 
                 //存檔-客戶記錄-SaveCapturedImage_NOIMAGE
-                PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, Success, Failure);
+                PageMethods.SaveCapturedImage_NOIMAGE(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, PHOTOSID, Success, Failure);
 
                 // 取得 photoContainer 中的所有 img 元素
                 var imgElements = $("#photoContainer img");
@@ -444,7 +463,7 @@
                         //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
                         const originalSizeKB = Math.ceil((image.src.length));
                         // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                        compressImage(image, 0.5, function (compressedBlob) {
+                        compressImage(image, 0.3, function (compressedBlob) {
                             // 將壓縮後的圖片轉換為Base64字串
                             const reader = new FileReader();
                             reader.onload = function () {
@@ -456,7 +475,7 @@
 
                                 // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
                                 //alert('BEFORE');
-                                PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64)
+                                PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, PHOTOSID)
                 
                                 //alert('AFTER');
                             };
@@ -475,7 +494,7 @@
                 //        reader.onload = function () {
                 //            const compressedBase64 = reader.result;
                 //            // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                //            PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, compressedBase64, Success, Failure);
+                //            PageMethods.SaveCapturedImage(selectedText_SALESNAMES, CLIENTSID, selectedText_CLIENTSNAMES, NEWCLIENTSNAMES, selectedText_KINDS, RECORDS, RECORDSDATES, PHOTOSID,compressedBase64, Success, Failure);
                 //        };
                 //        reader.readAsDataURL(compressedBlob);
                 //    });
