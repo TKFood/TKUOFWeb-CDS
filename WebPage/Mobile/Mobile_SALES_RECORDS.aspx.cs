@@ -676,8 +676,25 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         if (e.CommandName == "Grid1Button1")
         {
-            DELETE_TB_SALES_RECORDS(e.CommandArgument.ToString());
-            //MsgBox(e.CommandArgument.ToString(), this.Page, this);           
+            // 獲取命令所在的 GridViewRow
+            GridViewRow row = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
+            // 使用 row 所提供的控制項 ID 來獲取特定控制項的內容
+            //string cellText = DataBinder.Eval(row.DataItem, "業務員").ToString();
+            string cellText = row.Cells[0].Text;
+            if (cellText.Equals(ViewState["NAME"]))
+            {
+                DELETE_TB_SALES_RECORDS(e.CommandArgument.ToString());
+            }
+            else if(ViewState["ACCOUNT"] != null && new[] { "160115", "ITENG" }.Contains(ViewState["ACCOUNT"].ToString()))
+            {
+                DELETE_TB_SALES_RECORDS(e.CommandArgument.ToString());
+            }
+            else
+            {
+                MsgBox("不是該業務員的記錄，不可刪除", this.Page, this);
+            }
+
+            //          
         }
     }
 
@@ -955,6 +972,14 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         {
             return null;
         }
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
     #endregion
 
