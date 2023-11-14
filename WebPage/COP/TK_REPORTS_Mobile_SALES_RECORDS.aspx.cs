@@ -180,6 +180,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                             ,[ID]
                             ,CONVERT(nvarchar,[CREATDATES],111) AS '建立日期'                            
                             ,[CLIENTSID] AS '客戶代號'
+                            ,[PHOTOSID]
                             FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
                             WHERE CONVERT(nvarchar,[RECORDSDATES],111)>='{0}' AND CONVERT(nvarchar,[RECORDSDATES],111)<='{1}'
                             ORDER BY [SALESNAMES],[CLIENTSNAMES],[ID]
@@ -195,7 +196,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
         if (dt.Rows.Count > 0)
         {
             //檔案名稱
-            var fileName = "拜訪清單" + DateTime.Now.ToString("yyyy-MM-dd--hh-mm-ss") + ".xlsx";
+            var fileName = "清單" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
 
             using (var excel = new ExcelPackage(new FileInfo(fileName)))
@@ -212,6 +213,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                 //ws.Cells[2, 1].Value = "測試測試";
                 int ROWS = 2;
                 int COLUMNS = 1;
+                int COUNT_IMAGES = 1;
 
 
                 //excel標題
@@ -238,24 +240,24 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                 ws.Cells[1, 6].Value = "訪談日期";
                 ws.Cells[1, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 7].Value = "照片";
+                ws.Cells[1, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線               
+                ws.Cells[1, 7].Value = "ID";
                 ws.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 8].Value = "ID";
+                ws.Cells[1, 8].Value = "建立日期";
                 ws.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 9].Value = "建立日期";
+                ws.Cells[1, 9].Value = "客戶代號";
                 ws.Cells[1, 9].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 10].Value = "客戶代號";
+                ws.Cells[1, 10].Value = "照片";
                 ws.Cells[1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-               
+
                 foreach (DataRow od in dt.Rows)
                 {
                     ws.Cells[ROWS, 1].Value = od["業務員"].ToString();
@@ -276,30 +278,70 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                     ws.Cells[ROWS, 6].Value = od["訪談日期"].ToString();
                     ws.Cells[ROWS, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 7].Value = od["ID"].ToString();
+                    ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 8].Value = od["建立日期"].ToString();
+                    ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 9].Value = od["客戶代號"].ToString();
+                    ws.Cells[ROWS, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
                     //ws.Cells[ROWS, 7].Value = od["照片"].ToString();
                     //ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
                     try
                     {
-                        if (od["PHOTOS"] != DBNull.Value && od["PHOTOS"] != null)
+                        if (od["PHOTOSID"] != DBNull.Value && od["PHOTOSID"] != null)
                         {
-                            byte[] imageBytes = (byte[])od["PHOTOS"];
-
-                            using (MemoryStream ms = new MemoryStream(imageBytes))
+                            DataTable dtPHOTOS = SEARCH_TB_SALES_RECORDS_PHOTOS(od["PHOTOSID"].ToString());
+                            if(dtPHOTOS != null&& dtPHOTOS.Rows.Count>=1)
                             {
-                                System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
-                                string imageName = od["ID"].ToString() + "_Image" + imageCounter; // 生成唯一的图像名称
-                                ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(imageName, img);
+                                foreach (DataRow row in dtPHOTOS.Rows)
+                                {
+                                    if (row["PHOTOS"] != DBNull.Value && row["PHOTOS"] != null)
+                                    {
+                                        byte[] imageBytes = (byte[])row["PHOTOS"];
 
-                                picture.From.Row = ROWS;
-                                picture.From.Column = COLUMNS;
+                                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                                        {
+                                            System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+                                            string imageName = row["ID"].ToString() + "_Image" + imageCounter; // 生成唯一的圖像名稱
+                                            ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(imageName, img);
 
-                                picture.SetPosition(1 * ROWS - 1, 5, 6, 5);
-                                picture.SetSize(50, 50);
+                                            // 設置圖片位置，這裡將 COLUMNS 作為 X 軸偏移
+                                            picture.SetPosition(1 * ROWS - 1, 5, 9, 5);
 
-                                imageCounter++; // 递增计数器以确保下一个图像具有唯一的名称
+                                            // 設置圖片大小
+                                            picture.SetSize(50, 50);
+
+                                            COUNT_IMAGES= COUNT_IMAGES+1;
+                                            imageCounter = imageCounter + 1; // 递增計數器以確保下一個圖像具有唯一的名稱
+                                        }
+                                    }
+                                }
                             }
                         }
+                        //if (od["PHOTOS"] != DBNull.Value && od["PHOTOS"] != null)
+                        //{
+                        //    byte[] imageBytes = (byte[])od["PHOTOS"];
+
+                        //    using (MemoryStream ms = new MemoryStream(imageBytes))
+                        //    {
+                        //        System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+                        //        string imageName = od["ID"].ToString() + "_Image" + imageCounter; // 生成唯一的图像名称
+                        //        ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(imageName, img);
+
+                        //        picture.From.Row = ROWS;
+                        //        picture.From.Column = COLUMNS;
+
+                        //        picture.SetPosition(1 * ROWS - 1, 5, 6, 5);
+                        //        picture.SetSize(50, 50);
+
+                        //        imageCounter++; // 递增计数器以确保下一个图像具有唯一的名称
+                        //    }
+                        //}
                     }
                     catch
                     {
@@ -310,16 +352,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
 
                     }
 
-                    ws.Cells[ROWS, 8].Value = od["ID"].ToString();
-                    ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 9].Value = od["建立日期"].ToString();
-                    ws.Cells[ROWS, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 10].Value = od["客戶代號"].ToString();
-                    ws.Cells[ROWS, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-
+                 
 
 
                     ROWS++;
