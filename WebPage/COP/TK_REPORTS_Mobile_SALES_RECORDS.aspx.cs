@@ -213,7 +213,7 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                 //ws.Cells[2, 1].Value = "測試測試";
                 int ROWS = 2;
                 int COLUMNS = 1;
-                int COUNT_IMAGES = 1;
+                int COUNT_IMAGES =0;
 
 
                 //excel標題
@@ -298,6 +298,8 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                             DataTable dtPHOTOS = SEARCH_TB_SALES_RECORDS_PHOTOS(od["PHOTOSID"].ToString());
                             if(dtPHOTOS != null&& dtPHOTOS.Rows.Count>=1)
                             {
+                                COUNT_IMAGES = 0;
+
                                 foreach (DataRow row in dtPHOTOS.Rows)
                                 {
                                     if (row["PHOTOS"] != DBNull.Value && row["PHOTOS"] != null)
@@ -311,12 +313,12 @@ public partial class CDS_WebPage_COP_TK_REPORTS_Mobile_SALES_RECORDSE : Ede.Uof.
                                             ExcelPicture picture = excel.Workbook.Worksheets[0].Drawings.AddPicture(imageName, img);
 
                                             // 設置圖片位置，這裡將 COLUMNS 作為 X 軸偏移
-                                            picture.SetPosition(1 * ROWS - 1, 5, 9, 5);
+                                            picture.SetPosition(1 * ROWS - 1, 5, 9 + COUNT_IMAGES, 5);
 
                                             // 設置圖片大小
                                             picture.SetSize(50, 50);
 
-                                            COUNT_IMAGES= COUNT_IMAGES+1;
+                                            COUNT_IMAGES = COUNT_IMAGES + 1;
                                             imageCounter = imageCounter + 1; // 递增計數器以確保下一個圖像具有唯一的名稱
                                         }
                                     }
