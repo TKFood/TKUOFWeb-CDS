@@ -240,6 +240,7 @@
            
     </body>
 
+    <script src="compressor/compressor.min.js"></script>
 
     <script>
         //window.onload = function () {
@@ -285,7 +286,7 @@
                         var img = document.createElement("img");
                         img.src = photoUrl;
                         img.style.maxWidth = "50%";
-                        img.style.float = "left"; // 设置为左浮动
+                        img.style.float = "left"; // 设置为左浮动                       
 
                         // 将 img 元素添加到行元素中
                         row.appendChild(img);
@@ -306,8 +307,9 @@
         }
         //JS執行失敗
         function Failure(error) {
-            alert(error);
+            alert('AJAX request failed:', error);
         }
+
 
         // 壓縮圖片的函數
         function compressImage(image, quality, callback) {
@@ -322,43 +324,46 @@
             }, 'image/jpeg', quality);
         }
 
+        // 壓縮圖片的函數
         function compressImage_size(image, targetSizeKB, callback) {
+            const maxSizeBytes = targetSizeKB * 1024;
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
-            canvas.width = image.width;
-            canvas.height = image.height;
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            // 開始的壓縮品質
-            let quality = 1.0;
+            const calculateQuality = (currentSizeBytes, targetSizeBytes, quality) => {
+                return (currentSizeBytes > targetSizeBytes && quality > 0) ? quality - 0.1 : quality;
+            };
 
-            // 設定 Blob 大小的目標值（以字節為單位）
-            const targetSizeBytes = targetSizeKB * 1024;
+            const iterateCompression = (currentSizeBytes, targetSizeBytes, quality) => {
+                canvas.toBlob((blob) => {
+                    const compressedSizeKB = Math.ceil(blob.size / 1024);
 
-            // 迭代，直到 Blob 大小小於目標值
-            const iterate = function () {
-                canvas.toBlob(function (blob) {
-                    // 如果 Blob 大小小於目標值，則調用回調函數
-                    if (blob.size <= targetSizeBytes || quality <= 0) {
+                    if (compressedSizeKB <= targetSizeKB || quality <= 0) {
                         callback(blob);
                     } else {
-                        // 調整壓縮品質
-                        quality -= 0.1;
-                        // 重新繪製並迭代
+                        quality = calculateQuality(compressedSizeKB, targetSizeBytes, quality);
                         context.clearRect(0, 0, canvas.width, canvas.height);
                         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-                        iterate();
+                        iterateCompression(compressedSizeKB, targetSizeBytes, quality);
                     }
                 }, 'image/jpeg', quality);
             };
 
-            // 開始迭代
-            iterate();
+            const originalSizeBytes = Math.ceil(image.width * image.height * 4); // 4 bytes per pixel assumption
+            const initialQuality = 1.0;
+
+            let quality = initialQuality;
+            canvas.width = image.width;
+            canvas.height = image.height;
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            iterateCompression(originalSizeBytes, maxSizeBytes, initialQuality);
         }
+
         $(function () {
             $("#btnUpload").click(function () {
-
-
+                //SET_NEW_PHOTOSID
+                PageMethods.SET_NEW_PHOTOSID();
 
                 // DropDownListSALESNAMES获取 DropDownList 的元素
                 var SALESNAMES = document.getElementById('<%=DropDownListSALESNAMES.ClientID%>');
@@ -414,37 +419,84 @@
 
                 // 取得 photoContainer 中的所有 img 元素
                 var imgElements = $("#photoContainer img");
-                //console.log('Image:', imgElements.length);
 
                 // 迴圈處理每個 img 元素
                 imgElements.each(function () {
                     // 取得圖片的路徑
                     var imagePath = $(this).attr("src");
-                    // 載入圖片
-                    var image = new Image();
-                    image.src = imagePath;
-                    if (image !== "" && image !== undefined) {
-                        //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
-                        const originalSizeKB = Math.ceil((image.src.length));
-                        // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
-                        compressImage(image, 0.00005, function (compressedBlob) {
-                            // 將壓縮後的圖片轉換為Base64字串
-                            const reader = new FileReader();
-                            reader.onload = function () {
-                                const compressedBase64 = reader.result;
-                                const compressedSizeKB = Math.ceil((compressedBase64.length));
-                                alert(originalSizeKB);
-                                alert(compressedSizeKB);
-                                // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
-                                //alert('BEFORE');
-                                PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, Success, Failure)
-                                //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS_TEST(Success, Failure)
-                                //alert('AFTER');
-                            };
-                            reader.readAsDataURL(compressedBlob);
-                        });
-                    }
+
+                    // 使用 fetch 取得圖片
+                    fetch(imagePath)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            // 計算原始大小
+                            const originalSizeKB = Math.ceil(blob.size / 1024);
+                            //alert('imagePath  ' + imagePath);
+                            // 使用 Compressor.js 進行圖片壓縮
+                            new Compressor(blob, {
+                                quality: 1,
+                                maxWidth: 200,      // 調整最大寬度，影響圖片大小
+                                maxHeight: 200,     // 調整最大高度，影響圖片大小
+                                //convertSize: 200,   // 調整轉換大小，影響圖片大小
+                                success(result) {
+                                    // result 是壓縮後的 Blob 物件
+
+                                    // 將壓縮後的 Blob 轉換為 Base64 字串
+                                    const reader = new FileReader();
+                                    reader.onload = function () {
+                                        const compressedBase64 = reader.result;
+                                        //alert('compressedBase64 ' + compressedBase64);
+                                        // 計算壓縮後大小（以KB為單位）
+                                        const compressedSizeKB = Math.ceil((compressedBase64.length * 3) / 4 / 1024);
+
+                                        // 顯示大小資訊
+                                        alert('originalSizeKB ' + originalSizeKB);
+                                        alert('compressedSizeKB ' + compressedSizeKB);
+
+                                        // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
+                                        PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, Success, Failure);
+                                    };
+                                    reader.readAsDataURL(result);
+                                },
+                                error(err) {
+                                    console.error(err.message);
+                                },
+                            });
+                        })
+                        .catch(error => console.error(error));
                 });
+
+
+
+                //// 迴圈處理每個 img 元素
+                //imgElements.each(function () {
+                //    // 取得圖片的路徑
+                //    var imagePath = $(this).attr("src");
+                //    // 載入圖片
+                //    var image = new Image();
+                //    image.src = imagePath;
+                //    if (image !== "" && image !== undefined) {
+                //        //PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(imagePath, Success, Failure)
+                //        const originalSizeKB = Math.ceil((image.src.length));
+                //        // 壓縮圖片並使用 PageMethods.SaveCapturedImage 上傳
+                //        compressImage(image, 0.1, function (compressedBlob) {
+                //            // 將壓縮後的圖片轉換為Base64字串
+                //            const reader = new FileReader();
+                //            reader.onload = function () {
+                //                const compressedBase64 = reader.result;
+                //                const compressedSizeKB = Math.ceil((compressedBase64.length));
+                //                alert('originalSizeKB '+originalSizeKB);
+                //                alert('compressedSizeKB '+compressedSizeKB);
+                //                // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
+                //                //alert('BEFORE');
+                //                PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, Success, Failure)
+                //
+                //                //alert('AFTER');
+                //            };
+                //            reader.readAsDataURL(compressedBlob);
+                //        });
+                //    }
+                //});
 
 
                 ////圖片!== ""

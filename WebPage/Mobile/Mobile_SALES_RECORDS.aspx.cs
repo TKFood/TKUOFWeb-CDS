@@ -422,20 +422,12 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
     }
     [WebMethod()]
-    public static string SaveCapturedImage_TB_SALES_RECORDS_PHOTOS_TEST()
+    public static void SET_NEW_PHOTOSID()
     {
-        try
-        {
-            string MESSAGE = " YES ";
-            return MESSAGE;
-        }
-        catch
-        {
-            string MESSAGE = " NO ";
-            return MESSAGE;
-        }
-       
+        PHOTOSID = DateTime.Now.ToString("yyyyMMddHHmmss");
+
     }
+  
     [WebMethod()]
     public static string SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(
         string data
