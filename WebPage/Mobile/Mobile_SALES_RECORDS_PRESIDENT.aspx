@@ -90,7 +90,7 @@
                                                 <asp:BoundField HeaderText="業務員" DataField="業務員" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                                 </asp:BoundField>
-                                                <asp:BoundField HeaderText="客戶" DataField="客戶" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:BoundField HeaderText="舊客(有客代)" DataField="客戶" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemStyle HorizontalAlign="Center" Width="200px"></ItemStyle>
                                                 </asp:BoundField>
                                                 <asp:BoundField HeaderText="新客" DataField="新客" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
