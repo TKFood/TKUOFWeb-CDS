@@ -1810,6 +1810,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         DataTable DT = SEARCHCOPTCCOPTD(TC001, TC002);
         DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["TC006"].ToString());
+        DataTable DT_CHECK_COPTD_ZINVMBBAKING = CHECK_COPTD_ZINVMBBAKING(TC001, TC002);
 
         string account = DT.Rows[0]["TC006"].ToString();
         string groupId = DT.Rows[0]["GROUP_ID"].ToString();
@@ -1939,9 +1940,16 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
 
         //建立節點FieldItem
         //CHECKMOC	
+        //檢查訂單是否有烘培品，DT_CHECK_COPTD_ZINVMBBAKING
+        string CHECKMOC = "生產";
+        if(DT_CHECK_COPTD_ZINVMBBAKING!=null&& DT_CHECK_COPTD_ZINVMBBAKING.Rows.Count>=1)
+        {
+            CHECKMOC = "烘培";
+        }
+
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "CHECKMOC");
-        FieldItem.SetAttribute("fieldValue", "生產");
+        FieldItem.SetAttribute("fieldValue", CHECKMOC);
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("customValue", "@null");
@@ -3789,6 +3797,68 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         else
         {
             return null;
+        }
+    }
+
+    public DataTable CHECK_COPTD_ZINVMBBAKING(string TC001, string TC002)
+    {
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
+
+
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+            StringBuilder QUERYS = new StringBuilder();
+
+
+
+            cmdTxt.AppendFormat(@" 
+                                SELECT * 
+                                FROM [TK].dbo.COPTD
+                                WHERE TD001='{0}' AND TD002='{1}'
+                                AND TD004 IN (
+                                SELECT 
+                                [MB001]
+                                FROM [TK].[dbo].[ZINVMBBAKING]
+                                )
+                              
+                                ", TC001, TC002);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+            if (dt.Rows.Count >= 1)
+            {
+                return dt;
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+
         }
     }
     #endregion
