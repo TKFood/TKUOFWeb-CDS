@@ -2193,6 +2193,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         DataTable DT = SEARCHCOPTECOPTF(TE001, TE002, TE003);
         DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["TE009"].ToString());
+        DataTable DT_CHECK_COPTF_ZINVMBBAKING = CHECK_COPTF_ZINVMBBAKING(TE001, TE002, TE003);
 
         string account = DT.Rows[0]["TE009"].ToString();
         string groupId = DT.Rows[0]["GROUP_ID"].ToString();
@@ -2314,10 +2315,16 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //CHECKMOC	
+        //CHECKMOC
+        //檢查訂單是否有烘培品，DT_CHECK_COPTD_ZINVMBBAKING
+        string CHECKMOC = "生產";
+        if (DT_CHECK_COPTF_ZINVMBBAKING != null && DT_CHECK_COPTF_ZINVMBBAKING.Rows.Count >= 1)
+        {
+            CHECKMOC = "烘培";
+        }
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "CHECKMOC");
-        FieldItem.SetAttribute("fieldValue", "生產");
+        FieldItem.SetAttribute("fieldValue", CHECKMOC);
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("customValue", "@null");
@@ -5531,6 +5538,67 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         else
         {
             return null;
+        }
+    }
+    public DataTable CHECK_COPTF_ZINVMBBAKING(string TE001, string TE002, string TE003)
+    {
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
+
+
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+            StringBuilder QUERYS = new StringBuilder();
+
+
+
+            cmdTxt.AppendFormat(@" 
+                                SELECT *
+                                FROM [TK].dbo.COPTF
+                                WHERE TF001='{0}' AND TF002='{1}' AND TF003='{2}'
+                                AND TF005 IN (
+                                SELECT 
+                                [MB001]
+                                FROM [TK].[dbo].[ZINVMBBAKING]
+                                )
+                              
+                                ", TE001, TE002, TE003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+            if (dt.Rows.Count >= 1)
+            {
+                return dt;
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+
         }
     }
 
