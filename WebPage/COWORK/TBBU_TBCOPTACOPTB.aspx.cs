@@ -41,11 +41,12 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
 
         if (!IsPostBack)
         {
+            BindGrid();
         }
     }
 
     #region FUNCTION
-    private void BindGrid(string SALESFOCUS)
+    private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -54,7 +55,12 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
         StringBuilder QUERYS = new StringBuilder();
 
         cmdTxt.AppendFormat(@" 
-                                
+                                SELECT TA006,TA001,TA002,TB003,TB004,TB005,TB009,TB010,TA001+TA002 AS TA001TA002
+                                FROM [TK].dbo.COPTA,[TK].dbo.COPTB
+                                WHERE TA001=TB001 AND TA002=TB002
+                                AND TA019 IN ('N')
+                                AND TA003 LIKE '2023%'
+                                ORDER BY TA001,TA002  
 
                                 ", QUERYS.ToString());
 
@@ -92,12 +98,12 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
     {
         //int rowIndex = -1;
 
-        //if (e.CommandName == "Button1")
+        //if (e.CommandName == "Grid1_Button1")
         //{
         //    //MsgBox("Button1", this.Page, this);
         //    BindGrid("");
         //}
-       
+
     }
 
 
@@ -118,7 +124,7 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
     #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
     {
-        BindGrid("");
+        BindGrid();
       
 
     }
