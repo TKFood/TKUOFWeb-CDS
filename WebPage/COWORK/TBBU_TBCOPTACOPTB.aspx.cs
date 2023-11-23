@@ -41,11 +41,16 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
 
         if (!IsPostBack)
         {
+            SETDATES();
             BindGrid();
         }
     }
 
     #region FUNCTION
+    public void SETDATES()
+    {
+        TextBox1.Text = DateTime.Now.ToString("yyyy");     
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -54,12 +59,24 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        //核單
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" 
+                                AND TA003 LIKE '{0}%'
+                                ", TextBox1.Text);
+        }
+        else
+        {
+
+        }
+
         cmdTxt.AppendFormat(@" 
                                 SELECT TA006,TA001,TA002,TB003,TB004,TB005,TB009,TB010,TA001+TA002 AS TA001TA002
                                 FROM [TK].dbo.COPTA,[TK].dbo.COPTB
                                 WHERE TA001=TB001 AND TA002=TB002
                                 AND TA019 IN ('N')
-                                AND TA003 LIKE '2023%'
+                                {0}
                                 ORDER BY TA001,TA002  
 
                                 ", QUERYS.ToString());
