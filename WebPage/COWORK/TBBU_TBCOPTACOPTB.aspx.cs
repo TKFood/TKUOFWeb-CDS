@@ -45,10 +45,82 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
     }
 
     #region FUNCTION
+    private void BindGrid(string SALESFOCUS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                                
+
+                                ", QUERYS.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+    protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+           
+
+        }
+    }
+
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        //int rowIndex = -1;
+
+        //if (e.CommandName == "Button1")
+        //{
+        //    //MsgBox("Button1", this.Page, this);
+        //    BindGrid("");
+        //}
+       
+    }
+
+
+    public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();        
+    }
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
 
     #endregion
 
     #region BUTTON
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        BindGrid("");
+      
 
+    }
     #endregion
 }
