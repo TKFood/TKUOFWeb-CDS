@@ -126,7 +126,8 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
 
         if (e.CommandName == "Grid1_Button1")
         {
-            MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+            //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+
             TA001 = e.CommandArgument.ToString().Substring(0, 4);
             TA002 = e.CommandArgument.ToString().Substring(4, 11);
 
