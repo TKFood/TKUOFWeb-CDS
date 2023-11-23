@@ -106,20 +106,28 @@ public partial class CDS_WebPage_COWORK_TBBU_TBCOPTACOPTB : Ede.Uof.Utility.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-           
+            //Grid1_Button1
+            //Get the button that raised the event
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid1_Button1");
+            //Get the row that contains this button
+            GridViewRow gvr1 = (GridViewRow)Grid1_Button1.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue1 = Grid1_Button1.CommandArgument;
+            DataRowView row1 = (DataRowView)e.Row.DataItem;
+            Button lbtnName1 = (Button)e.Row.FindControl("Grid1_Button1");
+            ExpandoObject param1 = new { ID = Cellvalue1 }.ToExpando();
 
         }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        //int rowIndex = -1;
+        int rowIndex = -1;
 
-        //if (e.CommandName == "Grid1_Button1")
-        //{
-        //    //MsgBox("Button1", this.Page, this);
-        //    BindGrid("");
-        //}
+        if (e.CommandName == "Grid1_Button1")
+        {
+            MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+        }
 
     }
 
