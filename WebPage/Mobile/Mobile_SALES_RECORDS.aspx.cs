@@ -70,7 +70,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             }
             
             //交辨內容
-            BindGrid3();
+            //BindGrid3();
         }
 
 
@@ -715,16 +715,33 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         StringBuilder cmdTxt = new StringBuilder();
 
         cmdTxt.AppendFormat(@" 
+                           SELECT *
+                            FROM
+                            (
                             SELECT 
-                            [ID]
+                            [TB_SALES_ASSINGED].[ID]
                             ,[SALES]
                             ,[CLIENTS]
                             ,[EVENTS]
                             ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
                             ,[ISCLOSE]
-                            ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
+                            ,CONVERT(NVARCHAR,[ADDDATES],111)ADDDATES
+                            ,NULL DID
                             FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
-                            ORDER BY [SALES],[CLIENTS],[EDAYS]
+                            UNION ALL
+                            SELECT
+                            MID ID
+                            ,[TB_SALES_ASSINGED].[SALES]
+                            ,'回覆'
+                            ,[COMMENTS]
+                            ,''
+                            ,''
+                            ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES],111) ADDDATES
+                            ,[TB_SALES_ASSINGED_COMMENTS].ID DID
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS],[TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
+                            WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID
+                            ) AS TEMP
+                            ORDER BY [SALES],[ID],DID
 
                               
                             ");
@@ -747,7 +764,21 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     }
     protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-      
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 假設 txtNewField 是一個 Label 控制項
+            TextBox txtNewField = (TextBox)e.Row.FindControl("txtNewField");
+            Button Grid3Button1=(Button)e.Row.FindControl("Grid3Button1");
+            // 假設事件在資料繫結時，ISCLOSE 欄位的名稱是 "ISCLOSE"
+            string eventValue = DataBinder.Eval(e.Row.DataItem, "ISCLOSE") as string;
+
+            // 如果事件欄位的值為空，就隱藏 txtNewField
+            if (string.IsNullOrWhiteSpace(eventValue))
+            {
+                txtNewField.Visible = false;
+                Grid3Button1.Visible = false;
+            }
+        }
 
     }
 
