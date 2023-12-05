@@ -754,7 +754,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
 
         if(!string.IsNullOrEmpty(TextBox_CLIENTS.Text))
         {
-            Query1.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%' ", TextBox_CLIENTS.Text);
+            Query1.AppendFormat(@" AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [CLIENTS] LIKE '%{0}%') ", TextBox_CLIENTS.Text);
         }
         else
         {
@@ -762,7 +762,15 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         }
         if (!string.IsNullOrEmpty(DropDownListISCLOSE.SelectedValue.ToString()))
         {
-            Query2.AppendFormat(@" AND [ISCLOSE] LIKE '%{0}%' ", DropDownListISCLOSE.SelectedValue.ToString());
+            if(DropDownListISCLOSE.SelectedValue.ToString().Equals("全部"))
+            {
+                Query2.AppendFormat(@"");
+            }
+            else
+            {
+                Query2.AppendFormat(@"AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [ISCLOSE] LIKE '%{0}%')", DropDownListISCLOSE.SelectedValue.ToString());
+            }
+            
         }
         else
         {
@@ -799,10 +807,11 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             ) AS TEMP
                             WHERE 1=1
                             {0}
+                            {1}
                             ORDER BY [SALES],[ID],DID
 
                               
-                            ", Query1.ToString()); ;
+                            ", Query1.ToString(), Query2.ToString()); ;
 
 
         //m_db.AddParameter("@EDATE", EDATE);
