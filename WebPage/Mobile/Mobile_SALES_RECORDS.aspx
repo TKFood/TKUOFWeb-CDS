@@ -44,7 +44,9 @@
             <Tabs>
                 <telerik:RadTab Text="業務" PageViewID="RadPageView1">
                 </telerik:RadTab>
-                <telerik:RadTab Text="資料" PageViewID="RadPageView2">
+                <telerik:RadTab Text="報表" PageViewID="RadPageView2">
+                </telerik:RadTab>
+                <telerik:RadTab Text="交辨回覆" PageViewID="RadPageView3">
                 </telerik:RadTab>
             </Tabs>
         </telerik:RadTabStrip>
@@ -119,7 +121,7 @@
                                 <input type="file" accept="image/*" capture="camera" id="photoInputold" style="display: none" />
                             </td>
                         </tr>
-                     <%--   <tr>
+                        <%--   <tr>
                             <td></td>
                             <td>
                                 <button type="button" id="takePhotoButtonold">拍照</button>
@@ -133,7 +135,7 @@
                             </td>
                         </tr>--%>
 
-                     
+
                         <tr>
                             <td></td>
                             <td>
@@ -149,7 +151,7 @@
                                 </div>
                             </td>
                         </tr>
-                           <tr>
+                        <tr>
                             <td></td>
                             <td>
                                 <button type="button" id="btnUpload" class="custom-button">存檔</button>
@@ -215,7 +217,7 @@
                                             </asp:TemplateField>
                                             <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="50px"></ItemStyle>
-                                            </asp:BoundField>                                     
+                                            </asp:BoundField>
                                             <asp:TemplateField HeaderText="圖片">
                                                 <ItemTemplate>
                                                     <div runat="server" id="ImageContainer" class="image-container">
@@ -236,6 +238,44 @@
                     </table>
                 </div>
             </telerik:RadPageView>
+            <telerik:RadPageView ID="RadPageView3" runat="server" Selected="false" PageViewID="3">
+                <div id="tabs-2">
+                    <table class="PopTable">                       
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Button ID="Button4" runat="server" Text=" 查詢 " OnClick="btn2_Click" meta:resourcekey="btn2_Resource1" />
+                            </td>
+                        </tr>
+                   
+
+                    </table>
+                    <table style="width: 100%">
+                        <tr style="width: 100%">
+                            <td colspan="2" style="width: 100%">
+                                <div style="overflow-x: auto; width: 100%">
+                                    <Fast:Grid ID="Grid3" OnRowDataBound="Grid3_RowDataBound" OnRowCommand="Grid3_OnRowCommand" runat="server" OnBeforeExport="OnBeforeExport3" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="100" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging1" CssClass="fast-grid">
+                                        <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                        <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
+                                        <Columns>
+                                            <%--<asp:BoundField HeaderText="業務員" DataField="業務員" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                            </asp:BoundField>
+                                           
+                                            <asp:TemplateField HeaderText="是否刪除" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="Grid1Button1" runat="server" Text="刪除" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' OnClientClick="return confirm('確定要刪除嗎？');" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>--%>
+                                        </Columns>
+                                    </Fast:Grid>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </telerik:RadPageView>
+
         </telerik:RadMultiPage>​
            
     </body>
@@ -315,7 +355,7 @@
         function compressImage(image, quality, callback) {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
-            canvas.width =200;
+            canvas.width = 200;
             canvas.height = 200;
             context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
@@ -324,7 +364,7 @@
             }, 'image/jpeg', quality);
         }
 
-      
+
         $(function () {
             $("#btnUpload").click(function () {
                 //SET_NEW_PHOTOSID
@@ -476,7 +516,7 @@
                                 // 使用 PageMethods.SaveCapturedImage 上傳壓縮後的圖片
                                 //alert('BEFORE');
                                 PageMethods.SaveCapturedImage_TB_SALES_RECORDS_PHOTOS(compressedBase64, PHOTOSID)
-                
+
                                 //alert('AFTER');
                             };
                             reader.readAsDataURL(compressedBlob);
