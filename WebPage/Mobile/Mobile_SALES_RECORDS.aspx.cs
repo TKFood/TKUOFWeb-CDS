@@ -70,7 +70,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             }
             
             //交辨內容
-            //BindGrid3();
+            BindGrid3();
         }
 
 
@@ -734,7 +734,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             ,[TB_SALES_ASSINGED].[SALES]
                             ,'回覆'
                             ,[COMMENTS]
-                            ,''
+                            ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES],111)
                             ,''
                             ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES],111) ADDDATES
                             ,[TB_SALES_ASSINGED_COMMENTS].ID DID
@@ -805,7 +805,9 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                 Label txtid = (Label)row.FindControl("ID");
                 string id =txtid.Text;
 
-                MsgBox(id + " " + newTextValue, this.Page, this);
+                ADD_TB_SALES_ASSINGED_COMMENTS(id, newTextValue);
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
                 // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
                 // ...
 
@@ -1125,6 +1127,26 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         }
     }
 
+    public void ADD_TB_SALES_ASSINGED_COMMENTS(string MID,string COMMENTS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+     
+        cmdTxt = @"
+                   INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS]
+                    ([MID],[COMMENTS])
+                    VALUES (@MID,@COMMENTS)
+                        ";
+
+
+        m_db.AddParameter("@MID", MID);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
