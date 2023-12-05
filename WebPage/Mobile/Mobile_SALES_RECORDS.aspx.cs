@@ -51,6 +51,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             BindDropDownList1();
             BindDropDownList2("");
             BindDropDownList3();
+            BindDropDownList4();
 
             ViewState["ACCOUNT"] = Current.Account;
             ViewState["NAME"] = Current.User.Name;
@@ -218,6 +219,41 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             DropDownListKINDS.DataTextField = "KINDS";
             DropDownListKINDS.DataValueField = "KINDS";
             DropDownListKINDS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    private void BindDropDownList4()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='是否結案'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListISCLOSE.DataSource = dt;
+            DropDownListISCLOSE.DataTextField = "NAMES";
+            DropDownListISCLOSE.DataValueField = "NAMES";
+            DropDownListISCLOSE.DataBind();
 
         }
         else
@@ -713,9 +749,29 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder Query1 = new StringBuilder();
+        StringBuilder Query2 = new StringBuilder();
 
-        cmdTxt.AppendFormat(@" 
-                           SELECT *
+        if(!string.IsNullOrEmpty(TextBox_CLIENTS.Text))
+        {
+            Query1.AppendFormat(@" AND [CLIENTS] LIKE '%{0}%' ", TextBox_CLIENTS.Text);
+        }
+        else
+        {
+            Query1.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(DropDownListISCLOSE.SelectedValue.ToString()))
+        {
+            Query2.AppendFormat(@" AND [ISCLOSE] LIKE '%{0}%' ", DropDownListISCLOSE.SelectedValue.ToString());
+        }
+        else
+        {
+            Query2.AppendFormat(@"");
+        }
+
+        cmdTxt.AppendFormat(@"
+
+                          SELECT *
                             FROM
                             (
                             SELECT 
@@ -732,7 +788,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             SELECT
                             MID ID
                             ,[TB_SALES_ASSINGED].[SALES]
-                            ,'回覆'
+                            ,' 回覆'
                             ,[COMMENTS]
                             ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES],111)
                             ,''
@@ -741,10 +797,12 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS],[TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
                             WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID
                             ) AS TEMP
+                            WHERE 1=1
+                            {0}
                             ORDER BY [SALES],[ID],DID
 
                               
-                            ");
+                            ", Query1.ToString()); ;
 
 
         //m_db.AddParameter("@EDATE", EDATE);
@@ -768,7 +826,8 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         {
             // 假設 txtNewField 是一個 Label 控制項
             TextBox txtNewField = (TextBox)e.Row.FindControl("txtNewField");
-            Button Grid3Button1=(Button)e.Row.FindControl("Grid3Button1");
+            Button Grid3Button1 = (Button)e.Row.FindControl("Grid3Button1");
+            Label LabelSALES = (Label)e.Row.FindControl("SALES");
             // 假設事件在資料繫結時，ISCLOSE 欄位的名稱是 "ISCLOSE"
             string eventValue = DataBinder.Eval(e.Row.DataItem, "ISCLOSE") as string;
 
@@ -777,6 +836,7 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
             {
                 txtNewField.Visible = false;
                 Grid3Button1.Visible = false;
+                LabelSALES.Visible= false;
             }
         }
 

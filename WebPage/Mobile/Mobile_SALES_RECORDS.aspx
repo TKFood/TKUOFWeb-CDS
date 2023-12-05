@@ -242,6 +242,23 @@
                 <div id="tabs-2">
                     <table class="PopTable">
                         <tr>
+                            <td>
+                                <asp:Label ID="Label9" runat="server" Text="客戶: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox_CLIENTS" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="DropDownListISCLOSE" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
                                 <asp:Button ID="Button4" runat="server" Text=" 查詢 " OnClick="btn4_Click" meta:resourcekey="btn4_Resource1" />
@@ -258,9 +275,11 @@
                                         <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                         <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                         <Columns>
-                                            <asp:BoundField HeaderText="業務員" DataField="SALES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                            </asp:BoundField>
+                                            <asp:TemplateField HeaderText="業務員" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="SALES" runat="server" Text='<%# Bind("SALES") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="客戶" DataField="CLIENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>
@@ -287,7 +306,12 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="ID" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                    <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="DID" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" Visible="false">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="DID" runat="server" Text='<%# Bind("DID") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
