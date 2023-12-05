@@ -68,6 +68,9 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                 // 如果找不到匹配的選項，可以執行適當的處理
                 // 例如，顯示一條錯誤消息或執行其他操作
             }
+            
+            //交辨內容
+            BindGrid3();
         }
 
 
@@ -712,7 +715,16 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         StringBuilder cmdTxt = new StringBuilder();
 
         cmdTxt.AppendFormat(@" 
-                            
+                            SELECT 
+                            [ID]
+                            ,[SALES]
+                            ,[CLIENTS]
+                            ,[EVENTS]
+                            ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
+                            ,[ISCLOSE]
+                            ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
+                            ORDER BY [SALES],[CLIENTS],[EDAYS]
 
                               
                             ");
@@ -735,13 +747,43 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     }
     protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-       
+      
 
     }
 
     protected void Grid3_OnRowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
+
+        if (e.CommandName == "Grid3Button1")
+        { 
+            // 獲取所選行的索引
+             rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+           
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid3.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID");
+                string id =txtid.Text;
+
+                MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid3();
+            }
+
+               
+        }
 
     }
 
@@ -1079,6 +1121,10 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
     protected void btn3_Click(object sender, EventArgs e)
     {
         SETEXCEL(txtDate1.Text, txtDate2.Text);
+    }
+    protected void btn4_Click(object sender, EventArgs e)
+    {
+        BindGrid3();
     }
 
 
