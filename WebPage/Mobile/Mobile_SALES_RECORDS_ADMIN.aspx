@@ -117,6 +117,16 @@
                                                     <asp:Button ID="Grid1Button1" runat="server" Text="確定回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="確定結案" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="Grid1Button2" runat="server" Text="確定結案" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="改未結案" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="Grid1Button3" runat="server" Text="改未結案" CommandName="Grid1Button3" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="ID" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
                                                     <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
@@ -138,12 +148,10 @@
             </telerik:RadPageView>
             <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false" PageViewID="1">
                 <div id="tabs-2">
-                    
                 </div>
             </telerik:RadPageView>
             <telerik:RadPageView ID="RadPageView3" runat="server" Selected="false" PageViewID="3">
                 <div id="tabs-3">
-                   
                 </div>
             </telerik:RadPageView>
 

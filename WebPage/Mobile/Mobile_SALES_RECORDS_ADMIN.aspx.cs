@@ -165,8 +165,10 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
         {
             // 假設 txtNewField 是一個 Label 控制項
             TextBox txtNewField = (TextBox)e.Row.FindControl("txtNewField");
-            Button Grid3Button1 = (Button)e.Row.FindControl("Grid1Button1");
+            Button Grid1Button1 = (Button)e.Row.FindControl("Grid1Button1");
             Label LabelSALES = (Label)e.Row.FindControl("SALES");
+            Button Grid1Button2 = (Button)e.Row.FindControl("Grid1Button2");
+            Button Grid1Button3 = (Button)e.Row.FindControl("Grid1Button3");
             // 假設事件在資料繫結時，ISCLOSE 欄位的名稱是 "ISCLOSE"
             string eventValue = DataBinder.Eval(e.Row.DataItem, "ISCLOSE") as string;
 
@@ -174,8 +176,10 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
             if (string.IsNullOrWhiteSpace(eventValue))
             {
                 txtNewField.Visible = false;
-                Grid3Button1.Visible = false;
+                Grid1Button1.Visible = false;
                 LabelSALES.Visible = false;
+                Grid1Button2.Visible = false;
+                Grid1Button3.Visible = false;
             }
         }
 
@@ -213,8 +217,64 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
                 // 重新繫結GridView，刷新顯示
                 BindGrid();
             }
+        }
+        if (e.CommandName == "Grid1Button2")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
 
 
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID");
+                string id = txtid.Text;
+
+                UPDATE_TB_SALES_ASSINGED_YN(id,"Y");
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+            }
+        }
+        if (e.CommandName == "Grid1Button3")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID");
+                string id = txtid.Text;
+
+                UPDATE_TB_SALES_ASSINGED_YN(id, "N");
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+            }
         }
 
     }
@@ -246,6 +306,28 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
+    public void UPDATE_TB_SALES_ASSINGED_YN(string ID,string ISCLOSE)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"
+                UPDATE [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
+                SET [ISCLOSE]=@ISCLOSE
+                WHERE [ID]=@ID
+                        ";
+
+
+        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@ISCLOSE", ISCLOSE);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+
 
 
     #endregion
