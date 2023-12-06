@@ -70,6 +70,8 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                 // 例如，顯示一條錯誤消息或執行其他操作
             }
             
+            //報表
+            BindGrid(txtDate1.Text, txtDate2.Text);
             //交辨內容
             BindGrid3();
         }
