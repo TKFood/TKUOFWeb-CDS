@@ -148,6 +148,57 @@
             </telerik:RadPageView>
             <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false" PageViewID="1">
                 <div id="tabs-2">
+                    <table class="PopTable">
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label3" runat="server" Text="業務員: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label1" runat="server" Text="客戶: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label4" runat="server" Text="交辨內容: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label5" runat="server" Text="回覆期限: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtDate1" runat="server" Width="100px" onblur="validateDate()"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label2" runat="server" Text="是否結案: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD"></td>
+                            <td>
+                                <asp:Button ID="Button2" runat="server" Text="新增 " OnClick="btn2_Click" meta:resourcekey="btn2_Resource1" />
+                            </td>
+                        </tr>
+
+
+                    </table>
                 </div>
             </telerik:RadPageView>
             <telerik:RadPageView ID="RadPageView3" runat="server" Selected="false" PageViewID="3">
@@ -157,5 +208,22 @@
 
         </telerik:RadMultiPage>​
     </html>
+    <script type="text/javascript">
+        function validateDate() {
+            var dateTextbox = document.getElementById('<%= txtDate1.ClientID %>');
+            var dateValue = dateTextbox.value.trim();
+
+            // 使用正则表达式检查日期格式（yyyy/mm/dd）
+            var dateRegex = /^\d{4}\/(?:0?[1-9]|1[0-2])\/(?:0?[1-9]|[12][0-9]|3[01])$/;
+
+            if (!dateRegex.test(dateValue)) {
+                alert('請輸入有效的日期，格式为YYYY/MM/DD。');
+                var today = new Date();
+                var formattedDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+                dateTextbox.value = formattedDate;
+                dateTextbox.focus();
+            }
+        }
+    </script>
 </asp:Content>
 

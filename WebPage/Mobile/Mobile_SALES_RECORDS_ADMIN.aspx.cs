@@ -31,6 +31,7 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
     {
         if (!IsPostBack)
         {
+            txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
             BindDropDownList1();
             BindGrid();
         }
@@ -337,6 +338,10 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
     protected void btn1_Click(object sender, EventArgs e)
     {
         BindGrid();
+    }
+    protected void btn2_Click(object sender, EventArgs e)
+    {
+       
     }
     #endregion
 }
