@@ -33,13 +33,48 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
         {
             txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
             BindDropDownList1();
+            BindDropDownList2();
             BindGrid();
+
         }
            
     }
 
     #region FUNCTION
     private void BindDropDownList1()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[NAME]
+                        ,[LEADER]
+                        FROM [TKBUSINESS].[dbo].[TBSALESNAME]
+                        WHERE [NAME] NOT IN ('全部')
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "NAME";
+            DropDownList1.DataValueField = "NAME";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    private void BindDropDownList2()
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("ID", typeof(String));
@@ -63,10 +98,10 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
 
         if (dt.Rows.Count > 0)
         {
-            DropDownListISCLOSE.DataSource = dt;
-            DropDownListISCLOSE.DataTextField = "NAMES";
-            DropDownListISCLOSE.DataValueField = "NAMES";
-            DropDownListISCLOSE.DataBind();
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "NAMES";
+            DropDownList2.DataValueField = "NAMES";
+            DropDownList2.DataBind();
 
         }
         else
@@ -328,7 +363,52 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
+    public void ADD_TB_SALES_ASSINGED(
+                                    string SALES
+                                    , string CLIENTS
+                                    , string EVENTS
+                                    , string EDAYS
+                                    , string ISCLOSE
+                                    , string ADDDATES
+                                    )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"               
+                        INSERT INTO  [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
+                        (
+                        [SALES]
+                        ,[CLIENTS]
+                        ,[EVENTS]
+                        ,[EDAYS]
+                        ,[ISCLOSE]
+                        ,[ADDDATES]
+                        )
+                        VALUES
+                        (
+                        @SALES
+                        ,@CLIENTS
+                        ,@EVENTS
+                        ,@EDAYS
+                        ,@ISCLOSE
+                        ,@ADDDATES
+                        )
+                        ";
+
+
+        m_db.AddParameter("@SALES", SALES);
+        m_db.AddParameter("@CLIENTS", CLIENTS);
+        m_db.AddParameter("@EVENTS", EVENTS);
+        m_db.AddParameter("@EDAYS", EDAYS);
+        m_db.AddParameter("@ISCLOSE", ISCLOSE);
+        m_db.AddParameter("@ADDDATES", ADDDATES);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
 
 
     #endregion
@@ -341,7 +421,22 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
     }
     protected void btn2_Click(object sender, EventArgs e)
     {
-       
+        string SALES = DropDownList1.SelectedValue.ToString();
+        string CLIENTS = TextBox1.Text.ToString();
+        string EVENTS = TextBox2.Text.ToString();
+        string EDAYS = txtDate1.Text.ToString();
+        string ISCLOSE = DropDownList2.SelectedValue.ToString();
+        string ADDDATES = DateTime.Now.ToString("yyyy/MM/dd");
+
+        ADD_TB_SALES_ASSINGED(
+                                SALES
+                                , CLIENTS
+                                , EVENTS
+                                , EDAYS
+                                , ISCLOSE
+                                , ADDDATES
+                                );
+        BindGrid();
     }
     #endregion
 }

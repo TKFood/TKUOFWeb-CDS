@@ -159,7 +159,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:Label ID="Label1" runat="server" Text="客戶: "></asp:Label>
+                                <asp:Label ID="Label1" runat="server" Text="客戶: " Columns="100"></asp:Label>
                             </td>
                             <td>
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
@@ -170,7 +170,7 @@
                                 <asp:Label ID="Label4" runat="server" Text="交辨內容: "></asp:Label>
                             </td>
                             <td>
-                                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="TextBox2" runat="server" TextMode="MultiLine" Rows="4" Columns="50"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
