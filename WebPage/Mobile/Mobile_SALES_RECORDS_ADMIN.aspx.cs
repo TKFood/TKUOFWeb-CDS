@@ -34,6 +34,7 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
             txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
             BindDropDownList1();
             BindDropDownList2();
+            BindDropDownListISCLOSE();
             BindGrid();
 
         }
@@ -102,6 +103,41 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
             DropDownList2.DataTextField = "NAMES";
             DropDownList2.DataValueField = "NAMES";
             DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    private void BindDropDownListISCLOSE()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='是否結案'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListISCLOSE.DataSource = dt;
+            DropDownListISCLOSE.DataTextField = "NAMES";
+            DropDownListISCLOSE.DataValueField = "NAMES";
+            DropDownListISCLOSE.DataBind();
 
         }
         else
