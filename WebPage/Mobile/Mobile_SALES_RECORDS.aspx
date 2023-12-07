@@ -304,9 +304,9 @@
                                                     <asp:TextBox ID="txtNewField" runat="server"  Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="確定回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
-                                                    <asp:Button ID="Grid3Button1" runat="server" Text="確定回覆" CommandName="Grid3Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                    <asp:Button ID="Grid3Button1" runat="server" Text="新增回覆" CommandName="Grid3Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="ID" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
