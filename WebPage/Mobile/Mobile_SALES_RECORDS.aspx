@@ -291,12 +291,17 @@
                                                     <asp:Label ID="交辨內容" runat="server" Text='<%# Bind("EVENTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="已回覆內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>
                                             <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtNewField" runat="server" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                                    <asp:TextBox ID="txtNewField" runat="server"  Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="確定回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -308,12 +313,7 @@
                                                 <ItemTemplate>
                                                     <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="DID" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" Visible="false">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="DID" runat="server" Text='<%# Bind("DID") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>                                   
                                         </Columns>
                                     </Fast:Grid>
                                 </div>

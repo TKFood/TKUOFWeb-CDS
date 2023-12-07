@@ -780,10 +780,6 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
         }
 
         cmdTxt.AppendFormat(@"
-
-                          SELECT *
-                            FROM
-                            (
                             SELECT 
                             [TB_SALES_ASSINGED].[ID]
                             ,[SALES]
@@ -791,26 +787,13 @@ public partial class CDS_WebPage_Mobile_SALES_RECORDS : Ede.Uof.Utility.Page.Bas
                             ,[EVENTS]
                             ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
                             ,[ISCLOSE]
-                            ,CONVERT(NVARCHAR,[ADDDATES],111)ADDDATES
-                            ,NULL DID
+                            ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
+                            ,(SELECT TOP 1 [COMMENTS] FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS COMMENTS
                             FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
-                            UNION ALL
-                            SELECT
-                            MID ID
-                            ,[TB_SALES_ASSINGED].[SALES]
-                            ,' 回覆'
-                            ,[COMMENTS]
-                            ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES],111)
-                            ,''
-                            ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES],111) ADDDATES
-                            ,[TB_SALES_ASSINGED_COMMENTS].ID DID
-                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS],[TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
-                            WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID
-                            ) AS TEMP
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [SALES],[ID],DID
+                            ORDER BY [SALES],[EDAYS],[ID]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;

@@ -39,8 +39,8 @@
         <title>業務</title>
     </head>
     <body>
-        <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
-        <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage">
+        <telerik:radtabstrip id="RadTabStrip1" runat="server"></telerik:radtabstrip>
+        <telerik:radtabstrip id="RadTabStrip2" runat="server" multipageid="RadMultiPage">
             <Tabs>
                 <telerik:RadTab Text="交辨回覆" PageViewID="RadPageView1">
                 </telerik:RadTab>
@@ -49,8 +49,8 @@
                 <telerik:RadTab Text="資料" PageViewID="RadPageView3">
                 </telerik:RadTab>
             </Tabs>
-        </telerik:RadTabStrip>
-        <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
+        </telerik:radtabstrip>
+        <telerik:radmultipage id="RadMultiPage" runat="server" selectedindex="0">
             <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true" PageViewID="0">
                 <div id="tabs-1">
                     <table class="PopTable">
@@ -104,17 +104,22 @@
                                                     <asp:Label ID="交辨內容" runat="server" Text='<%# Bind("EVENTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="已回覆內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="是否結案" DataField="ISCLOSE" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                             </asp:BoundField>
                                             <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtNewField" runat="server" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                                    <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>'  TextMode="MultiLine" Rows="3"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="確定回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
-                                                    <asp:Button ID="Grid1Button1" runat="server" Text="確定回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                    <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="確定結案" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -131,12 +136,7 @@
                                                 <ItemTemplate>
                                                     <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="DID" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left" Visible="false">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="DID" runat="server" Text='<%# Bind("DID") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>                                     
                                         </Columns>
                                     </Fast:Grid>
                                 </div>
@@ -206,7 +206,8 @@
                 </div>
             </telerik:RadPageView>
 
-        </telerik:RadMultiPage>​
+        </telerik:radmultipage>
+    ​
     </html>
     <script type="text/javascript">
         function validateDate() {
