@@ -44,4 +44,12 @@
 		<Resource Name="vi" Value="Quẹt thẻ trực tuyến" />
 		<Resource Name="id" Value="absensi swipe kartu" />
 	</CustomControl>
+	
+	<CustomControl ControlType="CDS_WebPart_UC_Mobile_SALES_RECORDS" ControlPath="~/CDS/WebPart/UC_Mobile_SALES_RECORDS.ascx" DefaultTitle="業務交辨" TitleStyle="h" ZoneIndex="0">
+		<Resource Name="zh-CN" Value="業務交辨" />
+		<Resource Name="zh-TW" Value="業務交辨" />
+		<Resource Name="en-US" Value="業務交辨" />
+		<Resource Name="vi" Value="業務交辨" />
+		<Resource Name="id" Value="業務交辨" />
+	</CustomControl>
 </CustomControls>
