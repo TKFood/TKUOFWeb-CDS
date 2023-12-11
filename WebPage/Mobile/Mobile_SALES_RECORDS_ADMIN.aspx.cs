@@ -457,6 +457,12 @@ public partial class CDS_WebPage_Mobile_Mobile_SALES_RECORDS_ADMIN : Ede.Uof.Uti
                                 , ADDDATES
                                 );
         BindGrid();
+
+        // 在伺服器端註冊 JavaScript
+        string script = "alert('完成');";
+
+        // 使用ScriptManager
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMessage", script, true);
     }
     #endregion
 }
