@@ -15,8 +15,8 @@
     <Tabs>
         <telerik:RadTab Text="校稿交付">
         </telerik:RadTab>
-        <telerik:RadTab Text="業務交辨">
-        </telerik:RadTab>
+       <%-- <telerik:RadTab Text="業務交辨">
+        </telerik:RadTab>--%>
         <telerik:RadTab Text="記錄">
         </telerik:RadTab>
     </Tabs>
@@ -105,7 +105,7 @@
             </table>
         </div>
     </telerik:RadPageView>
-    <telerik:RadPageView ID="RadPageView1" runat="server">
+  <%--  <telerik:RadPageView ID="RadPageView1" runat="server">
         <div id="tabs-1">
             <table class="PopTable">
                 <tr>
@@ -150,7 +150,7 @@
                 </td>
             </table>
         </div>
-    </telerik:RadPageView>
+    </telerik:RadPageView>--%>
     <telerik:RadPageView ID="RadPageView2" runat="server">
         <div id="tabs-2">
         </div>
