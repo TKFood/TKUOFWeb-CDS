@@ -197,6 +197,19 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
                             LEFT JOIN [UOF].dbo.TB_EB_USER USER1 ON USER1.USER_GUID=CREATE_USER
                             LEFT JOIN [UOF].dbo.TB_EB_USER USER2 ON USER2.USER_GUID=EXECUTE_USER
                             WHERE 1=1
+                            AND EXECUTE_USER IN 
+                            (
+                            SELECT
+                            UserId.value('(.)', 'nvarchar(50)') AS UserId
+                            FROM
+                            [UOF].dbo.TB_EIP_SCH_DEVOLVE
+                            CROSS APPLY
+                            USER_SET.nodes('/UserSet/Element') AS UserSet(Element)
+                            CROSS APPLY
+                            Element.nodes('userId') AS UserId(UserId)
+                            WHERE
+                            TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID=TB_EIP_SCH_WORK.DEVOLVE_GUID
+                            )
                                 {0}
                             ORDER BY SUBJECT,CREATE_TIME DESC
                              
