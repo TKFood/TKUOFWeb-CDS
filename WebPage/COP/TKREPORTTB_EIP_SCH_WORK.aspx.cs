@@ -99,6 +99,20 @@ public partial class CDS_WebPage_TKREPORTTB_EIP_SCH_WORK : Ede.Uof.Utility.Page.
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
                         WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
+                        AND EXECUTE_USER IN 
+                        (
+                        SELECT
+                        UserId.value('(.)', 'nvarchar(50)') AS UserId
+                        FROM
+                        [UOF].dbo.TB_EIP_SCH_DEVOLVE
+                        CROSS APPLY
+                        USER_SET.nodes('/UserSet/Element') AS UserSet(Element)
+                        CROSS APPLY
+                        Element.nodes('userId') AS UserId(UserId)
+                        WHERE
+                        TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID=TB_EIP_SCH_WORK.DEVOLVE_GUID
+                        )
+
                         AND DATEDIFF(day, [TB_EIP_SCH_WORK].[END_TIME],GETDATE())>=0
                         AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)>=@DATESTART AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],112)<=@DATEEND
                         ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]

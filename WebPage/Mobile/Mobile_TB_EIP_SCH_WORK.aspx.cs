@@ -34,11 +34,7 @@ public partial class CDS_WebPage_Mobile_Mobile_TB_EIP_SCH_WORK : Ede.Uof.Utility
             txtDate1.Text = FirstDay.ToString("yyyy/MM/dd");
             txtDate2.Text = LastDay.ToString("yyyy/MM/dd");
         }
-        else
-        {
-            BindGrid(txtDate1.Text, txtDate2.Text);
-            BindGrid2(txtDate1.Text, txtDate2.Text);
-        }
+      
     }
 
 
@@ -113,7 +109,21 @@ public partial class CDS_WebPage_Mobile_Mobile_TB_EIP_SCH_WORK : Ede.Uof.Utility
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER1 ON USER1.USER_GUID=[TB_EIP_SCH_WORK].[EXECUTE_USER]
                         LEFT JOIN [UOF].[dbo].[TB_EB_USER] USER2 ON USER2.USER_GUID=[TB_EIP_SCH_WORK].[SOURCE_USER]
                         WHERE [WORK_STATE] IN ('NotYetBegin','Proceeding')
-                        AND USER1.[NAME] IN ('洪櫻芬','王琇平','葉枋俐','何姍怡','林琪琪','林杏育','張釋予','蔡顏鴻','陳帟靜','黃鈺涵','張健洲')
+                        AND EXECUTE_USER IN 
+                        (
+                        SELECT
+                        UserId.value('(.)', 'nvarchar(50)') AS UserId
+                        FROM
+                        [UOF].dbo.TB_EIP_SCH_DEVOLVE
+                        CROSS APPLY
+                        USER_SET.nodes('/UserSet/Element') AS UserSet(Element)
+                        CROSS APPLY
+                        Element.nodes('userId') AS UserId(UserId)
+                        WHERE
+                        TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID=TB_EIP_SCH_WORK.DEVOLVE_GUID
+                        )
+
+                        AND USER1.[NAME] IN (SELECT [NAMES] FROM [UOF].[dbo].[Z_SALES_NAMES])
                         AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111) >=@SDATE AND CONVERT(NVARCHAR,[TB_EIP_SCH_WORK].[END_TIME],111) <=@EDATE
                         ORDER BY [EXECUTE_USER],[TB_EIP_SCH_WORK].[END_TIME],[SUBJECT]
 
@@ -211,7 +221,8 @@ public partial class CDS_WebPage_Mobile_Mobile_TB_EIP_SCH_WORK : Ede.Uof.Utility
     #region BUTTON
     protected void btn1_Click(object sender, EventArgs e)
     {
-
+        BindGrid(txtDate1.Text, txtDate2.Text);
+        BindGrid2(txtDate1.Text, txtDate2.Text);
     }
 
 
