@@ -575,54 +575,25 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
             string Cellvalue2 = btn2.CommandArgument;
             DataRowView row2 = (DataRowView)e.Row.DataItem;
             Button lbtnName2 = (Button)e.Row.FindControl("Button2");
-            ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();
-            
+            ExpandoObject param2 = new { ID = Cellvalue }.ToExpando();         
 
 
         }
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label Label_PURCHECKS = (Label)e.Row.FindControl("Label_PURCHECKS");
+            Label Label_MOCCHECKS = (Label)e.Row.FindControl("Label_MOCCHECKS");
+            Button Button2 = (Button)e.Row.FindControl("Button2");
+            if (Label_PURCHECKS.Text.Equals("Y") && Label_MOCCHECKS.Text.Equals("Y"))
+            {
+                Button2.Visible = true;
+            }
+            else
+            {
+                Button2.Visible = false;
+            }
+        }
 
-
-
-
-
-        //StringBuilder PATH = new StringBuilder();
-
-        //System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    DataRowView row = (DataRowView)e.Row.DataItem;
-        //    System.Web.UI.WebControls.Image img1 = (System.Web.UI.WebControls.Image)e.Row.FindControl("Image1");
-
-
-
-        //    if (!string.IsNullOrEmpty(row["PHOTO_GUID"].ToString()))
-        //    {
-        //        //img.ImageUrl = "https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id=8b2a033b-c301-419b-938d-e6cfedf28b82&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name=40100010650490.png";
-
-
-        //        //PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/common/filecenter/v3/handler/downloadhandler.ashx?id={0}&path=ALBUM%5C2021%5C03&contentType=image%2Fpng&name={1}
-        //        //                ", row["RESIZE_FILE_ID"].ToString(), row["PHOTO_DESC"].ToString());
-
-        //        PATH.AppendFormat(@"https://eip.tkfood.com.tw/UOF/Common/FileCenter/V3/Handler/FileControlHandler.ashx?id={0}
-        //                        ", row["RESIZE_FILE_ID"].ToString());
-        //        img.ImageUrl = PATH.ToString();
-
-        //        //img.ImageUrl  = Request.ApplicationPath + "/Common/FileCenter/ShowImage.aspx?id=" + row["THUMBNAIL_FILE_ID"].ToString();
-
-        //        //img.ImageUrl = string.Format("~/Common/FileCenter/Downloadfile.ashx?id={0}", row["THUMBNAIL_FILE_ID"].ToString());
-
-        //        //e.Row.Cells[0].Text = row["THUMBNAIL_FILE_ID"].ToString();
-        //        ////獲取當前行的圖片路徑
-        //        //string ImgUrl = img.ImageUrl;
-        //        ////給帶圖片的單元格添加點擊事件
-        //        //e.Row.Cells[3].Attributes.Add("onclick", e.Row.Cells[3].ClientID.ToString()
-        //        //    + ".checked=true;CellClick('" + ImgUrl + "')");
-
-        //        //  img.ImageUrl = "https://eip.tkfood.com.tw/BM/upload/note/20200926112527.jpg";
-        //    }
-
-
-        //}
 
 
     }
