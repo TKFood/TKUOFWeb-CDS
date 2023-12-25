@@ -144,6 +144,11 @@
                                         <asp:BoundField HeaderText="變更版次" DataField="TF003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:TemplateField HeaderText="是否生產" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Label_COPTFUDF01" runat="server" Text='<%# Bind("COPTFUDF01") %>' Style="word-break: break-all; white-space: pre-line;" Width="20px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:BoundField HeaderText="品號" DataField="TF005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
@@ -185,7 +190,7 @@
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="生管備註" DataField="MOCCHECKSCOMMENTS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                        </asp:BoundField>                                      
+                                        </asp:BoundField>
                                         <asp:TemplateField HeaderText="採購核準" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="Label_PURCHECKS" runat="server" Text='<%# Bind("PURCHECKS") %>' Style="word-break: break-all; white-space: pre-line;" Width="20px"></asp:Label>
@@ -328,6 +333,11 @@
                                             <asp:BoundField HeaderText="變更版次" DataField="TF003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
+                                            <asp:TemplateField HeaderText="是否生產" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label_COPTFUDF01" runat="server" Text='<%# Bind("COPTFUDF01") %>' Style="word-break: break-all; white-space: pre-line;" Width="20px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="品號" DataField="TF005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
@@ -523,6 +533,11 @@
                                             <asp:BoundField HeaderText="變更版次" DataField="TF003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
+                                            <asp:TemplateField HeaderText="是否生產" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label_COPTFUDF01" runat="server" Text='<%# Bind("COPTFUDF01") %>' Style="word-break: break-all; white-space: pre-line;" Width="20px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="品號" DataField="TF005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
@@ -718,6 +733,11 @@
                                             <asp:BoundField HeaderText="變更版次" DataField="TF003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
+                                            <asp:TemplateField HeaderText="是否生產" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label_COPTFUDF01" runat="server" Text='<%# Bind("COPTFUDF01") %>' Style="word-break: break-all; white-space: pre-line;" Width="20px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="品號" DataField="TF005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
@@ -892,6 +912,11 @@
                                             <asp:BoundField HeaderText="變更版次" DataField="TF003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
+                                            <asp:TemplateField HeaderText="是否生產" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label_COPTFUDF01" runat="server" Text='<%# Bind("COPTFUDF01") %>' Style="word-break: break-all; white-space: pre-line;" Width="20px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="品號" DataField="TF005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
@@ -1044,6 +1069,11 @@
                                             <asp:BoundField HeaderText="變更版次" DataField="TE003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
+                                            <asp:TemplateField HeaderText="是否生產" ItemStyle-Width="20px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label_COPTFUDF01" runat="server" Text='<%# Bind("COPTFUDF01") %>' Style="word-break: break-all; white-space: pre-line;" Width="20px"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField HeaderText="品號" DataField="TF005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                 <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                             </asp:BoundField>
