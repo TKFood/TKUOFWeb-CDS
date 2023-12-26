@@ -120,6 +120,11 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                        FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
                                        WHERE MG005=NI001 AND MG003 = MB003
                                        FOR XML PATH('')), 1, 1, '1') AS All_NI002
+                            ,STUFF((
+                                        SELECT  LTRIM(RTRIM(MC004))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMC,[TK].dbo.INVMB
+                                        WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                        FOR XML PATH('')), 1, 1, '1') AS All_MC004
 
                             FROM [TK].dbo.POSMB
                             WHERE 1=1                            

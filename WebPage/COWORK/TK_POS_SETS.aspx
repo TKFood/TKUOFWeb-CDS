@@ -65,14 +65,19 @@
                                         <asp:BoundField HeaderText="核價日期" DataField="MB005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="適用門市" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="活動商品" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="Label_All_MF004" runat="server" Text='<%# Bind("All_MF004") %>'  Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                <asp:Label ID="Label_All_MC004" runat="server" Text='<%# Bind("All_MC004") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                        
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="適用門市" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Label_All_MF004" runat="server" Text='<%# Bind("All_MF004") %>' Style="word-break: break-all; white-space: pre-line;" Width="160px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="適用會員" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="Label_All_NI002" runat="server"  Text='<%# Bind("All_NI002") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                <asp:Label ID="Label_All_NI002" runat="server" Text='<%# Bind("All_NI002") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
