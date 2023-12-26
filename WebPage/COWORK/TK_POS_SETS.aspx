@@ -82,7 +82,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid1_Button2" runat="server" Text="送簽" CommandName="Grid1_Button2" ForeColor="Red" CommandArgument='<%# Eval("MB003") %>' />
+                                                <asp:Button ID="Grid1_Button1" runat="server" Text="送簽" CommandName="Grid1_Button1" ForeColor="Red" CommandArgument='<%# Eval("MB003") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

@@ -24,6 +24,7 @@ using OfficeOpenXml.Style;
 
 public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BasePage
 {
+    string MB003 = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         string ACCOUNT = Current.Account;
@@ -151,20 +152,34 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
        
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
-    {        
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Grid1_Button1
+            //Get the button that raised the event
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid1_Button1");
+            //Get the row that contains this button
+            GridViewRow gvr1 = (GridViewRow)Grid1_Button1.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue1 = Grid1_Button1.CommandArgument;
+            DataRowView row1 = (DataRowView)e.Row.DataItem;
+            Button lbtnName1 = (Button)e.Row.FindControl("Grid1_Button1");
+            ExpandoObject param1 = new { ID = Cellvalue1 }.ToExpando();
 
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
 
-        if (e.CommandName == "Button1")
-        {           
-            BindGrid();
-        }
-        else if (e.CommandName == "Button2")
+        if (e.CommandName == "Grid1_Button1")
         {
+            //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+
+            MB003 = e.CommandArgument.ToString();      
+
+            ADDTB_WKF_EXTERNAL_TASK_POSSET(MB003);
         }
 
     }
@@ -176,6 +191,434 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
 
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string MB003)
+    {
+        DataTable DT = SEARCH_POSM(MB003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
+
+        string account = DT.Rows[0]["CREATOR"].ToString();
+        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string fillerName = DT.Rows[0]["NAME"].ToString();
+        string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+        string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+        string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim() ;
+
+        int rowscounts = 0;
+
+        XmlDocument xmlDoc = new XmlDocument();
+        //建立根節點
+        XmlElement Form = xmlDoc.CreateElement("Form");
+
+        //正式的id
+        string ID = SEARCHFORM_VERSION_ID("POS,商品活動設定");
+
+        if (!string.IsNullOrEmpty(ID))
+        {
+            Form.SetAttribute("formVersionId", ID);
+        }
+
+
+        Form.SetAttribute("urgentLevel", "2");
+        //加入節點底下
+        xmlDoc.AppendChild(Form);
+
+        ////建立節點Applicant
+        XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+        Applicant.SetAttribute("account", account);
+        Applicant.SetAttribute("groupId", groupId);
+        Applicant.SetAttribute("jobTitleId", jobTitleId);
+        //加入節點底下
+        Form.AppendChild(Applicant);
+
+        //建立節點 Comment
+        XmlElement Comment = xmlDoc.CreateElement("Comment");
+        Comment.InnerText = "申請者意見";
+        //加入至節點底下
+        Applicant.AppendChild(Comment);
+
+        //建立節點 FormFieldValue
+        XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+        //加入至節點底下
+        Form.AppendChild(FormFieldValue);
+
+        //建立節點FieldItem
+        //ID 表單編號	
+        XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "ID");
+        FieldItem.SetAttribute("fieldValue", "");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //用ADDTACK，直接啟動起單
+        ADDTACK(Form);
+
+    }
+    public string SEARCHFORM_VERSION_ID(string FORM_NAME)
+    {
+        try
+        {
+
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+            StringBuilder QUERYS = new StringBuilder();
+
+
+
+            cmdTxt.AppendFormat(@" 
+                                 SELECT TOP 1 RTRIM(LTRIM(TB_WKF_FORM_VERSION.FORM_VERSION_ID)) FORM_VERSION_ID,TB_WKF_FORM_VERSION.FORM_ID,TB_WKF_FORM_VERSION.VERSION,TB_WKF_FORM_VERSION.ISSUE_CTL
+                                    ,TB_WKF_FORM.FORM_NAME
+                                    FROM [UOF].dbo.TB_WKF_FORM_VERSION,[UOF].dbo.TB_WKF_FORM
+                                    WHERE 1=1
+                                    AND TB_WKF_FORM_VERSION.FORM_ID=TB_WKF_FORM.FORM_ID
+                                    AND TB_WKF_FORM_VERSION.ISSUE_CTL=1
+                                    AND FORM_NAME='{0}'
+                                    ORDER BY TB_WKF_FORM_VERSION.FORM_ID,TB_WKF_FORM_VERSION.VERSION DESC
+
+                                   ", FORM_NAME);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt.Rows.Count >= 1)
+            {
+                return dt.Rows[0]["FORM_VERSION_ID"].ToString();
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+        catch
+        {
+            return "";
+        }
+        finally
+        {
+
+        }
+    }
+
+    public DataTable SEARCH_POSM(string MB003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                   SELECT TEMP.*
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+
+                                    FROM 
+                                    (
+                                    SELECT
+                                    POSMB.[CREATOR]
+                                    ,POSMB.[MB001]
+                                    ,POSMB.[MB002]
+                                    ,POSMB.[MB003]
+                                    ,POSMB.[MB004]
+                                    ,POSMB.[MB005]
+                                    ,POSMB.[MB006]
+                                    ,POSMB.[MB007]
+                                    ,POSMB.[MB008]
+                                    ,POSMB.[MB009]
+                                    ,POSMB.[MB010]
+                                    ,POSMB.[MB011]
+                                    ,POSMB.[MB012]
+                                    ,POSMB.[MB013]
+                                    ,POSMB.[MB014]
+                                    ,POSMB.[MB015]
+                                    ,POSMB.[MB016]
+                                    ,POSMB.[MB017]
+                                    ,POSMB.[MB018]
+                                    ,POSMB.[MB019]
+                                    ,POSMB.[MB020]
+                                    ,POSMB.[MB021]
+                                    ,POSMB.[MB022]
+                                    ,POSMB.[MB023]
+                                    ,POSMB.[MB024]
+                                    ,POSMB.[MB025]
+                                    ,POSMB.[MB026]
+                                    ,POSMB.[MB027]
+                                    ,POSMB.[MB028]
+                                    ,POSMB.[MB029]
+                                    ,POSMB.[MB030]
+                                    ,POSMB.[MB031]
+                                    ,POSMB.[MB032]
+                                    ,POSMB.[MB033]
+                                    ,POSMB.[MB034]
+                                    ,POSMB.[MB035]
+                                    ,POSMB.[MB036]
+                                    ,POSMB.[MB037]
+                                    ,POSMB.[MB038]
+                                    ,POSMB.[MB039]
+                                    ,POSMB.[MB040]
+                                    ,POSMB.[MB041]
+                                    ,POSMB.[MB042]
+                                    ,POSMB.[MB043]
+                                    ,POSMB.[MB044]
+                                    ,POSMB.[MB045]
+                                    ,POSMB.[MB046]
+                                    ,POSMB.[MB200]
+                                    ,POSMB.[UDF01]
+                                    ,POSMB.[UDF02]
+                                    ,POSMB.[UDF03]
+                                    ,POSMB.[UDF04]
+                                    ,POSMB.[UDF05]
+                                    ,POSMB.[UDF06]
+                                    ,POSMB.[UDF07]
+                                    ,POSMB.[UDF08]
+                                    ,POSMB.[UDF09]
+                                    ,POSMB.[UDF10]
+                                    ,STUFF((
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                    FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                    WHERE MF004=MA001 AND MF003 = MB003
+                                    FOR XML PATH('')), 1, 1, '1') AS All_MF004
+                                    ,STUFF((
+                                    SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                    FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                    WHERE MG005=NI001 AND MG003 = MB003
+                                    FOR XML PATH('')), 1, 1, '1') AS All_NI002
+                                    ,STUFF((
+                                    SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(13) + CHAR(10) 
+                                    FROM [TK].dbo.POSMC,[TK].dbo.INVMB
+                                    WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                    FOR XML PATH('')), 1, 1, '1') AS All_MC004
+                                     ,[TB_EB_USER].USER_GUID,NAME
+
+                                    FROM [TK].dbo.POSMB
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMB.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE 1=1    
+                                    AND MB003='{0}'
+                                    ) AS TEMP
+                              
+                                    ", MB003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+    public DataTable SEARCHUOFDEP(string ACCOUNT)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                    SELECT 
+                                    [GROUP_NAME] AS 'DEPNAME'
+                                    ,[TB_EB_EMPL_DEP].[GROUP_ID]+','+[GROUP_NAME]+',False' AS 'DEPNO'
+                                    ,[TB_EB_USER].[USER_GUID]
+                                    ,[ACCOUNT]
+                                    ,[NAME]
+                                    ,[TB_EB_EMPL_DEP].[GROUP_ID]
+                                    ,[TITLE_ID]     
+                                    ,[GROUP_NAME]
+                                    ,[GROUP_CODE]
+                                    FROM [192.168.1.223].[UOF].[dbo].[TB_EB_USER],[192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP],[192.168.1.223].[UOF].[dbo].[TB_EB_GROUP]
+                                    WHERE [TB_EB_USER].[USER_GUID]=[TB_EB_EMPL_DEP].[USER_GUID]
+                                    AND [TB_EB_EMPL_DEP].[GROUP_ID]=[TB_EB_GROUP].[GROUP_ID]
+                                    AND ISNULL([TB_EB_GROUP].[GROUP_CODE],'')<>''
+                                    AND [ACCOUNT]='{0}'
+                              
+                                    ", ACCOUNT);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+    public void ADDTACK(XmlElement Form)
+    {
+        Ede.Uof.WKF.Utility.TaskUtilityUCO taskUCO = new Ede.Uof.WKF.Utility.TaskUtilityUCO();
+
+        string result = taskUCO.WebService_CreateTask(Form.OuterXml);
+
+        XElement resultXE = XElement.Parse(result);
+
+        string status = "";
+        string formNBR = "";
+        string error = "";
+
+        string NEWTASK_ID = "";
+
+        if (resultXE.Element("Status").Value == "1")
+        {
+            status = "送單成功!";
+            formNBR = resultXE.Element("FormNumber").Value;
+
+            NEWTASK_ID = formNBR;
+
+            Logger.Write("起單", status + formNBR);
+            MsgBox("送單成功 \r\n" + MB003 + " > " + formNBR, this.Page, this);
+
+        }
+        else
+        {
+            status = "送單失敗!";
+            error = resultXE.Element("Exception").Element("Message").Value;
+
+            Logger.Write("起單", status + error + "\r\n" + Form.OuterXml);
+
+            MsgBox("失敗了，無法送單!!!!    " + error + "\r\n" + Form.OuterXml, this.Page, this);
+
+            throw new Exception(status + error + "\r\n" + Form.OuterXml);
+
+        }
+    }
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
     #endregion
 
     #region BUTTON
