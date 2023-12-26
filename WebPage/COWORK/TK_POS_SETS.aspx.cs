@@ -78,27 +78,32 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
 
-        ////日期
-        //if (!string.IsNullOrEmpty(TextBox1.Text))
-        //{
+        //日期
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND MB001 LIKE '{0}%' ", TextBox1.Text.Trim());
+        }
 
-        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%' ", TextBox1.Text.Trim());
-
-        //}
-
-        ////核單
-        //if (!string.IsNullOrEmpty(DropDownList1.Text))
-        //{
-        //    if (DropDownList1.Text.Equals("未核單"))
-        //    {
-        //        QUERYS.AppendFormat(@" AND TE029='N' ");
-        //    }
-        //    else if (DropDownList1.Text.Equals("已核單"))
-        //    {
-        //        QUERYS.AppendFormat(@"  AND TE029='Y' ");
-        //    }
-        //}
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        {
+            if (DropDownList1.Text.Equals("未核單"))
+            {
+                QUERYS2.AppendFormat(@" AND MB008='N' ");
+            }
+            else if (DropDownList1.Text.Equals("已核單"))
+            {
+                QUERYS2.AppendFormat(@"  AND MB008='Y' ");
+            }
+        }
+        //特價名稱
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS3.AppendFormat(@" AND MB004 LIKE '{0}%' ", TextBox2.Text.Trim());
+        }
 
 
 
@@ -106,13 +111,12 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         cmdTxt.AppendFormat(@" 
                             SELECT *
                             FROM [TK].dbo.POSMB
-                            WHERE 1=1
-                            AND MB001 LIKE '2023%'
+                            WHERE 1=1                            
                             {0}
-                               
-                                
+                            {1}   
+                            {2}    
 
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
 
 
