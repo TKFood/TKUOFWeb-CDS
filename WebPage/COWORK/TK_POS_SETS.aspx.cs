@@ -110,6 +110,17 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
         cmdTxt.AppendFormat(@" 
                             SELECT *
+                            ,STUFF((
+                                       SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                       FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                       WHERE MF004=MA001 AND MF003 = MB003
+                                       FOR XML PATH('')), 1, 1, '1') AS All_MF004
+                            ,STUFF((
+                                       SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                       FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                       WHERE MG005=NI001 AND MG003 = MB003
+                                       FOR XML PATH('')), 1, 1, '1') AS All_NI002
+
                             FROM [TK].dbo.POSMB
                             WHERE 1=1                            
                             {0}
