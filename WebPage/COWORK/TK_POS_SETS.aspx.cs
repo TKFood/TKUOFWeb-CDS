@@ -103,7 +103,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //特價名稱
         if (!string.IsNullOrEmpty(TextBox2.Text))
         {
-            QUERYS3.AppendFormat(@" AND MB004 LIKE '{0}%' ", TextBox2.Text.Trim());
+            QUERYS3.AppendFormat(@" AND (MB004 LIKE '%{0}%' OR MB003 LIKE '%{0}%') ", TextBox2.Text.Trim());
         }
 
 
@@ -299,7 +299,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD001	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD004");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -311,7 +311,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD001	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD005");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -323,7 +323,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD001	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD006");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -469,17 +469,17 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     ,POSMB.[UDF09]
                                     ,POSMB.[UDF10]
                                     ,STUFF((
-                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
                                     FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
                                     WHERE MF004=MA001 AND MF003 = MB003
                                     FOR XML PATH('')), 1, 1, '1') AS All_MF004
                                     ,STUFF((
-                                    SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                    SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
                                     FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
                                     WHERE MG005=NI001 AND MG003 = MB003
                                     FOR XML PATH('')), 1, 1, '1') AS All_NI002
                                     ,STUFF((
-                                    SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(13) + CHAR(10) 
+                                    SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(10)
                                     FROM [TK].dbo.POSMC,[TK].dbo.INVMB
                                     WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
                                     FOR XML PATH('')), 1, 1, '1') AS All_MC004

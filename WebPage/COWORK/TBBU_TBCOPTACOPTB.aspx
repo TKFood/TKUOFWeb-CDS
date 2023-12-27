@@ -73,7 +73,7 @@
                                                 </asp:BoundField>
                                                 <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Button ID="Grid1_Button1" runat="server" Text="送簽" CommandName="Grid1_Button1" ForeColor="Red" CommandArgument='<%# Eval("TA001TA002") %>' />
+                                                        <asp:Button ID="Grid1_Button1" runat="server" Text="送簽" CommandName="Grid1_Button1" ForeColor="Red" CommandArgument='<%# Eval("TA001TA002") %>' OnClientClick="return confirm('確定要送簽嗎？');" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
