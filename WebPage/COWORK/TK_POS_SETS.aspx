@@ -4,14 +4,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
-    <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
+    <telerik:radtabstrip id="RadTabStrip1" runat="server"></telerik:radtabstrip>
+    <telerik:radtabstrip id="RadTabStrip2" runat="server" multipageid="RadMultiPage" selectedindex="0">
         <Tabs>
             <telerik:RadTab Text="商品特價/折扣">
             </telerik:RadTab>
         </Tabs>
-    </telerik:RadTabStrip>
-    <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
+    </telerik:radtabstrip>
+    <telerik:radmultipage id="RadMultiPage" runat="server" selectedindex="0">
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
             <div id="tabs-1">
                 <table class="PopTable">
@@ -65,6 +65,9 @@
                                         <asp:BoundField HeaderText="核價日期" DataField="MB005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
+                                        <asp:BoundField HeaderText="起迄日期" DataField="MB012MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:TemplateField HeaderText="活動商品" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="Label_All_MC004" runat="server" Text='<%# Bind("All_MC004") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
@@ -93,6 +96,7 @@
                 </table>
             </div>
         </telerik:RadPageView>
-    </telerik:RadMultiPage>​
+    </telerik:radmultipage>
+    ​
 </asp:Content>
 

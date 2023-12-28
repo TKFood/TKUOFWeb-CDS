@@ -126,6 +126,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                         FROM [TK].dbo.POSMC,[TK].dbo.INVMB
                                         WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
                                         FOR XML PATH('')), 1, 1, '1') AS All_MC004
+                            ,(MB012+'~'+MB013) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMB
                             WHERE 1=1                            
@@ -179,7 +180,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
             MB003 = e.CommandArgument.ToString();      
 
-            ADDTB_WKF_EXTERNAL_TASK_POSSET(MB003);
+            ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣",MB003);
         }
 
     }
@@ -191,7 +192,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
 
-    public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string MB003)
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string KINDS,string MB003)
     {
         DataTable DT = SEARCH_POSM(MB003);
         DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
@@ -272,7 +273,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         FieldItem.SetAttribute("fillSiteId", "");
         //加入至members節點底下
         FormFieldValue.AppendChild(FieldItem);
-        //FIELD001	
+        //FIELD002	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD002");
         FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
@@ -284,7 +285,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         FieldItem.SetAttribute("fillSiteId", "");
         //加入至members節點底下
         FormFieldValue.AppendChild(FieldItem);
-        //FIELD001	
+        //FIELD003	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD003");
         FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
@@ -296,7 +297,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         FieldItem.SetAttribute("fillSiteId", "");
         //加入至members節點底下
         FormFieldValue.AppendChild(FieldItem);
-        //FIELD001	
+        //FIELD004	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD004");
         FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
@@ -308,7 +309,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         FieldItem.SetAttribute("fillSiteId", "");
         //加入至members節點底下
         FormFieldValue.AppendChild(FieldItem);
-        //FIELD001	
+        //FIELD005	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD005");
         FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
@@ -320,10 +321,34 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         FieldItem.SetAttribute("fillSiteId", "");
         //加入至members節點底下
         FormFieldValue.AppendChild(FieldItem);
-        //FIELD001	
+        //FIELD006	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD006");
         FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD007	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD007");
+        FieldItem.SetAttribute("fieldValue", KINDS);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD008	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB012MB013"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -484,6 +509,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
                                     FOR XML PATH('')), 1, 1, '1') AS All_MC004
                                      ,[TB_EB_USER].USER_GUID,NAME
+                                    ,(MB012+'~'+MB013) AS 'MB012MB013'
 
                                     FROM [TK].dbo.POSMB
                                     LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMB.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
