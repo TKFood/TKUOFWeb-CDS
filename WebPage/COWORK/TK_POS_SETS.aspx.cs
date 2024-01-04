@@ -1046,11 +1046,11 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                        WHERE MG005=NI001 AND MG003 = MB003
                                        FOR XML PATH('')) AS All_NI002
                             ,(
-                                        SELECT  LTRIM(RTRIM(MC004))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
-                                        FROM [TK].dbo.POSMC,[TK].dbo.INVMB
-                                        WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                        SELECT  LTRIM(RTRIM(MB027))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MT003))+ CHAR(13) + CHAR(10)
+                                        FROM [TK].dbo.POSMT,[TK].dbo.POSMB MB
+                                        WHERE MT002=MB.MB027 AND MB.MB003 = POSMB.MB003
                                         FOR XML PATH('')) AS All_MC004
-                            ,(MB012+'~'+MB013) AS 'MB012MB013'
+                             ,(MB012+'~'+MB013) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMB
                             WHERE 1=1  
@@ -2848,9 +2848,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     WHERE MG005=NI001 AND MG003 = MB003
                                     FOR XML PATH('')) AS All_NI002
                                     ,(
-                                    SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(10)
-                                    FROM [TK].dbo.POSMC,[TK].dbo.INVMB
-                                    WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                    SELECT  LTRIM(RTRIM(MB027))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MT003))+ CHAR(13) + CHAR(10)
+                                    FROM [TK].dbo.POSMT,[TK].dbo.POSMB MB
+                                    WHERE MT002=MB.MB027 AND MB.MB003 = POSMB.MB003
                                     FOR XML PATH('')) AS All_MC004
                                     ,(MB012+'~'+MB013) AS 'MB012MB013'
                                      ,[TB_EB_USER].USER_GUID,NAME
