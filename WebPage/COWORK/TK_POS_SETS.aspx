@@ -4,14 +4,26 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <telerik:radtabstrip id="RadTabStrip1" runat="server"></telerik:radtabstrip>
-    <telerik:radtabstrip id="RadTabStrip2" runat="server" multipageid="RadMultiPage" selectedindex="0">
+    <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
+    <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
             <telerik:RadTab Text="商品特價/折扣">
             </telerik:RadTab>
+            <telerik:RadTab Text="商品類別特價設定作業">
+            </telerik:RadTab>
+            <telerik:RadTab Text="商品價格區間特價設定作業">
+            </telerik:RadTab>
+            <telerik:RadTab Text="組合品搭贈設定作業">
+            </telerik:RadTab>
+            <telerik:RadTab Text="配對搭贈設定作業">
+            </telerik:RadTab>
+            <telerik:RadTab Text="滿額折價設定作業">
+            </telerik:RadTab>
+            <telerik:RadTab Text="付款方式特價設定作業">
+            </telerik:RadTab>
         </Tabs>
-    </telerik:radtabstrip>
-    <telerik:radmultipage id="RadMultiPage" runat="server" selectedindex="0">
+    </telerik:RadTabStrip>
+    <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
             <div id="tabs-1">
                 <table class="PopTable">
@@ -85,7 +97,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid1_Button1" runat="server" Text="送簽" CommandName="Grid1_Button1" ForeColor="Red" CommandArgument='<%# Eval("MB003") %>' OnClientClick="return confirm('確定要送簽嗎？');"/>
+                                                <asp:Button ID="Grid1_Button1" runat="server" Text="送簽" CommandName="Grid1_Button1" ForeColor="Red" CommandArgument='<%# Eval("MB003") %>' OnClientClick="return confirm('確定要送簽嗎？');" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -96,7 +108,266 @@
                 </table>
             </div>
         </telerik:RadPageView>
-    </telerik:radmultipage>
+        <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false">
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label4" runat="server" Text="年度: "></asp:Label>
+                            <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label5" runat="server" Text="商品類別特價代號/名稱: "></asp:Label>
+                            <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label6" runat="server" Text="是否確認: "></asp:Label>
+                            <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="Button2_Click"
+                                meta:resourcekey="btn2Resource1" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView3" runat="server" Selected="false">
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label7" runat="server" Text="年度: "></asp:Label>
+                            <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label8" runat="server" Text="商品價格區間特價設定代號/名稱: "></asp:Label>
+                            <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label9" runat="server" Text="是否確認: "></asp:Label>
+                            <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button3" runat="server" Text=" 查詢 " OnClick="Button3_Click"
+                                meta:resourcekey="btn3Resource1" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView4" runat="server" Selected="false">
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label10" runat="server" Text="年度: "></asp:Label>
+                            <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label11" runat="server" Text="組合品搭贈設定代號/名稱: "></asp:Label>
+                            <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label12" runat="server" Text="是否確認: "></asp:Label>
+                            <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button4" runat="server" Text=" 查詢 " OnClick="Button4_Click"
+                                meta:resourcekey="btn4Resource1" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView5" runat="server" Selected="false">
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label13" runat="server" Text="年度: "></asp:Label>
+                            <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label14" runat="server" Text="配對搭贈設定代號/名稱: "></asp:Label>
+                            <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label15" runat="server" Text="是否確認: "></asp:Label>
+                            <asp:DropDownList ID="DropDownList5" runat="server"></asp:DropDownList>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button5" runat="server" Text=" 查詢 " OnClick="Button5_Click"
+                                meta:resourcekey="btn5Resource1" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView6" runat="server" Selected="false">
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label16" runat="server" Text="年度: "></asp:Label>
+                            <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label17" runat="server" Text="滿額折價設定代號/名稱: "></asp:Label>
+                            <asp:TextBox ID="TextBox12" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label18" runat="server" Text="是否確認: "></asp:Label>
+                            <asp:DropDownList ID="DropDownList6" runat="server"></asp:DropDownList>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button6" runat="server" Text=" 查詢 " OnClick="Button6_Click"
+                                meta:resourcekey="btn6Resource1" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView7" runat="server" Selected="false">
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label19" runat="server" Text="年度: "></asp:Label>
+                            <asp:TextBox ID="TextBox13" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label20" runat="server" Text="付款方式特價代號/名稱: "></asp:Label>
+                            <asp:TextBox ID="TextBox14" runat="server"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Label ID="Label21" runat="server" Text="是否確認: "></asp:Label>
+                            <asp:DropDownList ID="DropDownList7" runat="server"></asp:DropDownList>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button7" runat="server" Text=" 查詢 " OnClick="Button7_Click"
+                                meta:resourcekey="btn7Resource1" />
+                        </td>
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+
+    </telerik:RadMultiPage>
     ​
 </asp:Content>
 
