@@ -7,7 +7,7 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
-            <telerik:RadTab Text="商品特價/折扣">
+            <telerik:RadTab Text="商品特價折扣作業">
             </telerik:RadTab>
             <telerik:RadTab Text="商品類別特價設定作業">
             </telerik:RadTab>

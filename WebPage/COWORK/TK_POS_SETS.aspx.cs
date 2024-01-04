@@ -41,13 +41,20 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
             BindDropDownList6();
             BindDropDownList7();
 
+            //商品特價折扣
             BindGrid();
+            //商品類別特價設定作業
             BindGrid2();
+            //商品價格區間特價設定作業
             BindGrid3();
+            //組合品搭贈設定作業
             BindGrid4();
+            //配對搭贈設定作業
             BindGrid5();
+            //滿額折價設定作業
             BindGrid6();
-    
+            //付款方式特價設定作業
+            BindGrid7();
         }
     }
     #region FUNCTION
