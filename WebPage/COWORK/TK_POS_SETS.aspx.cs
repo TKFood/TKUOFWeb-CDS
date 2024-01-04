@@ -934,7 +934,6 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
                             FROM [TK].dbo.POSMM
                             WHERE 1=1  
-                            AND MM003='620240101004'
                             {0}
                             {1}   
                             {2}    
@@ -1118,10 +1117,10 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
 
-    //
+    //商品特價折扣作業
     public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string KINDS,string MB003)
     {
-        DataTable DT = SEARCH_POSM(MB003);
+        DataTable DT = SEARCH_POSMB(MB003);
         DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
 
         string account = DT.Rows[0]["CREATOR"].ToString();
@@ -1289,6 +1288,1035 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         ADDTACK(Form);
 
     }
+
+    //商品類別特價設定作業
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET2(string KINDS, string MB003)
+    {
+        DataTable DT = SEARCH_POSMB2(MB003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
+
+        string account = DT.Rows[0]["CREATOR"].ToString();
+        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string fillerName = DT.Rows[0]["NAME"].ToString();
+        string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+        string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+        string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+
+        int rowscounts = 0;
+
+        XmlDocument xmlDoc = new XmlDocument();
+        //建立根節點
+        XmlElement Form = xmlDoc.CreateElement("Form");
+
+        //正式的id
+        string ID = SEARCHFORM_VERSION_ID("POS,商品活動設定");
+
+        if (!string.IsNullOrEmpty(ID))
+        {
+            Form.SetAttribute("formVersionId", ID);
+        }
+
+
+        Form.SetAttribute("urgentLevel", "2");
+        //加入節點底下
+        xmlDoc.AppendChild(Form);
+
+        ////建立節點Applicant
+        XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+        Applicant.SetAttribute("account", account);
+        Applicant.SetAttribute("groupId", groupId);
+        Applicant.SetAttribute("jobTitleId", jobTitleId);
+        //加入節點底下
+        Form.AppendChild(Applicant);
+
+        //建立節點 Comment
+        XmlElement Comment = xmlDoc.CreateElement("Comment");
+        Comment.InnerText = "申請者意見";
+        //加入至節點底下
+        Applicant.AppendChild(Comment);
+
+        //建立節點 FormFieldValue
+        XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+        //加入至節點底下
+        Form.AppendChild(FormFieldValue);
+
+        //建立節點FieldItem
+        //ID 表單編號	
+        XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "ID");
+        FieldItem.SetAttribute("fieldValue", "");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD002	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD003	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD004	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD005	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD006	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD007	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD007");
+        FieldItem.SetAttribute("fieldValue", KINDS);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD008	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB012MB013"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //用ADDTACK，直接啟動起單
+        ADDTACK(Form);
+
+    }
+    //商品價格區間特價設定作業
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET3(string KINDS, string MB003)
+    {
+        DataTable DT = SEARCH_POSMB3(MB003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
+
+        string account = DT.Rows[0]["CREATOR"].ToString();
+        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string fillerName = DT.Rows[0]["NAME"].ToString();
+        string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+        string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+        string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+
+        int rowscounts = 0;
+
+        XmlDocument xmlDoc = new XmlDocument();
+        //建立根節點
+        XmlElement Form = xmlDoc.CreateElement("Form");
+
+        //正式的id
+        string ID = SEARCHFORM_VERSION_ID("POS,商品活動設定");
+
+        if (!string.IsNullOrEmpty(ID))
+        {
+            Form.SetAttribute("formVersionId", ID);
+        }
+
+
+        Form.SetAttribute("urgentLevel", "2");
+        //加入節點底下
+        xmlDoc.AppendChild(Form);
+
+        ////建立節點Applicant
+        XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+        Applicant.SetAttribute("account", account);
+        Applicant.SetAttribute("groupId", groupId);
+        Applicant.SetAttribute("jobTitleId", jobTitleId);
+        //加入節點底下
+        Form.AppendChild(Applicant);
+
+        //建立節點 Comment
+        XmlElement Comment = xmlDoc.CreateElement("Comment");
+        Comment.InnerText = "申請者意見";
+        //加入至節點底下
+        Applicant.AppendChild(Comment);
+
+        //建立節點 FormFieldValue
+        XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+        //加入至節點底下
+        Form.AppendChild(FormFieldValue);
+
+        //建立節點FieldItem
+        //ID 表單編號	
+        XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "ID");
+        FieldItem.SetAttribute("fieldValue", "");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD002	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD003	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD004	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD005	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD006	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD007	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD007");
+        FieldItem.SetAttribute("fieldValue", KINDS);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD008	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB012MB013"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //用ADDTACK，直接啟動起單
+        ADDTACK(Form);
+
+    }
+    //組合品搭贈設定作業
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET4(string KINDS, string MI003)
+    {
+        DataTable DT = SEARCH_POSMI(MI003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
+
+        string account = DT.Rows[0]["CREATOR"].ToString();
+        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string fillerName = DT.Rows[0]["NAME"].ToString();
+        string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+        string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+        string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+
+        int rowscounts = 0;
+
+        XmlDocument xmlDoc = new XmlDocument();
+        //建立根節點
+        XmlElement Form = xmlDoc.CreateElement("Form");
+
+        //正式的id
+        string ID = SEARCHFORM_VERSION_ID("POS,商品活動設定");
+
+        if (!string.IsNullOrEmpty(ID))
+        {
+            Form.SetAttribute("formVersionId", ID);
+        }
+
+
+        Form.SetAttribute("urgentLevel", "2");
+        //加入節點底下
+        xmlDoc.AppendChild(Form);
+
+        ////建立節點Applicant
+        XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+        Applicant.SetAttribute("account", account);
+        Applicant.SetAttribute("groupId", groupId);
+        Applicant.SetAttribute("jobTitleId", jobTitleId);
+        //加入節點底下
+        Form.AppendChild(Applicant);
+
+        //建立節點 Comment
+        XmlElement Comment = xmlDoc.CreateElement("Comment");
+        Comment.InnerText = "申請者意見";
+        //加入至節點底下
+        Applicant.AppendChild(Comment);
+
+        //建立節點 FormFieldValue
+        XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+        //加入至節點底下
+        Form.AppendChild(FormFieldValue);
+
+        //建立節點FieldItem
+        //ID 表單編號	
+        XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "ID");
+        FieldItem.SetAttribute("fieldValue", "");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD002	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD003	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD004	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD005	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD006	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD007	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD007");
+        FieldItem.SetAttribute("fieldValue", KINDS);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD008	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB012MB013"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //用ADDTACK，直接啟動起單
+        ADDTACK(Form);
+
+    }
+    //配對搭贈設定作業
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET5(string KINDS, string MB003)
+    {
+        DataTable DT = SEARCH_POSMO(MB003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
+
+        string account = DT.Rows[0]["CREATOR"].ToString();
+        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string fillerName = DT.Rows[0]["NAME"].ToString();
+        string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+        string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+        string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+
+        int rowscounts = 0;
+
+        XmlDocument xmlDoc = new XmlDocument();
+        //建立根節點
+        XmlElement Form = xmlDoc.CreateElement("Form");
+
+        //正式的id
+        string ID = SEARCHFORM_VERSION_ID("POS,商品活動設定");
+
+        if (!string.IsNullOrEmpty(ID))
+        {
+            Form.SetAttribute("formVersionId", ID);
+        }
+
+
+        Form.SetAttribute("urgentLevel", "2");
+        //加入節點底下
+        xmlDoc.AppendChild(Form);
+
+        ////建立節點Applicant
+        XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+        Applicant.SetAttribute("account", account);
+        Applicant.SetAttribute("groupId", groupId);
+        Applicant.SetAttribute("jobTitleId", jobTitleId);
+        //加入節點底下
+        Form.AppendChild(Applicant);
+
+        //建立節點 Comment
+        XmlElement Comment = xmlDoc.CreateElement("Comment");
+        Comment.InnerText = "申請者意見";
+        //加入至節點底下
+        Applicant.AppendChild(Comment);
+
+        //建立節點 FormFieldValue
+        XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+        //加入至節點底下
+        Form.AppendChild(FormFieldValue);
+
+        //建立節點FieldItem
+        //ID 表單編號	
+        XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "ID");
+        FieldItem.SetAttribute("fieldValue", "");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD002	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD003	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD004	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD005	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD006	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD007	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD007");
+        FieldItem.SetAttribute("fieldValue", KINDS);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD008	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB012MB013"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //用ADDTACK，直接啟動起單
+        ADDTACK(Form);
+
+    }
+    //滿額折價設定作業
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET6(string KINDS, string MB003)
+    {
+        DataTable DT = SEARCH_POSMM(MB003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
+
+        string account = DT.Rows[0]["CREATOR"].ToString();
+        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string fillerName = DT.Rows[0]["NAME"].ToString();
+        string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+        string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+        string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+
+        int rowscounts = 0;
+
+        XmlDocument xmlDoc = new XmlDocument();
+        //建立根節點
+        XmlElement Form = xmlDoc.CreateElement("Form");
+
+        //正式的id
+        string ID = SEARCHFORM_VERSION_ID("POS,商品活動設定");
+
+        if (!string.IsNullOrEmpty(ID))
+        {
+            Form.SetAttribute("formVersionId", ID);
+        }
+
+
+        Form.SetAttribute("urgentLevel", "2");
+        //加入節點底下
+        xmlDoc.AppendChild(Form);
+
+        ////建立節點Applicant
+        XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+        Applicant.SetAttribute("account", account);
+        Applicant.SetAttribute("groupId", groupId);
+        Applicant.SetAttribute("jobTitleId", jobTitleId);
+        //加入節點底下
+        Form.AppendChild(Applicant);
+
+        //建立節點 Comment
+        XmlElement Comment = xmlDoc.CreateElement("Comment");
+        Comment.InnerText = "申請者意見";
+        //加入至節點底下
+        Applicant.AppendChild(Comment);
+
+        //建立節點 FormFieldValue
+        XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+        //加入至節點底下
+        Form.AppendChild(FormFieldValue);
+
+        //建立節點FieldItem
+        //ID 表單編號	
+        XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "ID");
+        FieldItem.SetAttribute("fieldValue", "");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD002	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD003	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD004	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD005	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD006	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD007	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD007");
+        FieldItem.SetAttribute("fieldValue", KINDS);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD008	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB012MB013"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //用ADDTACK，直接啟動起單
+        ADDTACK(Form);
+
+    }
+    //付款方式特價設定作業
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET7(string KINDS, string MB003)
+    {
+        DataTable DT = SEARCH_POSMB4(MB003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
+
+        string account = DT.Rows[0]["CREATOR"].ToString();
+        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string fillerName = DT.Rows[0]["NAME"].ToString();
+        string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
+
+        string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
+        string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
+
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+
+        int rowscounts = 0;
+
+        XmlDocument xmlDoc = new XmlDocument();
+        //建立根節點
+        XmlElement Form = xmlDoc.CreateElement("Form");
+
+        //正式的id
+        string ID = SEARCHFORM_VERSION_ID("POS,商品活動設定");
+
+        if (!string.IsNullOrEmpty(ID))
+        {
+            Form.SetAttribute("formVersionId", ID);
+        }
+
+
+        Form.SetAttribute("urgentLevel", "2");
+        //加入節點底下
+        xmlDoc.AppendChild(Form);
+
+        ////建立節點Applicant
+        XmlElement Applicant = xmlDoc.CreateElement("Applicant");
+        Applicant.SetAttribute("account", account);
+        Applicant.SetAttribute("groupId", groupId);
+        Applicant.SetAttribute("jobTitleId", jobTitleId);
+        //加入節點底下
+        Form.AppendChild(Applicant);
+
+        //建立節點 Comment
+        XmlElement Comment = xmlDoc.CreateElement("Comment");
+        Comment.InnerText = "申請者意見";
+        //加入至節點底下
+        Applicant.AppendChild(Comment);
+
+        //建立節點 FormFieldValue
+        XmlElement FormFieldValue = xmlDoc.CreateElement("FormFieldValue");
+        //加入至節點底下
+        Form.AppendChild(FormFieldValue);
+
+        //建立節點FieldItem
+        //ID 表單編號	
+        XmlElement FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "ID");
+        FieldItem.SetAttribute("fieldValue", "");
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //FIELD001	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD002	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD003	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD004	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MC004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD005	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_MF004"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD006	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["All_NI002"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD007	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD007");
+        FieldItem.SetAttribute("fieldValue", KINDS);
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+        //FIELD008	
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "FIELD008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB012MB013"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //用ADDTACK，直接啟動起單
+        ADDTACK(Form);
+
+    }
+
+
     public string SEARCHFORM_VERSION_ID(string FORM_NAME)
     {
         try
@@ -1344,7 +2372,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         }
     }
 
-    public DataTable SEARCH_POSM(string MB003)
+    public DataTable SEARCH_POSMB(string MB003)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -1420,23 +2448,24 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     ,POSMB.[UDF08]
                                     ,POSMB.[UDF09]
                                     ,POSMB.[UDF10]
-                                    ,STUFF((
+                                    ,(
                                     SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
                                     FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
                                     WHERE MF004=MA001 AND MF003 = MB003
-                                    FOR XML PATH('')), 1, 1, '1') AS All_MF004
-                                    ,STUFF((
+                                    FOR XML PATH('')) AS All_MF004
+                                    ,(
                                     SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
                                     FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
                                     WHERE MG005=NI001 AND MG003 = MB003
-                                    FOR XML PATH('')), 1, 1, '1') AS All_NI002
-                                    ,STUFF((
+                                    FOR XML PATH('')) AS All_NI002
+                                    ,(
                                     SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(10)
                                     FROM [TK].dbo.POSMC,[TK].dbo.INVMB
                                     WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
-                                    FOR XML PATH('')), 1, 1, '1') AS All_MC004
-                                     ,[TB_EB_USER].USER_GUID,NAME
+                                    FOR XML PATH('')) AS All_MC004
                                     ,(MB012+'~'+MB013) AS 'MB012MB013'
+                                     ,[TB_EB_USER].USER_GUID,NAME
+   
 
                                     FROM [TK].dbo.POSMB
                                     LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMB.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
@@ -1445,6 +2474,773 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     ) AS TEMP
                               
                                     ", MB003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+
+    public DataTable SEARCH_POSMB2(string MB003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                   SELECT TEMP.*
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+
+                                    FROM 
+                                    (
+                                    SELECT
+                                    POSMB.[CREATOR]
+                                    ,POSMB.[MB001]
+                                    ,POSMB.[MB002]
+                                    ,POSMB.[MB003]
+                                    ,POSMB.[MB004]
+                                    ,POSMB.[MB005]
+                                    ,POSMB.[MB006]
+                                    ,POSMB.[MB007]
+                                    ,POSMB.[MB008]
+                                    ,POSMB.[MB009]
+                                    ,POSMB.[MB010]
+                                    ,POSMB.[MB011]
+                                    ,POSMB.[MB012]
+                                    ,POSMB.[MB013]
+                                    ,POSMB.[MB014]
+                                    ,POSMB.[MB015]
+                                    ,POSMB.[MB016]
+                                    ,POSMB.[MB017]
+                                    ,POSMB.[MB018]
+                                    ,POSMB.[MB019]
+                                    ,POSMB.[MB020]
+                                    ,POSMB.[MB021]
+                                    ,POSMB.[MB022]
+                                    ,POSMB.[MB023]
+                                    ,POSMB.[MB024]
+                                    ,POSMB.[MB025]
+                                    ,POSMB.[MB026]
+                                    ,POSMB.[MB027]
+                                    ,POSMB.[MB028]
+                                    ,POSMB.[MB029]
+                                    ,POSMB.[MB030]
+                                    ,POSMB.[MB031]
+                                    ,POSMB.[MB032]
+                                    ,POSMB.[MB033]
+                                    ,POSMB.[MB034]
+                                    ,POSMB.[MB035]
+                                    ,POSMB.[MB036]
+                                    ,POSMB.[MB037]
+                                    ,POSMB.[MB038]
+                                    ,POSMB.[MB039]
+                                    ,POSMB.[MB040]
+                                    ,POSMB.[MB041]
+                                    ,POSMB.[MB042]
+                                    ,POSMB.[MB043]
+                                    ,POSMB.[MB044]
+                                    ,POSMB.[MB045]
+                                    ,POSMB.[MB046]
+                                    ,POSMB.[MB200]
+                                    ,POSMB.[UDF01]
+                                    ,POSMB.[UDF02]
+                                    ,POSMB.[UDF03]
+                                    ,POSMB.[UDF04]
+                                    ,POSMB.[UDF05]
+                                    ,POSMB.[UDF06]
+                                    ,POSMB.[UDF07]
+                                    ,POSMB.[UDF08]
+                                    ,POSMB.[UDF09]
+                                    ,POSMB.[UDF10]
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
+                                    FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                    WHERE MF004=MA001 AND MF003 = MB003
+                                    FOR XML PATH('')) AS All_MF004
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
+                                    FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                    WHERE MG005=NI001 AND MG003 = MB003
+                                    FOR XML PATH('')) AS All_NI002
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(10)
+                                    FROM [TK].dbo.POSMC,[TK].dbo.INVMB
+                                    WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                    FOR XML PATH('')) AS All_MC004
+                                    ,(MB012+'~'+MB013) AS 'MB012MB013'
+                                     ,[TB_EB_USER].USER_GUID,NAME
+
+
+                                    FROM [TK].dbo.POSMB
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMB.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE 1=1    
+                                    AND MB003='{0}'
+                                    ) AS TEMP
+                              
+                                    ", MB003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+    public DataTable SEARCH_POSMB3(string MB003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                   SELECT TEMP.*
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+
+                                    FROM 
+                                    (
+                                    SELECT
+                                    POSMB.[CREATOR]
+                                    ,POSMB.[MB001]
+                                    ,POSMB.[MB002]
+                                    ,POSMB.[MB003]
+                                    ,POSMB.[MB004]
+                                    ,POSMB.[MB005]
+                                    ,POSMB.[MB006]
+                                    ,POSMB.[MB007]
+                                    ,POSMB.[MB008]
+                                    ,POSMB.[MB009]
+                                    ,POSMB.[MB010]
+                                    ,POSMB.[MB011]
+                                    ,POSMB.[MB012]
+                                    ,POSMB.[MB013]
+                                    ,POSMB.[MB014]
+                                    ,POSMB.[MB015]
+                                    ,POSMB.[MB016]
+                                    ,POSMB.[MB017]
+                                    ,POSMB.[MB018]
+                                    ,POSMB.[MB019]
+                                    ,POSMB.[MB020]
+                                    ,POSMB.[MB021]
+                                    ,POSMB.[MB022]
+                                    ,POSMB.[MB023]
+                                    ,POSMB.[MB024]
+                                    ,POSMB.[MB025]
+                                    ,POSMB.[MB026]
+                                    ,POSMB.[MB027]
+                                    ,POSMB.[MB028]
+                                    ,POSMB.[MB029]
+                                    ,POSMB.[MB030]
+                                    ,POSMB.[MB031]
+                                    ,POSMB.[MB032]
+                                    ,POSMB.[MB033]
+                                    ,POSMB.[MB034]
+                                    ,POSMB.[MB035]
+                                    ,POSMB.[MB036]
+                                    ,POSMB.[MB037]
+                                    ,POSMB.[MB038]
+                                    ,POSMB.[MB039]
+                                    ,POSMB.[MB040]
+                                    ,POSMB.[MB041]
+                                    ,POSMB.[MB042]
+                                    ,POSMB.[MB043]
+                                    ,POSMB.[MB044]
+                                    ,POSMB.[MB045]
+                                    ,POSMB.[MB046]
+                                    ,POSMB.[MB200]
+                                    ,POSMB.[UDF01]
+                                    ,POSMB.[UDF02]
+                                    ,POSMB.[UDF03]
+                                    ,POSMB.[UDF04]
+                                    ,POSMB.[UDF05]
+                                    ,POSMB.[UDF06]
+                                    ,POSMB.[UDF07]
+                                    ,POSMB.[UDF08]
+                                    ,POSMB.[UDF09]
+                                    ,POSMB.[UDF10]
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
+                                    FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                    WHERE MF004=MA001 AND MF003 = MB003
+                                    FOR XML PATH('')) AS All_MF004
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
+                                    FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                    WHERE MG005=NI001 AND MG003 = MB003
+                                    FOR XML PATH('')) AS All_NI002
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(10)
+                                    FROM [TK].dbo.POSMC,[TK].dbo.INVMB
+                                    WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                    FOR XML PATH('')) AS All_MC004
+                                    ,(MB012+'~'+MB013) AS 'MB012MB013'
+                                     ,[TB_EB_USER].USER_GUID,NAME
+               
+
+                                    FROM [TK].dbo.POSMB
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMB.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE 1=1    
+                                    AND MB003='{0}'
+                                    ) AS TEMP
+                              
+                                    ", MB003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+
+    public DataTable SEARCH_POSMB4(string MB003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                   SELECT TEMP.*
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+
+                                    FROM 
+                                    (
+                                    SELECT
+                                    POSMB.[CREATOR]
+                                    ,POSMB.[MB001]
+                                    ,POSMB.[MB002]
+                                    ,POSMB.[MB003]
+                                    ,POSMB.[MB004]
+                                    ,POSMB.[MB005]
+                                    ,POSMB.[MB006]
+                                    ,POSMB.[MB007]
+                                    ,POSMB.[MB008]
+                                    ,POSMB.[MB009]
+                                    ,POSMB.[MB010]
+                                    ,POSMB.[MB011]
+                                    ,POSMB.[MB012]
+                                    ,POSMB.[MB013]
+                                    ,POSMB.[MB014]
+                                    ,POSMB.[MB015]
+                                    ,POSMB.[MB016]
+                                    ,POSMB.[MB017]
+                                    ,POSMB.[MB018]
+                                    ,POSMB.[MB019]
+                                    ,POSMB.[MB020]
+                                    ,POSMB.[MB021]
+                                    ,POSMB.[MB022]
+                                    ,POSMB.[MB023]
+                                    ,POSMB.[MB024]
+                                    ,POSMB.[MB025]
+                                    ,POSMB.[MB026]
+                                    ,POSMB.[MB027]
+                                    ,POSMB.[MB028]
+                                    ,POSMB.[MB029]
+                                    ,POSMB.[MB030]
+                                    ,POSMB.[MB031]
+                                    ,POSMB.[MB032]
+                                    ,POSMB.[MB033]
+                                    ,POSMB.[MB034]
+                                    ,POSMB.[MB035]
+                                    ,POSMB.[MB036]
+                                    ,POSMB.[MB037]
+                                    ,POSMB.[MB038]
+                                    ,POSMB.[MB039]
+                                    ,POSMB.[MB040]
+                                    ,POSMB.[MB041]
+                                    ,POSMB.[MB042]
+                                    ,POSMB.[MB043]
+                                    ,POSMB.[MB044]
+                                    ,POSMB.[MB045]
+                                    ,POSMB.[MB046]
+                                    ,POSMB.[MB200]
+                                    ,POSMB.[UDF01]
+                                    ,POSMB.[UDF02]
+                                    ,POSMB.[UDF03]
+                                    ,POSMB.[UDF04]
+                                    ,POSMB.[UDF05]
+                                    ,POSMB.[UDF06]
+                                    ,POSMB.[UDF07]
+                                    ,POSMB.[UDF08]
+                                    ,POSMB.[UDF09]
+                                    ,POSMB.[UDF10]
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
+                                    FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                    WHERE MF004=MA001 AND MF003 = MB003
+                                    FOR XML PATH('')) AS All_MF004
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
+                                    FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                    WHERE MG005=NI001 AND MG003 = MB003
+                                    FOR XML PATH('')) AS All_NI002
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MC004))+LTRIM(RTRIM(MB002))+'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(10)
+                                    FROM [TK].dbo.POSMC,[TK].dbo.INVMB
+                                    WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                    FOR XML PATH('')) AS All_MC004
+                                    ,(MB012+'~'+MB013) AS 'MB012MB013'
+                                     ,[TB_EB_USER].USER_GUID,NAME
+               
+
+                                    FROM [TK].dbo.POSMB
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMB.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE 1=1    
+                                    AND MB003='{0}'
+                                    ) AS TEMP
+                              
+                                    ", MB003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+
+    public DataTable SEARCH_POSMI(string MI003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                  SELECT TEMP.*
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+
+                                    FROM 
+                                    (
+                                    SELECT
+                                    POSMI.[CREATOR]
+                                    ,POSMI.[MI001]
+                                    ,POSMI.[MI002]
+                                    ,POSMI.[MI003]
+                                    ,POSMI.[MI004]
+                                    ,POSMI.[MI005]
+                                    ,POSMI.[MI006]
+                                    ,POSMI.[MI007]
+                                    ,POSMI.[MI008]
+                                    ,POSMI.[MI009]
+                                    ,POSMI.[MI010]
+                                    ,POSMI.[MI011]
+                                    ,POSMI.[MI012]
+                                    ,POSMI.[MI013]
+                                    ,POSMI.[MI014]
+                                    ,POSMI.[MI015]
+                                    ,POSMI.[MI016]
+                                    ,POSMI.[MI017]
+                                    ,POSMI.[MI018]
+                                    ,POSMI.[MI019]
+                                    ,POSMI.[MI020]
+                                    ,POSMI.[MI021]
+                                    ,POSMI.[MI022]
+                                    ,POSMI.[MI023]
+                                    ,POSMI.[MI024]
+                                    ,POSMI.[MI025]
+                                    ,POSMI.[MI026]
+                                    ,POSMI.[MI027]
+                                    ,POSMI.[MI028]
+                                    ,POSMI.[MI029]
+                                    ,POSMI.[MI030]
+                                    ,POSMI.[MI031]
+                                    ,POSMI.[MI032]
+                                    ,POSMI.[MI033]
+                                    ,POSMI.[MI034]
+                                    ,POSMI.[MI035]
+                                    ,POSMI.[MI036]
+                                    ,POSMI.[MI037]
+                                    ,POSMI.[MI038]
+                                    ,POSMI.[MI039]
+                                    ,POSMI.[MI040]
+                                    ,POSMI.[MI041]
+                                    ,POSMI.[MI042]
+                                    ,POSMI.[MI043]
+                                    ,POSMI.[MI200]
+                                    ,POSMI.[UDF01]
+                                    ,POSMI.[UDF02]
+                                    ,POSMI.[UDF03]
+                                    ,POSMI.[UDF04]
+                                    ,POSMI.[UDF05]
+                                    ,POSMI.[UDF06]
+                                    ,POSMI.[UDF07]
+                                    ,POSMI.[UDF08]
+                                    ,POSMI.[UDF09]
+                                    ,POSMI.[UDF10]
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
+                                    FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                    WHERE MF004=MA001 AND MF003 = MI003
+                                    FOR XML PATH('')) AS All_MF004
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
+                                    FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                    WHERE MG005=NI001 AND MG003 = MI003
+                                    FOR XML PATH('')) AS All_NI002
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MJ004))+ CHAR(13) + CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI017))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI018))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                    FROM [TK].dbo.POSMJ,[TK].dbo.INVMB
+                                    WHERE MJ004=MB001 AND  MJ003 = MI003
+                                    FOR XML PATH('')) AS All_MC004
+                                    ,(MI005+'~'+MI006) AS 'MB012MB013'
+                                    ,[TB_EB_USER].USER_GUID,NAME
+                                 
+
+                                    FROM [TK].dbo.POSMI
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMI.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE 1=1    
+                                    AND MI003='{0}'
+                                    ) AS TEMP
+                              
+                                    ", MI003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+    public DataTable SEARCH_POSMO(string MO003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                 SELECT TEMP.*
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+
+                                    FROM 
+                                    (
+                                    SELECT
+                                    POSMO.[CREATOR]
+                                    ,POSMO.[MO001]
+                                    ,POSMO.[MO002]
+                                    ,POSMO.[MO003]
+                                    ,POSMO.[MO004]
+                                    ,POSMO.[MO005]
+                                    ,POSMO.[MO006]
+                                    ,POSMO.[MO007]
+                                    ,POSMO.[MO008]
+                                    ,POSMO.[MO009]
+                                    ,POSMO.[MO010]
+                                    ,POSMO.[MO011]
+                                    ,POSMO.[MO012]
+                                    ,POSMO.[MO013]
+                                    ,POSMO.[MO014]
+                                    ,POSMO.[MO015]
+                                    ,POSMO.[MO016]
+                                    ,POSMO.[MO017]
+                                    ,POSMO.[MO018]
+                                    ,POSMO.[MO019]
+                                    ,POSMO.[MO020]
+                                    ,POSMO.[MO021]
+                                    ,POSMO.[MO022]
+                                    ,POSMO.[MO023]
+                                    ,POSMO.[MO024]
+                                    ,POSMO.[MO025]
+                                    ,POSMO.[MO026]
+                                    ,POSMO.[MO027]
+                                    ,POSMO.[MO028]
+                                    ,POSMO.[MO029]
+                                    ,POSMO.[MO030]
+                                    ,POSMO.[MO031]
+                                    ,POSMO.[MO032]
+                                    ,POSMO.[MO033]
+                                    ,POSMO.[MO034]
+                                    ,POSMO.[MO035]
+                                    ,POSMO.[MO036]
+                                    ,POSMO.[MO037]
+                                    ,POSMO.[MO038]
+                                    ,POSMO.[MO039]
+                                    ,POSMO.[MO040]
+                                    ,POSMO.[MO041]
+                                    ,POSMO.[MO042]
+                                    ,POSMO.[MO200]
+                                    ,POSMO.[UDF01]
+                                    ,POSMO.[UDF02]
+                                    ,POSMO.[UDF03]
+                                    ,POSMO.[UDF04]
+                                    ,POSMO.[UDF05]
+                                    ,POSMO.[UDF06]
+                                    ,POSMO.[UDF07]
+                                    ,POSMO.[UDF08]
+                                    ,POSMO.[UDF09]
+                                    ,POSMO.[UDF10]
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
+                                    FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                    WHERE MF004=MA001 AND MF003 = MO003
+                                    FOR XML PATH('')) AS All_MF004
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
+                                    FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                    WHERE MG005=NI001 AND MG003 = MO003
+                                    FOR XML PATH('')) AS All_NI002
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MP005))+ CHAR(13) + CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP006))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP007))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                    FROM [TK].dbo.POSMP,[TK].dbo.INVMB
+                                    WHERE MP005=MB001 AND  MP003 = MO003
+                                    FOR XML PATH('')) AS All_MC004
+                                     ,(MO011+'~'+MO012) AS 'MB012MB013'
+                                    ,[TB_EB_USER].USER_GUID,NAME
+
+
+                                    FROM [TK].dbo.POSMO
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMO.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE 1=1    
+                                    AND MO003='{0}'
+                                    ) AS TEMP
+                              
+                                    ", MO003);
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+    public DataTable SEARCH_POSMM(string MM003)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"  
+                                 SELECT TEMP.*
+                                    ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
+                                    ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
+
+                                    FROM 
+                                    (
+                                    SELECT
+                                    POSMM.[CREATOR]
+
+                                    ,POSMM.[MM001]
+                                    ,POSMM.[MM002]
+                                    ,POSMM.[MM003]
+                                    ,POSMM.[MM004]
+                                    ,POSMM.[MM005]
+                                    ,POSMM.[MM006]
+                                    ,POSMM.[MM007]
+                                    ,POSMM.[MM008]
+                                    ,POSMM.[MM009]
+                                    ,POSMM.[MM010]
+                                    ,POSMM.[MM011]
+                                    ,POSMM.[MM012]
+                                    ,POSMM.[MM013]
+                                    ,POSMM.[MM014]
+                                    ,POSMM.[MM015]
+                                    ,POSMM.[MM016]
+                                    ,POSMM.[MM017]
+                                    ,POSMM.[MM018]
+                                    ,POSMM.[MM019]
+                                    ,POSMM.[MM020]
+                                    ,POSMM.[MM021]
+                                    ,POSMM.[MM022]
+                                    ,POSMM.[MM023]
+                                    ,POSMM.[MM024]
+                                    ,POSMM.[MM025]
+                                    ,POSMM.[MM026]
+                                    ,POSMM.[MM027]
+                                    ,POSMM.[MM028]
+                                    ,POSMM.[MM029]
+                                    ,POSMM.[MM030]
+                                    ,POSMM.[MM031]
+                                    ,POSMM.[MM032]
+                                    ,POSMM.[MM033]
+                                    ,POSMM.[MM034]
+                                    ,POSMM.[MM035]
+                                    ,POSMM.[MM036]
+                                    ,POSMM.[MM037]
+                                    ,POSMM.[MM038]
+                                    ,POSMM.[MM039]
+                                    ,POSMM.[MM040]
+                                    ,POSMM.[MM041]
+                                    ,POSMM.[MM042]
+                                    ,POSMM.[MM200]
+                                    ,POSMM.[UDF01]
+                                    ,POSMM.[UDF02]
+                                    ,POSMM.[UDF03]
+                                    ,POSMM.[UDF04]
+                                    ,POSMM.[UDF05]
+                                    ,POSMM.[UDF06]
+                                    ,POSMM.[UDF07]
+                                    ,POSMM.[UDF08]
+                                    ,POSMM.[UDF09]
+                                    ,POSMM.[UDF10]
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(10) 
+                                    FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                    WHERE MF004=MA001 AND MF003 = MM003
+                                    FOR XML PATH('')) AS All_MF004
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(NI002)) + CHAR(10)
+                                    FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                    WHERE MG005=NI001 AND MG003 = MM003
+                                    FOR XML PATH('')) AS All_NI002
+                                    ,(
+                                    SELECT  LTRIM(RTRIM(CONVERT(INT,MN005)))+' 以上'+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN008))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN009))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                    FROM [TK].dbo.POSMN
+                                    WHERE  MN003 = MM003
+                                    FOR XML PATH('')) AS All_MC004
+                                    ,(MM005+'~'+MM005) AS 'MB012MB013'
+                                    ,[TB_EB_USER].USER_GUID,NAME
+
+
+                                    FROM [TK].dbo.POSMM
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= POSMM.CREATOR COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE 1=1    
+                                    AND MM003='{0}'
+                                    ) AS TEMP
+                              
+                                    ", MM003);
 
 
 
