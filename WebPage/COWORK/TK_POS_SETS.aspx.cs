@@ -990,6 +990,127 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
 
+    private void BindGrid7()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        //日期
+        if (!string.IsNullOrEmpty(TextBox13.Text))
+        {
+            QUERYS.AppendFormat(@" AND MB001 LIKE '{0}%' ", TextBox13.Text.Trim());
+        }
+
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList7.Text))
+        {
+            if (DropDownList7.Text.Equals("未核單"))
+            {
+                QUERYS2.AppendFormat(@" AND MB008='N' ");
+            }
+            else if (DropDownList7.Text.Equals("已核單"))
+            {
+                QUERYS2.AppendFormat(@"  AND MB008='Y' ");
+            }
+        }
+        //特價名稱
+        if (!string.IsNullOrEmpty(TextBox14.Text))
+        {
+            QUERYS3.AppendFormat(@" AND (MB003 LIKE '%{0}%' OR MB004 LIKE '%{0}%') ", TextBox14.Text.Trim());
+        }
+
+
+
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT *
+                            ,(
+                                       SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                       FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                       WHERE MF004=MA001 AND MF003 = MB003
+                                       FOR XML PATH('')) AS All_MF004
+                            ,(
+                                       SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                       FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                       WHERE MG005=NI001 AND MG003 = MB003
+                                       FOR XML PATH('')) AS All_NI002
+                            ,(
+                                        SELECT  LTRIM(RTRIM(MC004))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMC,[TK].dbo.INVMB
+                                        WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
+                                        FOR XML PATH('')) AS All_MC004
+                            ,(MB012+'~'+MB013) AS 'MB012MB013'
+
+                            FROM [TK].dbo.POSMB
+                            WHERE 1=1  
+                            AND MB002 IN ('8')
+                            {0}
+                            {1}   
+                            {2}    
+
+                                ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid7.DataSource = dt;
+        Grid7.DataBind();
+    }
+
+    protected void grid_PageIndexChanging7(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid7_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Grid1_Button1
+            //Get the button that raised the event
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid7_Button1");
+            //Get the row that contains this button
+            GridViewRow gvr1 = (GridViewRow)Grid1_Button1.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue1 = Grid1_Button1.CommandArgument;
+            DataRowView row1 = (DataRowView)e.Row.DataItem;
+            Button lbtnName1 = (Button)e.Row.FindControl("Grid7_Button1");
+            ExpandoObject param1 = new { ID = Cellvalue1 }.ToExpando();
+
+        }
+    }
+
+    protected void Grid7_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid7_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+
+            MB003 = e.CommandArgument.ToString();
+
+            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+        }
+
+    }
+
+
+    public void OnBeforeExport7(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+
     //
     public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string KINDS,string MB003)
     {
@@ -1479,8 +1600,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
     }
     protected void Button7_Click(object sender, EventArgs e)
     {
-
-
+        BindGrid7();
     }
     #endregion
 }
