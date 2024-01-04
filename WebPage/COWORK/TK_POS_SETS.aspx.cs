@@ -43,6 +43,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
             BindGrid();
             BindGrid2();
+            BindGrid3();
         }
     }
     #region FUNCTION
@@ -502,6 +503,129 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //SETEXCEL();
 
     }
+
+    private void BindGrid3()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        //日期
+        if (!string.IsNullOrEmpty(TextBox5.Text))
+        {
+            QUERYS.AppendFormat(@" AND MB001 LIKE '{0}%' ", TextBox5.Text.Trim());
+        }
+
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList3.Text))
+        {
+            if (DropDownList3.Text.Equals("未核單"))
+            {
+                QUERYS2.AppendFormat(@" AND MB008='N' ");
+            }
+            else if (DropDownList3.Text.Equals("已核單"))
+            {
+                QUERYS2.AppendFormat(@"  AND MB008='Y' ");
+            }
+        }
+        //特價名稱
+        if (!string.IsNullOrEmpty(TextBox6.Text))
+        {
+            QUERYS3.AppendFormat(@" AND (MB004 LIKE '%{0}%' OR MB003 LIKE '%{0}%') ", TextBox6.Text.Trim());
+        }
+
+
+
+
+        cmdTxt.AppendFormat(@" 
+                           SELECT *
+                            ,STUFF((
+                                        SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                        WHERE MF004=MA001 AND MF003 = MB003
+                                        FOR XML PATH('')), 1, 1, '1') AS All_MF004
+                            ,STUFF((
+                                        SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                        WHERE MG005=NI001 AND MG003 = MB003
+                                        FOR XML PATH('')), 1, 1, '1') AS All_NI002
+                            ,STUFF((
+                                        SELECT  LTRIM(RTRIM(CONVERT(INT,ME005)))+ '~' +LTRIM(RTRIM(CONVERT(INT,ME006)))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,ME007))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,ME008))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSME
+                                        WHERE  ME003 = POSMB.MB003
+                                        FOR XML PATH('')), 1, 1, '1') AS All_MC004
+                            ,(MB012+'~'+MB013) AS 'MB012MB013'
+
+                            FROM [TK].dbo.POSMB
+                            WHERE 1=1      
+                            AND MB002 IN ('3')
+                            {0}
+                            {1}   
+                            {2}    
+
+                                ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+    }
+
+    protected void grid_PageIndexChanging3(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Grid1_Button1
+            //Get the button that raised the event
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid3_Button1");
+            //Get the row that contains this button
+            GridViewRow gvr1 = (GridViewRow)Grid1_Button1.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue1 = Grid1_Button1.CommandArgument;
+            DataRowView row1 = (DataRowView)e.Row.DataItem;
+            Button lbtnName1 = (Button)e.Row.FindControl("Grid3_Button1");
+            ExpandoObject param1 = new { ID = Cellvalue1 }.ToExpando();
+
+        }
+    }
+
+    protected void Grid3_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid3_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+
+            MB003 = e.CommandArgument.ToString();
+
+            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+        }
+
+    }
+
+
+    public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+
+
     public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string KINDS,string MB003)
     {
         DataTable DT = SEARCH_POSM(MB003);
@@ -970,7 +1094,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
     }
     protected void Button3_Click(object sender, EventArgs e)
     {
-
+        BindGrid3();
 
     }
     protected void Button4_Click(object sender, EventArgs e)
