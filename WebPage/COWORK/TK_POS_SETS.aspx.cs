@@ -45,7 +45,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
             BindGrid2();
             BindGrid3();
             BindGrid4();
-            BindGrid5()
+            BindGrid5();
         }
     }
     #region FUNCTION
