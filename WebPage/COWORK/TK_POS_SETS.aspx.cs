@@ -501,9 +501,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
 
-            MB003 = e.CommandArgument.ToString();
+            string MB003 = e.CommandArgument.ToString();
 
-            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+            ADDTB_WKF_EXTERNAL_TASK_POSSET2("商品類別特價設定作業", MB003);
         }
 
     }
@@ -622,9 +622,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
 
-            MB003 = e.CommandArgument.ToString();
+            string MB003 = e.CommandArgument.ToString();
 
-            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+            ADDTB_WKF_EXTERNAL_TASK_POSSET3("商品價格區間特價設定作業", MB003);
         }
 
     }
@@ -742,9 +742,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
 
-            MB003 = e.CommandArgument.ToString();
+            string MI003 = e.CommandArgument.ToString();
 
-            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+            ADDTB_WKF_EXTERNAL_TASK_POSSET4("組合品搭贈設定作業", MI003);
         }
 
     }
@@ -862,9 +862,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
 
-            MB003 = e.CommandArgument.ToString();
+            string MO003 = e.CommandArgument.ToString();
 
-            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+            ADDTB_WKF_EXTERNAL_TASK_POSSET5("配對搭贈設定作業", MO003);
         }
 
     }
@@ -982,9 +982,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
 
-            MB003 = e.CommandArgument.ToString();
+            string MM003 = e.CommandArgument.ToString();
 
-            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+            ADDTB_WKF_EXTERNAL_TASK_POSSET6("滿額折價設定作業", MM003);
         }
 
     }
@@ -1103,9 +1103,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
 
-            MB003 = e.CommandArgument.ToString();
+            string MB003 = e.CommandArgument.ToString();
 
-            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+            ADDTB_WKF_EXTERNAL_TASK_POSSET7("付款方式特價設定作業", MB003);
         }
 
     }
@@ -1646,7 +1646,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
         string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
 
-        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MI003"].ToString().Trim();
 
         int rowscounts = 0;
 
@@ -1704,7 +1704,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD001	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD001");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MI001"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -1716,7 +1716,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD002	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD002");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MI003"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -1728,7 +1728,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD003	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD003");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MI004"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -1803,9 +1803,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
     //配對搭贈設定作業
-    public void ADDTB_WKF_EXTERNAL_TASK_POSSET5(string KINDS, string MB003)
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET5(string KINDS, string MO003)
     {
-        DataTable DT = SEARCH_POSMO(MB003);
+        DataTable DT = SEARCH_POSMO(MO003);
         DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
 
         string account = DT.Rows[0]["CREATOR"].ToString();
@@ -1817,7 +1817,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
         string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
 
-        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MO003"].ToString().Trim();
 
         int rowscounts = 0;
 
@@ -1875,7 +1875,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD001	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD001");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MO001"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -1887,7 +1887,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD002	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD002");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MO003"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -1899,7 +1899,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD003	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD003");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MO004"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -1974,9 +1974,9 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
     //滿額折價設定作業
-    public void ADDTB_WKF_EXTERNAL_TASK_POSSET6(string KINDS, string MB003)
+    public void ADDTB_WKF_EXTERNAL_TASK_POSSET6(string KINDS, string MM003)
     {
-        DataTable DT = SEARCH_POSMM(MB003);
+        DataTable DT = SEARCH_POSMM(MM003);
         DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["CREATOR"].ToString());
 
         string account = DT.Rows[0]["CREATOR"].ToString();
@@ -1988,7 +1988,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
         string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
 
-        string EXTERNAL_FORM_NBR = DT.Rows[0]["MB003"].ToString().Trim();
+        string EXTERNAL_FORM_NBR = DT.Rows[0]["MM003"].ToString().Trim();
 
         int rowscounts = 0;
 
@@ -2046,7 +2046,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD001	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD001");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB001"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MM001"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -2058,7 +2058,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD002	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD002");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB003"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MM003"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -2070,7 +2070,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //FIELD003	
         FieldItem = xmlDoc.CreateElement("FieldItem");
         FieldItem.SetAttribute("fieldId", "FIELD003");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MB004"].ToString());
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["MM004"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
