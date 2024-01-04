@@ -2848,7 +2848,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     WHERE MG005=NI001 AND MG003 = MB003
                                     FOR XML PATH('')) AS All_NI002
                                     ,(
-                                    SELECT  LTRIM(RTRIM(MB027))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MT003))+ CHAR(13) + CHAR(10)
+                                    SELECT  LTRIM(RTRIM(MB027))+ CHAR(10) +LTRIM(RTRIM(MT003))+ CHAR(10)
                                     FROM [TK].dbo.POSMT,[TK].dbo.POSMB MB
                                     WHERE MT002=MB.MB027 AND MB.MB003 = POSMB.MB003
                                     FOR XML PATH('')) AS All_MC004
@@ -2975,7 +2975,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     WHERE MG005=NI001 AND MG003 = MI003
                                     FOR XML PATH('')) AS All_NI002
                                     ,(
-                                    SELECT  LTRIM(RTRIM(MJ004))+ CHAR(13) + CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI017))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI018))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                    SELECT  LTRIM(RTRIM(MJ004))+ CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI017))+ CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI018)) + CHAR(10) 
                                     FROM [TK].dbo.POSMJ,[TK].dbo.INVMB
                                     WHERE MJ004=MB001 AND  MJ003 = MI003
                                     FOR XML PATH('')) AS All_MC004
@@ -3100,7 +3100,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     WHERE MG005=NI001 AND MG003 = MO003
                                     FOR XML PATH('')) AS All_NI002
                                     ,(
-                                    SELECT  LTRIM(RTRIM(MP005))+ CHAR(13) + CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP006))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP007))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                    SELECT  LTRIM(RTRIM(MP005))+ CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP006))+ CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP007))+ CHAR(10) 
                                     FROM [TK].dbo.POSMP,[TK].dbo.INVMB
                                     WHERE MP005=MB001 AND  MP003 = MO003
                                     FOR XML PATH('')) AS All_MC004
@@ -3226,7 +3226,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                                     WHERE MG005=NI001 AND MG003 = MM003
                                     FOR XML PATH('')) AS All_NI002
                                     ,(
-                                    SELECT  LTRIM(RTRIM(CONVERT(INT,MN005)))+' 以上'+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN008))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN009))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                    SELECT  LTRIM(RTRIM(CONVERT(INT,MN005)))+' 以上'+ CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN008))+ CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN009))+ CHAR(10) 
                                     FROM [TK].dbo.POSMN
                                     WHERE  MN003 = MM003
                                     FOR XML PATH('')) AS All_MC004
