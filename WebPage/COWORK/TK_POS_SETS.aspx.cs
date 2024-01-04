@@ -34,13 +34,28 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             SETDATES();
             BindDropDownList();
+            BindDropDownList2();
+            BindDropDownList3();
+            BindDropDownList4();
+            BindDropDownList5();
+            BindDropDownList6();
+            BindDropDownList7();
+
             BindGrid();
+            BindGrid2();
         }
     }
     #region FUNCTION
     public void SETDATES()
     {
-        TextBox1.Text = DateTime.Now.ToString("yyyy");       
+        TextBox1.Text = DateTime.Now.ToString("yyyy");
+        TextBox3.Text = DateTime.Now.ToString("yyyy");
+        TextBox5.Text = DateTime.Now.ToString("yyyy");
+        TextBox7.Text = DateTime.Now.ToString("yyyy");
+        TextBox9.Text = DateTime.Now.ToString("yyyy");
+        TextBox11.Text = DateTime.Now.ToString("yyyy");
+        TextBox13.Text = DateTime.Now.ToString("yyyy");
+    
 
     }
     private void BindDropDownList()
@@ -62,6 +77,180 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
             DropDownList1.DataTextField = "STATUS";
             DropDownList1.DataValueField = "STATUS";
             DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "STATUS";
+            DropDownList2.DataValueField = "STATUS";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "STATUS";
+            DropDownList3.DataValueField = "STATUS";
+            DropDownList3.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+    private void BindDropDownList4()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList4.DataSource = dt;
+            DropDownList4.DataTextField = "STATUS";
+            DropDownList4.DataValueField = "STATUS";
+            DropDownList4.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+    private void BindDropDownList5()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList5.DataSource = dt;
+            DropDownList5.DataTextField = "STATUS";
+            DropDownList5.DataValueField = "STATUS";
+            DropDownList5.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+    private void BindDropDownList6()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList6.DataSource = dt;
+            DropDownList6.DataTextField = "STATUS";
+            DropDownList6.DataValueField = "STATUS";
+            DropDownList6.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+
+
+    }
+    private void BindDropDownList7()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("STATUS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT '未核單' AS 'STATUS' UNION ALL SELECT '已核單' AS 'STATUS' ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList7.DataSource = dt;
+            DropDownList7.DataTextField = "STATUS";
+            DropDownList7.DataValueField = "STATUS";
+            DropDownList7.DataBind();
 
         }
         else
@@ -129,7 +318,8 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                             ,(MB012+'~'+MB013) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMB
-                            WHERE 1=1                            
+                            WHERE 1=1  
+                            AND MB002 IN ('1')
                             {0}
                             {1}   
                             {2}    
@@ -192,6 +382,126 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
 
+    private void BindGrid2()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        //日期
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS.AppendFormat(@" AND MB001 LIKE '{0}%' ", TextBox3.Text.Trim());
+        }
+
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList2.Text))
+        {
+            if (DropDownList2.Text.Equals("未核單"))
+            {
+                QUERYS2.AppendFormat(@" AND MB008='N' ");
+            }
+            else if (DropDownList2.Text.Equals("已核單"))
+            {
+                QUERYS2.AppendFormat(@"  AND MB008='Y' ");
+            }
+        }
+        //特價名稱
+        if (!string.IsNullOrEmpty(TextBox4.Text))
+        {
+            QUERYS3.AppendFormat(@" AND (MB004 LIKE '%{0}%' OR MB003 LIKE '%{0}%') ", TextBox4.Text.Trim());
+        }
+
+
+
+
+        cmdTxt.AppendFormat(@" 
+                           SELECT *
+                            ,STUFF((
+                                        SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                        WHERE MF004=MA001 AND MF003 = MB003
+                                        FOR XML PATH('')), 1, 1, '1') AS All_MF004
+                            ,STUFF((
+                                        SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                        WHERE MG005=NI001 AND MG003 = MB003
+                                        FOR XML PATH('')), 1, 1, '1') AS All_NI002
+                            ,STUFF((
+                                        SELECT  LTRIM(RTRIM(MD004))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MA003))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MD005))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MD006))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMD,[TK].dbo.INVMA
+                                        WHERE MD004=INVMA.MA002 AND INVMA.MA001='3' AND MD003 = POSMB.MB003
+                                        FOR XML PATH('')), 1, 1, '1') AS All_MC004
+                            ,(MB012+'~'+MB013) AS 'MB012MB013'
+
+                            FROM [TK].dbo.POSMB
+                            WHERE 1=1  
+                            AND MB002 IN ('2')
+                            {0}
+                            {1}   
+                            {2}    
+
+                                ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Grid1_Button1
+            //Get the button that raised the event
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid2_Button1");
+            //Get the row that contains this button
+            GridViewRow gvr1 = (GridViewRow)Grid1_Button1.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue1 = Grid1_Button1.CommandArgument;
+            DataRowView row1 = (DataRowView)e.Row.DataItem;
+            Button lbtnName1 = (Button)e.Row.FindControl("Grid2_Button1");
+            ExpandoObject param1 = new { ID = Cellvalue1 }.ToExpando();
+
+        }
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid2_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+
+            MB003 = e.CommandArgument.ToString();
+
+            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+        }
+
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
     public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string KINDS,string MB003)
     {
         DataTable DT = SEARCH_POSM(MB003);
@@ -655,7 +965,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
-       
+        BindGrid2();
 
     }
     protected void Button3_Click(object sender, EventArgs e)
