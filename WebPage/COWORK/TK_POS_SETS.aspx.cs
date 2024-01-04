@@ -46,6 +46,8 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
             BindGrid3();
             BindGrid4();
             BindGrid5();
+            BindGrid6();
+    
         }
     }
     #region FUNCTION
@@ -804,8 +806,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                             ,(MO011+'~'+MO012) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMO
-                            WHERE 1=1  
-                            AND MO003='520240101001'
+                            WHERE 1=1                            
                             {0}
                             {1}   
                             {2}    
@@ -863,6 +864,127 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
 
     public void OnBeforeExport5(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+
+    private void BindGrid6()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        //日期
+        if (!string.IsNullOrEmpty(TextBox11.Text))
+        {
+            QUERYS.AppendFormat(@" AND MM001 LIKE '{0}%' ", TextBox11.Text.Trim());
+        }
+
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList6.Text))
+        {
+            if (DropDownList6.Text.Equals("未核單"))
+            {
+                QUERYS2.AppendFormat(@" AND MM015='N' ");
+            }
+            else if (DropDownList6.Text.Equals("已核單"))
+            {
+                QUERYS2.AppendFormat(@"  AND MM015='Y' ");
+            }
+        }
+        //特價名稱
+        if (!string.IsNullOrEmpty(TextBox12.Text))
+        {
+            QUERYS3.AppendFormat(@" AND (MM003 LIKE '%{0}%' OR MM004 LIKE '%{0}%') ", TextBox12.Text.Trim());
+        }
+
+
+
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT *
+                            ,(
+                                        SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                        WHERE MF004=MA001 AND MF003 = MM003
+                                        FOR XML PATH('')) AS All_MF004                                     
+                            ,(
+                                        SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                        WHERE MG005=NI001 AND MG003 = MM003
+                                        FOR XML PATH('')) AS All_NI002
+                            ,(
+                                        SELECT  LTRIM(RTRIM(CONVERT(INT,MN005)))+' 以上'+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN008))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MN009))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMN
+                                        WHERE  MN003 = MM003
+                                        FOR XML PATH('')) AS All_MC004
+                            ,(MM005+'~'+MM005) AS 'MB012MB013'
+
+                            FROM [TK].dbo.POSMM
+                            WHERE 1=1  
+                            AND MM003='620240101004'
+                            {0}
+                            {1}   
+                            {2}    
+
+                                ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid6.DataSource = dt;
+        Grid6.DataBind();
+    }
+
+    protected void grid_PageIndexChanging6(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid6_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Grid1_Button1
+            //Get the button that raised the event
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid6_Button1");
+            //Get the row that contains this button
+            GridViewRow gvr1 = (GridViewRow)Grid1_Button1.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue1 = Grid1_Button1.CommandArgument;
+            DataRowView row1 = (DataRowView)e.Row.DataItem;
+            Button lbtnName1 = (Button)e.Row.FindControl("Grid6_Button1");
+            ExpandoObject param1 = new { ID = Cellvalue1 }.ToExpando();
+
+        }
+    }
+
+    protected void Grid6_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid6_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+
+            MB003 = e.CommandArgument.ToString();
+
+            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+        }
+
+    }
+
+
+    public void OnBeforeExport6(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         //SETEXCEL();
 
@@ -1352,7 +1474,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
     }
     protected void Button6_Click(object sender, EventArgs e)
     {
-
+        BindGrid6();
 
     }
     protected void Button7_Click(object sender, EventArgs e)

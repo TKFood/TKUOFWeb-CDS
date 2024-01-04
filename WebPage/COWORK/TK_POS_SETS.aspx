@@ -481,6 +481,47 @@
                     <tr>
                         <td colspan="2" class="PopTableRightTD">
                             <div style="overflow-x: auto; width: 100%">
+                                 <Fast:Grid ID="Grid6" OnRowDataBound="Grid6_RowDataBound" OnRowCommand="Grid6_RowCommand" runat="server" OnBeforeExport="OnBeforeExport6" meta:resourcekey="Grid6Resource1" OnPageIndexChanging="grid_PageIndexChanging6" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" >
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                    <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                    <Columns>
+                                        <asp:BoundField HeaderText="活動代號" DataField="MM001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="特價代號" DataField="MM003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="特價名稱" DataField="MM004" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="核價日期" DataField="MM007" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                           <asp:BoundField HeaderText="起迄日期" DataField="MB012MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                       <asp:TemplateField HeaderText="活動商品" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Label_All_MC004" runat="server" Text='<%# Bind("All_MC004") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="適用門市" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Label_All_MF004" runat="server" Text='<%# Bind("All_MF004") %>' Style="word-break: break-all; white-space: pre-line;" Width="160px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                       <asp:TemplateField HeaderText="適用會員" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Label_All_NI002" runat="server" Text='<%# Bind("All_NI002") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                          <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="Grid6_Button1" runat="server" Text="送簽" CommandName="Grid6_Button1" ForeColor="Red" CommandArgument='<%# Eval("MM003") %>' OnClientClick="return confirm('確定要送簽嗎？');" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </Fast:Grid>
                             </div>
                         </td>
                     </tr>
@@ -524,6 +565,7 @@
                     <tr>
                         <td colspan="2" class="PopTableRightTD">
                             <div style="overflow-x: auto; width: 100%">
+
                             </div>
                         </td>
                     </tr>
