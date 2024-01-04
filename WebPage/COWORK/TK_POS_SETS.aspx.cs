@@ -44,6 +44,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
             BindGrid();
             BindGrid2();
             BindGrid3();
+            BindGrid4();
         }
     }
     #region FUNCTION
@@ -301,21 +302,21 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
         cmdTxt.AppendFormat(@" 
                             SELECT *
-                            ,STUFF((
+                            ,(
                                        SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
                                        FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
                                        WHERE MF004=MA001 AND MF003 = MB003
-                                       FOR XML PATH('')), 1, 1, '1') AS All_MF004
-                            ,STUFF((
+                                       FOR XML PATH('')) AS All_MF004
+                            ,(
                                        SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
                                        FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
                                        WHERE MG005=NI001 AND MG003 = MB003
-                                       FOR XML PATH('')), 1, 1, '1') AS All_NI002
-                            ,STUFF((
+                                       FOR XML PATH('')) AS All_NI002
+                            ,(
                                         SELECT  LTRIM(RTRIM(MC004))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC005))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MC006))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMC,[TK].dbo.INVMB
                                         WHERE MC004=INVMB.MB001 AND MC003 = POSMB.MB003
-                                        FOR XML PATH('')), 1, 1, '1') AS All_MC004
+                                        FOR XML PATH('')) AS All_MC004
                             ,(MB012+'~'+MB013) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMB
@@ -422,21 +423,21 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
         cmdTxt.AppendFormat(@" 
                            SELECT *
-                            ,STUFF((
+                            ,(
                                         SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
                                         WHERE MF004=MA001 AND MF003 = MB003
-                                        FOR XML PATH('')), 1, 1, '1') AS All_MF004
-                            ,STUFF((
+                                        FOR XML PATH('')) AS All_MF004
+                            ,(
                                         SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
                                         WHERE MG005=NI001 AND MG003 = MB003
-                                        FOR XML PATH('')), 1, 1, '1') AS All_NI002
-                            ,STUFF((
+                                        FOR XML PATH('')) AS All_NI002
+                            ,(
                                         SELECT  LTRIM(RTRIM(MD004))+ CHAR(13) + CHAR(10) +LTRIM(RTRIM(MA003))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MD005))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MD006))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMD,[TK].dbo.INVMA
                                         WHERE MD004=INVMA.MA002 AND INVMA.MA001='3' AND MD003 = POSMB.MB003
-                                        FOR XML PATH('')), 1, 1, '1') AS All_MC004
+                                        FOR XML PATH('')) AS All_MC004
                             ,(MB012+'~'+MB013) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMB
@@ -543,21 +544,21 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
         cmdTxt.AppendFormat(@" 
                            SELECT *
-                            ,STUFF((
+                            ,(
                                         SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
                                         WHERE MF004=MA001 AND MF003 = MB003
-                                        FOR XML PATH('')), 1, 1, '1') AS All_MF004
-                            ,STUFF((
+                                        FOR XML PATH('')) AS All_MF004
+                            ,(
                                         SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
                                         WHERE MG005=NI001 AND MG003 = MB003
-                                        FOR XML PATH('')), 1, 1, '1') AS All_NI002
-                            ,STUFF((
+                                        FOR XML PATH('')) AS All_NI002
+                            ,(
                                         SELECT  LTRIM(RTRIM(CONVERT(INT,ME005)))+ '~' +LTRIM(RTRIM(CONVERT(INT,ME006)))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,ME007))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,ME008))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSME
                                         WHERE  ME003 = POSMB.MB003
-                                        FOR XML PATH('')), 1, 1, '1') AS All_MC004
+                                        FOR XML PATH('')) AS All_MC004
                             ,(MB012+'~'+MB013) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMB
@@ -625,6 +626,126 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
     }
 
+    private void BindGrid4()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        //日期
+        if (!string.IsNullOrEmpty(TextBox9.Text))
+        {
+            QUERYS.AppendFormat(@" AND MI001 LIKE '{0}%' ", TextBox9.Text.Trim());
+        }
+
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList5.Text))
+        {
+            if (DropDownList5.Text.Equals("未核單"))
+            {
+                QUERYS2.AppendFormat(@" AND MI015='N' ");
+            }
+            else if (DropDownList5.Text.Equals("已核單"))
+            {
+                QUERYS2.AppendFormat(@"  AND MI015='Y' ");
+            }
+        }
+        //特價名稱
+        if (!string.IsNullOrEmpty(TextBox10.Text))
+        {
+            QUERYS3.AppendFormat(@" AND (MI003 LIKE '%{0}%' OR MI004 LIKE '%{0}%') ", TextBox10.Text.Trim());
+        }
+
+
+
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT *
+                            ,(
+                                        SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
+                                        WHERE MF004=MA001 AND MF003 = MI003
+                                        FOR XML PATH('')) AS All_MF004                                     
+                            ,(
+                                        SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
+                                        WHERE MG005=NI001 AND MG003 = MI003
+                                        FOR XML PATH('')) AS All_NI002
+                            ,(
+                                        SELECT  LTRIM(RTRIM(MJ004))+ CHAR(13) + CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI017))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI018))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMJ,[TK].dbo.INVMB
+                                        WHERE MJ004=MB001 AND  MJ003 = MI003
+                                        FOR XML PATH('')) AS All_MC004
+                            ,(MI005+'~'+MI006) AS 'MB012MB013'
+
+                            FROM [TK].dbo.POSMI
+                            WHERE 1=1  
+                            AND MI003='420240101047'
+                            {0}
+                            {1}   
+                            {2}    
+
+                                ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+
+        Grid4.DataSource = dt;
+        Grid4.DataBind();
+    }
+
+    protected void grid_PageIndexChanging4(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //Grid1_Button1
+            //Get the button that raised the event
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid4_Button1");
+            //Get the row that contains this button
+            GridViewRow gvr1 = (GridViewRow)Grid1_Button1.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue1 = Grid1_Button1.CommandArgument;
+            DataRowView row1 = (DataRowView)e.Row.DataItem;
+            Button lbtnName1 = (Button)e.Row.FindControl("Grid4_Button1");
+            ExpandoObject param1 = new { ID = Cellvalue1 }.ToExpando();
+
+        }
+    }
+
+    protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid4_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "", this.Page, this);
+
+            MB003 = e.CommandArgument.ToString();
+
+            //ADDTB_WKF_EXTERNAL_TASK_POSSET("商品特價折扣", MB003);
+        }
+
+    }
+
+
+    public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
 
     public void ADDTB_WKF_EXTERNAL_TASK_POSSET(string KINDS,string MB003)
     {
@@ -1099,7 +1220,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
     }
     protected void Button4_Click(object sender, EventArgs e)
     {
-
+        BindGrid4();
 
     }
     protected void Button5_Click(object sender, EventArgs e)
