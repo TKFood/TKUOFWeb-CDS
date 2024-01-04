@@ -45,6 +45,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
             BindGrid2();
             BindGrid3();
             BindGrid4();
+            BindGrid5()
         }
     }
     #region FUNCTION
@@ -683,8 +684,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
                             ,(MI005+'~'+MI006) AS 'MB012MB013'
 
                             FROM [TK].dbo.POSMI
-                            WHERE 1=1  
-                            AND MI003='420240101047'
+                            WHERE 1=1                             
                             {0}
                             {1}   
                             {2}    
@@ -760,7 +760,7 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         //日期
         if (!string.IsNullOrEmpty(TextBox9.Text))
         {
-            QUERYS.AppendFormat(@" AND MI001 LIKE '{0}%' ", TextBox9.Text.Trim());
+            QUERYS.AppendFormat(@" AND MO001 LIKE '{0}%' ", TextBox9.Text.Trim());
         }
 
         //核單
@@ -768,44 +768,44 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
         {
             if (DropDownList5.Text.Equals("未核單"))
             {
-                QUERYS2.AppendFormat(@" AND MI015='N' ");
+                QUERYS2.AppendFormat(@" AND MO008='N' ");
             }
             else if (DropDownList5.Text.Equals("已核單"))
             {
-                QUERYS2.AppendFormat(@"  AND MI015='Y' ");
+                QUERYS2.AppendFormat(@"  AND MO008='Y' ");
             }
         }
         //特價名稱
         if (!string.IsNullOrEmpty(TextBox10.Text))
         {
-            QUERYS3.AppendFormat(@" AND (MI003 LIKE '%{0}%' OR MI004 LIKE '%{0}%') ", TextBox10.Text.Trim());
+            QUERYS3.AppendFormat(@" AND (MO003 LIKE '%{0}%' OR MO004 LIKE '%{0}%') ", TextBox10.Text.Trim());
         }
 
 
 
 
         cmdTxt.AppendFormat(@" 
-                            SELECT *
+                           SELECT *
                             ,(
                                         SELECT  LTRIM(RTRIM(MF004))+LTRIM(RTRIM(MA002))+ CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMF,[TK].dbo.WSCMA
-                                        WHERE MF004=MA001 AND MF003 = MI003
+                                        WHERE MF004=MA001 AND MF003 = MO003
                                         FOR XML PATH('')) AS All_MF004                                     
                             ,(
                                         SELECT  LTRIM(RTRIM(NI002))+ CHAR(13) + CHAR(10) 
                                         FROM [TK].dbo.POSMG,[TK].dbo.WSCNI
-                                        WHERE MG005=NI001 AND MG003 = MI003
+                                        WHERE MG005=NI001 AND MG003 = MO003
                                         FOR XML PATH('')) AS All_NI002
                             ,(
-                                        SELECT  LTRIM(RTRIM(MJ004))+ CHAR(13) + CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI017))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MI018))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
-                                        FROM [TK].dbo.POSMJ,[TK].dbo.INVMB
-                                        WHERE MJ004=MB001 AND  MJ003 = MI003
+                                        SELECT  LTRIM(RTRIM(MP005))+ CHAR(13) + CHAR(10)+LTRIM(RTRIM(MB002))+ CHAR(13) + CHAR(10) +'非會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP006))+ CHAR(13) + CHAR(10) +' 會員特價'+CONVERT(NVARCHAR,CONVERT(INT,MP007))+ CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+                                        FROM [TK].dbo.POSMP,[TK].dbo.INVMB
+                                        WHERE MP005=MB001 AND  MP003 = MO003
                                         FOR XML PATH('')) AS All_MC004
-                            ,(MI005+'~'+MI006) AS 'MB012MB013'
+                            ,(MO011+'~'+MO012) AS 'MB012MB013'
 
-                            FROM [TK].dbo.POSMI
+                            FROM [TK].dbo.POSMO
                             WHERE 1=1  
-                            AND MI003='420240101047'
+                            AND MO003='520240101001'
                             {0}
                             {1}   
                             {2}    

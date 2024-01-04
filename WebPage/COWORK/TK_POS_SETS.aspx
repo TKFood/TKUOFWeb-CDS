@@ -401,16 +401,16 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
-                                        <asp:BoundField HeaderText="活動代號" DataField="MI001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="活動代號" DataField="MO001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="特價代號" DataField="MI003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="特價代號" DataField="MO003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="特價名稱" DataField="MI004" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="特價名稱" DataField="MO004" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:BoundField HeaderText="核價日期" DataField="MI007" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:BoundField HeaderText="核價日期" DataField="MO005" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                            <asp:BoundField HeaderText="起迄日期" DataField="MB012MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -433,7 +433,7 @@
                                         </asp:TemplateField>
                                           <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid5_Button1" runat="server" Text="送簽" CommandName="Grid5_Button1" ForeColor="Red" CommandArgument='<%# Eval("MI003") %>' OnClientClick="return confirm('確定要送簽嗎？');" />
+                                                <asp:Button ID="Grid5_Button1" runat="server" Text="送簽" CommandName="Grid5_Button1" ForeColor="Red" CommandArgument='<%# Eval("MO003") %>' OnClientClick="return confirm('確定要送簽嗎？');" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
