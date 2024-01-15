@@ -522,7 +522,26 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
             string MB003 = e.CommandArgument.ToString();
 
-            ADDTB_WKF_EXTERNAL_TASK_POSSET2("商品類別特價設定作業", MB003);
+            //有重疊日期的品號
+            DataTable DT = CHECK_POSMB_POSMI_POSMO(MB003);
+            if (DT != null && DT.Rows.Count >= 1)
+            {
+                StringBuilder MESSAGES = new StringBuilder();
+                MESSAGES.AppendFormat(@"");
+                foreach (DataRow DR in DT.Rows)
+                {
+                    MESSAGES.AppendFormat(@"有錯誤，不可送簽 \r\n");
+                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊日期", DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
+                }
+
+
+                MsgBox(MESSAGES.ToString() + "", this.Page, this);
+            }
+            else
+            {
+                ADDTB_WKF_EXTERNAL_TASK_POSSET2("商品類別特價設定作業", MB003);
+            }
+            
         }
 
     }
@@ -643,7 +662,27 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
             string MB003 = e.CommandArgument.ToString();
 
-            ADDTB_WKF_EXTERNAL_TASK_POSSET3("商品價格區間特價設定作業", MB003);
+            //有重疊日期的品號
+            DataTable DT = CHECK_POSMB_POSMI_POSMO(MB003);
+            if (DT != null && DT.Rows.Count >= 1)
+            {
+                StringBuilder MESSAGES = new StringBuilder();
+                MESSAGES.AppendFormat(@"");
+                foreach (DataRow DR in DT.Rows)
+                {
+                    MESSAGES.AppendFormat(@"有錯誤，不可送簽 \r\n");
+                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊日期", DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
+                }
+
+
+                MsgBox(MESSAGES.ToString() + "", this.Page, this);
+            }
+            else
+            {
+                ADDTB_WKF_EXTERNAL_TASK_POSSET3("商品價格區間特價設定作業", MB003);
+            }
+
+            
         }
 
     }
@@ -763,7 +802,26 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
             string MI003 = e.CommandArgument.ToString();
 
-            ADDTB_WKF_EXTERNAL_TASK_POSSET4("組合品搭贈設定作業", MI003);
+            //有重疊日期的品號
+            DataTable DT = CHECK_POSMB_POSMI_POSMO(MI003);
+            if (DT != null && DT.Rows.Count >= 1)
+            {
+                StringBuilder MESSAGES = new StringBuilder();
+                MESSAGES.AppendFormat(@"");
+                foreach (DataRow DR in DT.Rows)
+                {
+                    MESSAGES.AppendFormat(@"有錯誤，不可送簽 \r\n");
+                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊日期", DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
+                }
+
+
+                MsgBox(MESSAGES.ToString() + "", this.Page, this);
+            }
+            else
+            {
+                ADDTB_WKF_EXTERNAL_TASK_POSSET4("組合品搭贈設定作業", MI003);
+            }
+            
         }
 
     }
@@ -883,7 +941,27 @@ public partial class CDS_WebPage_COWORK_TK_POS_SETS : Ede.Uof.Utility.Page.BaseP
 
             string MO003 = e.CommandArgument.ToString();
 
-            ADDTB_WKF_EXTERNAL_TASK_POSSET5("配對搭贈設定作業", MO003);
+            //有重疊日期的品號
+            DataTable DT = CHECK_POSMB_POSMI_POSMO(MO003);
+            if (DT != null && DT.Rows.Count >= 1)
+            {
+                StringBuilder MESSAGES = new StringBuilder();
+                MESSAGES.AppendFormat(@"");
+                foreach (DataRow DR in DT.Rows)
+                {
+                    MESSAGES.AppendFormat(@"有錯誤，不可送簽 \r\n");
+                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊日期", DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
+                }
+
+
+                MsgBox(MESSAGES.ToString() + "", this.Page, this);
+            }
+            else
+            {
+                ADDTB_WKF_EXTERNAL_TASK_POSSET5("配對搭贈設定作業", MO003);
+            }
+
+           
         }
 
     }
