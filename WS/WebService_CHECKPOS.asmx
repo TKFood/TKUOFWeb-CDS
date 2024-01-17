@@ -23,6 +23,7 @@ using Ede.Uof.EIP.SystemInfo;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Log;
 using Ede.Uof.Utility.Page.Common;
+using Ede.Uof.WKF.Utility;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
@@ -63,6 +64,7 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
         formInfo = HttpUtility.UrlDecode(formInfo);
         XmlDocument formInfoxmlDoc = new XmlDocument();
         formInfoxmlDoc.LoadXml(formInfo);
+        string DOC_NBR = formInfoxmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='ID']").Attributes["fieldValue"].Value;
         string MB003 = formInfoxmlDoc.SelectSingleNode("/Form/FormFieldValue/FieldItem[@fieldId='FIELD002']").Attributes["fieldValue"].Value;
 
         XmlDocument xmlDoc = new XmlDocument();
@@ -81,28 +83,58 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
 
         try
         {
-            StringBuilder MESSAGES=new StringBuilder();
+            StringBuilder MESSAGES = new StringBuilder();
             //有重疊日期的品號
-            DataTable DT= CHECK_POSMB_POSMI_POSMO(MB003);
-            if(DT!=null && DT.Rows.Count>=1)
+            DataTable DT = CHECK_POSMB_POSMI_POSMO(MB003);
+            if (DT != null && DT.Rows.Count >= 1)
             {
 
                 MESSAGES.AppendFormat(@"");
-                foreach(DataRow DR in DT.Rows)
+                foreach (DataRow DR in DT.Rows)
                 {
                     MESSAGES.AppendFormat(@"有錯誤，不可送簽  ");
-                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊日期 ",DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
+                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊日期 ", DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
                 }
                 //不允許簽核
                 returnValueElement.SelectSingleNode("/ReturnValue/Status").InnerText = "0";
                 returnValueElement.SelectSingleNode("/ReturnValue/Exception/Message").InnerText = MESSAGES.ToString();
+
+                DataTable DT_FIND_UOD_TASKID_SITEID = FIND_UOD_TASKID_SITEID(DOC_NBR);
+                if (DT_FIND_UOD_TASKID_SITEID != null && DT_FIND_UOD_TASKID_SITEID.Rows.Count >= 1)
+                {
+                    string TASK_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["TASK_ID"].ToString();
+                    string CURRENT_SITE_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["CURRENT_SITE_ID"].ToString();
+                    int NODE_SEQ = Convert.ToInt32(DT_FIND_UOD_TASKID_SITEID.Rows[0]["NODE_SEQ"].ToString());
+
+                    UPDATE_TB_WKF_TASK_NODE_COMMENT(TASK_ID,CURRENT_SITE_ID,"退回申請者");
+
+                    ReturnSignUCO returnUCO =  new ReturnSignUCO();
+                    /// <summary>
+                    /// 退回到申請者
+                    /// </summary>
+                    /// <param name="taskId">taskId</param>
+                    /// <param name="currentSiteId">目前站點</param>
+                    /// <param name="currentNodeSeq">目前節點</param>
+                    /// <param name="actualSigner"></param>
+                    /// <param name="isFreeTask">是否為自由流程</param>
+                    /// <param name="source">表單處理來源</param>
+
+                    returnUCO.ReturnToApplicant(
+                    TASK_ID,
+                    CURRENT_SITE_ID,
+                    NODE_SEQ,
+                    Current.UserGUID,
+                    false,
+                    Source.External.ToString());
+                }
+
             }
             else
             {
                 //允許簽核
                 returnValueElement.SelectSingleNode("/ReturnValue/Status").InnerText = "1";
             }
-            
+
 
         }
         catch (Exception ce)
@@ -246,5 +278,73 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
         finally
         { }
     }
+
+    public DataTable FIND_UOD_TASKID_SITEID(string DOC_NBR)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        try
+        {
+
+            cmdTxt.AppendFormat(@"                                    
+                                SELECT DOC_NBR,TB_WKF_TASK.TASK_ID,CURRENT_SITE_ID,SITE_ID,NODE_SEQ
+                                FROM [UOFTEST].dbo.TB_WKF_TASK,[UOFTEST].dbo.TB_WKF_TASK_NODE 
+                                WHERE 1=1
+                                AND TB_WKF_TASK.TASK_ID=TB_WKF_TASK_NODE.TASK_ID
+                                AND TB_WKF_TASK.CURRENT_SITE_ID=TB_WKF_TASK_NODE.SITE_ID
+                                AND DOC_NBR='{0}'
+
+
+                              
+                                    ", DOC_NBR);
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        { }
+    }
+
+    public void UPDATE_TB_WKF_TASK_NODE_COMMENT(string TASK_ID, string SITE_ID,string COMMENT)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"
+                    UPDATE [UOFTEST].dbo.TB_WKF_TASK_NODE 
+                    SET COMMENT=@COMMENT
+                    WHERE TASK_ID=@TASK_ID AND SITE_ID=@SITE_ID
+                        ";
+
+        m_db.AddParameter("@TASK_ID", TASK_ID);
+        m_db.AddParameter("@SITE_ID", SITE_ID);
+        m_db.AddParameter("@COMMENT", COMMENT);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
 }
 
