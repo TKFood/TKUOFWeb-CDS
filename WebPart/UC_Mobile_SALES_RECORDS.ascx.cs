@@ -428,6 +428,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                             ,[ISCLOSE]
                             ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
                             ,(SELECT TOP 1 [COMMENTS] FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS COMMENTS
+                            ,(SELECT TOP 1 CONVERT(NVARCHAR,[ADDDATES],111) FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS ADDDATES
                             FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
                             WHERE 1=1
                             {0}
