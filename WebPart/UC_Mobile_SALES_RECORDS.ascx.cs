@@ -656,7 +656,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                 // ...
 
                 // 重新繫結GridView，刷新顯示
-                BindGrid();
+                BindGrid3();
             }
         }
 
