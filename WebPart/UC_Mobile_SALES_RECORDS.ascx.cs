@@ -38,9 +38,11 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
 
             BindDropDownListISCLOSE();
             BindDropDownListISCLOSE2();
+            BindDropDownListISCLOSE3();
 
             BindGrid();
             BindGrid2();
+            BindGrid3();
 
         }
     }
@@ -180,6 +182,41 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
             DropDownListISCLOSE2.DataTextField = "NAMES";
             DropDownListISCLOSE2.DataValueField = "NAMES";
             DropDownListISCLOSE2.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    private void BindDropDownListISCLOSE3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='是否結案'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListISCLOSE3.DataSource = dt;
+            DropDownListISCLOSE3.DataTextField = "NAMES";
+            DropDownListISCLOSE3.DataValueField = "NAMES";
+            DropDownListISCLOSE3.DataBind();
 
         }
         else
@@ -514,6 +551,125 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
 
     }
 
+    private void BindGrid3()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder Query1 = new StringBuilder();
+        StringBuilder Query2 = new StringBuilder();
+
+        if (!string.IsNullOrEmpty(TextBox_CLIENTS3.Text))
+        {
+            Query1.AppendFormat(@" AND  [TB_SALES_ASSINGED].[ID] IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [CLIENTS] LIKE '%{0}%') ", TextBox_CLIENTS3.Text);
+        }
+        else
+        {
+            Query1.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(DropDownListISCLOSE2.SelectedValue.ToString()))
+        {
+            if (DropDownListISCLOSE3.SelectedValue.ToString().Equals("全部"))
+            {
+                Query2.AppendFormat(@"");
+            }
+            else
+            {
+                Query2.AppendFormat(@"AND [TB_SALES_ASSINGED].[ID]  IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [ISCLOSE] LIKE '%{0}%')", DropDownListISCLOSE3.SelectedValue.ToString());
+            }
+
+        }
+        else
+        {
+            Query2.AppendFormat(@"");
+        }
+
+        cmdTxt.AppendFormat(@"
+                           SELECT 
+                            [TB_SALES_ASSINGED].[ID]
+                            ,[SALES]
+                            ,[CLIENTS]
+                            ,[EVENTS]
+                            ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
+                            ,[ISCLOSE]
+                            ,[MID]
+                            ,[COMMENTS]
+                            ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES] ,111)  ADDDATES
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED], [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS]
+                            WHERE 1=1
+                            AND  [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID                           
+                            {0}
+                            {1}
+                            ORDER BY [SALES],[EDAYS],[ID],[TB_SALES_ASSINGED_COMMENTS].[ADDDATES]
+
+                              
+                            ", Query1.ToString(), Query2.ToString()); ;
+
+
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+    }
+
+    protected void grid_PageIndexChanging3(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid("");
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid3_OnRowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid3Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引          
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid3.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField3");
+                string newTextValue = txtNewField.Text;
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID3");
+                string id = txtid.Text;
+
+                ADD_TB_SALES_ASSINGED_COMMENTS(id, newTextValue);
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+            }
+        }
+
+
+    }
+
+    public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL(txtDate1.Text, txtDate2.Text);
+
+
+    }
+
     public void ADD_TB_SALES_ASSINGED_COMMENTS(string MID, string COMMENTS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -670,6 +826,10 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
     protected void btn3_Click(object sender, EventArgs e)
     {
         BindGrid2();
+    }
+    protected void btn4_Click(object sender, EventArgs e)
+    {
+        BindGrid3();
     }
     #endregion
 }
