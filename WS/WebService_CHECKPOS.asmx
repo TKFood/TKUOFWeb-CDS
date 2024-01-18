@@ -24,6 +24,7 @@ using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Log;
 using Ede.Uof.Utility.Page.Common;
 using Ede.Uof.WKF.Utility;
+using Ede.Uof.WKF.Engine;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
@@ -105,6 +106,7 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
                     string TASK_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["TASK_ID"].ToString();
                     string CURRENT_SITE_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["CURRENT_SITE_ID"].ToString();
                     int NODE_SEQ = Convert.ToInt32(DT_FIND_UOD_TASKID_SITEID.Rows[0]["NODE_SEQ"].ToString());
+                    string USER_GUID= DT_FIND_UOD_TASKID_SITEID.Rows[0]["USER_GUID"].ToString();
 
                     UPDATE_TB_WKF_TASK_NODE_COMMENT(TASK_ID,CURRENT_SITE_ID,"退回申請者");
 
@@ -119,13 +121,21 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
                     /// <param name="isFreeTask">是否為自由流程</param>
                     /// <param name="source">表單處理來源</param>
 
-                    returnUCO.ReturnToApplicant(
-                    TASK_ID,
-                    CURRENT_SITE_ID,
-                    NODE_SEQ,
-                    Current.UserGUID,
-                    false,
-                    Source.External.ToString());
+                    //returnUCO.ReturnToApplicant(
+                    //TASK_ID,
+                    //CURRENT_SITE_ID,
+                    //NODE_SEQ,
+                    //Current.UserGUID,
+                    //false,
+                    //Source.External.ToString());
+
+                   returnUCO.ReturnToApplicant(
+                   TASK_ID,
+                   CURRENT_SITE_ID,
+                   0,
+                   USER_GUID,
+                   false,
+                   Source.External.ToString());
                 }
 
             }
@@ -290,7 +300,7 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
         {
 
             cmdTxt.AppendFormat(@"                                    
-                                SELECT DOC_NBR,TB_WKF_TASK.TASK_ID,CURRENT_SITE_ID,SITE_ID,NODE_SEQ
+                                SELECT DOC_NBR,TB_WKF_TASK.TASK_ID,CURRENT_SITE_ID,SITE_ID,NODE_SEQ,USER_GUID
                                 FROM [UOFTEST].dbo.TB_WKF_TASK,[UOFTEST].dbo.TB_WKF_TASK_NODE 
                                 WHERE 1=1
                                 AND TB_WKF_TASK.TASK_ID=TB_WKF_TASK_NODE.TASK_ID
