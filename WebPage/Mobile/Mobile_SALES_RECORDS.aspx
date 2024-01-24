@@ -40,7 +40,7 @@
     </head>
     <body>
         <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
-        <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage">
+        <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" OnClientTabSelected="OnClientTabSelected">
             <Tabs>
                 <telerik:RadTab Text="業務" PageViewID="RadPageView1">
                 </telerik:RadTab>
@@ -605,6 +605,17 @@
             $("#<%= RECORDSDATES.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
 
         });
+
+        function OnClientTabSelected(sender, eventArgs) {
+            var tabStrip = sender;
+            var tab = eventArgs.get_tab();
+            //alert(tab.get_text());
+
+            if (tab.get_text() == '報表') {               
+                // 模拟调用ASP.NET按钮点击事件
+                $("#<%= Button2.ClientID %>").click();
+            }
+        }
     </script>
 
     </html>
