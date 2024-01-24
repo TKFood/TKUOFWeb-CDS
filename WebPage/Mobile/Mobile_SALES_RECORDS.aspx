@@ -598,9 +598,7 @@
 
                 //PageMethods.SaveCapturedImage(myTextcontent, imgCapture, Success, Failure);
                 //PageMethods.TEST(Success, Failure);
-
-                // 模拟调用ASP.NET按钮点击事件
-                $("#<%= Button2.ClientID %>").click();
+              
             });
         });
         $(function () {
