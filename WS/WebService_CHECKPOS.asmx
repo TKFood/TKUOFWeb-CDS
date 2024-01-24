@@ -136,6 +136,9 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
                    USER_GUID,
                    false,
                    Source.External.ToString());
+
+                   Dialog.SetReturnValue2("PostBack");                            
+                   Dialog.Close(this);
                 }
 
             }
