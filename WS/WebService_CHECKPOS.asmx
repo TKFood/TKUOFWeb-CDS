@@ -188,9 +188,7 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
         try
         {
 
-            cmdTxt.AppendFormat(@"                                    
-                               --20240126 查POS重疊活動-商品、日期起、門市
-
+            cmdTxt.AppendFormat(@" 
                                     SELECT *
                                     FROM 
                                     (
