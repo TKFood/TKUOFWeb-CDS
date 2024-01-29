@@ -100,46 +100,46 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
                 returnValueElement.SelectSingleNode("/ReturnValue/Status").InnerText = "0";
                 returnValueElement.SelectSingleNode("/ReturnValue/Exception/Message").InnerText = MESSAGES.ToString();
 
-                DataTable DT_FIND_UOD_TASKID_SITEID = FIND_UOD_TASKID_SITEID(DOC_NBR);
-                if (DT_FIND_UOD_TASKID_SITEID != null && DT_FIND_UOD_TASKID_SITEID.Rows.Count >= 1)
-                {
-                    string TASK_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["TASK_ID"].ToString();
-                    string CURRENT_SITE_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["CURRENT_SITE_ID"].ToString();
-                    int NODE_SEQ = Convert.ToInt32(DT_FIND_UOD_TASKID_SITEID.Rows[0]["NODE_SEQ"].ToString());
-                    string USER_GUID= DT_FIND_UOD_TASKID_SITEID.Rows[0]["USER_GUID"].ToString();
+                //DataTable DT_FIND_UOD_TASKID_SITEID = FIND_UOD_TASKID_SITEID(DOC_NBR);
+                //if (DT_FIND_UOD_TASKID_SITEID != null && DT_FIND_UOD_TASKID_SITEID.Rows.Count >= 1)
+                //{
+                //    string TASK_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["TASK_ID"].ToString();
+                //    string CURRENT_SITE_ID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["CURRENT_SITE_ID"].ToString();
+                //    int NODE_SEQ = Convert.ToInt32(DT_FIND_UOD_TASKID_SITEID.Rows[0]["NODE_SEQ"].ToString());
+                //    string USER_GUID= DT_FIND_UOD_TASKID_SITEID.Rows[0]["USER_GUID"].ToString();
 
-                    UPDATE_TB_WKF_TASK_NODE_COMMENT(TASK_ID,CURRENT_SITE_ID,"退回申請者");
+                //    UPDATE_TB_WKF_TASK_NODE_COMMENT(TASK_ID,CURRENT_SITE_ID,"退回申請者");
 
-                    ReturnSignUCO returnUCO =  new ReturnSignUCO();
-                    /// <summary>
-                    /// 退回到申請者
-                    /// </summary>
-                    /// <param name="taskId">taskId</param>
-                    /// <param name="currentSiteId">目前站點</param>
-                    /// <param name="currentNodeSeq">目前節點</param>
-                    /// <param name="actualSigner"></param>
-                    /// <param name="isFreeTask">是否為自由流程</param>
-                    /// <param name="source">表單處理來源</param>
+                //    ReturnSignUCO returnUCO =  new ReturnSignUCO();
+                //    /// <summary>
+                //    /// 退回到申請者
+                //    /// </summary>
+                //    /// <param name="taskId">taskId</param>
+                //    /// <param name="currentSiteId">目前站點</param>
+                //    /// <param name="currentNodeSeq">目前節點</param>
+                //    /// <param name="actualSigner"></param>
+                //    /// <param name="isFreeTask">是否為自由流程</param>
+                //    /// <param name="source">表單處理來源</param>
 
-                    //returnUCO.ReturnToApplicant(
-                    //TASK_ID,
-                    //CURRENT_SITE_ID,
-                    //NODE_SEQ,
-                    //Current.UserGUID,
-                    //false,
-                    //Source.External.ToString());
+                //    //returnUCO.ReturnToApplicant(
+                //    //TASK_ID,
+                //    //CURRENT_SITE_ID,
+                //    //NODE_SEQ,
+                //    //Current.UserGUID,
+                //    //false,
+                //    //Source.External.ToString());
 
-                    returnUCO.ReturnToApplicant(
-                    TASK_ID,
-                    CURRENT_SITE_ID,
-                    0,
-                    USER_GUID,
-                    false,
-                    Source.External.ToString());
+                //    returnUCO.ReturnToApplicant(
+                //    TASK_ID,
+                //    CURRENT_SITE_ID,
+                //    0,
+                //    USER_GUID,
+                //    false,
+                //    Source.External.ToString());
 
-                    //Dialog.SetReturnValue2("PostBack");                            
-                    //Dialog.Close(this);
-                }
+                //    //Dialog.SetReturnValue2("PostBack");                            
+                //    //Dialog.Close(this);
+                //}
 
             }
             else
