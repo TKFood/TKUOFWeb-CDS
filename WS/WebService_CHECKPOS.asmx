@@ -129,16 +129,16 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
                     //false,
                     //Source.External.ToString());
 
-                   returnUCO.ReturnToApplicant(
-                   TASK_ID,
-                   CURRENT_SITE_ID,
-                   0,
-                   USER_GUID,
-                   false,
-                   Source.External.ToString());
+                    returnUCO.ReturnToApplicant(
+                    TASK_ID,
+                    CURRENT_SITE_ID,
+                    0,
+                    USER_GUID,
+                    false,
+                    Source.External.ToString());
 
-                   Dialog.SetReturnValue2("PostBack");                            
-                   Dialog.Close(this);
+                    //Dialog.SetReturnValue2("PostBack");                            
+                    //Dialog.Close(this);
                 }
 
             }
