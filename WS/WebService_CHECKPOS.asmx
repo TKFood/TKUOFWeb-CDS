@@ -189,78 +189,88 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
         {
 
             cmdTxt.AppendFormat(@"                                    
-                                SELECT *
-                                FROM 
-                                (
-                                SELECT MB001,MB003,MB002,MB012,MB013,MC004,MB2MB001,MB2MB003,MB2MB012,MB2MB013,MC2MC004
-                                FROM [TK].dbo.POSMB
-                                INNER JOIN [TK].dbo.POSMC ON MB003 = MC003
-                                INNER JOIN
-                                (    
-                                SELECT MB2.MB001 AS MB2MB001,MB2.MB003 AS MB2MB003,MB2.MB002 AS MB2MB002,MB2.MB012 AS MB2MB012 ,MB2.MB013 AS MB2MB013, MC2.MC004 AS MC2MC004
-                                FROM [TK].dbo.POSMB AS MB2
-                                INNER JOIN [TK].dbo.POSMC AS MC2 ON MB2.MB003 = MC2.MC003
-                                ) 
-                                AS TEMP  ON  TEMP.MC2MC004 IS NOT NULL
-                                AND TEMP.MB2MB003 <> POSMB.MB003
-                                AND TEMP.MC2MC004 = POSMC.MC004
-                                AND 
-                                (
-                                MB012 BETWEEN MB2MB012 AND MB2MB013
-                                OR MB013 BETWEEN MB2MB012 AND MB2MB013
-                                OR (MB2MB012 BETWEEN MB012 AND MB013)
-                                OR (MB2MB013 BETWEEN MB012 AND MB013)
-                                )
-                                WHERE MC004 IS NOT NULL
-                                AND MB003 = '{0}'
-                                UNION ALL
+                               --20240126 查POS重疊活動-商品、日期起、門市
 
-                                SELECT MI001,MI003,MI002,MI005,MI006,MJ004,MI2MI001,MI2MI003,MI2MI005,MI2MI006,MJ2MJ004
-                                FROM [TK].dbo.POSMI
-                                INNER JOIN [TK].dbo.POSMJ ON MI003 = MJ003
-                                INNER JOIN
-                                (    
-                                SELECT MI2.MI001 AS MI2MI001,MI2.MI003 AS MI2MI003,MI2.MI002 AS MI2MI002,MI2.MI005 AS MI2MI005 ,MI2.MI006 AS MI2MI006, MJ2.MJ004 AS MJ2MJ004
-                                FROM [TK].dbo.POSMI AS MI2
-                                INNER JOIN [TK].dbo.POSMJ AS MJ2 ON MI2.MI003 = MJ2.MJ003
-                                ) 
-                                AS TEMP  ON  TEMP.MJ2MJ004 IS NOT NULL
-                                AND TEMP.MI2MI003 <> POSMI.MI003
-                                AND TEMP.MJ2MJ004 = POSMJ.MJ004
-                                AND 
-                                (
-                                MI005 BETWEEN MI2MI005 AND MI2MI006
-                                OR MI006 BETWEEN MI2MI005 AND MI2MI006
-                                OR (MI2MI005 BETWEEN MI005 AND MI006)
-                                OR (MI2MI006 BETWEEN MI005 AND MI006)
-                                )
-                                WHERE MJ004 IS NOT NULL
-                                AND MI003 = '{0}'
+                                    SELECT *
+                                    FROM 
+                                    (
+                                    SELECT MB001,MB003,MB002,MB012,MB013,MC004,MF004,MB2MB001,MB2MB003,MB2MB012,MB2MB013,MC2MC004,MF2MF004
+                                    FROM [TK].dbo.POSMB
+                                    INNER JOIN [TK].dbo.POSMC ON MB003 = MC003
+                                    LEFT JOIN [TK].dbo.POSMF ON MF003=MB003
+                                    INNER JOIN
+                                    (    
+                                    SELECT MB2.MB001 AS MB2MB001,MB2.MB003 AS MB2MB003,MB2.MB002 AS MB2MB002,MB2.MB012 AS MB2MB012 ,MB2.MB013 AS MB2MB013, MC2.MC004 AS MC2MC004,MF2.MF004 AS'MF2MF004'
+                                    FROM [TK].dbo.POSMB AS MB2
+                                    INNER JOIN [TK].dbo.POSMC AS MC2 ON MB2.MB003 = MC2.MC003
+                                    LEFT JOIN [TK].dbo.POSMF AS MF2 ON MF2.MF003=MB2.MB003
+                                    ) 
+                                    AS TEMP  ON  TEMP.MC2MC004 IS NOT NULL
+                                    AND TEMP.MB2MB003 <> POSMB.MB003
+                                    AND TEMP.MC2MC004 = POSMC.MC004
+                                    AND ((TEMP.MF2MF004=POSMF.MF004) OR (ISNULL(TEMP.MF2MF004,'')='' AND ISNULL(POSMF.MF004,'')<>'') OR (ISNULL(TEMP.MF2MF004,'')<>'' AND ISNULL(POSMF.MF004,'')='') OR (ISNULL(TEMP.MF2MF004,'')='' AND ISNULL(POSMF.MF004,'')=''))
+                                    AND 
+                                    (
+                                    MB012 BETWEEN MB2MB012 AND MB2MB013
+                                    OR MB013 BETWEEN MB2MB012 AND MB2MB013
+                                    OR (MB2MB012 BETWEEN MB012 AND MB013)
+                                    OR (MB2MB013 BETWEEN MB012 AND MB013)
+                                    )
+                                    WHERE MC004 IS NOT NULL
+                                    AND MB003 = '{0}'
+                                    UNION ALL
 
-                                UNION ALL
-                                SELECT MO001,MO003,MO002,MO011,MO012,MP005,MO2MO001,MO2MO003,MO2MO011,MO2MO012,MP2MP005
-                                FROM [TK].dbo.POSMO
-                                INNER JOIN [TK].dbo.POSMP ON MO003 = MP003
-                                INNER JOIN
-                                (    
-                                SELECT MO2.MO001 AS MO2MO001,MO2.MO003 AS MO2MO003,MO2.MO002 AS MO2MO002,MO2.MO011 AS MO2MO011 ,MO2.MO012 AS MO2MO012, MP2.MP005 AS MP2MP005
-                                FROM [TK].dbo.POSMO AS MO2
-                                INNER JOIN [TK].dbo.POSMP AS MP2 ON MO2.MO003 = MP2.MP003
-                                ) 
-                                AS TEMP  ON  TEMP.MP2MP005 IS NOT NULL
-                                AND TEMP.MO2MO003 <> POSMO.MO003
-                                AND TEMP.MP2MP005 = POSMP.MP005
-                                AND 
-                                (
-                                MO011 BETWEEN MO2MO011 AND MO2MO012
-                                OR MO012 BETWEEN MO2MO011 AND MO2MO012
-                                OR (MO2MO011 BETWEEN MO011 AND MO012)
-                                OR (MO2MO012 BETWEEN MO011 AND MO012)
-                                )
-                                WHERE MP005 IS NOT NULL
-                                AND MO003 =  '{0}'
-                                ) AS TEMP
+                                    SELECT MI001,MI003,MI002,MI005,MI006,MJ004,MF004,MI2MI001,MI2MI003,MI2MI005,MI2MI006,MJ2MJ004,MF2MF004
+                                    FROM [TK].dbo.POSMI
+                                    INNER JOIN [TK].dbo.POSMJ ON MI003 = MJ003
+                                    LEFT JOIN [TK].dbo.POSMF ON MF003=MI003
+                                    INNER JOIN
+                                    (    
+                                    SELECT MI2.MI001 AS MI2MI001,MI2.MI003 AS MI2MI003,MI2.MI002 AS MI2MI002,MI2.MI005 AS MI2MI005 ,MI2.MI006 AS MI2MI006, MJ2.MJ004 AS MJ2MJ004,MF2.MF004 AS'MF2MF004'
+                                    FROM [TK].dbo.POSMI AS MI2
+                                    INNER JOIN [TK].dbo.POSMJ AS MJ2 ON MI2.MI003 = MJ2.MJ003
+                                    LEFT JOIN [TK].dbo.POSMF AS MF2 ON MF2.MF003=MI2.MI003
+                                    ) 
+                                    AS TEMP  ON  TEMP.MJ2MJ004 IS NOT NULL
+                                    AND TEMP.MI2MI003 <> POSMI.MI003
+                                    AND TEMP.MJ2MJ004 = POSMJ.MJ004
+                                    AND ((TEMP.MF2MF004=POSMF.MF004) OR (ISNULL(TEMP.MF2MF004,'')='' AND ISNULL(POSMF.MF004,'')<>'') OR (ISNULL(TEMP.MF2MF004,'')<>'' AND ISNULL(POSMF.MF004,'')='') OR (ISNULL(TEMP.MF2MF004,'')='' AND ISNULL(POSMF.MF004,'')=''))
+                                    AND 
+                                    (
+                                    MI005 BETWEEN MI2MI005 AND MI2MI006
+                                    OR MI006 BETWEEN MI2MI005 AND MI2MI006
+                                    OR (MI2MI005 BETWEEN MI005 AND MI006)
+                                    OR (MI2MI006 BETWEEN MI005 AND MI006)
+                                    )
+                                    WHERE MJ004 IS NOT NULL
+                                    AND MI003 = '{0}'
 
+                                    UNION ALL
+                                    SELECT MO001,MO003,MO002,MO011,MO012,MP005,MF004,MO2MO001,MO2MO003,MO2MO011,MO2MO012,MP2MP005,MF2MF004
+                                    FROM [TK].dbo.POSMO
+                                    INNER JOIN [TK].dbo.POSMP ON MO003 = MP003
+                                    LEFT JOIN [TK].dbo.POSMF ON MF003=MO003
+                                    INNER JOIN
+                                    (    
+                                    SELECT MO2.MO001 AS MO2MO001,MO2.MO003 AS MO2MO003,MO2.MO002 AS MO2MO002,MO2.MO011 AS MO2MO011 ,MO2.MO012 AS MO2MO012, MP2.MP005 AS MP2MP005,MF2.MF004 AS'MF2MF004'
+                                    FROM [TK].dbo.POSMO AS MO2
+                                    INNER JOIN [TK].dbo.POSMP AS MP2 ON MO2.MO003 = MP2.MP003
+                                    LEFT JOIN [TK].dbo.POSMF AS MF2 ON MF2.MF003=MO2.MO003
+                                    ) 
+                                    AS TEMP  ON  TEMP.MP2MP005 IS NOT NULL
+                                    AND TEMP.MO2MO003 <> POSMO.MO003
+                                    AND TEMP.MP2MP005 = POSMP.MP005
+                                    AND ((TEMP.MF2MF004=POSMF.MF004) OR (ISNULL(TEMP.MF2MF004,'')='' AND ISNULL(POSMF.MF004,'')<>'') OR (ISNULL(TEMP.MF2MF004,'')<>'' AND ISNULL(POSMF.MF004,'')='') OR (ISNULL(TEMP.MF2MF004,'')='' AND ISNULL(POSMF.MF004,'')=''))
+                                    AND 
+                                    (
+                                    MO011 BETWEEN MO2MO011 AND MO2MO012
+                                    OR MO012 BETWEEN MO2MO011 AND MO2MO012
+                                    OR (MO2MO011 BETWEEN MO011 AND MO012)
+                                    OR (MO2MO012 BETWEEN MO011 AND MO012)
+                                    )
+                                    WHERE MP005 IS NOT NULL
+                                    AND MO003 =  '{0}'
+                                    ) AS TEMP
 
                               
                                     ", MB003);
