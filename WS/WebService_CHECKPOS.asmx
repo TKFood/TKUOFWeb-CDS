@@ -304,7 +304,7 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
 
     public DataTable FIND_UOD_TASKID_SITEID(string DOC_NBR)
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
@@ -314,7 +314,7 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
 
             cmdTxt.AppendFormat(@"                                    
                                 SELECT DOC_NBR,TB_WKF_TASK.TASK_ID,CURRENT_SITE_ID,SITE_ID,NODE_SEQ,USER_GUID
-                                FROM [UOFTEST].dbo.TB_WKF_TASK,[UOFTEST].dbo.TB_WKF_TASK_NODE 
+                                FROM [UOF].dbo.TB_WKF_TASK,[UOF].dbo.TB_WKF_TASK_NODE 
                                 WHERE 1=1
                                 AND TB_WKF_TASK.TASK_ID=TB_WKF_TASK_NODE.TASK_ID
                                 AND TB_WKF_TASK.CURRENT_SITE_ID=TB_WKF_TASK_NODE.SITE_ID
@@ -350,14 +350,14 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
 
     public void UPDATE_TB_WKF_TASK_NODE_COMMENT(string TASK_ID, string SITE_ID,string COMMENT)
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"   ";
 
 
         cmdTxt = @"
-                    UPDATE [UOFTEST].dbo.TB_WKF_TASK_NODE 
+                    UPDATE [UOF].dbo.TB_WKF_TASK_NODE 
                     SET COMMENT=@COMMENT
                     WHERE TASK_ID=@TASK_ID AND SITE_ID=@SITE_ID
                         ";
