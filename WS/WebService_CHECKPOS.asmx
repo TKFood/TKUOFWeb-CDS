@@ -93,8 +93,10 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
                 MESSAGES.AppendFormat(@"");
                 foreach (DataRow DR in DT.Rows)
                 {
-                    MESSAGES.AppendFormat(@"有錯誤，不可送簽  ");
-                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊日期 ", DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
+                    MESSAGES.AppendFormat(@"已退簽給申請者  ");
+                    MESSAGES.AppendFormat(@"-------------------- ");
+                    MESSAGES.AppendFormat(@"有錯誤，無法簽核  ");
+                    MESSAGES.AppendFormat(@"代號 ={0} 的 品號 ={1} 有重疊的活動日期 ", DR["MB2MB003"].ToString().Trim(), DR["MC004"].ToString().Trim());
                 }
                 //不允許簽核
                 returnValueElement.SelectSingleNode("/ReturnValue/Status").InnerText = "0";
@@ -108,7 +110,7 @@ public class WebService_CHECKPOS : System.Web.Services.WebService
                     int NODE_SEQ = Convert.ToInt32(DT_FIND_UOD_TASKID_SITEID.Rows[0]["NODE_SEQ"].ToString());
                     string USER_GUID = DT_FIND_UOD_TASKID_SITEID.Rows[0]["USER_GUID"].ToString();
 
-                    UPDATE_TB_WKF_TASK_NODE_COMMENT(TASK_ID, CURRENT_SITE_ID, "退回申請者");
+                    UPDATE_TB_WKF_TASK_NODE_COMMENT(TASK_ID, CURRENT_SITE_ID, MESSAGES.ToString());
 
                     ReturnSignUCO returnUCO = new ReturnSignUCO();
                     /// <summary>
