@@ -139,9 +139,9 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                 AND TO001=TP001 AND TO002=TP002
                                 AND TO005=MA001
                                 AND TO013 IN ('Y')
-                                AND TO003 LIKE '%{0}%'
+                                
                                 ORDER BY TO001,TO002
-                             ",DateTime.Now.Year.ToString());
+                                ");
         }
 
 
