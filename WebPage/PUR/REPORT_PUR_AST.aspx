@@ -42,14 +42,22 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="品號/品名"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="廠商名稱"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="TextBox1" runat="server" Text=""></asp:TextBox>
                         </td>
 
                     </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="資產名稱"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox2" runat="server" Text=""></asp:TextBox>
+                        </td>
 
+                    </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -91,7 +99,7 @@
                                             <ItemTemplate>
                                                 <asp:Label ID="規格" runat="server" Text='<%# Bind("TP006") %>' Style="word-break: break-all; white-space: pre-line; text-align: left;" Width="200px"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                       
+                                        </asp:TemplateField>
                                         <asp:BoundField HeaderText="進貨數量" DataField="TP007" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>

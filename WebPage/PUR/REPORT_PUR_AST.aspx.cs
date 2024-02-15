@@ -87,18 +87,33 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
-        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
 
 
 
         //TextBox1
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND (MB001 LIKE '%'+@MB001+'%' OR MB002 LIKE '%'+@MB001+'%')");
+            QUERYS1.AppendFormat(@" AND MA002 LIKE '%{0}%' ", TextBox1.Text);
+        }
+        else
+        {
+            QUERYS1.AppendFormat(@" ");
+        }
+
+        //TextBox2
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS2.AppendFormat(@" AND TP005 LIKE '%{0}%' ", TextBox2.Text);
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@" ");
         }
 
 
-        if (!string.IsNullOrEmpty(TextBox1.Text))
+        if (!string.IsNullOrEmpty(TextBox1.Text) || !string.IsNullOrEmpty(TextBox2.Text))
         {
             cmdTxt.AppendFormat(@"
                                 SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,TP037,TP038
@@ -107,24 +122,31 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                 AND TO001=TP001 AND TO002=TP002
                                 AND TO005=MA001
                                 AND TO013 IN ('Y')
-                                AND MA002 LIKE '%銓麥%'
-                                --AND TP005 LIKE '%牛軋糖%'
+                                {0}
+                                {1}
                                 ORDER BY TO001,TO002
         
 
 
-                             ", QUERYS.ToString());
+                             ", QUERYS1.ToString(), QUERYS2.ToString());
         }
         else
         {
             cmdTxt.AppendFormat(@"
-                              
-                             ");
+                               SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,TP037,TP038
+                                FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
+                                WHERE 1=1
+                                AND TO001=TP001 AND TO002=TP002
+                                AND TO005=MA001
+                                AND TO013 IN ('Y')
+                                AND TO003 LIKE '%{0}%'
+                                ORDER BY TO001,TO002
+                             ",DateTime.Now.Year.ToString());
         }
 
 
 
-        m_db.AddParameter("@MB001", TextBox1.Text.Trim());
+        //m_db.AddParameter("@MB001", TextBox1.Text.Trim());
 
 
         DataTable dt = new DataTable();
