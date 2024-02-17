@@ -106,16 +106,11 @@
                                         <asp:BoundField HeaderText="進貨單位" DataField="TP008" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="進貨金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="進貨總金額(含稅)" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="進貨金額" runat="server" Text='<%# Bind("TP037", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                <asp:Label ID="進貨金額" runat="server" Text='<%# Bind("TP037038", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="120px"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="進貨稅額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>
-                                                <asp:Label ID="進貨稅額" runat="server" Text='<%# Bind("TP038", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+                                        </asp:TemplateField>                                       
 
 
                                     </Columns>
