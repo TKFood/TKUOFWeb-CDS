@@ -116,7 +116,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         if (!string.IsNullOrEmpty(TextBox1.Text) || !string.IsNullOrEmpty(TextBox2.Text))
         {
             cmdTxt.AppendFormat(@"
-                                SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,TP037,TP038
+                                SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,(TP037+TP038) AS TP037038
                                 FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
                                 WHERE 1=1
                                 AND TO001=TP001 AND TO002=TP002
