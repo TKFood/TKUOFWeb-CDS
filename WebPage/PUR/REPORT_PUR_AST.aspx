@@ -110,7 +110,12 @@
                                             <ItemTemplate>
                                                 <asp:Label ID="進貨金額" runat="server" Text='<%# Bind("TP037038", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="120px"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                       
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="保管人放置" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="保管人放置" runat="server" Text='<%#Bind("EMPPLACES")%>' Style="word-break: break-all; white-space: pre-line; text-align: left;" Width="120px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
 
                                     </Columns>

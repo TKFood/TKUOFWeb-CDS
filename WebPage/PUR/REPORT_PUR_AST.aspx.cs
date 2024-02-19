@@ -117,6 +117,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         {
             cmdTxt.AppendFormat(@"
                                 SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,(TP037+TP038) AS TP037038
+                                ,STUFF((SELECT DISTINCT  ',' +MB002+ '保管人:'+MV002+'放置:'+MC006 FROM [TK].dbo.ASTMB,[TK].dbo.ASTMC,[TK].dbo.CMSMV WHERE MC003=MV001 AND  MB001=MC001 AND MB002 LIKE '%'+TP005+'%' AND MB002 LIKE '%'+MA002+'%' FOR XML PATH('')) , 1, 1, '') AS 'EMPPLACES' 
                                 FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
                                 WHERE 1=1
                                 AND TO001=TP001 AND TO002=TP002
@@ -134,6 +135,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         {
             cmdTxt.AppendFormat(@"
                                SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,(TP037+TP038) AS TP037038
+                                ,STUFF((SELECT DISTINCT  ',' +MB002+ '保管人:'+MV002+'放置:'+MC006 FROM [TK].dbo.ASTMB,[TK].dbo.ASTMC,[TK].dbo.CMSMV WHERE MC003=MV001 AND  MB001=MC001 AND MB002 LIKE '%'+TP005+'%' AND MB002 LIKE '%'+MA002+'%' FOR XML PATH('')) , 1, 1, '') AS 'EMPPLACES' 
                                 FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
                                 WHERE 1=1
                                 AND TO001=TP001 AND TO002=TP002
@@ -164,7 +166,24 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 找到 Label 控制項
+            Label lblEmpPlaces = (Label)e.Row.FindControl("保管人放置");
+
+            // 檢查是否找到了 Label 控制項
+            if (lblEmpPlaces != null)
+            {
+                // 從資料行中取得 EMPPLACES 字串
+                string empPlaces = DataBinder.Eval(e.Row.DataItem, "EMPPLACES").ToString();
+
+                // 將逗號替換為換行符號
+                empPlaces = empPlaces.Replace(",", Environment.NewLine);
+
+                // 將結果資料繫結到 Label 控制項
+                lblEmpPlaces.Text = empPlaces;
+            }
+        }
 
 
     }
