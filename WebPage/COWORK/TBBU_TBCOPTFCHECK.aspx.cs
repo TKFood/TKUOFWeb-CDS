@@ -5538,13 +5538,17 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
 
         cmdTxt.AppendFormat(@" 
-                            SELECT CURRENT_DOC,*
-                            FROM [UOF].[dbo].TB_WKF_TASK 
-                            WHERE  1=1
-                            AND DISPLAY_TITLE LIKE '%{0}%'
-                            AND DISPLAY_TITLE LIKE '%{1}%'
-                            AND JSON_DISPLAY NOT LIKE '%TE001%'
-                            AND TASK_STATUS='1'
+                           SELECT CURRENT_DOC
+                            ,CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""TE001""]/@fieldValue)[1]', 'nvarchar(max)') AS TE001Value
+                            , CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""TE002""]/@fieldValue)[1]', 'nvarchar(max)') AS TE002Value
+                            , TASK_STATUS
+                            FROM[UOF].[dbo].TB_WKF_TASK
+                            WHERE  1 = 1
+                            AND TASK_STATUS = '1'
+                            AND CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""TE001""]/@fieldValue)[1]', 'nvarchar(max)') LIKE '%{0}%'
+                            AND CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""TE002""]/@fieldValue)[1]', 'nvarchar(max)') LIKE '%{1}%'
+
+
 
                               ", TC001, TC002);
 
