@@ -685,7 +685,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
-                Button2.Visible = false;
+                Button2.Visible = true;
             }
           
         }
