@@ -130,9 +130,9 @@
                                                 <asp:Label ID="年月" runat="server" Text='<%# Eval("年月") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                         <asp:TemplateField HeaderText="品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="left">
+                                         <asp:TemplateField HeaderText="品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="left">
                                             <ItemTemplate>
-                                                <asp:Label ID="品號" runat="server" Text='<%# Eval("品號") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                <asp:Label ID="品號" runat="server" Text='<%# Eval("品號") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                          <asp:TemplateField HeaderText="品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="left">
