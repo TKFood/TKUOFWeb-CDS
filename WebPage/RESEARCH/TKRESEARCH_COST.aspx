@@ -124,60 +124,71 @@
                                 <Fast:Grid ID="Grid1" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_RowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource1" OnPageIndexChanging="grid1_PageIndexChanging">
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
-                                    <Columns>
-                                        <asp:BoundField HeaderText="年月" DataField="年月" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="40px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="品號" DataField="品號" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="品名" DataField="品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="left" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="規格" DataField="規格" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="單位" DataField="單位" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="left" Width="40px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:TemplateField HeaderText="標準售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                    <Columns>   
+                                         <asp:TemplateField HeaderText="年月" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="center">
                                             <ItemTemplate>
-                                                <asp:Label ID="標準售價" runat="server" Text='<%# Eval("MB047", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="年月" runat="server" Text='<%# Eval("年月") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="單位材料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                         <asp:TemplateField HeaderText="品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="left">
                                             <ItemTemplate>
-                                                <asp:Label ID="單位材料成本" runat="server" Text='<%# Eval("單位材料成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="品號" runat="server" Text='<%# Eval("品號") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="單位人工成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                         <asp:TemplateField HeaderText="品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="left">
                                             <ItemTemplate>
-                                                <asp:Label ID="單位人工成本" runat="server" Text='<%# Eval("單位人工成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="品名" runat="server" Text='<%# Eval("品名") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="單位製造成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                         <asp:TemplateField HeaderText="規格" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="left">
                                             <ItemTemplate>
-                                                <asp:Label ID="單位製造成本" runat="server" Text='<%# Eval("單位製造成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="規格" runat="server" Text='<%# Eval("規格") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="單位加工成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                         <asp:TemplateField HeaderText="單位" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
                                             <ItemTemplate>
-                                                <asp:Label ID="單位加工成本" runat="server" Text='<%# Eval("單位加工成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="單位" runat="server" Text='<%# Eval("單位") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="單位成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+
+                                        <asp:TemplateField HeaderText="標準售價" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
                                             <ItemTemplate>
-                                                <asp:Label ID="單位成本" runat="server" Text='<%# Eval("單位成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="標準售價" runat="server" Text='<%# Eval("MB047", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="生產入庫數" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                        <asp:TemplateField HeaderText="單位材料成本" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
                                             <ItemTemplate>
-                                                <asp:Label ID="生產入庫數" runat="server" Text='<%# Eval("生產入庫數", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="單位材料成本" runat="server" Text='<%# Eval("單位材料成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="人工工時" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                        <asp:TemplateField HeaderText="單位人工成本" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
                                             <ItemTemplate>
-                                                <asp:Label ID="人工工時" runat="server" Text='<%# Eval("SUMPROTIMES", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                <asp:Label ID="單位人工成本" runat="server" Text='<%# Eval("單位人工成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="單位製造成本" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                            <ItemTemplate>
+                                                <asp:Label ID="單位製造成本" runat="server" Text='<%# Eval("單位製造成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="單位加工成本" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                            <ItemTemplate>
+                                                <asp:Label ID="單位加工成本" runat="server" Text='<%# Eval("單位加工成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="單位成本" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                            <ItemTemplate>
+                                                <asp:Label ID="單位成本" runat="server" Text='<%# Eval("單位成本", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="生產入庫數" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                            <ItemTemplate>
+                                                <asp:Label ID="生產入庫數" runat="server" Text='<%# Eval("生產入庫數", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="人工工時" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="right">
+                                            <ItemTemplate>
+                                                <asp:Label ID="人工工時" runat="server" Text='<%# Eval("SUMPROTIMES", "{0:N2}") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
