@@ -209,10 +209,17 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            string KINDS = e.Row.Cells[0].Text.ToString();
-            if (KINDS.Equals("小計"))
+            // 找到 KINDS Label 控制項
+            Label lblKinds = (Label)e.Row.FindControl("年月");
+
+            // 檢查是否找到了 Label 控制項
+            if (lblKinds != null)
             {
-                e.Row.BackColor = System.Drawing.Color.LightPink;
+                string KINDS = lblKinds.Text;
+                if (KINDS.Equals("小計"))
+                {
+                    e.Row.BackColor = System.Drawing.Color.LightPink;
+                }
             }
         }
 
