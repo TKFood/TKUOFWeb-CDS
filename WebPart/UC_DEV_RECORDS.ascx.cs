@@ -43,6 +43,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
             txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
             BindDropDownList1();
             BindDropDownList2();
+            BindDropDownList3();
 
             BindDropDownListISCLOSE();
             BindDropDownListISCLOSE2();
@@ -121,6 +122,42 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
             DropDownList2.DataTextField = "NAMES";
             DropDownList2.DataValueField = "NAMES";
             DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+
+    private void BindDropDownList3()
+    { 
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='是否結案'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            //DropDownList3.DataSource = dt;
+            //DropDownList3.DataTextField = "NAMES";
+            //DropDownList3.DataValueField = "NAMES";
+            //DropDownList3.DataBind();
 
         }
         else
@@ -423,9 +460,9 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         StringBuilder Query1 = new StringBuilder();
         StringBuilder Query2 = new StringBuilder();
 
-        if (!string.IsNullOrEmpty(TextBox_CLIENTS2.Text))
+        if (!string.IsNullOrEmpty(TextBox_PROJECTNAMES2.Text))
         {
-            Query1.AppendFormat(@" AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [CLIENTS] LIKE '%{0}%') ", TextBox_CLIENTS2.Text);
+            Query1.AppendFormat(@" AND ID IN (SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [PROJECTNAMES] LIKE '%{0}%') ", TextBox_PROJECTNAMES.Text);
         }
         else
         {
@@ -439,7 +476,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
             }
             else
             {
-                Query2.AppendFormat(@"AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [ISCLOSE] LIKE '%{0}%')", DropDownListISCLOSE2.SelectedValue.ToString());
+                Query2.AppendFormat(@" AND ID IN ( SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [ISCLOSE] LIKE '%{0}%' )", DropDownListISCLOSE2.SelectedValue.ToString());
             }
 
         }
@@ -449,22 +486,21 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         }
 
         cmdTxt.AppendFormat(@"
-
-                            SELECT 
-                            [TB_SALES_ASSINGED].[ID]
-                            ,[SALES]
-                            ,[CLIENTS]
-                            ,[EVENTS]
-                            ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
+                            SELECT
+                            [ID]
+                            ,[NO]
+                            ,[PROJECTNAMES]
+                            ,CONVERT(NVARCHAR,[PROJECTSDEADLINEDATES],111) AS 'PROJECTSDEADLINEDATES'
+                            ,[COMMENTS]
+                            ,CONVERT(NVARCHAR,[COMMENTSADDDATES],111) AS 'COMMENTSADDDATES' 
+                            ,[EXEUNITS]
+                            ,CONVERT(NVARCHAR,[EXEDEADLINEDATES],111) AS 'EXEDEADLINEDATES'  
                             ,[ISCLOSE]
-                            ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
-                            ,(SELECT TOP 1 [COMMENTS] FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS COMMENTS
-                            ,(SELECT TOP 1 CONVERT(NVARCHAR,[ADDDATES],111) FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS ADDDATES
-                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
+                            FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS]
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [SALES],[EDAYS],[ID]
+                            ORDER BY [NO]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
@@ -505,25 +541,22 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
             {
                 // 獲取TextBox的值
                 GridViewRow row = Grid2.Rows[rowIndex];
-                TextBox TextBox_SALES = (TextBox)row.FindControl("業務員");
-                string SALES = TextBox_SALES.Text;
-                TextBox TextBox_CLIENTS = (TextBox)row.FindControl("客戶");
-                string CLIENTS = TextBox_CLIENTS.Text;
-                TextBox TextBox_EDAYS = (TextBox)row.FindControl("回覆期限");
-                string EDAYS = TextBox_EDAYS.Text;
-                TextBox TextBox_EVENTS = (TextBox)row.FindControl("交辨內容");
-                string EVENTS = TextBox_EVENTS.Text;
+
+                TextBox TextBox_PROJECTNAMES = (TextBox)row.FindControl("專案名稱");
+                string PROJECTNAMES = TextBox_PROJECTNAMES.Text;
+                TextBox TextBox_PROJECTSDEADLINEDATES = (TextBox)row.FindControl("txtDate2");
+                string PROJECTSDEADLINEDATES = TextBox_PROJECTSDEADLINEDATES.Text;
+
 
                 // 獲取相應的ID
-                Label txtid = (Label)row.FindControl("ID");
-                string id = txtid.Text;
+                Label txtid = (Label)row.FindControl("立案單號");
+                string NO = txtid.Text;
 
-                UPDAT_TB_SALES_ASSINGED(
-                                       id
-                                      , SALES
-                                      , CLIENTS
-                                      , EVENTS
-                                      , EDAYS
+                UPDAT_TBDEV_RECORDS(
+                                       NO
+                                      , PROJECTNAMES
+                                      , PROJECTSDEADLINEDATES
+                                     
                                       );
 
                 ////MsgBox(id + " " + newTextValue, this.Page, this);
@@ -531,6 +564,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 //// ...
 
                 //// 重新繫結GridView，刷新顯示
+                BindGrid();
                 BindGrid2();
             }
         }
@@ -780,12 +814,10 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
-    public void UPDAT_TB_SALES_ASSINGED(
-                                     string ID
-                                    , string SALES
-                                    , string CLIENTS
-                                    , string EVENTS
-                                    , string EDAYS
+    public void UPDAT_TBDEV_RECORDS(
+                                     string NO
+                                    , string PROJECTNAMES
+                                    , string PROJECTSDEADLINEDATES                                    
                                     )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -795,18 +827,15 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
 
         cmdTxt = @"          
-                UPDATE [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
-                SET [SALES]=@SALES,[CLIENTS]=@CLIENTS,[EVENTS]=@EVENTS,[EDAYS]=@EDAYS
-                WHERE [ID]=@ID
+                    UPDATE [TKRESEARCH].[dbo].[TBDEV_RECORDS]
+                    SET [PROJECTNAMES]=@PROJECTNAMES,[PROJECTSDEADLINEDATES]=@PROJECTSDEADLINEDATES
+                    WHERE [NO]=@NO
                       
                         ";
 
-        m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@SALES", SALES);
-        m_db.AddParameter("@CLIENTS", CLIENTS);
-        m_db.AddParameter("@EVENTS", EVENTS);
-        m_db.AddParameter("@EDAYS", EDAYS);
-
+        m_db.AddParameter("@NO", NO);
+        m_db.AddParameter("@PROJECTNAMES", PROJECTNAMES);
+        m_db.AddParameter("@PROJECTSDEADLINEDATES", PROJECTSDEADLINEDATES);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
@@ -904,6 +933,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                            , ADDDATES
                                );
             BindGrid();
+            BindGrid2();
 
             // 在伺服器端註冊 JavaScript
             string script = "alert('完成');";
@@ -936,7 +966,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
     protected void btn5_Click(object sender, EventArgs e)
     {
-        TextBox1.Text = GETMAXNO(DateTime.Now);
+        TextBox1.Text = 'R'+GETMAXNO(DateTime.Now);
     }
     #endregion
 }
