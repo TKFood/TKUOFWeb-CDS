@@ -60,19 +60,22 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     private void BindDropDownList1()
     {
         DataTable dt = new DataTable();
-        dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("KINDS", typeof(String));
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        SELECT 
+                        SELECT
                         [ID]
-                        ,[NAME]
-                        ,[LEADER]
-                        FROM [TKBUSINESS].[dbo].[TBSALESNAME]
-                        WHERE [NAME] NOT IN ('全部')
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TBDEV_RECORDS_EXEUNITS'
+                        AND [PARANAME]>='10'
+                        ORDER BY [PARANAME]
                         ";
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
@@ -80,8 +83,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         if (dt.Rows.Count > 0)
         {
             DropDownList1.DataSource = dt;
-            DropDownList1.DataTextField = "NAME";
-            DropDownList1.DataValueField = "NAME";
+            DropDownList1.DataTextField = "PARAID";
+            DropDownList1.DataValueField = "PARAID";
             DropDownList1.DataBind();
 
         }
@@ -802,7 +805,69 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
+    public string GETMAXNO(DateTime DATES)
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+            StringBuilder cmdTxt = new StringBuilder();
+           
+
+            cmdTxt.AppendFormat(@"
+                            SELECT ISNULL(MAX(NO),'0000000000') AS NO
+                            FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS]
+                            WHERE [NO] LIKE '%{0}%'
+
+                              
+                            ", DATES.ToString("yyyyMM")); ;
+
+
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if(dt!=null && dt.Rows.Count>=1)
+            {
+                string MAXNO = SETMAXNO(DateTime.Now,dt.Rows[0]["NO"].ToString());
+                return MAXNO;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            
+        }
+    }
+
+    public string SETMAXNO(DateTime dt, string NO)
+    {
+        if (NO.Equals("0000000000"))
+        {
+            return dt.ToString("yyyyMM") + "001";
+        }
+
+        else
+        {
+            int serno = Convert.ToInt16(NO.Substring(7, 3));
+            serno = serno + 1;
+            string temp = serno.ToString();
+            temp = temp.PadLeft(3, '0');
+            return dt.ToString("yyyyMM") + temp.ToString();
+        }
+
+
+    }
     #endregion
 
 
@@ -844,6 +909,11 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     protected void btn4_Click(object sender, EventArgs e)
     {
         BindGrid3();
+    }
+
+    protected void btn5_Click(object sender, EventArgs e)
+    {
+        TextBox1.Text = GETMAXNO(DateTime.Now);
     }
     #endregion
 }

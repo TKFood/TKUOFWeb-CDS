@@ -92,7 +92,7 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
-                                         <asp:TemplateField HeaderText="立案單號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="立案單號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="立案單號" runat="server" Text='<%# Bind("NO") %>' Style="word-break: break-all; white-space: pre-line" Width="200px"></asp:Label>
                                             </ItemTemplate>
@@ -106,7 +106,7 @@
                                             <ItemTemplate>
                                                 <asp:Label ID="專案預計結案日期" runat="server" Text='<%# Bind("PROJECTSDEADLINEDATES") %>' Style="word-break: break-all; white-space: pre-line" Width="100px"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>   
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="目前執行部門" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="目前執行部門" runat="server" Text='<%# Bind("EXEUNITS") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
@@ -169,25 +169,20 @@
         <telerik:RadPageView ID="RadPageView2" runat="server" Selected="false" PageViewID="1">
             <div id="tabs-2">
                 <table class="PopTable">
+
                     <tr>
                         <td>
-                            <asp:Label ID="Label3" runat="server" Text="業務員: "></asp:Label>
-                        </td>
-                        <td>
-                            <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="Label1" runat="server" Text="客戶: " Columns="100"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="立案單號: " Columns="100"></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox1" runat="server" Columns="50"></asp:TextBox>
-                        </td>
+                            <asp:Button ID="Button5" runat="server" Text="取單號" OnClick="btn5_Click" meta:resourcekey="btn5_Resource1" />
+                        </td>                      
+                       
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="Label4" runat="server" Text="交辨內容: "></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="專案名稱: "></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox2" runat="server" TextMode="MultiLine" Rows="4" Columns="50"></asp:TextBox>
@@ -195,10 +190,26 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="Label5" runat="server" Text="回覆期限: "></asp:Label>
+                            <asp:Label ID="Label5" runat="server" Text="專案預計結案日期: "></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="txtDate1" runat="server" Width="100px" onblur="validateDate()"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="Label12" runat="server" Text="回覆: "></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox3" runat="server" TextMode="MultiLine" Rows="4" Columns="50"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="Label3" runat="server" Text="執行單位: "></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
                         </td>
                     </tr>
                     <tr>
@@ -387,7 +398,7 @@
                                             <ItemTemplate>
                                                 <asp:Button ID="Grid3Button1" runat="server" Text="新增回覆" CommandName="Grid3Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                        
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="ID" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="ID3" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line" Width="30px"></asp:Label>
