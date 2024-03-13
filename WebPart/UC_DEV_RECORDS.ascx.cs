@@ -728,13 +728,14 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
-    public void ADD_TB_SALES_ASSINGED(
-                                    string SALES
-                                    , string CLIENTS
-                                    , string EVENTS
-                                    , string EDAYS
-                                    , string ISCLOSE
-                                    , string ADDDATES
+    public void ADD_TBDEV_RECORDS(
+                            string NO,
+                            string PROJECTNAMES,
+                            string PROJECTSDEADLINEDATES,
+                            string COMMENTS,
+                            string EXEUNITS,
+                            string ISCLOSE,
+                            string ADDDATES
                                     )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -744,31 +745,35 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
 
         cmdTxt = @"               
-                        INSERT INTO  [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
-                        (
-                        [SALES]
-                        ,[CLIENTS]
-                        ,[EVENTS]
-                        ,[EDAYS]
-                        ,[ISCLOSE]
-                        ,[ADDDATES]
-                        )
-                        VALUES
-                        (
-                        @SALES
-                        ,@CLIENTS
-                        ,@EVENTS
-                        ,@EDAYS
-                        ,@ISCLOSE
-                        ,@ADDDATES
-                        )
+                   INSERT INTO [TKRESEARCH].[dbo].[TBDEV_RECORDS]
+                    (
+                    NO,
+                    PROJECTNAMES,
+                    PROJECTSDEADLINEDATES,
+                    COMMENTS,
+                    EXEUNITS,
+                    ISCLOSE,
+                    ADDDATES
+                    )
+                    VALUES
+                    (
+                    @NO,
+                    @PROJECTNAMES,
+                    @PROJECTSDEADLINEDATES,
+                    @COMMENTS,
+                    @EXEUNITS,
+                    @ISCLOSE,
+                    @ADDDATES
+                    ) 
                         ";
 
 
-        m_db.AddParameter("@SALES", SALES);
-        m_db.AddParameter("@CLIENTS", CLIENTS);
-        m_db.AddParameter("@EVENTS", EVENTS);
-        m_db.AddParameter("@EDAYS", EDAYS);
+    
+        m_db.AddParameter("@NO", NO);
+        m_db.AddParameter("@PROJECTNAMES", PROJECTNAMES);
+        m_db.AddParameter("@PROJECTSDEADLINEDATES", PROJECTSDEADLINEDATES);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@EXEUNITS", EXEUNITS);
         m_db.AddParameter("@ISCLOSE", ISCLOSE);
         m_db.AddParameter("@ADDDATES", ADDDATES);
 
@@ -878,28 +883,46 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     }
     protected void btn2_Click(object sender, EventArgs e)
     {
-        string SALES = DropDownList1.SelectedValue.ToString();
-        string CLIENTS = TextBox1.Text.ToString();
-        string EVENTS = TextBox2.Text.ToString();
-        string EDAYS = txtDate1.Text.ToString();
+        string NO = TextBox1.Text.ToString().Trim();
+        string PROJECTNAMES= TextBox2.Text.ToString().Trim();
+        string PROJECTSDEADLINEDATES= txtDate1.Text.ToString();
+        string COMMENTS= TextBox3.Text.ToString();
+        string EXEUNITS= DropDownList1.SelectedValue.ToString();
         string ISCLOSE = DropDownList2.SelectedValue.ToString();
         string ADDDATES = DateTime.Now.ToString("yyyy/MM/dd");
 
-        ADD_TB_SALES_ASSINGED(
-                                SALES
-                                , CLIENTS
-                                , EVENTS
-                                , EDAYS
-                                , ISCLOSE
-                                , ADDDATES
-                                );
-        BindGrid();
 
-        // 在伺服器端註冊 JavaScript
-        string script = "alert('完成');";
+        if(!string.IsNullOrEmpty(NO))
+        {
+            ADD_TBDEV_RECORDS(
+                          NO
+                           , PROJECTNAMES
+                           , PROJECTSDEADLINEDATES
+                           , COMMENTS
+                           , EXEUNITS
+                           , ISCLOSE
+                           , ADDDATES
+                               );
+            BindGrid();
 
-        // 使用ScriptManager
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMessage", script, true);
+            // 在伺服器端註冊 JavaScript
+            string script = "alert('完成');";
+
+            // 使用ScriptManager
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMessage", script, true);
+        }
+        else
+        {
+            // 在伺服器端註冊 JavaScript
+            string script = "alert('沒有單號');";
+
+            // 使用ScriptManager
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMessage", script, true);
+        }
+
+       
+
+      
     }
 
     protected void btn3_Click(object sender, EventArgs e)
