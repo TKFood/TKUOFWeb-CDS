@@ -402,10 +402,10 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 string newTextValue = txtNewField.Text;
 
                 // 獲取相應的ID
-                Label txtid = (Label)row.FindControl("ID");
-                string id = txtid.Text;
+                Label txtid = (Label)row.FindControl("立案單號");
+                string NO = txtid.Text;
 
-                UPDATE_TB_SALES_ASSINGED_YN(id, "Y");
+                UPDATE_TBDEV_RECORDS_ISCLOSE_YN(NO, "Y");
 
                 //MsgBox(id + " " + newTextValue, this.Page, this);
                 // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
@@ -433,10 +433,10 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 string newTextValue = txtNewField.Text;
 
                 // 獲取相應的ID
-                Label txtid = (Label)row.FindControl("ID");
-                string id = txtid.Text;
+                Label txtid = (Label)row.FindControl("立案單號");
+                string NO = txtid.Text;
 
-                UPDATE_TB_SALES_ASSINGED_YN(id, "N");
+                UPDATE_TBDEV_RECORDS_ISCLOSE_YN(NO, "N");
 
                 //MsgBox(id + " " + newTextValue, this.Page, this);
                 // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
@@ -755,7 +755,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
-    public void UPDATE_TB_SALES_ASSINGED_YN(string ID, string ISCLOSE)
+    public void UPDATE_TBDEV_RECORDS_ISCLOSE_YN(string NO, string ISCLOSE)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -764,13 +764,13 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
 
         cmdTxt = @"
-                UPDATE [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
+                UPDATE [TKRESEARCH].[dbo].[TBDEV_RECORDS]
                 SET [ISCLOSE]=@ISCLOSE
-                WHERE [ID]=@ID
+                WHERE [NO]=@NO
                         ";
 
 
-        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@NO", NO);
         m_db.AddParameter("@ISCLOSE", ISCLOSE);
 
         m_db.ExecuteNonQuery(cmdTxt);
