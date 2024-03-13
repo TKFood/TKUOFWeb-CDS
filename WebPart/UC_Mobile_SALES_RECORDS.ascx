@@ -97,9 +97,9 @@
                                                 <asp:Label ID="業務員" runat="server" Text='<%# Bind("SALES") %>' Style="word-break: break-all; white-space: pre-line" Width="60px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="客戶" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="客戶" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="客戶" runat="server" Text='<%# Bind("CLIENTS") %>' Style="word-break: break-all; white-space: pre-line" Width="60px"></asp:Label>
+                                                <asp:Label ID="客戶" runat="server" Text='<%# Bind("CLIENTS") %>' Style="word-break: break-all; white-space: pre-line" Width="200px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField HeaderText="回覆期限" DataField="EDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -127,7 +127,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3"  Width="200px"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
