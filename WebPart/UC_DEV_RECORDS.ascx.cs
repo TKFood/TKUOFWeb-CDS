@@ -25,11 +25,19 @@ using System.Drawing.Imaging;
 using Ede.Uof.EIP.SystemInfo;
 using Telerik.Web.UI;
 using System.Web.UI.HtmlControls;
+using Ede.Uof.EIP.SystemInfo;
 
 public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 {
+    string ACCOUNT = null;
+    string NAME = null;
+    
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+
         if (!IsPostBack)
         {
             txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
@@ -121,19 +129,19 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("KINDS", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        SELECT 
+                      SELECT
                         [ID]
-                        ,[KINDS]
-                        ,[NAMES]
-                        ,[VALUE]
-                        FROM [TKBUSINESS].[dbo].[TBPARA]
-                        WHERE [KINDS]='是否結案'
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TBDEV_RECORDS'
                         ORDER BY [ID]
                         ";
 
@@ -142,8 +150,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         if (dt.Rows.Count > 0)
         {
             DropDownListISCLOSE.DataSource = dt;
-            DropDownListISCLOSE.DataTextField = "NAMES";
-            DropDownListISCLOSE.DataValueField = "NAMES";
+            DropDownListISCLOSE.DataTextField = "PARANAME";
+            DropDownListISCLOSE.DataValueField = "PARANAME";
             DropDownListISCLOSE.DataBind();
 
         }
@@ -157,19 +165,19 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("KINDS", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        SELECT 
+                         SELECT
                         [ID]
-                        ,[KINDS]
-                        ,[NAMES]
-                        ,[VALUE]
-                        FROM [TKBUSINESS].[dbo].[TBPARA]
-                        WHERE [KINDS]='是否結案'
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TBDEV_RECORDS'
                         ORDER BY [ID]
                         ";
 
@@ -178,8 +186,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         if (dt.Rows.Count > 0)
         {
             DropDownListISCLOSE2.DataSource = dt;
-            DropDownListISCLOSE2.DataTextField = "NAMES";
-            DropDownListISCLOSE2.DataValueField = "NAMES";
+            DropDownListISCLOSE2.DataTextField = "PARANAME";
+            DropDownListISCLOSE2.DataValueField = "PARANAME";
             DropDownListISCLOSE2.DataBind();
 
         }
@@ -192,19 +200,19 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("KINDS", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @" 
-                        SELECT 
+                          SELECT
                         [ID]
-                        ,[KINDS]
-                        ,[NAMES]
-                        ,[VALUE]
-                        FROM [TKBUSINESS].[dbo].[TBPARA]
-                        WHERE [KINDS]='是否結案'
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TBDEV_RECORDS'
                         ORDER BY [ID]
                         ";
 
@@ -213,8 +221,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         if (dt.Rows.Count > 0)
         {
             DropDownListISCLOSE3.DataSource = dt;
-            DropDownListISCLOSE3.DataTextField = "NAMES";
-            DropDownListISCLOSE3.DataValueField = "NAMES";
+            DropDownListISCLOSE3.DataTextField = "PARANAME";
+            DropDownListISCLOSE3.DataValueField = "PARANAME";
             DropDownListISCLOSE3.DataBind();
 
         }
@@ -248,7 +256,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
             }
             else
             {
-                Query2.AppendFormat(@"AND ID IN ( SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [ISCLOSE] LIKE '%{0}%' )", DropDownListISCLOSE.SelectedValue.ToString());
+                Query2.AppendFormat(@" AND ID IN ( SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [ISCLOSE] LIKE '%{0}%' )", DropDownListISCLOSE.SelectedValue.ToString());
             }
 
         }
@@ -322,10 +330,11 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 string newTextValue = txtNewField.Text;
 
                 // 獲取相應的ID
-                Label txtid = (Label)row.FindControl("ID");
-                string id = txtid.Text;
+                Label txtid = (Label)row.FindControl("立案單號");
+                string NO = txtid.Text;
 
-                ADD_TB_SALES_ASSINGED_COMMENTS(id, newTextValue);
+                ADD_TBDEV_RECORDS_DETAILS(NO, newTextValue, NAME);
+                UPDATE_TBDEV_RECORDS(NO, newTextValue, NAME);
 
                 //MsgBox(id + " " + newTextValue, this.Page, this);
                 // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
@@ -631,7 +640,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 Label txtid = (Label)row.FindControl("ID3");
                 string id = txtid.Text;
 
-                ADD_TB_SALES_ASSINGED_COMMENTS(id, newTextValue);
+                ADD_TBDEV_RECORDS_DETAILS(id, newTextValue, NAME);
 
                 //MsgBox(id + " " + newTextValue, this.Page, this);
                 // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
@@ -652,7 +661,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
     }
 
-    public void ADD_TB_SALES_ASSINGED_COMMENTS(string MID, string COMMENTS)
+    public void ADD_TBDEV_RECORDS_DETAILS(string NO, string COMMENTS,string NAME)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -661,14 +670,37 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
 
         cmdTxt = @"
-                   INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS]
-                    ([MID],[COMMENTS])
-                    VALUES (@MID,@COMMENTS)
+                   INSERT INTO  [TKRESEARCH].[dbo].[TBDEV_RECORDS_DETAILS]
+                    ([NO],[COMMENTS],[COMMENTSNAMES])
+                    VALUES (@NO,@COMMENTS,@COMMENTSNAMES)
                         ";
 
 
-        m_db.AddParameter("@MID", MID);
+        m_db.AddParameter("@NO", NO);
         m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@COMMENTSNAMES", NAME);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+    public void UPDATE_TBDEV_RECORDS(string NO, string COMMENTS, string NAME)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"
+                   UPDATE  [TKRESEARCH].[dbo].[TBDEV_RECORDS]
+                    SET [COMMENTS]=@COMMENTS,[COMMENTSADDDATES]=GETDATE()
+                    WHERE [NO]=@NO
+                        ";
+
+
+        m_db.AddParameter("@NO", NO);
+        m_db.AddParameter("@COMMENTS", NAME+':'+Environment.NewLine+COMMENTS);
+  
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
