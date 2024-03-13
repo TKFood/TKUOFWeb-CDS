@@ -52,4 +52,12 @@
 		<Resource Name="vi" Value="業務交辨" />
 		<Resource Name="id" Value="業務交辨" />
 	</CustomControl>
+
+	<CustomControl ControlType="CDS_WebPart_UC_DEV_RECORDS" ControlPath="~/CDS/WebPart/UC_DEV_RECORDS.ascx" DefaultTitle="研發專案進度" TitleStyle="h" ZoneIndex="0">
+		<Resource Name="zh-CN" Value="研發專案進度" />
+		<Resource Name="zh-TW" Value="研發專案進度" />
+		<Resource Name="en-US" Value="研發專案進度" />
+		<Resource Name="vi" Value="研發專案進度" />
+		<Resource Name="id" Value="研發專案進度" />
+	</CustomControl>
 </CustomControls>
