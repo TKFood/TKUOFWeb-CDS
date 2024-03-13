@@ -552,6 +552,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 string PROJECTNAMES = TextBox_PROJECTNAMES.Text;
                 TextBox TextBox_PROJECTSDEADLINEDATES = (TextBox)row.FindControl("txtDate2");
                 string PROJECTSDEADLINEDATES = TextBox_PROJECTSDEADLINEDATES.Text;
+                TextBox TextBox_EXEDEADLINEDATES = (TextBox)row.FindControl("txtDate3");
+                string EXEDEADLINEDATES = TextBox_EXEDEADLINEDATES.Text;
 
 
                 // 獲取相應的ID
@@ -562,7 +564,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                                        NO
                                       , PROJECTNAMES
                                       , PROJECTSDEADLINEDATES
-                                     
+                                      , EXEDEADLINEDATES
                                       );
 
                 ////MsgBox(id + " " + newTextValue, this.Page, this);
@@ -831,7 +833,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     public void UPDAT_TBDEV_RECORDS(
                                      string NO
                                     , string PROJECTNAMES
-                                    , string PROJECTSDEADLINEDATES                                    
+                                    , string PROJECTSDEADLINEDATES  
+                                    , string EXEDEADLINEDATES
                                     )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -842,7 +845,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
         cmdTxt = @"          
                     UPDATE [TKRESEARCH].[dbo].[TBDEV_RECORDS]
-                    SET [PROJECTNAMES]=@PROJECTNAMES,[PROJECTSDEADLINEDATES]=@PROJECTSDEADLINEDATES
+                    SET [PROJECTNAMES]=@PROJECTNAMES,[PROJECTSDEADLINEDATES]=@PROJECTSDEADLINEDATES,[EXEDEADLINEDATES]=@EXEDEADLINEDATES
                     WHERE [NO]=@NO
                       
                         ";
@@ -850,6 +853,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         m_db.AddParameter("@NO", NO);
         m_db.AddParameter("@PROJECTNAMES", PROJECTNAMES);
         m_db.AddParameter("@PROJECTSDEADLINEDATES", PROJECTSDEADLINEDATES);
+        m_db.AddParameter("@EXEDEADLINEDATES", EXEDEADLINEDATES);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
