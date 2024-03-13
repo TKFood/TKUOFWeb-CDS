@@ -232,9 +232,9 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         StringBuilder Query1 = new StringBuilder();
         StringBuilder Query2 = new StringBuilder();
 
-        if (!string.IsNullOrEmpty(TextBox_CLIENTS.Text))
+        if (!string.IsNullOrEmpty(TextBox_PROJECTNAMES.Text))
         {
-            Query1.AppendFormat(@" AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [CLIENTS] LIKE '%{0}%') ", TextBox_CLIENTS.Text);
+            Query1.AppendFormat(@" AND ID IN (SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [PROJECTNAMES] LIKE '%{0}%') ", TextBox_PROJECTNAMES.Text);
         }
         else
         {
@@ -248,7 +248,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
             }
             else
             {
-                Query2.AppendFormat(@"AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [ISCLOSE] LIKE '%{0}%')", DropDownListISCLOSE.SelectedValue.ToString());
+                Query2.AppendFormat(@"AND ID IN ( SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [ISCLOSE] LIKE '%{0}%' )", DropDownListISCLOSE.SelectedValue.ToString());
             }
 
         }
@@ -258,23 +258,21 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         }
 
         cmdTxt.AppendFormat(@"
-
-                            SELECT 
-                            [TB_SALES_ASSINGED].[ID]
-                            ,[SALES]
-                            ,[CLIENTS]
-                            ,[EVENTS]
-                            ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
+                            SELECT
+                            [ID]
+                            ,[NO]
+                            ,[PROJECTNAMES]
+                            ,CONVERT(NVARCHAR,[PROJECTSDEADLINEDATES],111) AS 'PROJECTSDEADLINEDATES'
+                            ,[COMMENTS]
+                            ,CONVERT(NVARCHAR,[COMMENTSADDDATES],111) AS 'COMMENTSADDDATES' 
+                            ,[EXEUNITS]
+                            ,CONVERT(NVARCHAR,[EXEDEADLINEDATES],111) AS 'EXEDEADLINEDATES'  
                             ,[ISCLOSE]
-                            ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
-                            ,(SELECT TOP 1 [COMMENTS] FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS COMMENTS
-                            ,(SELECT TOP 1 CONVERT(NVARCHAR,TB_SALES_ASSINGED_COMMENTS.[ADDDATES],111) FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS COMMENTSADDDATES
-
-                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
+                            FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS]
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [SALES],[EDAYS],[ID]
+                            ORDER BY [NO]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
@@ -299,24 +297,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            // 假設 txtNewField 是一個 Label 控制項
-            TextBox txtNewField = (TextBox)e.Row.FindControl("txtNewField");
-            Button Grid1Button1 = (Button)e.Row.FindControl("Grid1Button1");
-            Label LabelSALES = (Label)e.Row.FindControl("SALES");
-            Button Grid1Button2 = (Button)e.Row.FindControl("Grid1Button2");
-            Button Grid1Button3 = (Button)e.Row.FindControl("Grid1Button3");
-            // 假設事件在資料繫結時，ISCLOSE 欄位的名稱是 "ISCLOSE"
-            string eventValue = DataBinder.Eval(e.Row.DataItem, "ISCLOSE") as string;
-
-            // 如果事件欄位的值為空，就隱藏 txtNewField
-            if (string.IsNullOrWhiteSpace(eventValue))
-            {
-                txtNewField.Visible = false;
-                Grid1Button1.Visible = false;
-                LabelSALES.Visible = false;
-                Grid1Button2.Visible = false;
-                Grid1Button3.Visible = false;
-            }
+           
         }
 
     }
