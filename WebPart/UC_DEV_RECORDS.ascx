@@ -76,6 +76,15 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>
+                            <asp:Label ID="Label6" runat="server" Text="執行部門: "></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="DropDownList_EXEUNITS" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="btn1_Click" meta:resourcekey="btn1_Resource1" />
@@ -132,6 +141,9 @@
                                                 <asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSE") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
+                                      
+
                                         <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
@@ -142,6 +154,13 @@
                                                 <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                          <asp:TemplateField HeaderText="更改執行部門" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="Grid1_DropDownList_EXEUNITS" runat="server">                                                   
+                                                </asp:DropDownList>
+                                                <asp:Button ID="Grid1Button4" runat="server" Text="確定更改" CommandName="Grid1Button4" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>                                       
                                         <asp:TemplateField HeaderText="確定結案" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Grid1Button2" runat="server" Text="確定結案" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
@@ -366,18 +385,18 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
-                                       <asp:TemplateField HeaderText="立案單號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="立案單號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="立案單號" runat="server" Text='<%# Bind("NO") %>' Style="word-break: break-all; white-space: pre-line" Width="200px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>                                                
+                                            <ItemTemplate>
                                                 <asp:Label ID="專案名稱" runat="server" Text='<%# Bind("PROJECTNAMES") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案預計結案日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>                                                
+                                            <ItemTemplate>
                                                 <asp:Label ID="專案預計結案日期" runat="server" Text='<%# Bind("PROJECTSDEADLINEDATES") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -387,7 +406,7 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="回覆期限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>                                                
+                                            <ItemTemplate>
                                                 <asp:Label ID="回覆期限" runat="server" Text='<%# Bind("EXEDEADLINEDATES") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>

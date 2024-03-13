@@ -49,6 +49,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
             BindDropDownListISCLOSE2();
             BindDropDownListISCLOSE3();
 
+            Bind_DropDownList_EXEUNITS();         
+
             BindGrid();
             BindGrid2();
             BindGrid3();
@@ -271,6 +273,46 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
         }
     }
+
+
+    private void Bind_DropDownList_EXEUNITS()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                         SELECT
+                        [ID]
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TBDEV_RECORDS_EXEUNITS'
+                        ORDER BY [PARANAME]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList_EXEUNITS.DataSource = dt;
+            DropDownList_EXEUNITS.DataTextField = "PARAID";
+            DropDownList_EXEUNITS.DataValueField = "PARAID";
+            DropDownList_EXEUNITS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+
+   
+
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -279,6 +321,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder Query1 = new StringBuilder();
         StringBuilder Query2 = new StringBuilder();
+        StringBuilder Query3 = new StringBuilder();
 
         if (!string.IsNullOrEmpty(TextBox_PROJECTNAMES.Text))
         {
@@ -304,6 +347,22 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         {
             Query2.AppendFormat(@"");
         }
+        if (!string.IsNullOrEmpty(DropDownList_EXEUNITS.SelectedValue.ToString()))
+        {
+            if (DropDownList_EXEUNITS.SelectedValue.ToString().Equals("全部"))
+            {
+                Query3.AppendFormat(@"");
+            }
+            else
+            {
+                Query3.AppendFormat(@" AND ID IN ( SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [EXEUNITS] LIKE '%{0}%' )", DropDownList_EXEUNITS.SelectedValue.ToString());
+            }
+
+        }
+        else
+        {
+            Query3.AppendFormat(@"");
+        }
 
         cmdTxt.AppendFormat(@"
                             SELECT
@@ -320,10 +379,11 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                             WHERE 1=1
                             {0}
                             {1}
+                            {2}
                             ORDER BY [NO]
 
                               
-                            ", Query1.ToString(), Query2.ToString()); ;
+                            ", Query1.ToString(), Query2.ToString(), Query3.ToString()); ;
 
 
         //m_db.AddParameter("@EDATE", EDATE);
@@ -345,7 +405,37 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-           
+            // 找到 DropDownList 控件
+            DropDownList Grid1_DropDownList_EXEUNITS = (DropDownList)e.Row.FindControl("Grid1_DropDownList_EXEUNITS");
+
+            // 獲取當前行的資料
+            DataRowView rowView = (DataRowView)e.Row.DataItem;
+            DataRow row = rowView.Row;
+
+            // 獲取相應的ID
+            string EXEUNITS = row["EXEUNITS"].ToString();
+
+
+            DataTable dt = SERACH_EXEUNITS(EXEUNITS);
+
+            // 使用 DataTable 的 foreach 迴圈來遍歷資料並添加到 DropDownList 中
+            if(dt!=null && dt.Rows.Count>1)
+            {
+                foreach (DataRow DTROW in dt.Rows)
+                {
+                    // 從每一行中取得相應的值，例如部門名稱和部門編號
+                    string PARAID = DTROW["PARAID"].ToString();
+                    string PARANAME = DTROW["PARANAME"].ToString();
+
+                    // 添加選項到 DropDownList 中
+                    Grid1_DropDownList_EXEUNITS.Items.Add(new ListItem(PARAID, PARANAME));
+                }
+            }
+            else
+            {
+                Grid1_DropDownList_EXEUNITS.Items.Add(new ListItem(EXEUNITS, EXEUNITS));
+            }
+            
         }
 
     }
@@ -437,6 +527,44 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 string NO = txtid.Text;
 
                 UPDATE_TBDEV_RECORDS_ISCLOSE_YN(NO, "N");
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+                BindGrid2();
+                BindGrid3();
+            }
+        }
+        if (e.CommandName == "Grid1Button4")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("立案單號");
+                string NO = txtid.Text;
+                // 找到 DropDownList 控件
+                DropDownList ddlGrid1_DropDownList_EXEUNITS = (DropDownList)row.FindControl("Grid1_DropDownList_EXEUNITS");
+                string selectedText = "";
+                // 確保找到了 DropDownList 控件
+                if (ddlGrid1_DropDownList_EXEUNITS != null)
+                {
+                    // 獲取選取的文字
+                    selectedText = ddlGrid1_DropDownList_EXEUNITS.SelectedItem.Text;
+                }
+
+                UPDATE_TBDEV_RECORDS_EXEUNITS(NO, selectedText);
 
                 //MsgBox(id + " " + newTextValue, this.Page, this);
                 // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
@@ -920,6 +1048,78 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
 
     }
+
+    public DataTable SERACH_EXEUNITS(string NOW_EXEUNITS)
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+
+
+            cmdTxt.AppendFormat(@"
+                               SELECT 
+                                [ID]
+                                ,[KIND]
+                                ,[PARAID]
+                                ,[PARANAME]
+                                FROM [TKRESEARCH].[dbo].[TBPARA]
+                                WHERE [KIND]='TBDEV_RECORDS_EXEUNITS'
+                                AND [PARAID] NOT IN ('全部')
+                                AND [PARAID]>'{0}'
+                              
+                            ", NOW_EXEUNITS); ;
+
+
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+
+        }
+    }
+    public void UPDATE_TBDEV_RECORDS_EXEUNITS(string NO, string EXEUNITS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"
+                UPDATE [TKRESEARCH].[dbo].[TBDEV_RECORDS]
+                SET [EXEUNITS]=@EXEUNITS
+                WHERE [NO]=@NO
+                        ";
+
+
+        m_db.AddParameter("@NO", NO);
+        m_db.AddParameter("@EXEUNITS", EXEUNITS);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+
+
     #endregion
 
 
