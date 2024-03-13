@@ -382,6 +382,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
                 // 重新繫結GridView，刷新顯示
                 BindGrid();
+                BindGrid2();
+                BindGrid3();
             }
         }
         if (e.CommandName == "Grid1Button2")
@@ -411,6 +413,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
                 // 重新繫結GridView，刷新顯示
                 BindGrid();
+                BindGrid2();
+                BindGrid3();
             }
         }
         if (e.CommandName == "Grid1Button3")
@@ -440,6 +444,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
                 // 重新繫結GridView，刷新顯示
                 BindGrid();
+                BindGrid2();
+                BindGrid3();
             }
         }
 
@@ -566,6 +572,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 //// 重新繫結GridView，刷新顯示
                 BindGrid();
                 BindGrid2();
+                BindGrid3();
             }
         }
 
@@ -588,23 +595,23 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         StringBuilder Query1 = new StringBuilder();
         StringBuilder Query2 = new StringBuilder();
 
-        if (!string.IsNullOrEmpty(TextBox_CLIENTS3.Text))
+        if (!string.IsNullOrEmpty(TextBox_PROJECTNAMES_3.Text))
         {
-            Query1.AppendFormat(@" AND  [TB_SALES_ASSINGED].[ID] IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [CLIENTS] LIKE '%{0}%') ", TextBox_CLIENTS3.Text);
+            Query1.AppendFormat(@" AND  [TBDEV_RECORDS].ID IN (SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [PROJECTNAMES] LIKE '%{0}%') ", TextBox_PROJECTNAMES_3.Text);
         }
         else
         {
             Query1.AppendFormat(@"");
         }
-        if (!string.IsNullOrEmpty(DropDownListISCLOSE2.SelectedValue.ToString()))
+        if (!string.IsNullOrEmpty(DropDownListISCLOSE3.SelectedValue.ToString()))
         {
-            if (DropDownListISCLOSE3.SelectedValue.ToString().Equals("全部"))
+            if (DropDownListISCLOSE2.SelectedValue.ToString().Equals("全部"))
             {
                 Query2.AppendFormat(@"");
             }
             else
             {
-                Query2.AppendFormat(@"AND [TB_SALES_ASSINGED].[ID]  IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED] WHERE [ISCLOSE] LIKE '%{0}%')", DropDownListISCLOSE3.SelectedValue.ToString());
+                Query2.AppendFormat(@" AND  [TBDEV_RECORDS].ID IN ( SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [ISCLOSE] LIKE '%{0}%' )", DropDownListISCLOSE3.SelectedValue.ToString());
             }
 
         }
@@ -614,22 +621,25 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         }
 
         cmdTxt.AppendFormat(@"
-                           SELECT 
-                            [TB_SALES_ASSINGED].[ID]
-                            ,[SALES]
-                            ,[CLIENTS]
-                            ,[EVENTS]
-                            ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
-                            ,[ISCLOSE]
-                            ,[MID]
-                            ,[COMMENTS]
-                            ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS].[ADDDATES] ,111)  ADDDATES
-                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED], [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS]
+                          SELECT
+                            [TBDEV_RECORDS].[ID]
+                            ,[TBDEV_RECORDS].[NO]
+                            ,[TBDEV_RECORDS].[PROJECTNAMES]
+                            ,CONVERT(NVARCHAR,[TBDEV_RECORDS].[PROJECTSDEADLINEDATES],111) AS 'PROJECTSDEADLINEDATES'
+                            ,[TBDEV_RECORDS].[COMMENTS]
+                            ,CONVERT(NVARCHAR,[TBDEV_RECORDS].[COMMENTSADDDATES],111) AS 'COMMENTSADDDATES' 
+                            ,[TBDEV_RECORDS].[EXEUNITS]
+                            ,CONVERT(NVARCHAR,[TBDEV_RECORDS].[EXEDEADLINEDATES],111) AS 'EXEDEADLINEDATES'  
+                            ,[TBDEV_RECORDS].[ISCLOSE]
+                            ,[TBDEV_RECORDS_DETAILS].[COMMENTS]
+                            ,[TBDEV_RECORDS_DETAILS].[COMMENTSNAMES]
+                            ,CONVERT(NVARCHAR,[TBDEV_RECORDS_DETAILS].[COMMENTSADDDATES],111) AS 'COMMENTSADDDATES'
+                            FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS]
+                            LEFT JOIN [TKRESEARCH].[dbo].[TBDEV_RECORDS_DETAILS] ON [TBDEV_RECORDS].NO=[TBDEV_RECORDS_DETAILS].NO
                             WHERE 1=1
-                            AND  [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID                           
                             {0}
                             {1}
-                            ORDER BY [SALES],[EDAYS],[ID],[TB_SALES_ASSINGED_COMMENTS].[ADDDATES]
+                            ORDER BY [NO]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
@@ -640,6 +650,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         DataTable dt = new DataTable();
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+       
 
         Grid3.DataSource = dt;
         Grid3.DataBind();
@@ -674,16 +685,19 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                 string newTextValue = txtNewField.Text;
 
                 // 獲取相應的ID
-                Label txtid = (Label)row.FindControl("ID3");
-                string id = txtid.Text;
+                Label txtid = (Label)row.FindControl("立案單號");
+                string NO = txtid.Text;
 
-                ADD_TBDEV_RECORDS_DETAILS(id, newTextValue, NAME);
+                ADD_TBDEV_RECORDS_DETAILS(NO, newTextValue, NAME);
+                UPDATE_TBDEV_RECORDS(NO, newTextValue, NAME);
 
                 //MsgBox(id + " " + newTextValue, this.Page, this);
                 // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
                 // ...
 
                 // 重新繫結GridView，刷新顯示
+                BindGrid();
+                BindGrid2();
                 BindGrid3();
             }
         }
@@ -909,6 +923,8 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
     protected void btn1_Click(object sender, EventArgs e)
     {
         BindGrid();
+        BindGrid2();
+        BindGrid3();
     }
     protected void btn2_Click(object sender, EventArgs e)
     {
@@ -934,6 +950,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                                );
             BindGrid();
             BindGrid2();
+            BindGrid3();
 
             // 在伺服器端註冊 JavaScript
             string script = "alert('完成');";
@@ -957,10 +974,14 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
 
     protected void btn3_Click(object sender, EventArgs e)
     {
+        BindGrid();
         BindGrid2();
+        BindGrid3();
     }
     protected void btn4_Click(object sender, EventArgs e)
     {
+        BindGrid();
+        BindGrid2();
         BindGrid3();
     }
 
