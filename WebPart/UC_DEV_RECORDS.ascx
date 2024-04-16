@@ -353,7 +353,7 @@
                 <table class="PopTable">
                     <tr>
                         <td>
-                            <asp:Label ID="Label10" runat="server" Text="客戶: "></asp:Label>
+                            <asp:Label ID="Label10" runat="server" Text="專案名稱: "></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox_PROJECTNAMES_3" runat="server"></asp:TextBox>

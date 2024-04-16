@@ -735,7 +735,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
         }
         if (!string.IsNullOrEmpty(DropDownListISCLOSE3.SelectedValue.ToString()))
         {
-            if (DropDownListISCLOSE2.SelectedValue.ToString().Equals("全部"))
+            if (DropDownListISCLOSE3.SelectedValue.ToString().Equals("全部"))
             {
                 Query2.AppendFormat(@"");
             }
