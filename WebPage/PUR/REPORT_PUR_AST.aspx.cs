@@ -223,6 +223,126 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         //}
     }
 
+    private void BindGrid2(string NO)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+
+
+
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS1.AppendFormat(@" AND (MB002 LIKE '%{0}%' OR MB008 LIKE '%{0}%') ", TextBox3.Text);
+        }
+        else
+        {
+            QUERYS1.AppendFormat(@" ");
+        }
+
+
+
+        if (!string.IsNullOrEmpty(TextBox3.Text) )
+        {
+            cmdTxt.AppendFormat(@"
+                                 SELECT MB001
+                                ,MB002
+                                ,MB003
+                                ,MB011
+                                ,MB012
+                                ,MB020
+                                ,MB008
+                                ,MB016
+                                ,STUFF((
+                                        SELECT ', ' + MV002+' 放置地點:'+MC006+' 數量:'+CONVERT(NVARCHAR,MC004)
+                                        FROM [TK].dbo.ASTMC,[TK].dbo.CMSMV
+                                        WHERE MC003=MV001 AND MB001=MC001
+                                        FOR XML PATH('')
+                                    ), 1, 2, '') AS EMPPLACES
+                                FROM [TK].dbo.ASTMB
+                                WHERE 1=1
+                                {0}
+                                ORDER BY MB001
+        
+
+
+                             ", QUERYS1.ToString());
+        }
+        else
+        {
+            cmdTxt.AppendFormat(@"
+                                SELECT MB001
+                                ,MB002
+                                ,MB003
+                                ,MB011
+                                ,MB012
+                                ,MB020
+                                ,MB008
+                                ,MB016
+                                ,STUFF((
+                                        SELECT ', ' + MV002+' 放置地點:'+MC006+' 數量:'+CONVERT(NVARCHAR,MC004)
+                                        FROM [TK].dbo.ASTMC,[TK].dbo.CMSMV
+                                        WHERE MC003=MV001 AND MB001=MC001
+                                        FOR XML PATH('')
+                                    ), 1, 2, '') AS EMPPLACES
+                                FROM [TK].dbo.ASTMB
+                                WHERE 1=1
+                                ORDER BY MB001
+                                ");
+        }
+
+
+
+        //m_db.AddParameter("@MB001", TextBox1.Text.Trim());
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 找到 Label 控制項
+            Label lblEmpPlaces = (Label)e.Row.FindControl("保管人放置");
+
+            // 檢查是否找到了 Label 控制項
+            if (lblEmpPlaces != null)
+            {
+                // 從資料行中取得 EMPPLACES 字串
+                string empPlaces = DataBinder.Eval(e.Row.DataItem, "EMPPLACES").ToString();
+
+                // 將逗號替換為換行符號
+                empPlaces = empPlaces.Replace(",", Environment.NewLine);
+
+                // 將結果資料繫結到 Label 控制項
+                lblEmpPlaces.Text = empPlaces;
+            }
+        }
+
+
+    }
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+       
+
+    }
+
     //private void AddImage(ExcelWorksheet oSheet, int rowIndex, int colIndex, string imagePath)
     //{
     //    Bitmap image = new Bitmap(imagePath);
@@ -396,31 +516,9 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
 
     protected void btn2_Click(object sender, EventArgs e)
     {
-        SETEXCEL();
+        BindGrid2("");
     }
-    protected void btn3_Click(object sender, EventArgs e)
-    {
-        Response.ClearContent();
-        Response.AddHeader("content-disposition", "attachment; filename=test.xls");
-        Response.ContentEncoding = System.Text.Encoding.GetEncoding("big5");
-        HttpContext.Current.Response.Write("<meta http-equiv=Content-Type content=text/html;charset=big5>");
-        HttpContext.Current.Response.Write("<head><meta http-equiv=Content-Type content=text/html;charset=big5></head>");
-        Response.Charset = "big5";
-        Response.ContentType = "application/excel";
-
-
-        System.IO.StringWriter sw = new System.IO.StringWriter();
-        HtmlTextWriter htw = new HtmlTextWriter(sw);
-        Grid1.RenderControl(htw);
-        Response.Write(sw.ToString());
-        Response.End();
-    }
-        protected void MyButtonClick(object sender, System.EventArgs e)
-    {
-      
-
-    }
-
+    
     
     #endregion
 }

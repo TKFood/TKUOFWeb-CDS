@@ -30,7 +30,9 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
-            <telerik:RadTab Text="查詢">
+            <telerik:RadTab Text="查詢採購進貨單">
+            </telerik:RadTab>
+            <telerik:RadTab Text="查詢財務資產">
             </telerik:RadTab>
             <telerik:RadTab Text="新增資料">
             </telerik:RadTab>
@@ -128,16 +130,83 @@
         </telerik:RadPageView>
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
-                <table class="PopTable">
+                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="資產名稱/廠商名稱"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
+                            <asp:TextBox ID="TextBox3" runat="server" Text=""></asp:TextBox>
+                        </td>
 
+                    </tr>                   
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn2_Click"
+                                meta:resourcekey="btn1Resource1" />
+                        </td>
+
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                                <Fast:Grid ID="Grid2" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid2_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource2" OnPageIndexChanging="grid2_PageIndexChanging">
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                    <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                    <Columns>         
+                                        <asp:BoundField HeaderText="資產編號" DataField="MB001" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
+                                        </asp:BoundField>  
+                                        <asp:BoundField HeaderText="取得日期" DataField="MB016" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="LEFT" Width="80px"></ItemStyle>
+                                        </asp:BoundField>                                       
+                                        <asp:BoundField HeaderText="廠商" DataField="MB008" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="品名" runat="server" Text='<%# Bind("MB002") %>' Style="word-break: break-all; white-space: pre-line; text-align: left;" Width="200px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="規格" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="規格" runat="server" Text='<%# Bind("MB003") %>' Style="word-break: break-all; white-space: pre-line; text-align: left;" Width="200px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField HeaderText="數量" DataField="MB012" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="單位" DataField="MB011" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="進貨總金額(含稅)" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="進貨金額" runat="server" Text='<%# Bind("MB020", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="120px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="保管人放置" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="保管人放置" runat="server" Text='<%#Bind("EMPPLACES")%>' Style="word-break: break-all; white-space: pre-line; text-align: left;" Width="200px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+                                    </Columns>
+                                </Fast:Grid>
+                            </div>
                         </td>
                     </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+
+          <telerik:RadPageView ID="RadPageView3" runat="server">
+            <div id="tabs-3">
+                <table class="PopTable">
+                  
                 </table>
             </div>
         </telerik:RadPageView>
