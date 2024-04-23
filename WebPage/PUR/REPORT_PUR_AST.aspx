@@ -44,22 +44,13 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="廠商名稱"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="資產名稱/廠商名稱"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="TextBox1" runat="server" Text=""></asp:TextBox>
                         </td>
 
-                    </tr>
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <asp:Label ID="Label3" runat="server" Text="資產名稱"></asp:Label>
-                        </td>
-                        <td class="PopTableRightTD">
-                            <asp:TextBox ID="TextBox2" runat="server" Text=""></asp:TextBox>
-                        </td>
-
-                    </tr>
+                    </tr>              
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>

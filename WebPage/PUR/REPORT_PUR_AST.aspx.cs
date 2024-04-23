@@ -25,7 +25,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         if (!IsPostBack)
         {
            
-            BindGrid("");
+            //BindGrid("");
         }
         else
         {
@@ -95,25 +95,16 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         //TextBox1
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS1.AppendFormat(@" AND MA002 LIKE '%{0}%' ", TextBox1.Text);
+            QUERYS1.AppendFormat(@" AND (MA002 LIKE '%{0}%' OR TP005 LIKE '%{0}%')", TextBox1.Text);
         }
         else
         {
             QUERYS1.AppendFormat(@" ");
         }
-
-        //TextBox2
-        if (!string.IsNullOrEmpty(TextBox2.Text))
-        {
-            QUERYS2.AppendFormat(@" AND TP005 LIKE '%{0}%' ", TextBox2.Text);
-        }
-        else
-        {
-            QUERYS2.AppendFormat(@" ");
-        }
+               
 
 
-        if (!string.IsNullOrEmpty(TextBox1.Text) || !string.IsNullOrEmpty(TextBox2.Text))
+        if (!string.IsNullOrEmpty(TextBox1.Text) )
         {
             cmdTxt.AppendFormat(@"
                                 SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,(TP037+TP038) AS TP037038
@@ -124,12 +115,12 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                 AND TO005=MA001
                                 AND TO013 IN ('Y')
                                 {0}
-                                {1}
+                             
                                 ORDER BY TO001,TO002
         
 
 
-                             ", QUERYS1.ToString(), QUERYS2.ToString());
+                             ", QUERYS1.ToString());
         }
         else
         {
