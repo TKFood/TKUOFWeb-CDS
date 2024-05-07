@@ -39,7 +39,8 @@ public partial class CDS_WebPage_Mobile_TB_DEV_RECORDS : Ede.Uof.Utility.Page.Ba
         if (!IsPostBack)
         {         
             BindDropDownListISCLOSE();
-           
+            Bind_DropDownList_EXEUNITS();
+
             BindGrid();
         }
 
