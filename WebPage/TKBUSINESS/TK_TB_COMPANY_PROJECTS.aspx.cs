@@ -21,6 +21,8 @@ using System.Web.UI.HtmlControls;
 
 public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Utility.Page.BasePage
 {
+    string DEPDEV_OPEN = "Y";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -100,41 +102,44 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         //BindGrid("");
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        string DEPDEV_OPEN = "N";
-
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            // 获取数据绑定行中 DEPDEV 的值
-            HiddenField hiddenDEPDEV = (HiddenField)e.Row.FindControl("HiddenDEPDEV");
-            string DEPDEV_Value = hiddenDEPDEV.Value;
-
-            // 根据条件判断是否使用 TextBox 还是 Label
-            if (DEPDEV_OPEN.Equals("Y"))
-            {
-                // 使用 TextBox
-                TextBox textBox = new TextBox();
-                textBox.ID = "研發";
-                textBox.Text = DEPDEV_Value;
-                textBox.Style["word-break"] = "break-all";
-                textBox.Style["white-space"] = "pre-line";
-                e.Row.Cells[4].Controls.Add(textBox);
-            }
-            else if (DEPDEV_OPEN.Equals("N"))
-            {
-                // 使用 Label
-                Label label = new Label();
-                label.ID = "研發";
-                label.Text = DEPDEV_Value;
-                label.Style["word-break"] = "break-all";
-                label.Style["white-space"] = "pre-line";
-                e.Row.Cells[4].Controls.Add(label);
-            }
-        }
+    {   
+       
     }
 
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
     {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid1Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                GridViewRow row = Grid1.Rows[rowIndex];
+                // 獲取相應的ID
+                Label LabelID = (Label)row.FindControl("ID");
+                string ID = LabelID.Text;
+                // 獲取TextBox的值                 
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+
+                MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
+
+                if (DEPDEV_OPEN.Equals("Y"))
+                {
+                    
+                }
+
+
+
+
+            }
+        }
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -156,7 +161,13 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     }
 
-   
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
 
     #endregion
 
