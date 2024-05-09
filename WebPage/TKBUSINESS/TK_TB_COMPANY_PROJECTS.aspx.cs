@@ -101,7 +101,36 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        string DEPDEV_OPEN = "N";
 
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 获取数据绑定行中 DEPDEV 的值
+            HiddenField hiddenDEPDEV = (HiddenField)e.Row.FindControl("HiddenDEPDEV");
+            string DEPDEV_Value = hiddenDEPDEV.Value;
+
+            // 根据条件判断是否使用 TextBox 还是 Label
+            if (DEPDEV_OPEN.Equals("Y"))
+            {
+                // 使用 TextBox
+                TextBox textBox = new TextBox();
+                textBox.ID = "研發";
+                textBox.Text = DEPDEV_Value;
+                textBox.Style["word-break"] = "break-all";
+                textBox.Style["white-space"] = "pre-line";
+                e.Row.Cells[4].Controls.Add(textBox);
+            }
+            else if (DEPDEV_OPEN.Equals("N"))
+            {
+                // 使用 Label
+                Label label = new Label();
+                label.ID = "研發";
+                label.Text = DEPDEV_Value;
+                label.Style["word-break"] = "break-all";
+                label.Style["white-space"] = "pre-line";
+                e.Row.Cells[4].Controls.Add(label);
+            }
+        }
     }
 
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
