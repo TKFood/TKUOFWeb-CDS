@@ -51,19 +51,34 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         cmdTxt.AppendFormat(@" 
                             SELECT 
                             [ID]
-                            ,CONVERT(nvarchar,[CREATDATES],111) AS '建立日期'
-                            ,[SALESNAMES] AS '業務員'
-                            ,[CLIENTSID] AS '客戶代號'
-                            ,[CLIENTSNAMES] AS '客戶'
-                            ,[NEWCLIENTSNAMES] AS '新客'
-                            ,[KINDS] AS '拜訪目的'
-                            ,[RECORDS] AS '訪談內容'
-                            ,CONVERT(nvarchar,[RECORDSDATES],111) AS '訪談日期'
-                            ,[PHOTOS]
-                            ,[PHOTOSID]
-                            FROM [TKBUSINESS].[dbo].[TB_SALES_RECORDS]
-                            WHERE CONVERT(nvarchar,[RECORDSDATES],111)>='{0}' AND CONVERT(nvarchar,[RECORDSDATES],111)<='{1}'
-                            ORDER BY [SALESNAMES],[CLIENTSNAMES],[ID]
+                            ,[ISCLOSED]
+                            ,[PROJECTNAMES]
+                            ,[CONTENTS]
+                            ,CONVERT(NVARCHAR,[PROJECTDATES],111 ) [PROJECTDATES]
+                            ,[DEPDEV]
+                            ,[DEPMARKET]
+                            ,[DEPACCOUNTS]
+                            ,[DEPMOC]
+                            ,[DEPLAWS]
+                            ,[DEPSALES]
+                            ,[DEPSTORES]
+                            ,[DEPFACTORYS]
+                            ,[DEPPURS]
+                            ,[DEPQCS]
+                            ,CONVERT(NVARCHAR,[CREATEDATES],111 ) [CREATEDATES]
+                            ,CONVERT(NVARCHAR,[DEPDEVREPLAYDATES],111 ) [DEPDEVREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPMARKETREPLAYDATES],111 ) [DEPMARKETREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPACCOUNTSREPLAYDATES],111 ) [DEPACCOUNTSREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPMOCREPLAYDATES],111 ) [DEPMOCREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPLAWSREPLAYDATES],111 ) [DEPLAWSREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPSALESREPLAYDATES],111 ) [DEPSALESREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPSTORESREPLAYDATES],111 ) [DEPSTORESREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPFACTORYSREPLAYDATES],111 ) [DEPFACTORYSREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPPURSREPLAYDATES],111 ) [DEPPURSREPLAYDATES]
+                            ,CONVERT(NVARCHAR,[DEPQCSREPLAYDATES],111 ) [DEPQCSREPLAYDATES]
+                            FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+                            WHERE [ISCLOSED]='N'
+                            ORDER BY [PROJECTDATES]
 
                               
                             ", SDAYS, EDAYS);
@@ -86,56 +101,6 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            // 找到 Image 容器
-            var imageContainer = (HtmlGenericControl)e.Row.FindControl("ImageContainer");
-            DataRowView dr = (DataRowView)e.Row.DataItem;
-            DataTable dt = new DataTable();
-            if (dr["PHOTOSID"] != DBNull.Value && dr["PHOTOSID"] != null)
-            {
-                dt = SEARCH_TB_SALES_RECORDS_PHOTOS(dr["PHOTOSID"].ToString());
-                if (dt != null && dt.Rows.Count >= 1)
-                {
-                    // 迴圈處理每張圖片
-                    foreach (DataRow imageRow in dt.Rows)
-                    {
-                        // 創建一個 Image 控制項
-                        System.Web.UI.WebControls.Image img = new System.Web.UI.WebControls.Image();
-                        string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])imageRow["PHOTOS"]);
-                        img.ImageUrl = imageUrl; // 假設你的資料表中有一個 "ImageUrl" 的欄位
-
-                        // 設置寬度和高度
-                        img.Width = Unit.Pixel(100);
-                        img.Height = Unit.Pixel(100);
-                        // 設置靠左對齊
-                        img.Style.Add("float", "left");
-
-
-                        // 將 Image 控制項加入到容器中
-                        imageContainer.Controls.Add(img);
-                    }
-                }
-            }
-
-            //DataRowView dr = (DataRowView)e.Row.DataItem;
-            //System.Web.UI.WebControls.Image imgPhoto = e.Row.FindControl("Image1") as System.Web.UI.WebControls.Image;
-
-
-            //if (dr["PHOTOS"] != DBNull.Value && dr["PHOTOS"] != null)
-            //{
-            //    string imageUrl = "data:image/jpg;base64," + Convert.ToBase64String((byte[])dr["PHOTOS"]);
-            //    imgPhoto.ImageUrl = imageUrl;
-            //}
-            //else
-            //{
-            //    // 如果PHOTOS字段为空或NULL，清空图像
-            //    imgPhoto.ImageUrl = string.Empty;
-            //}
-
-        }
-
 
     }
 

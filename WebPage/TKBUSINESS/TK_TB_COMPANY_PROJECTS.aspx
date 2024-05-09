@@ -60,36 +60,28 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
-                                        <asp:BoundField HeaderText="業務員" DataField="業務員" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="舊客(有客代)" DataField="客戶" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="新客" DataField="新客" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="拜訪目的" DataField="拜訪目的" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:TemplateField HeaderText="訪談內容" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                         <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="訪談內容" runat="server" Text='<%# Bind("訪談內容") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSED") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField HeaderText="訪談日期" DataField="訪談日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:BoundField HeaderText="建立日期" DataField="建立日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
-                                        </asp:BoundField>
-                                        <asp:TemplateField HeaderText="圖片">
+                                           <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <div runat="server" id="ImageContainer" class="image-container">
-                                                    <!-- Images will be added here dynamically -->
-                                                </div>
+                                                <asp:Label ID="專案名稱" runat="server" Text='<%# Bind("PROJECTNAMES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                           <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="專案內容" runat="server" Text='<%# Bind("CONTENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                           <asp:TemplateField HeaderText="專案日期" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="專案日期" runat="server" Text='<%# Bind("PROJECTDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                  
+                                        
                                     </Columns>
                                 </Fast:Grid>
                             </div>
