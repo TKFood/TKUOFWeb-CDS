@@ -60,28 +60,131 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                     <Columns>
-                                         <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSED") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                           <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="專案名稱" runat="server" Text='<%# Bind("PROJECTNAMES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                           <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="專案內容" runat="server" Text='<%# Bind("CONTENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <asp:TextBox ID="專案內容" runat="server" Text='<%# Bind("CONTENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                           <asp:TemplateField HeaderText="專案日期" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="專案日期" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="專案日期" runat="server" Text='<%# Bind("PROJECTDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                  
-                                        
+
+                                        <asp:TemplateField HeaderText="研發" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="研發" runat="server" Text='<%# Bind("DEPDEV") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="行銷設計" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="行銷設計" runat="server" Text='<%# Bind("DEPMARKET") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="法務" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="法務" runat="server" Text='<%# Bind("DEPLAWS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="品保" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="品保" runat="server" Text='<%# Bind("DEPQCS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="財務" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="財務" runat="server" Text='<%# Bind("DEPACCOUNTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="生產" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="生產" runat="server" Text='<%# Bind("DEPMOC") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="業務" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="業務" runat="server" Text='<%# Bind("DEPSALES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="門市" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="門市" runat="server" Text='<%# Bind("DEPSTORES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="觀光工廠" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="觀光工廠" runat="server" Text='<%# Bind("DEPFACTORYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="採購" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="採購" runat="server" Text='<%# Bind("DEPPURS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="研發最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="研發最新回覆日" runat="server" Text='<%# Bind("DEPDEVREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                       <asp:TemplateField HeaderText="行銷設計最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="行銷設計最新回覆日" runat="server" Text='<%# Bind("DEPMARKETREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="法務最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="法務最新回覆日" runat="server" Text='<%# Bind("DEPLAWSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="品保最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="品保最新回覆日" runat="server" Text='<%# Bind("DEPQCSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="財務最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="財務最新回覆日" runat="server" Text='<%# Bind("DEPACCOUNTSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                       <asp:TemplateField HeaderText="生產最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="生產最新回覆日" runat="server" Text='<%# Bind("DEPMOCREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="業務最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="業務最新回覆日" runat="server" Text='<%# Bind("DEPSALESREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="門市最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="門市最新回覆日" runat="server" Text='<%# Bind("DEPSTORESREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="觀光工廠最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="觀光工廠最新回覆日" runat="server" Text='<%# Bind("DEPFACTORYSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="採購最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="採購最新回覆日" runat="server" Text='<%# Bind("DEPPURSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+
+
                                     </Columns>
                                 </Fast:Grid>
                             </div>
