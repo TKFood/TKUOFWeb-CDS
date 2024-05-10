@@ -18,19 +18,27 @@ using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Web.UI.HtmlControls;
+using Ede.Uof.EIP.SystemInfo;
 
 public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Utility.Page.BasePage
 {
-    string DEPDEV_OPEN = "Y";
+    string DEPDEV_OPEN = "N";
+    string ACCOUNT = null;
+    string NAME = null;
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+
+        DEPDEV_OPEN = "Y";
+
         if (!IsPostBack)
         {
             txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
             txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
 
-            BindGrid(txtDate1.Text, txtDate2.Text);
+            BindGrid();
         }
         else
         {
@@ -43,7 +51,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
     }
     #region FUNCTION
 
-    private void BindGrid(string SDAYS, string EDAYS)
+    private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -83,7 +91,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                             ORDER BY [PROJECTDATES]
 
                               
-                            ", SDAYS, EDAYS);
+                            ");
 
 
         //m_db.AddParameter("@EDATE", EDATE);
@@ -128,14 +136,20 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
                 string newTextValue = txtNewField.Text;
 
-                MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
+                string MID = ID;
+                string DEPNAMES = "";
+                string COMMETNS = newTextValue;
 
                 if (DEPDEV_OPEN.Equals("Y"))
                 {
-                    
+                    DEPNAMES = "研發";
+                    ADD_TB_COMPANY_PROJECTS_DETAILS(MID, DEPNAMES, COMMETNS);
+                    UPDATE_TB_COMPANY_PROJECTS(MID, DEPNAMES, COMMETNS);
+
+                    MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
                 }
 
-
+                BindGrid();
 
 
             }
@@ -169,6 +183,68 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
 
+    public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string DEPNAMES, string COMMETNS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"
+                    INSERT INTO [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS]
+                    (
+                    [MID]
+                    ,[CREATEDATES]
+                    ,[DEPNAMES]
+                    ,[COMMETNS]
+                    )
+                    VALUES
+                    (
+                    @MID
+                    ,GETDATE()
+                    ,@DEPNAMES
+                    ,@COMMETNS
+                    )
+                        ";
+
+
+        m_db.AddParameter("@MID", MID);
+        m_db.AddParameter("@DEPNAMES", DEPNAMES);
+        m_db.AddParameter("@COMMETNS", NAME + ':' + Environment.NewLine +COMMETNS);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+    public void UPDATE_TB_COMPANY_PROJECTS(string ID, string DEPNAMES, string COMMETNS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+        if(DEPDEV_OPEN.Equals("Y"))
+        {
+            cmdTxt = @"
+                     UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+                    SET [DEPDEV]=@DEPDEV,[DEPDEVREPLAYDATES]=GETDATE()
+                    WHERE ID=@ID
+                        ";
+        }
+        else
+        {
+
+        }
+       
+
+
+        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@DEPDEV", NAME + ':' + Environment.NewLine + COMMETNS);
+
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
     #endregion
 
     #region BUTTON
@@ -187,7 +263,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     protected void btn1_Click(object sender, EventArgs e)
     {
-        BindGrid(txtDate1.Text, txtDate2.Text);
+        BindGrid();
     }
 
 
