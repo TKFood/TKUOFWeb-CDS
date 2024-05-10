@@ -7,7 +7,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script>          
         $(function () {
-        
+
         });
         //如果有設定回傳值則執行sender Event
         function OpenDialogResult(returnValue) {
@@ -31,7 +31,7 @@
         <telerik:RadPageView ID="RadPageView1" runat="server">
             <div id="tabs-1">
                 <table class="PopTable">
-                   <tr>
+                    <tr>
                         <td>
                             <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
                         </td>
@@ -98,6 +98,11 @@
                                                 <asp:Label ID="品保" runat="server" Text='<%# Bind("DEPQCS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="採購" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="採購" runat="server" Text='<%# Bind("DEPPURS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="財務" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="財務" runat="server" Text='<%# Bind("DEPACCOUNTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
@@ -123,11 +128,7 @@
                                                 <asp:Label ID="觀光工廠" runat="server" Text='<%# Bind("DEPFACTORYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="採購" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>
-                                                <asp:Label ID="採購" runat="server" Text='<%# Bind("DEPPURS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+
 
                                         <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
@@ -160,6 +161,11 @@
                                                 <asp:Label ID="品保最新回覆日" runat="server" Text='<%# Bind("DEPQCSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="採購最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="採購最新回覆日" runat="server" Text='<%# Bind("DEPPURSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="財務最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="財務最新回覆日" runat="server" Text='<%# Bind("DEPACCOUNTSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
@@ -185,11 +191,7 @@
                                                 <asp:Label ID="觀光工廠最新回覆日" runat="server" Text='<%# Bind("DEPFACTORYSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="採購最新回覆日" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                            <ItemTemplate>
-                                                <asp:Label ID="採購最新回覆日" runat="server" Text='<%# Bind("DEPPURSREPLAYDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+
 
                                         <asp:TemplateField HeaderText="ID" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
