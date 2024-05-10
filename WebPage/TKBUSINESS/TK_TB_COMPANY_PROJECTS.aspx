@@ -7,8 +7,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script>          
         $(function () {
-            $("#<%= txtDate1.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
-            $("#<%= txtDate2.ClientID %>").datepicker({ dateFormat: "yy/mm/dd", });
+        
         });
         //如果有設定回傳值則執行sender Event
         function OpenDialogResult(returnValue) {
@@ -32,15 +31,13 @@
         <telerik:RadPageView ID="RadPageView1" runat="server">
             <div id="tabs-1">
                 <table class="PopTable">
-                    <tr>
-                        <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                   <tr>
+                        <td>
+                            <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
                         </td>
-                        <td class="PopTableRightTD">
-                            <asp:TextBox ID="txtDate1" runat="server" Width="100px"></asp:TextBox>
-                            <asp:Label ID="Label11" runat="server" Text="~"></asp:Label>
-                            <asp:TextBox ID="txtDate2" runat="server" Width="100px"></asp:TextBox>
-                            <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
+                        <td>
+                            <asp:DropDownList ID="DropDownListISCLOSE" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
                         </td>
                     </tr>
                     <tr>
@@ -72,7 +69,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="專案內容" runat="server" Text='<%# Bind("CONTENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
+                                                <asp:Label ID="專案內容" runat="server" Text='<%# Bind("CONTENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案日期" ItemStyle-Width="25%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">

@@ -35,10 +35,9 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         if (!IsPostBack)
         {
-            txtDate1.Text = DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd");
-            txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
+            BindDropDownListISCLOSE();
 
-            BindGrid();
+            BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
         }
         else
         {
@@ -50,13 +49,66 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     }
     #region FUNCTION
+    private void BindDropDownListISCLOSE()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
 
-    private void BindGrid()
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='TB_COMPANY_PROJECTS'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListISCLOSE.DataSource = dt;
+            DropDownListISCLOSE.DataTextField = "NAMES";
+            DropDownListISCLOSE.DataValueField = "NAMES";
+            DropDownListISCLOSE.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+
+    private void BindGrid(string DropDownListISCLOSE)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder Query1 = new StringBuilder();
+
+        if (!string.IsNullOrEmpty(DropDownListISCLOSE))
+        {
+            if (DropDownListISCLOSE.Equals("全部"))
+            {
+                Query1.AppendFormat(@"");
+            }
+            else
+            {
+                Query1.AppendFormat(@"  AND ID IN ( SELECT [ID] FROM[TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS] WHERE [ISCLOSED] LIKE '%{0}%' ) ", DropDownListISCLOSE);
+            }
+
+        }
+        else
+        {
+            Query1.AppendFormat(@"");
+        }
 
         cmdTxt.AppendFormat(@" 
                             SELECT 
@@ -88,10 +140,12 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                             ,CONVERT(NVARCHAR,[DEPQCSREPLAYDATES],111 ) [DEPQCSREPLAYDATES]
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE [ISCLOSED]='N'
+                            {0}
+
                             ORDER BY [PROJECTDATES]
 
                               
-                            ");
+                            ", Query1.ToString());
 
 
         //m_db.AddParameter("@EDATE", EDATE);
@@ -149,7 +203,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                     MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
                 }
 
-                BindGrid();
+                BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
 
 
             }
@@ -158,7 +212,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-        SETEXCEL(txtDate1.Text, txtDate2.Text);
+        SETEXCEL();
 
 
     }
@@ -169,7 +223,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     }
 
-    public void SETEXCEL(string SDAYS, string EDAYS)
+    public void SETEXCEL()
     {
         
 
@@ -263,7 +317,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     protected void btn1_Click(object sender, EventArgs e)
     {
-        BindGrid();
+        BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
     }
 
 
