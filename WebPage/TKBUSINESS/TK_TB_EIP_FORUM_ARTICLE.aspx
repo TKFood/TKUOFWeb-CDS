@@ -36,7 +36,16 @@
                             <asp:Label ID="Label14" runat="server" Text="查詢年度: "></asp:Label>
                         </td>
                         <td>
-                            <asp:DropDownList ID="DropDownListISCLOSE" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>
+                            <asp:Label ID="Label1" runat="server" Text="查詢主題: "></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
 
                         </td>
                     </tr>
@@ -62,7 +71,76 @@
                                                 <asp:Label ID="討論區" runat="server" Text='<%# Bind("BOARD_NAME") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                      
+                                        <asp:TemplateField HeaderText="建立日期" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="建立日期" runat="server" Text='<%# Bind("CREATE_DATE") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="主題" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="主題" runat="server" Text='<%# Bind("SUBJECT") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="設計" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="設計" runat="server" Text='<%# Bind("設計") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="財務" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="財務" runat="server" Text='<%# Bind("財務") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="生管" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="生管" runat="server" Text='<%# Bind("生管") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="資材" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="資材" runat="server" Text='<%# Bind("資材") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="品保" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="品保" runat="server" Text='<%# Bind("品保") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="研發" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="研發" runat="server" Text='<%# Bind("研發") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="硯微墨" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="硯微墨" runat="server" Text='<%# Bind("硯微墨") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="門市" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="門市" runat="server" Text='<%# Bind("門市") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="觀光" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="觀光" runat="server" Text='<%# Bind("觀光") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="國外" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="國外" runat="server" Text='<%# Bind("國外") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="國內" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="國內" runat="server" Text='<%# Bind("國內") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="新事業發展" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="新事業發展" runat="server" Text='<%# Bind("新事業發展") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </Fast:Grid>
                             </div>
