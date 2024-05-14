@@ -21,17 +21,14 @@ using System.Web.UI.HtmlControls;
 using Ede.Uof.EIP.SystemInfo;
 
 public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Utility.Page.BasePage
-{
-    string DEPDEV_OPEN = "N";
-    string ACCOUNT = null;
-    string NAME = null;
+{   
+    string ACCOUNTS = null;
+    string NAMES = null;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ACCOUNT = Current.Account;
-        NAME = Current.User.Name;
-
-        DEPDEV_OPEN = "Y";
+        ACCOUNTS = Current.Account;
+        NAMES = Current.User.Name;      
 
         if (!IsPostBack)
         {
@@ -123,8 +120,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                             ,[SALEDATES]
                             ,[STATUS]
                             ,[COMMENTS]
-                            ,[COMMENTSDATES]
-                            ,[TRACEDATES]
+                            ,CONVERT(NVARCHAR,[COMMENTSDATES],111) COMMENTSDATES
+                            ,CONVERT(NVARCHAR,[TRACEDATES],111) TRACEDATES
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE [ISCLOSED]='N'
                             {0}
@@ -177,18 +174,13 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
                 string newTextValue = txtNewField.Text;
 
-                string MID = ID;
-                string DEPNAMES = "";
+                string MID = ID;              
                 string COMMETNS = newTextValue;
 
-                if (DEPDEV_OPEN.Equals("Y"))
-                {
-                    DEPNAMES = "研發";
-                    ADD_TB_COMPANY_PROJECTS_DETAILS(MID, DEPNAMES, COMMETNS);
-                    UPDATE_TB_COMPANY_PROJECTS(MID, DEPNAMES, COMMETNS);
+                ADD_TB_COMPANY_PROJECTS_DETAILS(MID, NAMES, COMMETNS);
+                UPDATE_TB_COMPANY_PROJECTS(MID, NAMES, COMMETNS);
 
-                    MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
-                }
+                MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
 
                 BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
 
@@ -224,7 +216,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
 
-    public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string DEPNAMES, string COMMETNS)
+    public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string NAMES, string COMMETNS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -237,50 +229,42 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                     (
                     [MID]
                     ,[CREATEDATES]
-                    ,[DEPNAMES]
+                    ,[NAMES]
                     ,[COMMETNS]
                     )
                     VALUES
                     (
                     @MID
                     ,GETDATE()
-                    ,@DEPNAMES
+                    ,@NAMES
                     ,@COMMETNS
                     )
                         ";
 
 
         m_db.AddParameter("@MID", MID);
-        m_db.AddParameter("@DEPNAMES", DEPNAMES);
-        m_db.AddParameter("@COMMETNS", NAME + ':' + Environment.NewLine +COMMETNS);
+        m_db.AddParameter("@NAMES", NAMES);
+        m_db.AddParameter("@COMMETNS", NAMES + ':' + Environment.NewLine +COMMETNS);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
-    public void UPDATE_TB_COMPANY_PROJECTS(string ID, string DEPNAMES, string COMMETNS)
+    public void UPDATE_TB_COMPANY_PROJECTS(string ID, string NAMES, string COMMETNS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"   ";
-
-        if(DEPDEV_OPEN.Equals("Y"))
-        {
-            cmdTxt = @"
+        cmdTxt = @"
                      UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
-                    SET [DEPDEV]=@DEPDEV,[DEPDEVREPLAYDATES]=GETDATE()
+                    SET [COMMENTS]=@COMMENTS,[COMMENTSDATES]=GETDATE()
                     WHERE ID=@ID
                         ";
-        }
-        else
-        {
 
-        }
-       
 
 
         m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@DEPDEV", NAME + ':' + Environment.NewLine + COMMETNS);
+        m_db.AddParameter("@COMMENTS", NAMES + ':' + Environment.NewLine + COMMETNS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);
