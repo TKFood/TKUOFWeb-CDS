@@ -244,7 +244,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@NAMES", NAMES);
-        m_db.AddParameter("@COMMETNS", NAMES + ':' + Environment.NewLine +COMMETNS);
+        m_db.AddParameter("@COMMETNS", NAMES + ':' + Environment.NewLine + DateTime.Now.ToString("yyyy/MM/dd")+ Environment.NewLine +COMMETNS);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
@@ -264,7 +264,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
 
         m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@COMMENTS", NAMES + ':' + Environment.NewLine + COMMETNS);
+        m_db.AddParameter("@COMMENTS", NAMES + ':' + Environment.NewLine + DateTime.Now.ToString("yyyy/MM/dd") + Environment.NewLine + COMMETNS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);
