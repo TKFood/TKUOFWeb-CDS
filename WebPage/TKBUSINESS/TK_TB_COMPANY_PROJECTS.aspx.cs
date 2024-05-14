@@ -111,38 +111,25 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         }
 
         cmdTxt.AppendFormat(@" 
-                            SELECT 
+                           SELECT 
                             [ID]
+                            ,[NO]
                             ,[ISCLOSED]
+                            ,[KINDS]
                             ,[PROJECTNAMES]
-                            ,[CONTENTS]
-                            ,CONVERT(NVARCHAR,[PROJECTDATES],111 ) [PROJECTDATES]
-                            ,[DEPDEV]
-                            ,[DEPMARKET]
-                            ,[DEPACCOUNTS]
-                            ,[DEPMOC]
-                            ,[DEPLAWS]
-                            ,[DEPSALES]
-                            ,[DEPSTORES]
-                            ,[DEPFACTORYS]
-                            ,[DEPPURS]
-                            ,[DEPQCS]
-                            ,CONVERT(NVARCHAR,[CREATEDATES],111 ) [CREATEDATES]
-                            ,ISNULL(CONVERT(NVARCHAR,[DEPDEVREPLAYDATES],111 ),'') [DEPDEVREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPMARKETREPLAYDATES],111 ) [DEPMARKETREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPACCOUNTSREPLAYDATES],111 ) [DEPACCOUNTSREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPMOCREPLAYDATES],111 ) [DEPMOCREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPLAWSREPLAYDATES],111 ) [DEPLAWSREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPSALESREPLAYDATES],111 ) [DEPSALESREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPSTORESREPLAYDATES],111 ) [DEPSTORESREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPFACTORYSREPLAYDATES],111 ) [DEPFACTORYSREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPPURSREPLAYDATES],111 ) [DEPPURSREPLAYDATES]
-                            ,CONVERT(NVARCHAR,[DEPQCSREPLAYDATES],111 ) [DEPQCSREPLAYDATES]
+                            ,[DEPNAMES]
+                            ,[PRODUCTAPPLYS]
+                            ,[PACKAPPLYS]
+                            ,[SALEDATES]
+                            ,[STATUS]
+                            ,[COMMENTS]
+                            ,[COMMENTSDATES]
+                            ,[TRACEDATES]
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE [ISCLOSED]='N'
                             {0}
 
-                            ORDER BY [PROJECTDATES]
+                            ORDER BY [NO]
 
                               
                             ", Query1.ToString());
