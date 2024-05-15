@@ -505,6 +505,18 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 TextBox txtTRACEDATES = (TextBox)row.FindControl("追蹤日");
                 string stringTRACEDATES = txtTRACEDATES.Text.Trim();
 
+                UPDATE_TB_COMPANY_PROJECTS_FIELDS(
+                        ID
+                        , stringDropDownListISCLOSED
+                        , stringDropDownListKINDS
+                        , stringPROJECTNAMES
+                        , stringDEPNAMES
+                        , stringDropDownListPRODUCTAPPLYS
+                        , stringDropDownListPACKAPPLYS
+                        , stringSALEDATES
+                        , stringDropDownListSTATUS
+                        , stringTRACEDATES);
+
                 MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
             }
         }
@@ -597,23 +609,48 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
-    public void UPDATE_TB_COMPANY_PROJECTS_FIELDS(string ID, string NAMES, string COMMETNS)
+    public void UPDATE_TB_COMPANY_PROJECTS_FIELDS(
+        string ID
+        , string ISCLOSED
+        , string KINDS
+        , string PROJECTNAMES
+        , string DEPNAMES
+        , string PRODUCTAPPLYS
+        , string PACKAPPLYS
+        , string SALEDATES
+        , string STATUS
+        , string TRACEDATES)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"   ";
         cmdTxt = @"
-                    UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
-                    SET 
-                    WHERE ID=@ID
+                    UPDATE [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+                    SET ISCLOSED=@ISCLOSED
+                    ,KINDS=@KINDS
+                    ,PROJECTNAMES=@PROJECTNAMES
+                    ,DEPNAMES=@DEPNAMES
+                    ,PRODUCTAPPLYS=@PRODUCTAPPLYS
+                    ,PACKAPPLYS=@PACKAPPLYS
+                    ,SALEDATES=@SALEDATES
+                    ,STATUS=@STATUS
+                    ,TRACEDATES=@TRACEDATES
+                    WHERE [ID]=@ID
                         ";
 
 
 
         m_db.AddParameter("@ID", ID);
-        
-
+        m_db.AddParameter("@ISCLOSED", ISCLOSED);
+        m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@PROJECTNAMES", PROJECTNAMES);
+        m_db.AddParameter("@DEPNAMES", DEPNAMES);
+        m_db.AddParameter("@PRODUCTAPPLYS", PRODUCTAPPLYS);
+        m_db.AddParameter("@PACKAPPLYS", PACKAPPLYS);
+        m_db.AddParameter("@SALEDATES", SALEDATES);
+        m_db.AddParameter("@STATUS", STATUS);
+        m_db.AddParameter("@TRACEDATES", TRACEDATES);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
