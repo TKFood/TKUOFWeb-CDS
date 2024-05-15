@@ -19,6 +19,7 @@ using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Web.UI.HtmlControls;
 using Ede.Uof.EIP.SystemInfo;
+using Telerik.Web.UI;
 
 public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Utility.Page.BasePage
 {   
@@ -122,7 +123,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                             ,[STATUS]
                             ,[COMMENTS]   
                             ,CONVERT(NVARCHAR,[COMMENTSDATES],111) COMMENTSDATES
-                            ,CONVERT(NVARCHAR,[TRACEDATES],111) TRACEDATES
+                            ,[TRACEDATES]
                             ,STUFF((
                                     SELECT ' ' +[TB_COMPANY_PROJECTS_DETAILS] .[COMMENTS]+CHAR(13)
                                     FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
@@ -502,8 +503,10 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 DropDownList DropDownListSTATUS = (DropDownList)row.FindControl("DropDownListSTATUS");
                 string stringDropDownListSTATUS = DropDownListSTATUS.Text.Trim();
                 //TextBox 追蹤日         
-                TextBox txtTRACEDATES = (TextBox)row.FindControl("追蹤日");
-                string stringTRACEDATES = txtTRACEDATES.Text.Trim();
+                //TextBox txtTRACEDATES = (TextBox)row.FindControl("追蹤日");
+                //string stringTRACEDATES = txtTRACEDATES.Text.Trim();
+                RadDatePicker RadDatePickerTRACEDATES = (RadDatePicker)row.FindControl("RadDatePicker1");
+                string stringTRACEDATES = RadDatePickerTRACEDATES.SelectedDate.Value.ToString("yyyy/MM/dd");
 
                 UPDATE_TB_COMPANY_PROJECTS_FIELDS(
                         ID
@@ -654,8 +657,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
-   
 
+   
     #endregion
 
     #region BUTTON

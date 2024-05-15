@@ -118,7 +118,8 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>'  Style="word-break: break-all; white-space: pre-line; max-width: 100px;"></asp:TextBox>
+                                                <%--<asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>'  Style="word-break: break-all; white-space: pre-line; max-width: 100px;"></asp:TextBox>--%>
+                                                <telerik:RadDatePicker ID="RadDatePicker1" SelectedDate='<%# Bind("TRACEDATES") %>' runat="server"  Width="120px"></telerik:RadDatePicker>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
