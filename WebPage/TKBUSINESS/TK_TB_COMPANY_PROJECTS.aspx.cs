@@ -405,7 +405,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
                 string newTextValue = txtNewField.Text;
 
-                string MID = ID;              
+                string MID = ID;
                 string COMMETNS = newTextValue;
 
                 ADD_TB_COMPANY_PROJECTS_DETAILS(MID, NAMES, COMMETNS);
@@ -416,6 +416,31 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
 
 
+            }
+        }
+        else if (e.CommandName == "Grid1Button2")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                GridViewRow row = Grid1.Rows[rowIndex];
+                // 獲取相應的ID
+                Label LabelID = (Label)row.FindControl("ID");
+                string ID = LabelID.Text;
+                // 獲取TextBox的值                 
+                TextBox txt專案名稱 = (TextBox)row.FindControl("專案名稱");
+                string string專案名稱 = txt專案名稱.Text.Trim();
+                //DropDownList的值
+                DropDownList DropDownListDEPNAMES = (DropDownList)row.FindControl("DropDownListDEPNAMES");
+                string stringDEPNAMES = DropDownListDEPNAMES.Text.Trim();
+
+
+                MsgBox("成功 \r\n" + ID + " > " + string專案名稱+">"+ stringDEPNAMES, this.Page, this);
             }
         }
     }
