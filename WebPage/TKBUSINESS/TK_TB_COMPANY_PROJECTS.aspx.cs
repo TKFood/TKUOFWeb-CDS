@@ -126,7 +126,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                                     SELECT ' ' +[TB_COMPANY_PROJECTS_DETAILS] .[COMMENTS]+CHAR(13)
                                     FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
                                     WHERE TB_COMPANY_PROJECTS_DETAILS.[MID] = TB_COMPANY_PROJECTS.[ID]
-                                    FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS AllCOMMETNS
+                                    FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS AllCOMMENTS
 
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE [ISCLOSED]='N'
@@ -236,7 +236,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                     [MID]
                     ,[CREATEDATES]
                     ,[NAMES]
-                    ,[COMMETNS]
+                    ,[COMMENTS]
                     )
                     VALUES
                     (
@@ -262,8 +262,14 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         string cmdTxt = @"   ";
         cmdTxt = @"
-                     UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
-                    SET [COMMENTS]=@COMMENTS,[COMMENTSDATES]=GETDATE()
+                    UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+                    SET [COMMENTS]=STUFF((
+                                    SELECT CHAR(13) + [COMMENTS]
+                                    FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
+                                    WHERE TB_COMPANY_PROJECTS_DETAILS.[MID] = @ID
+                                    ORDER BY TB_COMPANY_PROJECTS_DETAILS.ID
+                                    FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') 
+                    ,[COMMENTSDATES]=GETDATE()
                     WHERE ID=@ID
                         ";
 
