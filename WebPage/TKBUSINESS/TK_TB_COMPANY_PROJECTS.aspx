@@ -108,7 +108,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="需求單位預計上市時間" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="需求單位預計上市時間" runat="server" Text='<%# Bind("SALEDATES") %>' Style="word-break: break-all; white-space: pre-line;max-width: 100px;"></asp:TextBox>
+                                                <asp:TextBox ID="需求單位預計上市時間" runat="server" Text='<%# Bind("SALEDATES") %>' Style="word-break: break-all; white-space: pre-line; max-width: 100px;"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案進度" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -125,7 +125,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>' Style="word-break: break-all; white-space: pre-line;max-width: 100px;"></asp:TextBox>
+                                                <asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>' Style="word-break: break-all; white-space: pre-line; max-width: 100px;"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
@@ -137,7 +137,11 @@
                                         <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('新增回覆 確定？');" />
+                                                <!-- 上空行 -->
+                                                <div style="margin-top: 20px;"></div>
                                                 <asp:Button ID="Grid1Button2" runat="server" Text="修改專案" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('修改專案 確定？');" />
+                                                <!-- 下空行 -->
+                                                <div style="margin-bottom: 20px;"></div>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
