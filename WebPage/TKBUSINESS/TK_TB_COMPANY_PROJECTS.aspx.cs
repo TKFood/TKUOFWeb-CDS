@@ -34,7 +34,14 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         if (!IsPostBack)
         {
             BindDropDownListISCLOSE();
-         
+
+            BindDropDownListADDISCLOSED();
+            BindDropDownListADDKINDS();
+            BindDropDownListADDDEPNAMES();
+            BindDropDownListADDPRODUCTAPPLYS();
+            BindDropDownListADDPACKAPPLYS();
+            BindDropDownListADDSTATUS();
+
             BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
         }
         else
@@ -82,7 +89,220 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         }
     }
-   
+
+    public void BindDropDownListADDISCLOSED()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='ISCLOSED'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDISCLOSED.DataSource = dt;
+            DropDownListADDISCLOSED.DataTextField = "NAMES";
+            DropDownListADDISCLOSED.DataValueField = "NAMES";
+            DropDownListADDISCLOSED.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    public void BindDropDownListADDKINDS()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='KINDS'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDKINDS.DataSource = dt;
+            DropDownListADDKINDS.DataTextField = "NAMES";
+            DropDownListADDKINDS.DataValueField = "NAMES";
+            DropDownListADDKINDS.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+    }
+    public void BindDropDownListADDDEPNAMES()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='DEPNAMES'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDDEPNAMES.DataSource = dt;
+            DropDownListADDDEPNAMES.DataTextField = "NAMES";
+            DropDownListADDDEPNAMES.DataValueField = "NAMES";
+            DropDownListADDDEPNAMES.DataBind();
+
+        }
+        else
+        {
+
+        }
+       
+
+    }
+    public void BindDropDownListADDPRODUCTAPPLYS()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='PRODUCTAPPLYS'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDPRODUCTAPPLYS.DataSource = dt;
+            DropDownListADDPRODUCTAPPLYS.DataTextField = "NAMES";
+            DropDownListADDPRODUCTAPPLYS.DataValueField = "NAMES";
+            DropDownListADDPRODUCTAPPLYS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    public void BindDropDownListADDPACKAPPLYS()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='PACKAPPLYS'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDPACKAPPLYS.DataSource = dt;
+            DropDownListADDPACKAPPLYS.DataTextField = "NAMES";
+            DropDownListADDPACKAPPLYS.DataValueField = "NAMES";
+            DropDownListADDPACKAPPLYS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    public void BindDropDownListADDSTATUS()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='STATUS'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDSTATUS.DataSource = dt;
+            DropDownListADDSTATUS.DataTextField = "NAMES";
+            DropDownListADDSTATUS.DataValueField = "NAMES";
+            DropDownListADDSTATUS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
 
     private void BindGrid(string DropDownListISCLOSE)
     {

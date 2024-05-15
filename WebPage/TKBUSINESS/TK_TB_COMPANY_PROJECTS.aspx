@@ -16,14 +16,16 @@
             else
                 return true;
         }
-           
-      
+
+
     </script>
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
             <telerik:RadTab Text="專案進度">
+            </telerik:RadTab>
+            <telerik:RadTab Text="專案新增">
             </telerik:RadTab>
             <telerik:RadTab Text="資料">
             </telerik:RadTab>
@@ -119,7 +121,7 @@
                                         <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <%--<asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>'  Style="word-break: break-all; white-space: pre-line; max-width: 100px;"></asp:TextBox>--%>
-                                                <telerik:RadDatePicker ID="RadDatePicker1" SelectedDate='<%# Bind("TRACEDATES") %>' runat="server"  Width="120px"></telerik:RadDatePicker>
+                                                <telerik:RadDatePicker ID="RadDatePicker1" SelectedDate='<%# Bind("TRACEDATES") %>' runat="server" Width="120px"></telerik:RadDatePicker>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
@@ -157,6 +159,106 @@
 
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label1" runat="server" Text="專案新增"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD"></td>
+                    </tr>
+                      <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label12" runat="server" Text="是否結案"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                             <asp:DropDownList ID="DropDownListADDISCLOSED" runat="server" Width="50%"></asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label2" runat="server" Text="專案編號"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox1" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="專案屬性"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:DropDownList ID="DropDownListADDKINDS" runat="server" Width="50%"></asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label4" runat="server" Text="專案名稱"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox2" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label5" runat="server" Text="需求單位"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                             <asp:DropDownList ID="DropDownListADDDEPNAMES" runat="server" Width="50%"></asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label6" runat="server" Text="產品開發申請書"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:DropDownList ID="DropDownListADDPRODUCTAPPLYS" runat="server" Width="50%"></asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label7" runat="server" Text="包材暨包裝設計及變更申請書"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:DropDownList ID="DropDownListADDPACKAPPLYS" runat="server" Width="50%"></asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label8" runat="server" Text="需求單位預計上市時間"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox3" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label9" runat="server" Text="專案進度"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:DropDownList ID="DropDownListADDSTATUS" runat="server" Width="50%"></asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label10" runat="server" Text="回饋進度與內容"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox4" runat="server" TextMode="MultiLine" Rows="10" Text="" Width="50%" Style="height: 100%;"></asp:TextBox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label11" runat="server" Text="追蹤日"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="50%"></telerik:RadDatePicker>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView3" runat="server">
+            <div id="tabs-3">
             </div>
         </telerik:RadPageView>
 
