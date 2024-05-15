@@ -454,12 +454,16 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 string MID = ID;
                 string COMMETNS = newTextValue;
 
-                ADD_TB_COMPANY_PROJECTS_DETAILS(MID, NAMES, COMMETNS);
-                UPDATE_TB_COMPANY_PROJECTS(MID, NAMES, COMMETNS);
+                if(!string.IsNullOrEmpty(newTextValue))
+                {
+                    ADD_TB_COMPANY_PROJECTS_DETAILS(MID, NAMES, COMMETNS);
+                    UPDATE_TB_COMPANY_PROJECTS(MID, NAMES, COMMETNS);
 
-                MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
+                    MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
 
-                BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
+                    BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
+                }
+                
 
 
             }
