@@ -201,6 +201,186 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 }
             }
         }
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList DropDownListDEPNAMES = (DropDownList)e.Row.FindControl("DropDownListDEPNAMES");
+
+            if (DropDownListDEPNAMES != null)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("NAMES", typeof(String));
+
+                string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+                Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+                string cmdTxt = @" 
+                       SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='DEPNAMES' 
+                        ORDER BY [VALUE]
+                        ";
+
+                dt.Load(m_db.ExecuteReader(cmdTxt));
+
+                // 在這裡設置DropDownListKINDS的資料來源和其他屬性
+                if (dt.Rows.Count > 0)
+                {
+                    DropDownListDEPNAMES.DataSource = dt;
+                    DropDownListDEPNAMES.DataTextField = "NAMES";
+                    DropDownListDEPNAMES.DataValueField = "NAMES";
+                    DropDownListDEPNAMES.DataBind();
+
+                    // 獲取該列對應的資料行中的值
+                    DataRowView rowView = (DataRowView)e.Row.DataItem;
+                    string defaultValue = rowView["DEPNAMES"].ToString(); // 請替換YourDataField為您的資料行名稱
+
+                    // 設定DropDownList的預設值
+                    if (!string.IsNullOrEmpty(defaultValue))
+                    {
+                        DropDownListDEPNAMES.SelectedValue = defaultValue;
+                    }
+                }
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DropDownList DropDownListPRODUCTAPPLYS = (DropDownList)e.Row.FindControl("DropDownListPRODUCTAPPLYS");
+
+                if (DropDownListPRODUCTAPPLYS != null)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("NAMES", typeof(String));
+
+                    string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+                    Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+                    string cmdTxt = @" 
+                       SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='PRODUCTAPPLYS' 
+                        ORDER BY [VALUE]
+                        ";
+
+                    dt.Load(m_db.ExecuteReader(cmdTxt));
+
+                    // 在這裡設置DropDownListKINDS的資料來源和其他屬性
+                    if (dt.Rows.Count > 0)
+                    {
+                        DropDownListPRODUCTAPPLYS.DataSource = dt;
+                        DropDownListPRODUCTAPPLYS.DataTextField = "NAMES";
+                        DropDownListPRODUCTAPPLYS.DataValueField = "NAMES";
+                        DropDownListPRODUCTAPPLYS.DataBind();
+
+                        // 獲取該列對應的資料行中的值
+                        DataRowView rowView = (DataRowView)e.Row.DataItem;
+                        string defaultValue = rowView["PRODUCTAPPLYS"].ToString(); // 請替換YourDataField為您的資料行名稱
+
+                        // 設定DropDownList的預設值
+                        if (!string.IsNullOrEmpty(defaultValue))
+                        {
+                            DropDownListPRODUCTAPPLYS.SelectedValue = defaultValue;
+                        }
+                    }
+                }
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DropDownList DropDownListPACKAPPLYS = (DropDownList)e.Row.FindControl("DropDownListPACKAPPLYS");
+
+                if (DropDownListPACKAPPLYS != null)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("NAMES", typeof(String));
+
+                    string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+                    Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+                    string cmdTxt = @" 
+                       SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='PACKAPPLYS' 
+                        ORDER BY [VALUE]
+                        ";
+
+                    dt.Load(m_db.ExecuteReader(cmdTxt));
+
+                    // 在這裡設置DropDownListKINDS的資料來源和其他屬性
+                    if (dt.Rows.Count > 0)
+                    {
+                        DropDownListPACKAPPLYS.DataSource = dt;
+                        DropDownListPACKAPPLYS.DataTextField = "NAMES";
+                        DropDownListPACKAPPLYS.DataValueField = "NAMES";
+                        DropDownListPACKAPPLYS.DataBind();
+
+                        // 獲取該列對應的資料行中的值
+                        DataRowView rowView = (DataRowView)e.Row.DataItem;
+                        string defaultValue = rowView["PACKAPPLYS"].ToString(); // 請替換YourDataField為您的資料行名稱
+
+                        // 設定DropDownList的預設值
+                        if (!string.IsNullOrEmpty(defaultValue))
+                        {
+                            DropDownListPACKAPPLYS.SelectedValue = defaultValue;
+                        }
+                    }
+                }
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DropDownList DropDownListSTATUS = (DropDownList)e.Row.FindControl("DropDownListSTATUS");
+
+                if (DropDownListSTATUS != null)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("NAMES", typeof(String));
+
+                    string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+                    Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+                    string cmdTxt = @" 
+                       SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='STATUS' 
+                        ORDER BY [VALUE]
+                        ";
+
+                    dt.Load(m_db.ExecuteReader(cmdTxt));
+
+                    // 在這裡設置DropDownListKINDS的資料來源和其他屬性
+                    if (dt.Rows.Count > 0)
+                    {
+                        DropDownListSTATUS.DataSource = dt;
+                        DropDownListSTATUS.DataTextField = "NAMES";
+                        DropDownListSTATUS.DataValueField = "NAMES";
+                        DropDownListSTATUS.DataBind();
+
+                        // 獲取該列對應的資料行中的值
+                        DataRowView rowView = (DataRowView)e.Row.DataItem;
+                        string defaultValue = rowView["STATUS"].ToString(); // 請替換YourDataField為您的資料行名稱
+
+                        // 設定DropDownList的預設值
+                        if (!string.IsNullOrEmpty(defaultValue))
+                        {
+                            DropDownListSTATUS.SelectedValue = defaultValue;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)

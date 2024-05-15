@@ -22,7 +22,7 @@
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
             <telerik:RadTab Text="專案進度">
-            </telerik:RadTab>           
+            </telerik:RadTab>
             <telerik:RadTab Text="資料">
             </telerik:RadTab>
         </Tabs>
@@ -70,7 +70,7 @@
                                         <asp:TemplateField HeaderText="專案屬性" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <%--<asp:Label ID="專案屬性" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
-                                                <asp:DropDownList ID="DropDownListKINDS" runat="server" Style="width:100%;word-break: break-all;"></asp:DropDownList>
+                                                <asp:DropDownList ID="DropDownListKINDS" runat="server" Style="width: 100%; word-break: break-all;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -80,17 +80,20 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="需求單位" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="需求單位" runat="server" Text='<%# Bind("DEPNAMES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <%--<asp:Label ID="需求單位" runat="server" Text='<%# Bind("DEPNAMES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                <asp:DropDownList ID="DropDownListDEPNAMES" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="產品開發申請書" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="產品開發申請書" runat="server" Text='<%# Bind("PRODUCTAPPLYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <%--<asp:Label ID="產品開發申請書" runat="server" Text='<%# Bind("PRODUCTAPPLYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                <asp:DropDownList ID="DropDownListPRODUCTAPPLYS" runat="server" Style="width: 100%; word-break: break-all;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="包材暨包裝設計及變更申請書" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="包材暨包裝設計及變更申請書" runat="server" Text='<%# Bind("PACKAPPLYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <%--<asp:Label ID="包材暨包裝設計及變更申請書" runat="server" Text='<%# Bind("PACKAPPLYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                <asp:DropDownList ID="DropDownListPACKAPPLYS" runat="server" Style="width: 100%; word-break: break-all;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="需求單位預計上市時間" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -100,7 +103,9 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案進度" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="專案進度" runat="server" Text='<%# Bind("STATUS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <%--<asp:Label ID="專案進度" runat="server" Text='<%# Bind("STATUS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                <asp:DropDownList ID="DropDownListSTATUS" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
+
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="回饋進度與內容" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
