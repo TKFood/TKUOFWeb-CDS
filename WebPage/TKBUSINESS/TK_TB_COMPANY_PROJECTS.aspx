@@ -16,6 +16,16 @@
             else
                 return true;
         }
+        function formatDate(input) {
+            var regex = /^(\d{4})(\/)(\d{2})(\/)(\d{2})$/;
+            var value = input.value.replace(/[^0-9\/]/g, '');
+
+            if (regex.test(value)) {
+                input.value = value;
+            } else {
+                input.value = '';
+            }
+        }
     </script>
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
@@ -75,7 +85,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="專案名稱" runat="server" Text='<%# Bind("PROJECTNAMES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <asp:TextBox ID="專案名稱" runat="server" Text='<%# Bind("PROJECTNAMES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="需求單位" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -84,7 +94,7 @@
                                                 <asp:DropDownList ID="DropDownListDEPNAMES" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="產品開發申請書" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="產品開發申請書" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <%--<asp:Label ID="產品開發申請書" runat="server" Text='<%# Bind("PRODUCTAPPLYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
                                                 <asp:DropDownList ID="DropDownListPRODUCTAPPLYS" runat="server" Style="width: 100%; word-break: break-all;"></asp:DropDownList>
@@ -96,9 +106,9 @@
                                                 <asp:DropDownList ID="DropDownListPACKAPPLYS" runat="server" Style="width: 100%; word-break: break-all;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="需求單位預計上市時間" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="需求單位預計上市時間" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="需求單位預計上市時間" runat="server" Text='<%# Bind("SALEDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <asp:TextBox ID="需求單位預計上市時間" runat="server" Text='<%# Bind("SALEDATES") %>' Style="word-break: break-all; white-space: pre-line;max-width: 100px;"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案進度" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -108,30 +118,30 @@
 
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="回饋進度與內容" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="回饋進度與內容" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="回饋進度與內容" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>' Style="word-break: break-all; white-space: pre-line;max-width: 100px;"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtNewField" runat="server" Text='' TextMode="MultiLine" Rows="3" Width="100%"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
                                                 <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('新增回覆 確定？');" />
                                                 <asp:Button ID="Grid1Button2" runat="server" Text="修改專案" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('修改專案 確定？');" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="ID" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="ID" ItemStyle-Width="3%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
