@@ -16,16 +16,8 @@
             else
                 return true;
         }
-        function formatDate(input) {
-            var regex = /^(\d{4})(\/)(\d{2})(\/)(\d{2})$/;
-            var value = input.value.replace(/[^0-9\/]/g, '');
-
-            if (regex.test(value)) {
-                input.value = value;
-            } else {
-                input.value = '';
-            }
-        }
+           
+      
     </script>
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
@@ -70,7 +62,7 @@
                                         <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <%--<asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSED") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
-                                                  <asp:DropDownList ID="DropDownListISCLOSED" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
+                                                <asp:DropDownList ID="DropDownListISCLOSED" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案編號" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -126,7 +118,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>' Style="word-break: break-all; white-space: pre-line; max-width: 100px;"></asp:TextBox>
+                                                <asp:TextBox ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>'  Style="word-break: break-all; white-space: pre-line; max-width: 100px;"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 

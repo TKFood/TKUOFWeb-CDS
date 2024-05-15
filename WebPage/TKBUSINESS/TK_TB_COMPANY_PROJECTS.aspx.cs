@@ -130,7 +130,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                                     FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS AllCOMMENTS
 
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
-                            WHERE [ISCLOSED]='N'
+                            WHERE 1=1
                             {0}
 
                             ORDER BY [NO]
@@ -654,6 +654,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
+   
 
     #endregion
 
