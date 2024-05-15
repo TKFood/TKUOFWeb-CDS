@@ -108,7 +108,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         }
 
         cmdTxt.AppendFormat(@" 
-                           SELECT 
+                            SELECT 
                             [ID]
                             ,[NO]
                             ,[ISCLOSED]
@@ -119,9 +119,15 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                             ,[PACKAPPLYS]
                             ,[SALEDATES]
                             ,[STATUS]
-                            ,[COMMENTS]
+                            ,[COMMENTS]   
                             ,CONVERT(NVARCHAR,[COMMENTSDATES],111) COMMENTSDATES
                             ,CONVERT(NVARCHAR,[TRACEDATES],111) TRACEDATES
+                            ,STUFF((
+                                    SELECT ' ' +[TB_COMPANY_PROJECTS_DETAILS] .[COMMENTS]+CHAR(13)
+                                    FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
+                                    WHERE TB_COMPANY_PROJECTS_DETAILS.[MID] = TB_COMPANY_PROJECTS.[ID]
+                                    FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS AllCOMMETNS
+
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE [ISCLOSED]='N'
                             {0}
@@ -244,7 +250,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@NAMES", NAMES);
-        m_db.AddParameter("@COMMETNS", NAMES + ':' + Environment.NewLine + DateTime.Now.ToString("yyyy/MM/dd")+ Environment.NewLine +COMMETNS);
+        m_db.AddParameter("@COMMETNS", DateTime.Now.ToString("yyyy/MM/dd")+ Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMETNS);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
@@ -264,7 +270,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
 
         m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@COMMENTS", NAMES + ':' + Environment.NewLine + DateTime.Now.ToString("yyyy/MM/dd") + Environment.NewLine + COMMETNS);
+        m_db.AddParameter("@COMMENTS", DateTime.Now.ToString("yyyy/MM/dd") + Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMETNS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);
