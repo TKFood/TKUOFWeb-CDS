@@ -33,7 +33,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         if (!IsPostBack)
         {
             BindDropDownListISCLOSE();
-
+         
             BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
         }
         else
@@ -81,6 +81,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         }
     }
+   
 
     private void BindGrid(string DropDownListISCLOSE)
     {
@@ -154,8 +155,52 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         //BindGrid("");
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
-    {   
-       
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList DropDownListKINDS = (DropDownList)e.Row.FindControl("DropDownListKINDS");
+
+            if (DropDownListKINDS != null)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("NAMES", typeof(String));
+               
+                string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+                Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+                string cmdTxt = @" 
+                       SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='KINDS' 
+                        ORDER BY [VALUE]
+                        ";
+
+                dt.Load(m_db.ExecuteReader(cmdTxt));
+              
+                // 在這裡設置DropDownListKINDS的資料來源和其他屬性
+                if (dt.Rows.Count > 0)
+                {
+                    DropDownListKINDS.DataSource = dt;
+                    DropDownListKINDS.DataTextField = "NAMES";
+                    DropDownListKINDS.DataValueField = "NAMES";
+                    DropDownListKINDS.DataBind();
+
+                    // 獲取該列對應的資料行中的值
+                    DataRowView rowView = (DataRowView)e.Row.DataItem;
+                    string defaultValue = rowView["KINDS"].ToString(); // 請替換YourDataField為您的資料行名稱
+
+                    // 設定DropDownList的預設值
+                    if (!string.IsNullOrEmpty(defaultValue))
+                    {
+                        DropDownListKINDS.SelectedValue = defaultValue;
+                    }
+                }
+            }
+        }
     }
 
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)

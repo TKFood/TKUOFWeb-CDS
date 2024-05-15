@@ -21,8 +21,8 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
-            <telerik:RadTab Text="報表">
-            </telerik:RadTab>
+            <telerik:RadTab Text="專案進度">
+            </telerik:RadTab>           
             <telerik:RadTab Text="資料">
             </telerik:RadTab>
         </Tabs>
@@ -69,7 +69,8 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案屬性" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="專案屬性" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                <%--<asp:Label ID="專案屬性" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                <asp:DropDownList ID="DropDownListKINDS" runat="server" Style="width:100%;word-break: break-all;"></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -87,7 +88,7 @@
                                                 <asp:Label ID="產品開發申請書" runat="server" Text='<%# Bind("PRODUCTAPPLYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField  HeaderText="包材暨包裝設計及變更申請書"  ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">                                           
+                                        <asp:TemplateField HeaderText="包材暨包裝設計及變更申請書" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="包材暨包裝設計及變更申請書" runat="server" Text='<%# Bind("PACKAPPLYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                             </ItemTemplate>
@@ -120,9 +121,10 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('新增回覆 確定？');" />
+                                                <asp:Button ID="Grid1Button2" runat="server" Text="修改專案" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('修改專案 確定？');" />
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                       
+                                        </asp:TemplateField>
 
                                         <asp:TemplateField HeaderText="ID" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
@@ -141,9 +143,10 @@
         </telerik:RadPageView>
 
         <telerik:RadPageView ID="RadPageView2" runat="server">
-            <div id="tabs-3">
+            <div id="tabs-2">
             </div>
         </telerik:RadPageView>
+
     </telerik:RadMultiPage>​
 </asp:Content>
 
