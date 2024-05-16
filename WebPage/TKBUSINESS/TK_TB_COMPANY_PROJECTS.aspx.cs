@@ -768,13 +768,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     }
 
-    public void MsgBox(String ex, Page pg, Object obj)
-    {
-        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
-        Type cstype = obj.GetType();
-        ClientScriptManager cs = pg.ClientScript;
-        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
-    }
+   
 
     public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string NAMES, string COMMETNS)
     {
@@ -881,8 +875,14 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        Type cstype = obj.GetType();
+        ClientScriptManager cs = pg.ClientScript;
+        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
 
-   
     #endregion
 
     #region BUTTON
@@ -901,6 +901,11 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
     protected void btn1_Click(object sender, EventArgs e)
     {
+        BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
+    }
+    protected void btn2_Click(object sender, EventArgs e)
+    {
+
         BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
     }
 

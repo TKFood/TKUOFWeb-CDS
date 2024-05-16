@@ -5,6 +5,21 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <style>
+        .custom-button {
+            width: 150px; /* 设置按钮宽度 */
+            height: 40px; /* 设置按钮高度 */
+            font-size: 20px; /* 设置按钮字体大小 */
+            color: #ffffff; /* 设置按钮文本颜色 */
+            background-color: #007bff; /* 设置按钮背景颜色 */
+            border: none; /* 去除按钮边框 */
+            border-radius: 5px; /* 设置按钮圆角 */
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3; /* 设置按钮鼠标悬停时的背景颜色 */
+        }
+    </style>
     <script>          
         $(function () {
 
@@ -252,6 +267,14 @@
                         </td>
                         <td class="PopTableRightTD">
                             <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="50%"></telerik:RadDatePicker>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label13" runat="server" Text=""></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:Button ID="Button2" runat="server" Text="新增專案" OnClick="btn2_Click" meta:resourcekey="btn2_Resource1"  CssClass="custom-button"/>
                         </td>
                     </tr>
                 </table>
