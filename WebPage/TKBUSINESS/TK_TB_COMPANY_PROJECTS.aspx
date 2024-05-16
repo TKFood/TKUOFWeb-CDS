@@ -20,7 +20,7 @@
             background-color: #0056b3; /* 设置按钮鼠标悬停时的背景颜色 */
         }
     </style>
-    <script>          
+    <script>
         $(function () {
 
         });
@@ -266,7 +266,7 @@
                             <asp:Label ID="Label11" runat="server" Text="追蹤日"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <telerik:RadDatePicker ID="RadDatePicker1" runat="server" Width="50%"></telerik:RadDatePicker>
+                            <telerik:RadDatePicker ID="RadDatePicker1"  runat="server" Width="50%"></telerik:RadDatePicker>
                         </td>
                     </tr>
                      <tr>

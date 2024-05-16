@@ -29,7 +29,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
     protected void Page_Load(object sender, EventArgs e)
     {
         ACCOUNTS = Current.Account;
-        NAMES = Current.User.Name;      
+        NAMES = Current.User.Name;
+        RadDatePicker1.SelectedDate = DateTime.Now;
 
         if (!IsPostBack)
         {
@@ -875,6 +876,74 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
+    public void INSERT_TB_COMPANY_PROJECTS_FIELDS(
+        string NO
+        ,string ISCLOSED
+        , string KINDS
+        , string PROJECTNAMES
+        , string DEPNAMES
+        , string PRODUCTAPPLYS
+        , string PACKAPPLYS
+        , string SALEDATES
+        , string STATUS
+        , string TRACEDATES
+        , string COMMENTS
+        , string COMMENTSDATES
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+        cmdTxt = @"                  
+                    INSERT INTO [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+                    (
+                    [NO]
+                    ,[ISCLOSED]
+                    ,[KINDS]
+                    ,[PROJECTNAMES]
+                    ,[DEPNAMES]
+                    ,[PRODUCTAPPLYS]
+                    ,[PACKAPPLYS]
+                    ,[SALEDATES]
+                    ,[STATUS]                   
+                    ,[TRACEDATES]
+                    ,[COMMENTS]
+                    ,[COMMENTSDATES]
+                    )
+                    VALUES
+                    (
+                    @NO
+                    ,@ISCLOSED
+                    ,@KINDS
+                    ,@PROJECTNAMES
+                    ,@DEPNAMES
+                    ,@PRODUCTAPPLYS
+                    ,@PACKAPPLYS
+                    ,@SALEDATES
+                    ,@STATUS                  
+                    ,@TRACEDATES
+                    ,@COMMENTS
+                    ,@COMMENTSDATES
+                    )
+                        ";
+        m_db.AddParameter("@NO", NO);
+        m_db.AddParameter("@ISCLOSED", ISCLOSED);
+        m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@PROJECTNAMES", PROJECTNAMES);
+        m_db.AddParameter("@DEPNAMES", DEPNAMES);
+        m_db.AddParameter("@PRODUCTAPPLYS", PRODUCTAPPLYS);
+        m_db.AddParameter("@PACKAPPLYS", PACKAPPLYS);
+        m_db.AddParameter("@SALEDATES", SALEDATES);
+        m_db.AddParameter("@STATUS", STATUS);
+        m_db.AddParameter("@TRACEDATES", TRACEDATES);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@COMMENTSDATES", COMMENTSDATES);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
@@ -905,8 +974,37 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
     }
     protected void btn2_Click(object sender, EventArgs e)
     {
+        string NO = TextBox1.Text.ToString();
+        string ISCLOSED = DropDownListADDISCLOSED.SelectedValue.ToString();
+        string KINDS = DropDownListADDKINDS.SelectedValue.ToString();
+        string PROJECTNAMES = TextBox2.Text.ToString();
+        string DEPNAMES = DropDownListADDDEPNAMES.SelectedValue.ToString();
+        string PRODUCTAPPLYS = DropDownListADDPRODUCTAPPLYS.SelectedValue.ToString();
+        string PACKAPPLYS = DropDownListADDPACKAPPLYS.SelectedValue.ToString();
+        string SALEDATES = TextBox3.Text.ToString();
+        string STATUS = DropDownListADDSTATUS.SelectedValue.ToString();
+        string TRACEDATES = RadDatePicker1.SelectedDate.Value.ToString("yyyy/MM/dd");
+        string COMMENTS = TextBox4.Text.ToString();
+        string COMMENTSDATES = DateTime.Now.ToString("yyyy/MM/dd");
+
+    INSERT_TB_COMPANY_PROJECTS_FIELDS(
+            NO
+        ,ISCLOSED
+        , KINDS
+        , PROJECTNAMES
+        , DEPNAMES
+        , PRODUCTAPPLYS
+        , PACKAPPLYS
+        , SALEDATES
+        , STATUS
+        , TRACEDATES
+        , COMMENTS
+        , COMMENTSDATES
+        );
 
         BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
+
+        MsgBox("完成 \r\n" + NO, this.Page, this);
     }
 
 
