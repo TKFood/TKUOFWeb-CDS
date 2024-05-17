@@ -771,7 +771,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
    
 
-    public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string NAMES, string COMMETNS)
+    public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string NAMES, string COMMENTS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -792,19 +792,19 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                     @MID
                     ,GETDATE()
                     ,@NAMES
-                    ,@COMMETNS
+                    ,@COMMENTS
                     )
                         ";
 
 
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@NAMES", NAMES);
-        m_db.AddParameter("@COMMETNS", DateTime.Now.ToString("yyyy/MM/dd")+ Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMETNS);
+        m_db.AddParameter("@COMMENTS", DateTime.Now.ToString("yyyy/MM/dd")+ Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMENTS);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
-    public void UPDATE_TB_COMPANY_PROJECTS(string ID, string NAMES, string COMMETNS)
+    public void UPDATE_TB_COMPANY_PROJECTS(string ID, string NAMES, string COMMENTS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -825,7 +825,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
 
         m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@COMMENTS", DateTime.Now.ToString("yyyy/MM/dd") + Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMETNS);
+        m_db.AddParameter("@COMMENTS", DateTime.Now.ToString("yyyy/MM/dd") + Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMENTS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);
@@ -944,6 +944,32 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
+    public string FIND_MAX_ID(string NO)
+    {
+        DataTable dt = new DataTable();      
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        StringBuilder SQL = new StringBuilder();
+
+        SQL.AppendFormat(@"
+                        SELECT MAX([ID]) ID  FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+                        WHERE NO='{0}'
+                        ", NO);
+
+
+        dt.Load(m_db.ExecuteReader(SQL.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt.Rows[0]["ID"].ToString();
+
+        }
+        else
+        {
+            return null;
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
@@ -1001,6 +1027,13 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         , COMMENTS
         , COMMENTSDATES
         );
+
+        string MAXID = FIND_MAX_ID(NO);
+        if(!string.IsNullOrEmpty(MAXID))
+        {
+            ADD_TB_COMPANY_PROJECTS_DETAILS(MAXID, NAMES, COMMENTS);
+            UPDATE_TB_COMPANY_PROJECTS(MAXID, NAMES, COMMENTS);
+        }
 
         BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
 
