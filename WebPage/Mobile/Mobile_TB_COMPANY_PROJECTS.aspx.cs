@@ -96,7 +96,7 @@ public partial class CDS_WebPage_Mobile_TB_COMPANY_PROJECTS : Ede.Uof.Utility.Pa
 
         if (!string.IsNullOrEmpty(TextBox_PROJECTNAMES.Text))
         {
-            Query1.AppendFormat(@" AND ID IN (SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [PROJECTNAMES] LIKE '%{0}%') ", TextBox_PROJECTNAMES.Text);
+            Query1.AppendFormat(@" AND ID IN (SELECT  [ID] FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS] WHERE [PROJECTNAMES] LIKE '%{0}%') ", TextBox_PROJECTNAMES.Text);
         }
         else
         {
@@ -110,7 +110,7 @@ public partial class CDS_WebPage_Mobile_TB_COMPANY_PROJECTS : Ede.Uof.Utility.Pa
             }
             else
             {
-                Query2.AppendFormat(@" AND ID IN ( SELECT [ID] FROM [TKRESEARCH].[dbo].[TBDEV_RECORDS] WHERE [ISCLOSE] LIKE '%{0}%' )", DropDownListISCLOSE.SelectedValue.ToString());
+                Query2.AppendFormat(@" AND ID IN ( SELECT  [ID] FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS] WHERE [ISCLOSED] LIKE '%{0}%' )", DropDownListISCLOSE.SelectedValue.ToString());
             }
 
         }
@@ -134,7 +134,7 @@ public partial class CDS_WebPage_Mobile_TB_COMPANY_PROJECTS : Ede.Uof.Utility.Pa
                             ,[STATUS]
                             ,[COMMENTS]
                             ,[COMMENTSDATES]
-                            ,[TRACEDATES]
+                            ,CONVERT(NVARCHAR,[TRACEDATES],111) AS 'TRACEDATES'
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE 1=1
                             {0}
