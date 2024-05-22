@@ -36,7 +36,10 @@
         <title>業務</title>
     </head>
     <body>
-        <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
+
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
         <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage">
             <Tabs>
                 <telerik:RadTab Text="交辨回覆" PageViewID="RadPageView1">
@@ -85,40 +88,40 @@
                                         <Columns>
                                             <asp:TemplateField HeaderText="專案編號" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="專案編號" runat="server" Text='<%# Bind("NO") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
+                                                    <asp:Label ID="專案編號" runat="server" Text='<%# Bind("NO") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="專案名稱" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="專案名稱" runat="server" Text='<%# Bind("PROJECTNAMES") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
+                                                    <asp:Label ID="專案名稱" runat="server" Text='<%# Bind("PROJECTNAMES") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="專案屬性" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="專案屬性" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
+                                                    <asp:Label ID="專案屬性" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="需求單位" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="需求單位" runat="server" Text='<%# Bind("DEPNAMES") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
+                                                    <asp:Label ID="需求單位" runat="server" Text='<%# Bind("DEPNAMES") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="需求單位預計上市時間" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="需求單位預計上市時間" runat="server" Text='<%# Bind("SALEDATES") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
+                                                    <asp:Label ID="需求單位預計上市時間" runat="server" Text='<%# Bind("SALEDATES") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="專案進度" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="專案進度" runat="server" Text='<%# Bind("STATUS") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
+                                                    <asp:Label ID="專案進度" runat="server" Text='<%# Bind("STATUS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="回饋進度與內容" ItemStyle-Width="15%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="回饋進度與內容" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
+                                                    <asp:Label ID="回饋進度與內容" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                         <%--   <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <%--   <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
                                                     <asp:Label ID="追蹤日" runat="server" Text='<%# Bind("TRACEDATES") %>' Style="word-break: break-all; white-space: pre-line" ></asp:Label>
                                                 </ItemTemplate>
@@ -149,6 +152,9 @@
                 </div>
             </telerik:RadPageView>
         </telerik:RadMultiPage>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        
     </body>
 </asp:Content>
 
