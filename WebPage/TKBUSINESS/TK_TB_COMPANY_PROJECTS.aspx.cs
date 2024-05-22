@@ -25,6 +25,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 {   
     string ACCOUNTS = null;
     string NAMES = null;
+    string FIRSTTIMES = "N";
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -34,6 +35,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         if (!IsPostBack)
         {
+            FIRSTTIMES = "Y";
             BindDropDownListISCLOSE();
 
             BindDropDownListADDISCLOSED();
@@ -47,7 +49,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         }
         else
         {
-
+            FIRSTTIMES = "N";
         }
 
 
@@ -369,6 +371,12 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         Grid1.DataSource = dt;
         Grid1.DataBind();
+
+        if(FIRSTTIMES.Equals("N"))
+        {
+            MsgBox("完成 \r\n", this.Page, this);
+        }
+       
     }
 
     protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
@@ -972,10 +980,13 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
     }
     public void MsgBox(String ex, Page pg, Object obj)
     {
-        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
-        Type cstype = obj.GetType();
-        ClientScriptManager cs = pg.ClientScript;
-        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        //Type cstype = obj.GetType();
+        //ClientScriptManager cs = pg.ClientScript;
+        //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
 
     #endregion
