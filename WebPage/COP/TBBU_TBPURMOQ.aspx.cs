@@ -169,6 +169,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button1")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -277,6 +279,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button2")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -356,6 +360,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button3")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -437,6 +443,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button4")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -518,6 +526,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button5")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -599,6 +609,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button6")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -680,6 +692,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button7")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
     public void OnBeforeExport7(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -760,6 +774,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button8")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
     public void OnBeforeExport8(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -840,6 +856,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button9")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -921,6 +939,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button10")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -1001,6 +1021,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button11")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -1081,6 +1103,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button12")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -1161,6 +1185,8 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         if (e.CommandName == "Button13")
         {
             SEARCHALL();
+
+            MsgBox("完成", this.Page, this);
         }
     }
 
@@ -1285,7 +1311,7 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
         ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
 
-        //   MsgBox(e.CommandArgument.ToString() + " 已更新", this.Page, this);
+        //MsgBox("完成", this.Page, this);
     }
     #endregion
 
