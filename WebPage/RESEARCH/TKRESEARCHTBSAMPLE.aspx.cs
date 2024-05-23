@@ -519,7 +519,13 @@ public partial class CDS_WebPage_COP_TKRESEARCHTBSAMPLE : Ede.Uof.Utility.Page.B
         }
 
     }
+    public void MsgBox(string ex, Page pg, object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
 
+        //MsgBox("完成", this.Page, this);
+    }
     #endregion
 
     #region BUTTON
