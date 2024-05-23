@@ -43,6 +43,23 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" Text="客戶代號/客戶名稱: "></asp:Label>
+                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>                           
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
+                                        meta:resourcekey="btn1Resource1" />
+                                </td>
+
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
                                 <td colspan="2" class="PopTableRightTD">
                                     <div style="overflow-x: auto; width: 100%">
                                         <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_RowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid2Resource1" OnPageIndexChanging="grid1_PageIndexChanging">

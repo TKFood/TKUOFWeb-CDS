@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Dynamic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -32,36 +33,52 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" 
-                        SELECT 
-                        [ID]
-                        ,[SERNO]
-                        ,[MA001]
-                        ,[MA002]
-                        ,[CONTACTPERSON]
-                        ,[TEL1]
-                        ,[TEL2]
-                        ,[ISPURATTCH]
-                        ,[ISCOPATTCH]
-                        ,[ISSHOWMONEYS]
-                        ,[ISINVOICES]
-                        ,[ISSHIPMARK]
-                        ,[LIMITDAYS]
-                        ,[PAYMENT]
-                        ,[SENDADDRESS]
-                        ,[EMAILS]
-                        ,REPLACE([COMMENT] ,char(10),'<br/>') AS [COMMENT] 
-                        FROM [TKBUSINESS].[dbo].[COPCONDTIONS]
-                        WHERE ISUSED='Y'
-                        ORDER BY SERNO
-                        ";
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        // 日期
+        if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox1.Text))
+        {            
+            QUERYS.AppendFormat(@" AND (MA001 LIKE '%{0}%' OR MA002 LIKE '%{0}%')", TextBox1.Text.Trim() );
+
+        }
+        else
+        {
+            QUERYS.AppendFormat(@" ");
+        }
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [ID]
+                            ,[SERNO]
+                            ,[MA001]
+                            ,[MA002]
+                            ,[CONTACTPERSON]
+                            ,[TEL1]
+                            ,[TEL2]
+                            ,[ISPURATTCH]
+                            ,[ISCOPATTCH]
+                            ,[ISSHOWMONEYS]
+                            ,[ISINVOICES]
+                            ,[ISSHIPMARK]
+                            ,[LIMITDAYS]
+                            ,[PAYMENT]
+                            ,[SENDADDRESS]
+                            ,[EMAILS]
+                            ,REPLACE([COMMENT] ,char(10),'<br/>') AS [COMMENT] 
+                            FROM [TKBUSINESS].[dbo].[COPCONDTIONS]
+                            WHERE ISUSED='Y'
+                            {0}
+
+                            ORDER BY SERNO
+                        ", QUERYS.ToString() );
+       
 
         //m_db.AddParameter("@SDATE", SDATE);
         //m_db.AddParameter("@EDATE", EDATE);
 
         DataTable dt = new DataTable();
 
-        dt.Load(m_db.ExecuteReader(cmdTxt));
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
         Grid1.DataSource = dt;
         Grid1.DataBind();
@@ -193,13 +210,14 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
 
     protected void btn1_Click(object sender, EventArgs e)
     {
-        BindGrid();
+       
         
     }
-    protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void Button1_Click(object sender, EventArgs e)
     {
-      
+        BindGrid();        
 
     }
+
     #endregion
 }
