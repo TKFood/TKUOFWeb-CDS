@@ -22,7 +22,7 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
         }
         else
         {
-            BindGrid();
+           
         }
     }
     #region FUNCTION
@@ -97,6 +97,21 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
 
     }
 
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Button1")
+        {
+            //MsgBox("Button1", this.Page, this);
+            BindGrid();
+
+            MsgBox("完成", this.Page, this);
+        }
+       
+
+    }
+
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -154,6 +169,11 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
             e.Datasource = dt;
         }
     }
+    public void MsgBox(string ex, Page pg, object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+    }
     #endregion
 
     #region BUTTON
@@ -173,8 +193,8 @@ public partial class CDS_WebPage_COP_TBBU_COPCONDTIONS : Ede.Uof.Utility.Page.Ba
 
     protected void btn1_Click(object sender, EventArgs e)
     {
-        //this.Session["SDATE"] = txtDate1.Text.Trim();
-        //this.Session["EDATE"] = txtDate2.Text.Trim();
+        BindGrid();
+        
     }
     protected void MyButtonClick(object sender, System.EventArgs e)
     {
