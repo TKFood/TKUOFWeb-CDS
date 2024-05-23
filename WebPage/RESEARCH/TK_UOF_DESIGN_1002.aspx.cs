@@ -464,13 +464,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
 
     }
 
-    public void MsgBox(String ex, Page pg, Object obj)
-    {
-        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
-        Type cstype = obj.GetType();
-        ClientScriptManager cs = pg.ClientScript;
-        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
-    }
+  
 
     public void UPDATE_TK_UOF_DESIGN_1002(string FIELDS1,string INPROCESSING ,string ISCLOSED)
     {
@@ -867,6 +861,13 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_DESIGN_1002 : Ede.Uof.Utility.P
         }
     }
 
+    public void MsgBox(string ex, Page pg, object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //MsgBox("完成", this.Page, this);
+    }
 
     #endregion
 
