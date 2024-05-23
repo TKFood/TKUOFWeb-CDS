@@ -487,10 +487,10 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_RESEARCH_1002 : Ede.Uof.Utility
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
-        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
-        Type cstype = obj.GetType();
-        ClientScriptManager cs = pg.ClientScript;
-        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //MsgBox("完成", this.Page, this);
     }
 
     public void UPDATE_TK_UOF_RESEARCH_1002(string RDF1002SN, string INPROCESSING ,string ISCLOSED)
