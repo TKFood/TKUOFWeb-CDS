@@ -1280,6 +1280,13 @@ public partial class CDS_WebPage_COP_TBBU_TBPURMOQ : Ede.Uof.Utility.Page.BasePa
 
     }
 
+    public void MsgBox(String ex, Page pg, Object obj)
+    {       
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //   MsgBox(e.CommandArgument.ToString() + " 已更新", this.Page, this);
+    }
     #endregion
 
     #region BUTTON
