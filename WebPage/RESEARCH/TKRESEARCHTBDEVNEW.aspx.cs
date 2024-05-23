@@ -365,6 +365,14 @@ public partial class CDS_WebPage_TKRESEARCHTBDEVNEW : Ede.Uof.Utility.Page.BaseP
             e.Datasource = dt;
         }
     }
+
+    public void MsgBox(string ex, Page pg, object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //MsgBox("完成", this.Page, this);
+    }
     #endregion
 
     #region BUTTON
