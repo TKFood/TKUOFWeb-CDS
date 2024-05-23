@@ -1901,10 +1901,13 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
-        string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
-        Type cstype = obj.GetType();
-        ClientScriptManager cs = pg.ClientScript;
-        cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        //Type cstype = obj.GetType();
+        //ClientScriptManager cs = pg.ClientScript;
+        //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
 
     public void CHECKTBCOPTFCHECK(string TF001002003)
