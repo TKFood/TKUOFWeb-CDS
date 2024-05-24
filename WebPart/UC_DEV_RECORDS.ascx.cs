@@ -380,7 +380,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                             {0}
                             {1}
                             {2}
-                            ORDER BY [NO]
+                            ORDER BY [NO],[PROJECTNAMES]
 
                               
                             ", Query1.ToString(), Query2.ToString(), Query3.ToString()); ;
@@ -634,7 +634,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [NO]
+                            ORDER BY [NO],[PROJECTNAMES]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
@@ -769,7 +769,7 @@ public partial class CDS_WebPart_UC_DEV_RECORDS : System.Web.UI.UserControl
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [NO]
+                            ORDER BY [NO],[TBDEV_RECORDS].[PROJECTNAMES]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;

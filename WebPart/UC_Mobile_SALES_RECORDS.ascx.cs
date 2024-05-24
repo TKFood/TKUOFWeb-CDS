@@ -268,6 +268,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                             ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
                             ,[ISCLOSE]
                             ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
+                            ,CONVERT(NVARCHAR,[ISCLOSEDATES],111) ISCLOSEDATES
                             ,(SELECT TOP 1 [COMMENTS] FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS COMMENTS
                             ,(SELECT TOP 1 CONVERT(NVARCHAR,TB_SALES_ASSINGED_COMMENTS.[ADDDATES],111) FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS] WHERE [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID ORDER BY ID DESC) AS COMMENTSADDDATES
 
@@ -275,7 +276,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [SALES],[EDAYS],[ID]
+                            ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
@@ -472,7 +473,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [SALES],[EDAYS],[ID]
+                            ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
@@ -603,7 +604,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                             AND  [TB_SALES_ASSINGED_COMMENTS].MID=[TB_SALES_ASSINGED].ID                           
                             {0}
                             {1}
-                            ORDER BY [SALES],[EDAYS],[ID],[TB_SALES_ASSINGED_COMMENTS].[ADDDATES]
+                            ORDER BY [SALES],[CLIENTS],[EDAYS],[ID],[TB_SALES_ASSINGED_COMMENTS].[ADDDATES]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
@@ -698,17 +699,18 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"   ";
-
+        string ISCLOSEDATES = DateTime.Now.ToString("yyyy/MM/dd");
 
         cmdTxt = @"
                 UPDATE [TKBUSINESS].[dbo].[TB_SALES_ASSINGED]
-                SET [ISCLOSE]=@ISCLOSE
+                SET [ISCLOSE]=@ISCLOSE,[ISCLOSEDATES]=@ISCLOSEDATES
                 WHERE [ID]=@ID
                         ";
 
 
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@ISCLOSE", ISCLOSE);
+        m_db.AddParameter("@ISCLOSEDATES", ISCLOSEDATES);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
