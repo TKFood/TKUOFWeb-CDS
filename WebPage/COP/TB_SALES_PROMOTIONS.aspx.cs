@@ -35,6 +35,7 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
             BindDropDownListKINDS();
             BindDropDownListADDISCLOSED();
             BindDropDownListADDKINIDS();
+            BindDropDownList3ISCLOSE();
         }
         else
         {
@@ -176,6 +177,42 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
             DropDownListADDKINIDS.DataTextField = "NAMES";
             DropDownListADDKINIDS.DataValueField = "NAMES";
             DropDownListADDKINIDS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+
+    public void BindDropDownList3ISCLOSE()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='TB_SALES_PROMOTIONS_ISCLOSED'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3ISCLOSE.DataSource = dt;
+            DropDownList3ISCLOSE.DataTextField = "NAMES";
+            DropDownList3ISCLOSE.DataValueField = "NAMES";
+            DropDownList3ISCLOSE.DataBind();
 
         }
         else
@@ -453,11 +490,133 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
     {
         
     }
-    public void MsgBox(string ex, Page pg, object obj)
+
+    private void BindGrid3()
     {
-        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
-        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+        StringBuilder QUERYS4 = new StringBuilder();
+
+        // 通路名稱
+        if (!string.IsNullOrEmpty(TextBox8.Text) && !string.IsNullOrEmpty(TextBox8.Text))
+        {
+            QUERYS1.AppendFormat(@" AND [SALESTO] LIKE '%{0}%'", TextBox8.Text.Trim());
+
+        }
+        else
+        {
+            QUERYS1.AppendFormat(@" ");
+        }
+        // 產品規格
+        if (!string.IsNullOrEmpty(TextBox9.Text) && !string.IsNullOrEmpty(TextBox9.Text))
+        {
+            QUERYS2.AppendFormat(@" AND [PRODUCTS] LIKE '%{0}%'", TextBox9.Text.Trim());
+
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@" ");
+        }
+        // 是否結案
+        string String_DropDownListISCLOSE = DropDownList3ISCLOSE.SelectedValue.ToString();
+        if (!string.IsNullOrEmpty(String_DropDownListISCLOSE))
+        {
+            if (String_DropDownListISCLOSE.ToString().Equals("全部"))
+            {
+                QUERYS3.AppendFormat(@"");
+            }
+            else
+            {
+                QUERYS3.AppendFormat(@"  AND ID IN ( SELECT [ID] FROM [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS] WHERE [ISCLOSEED] LIKE '%{0}%' ) ", String_DropDownListISCLOSE);
+            }
+
+        }
+        else
+        {
+            QUERYS3.AppendFormat(@"");
+        }
+     
+
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                             [ID]
+                            ,[ISCLOSEED]
+                            ,[SALESTO]
+                            ,[SDATES]
+                            ,[PRODUCTS]
+                            ,[SHIPDATES]
+                            ,[KINDS]
+                            ,[CONTEXTS]
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS]
+                            WHERE 1=1 
+                            {0}
+                            {1}
+                            {2}
+                            {3}
+
+                            ORDER BY [SDATES]
+                        ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString());
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+               
     }
+
+    protected void grid3_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid3_OnRowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid3Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                GridViewRow row = Grid1.Rows[rowIndex];
+                // 獲取相應的ID
+                Label LabelID = (Label)row.FindControl("ID");
+                string ID = LabelID.Text;
+
+                DELETE_B_SALES_PROMOTIONS(ID);
+                BindGrid3();
+            }
+        }
+
+    }
+
+    public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+    }
+
+
 
     public void UPDATE_TB_SALES_PROMOTIONS(
         string ID,
@@ -556,8 +715,33 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
         MsgBox("成功 \r\n", this.Page, this);
     }
 
-   
+    public void DELETE_B_SALES_PROMOTIONS(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        string cmdTxt = @"   ";
+        cmdTxt = @"                    
+                DELETE [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS]
+                WHERE ID=@ID
+                        ";
+
+
+
+
+        m_db.AddParameter("@ID", ID);
+      
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+        MsgBox("成功 \r\n", this.Page, this);
+    }
+
+    public void MsgBox(string ex, Page pg, object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+    }
     #endregion
 
     #region BUTTON
@@ -611,6 +795,10 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
         RadPageView1.Selected = true;
         BindGrid();
     }
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        BindGrid3();
 
+    }
     #endregion
 }
