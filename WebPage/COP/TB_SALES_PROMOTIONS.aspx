@@ -40,9 +40,11 @@
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
                 <Tabs>
-                    <telerik:RadTab Text="資料">
+                    <telerik:RadTab Text="通路">
                     </telerik:RadTab>
-                    <telerik:RadTab Text="新增資料">
+                    <telerik:RadTab Text="新增通路">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="資料">
                     </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
@@ -162,14 +164,71 @@
                         <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD">
-                                    <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="新增"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD"></td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label12" runat="server" Text="是否結案"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
-
+                                    <asp:DropDownList ID="DropDownListADDISCLOSED" runat="server" Width="10%"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label5" runat="server" Text="通路"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="TextBox3" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label6" runat="server" Text="活動時間"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="TextBox4" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label7" runat="server" Text="產品規格"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="TextBox5" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label8" runat="server" Text="出貨日"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="TextBox6" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label9" runat="server" Text="活動類型"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownListADDKINIDS" runat="server" Width="10%"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label10" runat="server" Text="活動內容及價格"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="TextBox7" runat="server" TextMode="MultiLine" Rows="10" Text="" Width="50%" Style="height: 100%;"></asp:TextBox>
                                 </td>
                             </tr>
                         </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView3" runat="server">
+                    <div id="tabs-3">
                     </div>
                 </telerik:RadPageView>
             </telerik:RadMultiPage>​

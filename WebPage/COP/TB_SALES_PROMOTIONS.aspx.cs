@@ -32,6 +32,8 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
 
             BindDropDownListISCLOSE();
             BindDropDownListKINDS();
+            BindDropDownListADDISCLOSED();
+            BindDropDownListADDKINIDS();
         }
         else
         {
@@ -103,6 +105,76 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
             DropDownListKINDS.DataTextField = "NAMES";
             DropDownListKINDS.DataValueField = "NAMES";
             DropDownListKINDS.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    public void BindDropDownListADDISCLOSED()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='TB_SALES_PROMOTIONS_ISCLOSED'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDISCLOSED.DataSource = dt;
+            DropDownListADDISCLOSED.DataTextField = "NAMES";
+            DropDownListADDISCLOSED.DataValueField = "NAMES";
+            DropDownListADDISCLOSED.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    public void BindDropDownListADDKINIDS()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KIND", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='TB_SALES_PROMOTIONS_KINDS'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownListADDKINIDS.DataSource = dt;
+            DropDownListADDKINIDS.DataTextField = "NAMES";
+            DropDownListADDKINIDS.DataValueField = "NAMES";
+            DropDownListADDKINIDS.DataBind();
 
         }
         else
