@@ -151,7 +151,7 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
             }
             else
             {
-                QUERYS3.AppendFormat(@"  AND ID IN ( SELECT [ID] FROM [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS] WHERE [ISCLOSES] LIKE '%{0}%' ) ", String_DropDownListISCLOSE);
+                QUERYS3.AppendFormat(@"  AND ID IN ( SELECT [ID] FROM [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS] WHERE [ISCLOSEED] LIKE '%{0}%' ) ", String_DropDownListISCLOSE);
             }
 
         }
@@ -169,7 +169,7 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
             }
             else
             {
-                QUERYS4.AppendFormat(@"  AND ID IN ( SELECT [ID] FROM[TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS] WHERE [KINIDS] LIKE '%{0}%' ) ", String_DropDownListKINDS);
+                QUERYS4.AppendFormat(@"  AND ID IN ( SELECT [ID] FROM[TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS] WHERE [KINDS] LIKE '%{0}%' ) ", String_DropDownListKINDS);
             }
 
         }
@@ -181,12 +181,12 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
         cmdTxt.AppendFormat(@"
                             SELECT 
                              [ID]
-                            ,[ISCLOSES]
+                            ,[ISCLOSEED]
                             ,[SALESTO]
                             ,[SDATES]
                             ,[PRODUCTS]
                             ,[SHIPDATES]
-                            ,[KINIDS]
+                            ,[KINDS]
                             ,[CONTEXTS]
                             FROM [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS]
                             WHERE 1=1 
@@ -222,7 +222,99 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-       
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList GW1DropDownListISCLOSED = (DropDownList)e.Row.FindControl("GW1DropDownListISCLOSED");
+
+            if (GW1DropDownListISCLOSED != null)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("NAMES", typeof(String));
+
+                string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+                Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+                string cmdTxt = @" 
+                       SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='TB_SALES_PROMOTIONS_ISCLOSED' 
+                        AND [NAMES] NOT IN ('全部')
+                        ORDER BY [VALUE]
+                        ";
+
+                dt.Load(m_db.ExecuteReader(cmdTxt));
+
+                // 在這裡設置DropDownListKINDS的資料來源和其他屬性
+                if (dt.Rows.Count > 0)
+                {
+                    GW1DropDownListISCLOSED.DataSource = dt;
+                    GW1DropDownListISCLOSED.DataTextField = "NAMES";
+                    GW1DropDownListISCLOSED.DataValueField = "NAMES";
+                    GW1DropDownListISCLOSED.DataBind();
+
+                    // 獲取該列對應的資料行中的值
+                    DataRowView rowView = (DataRowView)e.Row.DataItem;
+                    string defaultValue = rowView["ISCLOSEED"].ToString(); // 請替換YourDataField為您的資料行名稱
+
+                    // 設定DropDownList的預設值
+                    if (!string.IsNullOrEmpty(defaultValue))
+                    {
+                        GW1DropDownListISCLOSED.SelectedValue = defaultValue;
+                    }
+                }
+            }
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList GW1DropDownListKINDS = (DropDownList)e.Row.FindControl("GW1DropDownListKINDS");
+
+            if (GW1DropDownListKINDS != null)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("NAMES", typeof(String));
+
+                string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+                Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+                string cmdTxt = @" 
+                       SELECT 
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='TB_SALES_PROMOTIONS_KINDS' 
+                        AND [NAMES] NOT IN ('全部')
+                        ORDER BY [VALUE]
+                        ";
+
+                dt.Load(m_db.ExecuteReader(cmdTxt));
+
+                // 在這裡設置DropDownListKINDS的資料來源和其他屬性
+                if (dt.Rows.Count > 0)
+                {
+                    GW1DropDownListKINDS.DataSource = dt;
+                    GW1DropDownListKINDS.DataTextField = "NAMES";
+                    GW1DropDownListKINDS.DataValueField = "NAMES";
+                    GW1DropDownListKINDS.DataBind();
+
+                    // 獲取該列對應的資料行中的值
+                    DataRowView rowView = (DataRowView)e.Row.DataItem;
+                    string defaultValue = rowView["KINDS"].ToString(); // 請替換YourDataField為您的資料行名稱
+
+                    // 設定DropDownList的預設值
+                    if (!string.IsNullOrEmpty(defaultValue))
+                    {
+                        GW1DropDownListKINDS.SelectedValue = defaultValue;
+                    }
+                }
+            }
+        }
 
 
     }

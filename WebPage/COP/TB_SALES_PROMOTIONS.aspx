@@ -3,13 +3,21 @@
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <style>
+        .multiline-textbox {
+            word-break: break-all;
+            white-space: pre-line;
+            /*width: 100px;*/ /* 根据需要设置宽度 */
+            height: 60px; /* 根据需要设置高度 */
+        }
+    </style>
     <script>    
         function btn4_Click(sender) {
             //從前端開始視窗
             //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
             //OpenDialogResult為關閉視後會執行的JS Function
             //參數使用JSON格式傳遞
-            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_COPCONDTIONSDialogADD.aspx", sender, "", 800, 600, OpenDialogResult, {});
+            $uof.dialog.open2("", sender, "", 800, 600, OpenDialogResult, {});
 
             return false;
 
@@ -99,42 +107,40 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                        <%--<asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                        <asp:DropDownList ID="GW1DropDownListISCLOSED" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="通路" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <%--<asp:Label ID="通路" runat="server" Text='<%# Bind("SALESTO") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
-                                                        <asp:TextBox ID="通路" runat="server" Text='<%# Bind("SALESTO") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
+                                                        <asp:TextBox ID="通路" runat="server" Text='<%# Bind("SALESTO") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動時間" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
-                                                        <%--<asp:Label ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                        <asp:TextBox ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>' CssClass="multiline-textbox"></asp:TextBox>                                                        
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="產品規格" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <%--<asp:Label ID="產品規格" runat="server" Text='<%# Bind("PRODUCTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
-                                                        <asp:TextBox ID="產品規格" runat="server" Text='<%# Bind("PRODUCTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
+                                                    <ItemTemplate>                                                        
+                                                        <asp:TextBox ID="產品規格" runat="server" Text='<%# Bind("PRODUCTS") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="出貨日" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <%--<asp:Label ID="出貨日" runat="server" Text='<%# Bind("SHIPDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
-                                                        <asp:TextBox ID="出貨日" runat="server" Text='<%# Bind("SHIPDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
+                                                    <ItemTemplate>                                                        
+                                                        <asp:TextBox ID="出貨日" runat="server" Text='<%# Bind("SHIPDATES") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動類型" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="活動類型" runat="server" Text='<%# Bind("KINIDS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                        <%--<asp:Label ID="活動類型" runat="server" Text='<%# Bind("KINIDS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
+                                                        <asp:DropDownList ID="GW1DropDownListKINDS" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動內容及價格" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <%--<asp:Label ID="活動內容及價格" runat="server" Text='<%# Bind("CONTEXTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
-                                                        <asp:TextBox ID="活動內容及價格" runat="server" Text='<%# Bind("CONTEXTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
+                                                    <ItemTemplate>                                                        
+                                                        <asp:TextBox ID="活動內容及價格" runat="server" Text='<%# Bind("CONTEXTS") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
