@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 using Ede.Uof.EIP.SystemInfo;
 using Ede.Uof.Utility.Data;
 using Ede.Uof.Utility.Page.Common;
+using Telerik.Web.UI;
 
 public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.BasePage
 {
@@ -552,8 +553,10 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
 
         m_db.ExecuteNonQuery(cmdTxt);
 
-        MsgBox("成功 \r\n"  + SALESTO, this.Page, this);
+        MsgBox("成功 \r\n", this.Page, this);
     }
+
+   
 
     #endregion
 
@@ -602,6 +605,11 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
                                     KINDS,
                                     CONTEXTS
                                     );
+
+        RadTab tab1 = RadTabStrip2.Tabs.FindTabByText("通路");
+        tab1.Selected = true;
+        RadPageView1.Selected = true;
+        BindGrid();
     }
 
     #endregion

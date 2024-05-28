@@ -6,8 +6,7 @@
     <style>
         .multiline-textbox {
             word-break: break-all;
-            white-space: pre-line;
-            /*width: 100px;*/ /* 根据需要设置宽度 */
+            white-space: pre-line;           
             height: 60px; /* 根据需要设置高度 */
         }
          .custom-button {
@@ -129,22 +128,22 @@
                                                 <asp:TemplateField HeaderText="通路" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <%--<asp:Label ID="通路" runat="server" Text='<%# Bind("SALESTO") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
-                                                        <asp:TextBox ID="通路" runat="server" Text='<%# Bind("SALESTO") %>' CssClass="multiline-textbox"></asp:TextBox>
+                                                        <asp:TextBox ID="通路" runat="server" Text='<%# Bind("SALESTO") %>'  TextMode="MultiLine"  CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動時間" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>' CssClass="multiline-textbox"></asp:TextBox>
+                                                        <asp:TextBox ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>'  TextMode="MultiLine"  CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="產品規格" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="產品規格" runat="server" Text='<%# Bind("PRODUCTS") %>' CssClass="multiline-textbox"></asp:TextBox>
+                                                        <asp:TextBox ID="產品規格" runat="server" Text='<%# Bind("PRODUCTS") %>'  TextMode="MultiLine"  CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="出貨日" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="出貨日" runat="server" Text='<%# Bind("SHIPDATES") %>' CssClass="multiline-textbox"></asp:TextBox>
+                                                        <asp:TextBox ID="出貨日" runat="server" Text='<%# Bind("SHIPDATES") %>'  TextMode="MultiLine"  CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動類型" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -155,7 +154,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動內容及價格" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="活動內容及價格" runat="server" Text='<%# Bind("CONTEXTS") %>' CssClass="multiline-textbox"></asp:TextBox>
+                                                        <asp:TextBox ID="活動內容及價格" runat="server" Text='<%# Bind("CONTEXTS") %>' TextMode="MultiLine" CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
@@ -194,7 +193,7 @@
                                     <asp:Label ID="Label5" runat="server" Text="通路"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:TextBox ID="TextBox3" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox3" runat="server" Text="" TextMode="MultiLine" Rows="3"  Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -202,7 +201,7 @@
                                     <asp:Label ID="Label6" runat="server" Text="活動時間"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:TextBox ID="TextBox4" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox4" runat="server" Text="" TextMode="MultiLine" Rows="3"  Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -210,7 +209,7 @@
                                     <asp:Label ID="Label7" runat="server" Text="產品規格"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:TextBox ID="TextBox5" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox5" runat="server" Text="" TextMode="MultiLine" Rows="3" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -218,7 +217,7 @@
                                     <asp:Label ID="Label8" runat="server" Text="出貨日"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:TextBox ID="TextBox6" runat="server" Text="" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox6" runat="server" Text="" TextMode="MultiLine" Rows="3" Width="50%" Row="1" Style="height: 100%;"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
