@@ -43,10 +43,36 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
-                                <td class="PopTableLeftTD"></td>
                                 <td>
-                                    <asp:Label ID="Label2" runat="server" Text="客戶代號/客戶名稱: "></asp:Label>
+                                    <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownListISCLOSE" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                      <asp:Label ID="Label2" runat="server" Text="通路名稱: "></asp:Label>
+                                </td>
+                                <td>                                  
                                     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label3" runat="server" Text="產品規格: "></asp:Label>
+                                </td>
+                                <td>                                   
+                                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label4" runat="server" Text="活動類型: "></asp:Label>
+                                </td>
+                                <td>                                    
+                                    <asp:DropDownList ID="DropDownListKINDS" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                                </td>
                                 </td>
                             </tr>
                             <tr>
@@ -81,7 +107,7 @@
                                                         <asp:Label ID="通路" runat="server" Text='<%# Bind("SALESTO") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                   <asp:TemplateField HeaderText="活動時間" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="活動時間" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
@@ -101,7 +127,7 @@
                                                         <asp:Label ID="活動類型" runat="server" Text='<%# Bind("KINIDS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="活動內容及價格" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="活動內容及價格" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="活動內容及價格" runat="server" Text='<%# Bind("CONTEXTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
