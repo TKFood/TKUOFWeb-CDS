@@ -500,7 +500,7 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
 
         m_db.ExecuteNonQuery(cmdTxt);
 
-        MsgBox("成功 \r\n" + ID + " > " + SALESTO, this.Page, this);
+        MsgBox("成功 \r\n", this.Page, this);
     }
 
     public void INSERT_TB_SALES_PROMOTIONS(
