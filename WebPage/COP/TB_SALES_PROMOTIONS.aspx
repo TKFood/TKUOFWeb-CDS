@@ -119,16 +119,16 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動時間" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>' CssClass="multiline-textbox"></asp:TextBox>                                                        
+                                                        <asp:TextBox ID="活動時間" runat="server" Text='<%# Bind("SDATES") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="產品規格" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
+                                                    <ItemTemplate>
                                                         <asp:TextBox ID="產品規格" runat="server" Text='<%# Bind("PRODUCTS") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="出貨日" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
+                                                    <ItemTemplate>
                                                         <asp:TextBox ID="出貨日" runat="server" Text='<%# Bind("SHIPDATES") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -139,14 +139,14 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="活動內容及價格" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
+                                                    <ItemTemplate>
                                                         <asp:TextBox ID="活動內容及價格" runat="server" Text='<%# Bind("CONTEXTS") %>' CssClass="multiline-textbox"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
                                                 <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Button ID="GW1Button1" runat="server" Text="修改" ForeColor="Red" CommandName="GW1Button1" CommandArgument='<%# Eval("ID") %>' />
+                                                        <asp:Button ID="GW1Button1" runat="server" Text="修改" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('新增回覆 確定？');" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
