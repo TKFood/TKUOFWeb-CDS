@@ -319,15 +319,60 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
 
     }
 
-    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
 
         if (e.CommandName == "GW1Button1")
         {
-          
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                GridViewRow row = Grid1.Rows[rowIndex];
+                // 獲取相應的ID
+                Label LabelID = (Label)row.FindControl("ID");
+                string ID = LabelID.Text;
+
+                //    //是否結案
+                //    DropDownList GW1DropDownListISCLOSED = (DropDownList)row.FindControl("GW1DropDownListISCLOSED");
+                //    string stringGW1DropDownListISCLOSED = GW1DropDownListISCLOSED.Text.Trim();
+                //    //通路
+                //    TextBox txtSALESTO = (TextBox)row.FindControl("通路");
+                //    string stringSALESTO = txtSALESTO.Text.Trim();
+                //    //活動時間
+                //    TextBox txtSDATES = (TextBox)row.FindControl("活動時間");
+                //    string stringSDATES = txtSDATES.Text.Trim();
+                //    //產品規格
+                //    TextBox txtPRODUCTS = (TextBox)row.FindControl("產品規格");
+                //    string stringPRODUCTS = txtPRODUCTS.Text.Trim();
+                //    //出貨日
+                //    TextBox txtSHIPDATES = (TextBox)row.FindControl("出貨日");
+                //    string stringSHIPDATES = txtSHIPDATES.Text.Trim();
+                //    //活動類型
+                //    DropDownList GW1DropDownListKINDS = (DropDownList)row.FindControl("GW1DropDownListKINDS");
+                //    string stringGW1DropDownListKINDS = GW1DropDownListKINDS.Text.Trim();
+                //    //活動內容及價格
+                //    TextBox txtCONTEXTS = (TextBox)row.FindControl("活動內容及價格");
+                //    string stringCONTEXTS = txtCONTEXTS.Text.Trim();
+
+                //    UPDATE_TB_SALES_PROMOTIONS(
+                //                              ID,
+                //                               stringGW1DropDownListISCLOSED,
+                //                               stringSALESTO,
+                //                               stringSDATES,
+                //                               stringPRODUCTS,
+                //                               stringSHIPDATES,
+                //                               stringGW1DropDownListKINDS,
+                //                               stringCONTEXTS
+                //                                );
+
+            }
         }
-       
 
     }
 
@@ -339,6 +384,49 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
         ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+    }
+
+    public void UPDATE_TB_SALES_PROMOTIONS(
+        string ID,
+        string ISCLOSES,
+        string SALESTO,
+        string SDATES,
+        string PRODUCTS,
+        string SHIPDATES,
+        string KINDS,
+        string CONTEXTS
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+        cmdTxt = @"
+                    UPDATE [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS]
+                    SET [ISCLOSES]=@ISCLOSES
+                    ,[SALESTO]=@SALESTO
+                    ,[SDATES]=@SDATES
+                    ,[PRODUCTS]=@PRODUCTS
+                    ,[SHIPDATES]=@SHIPDATES
+                    ,[KINDS]=@KINDS
+                    ,[CONTEXTS]=@CONTEXTS
+                    WHERE [ID]=@ID
+                        ";
+
+
+
+        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@ISCLOSES", ISCLOSES);
+        m_db.AddParameter("@SALESTO", SALESTO);
+        m_db.AddParameter("@SDATES", SDATES);
+        m_db.AddParameter("@PRODUCTS", PRODUCTS);
+        m_db.AddParameter("@SHIPDATES", SHIPDATES);
+        m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@CONTEXTS", CONTEXTS);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+        MsgBox("成功 \r\n" + ID + " > " + ISCLOSES, this.Page, this);
     }
 
     #endregion
