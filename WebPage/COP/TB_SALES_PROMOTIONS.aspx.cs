@@ -502,6 +502,59 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
         MsgBox("成功 \r\n" + ID + " > " + SALESTO, this.Page, this);
     }
 
+    public void INSERT_TB_SALES_PROMOTIONS(
+        string ISCLOSEED,
+        string SALESTO,
+        string SDATES,
+        string PRODUCTS,
+        string SHIPDATES,
+        string KINDS,
+        string CONTEXTS
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+        cmdTxt = @"                    
+                INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_PROMOTIONS]
+                (
+                [ISCLOSEED]
+                ,[SALESTO]
+                ,[SDATES]
+                ,[PRODUCTS]
+                ,[SHIPDATES]
+                ,[KINDS]
+                ,[CONTEXTS]
+                )
+                VALUES
+                (
+                @ISCLOSEED
+                ,@SALESTO
+                ,@SDATES
+                ,@PRODUCTS
+                ,@SHIPDATES
+                ,@KINDS
+                ,@CONTEXTS
+                )
+                        ";
+
+
+
+      
+        m_db.AddParameter("@ISCLOSEED", ISCLOSEED);
+        m_db.AddParameter("@SALESTO", SALESTO);
+        m_db.AddParameter("@SDATES", SDATES);
+        m_db.AddParameter("@PRODUCTS", PRODUCTS);
+        m_db.AddParameter("@SHIPDATES", SHIPDATES);
+        m_db.AddParameter("@KINDS", KINDS);
+        m_db.AddParameter("@CONTEXTS", CONTEXTS);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+
+        MsgBox("成功 \r\n"  + SALESTO, this.Page, this);
+    }
+
     #endregion
 
     #region BUTTON
@@ -528,6 +581,27 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
     {
         BindGrid();        
 
+    }
+
+    protected void btn2_Click(object sender, EventArgs e)
+    {     
+        string ISCLOSEED = DropDownListADDISCLOSED.SelectedValue.ToString();
+        string SALESTO = TextBox3.Text.ToString();
+        string SDATES = TextBox4.Text.ToString();
+        string PRODUCTS = TextBox5.Text.ToString();
+        string SHIPDATES = TextBox6.Text.ToString();
+        string KINDS = DropDownListADDKINIDS.SelectedValue.ToString();
+        string CONTEXTS = TextBox7.Text.ToString();
+
+        INSERT_TB_SALES_PROMOTIONS(
+                                    ISCLOSEED,
+                                    SALESTO,
+                                    SDATES,
+                                    PRODUCTS,
+                                    SHIPDATES,
+                                    KINDS,
+                                    CONTEXTS
+                                    );
     }
 
     #endregion
