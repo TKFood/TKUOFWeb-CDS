@@ -231,7 +231,7 @@ public partial class CDS_WebPage_COP_TB_SALES_PROMOTIONS : Ede.Uof.Utility.Page.
     {
         int rowIndex = -1;
 
-        if (e.CommandName == "Button1")
+        if (e.CommandName == "GW1Button1")
         {
           
         }
