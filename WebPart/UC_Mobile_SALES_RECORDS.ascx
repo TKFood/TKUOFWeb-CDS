@@ -5,6 +5,9 @@
 
 <!-- 在CSS文件中定义样式 -->
 <style>
+    .multiline-textbox {
+            width: 200px;
+        }
     .custom-button {
         background-color: #FF5733;
         color: #FFFFFF;
@@ -132,7 +135,8 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3" Width="200px"></asp:TextBox>
+                                                <%--<asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3" Width="200px"></asp:TextBox>--%>
+                                                   <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -422,5 +426,21 @@
             dateTextbox.focus();
         }
     }
+
+    function autoResizeTextBox(textbox) {
+        textbox.style.height = 'auto'; // Reset the height
+        textbox.style.height = (textbox.scrollHeight) + 'px'; // Adjust the height to fit the content
+    }
+
+    function initializeTextBoxes() {
+        var textboxes = document.getElementsByClassName('multiline-textbox');
+        for (var i = 0; i < textboxes.length; i++) {
+            autoResizeTextBox(textboxes[i]);
+        }
+    }
+
+    // Call this function on window load and after partial postback
+    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(initializeTextBoxes);
+    window.onload = initializeTextBoxes;
 </script>
 
