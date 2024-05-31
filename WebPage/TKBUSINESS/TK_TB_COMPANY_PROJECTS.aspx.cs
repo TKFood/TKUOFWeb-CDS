@@ -820,20 +820,25 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         string cmdTxt = @"   ";
         cmdTxt = @"
                     UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
-                    SET [COMMENTS]=STUFF((
-                                    SELECT CHAR(13) + [COMMENTS]
-                                    FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
-                                    WHERE TB_COMPANY_PROJECTS_DETAILS.[MID] = @ID
-                                    ORDER BY TB_COMPANY_PROJECTS_DETAILS.ID
-                                    FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') 
+                    SET [COMMENTS]=@COMMENTS
                     ,[COMMENTSDATES]=GETDATE()
                     WHERE ID=@ID
                         ";
-
+        //cmdTxt = @"
+        //            UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+        //            SET [COMMENTS]=STUFF((
+        //                            SELECT CHAR(13) + [COMMENTS]
+        //                            FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
+        //                            WHERE TB_COMPANY_PROJECTS_DETAILS.[MID] = @ID
+        //                            ORDER BY TB_COMPANY_PROJECTS_DETAILS.ID
+        //                            FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') 
+        //            ,[COMMENTSDATES]=GETDATE()
+        //            WHERE ID=@ID
+        //                ";
 
 
         m_db.AddParameter("@ID", ID);
-        m_db.AddParameter("@COMMENTS", DateTime.Now.ToString("yyyy/MM/dd") + Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMENTS);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);

@@ -161,7 +161,8 @@
 
                                                 <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField" runat="server" Text='' TextMode="MultiLine" Rows="3" Width="100%"></asp:TextBox>
+                                                        <%--<asp:TextBox ID="txtNewField" runat="server" Text='' TextMode="MultiLine" Rows="3" Width="100%"></asp:TextBox>--%>
+                                                        <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
