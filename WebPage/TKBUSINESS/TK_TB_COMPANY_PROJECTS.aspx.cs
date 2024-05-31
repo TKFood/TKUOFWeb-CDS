@@ -807,7 +807,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@NAMES", NAMES);
-        m_db.AddParameter("@COMMENTS", DateTime.Now.ToString("yyyy/MM/dd")+ Environment.NewLine + NAMES + ':' + Environment.NewLine + COMMENTS);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
