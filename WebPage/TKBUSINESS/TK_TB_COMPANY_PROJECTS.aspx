@@ -6,6 +6,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <style>
+         .multiline-textbox {
+            width: 200px;
+        }
         .custom-button {
             width: 150px; /* 设置按钮宽度 */
             height: 40px; /* 设置按钮高度 */
@@ -31,10 +34,23 @@
             else
                 return true;
         }
+        function autoResizeTextBox(textbox) {
+            textbox.style.height = 'auto'; // Reset the height
+            textbox.style.height = (textbox.scrollHeight) + 'px'; // Adjust the height to fit the content
+        }
 
+        function initializeTextBoxes() {
+            var textboxes = document.getElementsByClassName('multiline-textbox');
+            for (var i = 0; i < textboxes.length; i++) {
+                autoResizeTextBox(textboxes[i]);
+            }
+        }
+
+        // Call this function on window load and after partial postback
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(initializeTextBoxes);
+        window.onload = initializeTextBoxes;
 
     </script>
-
 
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
@@ -265,7 +281,8 @@
                             <asp:Label ID="Label10" runat="server" Text="回饋進度與內容"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:TextBox ID="TextBox4" runat="server" TextMode="MultiLine" Rows="10" Text="" Width="50%" Style="height: 100%;"></asp:TextBox>
+                            <%--<asp:TextBox ID="TextBox4" runat="server" TextMode="MultiLine" Rows="10" Text="" Width="50%" Style="height: 100%;"></asp:TextBox>--%>
+                            <asp:TextBox ID="TextBox4" runat="server" Text="" TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -296,4 +313,5 @@
      
 
 </asp:Content>
+
 
