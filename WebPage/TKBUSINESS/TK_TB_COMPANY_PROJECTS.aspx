@@ -6,9 +6,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <style>
-         .multiline-textbox {
+        .multiline-textbox {
             width: 200px;
         }
+
         .custom-button {
             width: 150px; /* 设置按钮宽度 */
             height: 40px; /* 设置按钮高度 */
@@ -163,6 +164,13 @@
                                                         <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="給主管的回覆" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <%--<asp:TextBox ID="txtNewField" runat="server" Text='' TextMode="MultiLine" Rows="3" Width="100%"></asp:TextBox>--%>
+                                                        <asp:TextBox ID="txtNEWCOMMENTS" runat="server" Text='<%# Bind("NEWCOMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
                                                 <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('新增回覆 確定？');" />
@@ -281,7 +289,7 @@
                         </td>
                         <td class="PopTableRightTD">
                             <%--<asp:TextBox ID="TextBox4" runat="server" TextMode="MultiLine" Rows="10" Text="" Width="50%" Style="height: 100%;"></asp:TextBox>--%>
-                            <asp:TextBox ID="TextBox4" runat="server" Text="" TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                            <asp:TextBox ID="TextBox4" runat="server" Text="" TextMode="MultiLine" Rows="5" Width="50%"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>

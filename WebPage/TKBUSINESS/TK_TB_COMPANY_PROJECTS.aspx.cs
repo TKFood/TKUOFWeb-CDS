@@ -347,11 +347,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                             ,[COMMENTS]   
                             ,CONVERT(NVARCHAR,[COMMENTSDATES],111) COMMENTSDATES
                             ,[TRACEDATES]
-                            ,STUFF((
-                                    SELECT ' ' +[TB_COMPANY_PROJECTS_DETAILS] .[COMMENTS]+CHAR(13)
-                                    FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
-                                    WHERE TB_COMPANY_PROJECTS_DETAILS.[MID] = TB_COMPANY_PROJECTS.[ID]
-                                    FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS AllCOMMENTS
+                            ,[NEWCOMMENTS]
 
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE 1=1
@@ -679,14 +675,17 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 // 獲取TextBox的值                 
                 TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
                 string newTextValue = txtNewField.Text;
+                //取得 NEWCOMMENTS 的值
+                TextBox txtNEWCOMMENTS = (TextBox)row.FindControl("txtNEWCOMMENTS");
+                string newNEWCOMMENTS = txtNEWCOMMENTS.Text;
 
                 string MID = ID;
                 string COMMETNS = newTextValue;
 
                 if(!string.IsNullOrEmpty(newTextValue))
                 {
-                    ADD_TB_COMPANY_PROJECTS_DETAILS(MID, NAMES, COMMETNS);
-                    UPDATE_TB_COMPANY_PROJECTS(MID, NAMES, COMMETNS);
+                    ADD_TB_COMPANY_PROJECTS_DETAILS(MID, NAMES, COMMETNS, newNEWCOMMENTS);
+                    UPDATE_TB_COMPANY_PROJECTS(MID, NAMES, COMMETNS, newNEWCOMMENTS);
 
                     MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
 
@@ -779,7 +778,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
    
 
-    public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string NAMES, string COMMENTS)
+    public void ADD_TB_COMPANY_PROJECTS_DETAILS(string MID, string NAMES, string COMMENTS,string NEWCOMMENTS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -794,6 +793,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                     ,[CREATEDATES]
                     ,[NAMES]
                     ,[COMMENTS]
+                    ,[NEWCOMMENTS]
                     )
                     VALUES
                     (
@@ -801,6 +801,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                     ,GETDATE()
                     ,@NAMES
                     ,@COMMENTS
+                    ,@NEWCOMMENTS
                     )
                         ";
 
@@ -808,11 +809,12 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         m_db.AddParameter("@MID", MID);
         m_db.AddParameter("@NAMES", NAMES);
         m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@NEWCOMMENTS", NEWCOMMENTS);
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
-    public void UPDATE_TB_COMPANY_PROJECTS(string ID, string NAMES, string COMMENTS)
+    public void UPDATE_TB_COMPANY_PROJECTS(string ID, string NAMES, string COMMENTS, string NEWCOMMENTS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -822,23 +824,15 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                     UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                     SET [COMMENTS]=@COMMENTS
                     ,[COMMENTSDATES]=GETDATE()
+                    ,[NEWCOMMENTS]=@NEWCOMMENTS
                     WHERE ID=@ID
                         ";
-        //cmdTxt = @"
-        //            UPDATE  [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
-        //            SET [COMMENTS]=STUFF((
-        //                            SELECT CHAR(13) + [COMMENTS]
-        //                            FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS_DETAILS] 
-        //                            WHERE TB_COMPANY_PROJECTS_DETAILS.[MID] = @ID
-        //                            ORDER BY TB_COMPANY_PROJECTS_DETAILS.ID
-        //                            FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') 
-        //            ,[COMMENTSDATES]=GETDATE()
-        //            WHERE ID=@ID
-        //                ";
+       
 
 
         m_db.AddParameter("@ID", ID);
         m_db.AddParameter("@COMMENTS", COMMENTS);
+        m_db.AddParameter("@NEWCOMMENTS", NEWCOMMENTS);
 
 
         m_db.ExecuteNonQuery(cmdTxt);
@@ -1047,8 +1041,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         string MAXID = FIND_MAX_ID(NO);
         if(!string.IsNullOrEmpty(MAXID))
         {
-            ADD_TB_COMPANY_PROJECTS_DETAILS(MAXID, NAMES, COMMENTS);
-            UPDATE_TB_COMPANY_PROJECTS(MAXID, NAMES, COMMENTS);
+            ADD_TB_COMPANY_PROJECTS_DETAILS(MAXID, NAMES, COMMENTS, COMMENTS);
+            UPDATE_TB_COMPANY_PROJECTS(MAXID, NAMES, COMMENTS, COMMENTS);
         }
 
         BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
