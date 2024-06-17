@@ -116,9 +116,9 @@
                                                     <asp:Label ID="專案進度" runat="server" Text='<%# Bind("STATUS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>--%>
-                                            <asp:TemplateField HeaderText="回饋進度與內容" ItemStyle-Width="80%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <asp:TemplateField HeaderText="最新進度" ItemStyle-Width="80%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="回饋進度與內容" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
+                                                    <asp:Label ID="最新進度" runat="server" Text='<%# Bind("NEWCOMMENTS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <%--   <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">

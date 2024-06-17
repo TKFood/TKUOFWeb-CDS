@@ -135,6 +135,8 @@ public partial class CDS_WebPage_Mobile_TB_COMPANY_PROJECTS : Ede.Uof.Utility.Pa
                             ,[COMMENTS]
                             ,[COMMENTSDATES]
                             ,CONVERT(NVARCHAR,[TRACEDATES],111) AS 'TRACEDATES'
+                            ,[NEWCOMMENTS]
+
                             FROM [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
                             WHERE 1=1
                             {0}
