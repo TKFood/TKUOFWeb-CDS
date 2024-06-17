@@ -164,7 +164,7 @@
                                                         <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="給主管的回覆" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="主管查閱的回覆" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <%--<asp:TextBox ID="txtNewField" runat="server" Text='' TextMode="MultiLine" Rows="3" Width="100%"></asp:TextBox>--%>
                                                         <asp:TextBox ID="txtNEWCOMMENTS" runat="server" Text='<%# Bind("NEWCOMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
