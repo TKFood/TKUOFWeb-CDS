@@ -143,7 +143,7 @@ public partial class CDS_WebPage_Mobile_TB_COMPANY_PROJECTS : Ede.Uof.Utility.Pa
                             {0}
                             {1}
                         
-                            ORDER BY [NO]
+                            ORDER BY CONVERT(NVARCHAR,[CREATEDATES],111)
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;

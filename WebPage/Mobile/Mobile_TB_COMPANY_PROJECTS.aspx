@@ -91,7 +91,7 @@
                                                     <asp:Label ID="專案編號" runat="server" Text='<%# Bind("NO") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>--%>
-                                                    <asp:TemplateField HeaderText="建立日期" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <asp:TemplateField HeaderText="建立日期" ItemStyle-Width="30%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                         <ItemTemplate>
                                                             <asp:Label ID="建立日期" runat="server" Text='<%# Bind("CREATEDATES") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                         </ItemTemplate>
@@ -121,7 +121,7 @@
                                                     <asp:Label ID="專案進度" runat="server" Text='<%# Bind("STATUS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>--%>
-                                                    <asp:TemplateField HeaderText="最新進度" ItemStyle-Width="60%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <asp:TemplateField HeaderText="最新進度" ItemStyle-Width="50%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                         <ItemTemplate>
                                                             <asp:Label ID="最新進度" runat="server" Text='<%# Bind("NEWCOMMENTS") %>' Style="word-break: break-all; white-space: pre-line"></asp:Label>
                                                         </ItemTemplate>
