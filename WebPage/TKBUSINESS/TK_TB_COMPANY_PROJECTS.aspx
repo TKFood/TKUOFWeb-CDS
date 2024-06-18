@@ -28,6 +28,33 @@
         $(function () {
 
         });
+
+        function updateNewComments(textBox) {
+            // 获取当前 txtNewField 的值
+            var newValue = textBox.value;
+
+            // 查找同一行中的 回饋進度與內容 标签
+            var gridViewRow = textBox.closest('tr');
+            var oldContentLabel = gridViewRow.querySelector('span[id$="COMMENTSLabel"]');
+            var txtNewComments = gridViewRow.querySelector('#' + textBox.id.replace('txtNewField', 'txtNEWCOMMENTS'));
+
+            // 获取旧内容
+            if (oldContentLabel) {
+                var oldValue = oldContentLabel.innerText;
+            
+                // 找出新增的文字
+                var newText = newValue.replace(oldValue, '').trim();
+
+                // 去除多余的空行
+                newText = newText.replace(/^\s*\n/gm, '');
+
+                // 更新 txtNEWCOMMENTS 的值
+                if (txtNewComments) {
+                    txtNewComments.value = newText;
+                }
+            }
+        }
+
         //如果有設定回傳值則執行sender Event
         function OpenDialogResult(returnValue) {
             if (typeof (returnValue) == "undefined")
@@ -143,12 +170,11 @@
                                                     <ItemTemplate>
                                                         <%--<asp:Label ID="專案進度" runat="server" Text='<%# Bind("STATUS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>--%>
                                                         <asp:DropDownList ID="DropDownListSTATUS" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
-
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="回饋進度與內容" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="回饋進度與內容" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                        <asp:Label ID="COMMENTSLabel" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="追蹤日" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -161,7 +187,7 @@
                                                 <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <%--<asp:TextBox ID="txtNewField" runat="server" Text='' TextMode="MultiLine" Rows="3" Width="100%"></asp:TextBox>--%>
-                                                        <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this);updateNewComments(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="主管查閱的回覆" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -170,6 +196,8 @@
                                                         <asp:TextBox ID="txtNEWCOMMENTS" runat="server" Text='<%# Bind("NEWCOMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+
+
 
                                                 <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
