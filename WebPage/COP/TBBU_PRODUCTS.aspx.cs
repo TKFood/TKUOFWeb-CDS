@@ -154,7 +154,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         //銷售重點
         if (!string.IsNullOrEmpty(TextBox10.Text))
         {
-            QUERYS.AppendFormat(@" AND MB1.MB002 LIKE '%{0}%'", TextBox10.Text);
+            QUERYS.AppendFormat(@" AND MB002 LIKE '%{0}%'", TextBox10.Text);
         }
 
         //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
@@ -246,6 +246,9 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            //
+            var COMPANYS = DataBinder.Eval(e.Row.DataItem, "COMPANYS").ToString();
+
             //Get the button that raised the event
             Button btn = (Button)e.Row.FindControl("GVButton1");
 
@@ -261,7 +264,15 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
             //Grid開窗是用RowDataBound事件再開窗
-            Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            if(COMPANYS.Equals("老楊"))
+            {
+                Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            }
+            else
+            {
+                Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+            }
+            
         }
 
 

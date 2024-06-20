@@ -15,6 +15,17 @@
 
         }
 
+        function btn5_Click(sender) {
+            //從前端開始視窗
+            //sender為註冊是由哪個視窗開啟，作為事後要觸發哪個元件的依據
+            //OpenDialogResult為關閉視後會執行的JS Function
+            //參數使用JSON格式傳遞
+            $uof.dialog.open2("~/CDS/WebPage/COP/TBBU_PRODUCTSDialogADDPRODUCTS_OTHERS.aspx", sender, "", 800, 600, OpenDialogResult, {});
+
+            return false;
+
+        }
+
         //如果有設定回傳值則執行sender Event
         function OpenDialogResult(returnValue) {
             if (typeof (returnValue) == "undefined")
@@ -34,7 +45,9 @@
                 <Tabs>
                     <telerik:RadTab Text="國內商務商品資料整理">
                     </telerik:RadTab>
-                    <telerik:RadTab Text="新增資料">
+                    <telerik:RadTab Text="新增老楊的商品資料">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="新增非老楊的商品資料">
                     </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
@@ -256,6 +269,21 @@
                                 </td>
                                 <td class="PopTableRightTD">
                                     <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView3" runat="server">
+                    <div id="tabs-3">
+                           <table class="PopTable">
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label13" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:Button ID="btn5" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn5_Click(this)" meta:resourcekey="btn5Resource1" />
 
                                 </td>
                             </tr>
