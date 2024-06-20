@@ -10,6 +10,23 @@
         $(function () {
 
         });
+        function validateInput(event) {
+            var char = String.fromCharCode(event.which);
+            var textbox = event.target;
+
+            if (!/[0-9.]/.test(char)) {
+                event.preventDefault();
+                return false;
+            }
+
+            // Allow only one decimal point
+            if (char === '.' && textbox.value.includes('.')) {
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
 
     </script>
     <div style="overflow-x: auto; width: 100%">
@@ -55,7 +72,7 @@
                 <asp:Label ID="Label4" runat="server" Text="建議售價"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox4" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;" OnKeyPress="return validateInput(event);"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -63,7 +80,7 @@
                 <asp:Label ID="Label6" runat="server" Text="IP價"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox5" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px; " OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
+                <asp:TextBox ID="TextBox5" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px; " OnKeyPress="return validateInput(event);"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -71,7 +88,7 @@
                 <asp:Label ID="Label7" runat="server" Text="DM價"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox6" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
+                <asp:TextBox ID="TextBox6" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="5" Style="height: 120px;" OnKeyPress="return validateInput(event);"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -79,7 +96,7 @@
                 <asp:Label ID="Label9" runat="server" Text="實際MOQ"></asp:Label>
             </td>
             <td class="PopTableRightTD">
-                <asp:TextBox ID="TextBox7" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="1" Style="height: 120px;" OnKeyPress="if(((event.keyCode>=48)&&(event.keyCode <=57))||(event.keyCode==46)) {event.returnValue=true;} else{event.returnValue=false;}"></asp:TextBox>
+                <asp:TextBox ID="TextBox7" runat="server" Text="0" Width="200%" TextMode="MultiLine" Row="1" Style="height: 120px;" OnKeyPress="return validateInput(event);"></asp:TextBox>
             </td>
         </tr>
 
