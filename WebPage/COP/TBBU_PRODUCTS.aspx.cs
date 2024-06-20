@@ -415,11 +415,9 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             }
             else if (!DropDownList1.Text.Equals("全部"))
             {
-                QUERYS.AppendFormat(@" AND  [SALESFOCUS] LIKE '%{0}%' ", DropDownList1.Text);
+                QUERYS.AppendFormat(@" AND  [SALESFOCUS]='{0}' ", DropDownList1.Text);
             }
         }
-
-        this.Session["STATUS"] = DropDownList1.Text;
 
         //建議售價
         if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
@@ -481,29 +479,79 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             QUERYS.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
         }
 
+
         //銷售重點
         if (!string.IsNullOrEmpty(TextBox10.Text))
         {
-            QUERYS.AppendFormat(@" AND [INVMB].MB002 LIKE '%{0}%'", TextBox10.Text);
+            QUERYS.AppendFormat(@" AND MB002 LIKE '%{0}%'", TextBox10.Text);
         }
 
+        //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
+
         cmdTxt.AppendFormat(@" 
-                                SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
-                                ,[PRICES1],[PRICES2],[PRICES3]
-                                ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
-                                ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
-                               ,(CONVERT(NVARCHAR,MB093)+'*'+CONVERT(NVARCHAR,MB094)+'*'+CONVERT(NVARCHAR,MB095)) AS MB093094095
+                           SELECT *
+                            FROM 
+                            (
+                            SELECT 
+                            [PRODUCTS].[MB001]
+                            ,[PRODUCTSFEATURES]
+                            ,[SALESFOCUS]
+                            ,[COPYWRITINGS]
+                            ,[PICPATHS]
+                            ,[PRICES1]
+                            ,[PRICES2]
+                            ,[PRICES3]
+                            ,[MOQS]
+                            ,[COMPANYS]
+                            ,MB1.MB002
+                            ,MB1.MB003
+                            ,MB1.MB004
+                            ,MA003
+                            ,(SELECT TOP 1 ISNULL(MD007,0) FROM [TK].dbo.BOMMD WHERE MD001=[PRODUCTS].[MB001] AND MD003 LIKE '201%' ORDER BY MD003) AS MD007,CONVERT(NVARCHAR,MB1.MB023)+(CASE WHEN MB1.MB198='1' THEN '天' ELSE (CASE WHEN MB1.MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD'
+                            ,CONVERT(decimal(16,3),ISNULL(MB1.MB047,0)) AS MB047
+                            ,MB1.MB013
+                            ,(CONVERT(NVARCHAR,MB093)+'*'+CONVERT(NVARCHAR,MB094)+'*'+CONVERT(NVARCHAR,MB095)) AS MB093094095
+                            ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
 
-                                FROM [TKBUSINESS].[dbo].[PRODUCTS]
-                                LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
-                                LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
-                                LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
-                                LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
-                                WHERE 1=1
-                                {0}
-                                ORDER BY [PRODUCTS].[MB001]
 
+                            FROM [TKBUSINESS].[dbo].[PRODUCTS]
+                            LEFT JOIN [TK].dbo.[INVMB] MB1 ON [PRODUCTS].[MB001]=MB1.[MB001]
+                            LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
+                            LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
+                            WHERE 1=1 
+                            UNION ALL
+                            SELECT 
+                            [MB001]
+                            ,[PRODUCTSFEATURES]
+                            ,[SALESFOCUS]
+                            ,[COPYWRITINGS]
+                            ,[PICPATHS]
+                            ,[PRICES1]
+                            ,[PRICES2]
+                            ,[PRICES3]
+                            ,[MOQS]
+                            ,[COMPANYS]
+                            ,[MB002]
+                            ,[MB003]
+                            ,[MB004]
+                            ,[MA003]
+                            ,[MD007]
+                            ,[VALIDITYPERIOD]
+                            ,[MB047]
+                            ,[MB013]
+                            ,[MB093094095]
+                            ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+
+                            FROM [TKBUSINESS].[dbo].[PRODUCTS_OTHERS]
+                            LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS_OTHERS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
+                            WHERE 1=1 
+                            ) AS TEMP
+                            WHERE 1=1
+
+                           {0}
+                           ORDER BY [COPYWRITINGS],[MB001]
                                 ", QUERYS.ToString());
+
 
         //string cmdTxt = @" 
         //                SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
@@ -547,115 +595,122 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
 
                 //excel標題
-                ws.Cells[1, 1].Value = "品號";
+                ws.Cells[1, 1].Value = "公司";
                 ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 2].Value = "品名";
+                ws.Cells[1, 2].Value = "品號";
                 ws.Cells[1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 3].Value = "規格";
+                ws.Cells[1, 3].Value = "品名";
                 ws.Cells[1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 4].Value = "單位";
+                ws.Cells[1, 4].Value = "規格";
                 ws.Cells[1, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 5].Value = "口味";
+                ws.Cells[1, 5].Value = "單位";
                 ws.Cells[1, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 6].Value = "箱入數";
+                ws.Cells[1, 6].Value = "口味";
                 ws.Cells[1, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 7].Value = "有效期";
+                ws.Cells[1, 7].Value = "箱入數";
                 ws.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 8].Value = "標準售價";
+                ws.Cells[1, 8].Value = "有效期";
                 ws.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 9].Value = "IP價";
+                ws.Cells[1, 9].Value = "標準售價";
                 ws.Cells[1, 9].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 10].Value = "DM價";
+                ws.Cells[1, 10].Value = "IP價";
                 ws.Cells[1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 11].Value = "條碼";
+                ws.Cells[1, 11].Value = "DM價";
                 ws.Cells[1, 11].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 12].Value = "銷售重點";
+                ws.Cells[1, 12].Value = "條碼";
                 ws.Cells[1, 12].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 12].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 13].Value = "銷售通路";
+                ws.Cells[1, 13].Value = "銷售重點";
                 ws.Cells[1, 13].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 14].Value = "照片";
+                ws.Cells[1, 14].Value = "銷售通路";
                 ws.Cells[1, 14].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 14].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 14].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 15].Value = "長*寬*高 ";
+                ws.Cells[1, 15].Value = "照片";
                 ws.Cells[1, 15].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 15].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 15].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 16].Value = "長*寬*高 ";
+                ws.Cells[1, 16].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 16].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 15].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
                 foreach (DataRow od in dt.Rows)
                 {
-                    ws.Cells[ROWS, 1].Value = od["MB001"].ToString();
+                    ws.Cells[ROWS, 1].Value = od["COMPANYS"].ToString();
                     ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 2].Value = od["MB002"].ToString();
+                    ws.Cells[ROWS, 2].Value = od["MB001"].ToString();
                     ws.Cells[ROWS, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 3].Value = od["MB003"].ToString();
+                    ws.Cells[ROWS, 3].Value = od["MB002"].ToString();
                     ws.Cells[ROWS, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 4].Value = od["MB004"].ToString();
+                    ws.Cells[ROWS, 4].Value = od["MB003"].ToString();
                     ws.Cells[ROWS, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 5].Value = od["MA003"].ToString();
+                    ws.Cells[ROWS, 5].Value = od["MB004"].ToString();
                     ws.Cells[ROWS, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 6].Value = od["MD007"].ToString();
+                    ws.Cells[ROWS, 6].Value = od["MA003"].ToString();
                     ws.Cells[ROWS, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 7].Value = od["VALIDITYPERIOD"].ToString();
+                    ws.Cells[ROWS, 7].Value = od["MD007"].ToString();
                     ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 8].Value = od["PRICES1"].ToString();
+                    ws.Cells[ROWS, 8].Value = od["VALIDITYPERIOD"].ToString();
                     ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 9].Value = od["PRICES2"].ToString();
+                    ws.Cells[ROWS, 9].Value = od["PRICES1"].ToString();
                     ws.Cells[ROWS, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 10].Value = od["PRICES3"].ToString();
+                    ws.Cells[ROWS, 10].Value = od["PRICES2"].ToString();
                     ws.Cells[ROWS, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 11].Value = od["MB013"].ToString();
+                    ws.Cells[ROWS, 11].Value = od["PRICES3"].ToString();
                     ws.Cells[ROWS, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 12].Value = od["PRODUCTSFEATURES"].ToString();
+                    ws.Cells[ROWS, 12].Value = od["MB013"].ToString();
                     ws.Cells[ROWS, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 12].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 13].Value = od["SALESFOCUS"].ToString();
+                    ws.Cells[ROWS, 13].Value = od["PRODUCTSFEATURES"].ToString();
                     ws.Cells[ROWS, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 14].Value = od["SALESFOCUS"].ToString();
+                    ws.Cells[ROWS, 14].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 14].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
                     ws.Cells[ROWS, 15].Value = od["MB093094095"].ToString();
                     ws.Cells[ROWS, 15].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 15].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
 
-                    ws.Cells[ROWS, 14].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 16].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
                     try
                     {
@@ -695,7 +750,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                             picture.From.Row = ROWS;
                             picture.From.Column = COLUMNS;
 
-                            picture.SetPosition(1 * ROWS - 1, 5, 13, 5);//設置圖片的位置
+                            picture.SetPosition(1 * ROWS - 1, 5, 15, 5);//設置圖片的位置
                             picture.SetSize(50, 50);//設置圖片的大小
                         }
                     }
