@@ -25,6 +25,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         if (!IsPostBack)
         {
             BindDropDownList();
+            BindDropDownList2();
 
             BindGrid("");
         }
@@ -47,7 +48,9 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @" SELECT '全部' AS SALESFOCUS UNION ALL SELECT SALESFOCUS  FROM  [TKBUSINESS].[dbo].[PRODUCTS]  GROUP BY SALESFOCUS ";
+        string cmdTxt = @" 
+                        SELECT '全部' AS SALESFOCUS UNION ALL SELECT SALESFOCUS  FROM  [TKBUSINESS].[dbo].[PRODUCTS]  GROUP BY SALESFOCUS
+                        ";
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
 
@@ -64,97 +67,148 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
         }
 
+    }
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("COMPANYS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT '全部' AS COMPANYS 
+                        UNION ALL SELECT COMPANYS  FROM  [TKBUSINESS].[dbo].[PRODUCTS]  GROUP BY COMPANYS 
+                        UNION ALL SELECT COMPANYS  FROM  [TKBUSINESS].[dbo].[PRODUCTS_OTHERS]  GROUP BY COMPANYS
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "COMPANYS";
+            DropDownList2.DataValueField = "COMPANYS";
+            DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+
 
 
     }
+
     private void BindGrid(string SALESFOCUS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
-        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+        StringBuilder QUERYS4 = new StringBuilder();
+        StringBuilder QUERYS5 = new StringBuilder();
+        StringBuilder QUERYS6 = new StringBuilder();
+        StringBuilder QUERYS7 = new StringBuilder();
+        StringBuilder QUERYS8 = new StringBuilder();
+        StringBuilder QUERYS9 = new StringBuilder();
 
-      
 
-        //狀態
-        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        //公司
+        if (!string.IsNullOrEmpty(DropDownList2.Text))
+        {
+            if (DropDownList2.Text.Equals("全部"))
+            {
+                QUERYS1.AppendFormat(@" ");
+            }
+            else if (!DropDownList2.Text.Equals("全部"))
+            {
+                QUERYS1.AppendFormat(@" AND  [COMPANYS]='{0}' ", DropDownList2.Text);
+            }
+        }
+        //銷售通路
+            if (!string.IsNullOrEmpty(DropDownList1.Text))
         {
             if (DropDownList1.Text.Equals("全部"))
             {
-                QUERYS.AppendFormat(@" ");
+                QUERYS2.AppendFormat(@" ");
             }
             else if(!DropDownList1.Text.Equals("全部"))
             {
-                QUERYS.AppendFormat(@" AND  [SALESFOCUS]='{0}' ", DropDownList1.Text);
+                QUERYS2.AppendFormat(@" AND  [SALESFOCUS]='{0}' ", DropDownList1.Text);
             }
         }
 
         //建議售價
         if (!string.IsNullOrEmpty(TextBox1.Text)&& !string.IsNullOrEmpty(TextBox2.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES1]>={0} AND [PRICES1]<={1}", TextBox1.Text, TextBox2.Text);
+            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} AND [PRICES1]<={1}", TextBox1.Text, TextBox2.Text);
         }
         else if (!string.IsNullOrEmpty(TextBox1.Text)&& string.IsNullOrEmpty(TextBox2.Text) )
         {
-            QUERYS.AppendFormat(@" AND [PRICES1]>={0} ", TextBox1.Text);
+            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} ", TextBox1.Text);
         }
         else if (string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES1]<={0} ", TextBox2.Text);
+            QUERYS3.AppendFormat(@" AND [PRICES1]<={0} ", TextBox2.Text);
         }
 
         //IP價
         if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES2]>={0} AND [PRICES2]<={1}", TextBox3.Text, TextBox4.Text);
+            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} AND [PRICES2]<={1}", TextBox3.Text, TextBox4.Text);
         }
         else if (!string.IsNullOrEmpty(TextBox3.Text) && string.IsNullOrEmpty(TextBox4.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES2]>={0} ", TextBox3.Text);
+            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} ", TextBox3.Text);
         }
         else if (string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES2]<={0} ", TextBox4.Text);
+            QUERYS4.AppendFormat(@" AND [PRICES2]<={0} ", TextBox4.Text);
         }
 
         //DM價
         if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES3]>={0} AND [PRICES3]<={1}", TextBox5.Text, TextBox6.Text);
+            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} AND [PRICES3]<={1}", TextBox5.Text, TextBox6.Text);
         }
         else if (!string.IsNullOrEmpty(TextBox5.Text) && string.IsNullOrEmpty(TextBox6.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES3]>={0} ", TextBox5.Text);
+            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} ", TextBox5.Text);
         }
         else if (string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
         {
-            QUERYS.AppendFormat(@" AND [PRICES3]<={0} ", TextBox6.Text);
+            QUERYS5.AppendFormat(@" AND [PRICES3]<={0} ", TextBox6.Text);
         }
 
         //口味
         if (!string.IsNullOrEmpty(TextBox7.Text) )
         {
-            QUERYS.AppendFormat(@" AND MA003 LIKE '%{0}%'", TextBox7.Text);
+            QUERYS6.AppendFormat(@" AND MA003 LIKE '%{0}%'", TextBox7.Text);
         }
 
         //效期
         if (!string.IsNullOrEmpty(TextBox8.Text))
         {
-            QUERYS.AppendFormat(@" AND CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) LIKE '%{0}%'", TextBox8.Text);
+            QUERYS7.AppendFormat(@" AND CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) LIKE '%{0}%'", TextBox8.Text);
         }
 
         //銷售重點
         if (!string.IsNullOrEmpty(TextBox9.Text))
         {
-            QUERYS.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
+            QUERYS8.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
         }
 
 
         //銷售重點
         if (!string.IsNullOrEmpty(TextBox10.Text))
         {
-            QUERYS.AppendFormat(@" AND MB002 LIKE '%{0}%'", TextBox10.Text);
+            QUERYS9.AppendFormat(@" AND MB002 LIKE '%{0}%'", TextBox10.Text);
         }
 
         //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
@@ -221,8 +275,17 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                             WHERE 1=1
 
                            {0}
+                            {1}
+                            {2}
+                            {3}
+                            {4}
+                            {5}
+                            {6}
+                            {7}
+                            {8}
+
                            ORDER BY [COPYWRITINGS],[MB001]
-                                ", QUERYS.ToString());
+                                ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString(), QUERYS6.ToString(), QUERYS7.ToString(), QUERYS8.ToString(), QUERYS9.ToString());
 
        
 

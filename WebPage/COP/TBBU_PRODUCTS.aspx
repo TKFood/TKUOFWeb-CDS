@@ -57,6 +57,15 @@
                         <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label14" runat="server" Text="公司:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
                                     <asp:Label ID="Label2" runat="server" Text="銷售通路:" meta:resourcekey="Label4Resource1"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
@@ -197,7 +206,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="長*寬*高" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="長寬高" runat="server" Text='<%# Bind("MB093094095") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>                                                        
+                                                        <asp:Label ID="長寬高" runat="server" Text='<%# Bind("MB093094095") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="有效期限" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -206,17 +215,17 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="建議售價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
+                                                    <ItemTemplate>
                                                         <asp:Label ID="建議售價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES1", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="IP價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
-                                                         <asp:Label ID="IP價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES2", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="IP價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES2", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="DM價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
+                                                    <ItemTemplate>
                                                         <asp:Label ID="DM價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES3", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -277,7 +286,7 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView3" runat="server">
                     <div id="tabs-3">
-                           <table class="PopTable">
+                        <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label13" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
