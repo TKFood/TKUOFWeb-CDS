@@ -270,7 +270,7 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
             }
             else
             {
-                Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTSDialogADD.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+                Dialog.Open2(lbtnName, "~/CDS/WebPage/COP/TBBU_PRODUCTS_OTHERSDialogEDITDEL.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
             }
             
         }
