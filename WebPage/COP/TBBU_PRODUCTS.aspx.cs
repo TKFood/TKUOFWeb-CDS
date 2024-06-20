@@ -401,58 +401,9 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
     {
         SETEXCEL();
 
-        //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-
-        //string cmdTxt = @" 
-        //               SELECT [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
-        //                ,MB002,MB003,MB004,MA003,ISNULL(MD007,0) AS MD007,CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB047,0)) AS MB047,MB013
-        //                ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
-        //                FROM [TKBUSINESS].[dbo].[PRODUCTS]
-        //                LEFT JOIN [TK].dbo.[INVMB] ON [PRODUCTS].[MB001]=[INVMB].[MB001]
-        //                LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
-        //                LEFT JOIN [TK].dbo.BOMMD ON MD001=[INVMB].[MB001] AND MD003 LIKE '201%'
-        //                LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_TOPIC]=[PRODUCTS].[MB001] COLLATE Chinese_Taiwan_Stroke_BIN
-        //                ORDER BY [PRODUCTS].[MB001]
-        //                ";
-
-
-
-        //DataTable dt = new DataTable();
-
-        //dt.Load(m_db.ExecuteReader(cmdTxt));
-
-        //if (dt.Rows.Count > 0)
-        //{
-        //    dt.Columns[0].Caption = "ID";
-
-
-        //    e.Datasource = dt;
-        //}
+      
     }
 
-    //private void AddImage(ExcelWorksheet oSheet, int rowIndex, int colIndex, string imagePath)
-    //{
-    //    Bitmap image = new Bitmap(imagePath);
-    //    ExcelPicture excelImage = null;
-    //    if (image != null)
-    //    {
-    //        excelImage = oSheet.Drawings.AddPicture("Debopam Pal", image);
-    //        excelImage.From.Column = colIndex;
-    //        excelImage.From.Row = rowIndex;
-    //        excelImage.SetSize(100, 100);
-    //        //2x2 px space for better alignment
-    //        excelImage.From.ColumnOff = Pixel2MTU(2);
-    //        excelImage.From.RowOff = Pixel2MTU(2);
-    //    }
-    //}
-
-    //public int Pixel2MTU(int pixels)
-    //{
-    //    int mtus = pixels * 9525;
-    //    return mtus;
-    //}
 
 
     public override void VerifyRenderingInServerForm(Control control) 
@@ -927,12 +878,38 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         Response.Write(sw.ToString());
         Response.End();
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void MyButtonClick(object sender, System.EventArgs e)
     {
       
 
     }
+    protected void btn4_Click(object sender, System.EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        {
+            if (Dialog.GetReturnValue().Equals("REFRESH"))
+            {
+                BindGrid("");
+            }
+        }
 
-  
+    
+    }
+    protected void btn5_Click(object sender, System.EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(Dialog.GetReturnValue()))
+        {
+            if (Dialog.GetReturnValue().Equals("REFRESH"))
+            {
+                BindGrid("");
+            }
+        }
+
+
+    }
+
+
+
+
     #endregion
 }

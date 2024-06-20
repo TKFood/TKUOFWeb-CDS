@@ -28,7 +28,7 @@
 
         //如果有設定回傳值則執行sender Event
         function OpenDialogResult(returnValue) {
-            if (typeof (returnValue) == "undefined")
+            if (typeof (returnValue) == "REFRESH")
                 return false;
             else
                 return true;
@@ -268,7 +268,7 @@
                                     <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
+                                    <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)"  onclick="btn4_Click" meta:resourcekey="btn4Resource1" />
 
                                 </td>
                             </tr>
@@ -283,7 +283,7 @@
                                     <asp:Label ID="Label13" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:Button ID="btn5" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn5_Click(this)" meta:resourcekey="btn5Resource1" />
+                                    <asp:Button ID="btn5" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn5_Click(this)" onclick="btn5_Click" meta:resourcekey="btn5Resource1" />
 
                                 </td>
                             </tr>

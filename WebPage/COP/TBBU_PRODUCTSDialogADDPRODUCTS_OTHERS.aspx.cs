@@ -57,6 +57,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADDPRODUCTS_OTHERS : Ede.Uof
 
         ADD();
 
+        Dialog.SetReturnValue2("REFRESH");
         Dialog.Close(this);
 
     }

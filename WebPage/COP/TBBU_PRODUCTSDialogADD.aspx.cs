@@ -57,6 +57,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
 
         ADD();
 
+        Dialog.SetReturnValue2("REFRESH");
         Dialog.Close(this);
 
     }
@@ -68,7 +69,6 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
         //Dialog.SetReturnValue2(txtReturnValue.Text);
 
         ADD();
-
        
     }
 
@@ -111,9 +111,9 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
         {
             string cmdTxt = @"  
                         INSERT INTO [TKBUSINESS].[dbo].[PRODUCTS]
-                        ([MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PRICES1],[PRICES2],[PRICES3],[MOQS])
+                        ([MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PRICES1],[PRICES2],[PRICES3],[MOQS],[COMPANYS])
                         VALUES
-                        (@MB001,@PRODUCTSFEATURES,@SALESFOCUS,@COPYWRITINGS,@PRICES1,@PRICES2,@PRICES3,@MOQS)         
+                        (@MB001,@PRODUCTSFEATURES,@SALESFOCUS,@COPYWRITINGS,@PRICES1,@PRICES2,@PRICES3,@MOQS,@COMPANYS)         
 
                             ";
 
@@ -127,7 +127,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogADD : Ede.Uof.Utility.Page.B
             m_db.AddParameter("@PRICES2", PRICES2);
             m_db.AddParameter("@PRICES3", PRICES3);
             m_db.AddParameter("@MOQS", MOQS);
-
+            m_db.AddParameter("@COMPANYS", "老楊");
 
 
             m_db.ExecuteNonQuery(cmdTxt);
