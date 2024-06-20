@@ -178,7 +178,8 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                             ,MB1.MB003
                             ,MB1.MB004
                             ,MA003
-                            ,(SELECT TOP 1 ISNULL(MD007,0) FROM [TK].dbo.BOMMD WHERE MD001=[PRODUCTS].[MB001] AND MD003 LIKE '201%' ORDER BY MD003) AS MD007,CONVERT(NVARCHAR,MB1.MB023)+(CASE WHEN MB1.MB198='1' THEN '天' ELSE (CASE WHEN MB1.MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD'
+                            ,CONVERT(NVARCHAR,(SELECT TOP 1 ISNULL(MD007,0) FROM [TK].dbo.BOMMD WHERE MD001=[PRODUCTS].[MB001] AND MD003 LIKE '201%' ORDER BY MD003)) AS MD007
+                            ,CONVERT(NVARCHAR,MB1.MB023)+(CASE WHEN MB1.MB198='1' THEN '天' ELSE (CASE WHEN MB1.MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD'
                             ,CONVERT(decimal(16,3),ISNULL(MB1.MB047,0)) AS MB047
                             ,MB1.MB013
                             ,(CONVERT(NVARCHAR,MB093)+'*'+CONVERT(NVARCHAR,MB094)+'*'+CONVERT(NVARCHAR,MB095)) AS MB093094095

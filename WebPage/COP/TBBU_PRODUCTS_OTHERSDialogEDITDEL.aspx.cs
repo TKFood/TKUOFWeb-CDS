@@ -72,7 +72,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTS_OTHERSDialogEDITDEL: Ede.Uof.Util
     }
     protected void btn1_Click(object sender, EventArgs e)
     {
-        DELCOPCOPMACLIENT(lblParam.Text);
+        DEL_PRODUCTS_OTHERS(lblParam.Text);
     }
 
 
@@ -127,53 +127,118 @@ public partial class CDS_WebPage_TBBU_PRODUCTS_OTHERSDialogEDITDEL: Ede.Uof.Util
     public void UPDATE()
     {
         string ID = lblParam.Text;
-        string MB002 = TextBox1.Text;
-        string PRODUCTSFEATURES = TextBox2.Text;
-        string SALESFOCUS = TextBox3.Text;
-        string COPYWRITINGS = "";
-        string PRICES1 = TextBox4.Text;
-        string PRICES2 = TextBox5.Text;
-        string PRICES3 = TextBox6.Text;
-        string MOQS= TextBox7.Text;
-
+        string COMPANYS = TextBox1.Text;
+        string MB001 = TextBox2.Text;
+        string MB002 = TextBox3.Text;
+        string MB003 = TextBox4.Text;
+        string MB004 = TextBox5.Text;
+        string MA003 = TextBox6.Text;
+        string MD007 = TextBox7.Text;
+        string MB093094095 = TextBox8.Text;
+        string VALIDITYPERIOD = TextBox9.Text;
+        string MB013 = TextBox10.Text;
+        string PRODUCTSFEATURES = TextBox11.Text;
+        string SALESFOCUS = TextBox12.Text;
+        string PRICES1 = TextBox13.Text;
+        string PRICES2 = TextBox14.Text;
+        string PRICES3 = TextBox15.Text;
+        string MOQS = TextBox16.Text;
 
         if (!string.IsNullOrEmpty(ID) )
         {
-            UPDATEPRODUCTS(ID, PRODUCTSFEATURES, SALESFOCUS, COPYWRITINGS, PRICES1, PRICES2, PRICES3, MOQS);
+            UPDATE_PRODUCTS_OTHERS(
+                                 ID,
+                                    COMPANYS ,
+                                    MB001,
+                                    MB002,
+                                    MB003,
+                                    MB004,
+                                    MA003,
+                                    MD007 ,
+                                    MB093094095 ,
+                                    VALIDITYPERIOD ,
+                                    MB013,
+                                    PRODUCTSFEATURES,
+                                    SALESFOCUS ,
+                                    PRICES1,
+                                    PRICES2 ,
+                                    PRICES3,
+                                    MOQS 
+                                        );
         }
 
         Dialog.SetReturnValue2("NeedPostBack");
     }
-    public void UPDATEPRODUCTS(string ID, string PRODUCTSFEATURES, string SALESFOCUS, string COPYWRITINGS, string PRICES1, string PRICES2, string PRICES3,string MOQS)
+    public void UPDATE_PRODUCTS_OTHERS(
+                                    string ID,
+                                    string COMPANYS,
+                                    string MB001,
+                                    string MB002,
+                                    string MB003,
+                                    string MB004,
+                                    string MA003,
+                                    string MD007,
+                                    string MB093094095,
+                                    string VALIDITYPERIOD,
+                                    string MB013,
+                                    string PRODUCTSFEATURES,
+                                    string SALESFOCUS,
+                                    string PRICES1,
+                                    string PRICES2,
+                                    string PRICES3,
+                                    string MOQS
+                                    )
     {
 
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  
-                        UPDATE [TKBUSINESS].[dbo].[PRODUCTS]
-                        SET 
-                        [PRODUCTSFEATURES]=@PRODUCTSFEATURES
-                        ,[SALESFOCUS]=@SALESFOCUS
-                        ,[COPYWRITINGS]=@COPYWRITINGS
-                        ,[PRICES1]=@PRICES1
-                        ,[PRICES2]=@PRICES2
-                        ,[PRICES3]=@PRICES3
-                        ,[MOQS]=@MOQS
-                        WHERE [MB001]=@ID
+        string cmdTxt = @"                        
+                            UPDATE  [TKBUSINESS].[dbo].[PRODUCTS_OTHERS]
+                            SET 
+                            [COMPANYS]=@COMPANYS
+                            ,[PRODUCTSFEATURES]=@PRODUCTSFEATURES
+                            ,[SALESFOCUS]=@SALESFOCUS
+                            ,[COPYWRITINGS]=@COPYWRITINGS
+                            ,[PICPATHS]=@PICPATHS
+                            ,[PRICES1]=@PRICES1
+                            ,[PRICES2]=@PRICES2
+                            ,[PRICES3]=@PRICES3
+                            ,[MOQS]=@MOQS
+                            ,[MB002]=@MB002
+                            ,[MB003]=@MB003
+                            ,[MB004]=@MB004
+                            ,[MA003]=@MA003
+                            ,[MD007]=@MD007
+                            ,[VALIDITYPERIOD]=@VALIDITYPERIOD
+                            ,[MB047]=@MB047
+                            ,[MB013]=@MB013
+                            ,[MB093094095]=@MB093094095
+                            WHERE [MB001]=@MB001
                    
                             ";
 
 
-        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@MB001", ID);
+        m_db.AddParameter("@COMPANYS", COMPANYS);
         m_db.AddParameter("@PRODUCTSFEATURES", PRODUCTSFEATURES);
         m_db.AddParameter("@SALESFOCUS", SALESFOCUS);
-        m_db.AddParameter("@COPYWRITINGS", COPYWRITINGS);
+        m_db.AddParameter("@COPYWRITINGS", "");
+        m_db.AddParameter("@PICPATHS", "");
         m_db.AddParameter("@PRICES1", PRICES1);
         m_db.AddParameter("@PRICES2", PRICES2);
         m_db.AddParameter("@PRICES3", PRICES3);
         m_db.AddParameter("@MOQS", MOQS);
+        m_db.AddParameter("@MB002", MB002);
+        m_db.AddParameter("@MB003", MB003);
+        m_db.AddParameter("@MB004", MB004);
+        m_db.AddParameter("@MA003", MA003);
+        m_db.AddParameter("@MD007", MD007);
+        m_db.AddParameter("@VALIDITYPERIOD", VALIDITYPERIOD);
+        m_db.AddParameter("@MB047", PRICES1);
+        m_db.AddParameter("@MB013", MB013);
+        m_db.AddParameter("@MB093094095", MB093094095);
 
 
 
@@ -185,12 +250,14 @@ public partial class CDS_WebPage_TBBU_PRODUCTS_OTHERSDialogEDITDEL: Ede.Uof.Util
 
 
 
-    public void DELCOPCOPMACLIENT(string ID)
+    public void DEL_PRODUCTS_OTHERS(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"  DELETE [TKBUSINESS].[dbo].[PRODUCTS] WHERE [MB001]=@ID
+        string cmdTxt = @"  
+                            DELETE [TKBUSINESS].[dbo].[PRODUCTS_OTHERS]
+                            WHERE [MB001]=@ID
                             ";
 
         m_db.AddParameter("@ID", ID);
