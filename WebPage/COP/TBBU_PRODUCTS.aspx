@@ -73,15 +73,6 @@
 
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td class="PopTableLeftTD">
-                                    <%--<asp:Button ID="Button2" runat="server" Text="匯出" onclick="btn2_Click"  meta:resourcekey="btn2Resource1" />--%>
-                                    <%--<asp:Button ID="Button3" runat="server" Text="匯出2" onclick="btn3_Click"  meta:resourcekey="btn2Resource1" />--%>
-                             
-                                </td>
-
-                            </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label12" runat="server" Text="品名:" meta:resourcekey="Label4Resource1"></asp:Label>
