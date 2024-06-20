@@ -152,51 +152,82 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
-                                                <asp:BoundField HeaderText="品號" DataField="MB001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="品名" DataField="MB002" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Left" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="規格" DataField="MB003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="單位" DataField="MB004" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="口味" DataField="MA003" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="箱入數" DataField="MD007" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="長*寬*高" DataField="MB093094095" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="有效期" DataField="VALIDITYPERIOD" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="建議售價" DataField="PRICES1" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="IP價" DataField="PRICES2" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="DM價" DataField="PRICES3" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="條碼" DataField="MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="銷售重點" DataField="PRODUCTSFEATURES" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="銷售通路" DataField="SALESFOCUS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
-                                                <asp:BoundField HeaderText="實際MOQ" DataField="MOQS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                    <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
-                                                </asp:BoundField>
+                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="品號" runat="server" Text='<%# Bind("MB001") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="品名" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="品名" runat="server" Text='<%# Bind("MB002") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="規格" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="規格" runat="server" Text='<%# Bind("MB003") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="單位" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="單位" runat="server" Text='<%# Bind("MB004") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="口味" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="口味" runat="server" Text='<%# Bind("MA003") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="箱入數" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="箱入數" runat="server" Text='<%# Bind("MD007") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="長*寬*高" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="長寬高" runat="server" Text='<%# Bind("MB093094095") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>                                                        
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="有效期限" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="有效期限" runat="server" Text='<%# Bind("VALIDITYPERIOD") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="建議售價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="建議售價" runat="server" Text='<%# Bind("PRICES1") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="IP價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="IP價" runat="server" Text='<%# Bind("PRICES2") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="DM價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="DM價" runat="server" Text='<%# Bind("PRICES3") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="條碼" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="條碼" runat="server" Text='<%# Bind("MB013") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="銷售重點" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="銷售重點" runat="server" Text='<%# Bind("PRODUCTSFEATURES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="銷售通路" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="銷售通路" runat="server" Text='<%# Bind("SALESFOCUS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="實際MOQ" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="實際MOQ" runat="server" Text='<%# Bind("MOQS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
                                                 <asp:TemplateField HeaderText="照片" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Image ID="Image1" runat="server" HorizontalAlign="Center" Length="100px" Width="100px" />
