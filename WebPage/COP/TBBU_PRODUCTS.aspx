@@ -132,7 +132,7 @@
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
-                                    <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn5_Click"
+                                    <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click"
                                         meta:resourcekey="btn5Resource1" />
                                 </td>
 
@@ -146,6 +146,12 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="公司" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="公司" runat="server" Text='<%# Bind("COMPANYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
                                                 <asp:BoundField HeaderText="品號" DataField="MB001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                                 </asp:BoundField>
@@ -179,7 +185,6 @@
                                                 <asp:BoundField HeaderText="DM價" DataField="PRICES3" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                                 </asp:BoundField>
-
                                                 <asp:BoundField HeaderText="條碼" DataField="MB013" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemStyle HorizontalAlign="Center" Width="10px"></ItemStyle>
                                                 </asp:BoundField>
