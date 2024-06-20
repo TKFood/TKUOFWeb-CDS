@@ -72,7 +72,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
     }
     protected void btn1_Click(object sender, EventArgs e)
     {
-        DELCOPCOPMACLIENT(lblParam.Text);
+        DEL_PRODUCTS(lblParam.Text);
     }
 
 
@@ -179,7 +179,7 @@ public partial class CDS_WebPage_TBBU_PRODUCTSDialogEDITDEL : Ede.Uof.Utility.Pa
 
 
 
-    public void DELCOPCOPMACLIENT(string ID)
+    public void DEL_PRODUCTS(string ID)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
