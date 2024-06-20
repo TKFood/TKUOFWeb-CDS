@@ -100,13 +100,22 @@ public partial class CDS_WebPage_TBBU_PRODUCTS_OTHERSDialogEDITDEL: Ede.Uof.Util
 
         if (dt.Rows.Count > 0)
         {           
-            TextBox1.Text = dt.Rows[0]["MB002"].ToString();
-            TextBox2.Text = dt.Rows[0]["PRODUCTSFEATURES"].ToString();
-            TextBox3.Text = dt.Rows[0]["SALESFOCUS"].ToString();
-            TextBox4.Text = dt.Rows[0]["PRICES1"].ToString();
-            TextBox5.Text = dt.Rows[0]["PRICES2"].ToString();
-            TextBox6.Text = dt.Rows[0]["PRICES3"].ToString();
-            TextBox7.Text = dt.Rows[0]["MOQS"].ToString();
+            TextBox1.Text = dt.Rows[0]["COMPANYS"].ToString();
+            TextBox2.Text = dt.Rows[0]["MB001"].ToString();
+            TextBox3.Text = dt.Rows[0]["MB002"].ToString();
+            TextBox4.Text = dt.Rows[0]["MB003"].ToString();
+            TextBox5.Text = dt.Rows[0]["MB004"].ToString();
+            TextBox6.Text = dt.Rows[0]["MA003"].ToString();
+            TextBox7.Text = dt.Rows[0]["MD007"].ToString();
+            TextBox8.Text = dt.Rows[0]["MB093094095"].ToString();
+            TextBox9.Text = dt.Rows[0]["VALIDITYPERIOD"].ToString();
+            TextBox10.Text = dt.Rows[0]["MB013"].ToString();
+            TextBox11.Text = dt.Rows[0]["PRODUCTSFEATURES"].ToString();
+            TextBox12.Text = dt.Rows[0]["SALESFOCUS"].ToString();
+            TextBox13.Text = dt.Rows[0]["PRICES1"].ToString();
+            TextBox14.Text = dt.Rows[0]["PRICES2"].ToString();
+            TextBox15.Text = dt.Rows[0]["PRICES3"].ToString();
+            TextBox16.Text = dt.Rows[0]["MOQS"].ToString();
 
         }
 
