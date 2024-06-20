@@ -160,25 +160,67 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
 
         cmdTxt.AppendFormat(@" 
+                           SELECT *
+                            FROM 
+                            (
                             SELECT 
-                            [PRODUCTS].[MB001],[PRODUCTSFEATURES],[SALESFOCUS],[COPYWRITINGS],[PICPATHS]
-                            ,[PRICES1],[PRICES2],[PRICES3]
+                            [PRODUCTS].[MB001]
+                            ,[PRODUCTSFEATURES]
+                            ,[SALESFOCUS]
+                            ,[COPYWRITINGS]
+                            ,[PICPATHS]
+                            ,[PRICES1]
+                            ,[PRICES2]
+                            ,[PRICES3]
                             ,[MOQS]
                             ,[COMPANYS]
-
-                            ,MB1.MB002,MB1.MB003,MB1.MB004,MA003
-                            ,(SELECT TOP 1 ISNULL(MD007,0) FROM [TK].dbo.BOMMD WHERE MD001=[PRODUCTS].[MB001] AND MD003 LIKE '201%' ORDER BY MD003) AS MD007,CONVERT(NVARCHAR,MB1.MB023)+(CASE WHEN MB1.MB198='1' THEN '天' ELSE (CASE WHEN MB1.MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD',CONVERT(decimal(16,3),ISNULL(MB1.MB047,0)) AS MB047,MB1.MB013
-                            ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+                            ,MB1.MB002
+                            ,MB1.MB003
+                            ,MB1.MB004
+                            ,MA003
+                            ,(SELECT TOP 1 ISNULL(MD007,0) FROM [TK].dbo.BOMMD WHERE MD001=[PRODUCTS].[MB001] AND MD003 LIKE '201%' ORDER BY MD003) AS MD007,CONVERT(NVARCHAR,MB1.MB023)+(CASE WHEN MB1.MB198='1' THEN '天' ELSE (CASE WHEN MB1.MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD'
+                            ,CONVERT(decimal(16,3),ISNULL(MB1.MB047,0)) AS MB047
+                            ,MB1.MB013
                             ,(CONVERT(NVARCHAR,MB093)+'*'+CONVERT(NVARCHAR,MB094)+'*'+CONVERT(NVARCHAR,MB095)) AS MB093094095
+                            ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+
 
                             FROM [TKBUSINESS].[dbo].[PRODUCTS]
                             LEFT JOIN [TK].dbo.[INVMB] MB1 ON [PRODUCTS].[MB001]=MB1.[MB001]
                             LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
                             LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
                             WHERE 1=1 
-                                
+                            UNION ALL
+                            SELECT 
+                            [MB001]
+                            ,[PRODUCTSFEATURES]
+                            ,[SALESFOCUS]
+                            ,[COPYWRITINGS]
+                            ,[PICPATHS]
+                            ,[PRICES1]
+                            ,[PRICES2]
+                            ,[PRICES3]
+                            ,[MOQS]
+                            ,[COMPANYS]
+                            ,[MB002]
+                            ,[MB003]
+                            ,[MB004]
+                            ,[MA003]
+                            ,[MD007]
+                            ,[VALIDITYPERIOD]
+                            ,[MB047]
+                            ,[MB013]
+                            ,[MB093094095]
+                            ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+
+                            FROM [TKBUSINESS].[dbo].[PRODUCTS_OTHERS]
+                            LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS_OTHERS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
+                            WHERE 1=1 
+                            ) AS TEMP
+                            WHERE 1=1
+
                            {0}
-                           ORDER BY [PRODUCTS].[MB001]
+                           ORDER BY [COPYWRITINGS],[MB001]
                                 ", QUERYS.ToString());
 
        

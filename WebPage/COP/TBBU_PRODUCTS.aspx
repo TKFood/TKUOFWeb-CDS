@@ -193,18 +193,18 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="建議售價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="建議售價" runat="server" Text='<%# Bind("PRICES1") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    <ItemTemplate>                                                        
+                                                        <asp:Label ID="建議售價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES1", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="IP價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="IP價" runat="server" Text='<%# Bind("PRICES2") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    <ItemTemplate>                                                        
+                                                         <asp:Label ID="IP價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES2", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="DM價" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="DM價" runat="server" Text='<%# Bind("PRICES3") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    <ItemTemplate>                                                        
+                                                        <asp:Label ID="DM價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES3", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="條碼" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
