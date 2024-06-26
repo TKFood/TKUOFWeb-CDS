@@ -25,25 +25,11 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         if (!IsPostBack)
         {
            
-            //BindGrid("");
+           
         }
         else
         {
-
           
-
-            //if (ViewState["TextBox1"] != null)
-            //{
-            //    TextBox1.Text = ViewState["TextBox1"].ToString();
-
-            //}
-
-
-            //if (this.Session["STATUS"] != null)
-            //{
-            //    DropDownList1.SelectedItem.Text = this.Session["STATUS"].ToString();
-
-            //}
 
         }
 
@@ -129,12 +115,14 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                 ,TP008
                                 ,(TP037+TP038) AS TP037038
                                 ,STUFF((SELECT DISTINCT  ',' +MB002+ '保管人:'+MV002+'放置:'+MC006 FROM [TK].dbo.ASTMB,[TK].dbo.ASTMC,[TK].dbo.CMSMV WHERE MC003=MV001 AND  MB001=MC001 AND MB002 LIKE '%'+TP005+'%' AND MB002 LIKE '%'+MA002+'%' FOR XML PATH('')) , 1, 1, '') AS 'EMPPLACES' 
+                                ,REPLACE(TP001+TP002+TP003,' ','') AS TP001002003
                                 FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
                                 WHERE 1=1
                                 AND TO001=TP001 AND TO002=TP002
                                 AND TO005=MA001
                                 AND TO013 IN ('Y')
                                 ) AS TEMP           
+                                LEFT JOIN [TKPUR].[dbo].[UOF_PUR_REPORT_PUR_AST] ON [UOF_PUR_REPORT_PUR_AST].[MAINTP001002003]=TEMP.TP001002003
                                 WHERE 1=1
                                 {0}
                                 {1}
@@ -184,7 +172,49 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
 
 
     }
+    protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
 
+        if (e.CommandName == "Grid1Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                GridViewRow row = Grid1.Rows[rowIndex];
+                // 獲取相應的ID
+                Label LabelID = (Label)row.FindControl("ID");
+                string ID = LabelID.Text;
+                // 獲取TextBox的值                 
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+                //取得 NEWCOMMENTS 的值
+                TextBox txtNEWCOMMENTS = (TextBox)row.FindControl("txtNEWCOMMENTS");
+                string newNEWCOMMENTS = txtNEWCOMMENTS.Text;
+
+                string MID = ID;
+                string COMMETNS = newTextValue;
+
+                if (!string.IsNullOrEmpty(newTextValue))
+                {
+                   
+
+                    MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
+
+                    BindGrid("");
+                }
+
+
+
+            }
+        }
+        
+    }
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         SETEXCEL();
@@ -478,7 +508,16 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         }
 
     }
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
 
+        //string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        //Type cstype = obj.GetType();
+        //ClientScriptManager cs = pg.ClientScript;
+        //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
     #endregion
 
     #region BUTTON
