@@ -50,7 +50,7 @@
                             <asp:TextBox ID="TextBox1" runat="server" Text=""></asp:TextBox>
                         </td>
 
-                    </tr>              
+                    </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -121,7 +121,7 @@
         </telerik:RadPageView>
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
-                 <table class="PopTable">
+                <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
                             <asp:Label ID="Label1" runat="server" Text="資產名稱/廠商名稱"></asp:Label>
@@ -130,7 +130,16 @@
                             <asp:TextBox ID="TextBox3" runat="server" Text=""></asp:TextBox>
                         </td>
 
-                    </tr>                   
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="保管人放置"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox2" runat="server" Text=""></asp:TextBox>
+                        </td>
+
+                    </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
@@ -147,13 +156,13 @@
                                 <Fast:Grid ID="Grid2" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid2_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource2" OnPageIndexChanging="grid2_PageIndexChanging">
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
-                                    <Columns>         
+                                    <Columns>
                                         <asp:BoundField HeaderText="資產編號" DataField="MB001" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
-                                        </asp:BoundField>  
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="取得日期" DataField="MB016" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="LEFT" Width="80px"></ItemStyle>
-                                        </asp:BoundField>                                       
+                                        </asp:BoundField>
                                         <asp:BoundField HeaderText="廠商" DataField="MB008" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                         </asp:BoundField>
@@ -194,10 +203,9 @@
             </div>
         </telerik:RadPageView>
 
-          <telerik:RadPageView ID="RadPageView3" runat="server">
+        <telerik:RadPageView ID="RadPageView3" runat="server">
             <div id="tabs-3">
                 <table class="PopTable">
-                  
                 </table>
             </div>
         </telerik:RadPageView>

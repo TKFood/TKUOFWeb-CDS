@@ -225,7 +225,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
 
 
 
-        //TextBox1
+        //TextBox3
         if (!string.IsNullOrEmpty(TextBox3.Text))
         {
             QUERYS1.AppendFormat(@" AND (MB002 LIKE '%{0}%' OR MB008 LIKE '%{0}%') ", TextBox3.Text);
@@ -236,55 +236,45 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         }
 
 
-
-        if (!string.IsNullOrEmpty(TextBox3.Text) )
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox2.Text))
         {
-            cmdTxt.AppendFormat(@"
-                                 SELECT MB001
-                                ,MB002
-                                ,MB003
-                                ,MB011
-                                ,MB012
-                                ,MB020
-                                ,MB008
-                                ,MB016
-                                ,STUFF((
-                                        SELECT ', ' + MV002+' 放置地點:'+MC006+' 數量:'+CONVERT(NVARCHAR,MC004)
-                                        FROM [TK].dbo.ASTMC,[TK].dbo.CMSMV
-                                        WHERE MC003=MV001 AND MB001=MC001
-                                        FOR XML PATH('')
-                                    ), 1, 2, '') AS EMPPLACES
-                                FROM [TK].dbo.ASTMB
-                                WHERE 1=1
-                                {0}
-                                ORDER BY MB001
-        
-
-
-                             ", QUERYS1.ToString());
+            QUERYS2.AppendFormat(@" AND EMPPLACES LIKE '%{0}%'  ", TextBox2.Text);
         }
         else
         {
-            cmdTxt.AppendFormat(@"
-                                SELECT MB001
-                                ,MB002
-                                ,MB003
-                                ,MB011
-                                ,MB012
-                                ,MB020
-                                ,MB008
-                                ,MB016
-                                ,STUFF((
-                                        SELECT ', ' + MV002+' 放置地點:'+MC006+' 數量:'+CONVERT(NVARCHAR,MC004)
-                                        FROM [TK].dbo.ASTMC,[TK].dbo.CMSMV
-                                        WHERE MC003=MV001 AND MB001=MC001
-                                        FOR XML PATH('')
-                                    ), 1, 2, '') AS EMPPLACES
-                                FROM [TK].dbo.ASTMB
-                                WHERE 1=1
-                                ORDER BY MB001
-                                ");
+            QUERYS2.AppendFormat(@" ");
         }
+
+        cmdTxt.AppendFormat(@"
+                                 SELECT *
+                                    FROM 
+                                    (
+                                    SELECT 
+                                    MB001
+                                    ,MB002
+                                    ,MB003
+                                    ,MB011
+                                    ,MB012
+                                    ,MB020
+                                    ,MB008
+                                    ,MB016
+                                    ,STUFF((
+                                            SELECT ', ' + MV002+' 放置地點:'+MC006+' 數量:'+CONVERT(NVARCHAR,MC004)
+                                            FROM [TK].dbo.ASTMC,[TK].dbo.CMSMV
+                                            WHERE MC003=MV001 AND MB001=MC001
+                                            FOR XML PATH('')
+                                        ), 1, 2, '') AS EMPPLACES
+                                    FROM [TK].dbo.ASTMB
+                                    ) AS TEMP
+                                    WHERE 1=1
+                                    {0}
+                                    {1}
+                                    ORDER BY MB001
+        
+
+
+                             ", QUERYS1.ToString(), QUERYS2.ToString());
 
 
 
