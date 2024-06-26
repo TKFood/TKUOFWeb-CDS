@@ -60,6 +60,15 @@
                         </td>
 
                     </tr>
+                        <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label5" runat="server" Text="保管部門"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox5" runat="server" Text=""></asp:TextBox>
+                        </td>
+
+                    </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
