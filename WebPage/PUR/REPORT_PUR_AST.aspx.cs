@@ -190,21 +190,19 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                 // 獲取相應的ID
                 Label LabelID = (Label)row.FindControl("ID");
                 string ID = LabelID.Text;
-                // 獲取TextBox的值                 
+                // 獲取txtNewField的值                 
                 TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
                 string newTextValue = txtNewField.Text;
                 //取得 NEWCOMMENTS 的值
-                TextBox txtNEWCOMMENTS = (TextBox)row.FindControl("txtNEWCOMMENTS");
-                string newNEWCOMMENTS = txtNEWCOMMENTS.Text;
-
-                string MID = ID;
-                string COMMETNS = newTextValue;
+                Label LabelTP005 = (Label)row.FindControl("TP005");
+                string TP005 = LabelTP005.Text;
 
                 if (!string.IsNullOrEmpty(newTextValue))
                 {
-                   
 
-                    MsgBox("成功 \r\n" + ID + " > " + newTextValue, this.Page, this);
+                    MODIFY_UOF_PUR_REPORT_PUR_AST(ID, TP005, newTextValue);
+
+                    MsgBox("成功 \r\n" + TP005 + " > " + newTextValue, this.Page, this);
 
                     BindGrid("");
                 }
@@ -507,6 +505,41 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
             //}
         }
 
+    }
+
+    public void MODIFY_UOF_PUR_REPORT_PUR_AST(
+        string TP001002003
+        ,string TP005
+        ,string COMMENTS
+       )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+        cmdTxt = @" 
+                    DELETE [TKPUR].[dbo].[UOF_PUR_REPORT_PUR_AST]
+                    WHERE  [MAINTP001002003]=@TP001002003
+
+                    INSERT INTO [TKPUR].[dbo].[UOF_PUR_REPORT_PUR_AST]
+                    (
+                    [MAINTP001002003]
+                    ,[TP005NAMES]
+                    ,[COMMENTS]
+                    )
+                    VALUES
+                    (
+                    @TP001002003
+                    ,@TP005
+                    ,@COMMENTS
+                    )
+                        ";
+        m_db.AddParameter("@TP001002003", TP001002003);
+        m_db.AddParameter("@TP005", TP005);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+
+        m_db.ExecuteNonQuery(cmdTxt);
     }
     public void MsgBox(String ex, Page pg, Object obj)
     {
