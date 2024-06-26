@@ -101,41 +101,47 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         {
             QUERYS1.AppendFormat(@" ");
         }
-               
 
-
-        if (!string.IsNullOrEmpty(TextBox1.Text) )
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox4.Text))
         {
-            cmdTxt.AppendFormat(@"
-                                SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,(TP037+TP038) AS TP037038
-                                ,STUFF((SELECT DISTINCT  ',' +MB002+ '保管人:'+MV002+'放置:'+MC006 FROM [TK].dbo.ASTMB,[TK].dbo.ASTMC,[TK].dbo.CMSMV WHERE MC003=MV001 AND  MB001=MC001 AND MB002 LIKE '%'+TP005+'%' AND MB002 LIKE '%'+MA002+'%' FOR XML PATH('')) , 1, 1, '') AS 'EMPPLACES' 
-                                FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
-                                WHERE 1=1
-                                AND TO001=TP001 AND TO002=TP002
-                                AND TO005=MA001
-                                AND TO013 IN ('Y')
-                                {0}
-                             
-                                ORDER BY TO001,TO002
-        
-
-
-                             ", QUERYS1.ToString());
+            QUERYS2.AppendFormat(@" AND EMPPLACES LIKE '%{0}%'", TextBox4.Text);
         }
         else
         {
-            cmdTxt.AppendFormat(@"
-                               SELECT TO001,TO002,TO003,TO005,MA002,TP005,TP006,TP007,TP008,(TP037+TP038) AS TP037038
+            QUERYS2.AppendFormat(@" ");
+        }
+
+
+        cmdTxt.AppendFormat(@"
+                                SELECT *
+                                FROM 
+                                (
+                                SELECT 
+                                TO001
+                                ,TO002
+                                ,TO003
+                                ,TO005
+                                ,MA002
+                                ,TP005
+                                ,TP006
+                                ,TP007
+                                ,TP008
+                                ,(TP037+TP038) AS TP037038
                                 ,STUFF((SELECT DISTINCT  ',' +MB002+ '保管人:'+MV002+'放置:'+MC006 FROM [TK].dbo.ASTMB,[TK].dbo.ASTMC,[TK].dbo.CMSMV WHERE MC003=MV001 AND  MB001=MC001 AND MB002 LIKE '%'+TP005+'%' AND MB002 LIKE '%'+MA002+'%' FOR XML PATH('')) , 1, 1, '') AS 'EMPPLACES' 
                                 FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
                                 WHERE 1=1
                                 AND TO001=TP001 AND TO002=TP002
                                 AND TO005=MA001
                                 AND TO013 IN ('Y')
-                                
+                                ) AS TEMP           
+                                WHERE 1=1
+                                {0}
+                                {1}
                                 ORDER BY TO001,TO002
-                                ");
-        }
+
+
+                             ", QUERYS1.ToString(), QUERYS2.ToString());
 
 
 

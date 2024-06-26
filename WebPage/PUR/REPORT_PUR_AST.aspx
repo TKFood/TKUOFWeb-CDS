@@ -52,6 +52,15 @@
 
                     </tr>
                     <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label4" runat="server" Text="保管人放置"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox4" runat="server" Text=""></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                             <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="btn1_Click"
