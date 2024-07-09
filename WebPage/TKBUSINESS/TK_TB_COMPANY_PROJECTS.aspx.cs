@@ -775,8 +775,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 //TextBox 專案名稱         
                 TextBox txtPROJECTNAMES = (TextBox)row.FindControl("專案名稱");
                 string stringPROJECTNAMES = txtPROJECTNAMES.Text.Trim();
-                
 
+                UPDATE_TB_COMPANY_PROJECTS_ISCLOSED(ID,"Y");
                 MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
             }
         }
@@ -799,7 +799,7 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 TextBox txtPROJECTNAMES = (TextBox)row.FindControl("專案名稱");
                 string stringPROJECTNAMES = txtPROJECTNAMES.Text.Trim();
 
-
+                UPDATE_TB_COMPANY_PROJECTS_ISCLOSED(ID, "N");
                 MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
             }
         }
@@ -1024,6 +1024,25 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         {
             return null;
         }
+    }
+
+    public void UPDATE_TB_COMPANY_PROJECTS_ISCLOSED(string ID, string ISCLOSED)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+        cmdTxt = @"                  
+                UPDATE [TKBUSINESS].[dbo].[TB_COMPANY_PROJECTS]
+                SET [ISCLOSED]=@ISCLOSED
+                WHERE [ID]=@ID
+                        ";
+        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@ISCLOSED", ISCLOSED);
+       
+
+        m_db.ExecuteNonQuery(cmdTxt);
     }
     public void MsgBox(String ex, Page pg, Object obj)
     {
