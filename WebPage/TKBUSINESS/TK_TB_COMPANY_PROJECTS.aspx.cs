@@ -369,10 +369,10 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
         Grid1.DataSource = dt;
         Grid1.DataBind();
 
-        if(FIRSTTIMES.Equals("N"))
-        {
-            MsgBox("完成 \r\n", this.Page, this);
-        }
+        //if(FIRSTTIMES.Equals("N"))
+        //{
+        //    MsgBox("完成 \r\n", this.Page, this);
+        //}
        
     }
 
@@ -754,6 +754,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                         , stringTRACEDATES);
 
                 MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
+
+                BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
             }
         }
 
@@ -778,6 +780,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
                 UPDATE_TB_COMPANY_PROJECTS_ISCLOSED(ID,"Y");
                 MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
+
+                BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
             }
         }
         else if (e.CommandName == "Grid1Button4")
@@ -801,6 +805,8 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
 
                 UPDATE_TB_COMPANY_PROJECTS_ISCLOSED(ID, "N");
                 MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
+
+                BindGrid(DropDownListISCLOSE.SelectedValue.ToString());
             }
         }
     }
