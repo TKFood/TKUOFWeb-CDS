@@ -41,7 +41,7 @@
             // 获取旧内容
             if (oldContentLabel) {
                 var oldValue = oldContentLabel.innerText;
-            
+
                 // 找出新增的文字
                 var newText = newValue.replace(oldValue, '').trim();
 
@@ -123,12 +123,12 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="DataSource"></ExportExcelSettings>
                                             <Columns>
-                                                <%--<asp:TemplateField HeaderText="是否結案" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                               <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>                                                        
                                                         <asp:DropDownList ID="DropDownListISCLOSED" runat="server" Style="word-wrap: break-word; min-width: 100%;"></asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="專案編號" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                 <%--<asp:TemplateField HeaderText="專案編號" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="專案編號" runat="server" Text='<%# Bind("NO") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
@@ -205,6 +205,12 @@
                                                         <!-- 上空行 -->
                                                         <div style="margin-top: 20px;"></div>
                                                         <asp:Button ID="Grid1Button2" runat="server" Text="修改專案" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('修改專案 確定？');" />
+                                                        <!-- 上空行 -->
+                                                        <div style="margin-top: 20px;"></div>
+                                                        <asp:Button ID="Grid1Button3" runat="server" Text="改結案" CommandName="Grid1Button3" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('改結案 確定？');" />
+                                                        <!-- 上空行 -->
+                                                        <div style="margin-top: 20px;"></div>
+                                                        <asp:Button ID="Grid1Button4" runat="server" Text="改未結案" CommandName="Grid1Button4" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('改未結案 確定？');" />
                                                         <!-- 下空行 -->
                                                         <div style="margin-bottom: 20px;"></div>
                                                     </ItemTemplate>

@@ -756,6 +756,53 @@ public partial class CDS_WebPage_TKBUSINESS_TK_TB_COMPANY_PROJECTSE : Ede.Uof.Ut
                 MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
             }
         }
+
+        else if (e.CommandName == "Grid1Button3")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                GridViewRow row = Grid1.Rows[rowIndex];
+                // 獲取相應的ID
+                Label LabelID = (Label)row.FindControl("ID");
+                string ID = LabelID.Text;
+                
+                //TextBox 專案名稱         
+                TextBox txtPROJECTNAMES = (TextBox)row.FindControl("專案名稱");
+                string stringPROJECTNAMES = txtPROJECTNAMES.Text.Trim();
+                
+
+                MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
+            }
+        }
+        else if (e.CommandName == "Grid1Button4")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                GridViewRow row = Grid1.Rows[rowIndex];
+                // 獲取相應的ID
+                Label LabelID = (Label)row.FindControl("ID");
+                string ID = LabelID.Text;
+
+                //TextBox 專案名稱         
+                TextBox txtPROJECTNAMES = (TextBox)row.FindControl("專案名稱");
+                string stringPROJECTNAMES = txtPROJECTNAMES.Text.Trim();
+
+
+                MsgBox("成功 \r\n" + ID + " > " + stringPROJECTNAMES, this.Page, this);
+            }
+        }
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
