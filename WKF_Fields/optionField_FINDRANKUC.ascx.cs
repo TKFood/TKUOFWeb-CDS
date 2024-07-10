@@ -302,10 +302,12 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
             if(DT!=null&& DT.Rows.Count>=1)
             {
                 TextBox2.Text = DT.Rows[0]["RANK"].ToString();
+                TextBox3.Text = DT.Rows[0]["NAME"].ToString();
             }
             else
             {
                 TextBox2.Text = "找不到職級";
+                TextBox3.Text = "找不到姓名";
             }
             
         }
