@@ -16,6 +16,7 @@
                  <asp:TextBox ID="TextBox1" runat="server" Text="" AutoPostBack="true" OnTextChanged="TextBox1_TextChanged" ></asp:TextBox>
             </td>  
             <td>
+                <asp:Label ID="Label2" runat="server" Text="職級: " ></asp:Label>
                 <asp:TextBox ID="TextBox2" runat="server" Text="" ReadOnly="true" ></asp:TextBox>
             </td>
         </tr>

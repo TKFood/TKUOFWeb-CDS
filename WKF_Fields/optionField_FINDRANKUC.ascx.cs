@@ -16,6 +16,7 @@ using Ede.Uof.WKF.Design.Data;
 using Ede.Uof.WKF.VersionFields;
 using System.Xml;
 using System.Linq;
+using System.Text;
 
 public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagement_VersionFieldUserControl_VersionFieldUC
 {
@@ -287,15 +288,72 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
         // 检查 TextBox1 的内容是否符合要求
         string input = TextBox1.Text;
 
+        TextBox2.Text = "";
+
         // 例如，检查输入是否为空
         if (string.IsNullOrEmpty(input))
         {
-            TextBox2.Text = "TextBox1 不能为空。";
+            TextBox2.Text = "TextBox1 不能空白";
         }
         else
         {
             // 执行其他检查
-            TextBox2.Text = "输入有效。";
+            DataTable DT = SEARCH_TB_EB_USER_RANK(input);
+            if(DT!=null&& DT.Rows.Count>=1)
+            {
+                TextBox2.Text = DT.Rows[0]["RANK"].ToString();
+            }
+            else
+            {
+                TextBox2.Text = "找不到職級";
+            }
+            
         }
+    }
+
+    private DataTable SEARCH_TB_EB_USER_RANK(string ACCOUNT)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT 
+                            TB_EB_USER.USER_GUID
+                            ,TB_EB_USER.ACCOUNT
+                            ,TB_EB_USER.NAME
+                            ,TB_EB_EMPL_DEP.TITLE_ID
+                            ,TB_EB_JOB_TITLE.TITLE_NAME
+                            ,TB_EB_JOB_TITLE.RANK
+                            FROM [UOF].[dbo].[TB_EB_USER],[UOF].dbO.[TB_EB_EMPL_DEP],[UOF].[dbo].[TB_EB_JOB_TITLE]
+                            WHERE 1=1
+                            AND [TB_EB_USER].USER_GUID=TB_EB_EMPL_DEP.USER_GUID
+                            AND [TB_EB_EMPL_DEP].ORDERS=0
+                            AND [TB_EB_EMPL_DEP].TITLE_ID=[TB_EB_JOB_TITLE].TITLE_ID
+                            AND ACCOUNT='{0}'
+                               
+                                ", ACCOUNT);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count >= 1)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+
     }
 }
