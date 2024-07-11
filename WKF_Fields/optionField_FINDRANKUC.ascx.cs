@@ -125,8 +125,18 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
         get
         {
             //回傳字串
-			//取得表單欄位填寫的內容
-			return String.Empty;
+            //取得表單欄位填寫的內容
+            //return String.Empty;
+
+            //開啟 xml 文件
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlElement element = xmlDoc.CreateElement("RANKSTAG");
+            element.SetAttribute("ID", TextBox1.Text);
+            element.SetAttribute("RANKS",TextBox2.Text);
+            element.SetAttribute("NAMES", TextBox3.Text);
+
+            return element.OuterXml;
+
         }
         set
         {
