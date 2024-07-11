@@ -189,9 +189,9 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
             //若有擴充屬性，可以用該屬性存取
             // fieldOptional.ExtensionSetting
 
-            
+
             //草稿
-            if(!fieldOptional.IsAudit)
+            if (!fieldOptional.IsAudit)
             {
                 if(fieldOptional.HasAuthority)
                 {
@@ -265,10 +265,26 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
             switch(fieldOptional.FieldMode)
             {
                 case FieldMode.Print:
-                case FieldMode.View:
-                    //觀看和列印都需作沒有權限的處理
+                    break;
+
+                //觀看和列印都需作沒有權限的處理
+                case FieldMode.View:                    
                     EnabledControl(false);
                     break;
+
+                //簽核模式
+                case FieldMode.Signin:
+                    //xmlDoc
+                    XmlDocument xmlDoc = new XmlDocument();
+                    // 把 XML 的字串放入xmlDoc 中
+                    xmlDoc.LoadXml(fieldOptional.FieldValue);
+
+                    TextBox1.Text = xmlDoc.SelectSingleNode("/RANKSTAG").Attributes["ID"].Value;
+                    TextBox2.Text = xmlDoc.SelectSingleNode("/RANKSTAG").Attributes["RANKS"].Value;
+                    TextBox3.Text = xmlDoc.SelectSingleNode("/RANKSTAG").Attributes["NAMES"].Value;
+
+                    break;
+
 
             }
             
