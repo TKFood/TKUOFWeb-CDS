@@ -264,24 +264,35 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
 
             switch(fieldOptional.FieldMode)
             {
+                
+
                 case FieldMode.Print:
                     break;
 
                 //觀看和列印都需作沒有權限的處理
                 case FieldMode.View:                    
                     EnabledControl(false);
+                    //xmlDoc
+                    XmlDocument xmlDoc_View = new XmlDocument();
+                    // 把 XML 的字串放入xmlDoc 中
+                    xmlDoc_View.LoadXml(fieldOptional.FieldValue);
+
+                    TextBox1.Text = xmlDoc_View.SelectSingleNode("/RANKSTAG").Attributes["ID"].Value;
+                    TextBox2.Text = xmlDoc_View.SelectSingleNode("/RANKSTAG").Attributes["RANKS"].Value;
+                    TextBox3.Text = xmlDoc_View.SelectSingleNode("/RANKSTAG").Attributes["NAMES"].Value;
+
                     break;
 
                 //簽核模式
                 case FieldMode.Signin:
                     //xmlDoc
-                    XmlDocument xmlDoc = new XmlDocument();
+                    XmlDocument xmlDoc_Signin = new XmlDocument();
                     // 把 XML 的字串放入xmlDoc 中
-                    xmlDoc.LoadXml(fieldOptional.FieldValue);
+                    xmlDoc_Signin.LoadXml(fieldOptional.FieldValue);
 
-                    TextBox1.Text = xmlDoc.SelectSingleNode("/RANKSTAG").Attributes["ID"].Value;
-                    TextBox2.Text = xmlDoc.SelectSingleNode("/RANKSTAG").Attributes["RANKS"].Value;
-                    TextBox3.Text = xmlDoc.SelectSingleNode("/RANKSTAG").Attributes["NAMES"].Value;
+                    TextBox1.Text = xmlDoc_Signin.SelectSingleNode("/RANKSTAG").Attributes["ID"].Value;
+                    TextBox2.Text = xmlDoc_Signin.SelectSingleNode("/RANKSTAG").Attributes["RANKS"].Value;
+                    TextBox3.Text = xmlDoc_Signin.SelectSingleNode("/RANKSTAG").Attributes["NAMES"].Value;
 
                     break;
 
