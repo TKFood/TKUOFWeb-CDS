@@ -47,9 +47,25 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
     {
         get
         {
-			//回傳字串
-			//此字串的內容將會被表單拿來當做條件判斷的值
-			return String.Empty;
+            //回傳字串
+            //此字串的內容將會被表單拿來當做條件判斷的值
+            //return String.Empty;
+
+            string input = TextBox1.Text;
+            DataTable DT = SEARCH_TB_EB_USER_RANK(input);
+
+            UserUCO userUCO = new UserUCO();
+            EBUser eBUser = userUCO.GetEBUser("");
+
+            if (DT != null && DT.Rows.Count >= 1)
+            {
+                return DT.Rows[0]["USER_GUID"].ToString();
+            }
+            else
+            {
+                return String.Empty;
+            }
+
         }
     }
 
@@ -107,32 +123,9 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
             //回傳字串
             //取得表單欄位簽核者的UsetSet字串
             //內容必須符合EB UserSet的格式
-            //return String.Empty;
+            return String.Empty;
 
-            string input = TextBox1.Text;
-            DataTable DT = SEARCH_TB_EB_USER_RANK(input);
-
-            UserUCO userUCO = new UserUCO();
-            EBUser eBUser = userUCO.GetEBUser("");
-
-            if (DT != null && DT.Rows.Count >= 1)
-            {
-                eBUser = userUCO.GetEBUser(DT.Rows[0]["USER_GUID"].ToString());
-            }
-            else
-            {
-
-            }
-
-
-
-            UserSet userSet = new UserSet();
-            UserSetTitleOfGroup userSetTitleOfGroup = new UserSetTitleOfGroup();
-            userSetTitleOfGroup.GROUP_ID = eBUser.GroupID;
-            userSetTitleOfGroup.TITLE_ID = eBUser.JobTitleID;
-            userSet.Items.Add(userSetTitleOfGroup);
-
-            return userSet.GetXML();
+            
 
 
         }
