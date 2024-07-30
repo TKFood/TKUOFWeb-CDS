@@ -116,15 +116,15 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
             EBUser eBUser = userUCO.GetEBUser("");
 
             if (DT != null && DT.Rows.Count >= 1)
-            {               
-                eBUser = userUCO.GetEBUser(DT.Rows[0]["USER_GUID"].ToString());                
+            {
+                eBUser = userUCO.GetEBUser(DT.Rows[0]["USER_GUID"].ToString());
             }
             else
             {
-                
+
             }
 
-            
+
 
             UserSet userSet = new UserSet();
             UserSetTitleOfGroup userSetTitleOfGroup = new UserSetTitleOfGroup();
@@ -133,6 +133,8 @@ public partial class WKF_OptionalFields_optionField_FINDRANKUC : WKF_FormManagem
             userSet.Items.Add(userSetTitleOfGroup);
 
             return userSet.GetXML();
+
+
         }
         set
         {
