@@ -147,68 +147,68 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         //建議售價
         if (!string.IsNullOrEmpty(TextBox1.Text)&& !string.IsNullOrEmpty(TextBox2.Text))
         {
-            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} AND [PRICES1]<={1}", TextBox1.Text, TextBox2.Text);
+            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} AND [PRICES1]<={1}", TextBox1.Text.Trim(), TextBox2.Text.Trim());
         }
         else if (!string.IsNullOrEmpty(TextBox1.Text)&& string.IsNullOrEmpty(TextBox2.Text) )
         {
-            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} ", TextBox1.Text);
+            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} ", TextBox1.Text.Trim());
         }
         else if (string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
         {
-            QUERYS3.AppendFormat(@" AND [PRICES1]<={0} ", TextBox2.Text);
+            QUERYS3.AppendFormat(@" AND [PRICES1]<={0} ", TextBox2.Text.Trim());
         }
 
         //IP價
         if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
         {
-            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} AND [PRICES2]<={1}", TextBox3.Text, TextBox4.Text);
+            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} AND [PRICES2]<={1}", TextBox3.Text.Trim(), TextBox4.Text.Trim());
         }
         else if (!string.IsNullOrEmpty(TextBox3.Text) && string.IsNullOrEmpty(TextBox4.Text))
         {
-            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} ", TextBox3.Text);
+            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} ", TextBox3.Text.Trim());
         }
         else if (string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
         {
-            QUERYS4.AppendFormat(@" AND [PRICES2]<={0} ", TextBox4.Text);
+            QUERYS4.AppendFormat(@" AND [PRICES2]<={0} ", TextBox4.Text.Trim());
         }
 
         //DM價
         if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
         {
-            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} AND [PRICES3]<={1}", TextBox5.Text, TextBox6.Text);
+            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} AND [PRICES3]<={1}", TextBox5.Text.Trim(), TextBox6.Text.Trim());
         }
         else if (!string.IsNullOrEmpty(TextBox5.Text) && string.IsNullOrEmpty(TextBox6.Text))
         {
-            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} ", TextBox5.Text);
+            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} ", TextBox5.Text.Trim());
         }
         else if (string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
         {
-            QUERYS5.AppendFormat(@" AND [PRICES3]<={0} ", TextBox6.Text);
+            QUERYS5.AppendFormat(@" AND [PRICES3]<={0} ", TextBox6.Text.Trim());
         }
 
         //口味
         if (!string.IsNullOrEmpty(TextBox7.Text) )
         {
-            QUERYS6.AppendFormat(@" AND MA003 LIKE '%{0}%'", TextBox7.Text);
+            QUERYS6.AppendFormat(@" AND MA003 LIKE '%{0}%'", TextBox7.Text.Trim());
         }
 
         //效期
         if (!string.IsNullOrEmpty(TextBox8.Text))
         {
-            QUERYS7.AppendFormat(@" AND CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) LIKE '%{0}%'", TextBox8.Text);
+            QUERYS7.AppendFormat(@" AND CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) LIKE '%{0}%'", TextBox8.Text.Trim());
         }
 
         //銷售重點
         if (!string.IsNullOrEmpty(TextBox9.Text))
         {
-            QUERYS8.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text);
+            QUERYS8.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text.Trim());
         }
 
 
-        //銷售重點
+        //品號、品名
         if (!string.IsNullOrEmpty(TextBox10.Text))
         {
-            QUERYS9.AppendFormat(@" AND MB002 LIKE '%{0}%'", TextBox10.Text);
+            QUERYS9.AppendFormat(@" AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')", TextBox10.Text.Trim());
         }
 
         //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
@@ -238,13 +238,15 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                             ,MB1.MB013
                             ,(CONVERT(NVARCHAR,MB093)+'*'+CONVERT(NVARCHAR,MB094)+'*'+CONVERT(NVARCHAR,MB095)) AS MB093094095
                             ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
-
+							,MB1.MB023
+							,MB1.MB198
 
                             FROM [TKBUSINESS].[dbo].[PRODUCTS]
                             LEFT JOIN [TK].dbo.[INVMB] MB1 ON [PRODUCTS].[MB001]=MB1.[MB001]
                             LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
                             LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
                             WHERE 1=1 
+
                             UNION ALL
                             SELECT 
                             [MB001]
@@ -267,6 +269,8 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
                             ,[MB013]
                             ,[MB093094095]
                             ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+							,MB023
+							,MB198
 
                             FROM [TKBUSINESS].[dbo].[PRODUCTS_OTHERS]
                             LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS_OTHERS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN

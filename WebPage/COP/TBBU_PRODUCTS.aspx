@@ -75,7 +75,7 @@
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                    <asp:Label ID="Label12" runat="server" Text="品名:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                    <asp:Label ID="Label12" runat="server" Text="品號/品名:" meta:resourcekey="Label4Resource1"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
@@ -126,7 +126,7 @@
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                    <asp:Label ID="Label10" runat="server" Text="效期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                    <asp:Label ID="Label10" runat="server" Text="效期:(限數字)" meta:resourcekey="Label4Resource1"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
