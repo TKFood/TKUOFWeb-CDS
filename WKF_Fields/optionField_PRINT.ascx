@@ -15,7 +15,7 @@
     <table cellpadding="8" width="100%" class="">
         <tr>
             <td>
-                <asp:Button ID="Button1" runat="server" Text="列印" OnClick="Button1_Click" />
+                <asp:Button ID="Button1" runat="server" Text="開窗查看" OnClick="Button1_Click" />
 
             </td>
         </tr>
