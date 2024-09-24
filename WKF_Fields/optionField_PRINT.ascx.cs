@@ -284,15 +284,22 @@ public partial class WKF_OptionalFields_optionField_PRINT : WKF_FormManagement_V
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        ////Response.Redirect("https://eip.tkfood.com.tw/UOF/WKF/FormUse/FormPrint.aspx?TASK_ID=33e2d96a-4ce0-4ab4-8344-f077271fc8fd");
+
+        ////https://www.google.com/
+        ////Page.ClientScript.RegisterStartupScript(
+        ////this.GetType(), "OpenWindow", "window.open('https://www.google.com/','_newtab','width=620,height=400');", true);
+
+        //Page.ClientScript.RegisterStartupScript(
+        //this.GetType(), "OpenWindow", "window.open('https://eip.tkfood.com.tw/UOF/WKF/FormUse/FormPrint.aspx?TASK_ID=33e2d96a-4ce0-4ab4-8344-f077271fc8fd','_newtab','width=620,height=600');", true);
+
+
+        // 重定向到指定的網址
         //Response.Redirect("https://eip.tkfood.com.tw/UOF/WKF/FormUse/FormPrint.aspx?TASK_ID=33e2d96a-4ce0-4ab4-8344-f077271fc8fd");
 
-        //https://www.google.com/
-        //Page.ClientScript.RegisterStartupScript(
-        //this.GetType(), "OpenWindow", "window.open('https://www.google.com/','_newtab','width=620,height=400');", true);
 
         Page.ClientScript.RegisterStartupScript(
-        this.GetType(), "OpenWindow", "window.open('https://eip.tkfood.com.tw/UOF/WKF/FormUse/FormPrint.aspx?TASK_ID=33e2d96a-4ce0-4ab4-8344-f077271fc8fd','_newtab','width=620,height=600');", true);
-
+        this.GetType(), "OpenWindow", "window.open('https://eip.tkfood.com.tw/UOFTEST/WKF/FormUse/FormPrint.aspx?TASK_ID=7ac23f77-691b-4deb-b33b-67ad52c455b2','_newtab','width=620,height=600');", true);
 
 
     }
