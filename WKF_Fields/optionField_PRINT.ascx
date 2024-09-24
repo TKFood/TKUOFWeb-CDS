@@ -14,8 +14,9 @@
 <div style="width: 100%; height: 100%; border: 3px #cccccc dashed;">
     <table cellpadding="8" width="100%" class="">
         <tr>
-            <td>
-                <asp:Button ID="Button1" runat="server" Text="開窗查看" OnClick="Button1_Click" />
+            <td style="padding: 8px;font-size:20pt;">
+
+               <asp:Button ID="Button1" runat="server" Style="width: 200px; height: 50px; background-color: palevioletred;"  Text="開窗查看" OnClick="Button1_Click" />
 
             </td>
         </tr>
