@@ -310,7 +310,7 @@ public partial class WKF_OptionalFields_optionField_PRINT : WKF_FormManagement_V
         //string taskID = "7ac23f77-691b-4deb-b33b-67ad52c455b2"; // 根據需要設置這個值
 
         // 構建完整的 URL
-        string url = "https://eip.tkfood.com.tw/UOFTEST/WKF/FormUse/FormPrint.aspx?TASK_ID=" + taskID;
+        string url = "https://eip.tkfood.com.tw/UOF/WKF/FormUse/FormPrint.aspx?TASK_ID=" + taskID;
 
         // 使用 ClientScript 來打開新窗口
         string script = "window.open('" + url + "', '_newtab', 'width=620,height=600');";
