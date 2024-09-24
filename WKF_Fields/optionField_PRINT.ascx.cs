@@ -297,10 +297,27 @@ public partial class WKF_OptionalFields_optionField_PRINT : WKF_FormManagement_V
         // 重定向到指定的網址
         //Response.Redirect("https://eip.tkfood.com.tw/UOF/WKF/FormUse/FormPrint.aspx?TASK_ID=33e2d96a-4ce0-4ab4-8344-f077271fc8fd");
 
+        string taskID = "";
+        if (taskObj != null && !string.IsNullOrEmpty(taskObj.TaskId))
+        {
+            taskID = taskObj.TaskId;
+        }
+        ////另開新網頁
+        //Page.ClientScript.RegisterStartupScript(
+        //this.GetType(), "OpenWindow", "window.open('https://eip.tkfood.com.tw/UOFTEST/WKF/FormUse/FormPrint.aspx?TASK_ID=7ac23f77-691b-4deb-b33b-67ad52c455b2','_newtab','width=620,height=600');", true);
 
-        Page.ClientScript.RegisterStartupScript(
-        this.GetType(), "OpenWindow", "window.open('https://eip.tkfood.com.tw/UOFTEST/WKF/FormUse/FormPrint.aspx?TASK_ID=7ac23f77-691b-4deb-b33b-67ad52c455b2','_newtab','width=620,height=600');", true);
+        // 假設 taskID 來自於某個來源
+        //string taskID = "7ac23f77-691b-4deb-b33b-67ad52c455b2"; // 根據需要設置這個值
+
+        // 構建完整的 URL
+        string url = "https://eip.tkfood.com.tw/UOFTEST/WKF/FormUse/FormPrint.aspx?TASK_ID=" + taskID;
+
+        // 使用 ClientScript 來打開新窗口
+        string script = "window.open('" + url + "', '_newtab', 'width=620,height=600');";
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenWindow", script, true);
 
 
     }
+
+    
 }

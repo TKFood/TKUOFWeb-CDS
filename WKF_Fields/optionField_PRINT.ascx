@@ -10,6 +10,7 @@
 <asp:Label ID="lblAuthorityMsg" runat="server" Text="具填寫權限人員" Visible="False" meta:resourcekey="lblAuthorityMsgResource1"></asp:Label>
 
 
+
 <div style="width: 100%; height: 100%; border: 3px #cccccc dashed;">
     <table cellpadding="8" width="100%" class="">
         <tr>
@@ -18,5 +19,6 @@
 
             </td>
         </tr>
+        
     </table>
 </div>
