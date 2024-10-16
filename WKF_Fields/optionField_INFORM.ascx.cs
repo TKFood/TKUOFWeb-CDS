@@ -36,6 +36,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
     string CURRENTRANK = "";
     string APPLICANT_EMAIL = "";
     string FORM_NAME = "";
+    string COMMENT = "";
 
     int CHECK_CURRENTRANK = 999;
 
@@ -77,6 +78,7 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                     APPLICANT_EMAIL = DT.Rows[0]["APPLICANT_EMAIL"].ToString();
                     FORM_NAME = DT.Rows[0]["FORM_NAME"].ToString();
                     CURRENTRANK = DT.Rows[0]["CURRENTRANK"].ToString();
+                    COMMENT= DT.Rows[0]["COMMENT"].ToString();
 
                     CHECK_CURRENTRANK = Convert.ToInt32(CURRENTRANK);
                 }
@@ -605,6 +607,8 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                             ,ISNULL(formVer.DISPLAY_TITLE,'') AS VERSION_TITLE
                             ,ISNULL(task.JSON_DISPLAY,'') AS JSON_DISPLAY
                             ,[NODES].SIGN_STATUS
+                            ,[NODES].COMMENT
+
                             FROM dbo.TB_WKF_TASK task
                             INNER JOIN dbo.TB_WKF_FORM_VERSION formVer ON task.FORM_VERSION_ID = formVer.FORM_VERSION_ID
                             INNER JOIN dbo.TB_WKF_FORM form  ON  formVer.FORM_ID = form.FORM_ID 
@@ -933,8 +937,8 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                     string USER_GUID = DT.Rows[0]["USER_GUID"].ToString();
                     string EMAIL = DT.Rows[0]["EMAIL"].ToString();
 
-                    string SUBJECTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
-                    string CONTEXTMESSAGES = "[" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+                    string SUBJECTMESSAGES = "[" + CURRENTNAME + "]  [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。" +" 簽核意見: "+ COMMENT;
+                    string CONTEXTMESSAGES = "[" + CURRENTNAME + "]  [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。" + " 簽核意見: " + COMMENT;
 
                     SENDMESSAGE(USER_GUID, SUBJECTMESSAGES, CONTEXTMESSAGES);
                     SENDEMAIL(new string[] { EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
