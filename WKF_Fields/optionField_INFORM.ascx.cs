@@ -937,8 +937,10 @@ public partial class WKF_OptionalFields_optionField_INFORM : WKF_FormManagement_
                     string USER_GUID = DT.Rows[0]["USER_GUID"].ToString();
                     string EMAIL = DT.Rows[0]["EMAIL"].ToString();
 
-                    string SUBJECTMESSAGES = "[" + CURRENTNAME + "]  [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
-                    string CONTEXTMESSAGES = "[" + CURRENTNAME + "]  [" + CURRENTTITLENAME + "] ，呼叫 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+                    string SUBJECTMESSAGES = "通知人員 [ " + NAME + " ] 您好" + "  ，[" + CURRENTNAME + "][" + CURRENTTITLENAME + "]" + " 針對表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + "有問題需要進一步了解，" + "敬請您跟 [" + CURRENTNAME + "][" + CURRENTTITLENAME + "] 說明，謝謝。";
+                    string CONTEXTMESSAGES = "通知人員 [ " + NAME + " ] 您好" + "  ，[" + CURRENTNAME + "][" + CURRENTTITLENAME + "]" + " 針對表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + "有問題需要進一步了解，" + "敬請您跟 [" + CURRENTNAME + "][" + CURRENTTITLENAME + "] 說明，謝謝。";
+                    //string SUBJECTMESSAGES = "[" + CURRENTNAME + "]  [" + CURRENTTITLENAME + "] ，通知 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
+                    //string CONTEXTMESSAGES = "[" + CURRENTNAME + "]  [" + CURRENTTITLENAME + "] ，通知 [" + NAME + "] " + " 表單: [" + FORM_NAME + "] 單號: [" + FormNumber + "] " + " ，請跟 [" + CURRENTNAME + "] [" + CURRENTTITLENAME + "] 說明表單內容，謝謝。";
 
                     SENDMESSAGE(USER_GUID, SUBJECTMESSAGES, CONTEXTMESSAGES);
                     SENDEMAIL(new string[] { EMAIL }, SUBJECTMESSAGES, CONTEXTMESSAGES);
