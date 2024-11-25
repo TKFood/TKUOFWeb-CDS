@@ -151,27 +151,27 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
         //BindGrid();
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            ////Get the button that raised the event
-            //Button btn = (Button)e.Row.FindControl("GVButton1");
+    {       
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    ////Get the button that raised the event
+        //    //Button btn = (Button)e.Row.FindControl("GVButton1");
 
-            ////Get the row that contains this button
-            //GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+        //    ////Get the row that contains this button
+        //    //GridViewRow gvr = (GridViewRow)btn.NamingContainer;
 
-            ////string cellvalue = gvr.Cells[2].Text.Trim();
-            //string Cellvalue = btn.CommandArgument;
+        //    ////string cellvalue = gvr.Cells[2].Text.Trim();
+        //    //string Cellvalue = btn.CommandArgument;
 
-            //DataRowView row = (DataRowView)e.Row.DataItem;
-            //Button lbtnName = (Button)e.Row.FindControl("GVButton1");
+        //    //DataRowView row = (DataRowView)e.Row.DataItem;
+        //    //Button lbtnName = (Button)e.Row.FindControl("GVButton1");
 
-            //ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+        //    //ExpandoObject param = new { ID = Cellvalue }.ToExpando();
 
-            ////Grid開窗是用RowDataBound事件再開窗
-            ////Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-           
-        }
+        //    ////Grid開窗是用RowDataBound事件再開窗
+        //    ////Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+        //}
 
 
     }
@@ -394,6 +394,6 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
     {
        
     }
-
+ 
     #endregion
 }
