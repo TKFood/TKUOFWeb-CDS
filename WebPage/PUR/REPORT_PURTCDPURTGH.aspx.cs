@@ -104,14 +104,26 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
         {
             cmdTxt.AppendFormat(@"
                                 SELECT 
-                                MB001 '品號'
-                                ,MB002 '品名'
-                                ,MB003 '規格'                               
-                                FROM [TK].dbo.INVMB
-                                WHERE 1=1
-                                AND (MB001 LIKE '3%' OR MB001 LIKE '4%' OR  MB001 LIKE '5%' )
-                                {0}
-                                ORDER BY MB001
+                                TC004 AS '供應廠商'
+                                ,MA002 AS '廠商'
+                                ,TC003 AS '採購日'
+                                ,TC001 AS '採購單別'
+                                ,TC002 AS '採購單號'
+                                ,TD003 AS '採購序號'
+                                ,TD004 AS '品號'
+                                ,MB002 AS '品名'
+                                ,TD008 AS '請購數量'
+                                ,TD009 AS '請購單位'
+                                ,TD012 AS '預交日'
+                                ,TD015 AS '已交數量'
+                                ,TD010 AS '請購單價'
+                                ,TD011 AS '請購金額'
+                                FROM [TK].dbo.PURTC,[TK].dbo.PURTD,[TK].dbo.PURMA,[TK].dbo.INVMB
+                                WHERE TC001=TD001 AND TC002=TD002 
+                                AND TC004=MA001
+                                AND TD004=MB001
+                                AND TC003 LIKE '%202411%'
+                                ORDER BY TC004,TC001,TC002,TD003
         
 
 
@@ -203,127 +215,6 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
         //}
     }
 
-    //private void AddImage(ExcelWorksheet oSheet, int rowIndex, int colIndex, string imagePath)
-    //{
-    //    Bitmap image = new Bitmap(imagePath);
-    //    ExcelPicture excelImage = null;
-    //    if (image != null)
-    //    {
-    //        excelImage = oSheet.Drawings.AddPicture("Debopam Pal", image);
-    //        excelImage.From.Column = colIndex;
-    //        excelImage.From.Row = rowIndex;
-    //        excelImage.SetSize(100, 100);
-    //        //2x2 px space for better alignment
-    //        excelImage.From.ColumnOff = Pixel2MTU(2);
-    //        excelImage.From.RowOff = Pixel2MTU(2);
-    //    }
-    //}
-
-    //public int Pixel2MTU(int pixels)
-    //{
-    //    int mtus = pixels * 9525;
-    //    return mtus;
-    //}
-
-    private void BindGrid2(string MB001)
-    {
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        StringBuilder cmdTxt = new StringBuilder();
-        StringBuilder QUERYS = new StringBuilder();
-
-        cmdTxt.AppendFormat(@"
-                            WITH RecursiveCTE AS (
-                                -- 基本查詢，選擇起始點
-                                SELECT  1 AS Level, CAST('主品號' AS NVARCHAR) AS 品號,MD001,MD003,MD006,MD007,MD008,MC004,CAST((((MD006*(1+MD008))/MD007)/MC004) AS FLOAT) AS USED,CAST( 1 AS FLOAT) AS LASTUSED
-                                FROM [TK].dbo.BOMMD -- 請替換YourDatabaseName為實際的數據庫名稱
-	                            INNER JOIN [TK].dbo.BOMMC ON MC001=MD001
-	                            INNER JOIN [TK].dbo.INVMB ON MB001=MC001
-                                WHERE (INVMB.MB001 LIKE  '%{0}%' OR INVMB.MB002 LIKE '%{0}%'  )
-	
-                                UNION ALL
-
-                                -- 遞迴查詢，選擇下一級
-                                SELECT  R.Level + 1,CAST('明細' AS NVARCHAR) AS 品號,D.MD001, D.MD003,D.MD006,D.MD007,D.MD008,C.MC004,CAST((((D.MD006*(1+D.MD008))/D.MD007)/C.MC004) AS FLOAT)*CAST( 1 AS FLOAT)*R.USED AS USED,R.USED AS LASTUSED
-                                FROM [TK].dbo.BOMMD D
-	                            INNER JOIN [TK].dbo.BOMMC C ON C.MC001=D.MD001
-                                INNER JOIN RecursiveCTE R ON R.MD003 = D.MD001
-                            )
-                            -- 最終查詢，選擇遞迴結果
-                            SELECT RecursiveCTE.*
-                            ,MB1.MB002 MAINMB002,MB1.MB003 MAINMB003,MB1.MB004 MAINMB004
-                            ,MB2.MB002 DMB002,MB2.MB003 DMB003,MB2.MB004 DMB004
-                            ,CONVERT(DECIMAL(16,4),RecursiveCTE.USED) AS NEWUSED                           
-                            ,(CASE WHEN Level=1 THEN CONVERT(DECIMAL(16,0),RecursiveCTE.LASTUSED) ELSE  CONVERT(DECIMAL(16,4),RecursiveCTE.LASTUSED) END )AS NEWLASTUSED
-
-                            FROM RecursiveCTE
-                            LEFT JOIN [TK].dbo.INVMB MB1 ON MB1.MB001=RecursiveCTE.MD001
-                            LEFT JOIN [TK].dbo.INVMB MB2 ON MB2.MB001=RecursiveCTE.MD003
-                            ORDER BY RecursiveCTE.Level;  -- 按遞迴的層級排序
-
-
-                            ", MB001);
-
-
-
-       // m_db.AddParameter("@MB001", MB001);
-
-        DataTable dt = new DataTable();
-
-        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
-
-        Grid2.DataSource = dt;
-        Grid2.DataBind();
-    }
-
-    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        //Grid1.PageIndex = e.NewPageIndex;
-        //BindGrid();
-    }
-    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            // 取得資料綁定到 GridView 的資料物件
-            DataRowView dataItem = (DataRowView)e.Row.DataItem;
-
-            // 把整數1.000改成1
-            if(e.Row.Cells[4].Text.Equals("1.0000"))
-            {
-                e.Row.Cells[4].Text = string.Format("{0:#}", DataBinder.Eval(e.Row.DataItem, "NEWLASTUSED"));
-            }
-            else
-            {
-                e.Row.Cells[4].Text = string.Format("{0:F4}", DataBinder.Eval(e.Row.DataItem, "NEWLASTUSED"));
-            }
-
-
-            // 假設您要根據某個欄位的值來判斷是否顯示 Column2 的值
-            column1Value = dataItem["MD001"].ToString();
-
-            // 在這裡設定 Column2 的顯示值，您可以根據特定條件決定是否留空白
-            if (CHECK_column1Value.Equals(column1Value))
-            {
-                // 留空白
-                e.Row.Cells[1].Text = string.Empty;
-                e.Row.Cells[2].Text = string.Empty;
-                e.Row.Cells[3].Text = string.Empty;
-                e.Row.Cells[4].Text = string.Empty;
-                e.Row.Cells[5].Text = string.Empty;
-            }
-            else
-            {
-                CHECK_column1Value = column1Value;
-            }
-        }
-    }
-
-    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
-    {
-       
-    }
     public override void VerifyRenderingInServerForm(Control control) 
     { 
 
@@ -451,11 +342,7 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
 
     }
 
-    public void SEARCH_BOMMCBOMMD(string  MB001)
-    {
-       
-        Label3.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-    }
+
 
     #endregion
 
@@ -472,13 +359,12 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
 
 
     }
-
-
     protected void btn1_Click(object sender, EventArgs e)
     {
-        //this.Session["SDATE"] = txtDate1.Text.Trim();
-        //this.Session["EDATE"] = txtDate2.Text.Trim();
+        BindGrid("");
+
     }
+
 
     protected void btn2_Click(object sender, EventArgs e)
     {
@@ -501,34 +387,16 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
         Response.Write(sw.ToString());
         Response.End();
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
+    protected void MyButtonClick(object sender, System.EventArgs e)
     {
       
 
     }
 
-    protected void btn5_Click(object sender, EventArgs e)
-    {
-        BindGrid("");
-
-    }
+   
     protected void GVButton1_Click(object sender, EventArgs e)
     {
-        // 獲取按鈕控制項
-        Button btn = (Button)sender;
-
-        // 獲取 GridView 的行 (Row)
-        GridViewRow row = (GridViewRow)btn.NamingContainer;
-
-        // 獲取行中某個單元格 (Cell) 的值，例如第一個單元格的值
-        string cellValue = row.Cells[0].Text; // 假設您想獲取第一個單元格的值
-
-        // 在這裡您可以處理獲取的值，例如顯示在標籤或執行其他操作
-        // Label1.Text = cellValue;
-        // 其他操作...
-
-        Label3.Text = cellValue;
-        BindGrid2(cellValue);
+       
     }
 
     #endregion
