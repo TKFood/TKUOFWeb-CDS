@@ -26,34 +26,19 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
     {
         if (!IsPostBack)
         {
-           
-            BindGrid("");
+            SETDATE();
         }
         else
         {
 
-          
-
-            //if (ViewState["TextBox1"] != null)
-            //{
-            //    TextBox1.Text = ViewState["TextBox1"].ToString();
-
-            //}
-
-
-            //if (this.Session["STATUS"] != null)
-            //{
-            //    DropDownList1.SelectedItem.Text = this.Session["STATUS"].ToString();
-
-            //}
-
         }
-
-       
-
 
     }
     #region FUNCTION
+    public void SETDATE()
+    {
+        TextBox1.Text=DateTime.Now.ToString("yyyyMM");
+    }
     private void BindDropDownList()
     {
         //DataTable dt = new DataTable();
@@ -83,63 +68,74 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
 
 
     }
-    private void BindGrid(string SALESFOCUS)
+    private void BindGrid(string TC003, string TC004, string TH004)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
-        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
 
 
 
         //TextBox1
-        if (!string.IsNullOrEmpty(TextBox1.Text))
+        if (!string.IsNullOrEmpty(TC003))
         {
-            QUERYS.AppendFormat(@" AND (MB001 LIKE '%'+@MB001+'%' OR MB002 LIKE '%'+@MB001+'%')");
-        }
-
-
-        if (!string.IsNullOrEmpty(TextBox1.Text))
-        {
-            cmdTxt.AppendFormat(@"
-                                SELECT 
-                                TC004 AS '供應廠商'
-                                ,MA002 AS '廠商'
-                                ,TC003 AS '採購日'
-                                ,TC001 AS '採購單別'
-                                ,TC002 AS '採購單號'
-                                ,TD003 AS '採購序號'
-                                ,TD004 AS '品號'
-                                ,MB002 AS '品名'
-                                ,TD008 AS '請購數量'
-                                ,TD009 AS '請購單位'
-                                ,TD012 AS '預交日'
-                                ,TD015 AS '已交數量'
-                                ,TD010 AS '請購單價'
-                                ,TD011 AS '請購金額'
-                                FROM [TK].dbo.PURTC,[TK].dbo.PURTD,[TK].dbo.PURMA,[TK].dbo.INVMB
-                                WHERE TC001=TD001 AND TC002=TD002 
-                                AND TC004=MA001
-                                AND TD004=MB001
-                                AND TC003 LIKE '%202411%'
-                                ORDER BY TC004,TC001,TC002,TD003
-        
-
-
-                             ", QUERYS.ToString());
+            QUERYS1.AppendFormat(@" AND TC003 LIKE '%{0}%'", TC003);
         }
         else
         {
-            cmdTxt.AppendFormat(@"
-                              
-                             ");
+            QUERYS1.AppendFormat("");
+        }
+        //TextBox2
+        if (!string.IsNullOrEmpty(TC004))
+        {
+            QUERYS2.AppendFormat(@" AND (TC004 LIKE '%{0}%' OR MA002 LIKE '%{0}%')", TC004);
+        }
+        else
+        {
+            QUERYS2.AppendFormat("");
+        }
+        //TextBox3
+        if (!string.IsNullOrEmpty(TH004))
+        {
+            QUERYS3.AppendFormat(@" AND  (TD004 LIKE '%{0}%' OR MB002 LIKE '%{0}%')", TH004);
+        }
+        else
+        {
+            QUERYS3.AppendFormat("");
         }
 
 
+       
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            TC004 AS '供應廠商'
+                            ,MA002 AS '廠商'
+                            ,TC003 AS '採購日'
+                            ,TC001 AS '採購單別'
+                            ,TC002 AS '採購單號'
+                            ,TD003 AS '採購序號'
+                            ,TD004 AS '品號'
+                            ,MB002 AS '品名'
+                            ,TD008 AS '請購數量'
+                            ,TD009 AS '請購單位'
+                            ,TD012 AS '預交日'
+                            ,TD015 AS '已交數量'
+                            ,TD010 AS '請購單價'
+                            ,TD011 AS '請購金額'
+                            FROM [TK].dbo.PURTC,[TK].dbo.PURTD,[TK].dbo.PURMA,[TK].dbo.INVMB
+                            WHERE TC001=TD001 AND TC002=TD002 
+                            AND TC004=MA001
+                            AND TD004=MB001
+                            {0}
+                            {1}
+                            {2}
+                            ORDER BY TC004,TC001,TC002,TD003
 
-        m_db.AddParameter("@MB001", TextBox1.Text.Trim());
-
+                            ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
         DataTable dt = new DataTable();
 
@@ -361,7 +357,7 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
     }
     protected void btn1_Click(object sender, EventArgs e)
     {
-        BindGrid("");
+        BindGrid(TextBox1.Text.Trim(), TextBox2.Text.Trim(), TextBox3.Text.Trim());
 
     }
 

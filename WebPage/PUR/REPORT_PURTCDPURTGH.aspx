@@ -49,6 +49,24 @@
                         </td>
 
                     </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label1" runat="server" Text="採購廠商"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox2" runat="server" Text=""></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label3" runat="server" Text="品號/品名"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox3" runat="server" Text=""></asp:TextBox>
+                        </td>
+
+                    </tr>
 
                     <tr>
                         <td class="PopTableLeftTD"></td>
