@@ -394,6 +394,17 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
     {
        
     }
- 
+    protected void ToggleDetails_Click(object sender, EventArgs e)
+    {
+        Button button = (Button)sender;
+        GridViewRow row = (GridViewRow)button.NamingContainer;
+        Panel pnlDetails = (Panel)row.FindControl("pnlDetails");
+
+        if (pnlDetails != null)
+        {
+            pnlDetails.Visible = !pnlDetails.Visible;
+            button.Text = pnlDetails.Visible ? "-" : "+";
+        }
+    }
     #endregion
 }
