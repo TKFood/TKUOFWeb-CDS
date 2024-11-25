@@ -37,7 +37,7 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
     #region FUNCTION
     public void SETDATE()
     {
-        TextBox1.Text=DateTime.Now.ToString("yyyyMM");
+        TextBox1.Text=DateTime.Now.ToString("yyyyMMdd");
     }
     private void BindDropDownList()
     {
