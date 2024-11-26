@@ -129,8 +129,9 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGHV2 : Ede.Uof.Utility.Page.Ba
                             ,(
                                 SELECT '日期:' + TG003+' 進貨單:' +TG001+TG002+TH003+' 進貨數量:'+CONVERT(NVARCHAR,TH007)+ CHAR(13) + CHAR(10)
 	                            FROM [TK].dbo.PURTG,[TK].dbo.PURTH
-	                            WHERE TG001=TH001  AND TG002=TH002
-	                            AND TH011=TC001 AND TH012=TC002 AND TH013=TD003
+	                           	WHERE TG013='Y'
+	                            AND TG001=TH001  AND TG002=TH002
+	                            AND TH011=TC001 AND TH012=TC002 AND TH013=TD003	                          
                                 FOR XML PATH('')
                              ) AS 'DETAILS'
                             FROM [TK].dbo.PURTC,[TK].dbo.PURTD,[TK].dbo.PURMA,[TK].dbo.INVMB
