@@ -221,8 +221,9 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
         StringBuilder cmdTxt = new StringBuilder();
 
         cmdTxt.AppendFormat(@"
-                            SELECT 
-                            (CASE WHEN TG013='N' THEN '未核單' ELSE '已核' END) AS '是否核單'
+                           SELECT 
+                            REPLACE(('日期:'+TG003+' 進貨單:'+TG001+'-'+TG002+'-'+TH003+' 數量:'+CONVERT(NVARCHAR,TH007)),' ','') AS '進貨明細'
+                            ,(CASE WHEN TG013='N' THEN '未核單' ELSE '已核' END) AS '是否核單'
                             ,MA002 AS '廠商'
                             ,TG003 AS '進貨日期'
                             ,TG001 AS '進貨單別'
