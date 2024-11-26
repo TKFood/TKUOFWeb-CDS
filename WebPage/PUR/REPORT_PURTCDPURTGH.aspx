@@ -85,13 +85,24 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
+
+                                        <%-- 操作按鈕列--%>
                                         <asp:TemplateField>
                                             <ItemTemplate>
                                                 <asp:Button ID="btnToggle" runat="server" Text="+" CommandName="Expand" OnClick="ToggleDetails_Click" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
+                                        <%-- 明細資料--%>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <asp:Panel ID="pnlDetails" runat="server" Visible="False">
+                                                    <asp:GridView ID="GridDetails" runat="server" AutoGenerateColumns="True"></asp:GridView>
+                                                </asp:Panel>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
+                                        <%--主表欄位--%>
                                         <asp:BoundField HeaderText="供應廠商" DataField="供應廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
@@ -153,6 +164,7 @@
 
 
                                     </Columns>
+
                                 </Fast:Grid>
                             </div>
                         </td>
