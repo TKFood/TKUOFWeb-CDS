@@ -168,25 +168,24 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            // 獲取主表的欄位值，例如 MainID
+            string TH011 = DataBinder.Eval(e.Row.DataItem, "採購單別").ToString();
+            string TH012 = DataBinder.Eval(e.Row.DataItem, "採購單號").ToString();
+            string TH013 = DataBinder.Eval(e.Row.DataItem, "採購序號").ToString();
+
             // 獲取子 GridView 控制項
             GridView childGrid = (GridView)e.Row.FindControl("ChildGrid");
 
-            // 綁定子表資料
-            DataTable childTable = new DataTable();
-            childTable.Columns.Add("DetailID");
-            childTable.Columns.Add("DetailName");
+            // 根據 MainID 從資料庫獲取子表資料
+            DataTable childTable = SEARCH_UOF_PURTG_PURTH(TH011, TH012, TH013);
 
-            for (int i = 1; i <= 3; i++)
+            if(childTable!=null && childTable.Rows.Count>=1)
             {
-                childTable.Rows.Add(
-                                    string.Format("{0}-{1}", e.Row.DataItemIndex + 1, i),
-                                    string.Format("明細資料 {0}", i)
-                                );
-
+                // 綁定子表資料
+                childGrid.DataSource = childTable;
+                childGrid.DataBind();
             }
-
-            childGrid.DataSource = childTable;
-            childGrid.DataBind();
+           
         }
 
         //if (e.Row.RowType == DataControlRowType.DataRow)
@@ -211,6 +210,58 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
         //}
 
 
+    }
+    public DataTable SEARCH_UOF_PURTG_PURTH(string  TH011, string TH012, string TH013)
+    {
+        DataTable DT = new DataTable();
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            (CASE WHEN TG013='N' THEN '未核單' ELSE '已核' END) AS '是否核單'
+                            ,MA002 AS '廠商'
+                            ,TG003 AS '進貨日期'
+                            ,TG001 AS '進貨單別'
+                            ,TG002 AS '進貨單號'
+                            ,TH003 AS '進貨序號'
+                            ,TH004 AS '品號'
+                            ,TH005 AS '品名'
+                            ,TH008 AS '單位'
+                            ,TH010 AS '批號'
+                            ,TH007 AS '進貨數量'
+                            ,TH015 AS '驗收數量'
+                            ,TH016 AS '計價數量'
+                            ,TH017 AS '驗退數量'
+                            ,TH011 AS '採購單別'
+                            ,TH012 AS '採購單號'
+                            ,TH013 AS '採購序號'
+                            FROM [TK].dbo.PURTG,[TK].dbo.PURTH,[TK].dbo.PURMA
+                            WHERE  TG001=TH001 AND TG002=TH002
+                            AND TG005=MA001
+                            AND TH011='{0}'
+                            AND TH012='{1}'
+                            AND TH013='{2}'
+
+                            ORDER BY MA002,TG001,TG002,TH003
+
+                            ", TH011, TH012, TH013);
+
+        DataTable dt = new DataTable();
+
+        DT.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+        if(DT!=null && DT.Rows.Count>=1)
+        {
+            return DT;
+        }
+        else
+        {
+            return null;
+        }
+        
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)

@@ -99,8 +99,10 @@
                                                 <asp:Panel ID="pnlDetails" runat="server" Visible="false">
                                                     <asp:GridView ID="ChildGrid" runat="server" AutoGenerateColumns="False">
                                                         <Columns>
-                                                            <asp:BoundField DataField="DetailID" HeaderText="Detail ID" />
-                                                            <asp:BoundField DataField="DetailName" HeaderText="Detail Name" />
+                                                            <asp:BoundField DataField="進貨日期" HeaderText="進貨日期" />
+                                                            <asp:BoundField DataField="進貨單別" HeaderText="進貨單別" />
+                                                            <asp:BoundField DataField="進貨單號" HeaderText="進貨單號" />
+                                                            <asp:BoundField DataField="進貨序號" HeaderText="進貨序號" />
                                                         </Columns>
                                                     </asp:GridView>
                                                 </asp:Panel>
