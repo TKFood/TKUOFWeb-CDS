@@ -152,41 +152,10 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGHV2 : Ede.Uof.Utility.Page.Ba
     }
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if (e.CommandName == "Expand")
-        {
-            int rowIndex = Convert.ToInt32(e.CommandArgument);
-            GridViewRow row = Grid1.Rows[rowIndex];
-            Panel pnlDetails = (Panel)row.FindControl("pnlDetails");
-            Button btnToggle = (Button)row.FindControl("btnToggle");
-
-            // 切換顯示狀態
-            pnlDetails.Visible = !pnlDetails.Visible;
-            btnToggle.Text = pnlDetails.Visible ? "-" : "+";
-        }
+       
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            // 獲取主表的欄位值，例如 MainID
-            string TH011 = DataBinder.Eval(e.Row.DataItem, "採購單別").ToString();
-            string TH012 = DataBinder.Eval(e.Row.DataItem, "採購單號").ToString();
-            string TH013 = DataBinder.Eval(e.Row.DataItem, "採購序號").ToString();
-
-            // 獲取子 GridView 控制項
-            GridView childGrid = (GridView)e.Row.FindControl("ChildGrid");
-
-            // 根據 MainID 從資料庫獲取子表資料
-            DataTable childTable = SEARCH_UOF_PURTG_PURTH(TH011, TH012, TH013);
-
-            if(childTable!=null && childTable.Rows.Count>=1)
-            {
-                // 綁定子表資料
-                childGrid.DataSource = childTable;
-                childGrid.DataBind();
-            }
-           
-        }
+    {      
 
         //if (e.Row.RowType == DataControlRowType.DataRow)
         //{
@@ -483,17 +452,6 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGHV2 : Ede.Uof.Utility.Page.Ba
     {
        
     }
-    protected void ToggleDetails_Click(object sender, EventArgs e)
-    {
-        Button button = (Button)sender;
-        GridViewRow row = (GridViewRow)button.NamingContainer;
-        Panel pnlDetails = (Panel)row.FindControl("pnlDetails");
-
-        if (pnlDetails != null)
-        {
-            pnlDetails.Visible = !pnlDetails.Visible;
-            button.Text = pnlDetails.Visible ? "-" : "+";
-        }
-    }
+  
     #endregion
 }

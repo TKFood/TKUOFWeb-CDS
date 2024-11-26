@@ -85,28 +85,6 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
-
-                                      <%-- 操作按鈕列--%>
-                                        <asp:TemplateField>
-                                            <ItemTemplate>
-                                                <asp:Button ID="btnToggle" runat="server" Text="+" CommandName="Expand" CommandArgument="<%# Container.DataItemIndex %>" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-
-                                         <%--明細表欄位--%>
-                                        <asp:TemplateField>
-                                            <ItemTemplate>
-                                                <asp:Panel ID="pnlDetails" runat="server" Visible="false">
-                                                    <asp:GridView ID="ChildGrid" runat="server" AutoGenerateColumns="False" Width="500px">
-                                                        <Columns>
-                                                            <asp:BoundField DataField="進貨明細" HeaderText="" ItemStyle-HorizontalAlign="Left"/>                                                          
-                                                        </Columns>
-                                                    </asp:GridView>
-                                                </asp:Panel>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-
-
                                         <%--主表欄位--%>
                                         <asp:BoundField HeaderText="供應廠商" DataField="供應廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
