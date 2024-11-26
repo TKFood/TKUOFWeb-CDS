@@ -81,7 +81,7 @@
                     <tr>
                         <td colspan="2" class="PopTableRightTD">
                             <div style="overflow-x: auto; width: 100%">
-                                <Fast:Grid ID="Grid1" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid1_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource1" OnPageIndexChanging="grid1_PageIndexChanging">
+                                <Fast:Grid ID="Grid1" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_RowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource1" OnPageIndexChanging="grid1_PageIndexChanging">
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
@@ -89,18 +89,24 @@
                                         <%-- 操作按鈕列--%>
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:Button ID="btnToggle" runat="server" Text="+" CommandName="Expand" OnClick="ToggleDetails_Click" />
+                                                <asp:Button ID="btnToggle" runat="server" Text="+" CommandName="Expand" CommandArgument="<%# Container.DataItemIndex %>" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <%-- 明細資料--%>
+                                         <%--明細表欄位--%>
                                         <asp:TemplateField>
                                             <ItemTemplate>
-                                                <asp:Panel ID="pnlDetails" runat="server" Visible="False">
-                                                    <asp:GridView ID="GridDetails" runat="server" AutoGenerateColumns="True"></asp:GridView>
+                                                <asp:Panel ID="pnlDetails" runat="server" Visible="false">
+                                                    <asp:GridView ID="ChildGrid" runat="server" AutoGenerateColumns="False">
+                                                        <Columns>
+                                                            <asp:BoundField DataField="DetailID" HeaderText="Detail ID" />
+                                                            <asp:BoundField DataField="DetailName" HeaderText="Detail Name" />
+                                                        </Columns>
+                                                    </asp:GridView>
                                                 </asp:Panel>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
 
                                         <%--主表欄位--%>
                                         <asp:BoundField HeaderText="供應廠商" DataField="供應廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
@@ -162,7 +168,6 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-
                                     </Columns>
 
                                 </Fast:Grid>
@@ -177,5 +182,13 @@
             </div>
         </telerik:RadPageView>
     </telerik:RadMultiPage>​
+
+    <style>
+        .detail-row td:first-child {
+            color: black; /* 設定 DetailID 欄位的文字為黑色 */
+        }
+    </style>
+
 </asp:Content>
+
 

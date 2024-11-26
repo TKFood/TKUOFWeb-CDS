@@ -150,24 +150,43 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGH : Ede.Uof.Utility.Page.Base
         //Grid1.PageIndex = e.NewPageIndex;
         //BindGrid();
     }
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "Expand")
+        {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = Grid1.Rows[rowIndex];
+            Panel pnlDetails = (Panel)row.FindControl("pnlDetails");
+            Button btnToggle = (Button)row.FindControl("btnToggle");
+
+            // 切換顯示狀態
+            pnlDetails.Visible = !pnlDetails.Visible;
+            btnToggle.Text = pnlDetails.Visible ? "-" : "+";
+        }
+    }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            // 綁定明細資料
-            var detailsTable = new DataTable();
-            detailsTable.Columns.Add("DetailID");
-            detailsTable.Columns.Add("DetailName");
+            // 獲取子 GridView 控制項
+            GridView childGrid = (GridView)e.Row.FindControl("ChildGrid");
 
-            for (int i = 1; i <= 2; i++)
+            // 綁定子表資料
+            DataTable childTable = new DataTable();
+            childTable.Columns.Add("DetailID");
+            childTable.Columns.Add("DetailName");
+
+            for (int i = 1; i <= 3; i++)
             {
-                detailsTable.Rows.Add(string.Format("{0}-{1}", e.Row.RowIndex + 1, i),
-                                      string.Format("明細資料 {0}", i));
+                childTable.Rows.Add(
+                                    string.Format("{0}-{1}", e.Row.DataItemIndex + 1, i),
+                                    string.Format("明細資料 {0}", i)
+                                );
+
             }
 
-            var gridDetails = (GridView)e.Row.FindControl("GridDetails");
-            gridDetails.DataSource = detailsTable;
-            gridDetails.DataBind();
+            childGrid.DataSource = childTable;
+            childGrid.DataBind();
         }
 
         //if (e.Row.RowType == DataControlRowType.DataRow)
