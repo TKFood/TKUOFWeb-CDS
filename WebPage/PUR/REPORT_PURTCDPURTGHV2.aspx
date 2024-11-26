@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="REPORT_PURTCDPURTGH.aspx.cs" Inherits="CDS_WebPage_REPORT_PURTCDPURTGH" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="REPORT_PURTCDPURTGHV2.aspx.cs" Inherits="CDS_WebPage_REPORT_PURTCDPURTGHV2" %>
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
