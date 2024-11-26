@@ -37,7 +37,7 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGHV2 : Ede.Uof.Utility.Page.Ba
     #region FUNCTION
     public void SETDATE()
     {
-        TextBox1.Text=DateTime.Now.ToString("yyyyMMdd");
+        TextBox1.Text=DateTime.Now.ToString("yyyyMM");
     }
     private void BindDropDownList()
     {
@@ -126,6 +126,13 @@ public partial class CDS_WebPage_REPORT_PURTCDPURTGHV2 : Ede.Uof.Utility.Page.Ba
                             ,TD015 AS '已交數量'
                             ,TD010 AS '請購單價'
                             ,TD011 AS '請購金額'
+                            ,(
+                                SELECT '日期:' + TG003+' 進貨單:' +TG001+TG002+TH003+' 進貨數量:'+CONVERT(NVARCHAR,TH007)+ CHAR(13) + CHAR(10)
+	                            FROM [TK].dbo.PURTG,[TK].dbo.PURTH
+	                            WHERE TG001=TH001  AND TG002=TH002
+	                            AND TH011=TC001 AND TH012=TC002 AND TH013=TD003
+                                FOR XML PATH('')
+                             ) AS 'DETAILS'
                             FROM [TK].dbo.PURTC,[TK].dbo.PURTD,[TK].dbo.PURMA,[TK].dbo.INVMB
                             WHERE TC001=TD001 AND TC002=TD002 
                             AND TC004=MA001

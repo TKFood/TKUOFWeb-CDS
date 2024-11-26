@@ -144,7 +144,11 @@
                                                 </span>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-
+                                         <asp:TemplateField HeaderText="進貨明細" ItemStyle-Width="500px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                            <ItemTemplate>
+                                                <asp:Label ID="進貨明細" runat="server" Text='<%#Bind("DETAILS")%>' Style="word-break: break-all; white-space: pre-line; text-align: left;" Width="500px"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
 
                                 </Fast:Grid>
