@@ -451,17 +451,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
-
-        ////日期
-        //if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
-        //{
-        //    if (TextBox2.Text.Length == 1)
-        //    {
-        //        TextBox2.Text = "0" + TextBox2.Text;
-        //    }
-        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%' ", TextBox1.Text.Trim() + TextBox2.Text.Trim());
-
-        //}
+        StringBuilder QUERYS2 = new StringBuilder();
 
         //日期
         if (!string.IsNullOrEmpty(TextBox1.Text) )
@@ -519,6 +509,21 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         }
 
+        //過濾烘培品
+        DataTable DT = SEARCH_MOCMANULINEMB001LIKES();
+        if (DT != null && DT.Rows.Count >= 1)
+        {
+            foreach (DataRow DR in DT.Rows)
+            {
+                QUERYS2.AppendFormat(@" AND TD004 NOT LIKE '{0}%'", DR["MB001"].ToString());
+            }
+        }
+        else
+        {
+            // No additional SQL clause required
+            QUERYS2.AppendFormat("");
+        }
+
         cmdTxt.AppendFormat(@" 
                                 SELECT 
                                 LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))+LTRIM(RTRIM(TF004)) AS 'TF1234'
@@ -539,45 +544,17 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
                                 WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
                                 AND 1=1
-
                                 {0}
-                               
+                                {1}
                                 
 
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
-
-        //        UNION ALL
-        //                                SELECT
-        //                                LTRIM(RTRIM(TF001)) + LTRIM(RTRIM(TF002)) + LTRIM(RTRIM(TF003)) + LTRIM(RTRIM(TF004)) AS 'TF1234'
-        //                                ,LTRIM(RTRIM(TF001)) + LTRIM(RTRIM(TF002)) + LTRIM(RTRIM(TF003)) AS 'TF123'
-        //                                ,*
-        //                                ,(SELECT TOP 1 ISNULL(MOCCHECKDATES, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKDATES'
-        //                                ,(SELECT TOP 1 ISNULL(MOCCHECKS, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKS'
-        //                                ,(SELECT TOP 1 ISNULL(MOCCHECKSCOMMENTS, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'MOCCHECKSCOMMENTS'
-        //                                ,(SELECT TOP 1 ISNULL(PURCHECKDATES, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKDATES'
-        //                                ,(SELECT TOP 1 ISNULL(PURCHECKS, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKS'
-        //                                ,(SELECT TOP 1 ISNULL(PURCHECKSCOMMENTS, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'PURCHECKSCOMMENTS'
-        //                                ,(SELECT TOP 1 ISNULL(SALESCHECKDATES, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKDATES'
-        //                                ,(SELECT TOP 1 ISNULL(SALESCHECKSCOMMENTS, '') FROM[TKBUSINESS].[dbo].[TBCOPTFCHECK] WHERE TBCOPTFCHECK.TF001 = COPTF.TF001 AND TBCOPTFCHECK.TF002 = COPTF.TF002 AND TBCOPTFCHECK.TF003 = COPTF.TF003 AND TBCOPTFCHECK.TF004 = COPTF.TF004 ORDER BY ID DESC) AS 'SALESCHECKSCOMMENTS'
-
-        //                                FROM[TK].dbo.COPTE,[TK].dbo.COPTF
-        //LEFT JOIN[TK].dbo.COPTC ON TC001=TF001 AND TC002=TF002
-        //LEFT JOIN[TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
-        //WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
-        //AND 1=1
-        //                                AND ISNULL(TD003,'')=''
-        //                                AND COPTF.UDF01 IN ('Y','y')
-        //                                ORDER BY TE002,TE001,TE003,TF004
-        //m_db.AddParameter("@SDATE", SDATE);
-        //m_db.AddParameter("@EDATE", EDATE);
 
         DataTable dt = new DataTable();
 
-        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));      
-
-        
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));     
 
         Grid1.DataSource = dt;
         Grid1.DataBind();
@@ -809,17 +786,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
-
-        ////日期
-        //if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
-        //{
-        //    if (TextBox4.Text.Length == 1)
-        //    {
-        //        TextBox4.Text = "0" + TextBox4.Text;
-        //    }
-        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox3.Text.Trim() + TextBox4.Text.Trim());
-
-        //}
+        StringBuilder QUERYS2 = new StringBuilder();
 
         //日期
         if (!string.IsNullOrEmpty(TextBox3.Text) )
@@ -876,7 +843,20 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox6.Text.Trim());
 
         }
-
+        //過濾烘培品
+        DataTable DT = SEARCH_MOCMANULINEMB001LIKES();
+        if (DT != null && DT.Rows.Count >= 1)
+        {
+            foreach (DataRow DR in DT.Rows)
+            {
+                QUERYS2.AppendFormat(@" AND TD004 NOT LIKE '{0}%'", DR["MB001"].ToString());
+            }
+        }
+        else
+        {
+            // No additional SQL clause required
+            QUERYS2.AppendFormat("");
+        }
         cmdTxt.AppendFormat(@" 
                                 
                                 SELECT 
@@ -898,13 +878,10 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
                                 WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
                                 AND 1=1
-
                                 {0}
+                                {1}
 
-                               
-                           
-
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
@@ -975,17 +952,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
-
-        ////日期
-        //if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
-        //{
-        //    if (TextBox6.Text.Length == 1)
-        //    {
-        //        TextBox6.Text = "0" + TextBox6.Text;
-        //    }
-        //    QUERYS.AppendFormat(@" AND TF002 LIKE '{0}%'", TextBox5.Text.Trim() + TextBox6.Text.Trim());
-
-        //}
+        StringBuilder QUERYS2 = new StringBuilder();
 
         //日期
         if (!string.IsNullOrEmpty(TextBox5.Text) )
@@ -1042,6 +1009,20 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox14.Text.Trim());
 
+        } 
+        //過濾烘培品
+        DataTable DT = SEARCH_MOCMANULINEMB001LIKES();
+        if (DT != null && DT.Rows.Count >= 1)
+        {
+            foreach (DataRow DR in DT.Rows)
+            {
+                QUERYS2.AppendFormat(@" AND TD004 NOT LIKE '{0}%'", DR["MB001"].ToString());
+            }
+        }
+        else
+        {
+            // No additional SQL clause required
+            QUERYS2.AppendFormat("");
         }
 
         cmdTxt.AppendFormat(@" 
@@ -1064,13 +1045,10 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 LEFT JOIN [TK].dbo.COPTD ON TD001=TF001 AND TD002=TF002 AND TD003=TF104
                                 WHERE TE001=TF001 AND TE002=TF002  AND TE003=TF003
                                 AND 1=1
-
                                 {0}
+                                {1}
 
-                                
-                               
-
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
@@ -5507,6 +5485,60 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
 
         }
     }
+
+    public DataTable SEARCH_MOCMANULINEMB001LIKES()
+    {
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
+
+
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+            StringBuilder QUERYS = new StringBuilder();
+
+
+
+            cmdTxt.AppendFormat(@" 
+                                SELECT [MB001]
+                                 FROM [TKMOC].[dbo].[MOCMANULINEMB001LIKES]                              
+                                ");
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt.Rows.Count >= 1)
+            {
+                return dt;
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+
+        }
+    }
+
 
     #endregion
 
