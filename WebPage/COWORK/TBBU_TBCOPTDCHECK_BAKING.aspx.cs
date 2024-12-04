@@ -438,6 +438,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+
 
         //日期
         if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
@@ -498,6 +500,27 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
         }
 
+        //限定烘培品
+        DataTable DT = SEARCH_MOCMANULINEMB001LIKES();
+        if (DT != null && DT.Rows.Count >= 1)
+        {
+            QUERYS2.AppendFormat(" AND (");
+            for (int i = 0; i < DT.Rows.Count; i++)
+            {
+                if (i > 0) // Add OR after the first condition
+                {
+                    QUERYS2.AppendFormat(" OR ");
+                }
+                QUERYS2.AppendFormat("TD004 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
+            }
+            QUERYS2.AppendFormat(")");
+        }
+        else
+        {
+            // No additional SQL clause required
+            QUERYS2.AppendFormat("");
+        }
+
         cmdTxt.AppendFormat(@" 
                                 SELECT  
                                  LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))+LTRIM(RTRIM(TD003)) AS 'TD123'
@@ -517,13 +540,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                                 LEFT JOIN [TK].dbo.COPMA ON MA001=TC004
                                 ,[TK].dbo.COPTD
                                 WHERE TC001=TD001 AND TC002=TD002
-                                AND 1=1
-                                
+                                AND 1=1                                
                                 {0}
-
+                                {1}
                                 ORDER BY TD002,TD001,TD003
 
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
@@ -720,6 +742,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
 
         //日期
         if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
@@ -779,6 +802,27 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox19.Text.Trim());
 
         }
+        //限定烘培品
+        DataTable DT = SEARCH_MOCMANULINEMB001LIKES();
+        if (DT != null && DT.Rows.Count >= 1)
+        {
+            QUERYS2.AppendFormat(" AND (");
+            for (int i = 0; i < DT.Rows.Count; i++)
+            {
+                if (i > 0) // Add OR after the first condition
+                {
+                    QUERYS2.AppendFormat(" OR ");
+                }
+                QUERYS2.AppendFormat("TD004 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
+            }
+            QUERYS2.AppendFormat(")");
+        }
+        else
+        {
+            // No additional SQL clause required
+            QUERYS2.AppendFormat("");
+        }
+
 
         cmdTxt.AppendFormat(@" 
                                 SELECT  
@@ -800,13 +844,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                                 ,[TK].dbo.COPTD
 
                                 WHERE TC001=TD001 AND TC002=TD002
-                                AND 1=1
-                                
+                                AND 1=1                                
                                 {0}
-
+                                {1}
                                 ORDER BY TD002,TD001,TD003
 
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
@@ -877,6 +920,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
 
         //日期
         if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
@@ -938,6 +982,26 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
         }
 
+        //限定烘培品
+        DataTable DT = SEARCH_MOCMANULINEMB001LIKES();
+        if (DT != null && DT.Rows.Count >= 1)
+        {
+            QUERYS2.AppendFormat(" AND (");
+            for (int i = 0; i < DT.Rows.Count; i++)
+            {
+                if (i > 0) // Add OR after the first condition
+                {
+                    QUERYS2.AppendFormat(" OR ");
+                }
+                QUERYS2.AppendFormat("TD004 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
+            }
+            QUERYS2.AppendFormat(")");
+        }
+        else
+        {
+            // No additional SQL clause required
+            QUERYS2.AppendFormat("");
+        }
         cmdTxt.AppendFormat(@" 
                                 SELECT  
                                 LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))+LTRIM(RTRIM(TD003)) AS 'TD123'
@@ -958,13 +1022,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                                 ,[TK].dbo.COPTD
 
                                 WHERE TC001=TD001 AND TC002=TD002
-                                AND 1=1
-                                
+                                AND 1=1                                
                                 {0}
-
+                                {1}
                                 ORDER BY TD002,TD001,TD003
 
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
@@ -1040,6 +1103,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
 
         //日期
         if (!string.IsNullOrEmpty(TextBox7.Text) && !string.IsNullOrEmpty(TextBox8.Text))
@@ -1099,6 +1163,26 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             QUERYS.AppendFormat(@" AND TD005 LIKE '%{0}%'", TextBox23.Text.Trim());
 
         }
+        //限定烘培品
+        DataTable DT = SEARCH_MOCMANULINEMB001LIKES();
+        if (DT != null && DT.Rows.Count >= 1)
+        {
+            QUERYS2.AppendFormat(" AND (");
+            for (int i = 0; i < DT.Rows.Count; i++)
+            {
+                if (i > 0) // Add OR after the first condition
+                {
+                    QUERYS2.AppendFormat(" OR ");
+                }
+                QUERYS2.AppendFormat("TD004 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
+            }
+            QUERYS2.AppendFormat(")");
+        }
+        else
+        {
+            // No additional SQL clause required
+            QUERYS2.AppendFormat("");
+        }
 
         cmdTxt.AppendFormat(@" 
                                 SELECT  
@@ -1120,12 +1204,11 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                                 ,[TK].dbo.COPTD
                                 WHERE TC001=TD001 AND TC002=TD002
                                 AND 1=1
-                                
                                 {0}
-
+                                {1}
                                 ORDER BY TD002,TD001,TD003
 
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
@@ -3668,7 +3751,6 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
         SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
         DataSet ds1 = new DataSet();
 
-
         try
         {
             string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -3676,8 +3758,6 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
             StringBuilder cmdTxt = new StringBuilder();
             StringBuilder QUERYS = new StringBuilder();
-
-
 
             cmdTxt.AppendFormat(@" 
                                 SELECT * 
@@ -3691,17 +3771,12 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                               
                                 ", TC001, TC002);
 
-
-
-
             //m_db.AddParameter("@SDATE", SDATE);
             //m_db.AddParameter("@EDATE", EDATE);
 
             DataTable dt = new DataTable();
 
             dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
-
-
 
             if (dt.Rows.Count >= 1)
             {
@@ -3723,6 +3798,60 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
         }
     }
+
+    public DataTable SEARCH_MOCMANULINEMB001LIKES()
+    {
+        SqlDataAdapter adapter1 = new SqlDataAdapter();
+        SqlCommandBuilder sqlCmdBuilder1 = new SqlCommandBuilder();
+        DataSet ds1 = new DataSet();
+
+
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+            StringBuilder QUERYS = new StringBuilder();
+
+
+
+            cmdTxt.AppendFormat(@" 
+                                SELECT [MB001]
+                                 FROM [TKMOC].[dbo].[MOCMANULINEMB001LIKES]                              
+                                ");
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt.Rows.Count >= 1)
+            {
+                return dt;
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+
+        }
+    }
+
     #endregion
 
     #region BUTTON
