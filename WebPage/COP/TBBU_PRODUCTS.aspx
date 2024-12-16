@@ -43,11 +43,13 @@
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
                 <Tabs>
-                    <telerik:RadTab Text="國內商務商品資料整理">
+                    <telerik:RadTab Text="商品資料整理">
                     </telerik:RadTab>
                     <telerik:RadTab Text="新增老楊的商品資料">
                     </telerik:RadTab>
                     <telerik:RadTab Text="新增非老楊的商品資料">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="老楊新品資料整理">
                     </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
@@ -140,20 +142,7 @@
                                 <td>
                                     <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
                                 </td>
-
-                            </tr>
-                                 <tr>
-                                <td class="PopTableLeftTD">
-                                    <asp:Label ID="Label15" runat="server" Text="新品建立日期:" meta:resourcekey="Label4Resource1"></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox>
-                                    <asp:Label ID="Label16" runat="server" Text="(之後)" meta:resourcekey="Label4Resource1"></asp:Label>
-                                     <asp:Button ID="Button6" runat="server" Text="只查老楊新品 " OnClick="btn6_Click"
-                                        meta:resourcekey="btn6Resource1" />
-                                </td>
-
-                            </tr>
+                                                         
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
@@ -297,6 +286,219 @@
                                 <td class="PopTableRightTD">
                                     <asp:Button ID="btn5" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn5_Click(this)" onclick="btn5_Click" meta:resourcekey="btn5Resource1" />
 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
+                  <telerik:RadPageView ID="RadPageView4" runat="server" Selected="false">
+                    <div id="tabs-4">
+                        <table class="PopTable">
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label17" runat="server" Text="公司:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label18" runat="server" Text="銷售通路:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label19" runat="server" Text="品號/品名:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox12" runat="server"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label20" runat="server" Text="建議售價:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox13" runat="server"></asp:TextBox>
+                                    <asp:Label ID="Label21" runat="server" Text="~" meta:resourcekey="Label4Resource1"></asp:Label>
+                                    <asp:TextBox ID="TextBox14" runat="server"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label22" runat="server" Text="IP價:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox15" runat="server"></asp:TextBox>
+                                    <asp:Label ID="Label23" runat="server" Text="~" meta:resourcekey="Label4Resource1"></asp:Label>
+                                    <asp:TextBox ID="TextBox16" runat="server"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label24" runat="server" Text="DM價:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox17" runat="server"></asp:TextBox>
+                                    <asp:Label ID="Label25" runat="server" Text="~" meta:resourcekey="Label4Resource1"></asp:Label>
+                                    <asp:TextBox ID="TextBox18" runat="server"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label26" runat="server" Text="口味:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox19" runat="server"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label27" runat="server" Text="效期:(限數字)" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox20" runat="server"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label28" runat="server" Text="銷售重點:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox21" runat="server"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                                 <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label29" runat="server" Text="新品建立日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox22" runat="server"></asp:TextBox>
+                                    <asp:Label ID="Label30" runat="server" Text="(之後)" meta:resourcekey="Label4Resource1"></asp:Label>
+                                     
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button3" runat="server" Text=" 只查老楊新品 " OnClick="btn3_Click"
+                                        meta:resourcekey="btn3Resource1" />
+                                </td>
+
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid2" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid2_RowDataBound" runat="server" OnRowCommand="Grid2_RowCommand" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource2" OnPageIndexChanging="grid2_PageIndexChanging">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="公司" ItemStyle-Width="3%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="公司" runat="server" Text='<%# Bind("COMPANYS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
+                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="8%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="品號" runat="server" Text='<%# Bind("MB001") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="品名" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="品名" runat="server" Text='<%# Bind("MB002") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="規格" ItemStyle-Width="8%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="規格" runat="server" Text='<%# Bind("MB003") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="單位" ItemStyle-Width="3%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="單位" runat="server" Text='<%# Bind("MB004") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="口味" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="口味" runat="server" Text='<%# Bind("MA003") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="箱入數" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="箱入數" runat="server" Text='<%# Bind("MD007") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="長*寬*高" ItemStyle-Width="8%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="長寬高" runat="server" Text='<%# Bind("MB093094095") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="有效期限" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="有效期限" runat="server" Text='<%# Bind("VALIDITYPERIOD") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="建議售價" ItemStyle-Width="3%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="建議售價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES1", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="IP價" ItemStyle-Width="3%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="IP價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES2", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="DM價" ItemStyle-Width="3%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="DM價" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "PRICES3", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="條碼" ItemStyle-Width="8%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="條碼" runat="server" Text='<%# Bind("MB013") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="銷售重點" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="銷售重點" runat="server" Text='<%# Bind("PRODUCTSFEATURES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="銷售通路" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="銷售通路" runat="server" Text='<%# Bind("SALESFOCUS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="實際MOQ" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="實際MOQ" runat="server" Text='<%# Bind("MOQS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
+                                                <asp:TemplateField HeaderText="照片" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Image ID="Image1" runat="server" HorizontalAlign="Center" Length="100px" Width="100px" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </Fast:Grid>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
