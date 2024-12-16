@@ -24,10 +24,13 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
     {
         if (!IsPostBack)
         {
+            SETDATE();
             BindDropDownList();
             BindDropDownList2();
 
             BindGrid("");
+
+
         }
         else
         {
@@ -39,6 +42,16 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
 
     }
     #region FUNCTION
+    public void SETDATE()
+    {
+        // 取得目前的日期
+        DateTime now = DateTime.Now;
+        // 計算上個月的1號
+        DateTime firstDayOfLastMonth = new DateTime(now.Year, now.Month, 1).AddMonths(-1);
+
+        TextBox11.Text = firstDayOfLastMonth.ToString("yyyyMMdd");
+
+    }
     private void BindDropDownList()
     {
         DataTable dt = new DataTable();
@@ -839,6 +852,189 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         }
 
     }
+
+    public void FIND_NEW_PRODUCT(string NEWDATES)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+        StringBuilder QUERYS4 = new StringBuilder();
+        StringBuilder QUERYS5 = new StringBuilder();
+        StringBuilder QUERYS6 = new StringBuilder();
+        StringBuilder QUERYS7 = new StringBuilder();
+        StringBuilder QUERYS8 = new StringBuilder();
+        StringBuilder QUERYS9 = new StringBuilder();
+        StringBuilder QUERYS10 = new StringBuilder();
+
+        //公司
+        if (!string.IsNullOrEmpty(DropDownList2.Text))
+        {
+            if (DropDownList2.Text.Equals("全部"))
+            {
+                QUERYS1.AppendFormat(@" ");
+            }
+            else if (!DropDownList2.Text.Equals("全部"))
+            {
+                QUERYS1.AppendFormat(@" AND  [COMPANYS]='{0}' ", DropDownList2.Text);
+            }
+        }
+        //銷售通路
+        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        {
+            if (DropDownList1.Text.Equals("全部"))
+            {
+                QUERYS2.AppendFormat(@" ");
+            }
+            else if (!DropDownList1.Text.Equals("全部"))
+            {
+                QUERYS2.AppendFormat(@" AND  [SALESFOCUS]='{0}' ", DropDownList1.Text);
+            }
+        }
+
+        //建議售價
+        if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} AND [PRICES1]<={1}", TextBox1.Text.Trim(), TextBox2.Text.Trim());
+        }
+        else if (!string.IsNullOrEmpty(TextBox1.Text) && string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS3.AppendFormat(@" AND [PRICES1]>={0} ", TextBox1.Text.Trim());
+        }
+        else if (string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS3.AppendFormat(@" AND [PRICES1]<={0} ", TextBox2.Text.Trim());
+        }
+
+        //IP價
+        if (!string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
+        {
+            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} AND [PRICES2]<={1}", TextBox3.Text.Trim(), TextBox4.Text.Trim());
+        }
+        else if (!string.IsNullOrEmpty(TextBox3.Text) && string.IsNullOrEmpty(TextBox4.Text))
+        {
+            QUERYS4.AppendFormat(@" AND [PRICES2]>={0} ", TextBox3.Text.Trim());
+        }
+        else if (string.IsNullOrEmpty(TextBox3.Text) && !string.IsNullOrEmpty(TextBox4.Text))
+        {
+            QUERYS4.AppendFormat(@" AND [PRICES2]<={0} ", TextBox4.Text.Trim());
+        }
+
+        //DM價
+        if (!string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
+        {
+            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} AND [PRICES3]<={1}", TextBox5.Text.Trim(), TextBox6.Text.Trim());
+        }
+        else if (!string.IsNullOrEmpty(TextBox5.Text) && string.IsNullOrEmpty(TextBox6.Text))
+        {
+            QUERYS5.AppendFormat(@" AND [PRICES3]>={0} ", TextBox5.Text.Trim());
+        }
+        else if (string.IsNullOrEmpty(TextBox5.Text) && !string.IsNullOrEmpty(TextBox6.Text))
+        {
+            QUERYS5.AppendFormat(@" AND [PRICES3]<={0} ", TextBox6.Text.Trim());
+        }
+
+        //口味
+        if (!string.IsNullOrEmpty(TextBox7.Text))
+        {
+            QUERYS6.AppendFormat(@" AND MA003 LIKE '%{0}%'", TextBox7.Text.Trim());
+        }
+
+        //效期
+        if (!string.IsNullOrEmpty(TextBox8.Text))
+        {
+            QUERYS7.AppendFormat(@" AND CONVERT(NVARCHAR,MB023)+(CASE WHEN MB198='1' THEN '天' ELSE (CASE WHEN MB198='2' THEN '月' ELSE '年' END ) END ) LIKE '%{0}%'", TextBox8.Text.Trim());
+        }
+
+        //銷售重點
+        if (!string.IsNullOrEmpty(TextBox9.Text))
+        {
+            QUERYS8.AppendFormat(@" AND PRODUCTSFEATURES LIKE '%{0}%'", TextBox9.Text.Trim());
+        }
+
+
+        //品號、品名
+        if (!string.IsNullOrEmpty(TextBox10.Text))
+        {
+            QUERYS9.AppendFormat(@" AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')", TextBox10.Text.Trim());
+        }
+
+        //NEWDATES
+        if (!string.IsNullOrEmpty(NEWDATES))
+        {
+            QUERYS10.AppendFormat(@"AND CREATE_DATE>='{0}' ", NEWDATES);
+        }
+
+        //AND BOMMD.MD003 NOT IN (SELECT  [MD003]   FROM [TKMOC].[dbo].[MOCHALFPRODUCTDBOXSLIMITS])
+
+        cmdTxt.AppendFormat(@" 
+                           SELECT *
+                            FROM 
+                            (
+                            SELECT 
+                            [PRODUCTS].[MB001]
+                            ,[PRODUCTSFEATURES]
+                            ,[SALESFOCUS]
+                            ,[COPYWRITINGS]
+                            ,[PICPATHS]
+                            ,[PRICES1]
+                            ,[PRICES2]
+                            ,[PRICES3]
+                            ,[MOQS]
+                            ,[COMPANYS]
+                            ,MB1.MB002
+                            ,MB1.MB003
+                            ,MB1.MB004
+                            ,MA003
+                            ,CONVERT(NVARCHAR,(SELECT TOP 1 ISNULL(MD007,0) FROM [TK].dbo.BOMMD WHERE MD001=[PRODUCTS].[MB001] AND MD003 LIKE '201%' ORDER BY MD003)) AS MD007
+                            ,CONVERT(NVARCHAR,MB1.MB023)+(CASE WHEN MB1.MB198='1' THEN '天' ELSE (CASE WHEN MB1.MB198='2' THEN '月' ELSE '年' END ) END ) AS 'VALIDITYPERIOD'
+                            ,CONVERT(decimal(16,3),ISNULL(MB1.MB047,0)) AS MB047
+                            ,MB1.MB013
+                            ,(CONVERT(NVARCHAR,MB093)+'*'+CONVERT(NVARCHAR,MB094)+'*'+CONVERT(NVARCHAR,MB095)) AS MB093094095
+                            ,[ALBUM_GUID], [PHOTO_GUID],[PHOTO_DESC],[FILE_ID],[RESIZE_FILE_ID],[THUMBNAIL_FILE_ID]
+							,MB1.MB023
+							,MB1.MB198
+                            ,MB1.CREATE_DATE
+
+                            FROM [TKBUSINESS].[dbo].[PRODUCTS]
+                            LEFT JOIN [TK].dbo.[INVMB] MB1 ON [PRODUCTS].[MB001]=MB1.[MB001]
+                            LEFT JOIN [TK].dbo.INVMA ON MA001='9' AND MA002=MB115
+                            LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EIP_ALBUM_PHOTO] ON [PHOTO_DESC] LIKE '%'+[PRODUCTS].[MB001]+'%' COLLATE Chinese_Taiwan_Stroke_BIN
+                            WHERE 1=1 
+
+                            ) AS TEMP
+                            WHERE 1=1
+
+                           {0}
+                            {1}
+                            {2}
+                            {3}
+                            {4}
+                            {5}
+                            {6}
+                            {7}
+                            {8}
+                            {9}
+
+                           ORDER BY [COPYWRITINGS],[MB001]
+                                ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString(), QUERYS5.ToString(), QUERYS6.ToString(), QUERYS7.ToString(), QUERYS8.ToString(), QUERYS9.ToString(), QUERYS10.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
      public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -916,6 +1112,15 @@ public partial class CDS_WebPage_COP_TBBU_PRODUCTS : Ede.Uof.Utility.Page.BasePa
         }
 
 
+    }
+
+    protected void btn6_Click(object sender, System.EventArgs e)
+    {
+        if(!string.IsNullOrEmpty(TextBox11.Text))
+        {
+            FIND_NEW_PRODUCT(TextBox11.Text.Trim());
+        }
+       
     }
 
 

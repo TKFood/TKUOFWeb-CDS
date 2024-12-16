@@ -142,6 +142,18 @@
                                 </td>
 
                             </tr>
+                                 <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label15" runat="server" Text="新品建立日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox>
+                                    <asp:Label ID="Label16" runat="server" Text="(之後)" meta:resourcekey="Label4Resource1"></asp:Label>
+                                     <asp:Button ID="Button6" runat="server" Text=" 只查老楊新品 " OnClick="btn6_Click"
+                                        meta:resourcekey="btn6Resource1" />
+                                </td>
+
+                            </tr>
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
