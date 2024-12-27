@@ -297,13 +297,13 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
 
         if (!string.IsNullOrEmpty(DropDownList3.SelectedValue.ToString()))
         {
-            if (DropDownList3.SelectedValue.ToString().Equals("依業務"))
+            if (DropDownList3.SelectedValue.ToString().Equals("依業務+客戶"))
             {
                 Query3.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
             }
-            else if (DropDownList3.SelectedValue.ToString().Equals("依回覆期限"))
+            else if (DropDownList3.SelectedValue.ToString().Equals("依業務+回覆期限"))
             {
-                Query3.AppendFormat(@"  ORDER BY [EDAYS],[SALES],[CLIENTS],[ID]");
+                Query3.AppendFormat(@"  ORDER BY [SALES],[EDAYS],[CLIENTS],[ID]");
             }
             else
             {
