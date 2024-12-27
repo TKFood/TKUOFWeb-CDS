@@ -35,6 +35,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
             txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
             BindDropDownList1();
             BindDropDownList2();
+            BindDropDownList3();
 
             BindDropDownListISCLOSE();
             BindDropDownListISCLOSE2();
@@ -111,6 +112,41 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
             DropDownList2.DataTextField = "NAMES";
             DropDownList2.DataValueField = "NAMES";
             DropDownList2.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT  
+                        [ID]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[VALUE]
+                        FROM [TKBUSINESS].[dbo].[TBPARA]
+                        WHERE [KINDS]='TB_SALES_ASSINGED'
+                        ORDER BY [ID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "NAMES";
+            DropDownList3.DataValueField = "NAMES";
+            DropDownList3.DataBind();
 
         }
         else
@@ -232,6 +268,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder Query1 = new StringBuilder();
         StringBuilder Query2 = new StringBuilder();
+        StringBuilder Query3 = new StringBuilder();
 
         if (!string.IsNullOrEmpty(TextBox_CLIENTS.Text))
         {
@@ -258,6 +295,29 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
             Query2.AppendFormat(@"");
         }
 
+        if (!string.IsNullOrEmpty(DropDownList3.SelectedValue.ToString()))
+        {
+            if (DropDownList3.SelectedValue.ToString().Equals("依業務"))
+            {
+                Query3.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+            }
+            else if (DropDownList3.SelectedValue.ToString().Equals("依回覆期限"))
+            {
+                Query3.AppendFormat(@"  ORDER BY [EDAYS],[SALES],[CLIENTS],[ID]");
+            }
+            else
+            {
+                Query3.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+
+            }
+
+        }
+        else
+        {
+            Query3.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+        }
+
+
         cmdTxt.AppendFormat(@"
 
                             SELECT 
@@ -276,10 +336,11 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]
+                            {2}
+                           
 
                               
-                            ", Query1.ToString(), Query2.ToString()); ;
+                            ", Query1.ToString(), Query2.ToString(), Query3.ToString()); ;
 
 
         //m_db.AddParameter("@EDATE", EDATE);

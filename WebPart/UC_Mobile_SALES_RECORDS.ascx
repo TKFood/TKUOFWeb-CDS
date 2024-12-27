@@ -78,6 +78,15 @@
 
                         </td>
                     </tr>
+                       <tr>
+                        <td>
+                            <asp:Label ID="Label12" runat="server" Text="排序: "></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                        </td>
+                    </tr>
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
