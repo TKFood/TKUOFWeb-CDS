@@ -520,7 +520,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK_BAKING : Ede.Uof.Utility.
                 {
                     QUERYS2.AppendFormat(" OR ");
                 }
-                QUERYS2.AppendFormat("TD004 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
+                QUERYS2.AppendFormat("TF005 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
             }
             QUERYS2.AppendFormat(")");
         }
@@ -860,7 +860,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK_BAKING : Ede.Uof.Utility.
                 {
                     QUERYS2.AppendFormat(" OR ");
                 }
-                QUERYS2.AppendFormat("TD004 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
+                QUERYS2.AppendFormat("TF005 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
             }
             QUERYS2.AppendFormat(")");
         }
@@ -1035,7 +1035,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK_BAKING : Ede.Uof.Utility.
                 {
                     QUERYS2.AppendFormat(" OR ");
                 }
-                QUERYS2.AppendFormat("TD004 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
+                QUERYS2.AppendFormat("TF005 LIKE '{0}%'", DT.Rows[i]["MB001"].ToString());
             }
             QUERYS2.AppendFormat(")");
         }
