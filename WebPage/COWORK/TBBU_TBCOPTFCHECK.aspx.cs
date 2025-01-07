@@ -515,7 +515,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             foreach (DataRow DR in DT.Rows)
             {
-                QUERYS2.AppendFormat(@" AND TD004 NOT LIKE '{0}%'", DR["MB001"].ToString());
+                QUERYS2.AppendFormat(@" AND TF005 NOT LIKE '{0}%'", DR["MB001"].ToString());
             }
         }
         else
@@ -849,7 +849,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             foreach (DataRow DR in DT.Rows)
             {
-                QUERYS2.AppendFormat(@" AND TD004 NOT LIKE '{0}%'", DR["MB001"].ToString());
+                QUERYS2.AppendFormat(@" AND TF005 NOT LIKE '{0}%'", DR["MB001"].ToString());
             }
         }
         else
@@ -1016,7 +1016,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         {
             foreach (DataRow DR in DT.Rows)
             {
-                QUERYS2.AppendFormat(@" AND TD004 NOT LIKE '{0}%'", DR["MB001"].ToString());
+                QUERYS2.AppendFormat(@" AND TF005 NOT LIKE '{0}%'", DR["MB001"].ToString());
             }
         }
         else
