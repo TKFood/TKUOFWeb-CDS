@@ -22,6 +22,8 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 {
     string CHECK_column1Value = "";
     string column1Value = "";
+    // 全域變數，用於跨頁處理（可選）
+    private string previousValue = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -477,7 +479,9 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         if (!string.IsNullOrEmpty(MB001))
         {
             cmdTxt.AppendFormat(@"
+
                                 ---先找出原料、物料的MB001
+                                ---在 TKPUR 的SELECT [MB001] FROM [TKPUR].[dbo].[PUR_REPORT_BOM_NOTIN]，是不用當原  料計算
                                   WITH CTE_FILTERED_MC AS (
                                         SELECT DISTINCT 
                                             MC001
@@ -510,8 +514,9 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 	                                    SELECT 
 	                                    *
 	                                    ,(單個材料+單個人工+單個製造+單個加工) AS '單個成本'
-	                                    ,(CASE WHEN 明細品號 LIKE '1%' AND  原料總成本>0 AND MD006>0 THEN 原料總成本*MD006/材料的總重 
+	                                    ,(CASE WHEN 明細品號 LIKE '1%' AND 明細品號 NOT IN (SELECT [MB001] FROM [TKPUR].[dbo].[PUR_REPORT_BOM_NOTIN]) AND  原料總成本>0 AND MD006>0 THEN 原料總成本*MD006/材料的總重 
 	                                    WHEN 明細品號 LIKE '2%' THEN MB050
+                                        ELSE 0
 	                                    END ) AS '明細材料成本'
 	                                    FROM 
 		                                    (
@@ -535,7 +540,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 			                                    ,DINVMB.MB050
 			                                    --先算出物料總成本
 			                                    ,(
-				                                    SELECT  CONVERT(DECIMAL(16,3),SUM(MB050)) 
+				                                    SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050)),0)
 				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2
 				                                    WHERE 1=1
 				                                    AND MB001=MD2.MD003
@@ -547,7 +552,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 			                                    ,(
 			                                     CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME007>0 AND (ME003+ME004)>0 THEN  TEMP.ME007/(ME003+ME004) ELSE 0 END))-
 				                                    (
-				                                    SELECT SUM(MB050) 
+				                                    SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050)),0)
 				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2
 				                                    WHERE 1=1
 				                                    AND MB001=MD2.MD003
@@ -562,6 +567,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 			                                      WHERE 1=1
 			                                      AND MD3.MD001=MD.MD001
 			                                      AND MD3.MD003 LIKE '1%'
+                                                  AND MD3.MD003 NOT IN (SELECT [MB001] FROM [TKPUR].[dbo].[PUR_REPORT_BOM_NOTIN])
 			                                    ) AS '材料的總重'
 		                                    FROM [TK].dbo.BOMMC AS MC
 		                                    JOIN [TK].dbo.BOMMD AS MD ON MC.MC001 = MD.MD001
@@ -604,28 +610,39 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
     }
     protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            ////Get the button that raised the event
-            //Button btn = (Button)e.Row.FindControl("GVButton1");
-
-            ////Get the row that contains this button
-            //GridViewRow gvr = (GridViewRow)btn.NamingContainer;
-
-            ////string cellvalue = gvr.Cells[2].Text.Trim();
-            //string Cellvalue = btn.CommandArgument;
-
-            //DataRowView row = (DataRowView)e.Row.DataItem;
-            //Button lbtnName = (Button)e.Row.FindControl("GVButton1");
-
-            //ExpandoObject param = new { ID = Cellvalue }.ToExpando();
-
-            ////Grid開窗是用RowDataBound事件再開窗
-            ////Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
-
+        //Grid3
+        if (e.Row.RowType == DataControlRowType.DataRow)        {
+            // 獲取當前行的目標欄位值（假設是第一欄）
+            string currentValue = DataBinder.Eval(e.Row.DataItem, "主品號").ToString();
+            // 檢查是否與上一行相同
+            if (!string.IsNullOrEmpty(previousValue) && currentValue == previousValue)
+            {
+                // 設置當前行的該欄位為空白
+                e.Row.Cells[0].Text = string.Empty;
+                e.Row.Cells[1].Text = string.Empty;
+                e.Row.Cells[2].Text = string.Empty;
+                e.Row.Cells[3].Text = string.Empty;
+                e.Row.Cells[4].Text = string.Empty;
+            }
+            // 更新上一行的值
+            previousValue = currentValue;
         }
 
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 獲取目標欄位的值
+            string numberText = DataBinder.Eval(e.Row.DataItem, "影響成本").ToString();
 
+            // 在 C# 5.0 中，需先宣告變數
+            decimal numberValue;
+
+            // 嘗試將目標值解析為數字
+            if (decimal.TryParse(numberText, out numberValue) && numberValue != 0)
+            {
+                // 如果數值不為 0，將文字顏色設為紅色
+                e.Row.Cells[11].ForeColor = System.Drawing.Color.Red;
+            }
+        }
     }
 
     public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
