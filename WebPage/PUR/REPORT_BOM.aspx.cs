@@ -468,16 +468,111 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 
 
         //TextBox1
-        if (!string.IsNullOrEmpty(TextBox2.Text))
+        if (!string.IsNullOrEmpty(MB001))
         {
-            QUERYS.AppendFormat(@" AND (MB001 LIKE '%'+@MB001+'%' OR MB002 LIKE '%'+@MB001+'%')");
+            QUERYS.AppendFormat(@" AND MD003 LIKE '%麥芬蛋糕粉%' OR DINVMB.MB002 LIKE '%麥芬蛋糕粉%'");
         }
 
 
-        if (!string.IsNullOrEmpty(TextBox2.Text))
+        if (!string.IsNullOrEmpty(MB001))
         {
             cmdTxt.AppendFormat(@"
-                              
+                                ---先找出原料、物料的MB001
+                                  WITH CTE_FILTERED_MC AS (
+                                        SELECT DISTINCT 
+                                            MC001
+                                        FROM [TK].dbo.BOMMC
+                                        JOIN [TK].dbo.BOMMD ON MC001 = MD001
+                                        JOIN [TK].dbo.INVMB AS MINVMB ON MC001 = MINVMB.MB001
+                                        JOIN [TK].dbo.INVMB AS DINVMB ON MD003 = DINVMB.MB001
+                                        WHERE 1=1
+                                        {0}
+                                    ),
+                                    CTE_CSTME AS (
+                                        SELECT 
+                                            ME001,
+		                                    ME003,
+		                                    ME004,
+                                            ME007,
+                                            ME008,
+                                            ME009,
+                                            ME010,
+                                            ROW_NUMBER() OVER (PARTITION BY ME001 ORDER BY ME002 DESC) AS RN
+                                        FROM [TK].dbo.CSTME
+                                    )
+
+                                    SELECT 
+                                    *
+                                    ,(CASE WHEN 明細品號='101001022' THEN 明細材料成本*1.02 ELSE 明細材料成本 END) AS '調整後的明細材料成本'
+                                    ,((CASE WHEN 明細品號='101001022' THEN 明細材料成本*1.02 ELSE 明細材料成本 END)-明細材料成本) AS '影響成本'
+                                    FROM
+	                                    (
+	                                    SELECT 
+	                                    *
+	                                    ,(單個材料+單個人工+單個製造+單個加工) AS '單個成本'
+	                                    ,(CASE WHEN 明細品號 LIKE '1%' AND  原料總成本>0 AND MD006>0 THEN 原料總成本*MD006/材料的總重 
+	                                    WHEN 明細品號 LIKE '2%' THEN MB050
+	                                    END ) AS '明細材料成本'
+	                                    FROM 
+		                                    (
+		                                    SELECT 
+			                                    MC.MC001 AS '主品號',
+			                                    MINVMB.MB002 AS '主品名',
+			                                    MINVMB.MB004 AS '主單位',
+			                                    MC.MC004,
+			                                    MD.MD003  AS '明細品號',
+			                                    DINVMB.MB002  AS '明細品名',
+			                                    DINVMB.MB004  AS '明細單位',
+                                                CONVERT(DECIMAL(16,3),((MD.MD006/MD.MD007*(1+MD.MD008))/MC.MC004)) AS '用量',
+			                                    MD.MD006,
+			                                    MD.MD007,
+			                                    MD.MD008,
+			                                    --單個的材料、人工、製造、加工的成本
+			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME007>0 AND (ME003+ME004)>0 THEN  TEMP.ME007/(ME003+ME004) ELSE 0 END)) AS '單個材料',
+			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME008>0 AND (ME003+ME004)>0 THEN  TEMP.ME008/(ME003+ME004) ELSE 0 END)) AS '單個人工',
+			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME009>0 AND (ME003+ME004)>0 THEN  TEMP.ME009/(ME003+ME004) ELSE 0 END)) AS '單個製造',
+			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME010>0 AND (ME003+ME004)>0 THEN  TEMP.ME010/(ME003+ME004) ELSE 0 END)) AS '單個加工'
+			                                    ,DINVMB.MB050
+			                                    --先算出物料總成本
+			                                    ,(
+				                                    SELECT  CONVERT(DECIMAL(16,3),SUM(MB050)) 
+				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2
+				                                    WHERE 1=1
+				                                    AND MB001=MD2.MD003
+				                                    AND MD2.MD001=MD.MD001
+				                                    AND MB001 LIKE '2%'
+
+				                                    ) AS' 物料總成本'
+			                                    --月結材料成本-物料總成本=原料總成本 
+			                                    ,(
+			                                     CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME007>0 AND (ME003+ME004)>0 THEN  TEMP.ME007/(ME003+ME004) ELSE 0 END))-
+				                                    (
+				                                    SELECT SUM(MB050) 
+				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2
+				                                    WHERE 1=1
+				                                    AND MB001=MD2.MD003
+				                                    AND MD2.MD001=MD.MD001
+				                                    AND MB001 LIKE '2%'
+				                                    )
+			                                    ) AS '原料總成本'
+			                                    --材料的總重
+			                                    ,(
+			                                      SELECT  CONVERT(DECIMAL(16,3),SUM(MD006/MD007*(1+MD008)))
+			                                      FROM [TK].dbo.BOMMD MD3
+			                                      WHERE 1=1
+			                                      AND MD3.MD001=MD.MD001
+			                                      AND MD3.MD003 LIKE '1%'
+			                                    ) AS '材料的總重'
+		                                    FROM [TK].dbo.BOMMC AS MC
+		                                    JOIN [TK].dbo.BOMMD AS MD ON MC.MC001 = MD.MD001
+		                                    JOIN [TK].dbo.INVMB AS MINVMB ON MC.MC001 = MINVMB.MB001
+		                                    JOIN [TK].dbo.INVMB AS DINVMB ON MD.MD003 = DINVMB.MB001
+		                                    LEFT JOIN CTE_CSTME AS TEMP ON MC.MC001 = TEMP.ME001 AND TEMP.RN = 1
+		                                    WHERE MC.MC001 IN (SELECT MC001 FROM CTE_FILTERED_MC)
+	                                    ) AS TEMP 
+	                                    WHERE 1=1
+                                    ) AS TEMP2
+                                    ;
 
 
                              ", QUERYS.ToString());
@@ -491,7 +586,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 
 
 
-        m_db.AddParameter("@MB001", TextBox1.Text.Trim());
+        //m_db.AddParameter("@MB001", TextBox1.Text.Trim());
 
 
         DataTable dt = new DataTable();
@@ -568,26 +663,9 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
     }
     protected void btn3_Click(object sender, EventArgs e)
     {
-        Response.ClearContent();
-        Response.AddHeader("content-disposition", "attachment; filename=test.xls");
-        Response.ContentEncoding = System.Text.Encoding.GetEncoding("big5");
-        HttpContext.Current.Response.Write("<meta http-equiv=Content-Type content=text/html;charset=big5>");
-        HttpContext.Current.Response.Write("<head><meta http-equiv=Content-Type content=text/html;charset=big5></head>");
-        Response.Charset = "big5";
-        Response.ContentType = "application/excel";
-
-
-        System.IO.StringWriter sw = new System.IO.StringWriter();
-        HtmlTextWriter htw = new HtmlTextWriter(sw);
-        Grid1.RenderControl(htw);
-        Response.Write(sw.ToString());
-        Response.End();
+        BindGrid3(TextBox2.Text.Trim());
     }
-        protected void MyButtonClick(object sender, System.EventArgs e)
-    {
-      
-
-    }
+        
 
     protected void btn5_Click(object sender, EventArgs e)
     {
@@ -611,6 +689,25 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 
         Label3.Text = cellValue;
         BindGrid2(cellValue);
+    }
+    protected void GV3Button1_Click(object sender, EventArgs e)
+    {
+        // 獲取按鈕控制項
+        Button btn = (Button)sender;
+
+        // 獲取 GridView 的行 (Row)
+        GridViewRow row = (GridViewRow)btn.NamingContainer;
+
+        // 獲取行中某個單元格 (Cell) 的值，例如第一個單元格的值
+        string cellValue = row.Cells[0].Text; // 假設您想獲取第一個單元格的值
+
+        // 在這裡您可以處理獲取的值，例如顯示在標籤或執行其他操作
+        // Label1.Text = cellValue;
+        // 其他操作...
+
+        Label3.Text = cellValue;
+        //BindGrid2(cellValue);
+        BindGrid3(TextBox2.Text.Trim());    
     }
 
     #endregion
