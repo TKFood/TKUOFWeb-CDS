@@ -470,7 +470,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         //TextBox1
         if (!string.IsNullOrEmpty(MB001))
         {
-            QUERYS.AppendFormat(@" AND MD003 LIKE '%麥芬蛋糕粉%' OR DINVMB.MB002 LIKE '%麥芬蛋糕粉%'");
+            QUERYS.AppendFormat(@" AND MD003 LIKE '%{0}%' OR DINVMB.MB002 LIKE '%{0}%'", MB001);
         }
 
 
@@ -702,7 +702,8 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 
         // 獲取行中某個單元格 (Cell) 的值，例如第一個單元格的值
         string DMB001 = row.Cells[5].Text; // 假設您想獲取第一個單元格的值
-       // 找到 TextBox 控制項並獲取它的值
+        string DMB002 = row.Cells[6].Text; // 假設您想獲取第一個單元格的值
+                                           // 找到 TextBox 控制項並獲取它的值
         TextBox txt單個成本 = (TextBox)row.FindControl("txt單個成本");
         string PERCENTS = "0";
 
@@ -715,7 +716,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
             PERCENTS = percentage.ToString(); // 格式化為百分比形式
 
             // 更新 Label 的文字
-            Label5.Text = DMB001 + " " + PERCENTS;
+            Label5.Text = "品號: "+DMB001 +" 品名: "+ DMB002 + " 調整後百分比" + PERCENTS;
         }
         else
         {
