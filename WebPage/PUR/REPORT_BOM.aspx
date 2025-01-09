@@ -30,7 +30,9 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
-            <telerik:RadTab Text="品號/品名查詢">
+            <telerik:RadTab Text="成品或半成品 的品號/品名查詢BOM表">
+            </telerik:RadTab>
+            <telerik:RadTab Text="查詢BOM表的原物料成本">
             </telerik:RadTab>
             <telerik:RadTab Text="資料">
             </telerik:RadTab>
@@ -42,7 +44,7 @@
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label2" runat="server" Text="品號/品名"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="成品或半成品 的品號/品名"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="TextBox1" runat="server" Text=""></asp:TextBox>
@@ -137,13 +139,64 @@
         </telerik:RadPageView>
         <telerik:RadPageView ID="RadPageView2" runat="server">
             <div id="tabs-2">
+                 <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label1" runat="server" Text="原料/物料的品號/品名"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox2" runat="server" Text=""></asp:TextBox>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <asp:Button ID="Button3" runat="server" Text=" 查詢 " OnClick="btn5_Click"
+                                meta:resourcekey="btn5Resource1" />
+                        </td>
+
+                    </tr>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                                <Fast:Grid ID="Grid3" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid3_RowDataBound" runat="server" OnBeforeExport="OnBeforeExport3" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource3" OnPageIndexChanging="grid3_PageIndexChanging">
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                    <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                    <Columns>
+                                        <asp:BoundField HeaderText="品號" DataField="品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="品名" DataField="品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="LEFT" Width="300px"></ItemStyle>
+                                        </asp:BoundField>
+                                      
+                                        <asp:TemplateField HeaderText="BOM" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Button ID="GVButton1" runat="server" CommandName="GVButton1" Text="查BOM" ForeColor="Red" OnClick="GVButton1_Click" CommandArgument='<%# Eval("品號") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </Fast:Grid>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </telerik:RadPageView>
+        <telerik:RadPageView ID="RadPageView3" runat="server">
+            <div id="tabs-3">
                 <table class="PopTable">
                     <tr>
                         <td class="PopTableLeftTD">
-                            <asp:Label ID="Label1" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="新增資料" meta:resourcekey="Label4Resource1"></asp:Label>
                         </td>
                         <td class="PopTableRightTD">
-                            <asp:Button ID="btn4" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
+                            <asp:Button ID="Button2" runat="server" Text="新增資料" ForeColor="red" OnClientClick="return btn4_Click(this)" meta:resourcekey="btn4Resource1" />
 
                         </td>
                     </tr>

@@ -457,6 +457,88 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         Label3.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
     }
 
+    private void BindGrid3(string MB001)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND (MB001 LIKE '%'+@MB001+'%' OR MB002 LIKE '%'+@MB001+'%')");
+        }
+
+
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            cmdTxt.AppendFormat(@"
+                              
+
+
+                             ", QUERYS.ToString());
+        }
+        else
+        {
+            cmdTxt.AppendFormat(@"
+                              
+                             ");
+        }
+
+
+
+        m_db.AddParameter("@MB001", TextBox1.Text.Trim());
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+    }
+
+    protected void grid3_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            ////Get the button that raised the event
+            //Button btn = (Button)e.Row.FindControl("GVButton1");
+
+            ////Get the row that contains this button
+            //GridViewRow gvr = (GridViewRow)btn.NamingContainer;
+
+            ////string cellvalue = gvr.Cells[2].Text.Trim();
+            //string Cellvalue = btn.CommandArgument;
+
+            //DataRowView row = (DataRowView)e.Row.DataItem;
+            //Button lbtnName = (Button)e.Row.FindControl("GVButton1");
+
+            //ExpandoObject param = new { ID = Cellvalue }.ToExpando();
+
+            ////Grid開窗是用RowDataBound事件再開窗
+            ////Dialog.Open2(lbtnName, "~/CDS/WebPage/STOCK/COPTGTHDialogEDIT.aspx", "", 800, 600, Dialog.PostBackType.AfterReturn, param);
+
+        }
+
+
+    }
+
+    public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+
     #endregion
 
     #region BUTTON
