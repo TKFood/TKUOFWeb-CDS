@@ -457,7 +457,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         Label3.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
     }
 
-    private void BindGrid3(string MB001)
+    private void BindGrid3(string MB001,string DMB001,string PERCENTS)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -503,8 +503,8 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 
                                     SELECT 
                                     *
-                                    ,(CASE WHEN 明細品號='101001022' THEN 明細材料成本*1.02 ELSE 明細材料成本 END) AS '調整後的明細材料成本'
-                                    ,((CASE WHEN 明細品號='101001022' THEN 明細材料成本*1.02 ELSE 明細材料成本 END)-明細材料成本) AS '影響成本'
+                                    ,(CASE WHEN 明細品號='{1}' THEN 明細材料成本*{2} ELSE 明細材料成本 END) AS '調整後的明細材料成本'
+                                    ,((CASE WHEN 明細品號='{1}' THEN 明細材料成本*{2} ELSE 明細材料成本 END)-明細材料成本) AS '影響成本'
                                     FROM
 	                                    (
 	                                    SELECT 
@@ -575,7 +575,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                                     ;
 
 
-                             ", QUERYS.ToString());
+                             ", QUERYS.ToString(), DMB001,  PERCENTS);
         }
         else
         {
@@ -663,7 +663,9 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
     }
     protected void btn3_Click(object sender, EventArgs e)
     {
-        BindGrid3(TextBox2.Text.Trim());
+        string DMB001 = "";
+        string PERCENTS = "0";
+        BindGrid3(TextBox2.Text.Trim(), DMB001, PERCENTS);
     }
         
 
@@ -699,15 +701,31 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         GridViewRow row = (GridViewRow)btn.NamingContainer;
 
         // 獲取行中某個單元格 (Cell) 的值，例如第一個單元格的值
-        string cellValue = row.Cells[0].Text; // 假設您想獲取第一個單元格的值
+        string DMB001 = row.Cells[5].Text; // 假設您想獲取第一個單元格的值
+       // 找到 TextBox 控制項並獲取它的值
+        TextBox txt單個成本 = (TextBox)row.FindControl("txt單個成本");
+        string PERCENTS = "0";
 
+        if (txt單個成本 != null)
+        {
+            string SETPERCENTS = txt單個成本.Text;
+
+            // 計算百分比
+            decimal percentage = 1 + Convert.ToDecimal(SETPERCENTS) / 100;
+            PERCENTS = percentage.ToString(); // 格式化為百分比形式
+
+            // 更新 Label 的文字
+            Label5.Text = DMB001 + " " + PERCENTS;
+        }
+        else
+        {
+            Label5.Text = "無法找到 txt單個成本 控制項";
+        }
         // 在這裡您可以處理獲取的值，例如顯示在標籤或執行其他操作
         // Label1.Text = cellValue;
-        // 其他操作...
-
-        Label3.Text = cellValue;
-        //BindGrid2(cellValue);
-        BindGrid3(TextBox2.Text.Trim());    
+        // 其他操作...      
+      
+        BindGrid3(TextBox2.Text.Trim(), DMB001, PERCENTS);    
     }
 
     #endregion

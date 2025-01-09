@@ -174,57 +174,67 @@
                                             <ItemStyle HorizontalAlign="LEFT" Width="300px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="主單位" DataField="主單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="LEFT" Width="300px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:TemplateField HeaderText="單個成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Label ID="lbl單個成本" runat="server" 
-                                                    Text='<%# String.Format("{0:N2}", Eval("單個成本")) %>' 
-                                                    Style="text-align: left; width: 300px;"></asp:Label>
+                                                <asp:Label ID="lbl單個成本" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("單個成本")) %>'
+                                                    Style="text-align: left; width: 100px;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="單個材料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lbl單個材料" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("單個材料")) %>'
+                                                    Style="text-align: left; width: 100px;"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>                         
                                         <asp:BoundField HeaderText="明細品號" DataField="明細品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="LEFT" Width="300px"></ItemStyle>
+                                            <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="明細品名" DataField="明細品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="LEFT" Width="300px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:BoundField HeaderText="明細單位" DataField="明細單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="LEFT" Width="300px"></ItemStyle>
-                                        </asp:BoundField>                                   
+                                            <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
+                                        </asp:BoundField>
                                         <asp:TemplateField HeaderText="用量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Label ID="lbl用量" runat="server" 
-                                                    Text='<%# String.Format("{0:N2}", Eval("用量")) %>' 
-                                                    Style="text-align: left; width: 300px;"></asp:Label>
+                                                <asp:Label ID="lbl用量" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("用量")) %>'
+                                                    Style="text-align: left; width: 100px;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                         <asp:TemplateField HeaderText="明細材料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="明細材料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Label ID="lbl明細材料成本" runat="server" 
-                                                    Text='<%# String.Format("{0:N2}", Eval("明細材料成本")) %>' 
-                                                    Style="text-align: left; width: 300px;"></asp:Label>
+                                                <asp:Label ID="lbl明細材料成本" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("明細材料成本")) %>'
+                                                    Style="text-align: left; width: 100px;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="調整後的明細材料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Label ID="lbl調整後的明細材料成本" runat="server" 
-                                                    Text='<%# String.Format("{0:N2}", Eval("調整後的明細材料成本")) %>' 
-                                                    Style="text-align: left; width: 300px;"></asp:Label>
+                                                <asp:Label ID="lbl調整後的明細材料成本" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("調整後的明細材料成本")) %>'
+                                                    Style="text-align: left; width: 100px;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="影響成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Label ID="lbl影響成本" runat="server" 
-                                                    Text='<%# String.Format("{0:N2}", Eval("影響成本")) %>' 
-                                                    Style="text-align: left; width: 300px;"></asp:Label>
+                                                <asp:Label ID="lbl影響成本" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("影響成本")) %>'
+                                                    Style="text-align: left; width: 100px;"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>                                  
-                                        
-                                    
-                                        <asp:TemplateField HeaderText="BOM" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        </asp:TemplateField>
+                                       <asp:TemplateField HeaderText="輸入漲跌數字的百分比" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemTemplate>        
+                                                <asp:TextBox ID="txt單個成本" runat="server" TextMode="Number"  Width="100px"></asp:TextBox>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="計算" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="GV3Button1" runat="server" CommandName="GV3Button1" Text="計偵" ForeColor="Red" OnClick="GV3Button1_Click" CommandArgument='<%# Eval("主品號") %>' />
+                                                <asp:Button ID="GV3Button1" runat="server" CommandName="GV3Button1" Text="計算" ForeColor="Red" OnClick="GV3Button1_Click" CommandArgument='<%# Eval("主品號") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -232,7 +242,7 @@
                             </div>
                         </td>
                     </tr>
-
+                     <asp:Label ID="Label5" runat="server" Text="Label5"></asp:Label>
                 </table>
             </div>
         </telerik:RadPageView>
