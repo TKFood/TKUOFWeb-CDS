@@ -515,7 +515,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 	                                    *
 	                                    ,(單個材料+單個人工+單個製造+單個加工) AS '單個成本'
 	                                    ,(CASE WHEN 明細品號 LIKE '1%' AND 明細品號 NOT IN (SELECT [MB001] FROM [TKPUR].[dbo].[PUR_REPORT_BOM_NOTIN]) AND  原料總成本>0 AND MD006>0 THEN 原料總成本*MD006/材料的總重 
-	                                    WHEN 明細品號 LIKE '2%' THEN MB050
+	                                    WHEN 明細品號 LIKE '2%' THEN  MB050*用量
                                         ELSE 0
 	                                    END ) AS '明細材料成本'
 	                                    FROM 
@@ -540,10 +540,11 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 			                                    ,DINVMB.MB050
 			                                    --先算出物料總成本
 			                                    ,(
-				                                    SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050)),0)
-				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2
+				                                   SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050*((MD2.MD006/MD2.MD007*(1+MD2.MD008))/MC2.MC004))),0)
+				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2,[TK].dbo.BOMMC MC2
 				                                    WHERE 1=1
 				                                    AND MB001=MD2.MD003
+				                                    AND MC2.MC001=MD2.MD001
 				                                    AND MD2.MD001=MD.MD001
 				                                    AND MB001 LIKE '2%'
 
@@ -552,10 +553,11 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 			                                    ,(
 			                                     CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME007>0 AND (ME003+ME004)>0 THEN  TEMP.ME007/(ME003+ME004) ELSE 0 END))-
 				                                    (
-				                                    SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050)),0)
-				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2
+				                                    SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050*((MD2.MD006/MD2.MD007*(1+MD2.MD008))/MC2.MC004))),0)
+				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2,[TK].dbo.BOMMC MC2
 				                                    WHERE 1=1
 				                                    AND MB001=MD2.MD003
+				                                    AND MC2.MC001=MD2.MD001
 				                                    AND MD2.MD001=MD.MD001
 				                                    AND MB001 LIKE '2%'
 				                                    )
