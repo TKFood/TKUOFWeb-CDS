@@ -176,20 +176,13 @@
                                         <asp:BoundField HeaderText="主單位" DataField="主單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="單個成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="合計明細材料成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Label ID="lbl單個成本" runat="server"
-                                                    Text='<%# String.Format("{0:N2}", Eval("單個成本")) %>'
+                                                <asp:Label ID="lbl合計明細材料成本" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("合計明細材料成本")) %>'
                                                     Style="text-align: left; width: 100px;"></asp:Label>
                                             </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="單個材料" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lbl單個材料" runat="server"
-                                                    Text='<%# String.Format("{0:N2}", Eval("單個材料")) %>'
-                                                    Style="text-align: left; width: 100px;"></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>                         
+                                        </asp:TemplateField>                   
                                         <asp:BoundField HeaderText="明細品號" DataField="明細品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
                                         </asp:BoundField>
@@ -199,10 +192,10 @@
                                         <asp:BoundField HeaderText="明細單位" DataField="明細單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="LEFT" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="用量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="明細用量比" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Label ID="lbl用量" runat="server"
-                                                    Text='<%# String.Format("{0:N2}", Eval("用量")) %>'
+                                                <asp:Label ID="lbl明細用量比" runat="server"
+                                                    Text='<%# String.Format("{0:N2}", Eval("明細用量比")) %>'
                                                     Style="text-align: left; width: 100px;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>

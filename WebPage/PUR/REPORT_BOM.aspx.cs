@@ -479,108 +479,79 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         if (!string.IsNullOrEmpty(MB001))
         {
             cmdTxt.AppendFormat(@"
+                                --20240110 成本
+                                --不管月結成本
+                                --採購件=直接用單價進價*用量佔比
+                                --半成品=最近的月結成本*用量佔比
+                                WITH CTE_FILTERED_MC AS (
+                                SELECT DISTINCT 
+                                MC001
+                                FROM [TK].dbo.BOMMC
+                                JOIN [TK].dbo.BOMMD ON MC001 = MD001
+                                JOIN [TK].dbo.INVMB AS MINVMB ON MC001 = MINVMB.MB001
+                                JOIN [TK].dbo.INVMB AS DINVMB ON MD003 = DINVMB.MB001
+                                WHERE 1=1
+                                {0}
+                                ),
+                                CTE_CSTME AS (
+                                SELECT 
+                                ME001,
+                                ME003,
+                                ME004,
+                                ME007,
+                                ME008,
+                                ME009,
+                                ME010,
+                                ROW_NUMBER() OVER (PARTITION BY ME001 ORDER BY ME002 DESC) AS RN
+                                FROM [TK].dbo.CSTME
+                                )
 
-                                ---先找出原料、物料的MB001
-                                ---在 TKPUR 的SELECT [MB001] FROM [TKPUR].[dbo].[PUR_REPORT_BOM_NOTIN]，是不用當原  料計算
-                                  WITH CTE_FILTERED_MC AS (
-                                        SELECT DISTINCT 
-                                            MC001
-                                        FROM [TK].dbo.BOMMC
-                                        JOIN [TK].dbo.BOMMD ON MC001 = MD001
-                                        JOIN [TK].dbo.INVMB AS MINVMB ON MC001 = MINVMB.MB001
-                                        JOIN [TK].dbo.INVMB AS DINVMB ON MD003 = DINVMB.MB001
-                                        WHERE 1=1
-                                        {0}
-                                    ),
-                                    CTE_CSTME AS (
-                                        SELECT 
-                                            ME001,
-		                                    ME003,
-		                                    ME004,
-                                            ME007,
-                                            ME008,
-                                            ME009,
-                                            ME010,
-                                            ROW_NUMBER() OVER (PARTITION BY ME001 ORDER BY ME002 DESC) AS RN
-                                        FROM [TK].dbo.CSTME
-                                    )
-
-                                    SELECT 
-                                    *
-                                    ,(CASE WHEN 明細品號='{1}' THEN 明細材料成本*{2} ELSE 明細材料成本 END) AS '調整後的明細材料成本'
-                                    ,((CASE WHEN 明細品號='{1}' THEN 明細材料成本*{2} ELSE 明細材料成本 END)-明細材料成本) AS '影響成本'
-                                    FROM
-	                                    (
-	                                    SELECT 
-	                                    *
-	                                    ,(單個材料+單個人工+單個製造+單個加工) AS '單個成本'
-	                                    ,(CASE WHEN 明細品號 LIKE '1%' AND 明細品號 NOT IN (SELECT [MB001] FROM [TKPUR].[dbo].[PUR_REPORT_BOM_NOTIN]) AND  原料總成本>0 AND MD006>0 THEN 原料總成本*MD006/材料的總重 
-	                                    WHEN 明細品號 LIKE '2%' THEN  MB050*用量
-                                        ELSE 0
-	                                    END ) AS '明細材料成本'
-	                                    FROM 
-		                                    (
-		                                    SELECT 
-			                                    MC.MC001 AS '主品號',
-			                                    MINVMB.MB002 AS '主品名',
-			                                    MINVMB.MB004 AS '主單位',
-			                                    MC.MC004,
-			                                    MD.MD003  AS '明細品號',
-			                                    DINVMB.MB002  AS '明細品名',
-			                                    DINVMB.MB004  AS '明細單位',
-                                                CONVERT(DECIMAL(16,3),((MD.MD006/MD.MD007*(1+MD.MD008))/MC.MC004)) AS '用量',
-			                                    MD.MD006,
-			                                    MD.MD007,
-			                                    MD.MD008,
-			                                    --單個的材料、人工、製造、加工的成本
-			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME007>0 AND (ME003+ME004)>0 THEN  TEMP.ME007/(ME003+ME004) ELSE 0 END)) AS '單個材料',
-			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME008>0 AND (ME003+ME004)>0 THEN  TEMP.ME008/(ME003+ME004) ELSE 0 END)) AS '單個人工',
-			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME009>0 AND (ME003+ME004)>0 THEN  TEMP.ME009/(ME003+ME004) ELSE 0 END)) AS '單個製造',
-			                                    CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME010>0 AND (ME003+ME004)>0 THEN  TEMP.ME010/(ME003+ME004) ELSE 0 END)) AS '單個加工'
-			                                    ,DINVMB.MB050
-			                                    --先算出物料總成本
-			                                    ,(
-				                                   SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050*((MD2.MD006/MD2.MD007*(1+MD2.MD008))/MC2.MC004))),0)
-				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2,[TK].dbo.BOMMC MC2
-				                                    WHERE 1=1
-				                                    AND MB001=MD2.MD003
-				                                    AND MC2.MC001=MD2.MD001
-				                                    AND MD2.MD001=MD.MD001
-				                                    AND MB001 LIKE '2%'
-
-				                                    ) AS' 物料總成本'
-			                                    --月結材料成本-物料總成本=原料總成本 
-			                                    ,(
-			                                     CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME007>0 AND (ME003+ME004)>0 THEN  TEMP.ME007/(ME003+ME004) ELSE 0 END))-
-				                                    (
-				                                    SELECT ISNULL(CONVERT(DECIMAL(16,3),SUM(MB050*((MD2.MD006/MD2.MD007*(1+MD2.MD008))/MC2.MC004))),0)
-				                                    FROM [TK].dbo.INVMB,[TK].dbo.BOMMD MD2,[TK].dbo.BOMMC MC2
-				                                    WHERE 1=1
-				                                    AND MB001=MD2.MD003
-				                                    AND MC2.MC001=MD2.MD001
-				                                    AND MD2.MD001=MD.MD001
-				                                    AND MB001 LIKE '2%'
-				                                    )
-			                                    ) AS '原料總成本'
-			                                    --材料的總重
-			                                    ,(
-			                                      SELECT  CONVERT(DECIMAL(16,3),SUM(MD006/MD007*(1+MD008)))
-			                                      FROM [TK].dbo.BOMMD MD3
-			                                      WHERE 1=1
-			                                      AND MD3.MD001=MD.MD001
-			                                      AND MD3.MD003 LIKE '1%'
-                                                  AND MD3.MD003 NOT IN (SELECT [MB001] FROM [TKPUR].[dbo].[PUR_REPORT_BOM_NOTIN])
-			                                    ) AS '材料的總重'
-		                                    FROM [TK].dbo.BOMMC AS MC
-		                                    JOIN [TK].dbo.BOMMD AS MD ON MC.MC001 = MD.MD001
-		                                    JOIN [TK].dbo.INVMB AS MINVMB ON MC.MC001 = MINVMB.MB001
-		                                    JOIN [TK].dbo.INVMB AS DINVMB ON MD.MD003 = DINVMB.MB001
-		                                    LEFT JOIN CTE_CSTME AS TEMP ON MC.MC001 = TEMP.ME001 AND TEMP.RN = 1
-		                                    WHERE MC.MC001 IN (SELECT MC001 FROM CTE_FILTERED_MC)
-	                                    ) AS TEMP 
-	                                    WHERE 1=1
-                                    ) AS TEMP2
-                                    ORDER BY 主品號,明細品號
+                                SELECT *
+                                ,(CASE WHEN 明細品號='{1}' THEN 明細材料成本*{2} ELSE 明細材料成本 END) AS '調整後的明細材料成本'
+                                ,((CASE WHEN 明細品號='{1}' THEN 明細材料成本*{2} ELSE 明細材料成本 END)-明細材料成本) AS '影響成本'
+                                FROM 
+                                (
+	                                SELECT *
+	                                ,CONVERT(DECIMAL(16,3),(CASE WHEN 進價用量比成本>0 THEN 進價用量比成本 ELSE 最近成本用量比成本 END)) AS '明細材料成本'
+	                                ,CONVERT(DECIMAL(16,3),SUM((CASE WHEN 進價用量比成本 > 0 THEN 進價用量比成本 ELSE 最近成本用量比成本 END)) OVER (PARTITION BY 主品號)) AS '合計明細材料成本'
+	                                FROM
+	                                (
+		                                SELECT 
+		                                MC.MC001 AS '主品號',
+		                                MINVMB.MB002 AS '主品名',
+		                                MINVMB.MB004 AS '主單位',
+		                                MD.MD003  AS '明細品號',
+		                                DINVMB.MB002  AS '明細品名',
+		                                DINVMB.MB004  AS '明細單位',
+		                                MC.MC004 AS '標準批量',
+		                                MD.MD006 AS '使用量',
+		                                MD.MD007 AS '底數',
+		                                MD.MD008 AS '損秏率',
+		                                CONVERT(DECIMAL(16,3),((MD.MD006/MD.MD007*(1+MD.MD008))/MC.MC004)) AS '明細用量比',
+		                                --單個的材料、人工、製造、加工的成本
+		                                CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME007>0 AND (ME003+ME004)>0 THEN  TEMP.ME007/(ME003+ME004) ELSE 0 END)) AS '單個材料',
+		                                CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME008>0 AND (ME003+ME004)>0 THEN  TEMP.ME008/(ME003+ME004) ELSE 0 END)) AS '單個人工',
+		                                CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME009>0 AND (ME003+ME004)>0 THEN  TEMP.ME009/(ME003+ME004) ELSE 0 END)) AS '單個製造',
+		                                CONVERT(DECIMAL(16,3),(CASE WHEN  TEMP.ME010>0 AND (ME003+ME004)>0 THEN  TEMP.ME010/(ME003+ME004) ELSE 0 END)) AS '單個加工'
+		                                ,DINVMB.MB050 AS '最近單位進價'	 
+		                                ,(DINVMB.MB050 * CONVERT(DECIMAL(16,3),((MD.MD006/MD.MD007*(1+MD.MD008))/MC.MC004))) AS '進價用量比成本'	
+		                                ,ISNULL((SELECT TOP 1 CONVERT(DECIMAL(16,3),( (CSTME.ME007+CSTME.ME008+CSTME.ME009+CSTME.ME010)/(CSTME.ME003+CSTME.ME004)) )
+		                                FROM [TK].dbo.CSTME
+		                                WHERE CSTME.ME001=MD.MD003 
+		                                ORDER BY ME002 DESC
+		                                )* CONVERT(DECIMAL(16,3),((MD.MD006/MD.MD007*(1+MD.MD008))/MC.MC004)),0) AS '最近成本用量比成本'
+		                                FROM [TK].dbo.BOMMC AS MC
+		                                JOIN [TK].dbo.BOMMD AS MD ON MC.MC001 = MD.MD001
+		                                JOIN [TK].dbo.INVMB AS MINVMB ON MC.MC001 = MINVMB.MB001
+		                                JOIN [TK].dbo.INVMB AS DINVMB ON MD.MD003 = DINVMB.MB001
+		                                LEFT JOIN CTE_CSTME AS TEMP ON MC.MC001 = TEMP.ME001 AND TEMP.RN = 1
+		                                WHERE MC.MC001 IN (SELECT MC001 FROM CTE_FILTERED_MC)
+	                                ) AS TEMP1
+	                                WHERE 1=1
+                                ) AS TEMP2
+                                WHERE 1=1
+                                ORDER BY 主品號,明細品號
+                                --AND MC.MC001='3010100215'
                                     ;
 
 
@@ -624,8 +595,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
                 e.Row.Cells[0].Text = string.Empty;
                 e.Row.Cells[1].Text = string.Empty;
                 e.Row.Cells[2].Text = string.Empty;
-                e.Row.Cells[3].Text = string.Empty;
-                e.Row.Cells[4].Text = string.Empty;
+                e.Row.Cells[3].Text = string.Empty;               
             }
             // 更新上一行的值
             previousValue = currentValue;
@@ -643,7 +613,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
             if (decimal.TryParse(numberText, out numberValue) && numberValue != 0)
             {
                 // 如果數值不為 0，將文字顏色設為紅色
-                e.Row.Cells[11].ForeColor = System.Drawing.Color.Red;
+                e.Row.Cells[10].ForeColor = System.Drawing.Color.Red;
             }
         }
     }
@@ -721,8 +691,8 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
         GridViewRow row = (GridViewRow)btn.NamingContainer;
 
         // 獲取行中某個單元格 (Cell) 的值，例如第一個單元格的值
-        string DMB001 = row.Cells[5].Text; // 假設您想獲取第一個單元格的值
-        string DMB002 = row.Cells[6].Text; // 假設您想獲取第一個單元格的值
+        string DMB001 = row.Cells[4].Text; // 假設您想獲取第一個單元格的值
+        string DMB002 = row.Cells[5].Text; // 假設您想獲取第一個單元格的值
                                            // 找到 TextBox 控制項並獲取它的值
         TextBox txt單個成本 = (TextBox)row.FindControl("txt單個成本");
         string PERCENTS = "0";
