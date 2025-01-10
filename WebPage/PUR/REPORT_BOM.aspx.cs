@@ -578,6 +578,7 @@ public partial class CDS_WebPage_PUR_REPORT_BOM : Ede.Uof.Utility.Page.BasePage
 	                                    ) AS TEMP 
 	                                    WHERE 1=1
                                     ) AS TEMP2
+                                    ORDER BY 主品號,明細品號
                                     ;
 
 
