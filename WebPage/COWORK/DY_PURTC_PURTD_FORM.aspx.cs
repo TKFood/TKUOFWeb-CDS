@@ -36,9 +36,12 @@ public partial class CDS_WebPage_COWORK_DY_PURTC_PURTD_FORM : Ede.Uof.Utility.Pa
         ACCOUNT = Current.Account;
         NAME = Current.User.Name;
 
-        BindDropDownList();
+        if (!IsPostBack)
+        {
+            BindDropDownList();
 
-        SETTEXT();
+            SETTEXT();
+        }
 
     }
 
@@ -81,7 +84,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTC_PURTD_FORM : Ede.Uof.Utility.Pa
 
 
     }
-    private void BindGrid(string SALESFOCUS)
+    private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -98,12 +101,42 @@ public partial class CDS_WebPage_COWORK_DY_PURTC_PURTD_FORM : Ede.Uof.Utility.Pa
             {
                 TextBox2.Text = "0" + TextBox2.Text;
             }
-            QUERYS.AppendFormat(@" AND TD002 LIKE '{0}%'", TextBox1.Text.Trim() + TextBox2.Text.Trim());
+            QUERYS.AppendFormat(@" AND TC002 LIKE '{0}%'", TextBox1.Text.Trim() + TextBox2.Text.Trim());
 
         }
 
-        cmdTxt.AppendFormat(@" 
+        //核單
+        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        {
+            if (DropDownList1.Text.Equals("未核單"))
+            {
+                QUERYS.AppendFormat(@" AND TC014='N'");
+            }
+            else if (DropDownList1.Text.Equals("已核單"))
+            {
+                QUERYS.AppendFormat(@"  AND TC014='Y'");
+            }
+        }
 
+        cmdTxt.AppendFormat(@" 
+                            SELECT 
+                            TC001,
+                            TC002,
+                            TC003,
+                            TC004,
+                            MA002,
+                            STUFF((
+                                    SELECT ',' + TD005+' ,數量'+CONVERT(NVARCHAR,TD008)+' ,到貨日'+TD012
+                                    FROM [DY].dbo.PURTD
+                                    WHERE TD001=TC001 AND TD002=TC002
+                                    FOR XML PATH(''), TYPE
+                                ).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS DETAILS
+
+                            FROM [DY].dbo.PURTC,[DY].dbo.PURMA
+                            WHERE TC004=MA001
+                            {0}
+                            {1}
+                            ORDER BY TC001,TC002
                                 ", QUERYS.ToString(), QUERYS2.ToString());
 
 
@@ -149,7 +182,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTC_PURTD_FORM : Ede.Uof.Utility.Pa
     #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
     {
-        BindGrid("");
+        BindGrid();
     }
 
     #endregion
