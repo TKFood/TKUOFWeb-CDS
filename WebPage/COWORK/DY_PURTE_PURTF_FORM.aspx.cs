@@ -120,7 +120,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
 
         cmdTxt.AppendFormat(@" 
                                 SELECT 
-                                REPLACE(TE001+TE001+TE003,' ','') AS TE001TE002TE003,
+                                REPLACE(TE001+TE002+TE003,' ','') AS TE001TE002TE003,
                                 TE001,
                                 TE002,
                                 TE003,
@@ -268,7 +268,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
     {
         string TE001 = TE001TE002TE003.Substring(0, 4);
         string TE002 = TE001TE002TE003.Substring(4, 11);
-        string TE003 = TE001TE002TE003.Substring(11, 4);
+        string TE003 = TE001TE002TE003.Substring(15, 4);
 
 
         DataTable DT = SEARCHPURTEPURTF(TE001, TE002, TE003);
