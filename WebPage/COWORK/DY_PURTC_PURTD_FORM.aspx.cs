@@ -120,6 +120,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTC_PURTD_FORM : Ede.Uof.Utility.Pa
 
         cmdTxt.AppendFormat(@" 
                             SELECT 
+                            REPLACE(TC001+TC002,' ','') AS TC001TC002,
                             TC001,
                             TC002,
                             TC003,
@@ -160,14 +161,45 @@ public partial class CDS_WebPage_COWORK_DY_PURTC_PURTD_FORM : Ede.Uof.Utility.Pa
         //BindGrid();
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
-    {        
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {         
 
+            //Button2
+            //Get the button that raised the event
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            //Get the row that contains this button
+            GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue2 = btn2.CommandArgument;
+            DataRowView row2 = (DataRowView)e.Row.DataItem;
+            Button lbtnName2 = (Button)e.Row.FindControl("Button2");
+            ExpandoObject param2 = new { ID = Cellvalue2 }.ToExpando();
+
+
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
 
+         if (e.CommandName == "Button2")
+        {
+            //檢查是否已送單，簽核中
+            DataTable DT = CHECK_TB_WKF_TASK(e.CommandArgument.ToString());
+
+            if (DT != null && DT.Rows.Count >= 1)
+            {
+                MsgBox(e.CommandArgument.ToString() + " 重覆送單 \r\n 此單已簽核 或是 在簽核中", this.Page, this);
+            }
+            else
+            {
+                //檢查並送出UOF               
+
+            }
+
+        }
     }
 
 
@@ -175,6 +207,71 @@ public partial class CDS_WebPage_COWORK_DY_PURTC_PURTD_FORM : Ede.Uof.Utility.Pa
     {
         //SETEXCEL();
 
+    }
+
+    public DataTable CHECK_TB_WKF_TASK(string TC001TC002)
+    {
+        string TC001 = TC001TC002.Substring(0, 4);
+        string TC002 = TC001TC002.Substring(4, 11);
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@" 
+                            WITH TEMP AS (
+                            SELECT 
+                                [FORM_NAME],
+                                [DOC_NBR],
+	                            [CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""TC001""]/@fieldValue)[1]', 'NVARCHAR(100)') AS TC001,
+                                [CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""TC002""]/@fieldValue)[1]', 'NVARCHAR(100)') AS TC002,
+                                TASK_ID,
+                                TASK_STATUS,
+                                TASK_RESULT
+                                FROM[UOF].[dbo].TB_WKF_TASK
+                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
+                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
+                                WHERE[FORM_NAME] = 'PUR40.採購單-大潁'
+                                AND(TASK_STATUS IN('1') OR(TASK_STATUS IN('2') AND TASK_RESULT = '0'))
+
+
+                            )
+                            SELECT*
+                            FROM TEMP
+                            WHERE TC001 = '{0}' AND TC002 = '{1}'
+
+                              ", TC001, TC002);
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        //Type cstype = obj.GetType();
+        //ClientScriptManager cs = pg.ClientScript;
+        //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
 
     #endregion

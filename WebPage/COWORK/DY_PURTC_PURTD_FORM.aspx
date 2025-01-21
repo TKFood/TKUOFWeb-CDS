@@ -89,37 +89,36 @@
                                                         <asp:Label ID="Label_TC001" runat="server" Text='<%# Bind("TC001") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="採購單號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="採購單號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_TC002" runat="server" Text='<%# Bind("TC002") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="採購日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="採購日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_TC003" runat="server" Text='<%# Bind("TC003") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="代號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="代號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_TC004" runat="server" Text='<%# Bind("TC004") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_MA002" runat="server" Text='<%# Bind("MA002") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="明細" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="明細" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_DETAILS" runat="server" Text='<%# Bind("DETAILS") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-
-                                                <%--   <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                                        <ItemTemplate>
-                                                            <asp:Button ID="Button2" runat="server" Text="送簽" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Eval("TD12") %>' />
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>--%>
+                                                <asp:TemplateField HeaderText="是否送簽" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Button2" runat="server" Text="送簽" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Eval("TC001TC002") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
                                     </div>
@@ -135,7 +134,8 @@
                     <div id="tabs-99">
                     </div>
                 </telerik:RadPageView>
-            </telerik:RadMultiPage>            ​
+            </telerik:RadMultiPage>
+            ​
           
         </ContentTemplate>
     </asp:UpdatePanel>
