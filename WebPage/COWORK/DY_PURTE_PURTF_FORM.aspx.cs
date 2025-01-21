@@ -101,7 +101,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
             {
                 TextBox2.Text = "0" + TextBox2.Text;
             }
-            QUERYS.AppendFormat(@" AND TC002 LIKE '{0}%'", TextBox1.Text.Trim() + TextBox2.Text.Trim());
+            QUERYS.AppendFormat(@" AND TE002 LIKE '{0}%'", TextBox1.Text.Trim() + TextBox2.Text.Trim());
 
         }
 
@@ -110,34 +110,34 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         {
             if (DropDownList1.Text.Equals("未核單"))
             {
-                QUERYS.AppendFormat(@" AND TC014='N'");
+                QUERYS.AppendFormat(@" AND TE017='N'");
             }
             else if (DropDownList1.Text.Equals("已核單"))
             {
-                QUERYS.AppendFormat(@"  AND TC014='Y'");
+                QUERYS.AppendFormat(@"  AND TE017='Y'");
             }
         }
 
         cmdTxt.AppendFormat(@" 
-                            SELECT 
-                            REPLACE(TC001+TC002,' ','') AS TC001TC002,
-                            TC001,
-                            TC002,
-                            TC003,
-                            TC004,
-                            MA002,
-                            STUFF((
-                                    SELECT ',' + TD005+' ,數量'+CONVERT(NVARCHAR,TD008)+' ,到貨日'+TD012
-                                    FROM [DY].dbo.PURTD
-                                    WHERE TD001=TC001 AND TD002=TC002
-                                    FOR XML PATH(''), TYPE
-                                ).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS DETAILS
+                                SELECT 
+                                REPLACE(TE001+TE001+TE003,' ','') AS TE001TE002TE003,
+                                TE001,
+                                TE002,
+                                TE003,
+                                TE005,
+                                MA002,
+                                STUFF((
+                                        SELECT ',' + TF006+' ,數量'+CONVERT(NVARCHAR,TF009)+' ,到貨日'+TF013
+                                        FROM [DY].dbo.PURTF
+                                        WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
+                                        FOR XML PATH(''), TYPE
+                                    ).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS DETAILS
 
-                            FROM [DY].dbo.PURTC,[DY].dbo.PURMA
-                            WHERE TC004=MA001
-                            {0}
-                            {1}
-                            ORDER BY TC001,TC002
+                                FROM [DY].dbo.PURTE,[DY].dbo.PURMA
+                                WHERE TE005=MA001
+                                {0}
+                                {1}
+                                ORDER BY TE001,PURTE.TE002,PURTE.TE003
                                 ", QUERYS.ToString(), QUERYS2.ToString());
 
 
