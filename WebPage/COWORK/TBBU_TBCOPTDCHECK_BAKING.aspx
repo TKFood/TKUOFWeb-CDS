@@ -958,6 +958,6 @@
                 </telerik:RadPageView>
             </telerik:RadMultiPage>​
         </ContentTemplate>
-    </asp:UpdatePanel>
+    </asp:UpdatePanel>RadMultiPage
 </asp:Content>
 
