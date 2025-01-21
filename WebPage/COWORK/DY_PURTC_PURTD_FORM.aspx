@@ -84,9 +84,34 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="TC001" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="採購單別" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_TC001" runat="server" Text='<%# Bind("TC001") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="採購單號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_TC002" runat="server" Text='<%# Bind("TC002") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="採購日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_TC003" runat="server" Text='<%# Bind("TC003") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="代號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_TC004" runat="server" Text='<%# Bind("TC004") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_MA002" runat="server" Text='<%# Bind("MA002") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="明細" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_DETAILS" runat="server" Text='<%# Bind("DETAILS") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
