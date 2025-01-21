@@ -196,7 +196,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
             else
             {
                 //檢查並送出UOF               
-                ADD_PURTCPURTD_TB_WKF_EXTERNAL_TASK("PUR40.採購單-大潁",e.CommandArgument.ToString());
+                ADD_PURTCPURTD_TB_WKF_EXTERNAL_TASK("PUR50.採購變更單-大潁", e.CommandArgument.ToString());
             }
 
         }
@@ -209,10 +209,11 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
 
     }
 
-    public DataTable CHECK_TB_WKF_TASK(string TC001TC002)
+    public DataTable CHECK_TB_WKF_TASK(string TE001TE002TE003)
     {
-        string TC001 = TC001TC002.Substring(0, 4);
-        string TC002 = TC001TC002.Substring(4, 11);
+        string TE001 = TE001TE002TE003.Substring(0, 4);
+        string TE002 = TE001TE002TE003.Substring(4, 11);
+        string TE003 = TE001TE002TE003.Substring(11, 4);
 
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -220,28 +221,29 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         StringBuilder cmdTxt = new StringBuilder();
 
         cmdTxt.AppendFormat(@" 
-                            WITH TEMP AS (
+                           WITH TEMP AS (
                             SELECT 
                                 [FORM_NAME],
                                 [DOC_NBR],
-	                            [CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""TC001""]/@fieldValue)[1]', 'NVARCHAR(100)') AS TC001,
-                                [CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""TC002""]/@fieldValue)[1]', 'NVARCHAR(100)') AS TC002,
+	                            [CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""TE001""]/@fieldValue)[1]', 'NVARCHAR(100)') AS TE001,
+                                [CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""TE002""]/@fieldValue)[1]', 'NVARCHAR(100)') AS TE002,
+	                            [CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""TE002""]/@fieldValue)[1]', 'NVARCHAR(100)') AS TE003,
                                 TASK_ID,
                                 TASK_STATUS,
                                 TASK_RESULT
                                 FROM[UOF].[dbo].TB_WKF_TASK
                                 LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
                                 LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
-                                WHERE[FORM_NAME] = 'PUR40.採購單-大潁'
+                                WHERE[FORM_NAME] = 'PUR50.採購變更單-大潁'
                                 AND(TASK_STATUS IN('1') OR(TASK_STATUS IN('2') AND TASK_RESULT = '0'))
 
 
                             )
                             SELECT*
                             FROM TEMP
-                            WHERE TC001 = '{0}' AND TC002 = '{1}'
+                            WHERE TE001 = '{0}' AND TE002 = '{1}' AND TE003='{2}'
 
-                              ", TC001, TC002);
+                              ", TE001, TE002, TE003);
 
 
 
@@ -262,24 +264,17 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
             return null;
         }
     }
-    public void ADD_PURTCPURTD_TB_WKF_EXTERNAL_TASK(string FORMNAME, string TC001TC002)
+    public void ADD_PURTCPURTD_TB_WKF_EXTERNAL_TASK(string FORMNAME, string TE001TE002TE003)
     {
-        string TC001 = TC001TC002.Substring(0, 4);
-        string TC002 = TC001TC002.Substring(4, 11);
-
-        SqlConnection sqlConn = new SqlConnection();
-        SqlCommand sqlComm = new SqlCommand();
-        StringBuilder sbSql = new StringBuilder();
-        StringBuilder sbSqlQuery = new StringBuilder();
-
-        //找出ERP的單據資料
-        DataTable DT = SEARCHPURTCPURTD(TC001, TC002);
-        //用建單人找出建單人+部門的UOF資訊
-        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["TC011"].ToString());
+        string TE001 = TE001TE002TE003.Substring(0, 4);
+        string TE002 = TE001TE002TE003.Substring(4, 11);
+        string TE003 = TE001TE002TE003.Substring(11, 4);
 
 
+        DataTable DT = SEARCHPURTEPURTF(TE001, TE002, TE003);
+        DataTable DTUPFDEP = SEARCHUOFDEP(DT.Rows[0]["TE037"].ToString());
 
-        string account = DT.Rows[0]["TC011"].ToString();
+        string account = DT.Rows[0]["TE037"].ToString();
         string groupId = DT.Rows[0]["GROUP_ID"].ToString();
         string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
         string fillerName = DT.Rows[0]["MV002"].ToString();
@@ -288,7 +283,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
         string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
 
-        string EXTERNAL_FORM_NBR = "DY-" + DT.Rows[0]["TC001"].ToString().Trim() + DT.Rows[0]["TC002"].ToString().Trim();
+        string EXTERNAL_FORM_NBR = "DY-" + DT.Rows[0]["TE001"].ToString().Trim() + DT.Rows[0]["TE002"].ToString().Trim() + DT.Rows[0]["TE003"].ToString().Trim();
 
         int rowscounts = 0;
 
@@ -297,11 +292,11 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         XmlElement Form = xmlDoc.CreateElement("Form");
 
         //正式的id
-        string PURTCID = SEARCHFORM_UOF_VERSION_ID("PUR40.採購單-大潁");
+        string PURTEID = SEARCHFORM_UOF_VERSION_ID("PUR50.採購變更單-大潁");
 
-        if (!string.IsNullOrEmpty(PURTCID))
+        if (!string.IsNullOrEmpty(PURTEID))
         {
-            Form.SetAttribute("formVersionId", PURTCID);
+            Form.SetAttribute("formVersionId", PURTEID);
         }
 
 
@@ -343,10 +338,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC001	
+        //TE001	
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC001");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC001"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE001");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE001"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -357,10 +352,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC002	
+        //TE002	
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC002");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC002"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE002");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE002"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -371,10 +366,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC003	
+        //TE003	
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC003");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC003"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE003");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE003"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -385,10 +380,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC004	
+        //TE004
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC004");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC004"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE004");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE004"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -399,10 +394,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC004NAME	
+        //TE006
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC004NAME");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC004NAME"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE006");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE006"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -413,10 +408,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC010	
+        //TE005
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC010");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC010"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE005");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE005"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -427,10 +422,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC005	
+        //TE005NAME
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC005");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC005"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE005NAME");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE005NAME"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -441,10 +436,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC006	
+        //TE007
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC006");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC006"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE007");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE007"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -455,10 +450,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC027	
+        //TE008
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC027");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC027"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE008");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE008"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -469,10 +464,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC008	
+        //TE009
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC008");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC008"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE009");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE009"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -483,10 +478,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC028	
+        //TE010
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC028");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC028"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE010");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE010"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -497,10 +492,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC009	
+        //TE023
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC009");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC009"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE023");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE023"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -511,10 +506,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC018	
+        //TE011
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC018");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC018"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE011");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE011"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -525,10 +520,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC018NAME	
+        //TE012
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC018NAME");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC018NAME"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE012");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE012"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -539,10 +534,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //	TC011
+        //TE015
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC011");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC011"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE015");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE015"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -553,10 +548,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC011NAME	
+        //TE018
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC011NAME");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC011NAME"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE018");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE018"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -567,10 +562,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC037	
+        //TE018NAME
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC037");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC037"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE018NAME");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE018NAME"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -581,10 +576,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC038	
+        //TE019
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC038");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC038"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE019");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE019"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -595,10 +590,10 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //TC021	
+        //TE020
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "TC021");
-        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TC021"].ToString());
+        FieldItem.SetAttribute("fieldId", "TE020");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE020"].ToString());
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
         FieldItem.SetAttribute("fillerName", fillerName);
@@ -609,9 +604,127 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         FormFieldValue.AppendChild(FieldItem);
 
         //建立節點FieldItem
-        //PURTD
+        //TE022
         FieldItem = xmlDoc.CreateElement("FieldItem");
-        FieldItem.SetAttribute("fieldId", "PURTD");
+        FieldItem.SetAttribute("fieldId", "TE022");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE022"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //TE024
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE024");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE024"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //TE027
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE027");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE027"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //TE037
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE037");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE037"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //TE037NAME
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE037NAME");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE037NAME"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //TE043
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE043");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE043"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //TE045
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE045");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE045"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+        //建立節點FieldItem
+        //TE046
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "TE046");
+        FieldItem.SetAttribute("fieldValue", DT.Rows[0]["TE046"].ToString());
+        FieldItem.SetAttribute("realValue", "");
+        FieldItem.SetAttribute("enableSearch", "True");
+        FieldItem.SetAttribute("fillerName", fillerName);
+        FieldItem.SetAttribute("fillerUserGuid", fillerUserGuid);
+        FieldItem.SetAttribute("fillerAccount", account);
+        FieldItem.SetAttribute("fillSiteId", "");
+        //加入至members節點底下
+        FormFieldValue.AppendChild(FieldItem);
+
+
+
+
+
+
+
+        //建立節點FieldItem
+        //PURTF
+        FieldItem = xmlDoc.CreateElement("FieldItem");
+        FieldItem.SetAttribute("fieldId", "PURTF");
         FieldItem.SetAttribute("fieldValue", "");
         FieldItem.SetAttribute("realValue", "");
         FieldItem.SetAttribute("enableSearch", "True");
@@ -625,7 +738,7 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
         //建立節點 DataGrid
         XmlElement DataGrid = xmlDoc.CreateElement("DataGrid");
         //DataGrid 加入至 TB 節點底下
-        XmlNode PURTD = xmlDoc.SelectSingleNode("./Form/FormFieldValue/FieldItem[@fieldId='PURTD']");
+        XmlNode PURTD = xmlDoc.SelectSingleNode("./Form/FormFieldValue/FieldItem[@fieldId='PURTF']");
         PURTD.AppendChild(DataGrid);
 
 
@@ -635,190 +748,191 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
             XmlElement Row = xmlDoc.CreateElement("Row");
             Row.SetAttribute("order", (rowscounts).ToString());
 
-            //Row	TD003
+            //Row	TF004
             XmlElement Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD003");
-            Cell.SetAttribute("fieldValue", od["TD003"].ToString());
+            Cell.SetAttribute("fieldId", "TF004");
+            Cell.SetAttribute("fieldValue", od["TF004"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TB005
+            //Row	TF005
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TB005");
-            Cell.SetAttribute("fieldValue", od["TB005"].ToString());
+            Cell.SetAttribute("fieldId", "TF005");
+            Cell.SetAttribute("fieldValue", od["TF005"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD004
+            //Row	TF006
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD004");
-            Cell.SetAttribute("fieldValue", od["TD004"].ToString());
+            Cell.SetAttribute("fieldId", "TF006");
+            Cell.SetAttribute("fieldValue", od["TF006"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD005
+            //Row	TF007
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD005");
-            Cell.SetAttribute("fieldValue", od["TD005"].ToString());
+            Cell.SetAttribute("fieldId", "TF007");
+            Cell.SetAttribute("fieldValue", od["TF007"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD006
+            //Row	TF008
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD006");
-            Cell.SetAttribute("fieldValue", od["TD006"].ToString());
+            Cell.SetAttribute("fieldId", "TF008");
+            Cell.SetAttribute("fieldValue", od["TF008"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD007
+            //Row	TF009
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD007");
-            Cell.SetAttribute("fieldValue", od["TD007"].ToString());
+            Cell.SetAttribute("fieldId", "TF009");
+            Cell.SetAttribute("fieldValue", od["TF009"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD008
+            //Row	TF010
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD008");
-            Cell.SetAttribute("fieldValue", od["TD008"].ToString());
+            Cell.SetAttribute("fieldId", "TF010");
+            Cell.SetAttribute("fieldValue", od["TF010"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD009
+            //Row	TF011
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD009");
-            Cell.SetAttribute("fieldValue", od["TD009"].ToString());
+            Cell.SetAttribute("fieldId", "TF011");
+            Cell.SetAttribute("fieldValue", od["TF011"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD010
+            //Row	TF012
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD010");
-            Cell.SetAttribute("fieldValue", od["TD010"].ToString());
+            Cell.SetAttribute("fieldId", "TF012");
+            Cell.SetAttribute("fieldValue", od["TF012"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD011
+            //Row	TF013
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD011");
-            Cell.SetAttribute("fieldValue", od["TD011"].ToString());
+            Cell.SetAttribute("fieldId", "TF013");
+            Cell.SetAttribute("fieldValue", od["TF013"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD012
+            //Row	TF014
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD012");
-            Cell.SetAttribute("fieldValue", od["TD012"].ToString());
+            Cell.SetAttribute("fieldId", "TF014");
+            Cell.SetAttribute("fieldValue", od["TF014"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD015
+            //Row	TF015
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD015");
-            Cell.SetAttribute("fieldValue", od["TD015"].ToString());
+            Cell.SetAttribute("fieldId", "TF015");
+            Cell.SetAttribute("fieldValue", od["TF015"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD019
+            //Row	TF017
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD019");
-            Cell.SetAttribute("fieldValue", od["TD019"].ToString());
+            Cell.SetAttribute("fieldId", "TF017");
+            Cell.SetAttribute("fieldValue", od["TF017"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD026
+            //Row	TF018
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD026");
-            Cell.SetAttribute("fieldValue", od["TD026"].ToString());
+            Cell.SetAttribute("fieldId", "TF018");
+            Cell.SetAttribute("fieldValue", od["TF018"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD027
+            //Row	TF021
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD027");
-            Cell.SetAttribute("fieldValue", od["TD027"].ToString());
+            Cell.SetAttribute("fieldId", "TF021");
+            Cell.SetAttribute("fieldValue", od["TF021"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD028
+            //Row	TF022
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD028");
-            Cell.SetAttribute("fieldValue", od["TD028"].ToString());
+            Cell.SetAttribute("fieldId", "TF022");
+            Cell.SetAttribute("fieldValue", od["TF022"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
 
-            //Row	TD014
+            //Row	TF030
             Cell = xmlDoc.CreateElement("Cell");
-            Cell.SetAttribute("fieldId", "TD014");
-            Cell.SetAttribute("fieldValue", od["TD014"].ToString());
+            Cell.SetAttribute("fieldId", "TF030");
+            Cell.SetAttribute("fieldValue", od["TF030"].ToString());
             Cell.SetAttribute("realValue", "");
             Cell.SetAttribute("customValue", "");
             Cell.SetAttribute("enableSearch", "True");
             //Row
             Row.AppendChild(Cell);
+
 
             rowscounts = rowscounts + 1;
 
-            XmlNode DataGridS = xmlDoc.SelectSingleNode("./Form/FormFieldValue/FieldItem[@fieldId='PURTD']/DataGrid");
+            XmlNode DataGridS = xmlDoc.SelectSingleNode("./Form/FormFieldValue/FieldItem[@fieldId='PURTF']/DataGrid");
             DataGridS.AppendChild(Row);
 
         }
 
-       
+
         //用ADDTACK，直接啟動起單
         ADDTACK(Form);              
 
     }
 
-    public DataTable SEARCHPURTCPURTD(string TC001, string TC002)
+    public DataTable SEARCHPURTEPURTF(string TE001, string TE002, string TE003)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -839,236 +953,260 @@ public partial class CDS_WebPage_COWORK_DY_PURTE_PURTF_FORM : Ede.Uof.Utility.Pa
                                     ,(SELECT TOP 1 GROUP_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'GROUP_ID'
                                     ,(SELECT TOP 1 TITLE_ID FROM [192.168.1.223].[UOF].[dbo].[TB_EB_EMPL_DEP] WHERE [TB_EB_EMPL_DEP].USER_GUID=TEMP.USER_GUID) AS 'TITLE_ID'
                                     ,SUMLA011
-                                    ,MA002 AS TC004NAME
-                                    ,(CASE WHEN TC018='1' THEN '1.應稅內含'  WHEN TC018='2' THEN '2.應稅外加'  WHEN TC018='3' THEN '3.零稅率' WHEN TC018='4' THEN '4.免稅' WHEN TC018='9' THEN '9.不計稅' END) AS TC018NAME
-                                    ,NAME AS TC011NAME
+                                    ,MA002 AS TE005NAME
+                                    ,(CASE WHEN TE018='1' THEN '1.應稅內含'  WHEN TE018='2' THEN '2.應稅外加'  WHEN TE018='3' THEN '3.零稅率' WHEN TE018='4' THEN '4.免稅' WHEN TE018='9' THEN '9.不計稅' END) AS TE018NAME
+                                    ,NAME AS TE037NAME
                                     FROM 
                                     (
-                                        SELECT 
-                                        [PURTC].[COMPANY]
-                                        ,[PURTC].[CREATOR]
-                                        ,[PURTC].[USR_GROUP]
-                                        ,[PURTC].[CREATE_DATE]
-                                        ,[PURTC].[MODIFIER]
-                                        ,[PURTC].[MODI_DATE]
-                                        ,[PURTC].[FLAG]
-                                        ,[PURTC].[CREATE_TIME]
-                                        ,[PURTC].[MODI_TIME]
-                                        ,[PURTC].[TRANS_TYPE]
-                                        ,[PURTC].[TRANS_NAME]
-                                        ,[PURTC].[sync_date]
-                                        ,[PURTC].[sync_time]
-                                        ,[PURTC].[sync_mark]
-                                        ,[PURTC].[sync_count]
-                                        ,[PURTC].[DataUser]
-                                        ,[PURTC].[DataGroup]
-                                        ,[PURTC].[TC001]
-                                        ,[PURTC].[TC002]
-                                        ,[PURTC].[TC003]
-                                        ,[PURTC].[TC004]
-                                        ,[PURTC].[TC005]
-                                        ,[PURTC].[TC006]
-                                        ,[PURTC].[TC007]
-                                        ,[PURTC].[TC008]
-                                        ,[PURTC].[TC009]
-                                        ,[PURTC].[TC010]
-                                        ,[PURTC].[TC011]
-                                        ,[PURTC].[TC012]
-                                        ,[PURTC].[TC013]
-                                        ,[PURTC].[TC014]
-                                        ,[PURTC].[TC015]
-                                        ,[PURTC].[TC016]
-                                        ,[PURTC].[TC017]
-                                        ,[PURTC].[TC018]
-                                        ,[PURTC].[TC019]
-                                        ,[PURTC].[TC020]
-                                        ,[PURTC].[TC021]
-                                        ,[PURTC].[TC022]
-                                        ,[PURTC].[TC023]
-                                        ,[PURTC].[TC024]
-                                        ,[PURTC].[TC025]
-                                        ,[PURTC].[TC026]
-                                        ,[PURTC].[TC027]
-                                        ,[PURTC].[TC028]
-                                        ,[PURTC].[TC029]
-                                        ,[PURTC].[TC030]
-                                        ,[PURTC].[TC031]
-                                        ,[PURTC].[TC032]
-                                        ,[PURTC].[TC033]
-                                        ,[PURTC].[TC034]
-                                        ,[PURTC].[TC035]
-                                        ,[PURTC].[TC036]
-                                        ,[PURTC].[TC037]
-                                        ,[PURTC].[TC038]
-                                        ,[PURTC].[TC039]
-                                        ,[PURTC].[TC040]
-                                        ,[PURTC].[TC041]
-                                        ,[PURTC].[TC042]
-                                        ,[PURTC].[TC043]
-                                        ,[PURTC].[TC044]
-                                        ,[PURTC].[TC045]
-                                        ,[PURTC].[TC046]
-                                        ,[PURTC].[TC047]
-                                        ,[PURTC].[TC048]
-                                        ,[PURTC].[TC049]
-                                        ,[PURTC].[TC050]
-                                        ,[PURTC].[TC051]
-                                        ,[PURTC].[TC052]
-                                        ,[PURTC].[TC053]
-                                        ,[PURTC].[TC054]
-                                        ,[PURTC].[TC055]
-                                        ,[PURTC].[TC056]
-                                        ,[PURTC].[TC057]
-                                        ,[PURTC].[TC058]
-                                        ,[PURTC].[TC059]
-                                        ,[PURTC].[TC060]
-                                        ,[PURTC].[TC061]
-                                        ,[PURTC].[TC062]
-                                        ,[PURTC].[TC063]
-                                        ,[PURTC].[TC064]
-                                        ,[PURTC].[TC065]
-                                        ,[PURTC].[TC066]
-                                        ,[PURTC].[TC067]
-                                        ,[PURTC].[TC068]
-                                        ,[PURTC].[TC069]
-                                        ,[PURTC].[TC070]
-                                        ,[PURTC].[TC071]
-                                        ,[PURTC].[TC072]
-                                        ,[PURTC].[TC073]
-                                        ,[PURTC].[TC074]
-                                        ,[PURTC].[TC075]
-                                        ,[PURTC].[TC076]
-                                        ,[PURTC].[TC077]
-                                        ,[PURTC].[TC078]
-                                        ,[PURTC].[TC079]
-                                        ,[PURTC].[TC080]
-                                        ,[PURTC].[UDF01] AS PURTCUDF01
-                                        ,[PURTC].[UDF02] AS PURTCUDF02
-                                        ,[PURTC].[UDF03] AS PURTCUDF03
-                                        ,[PURTC].[UDF04] AS PURTCUDF04
-                                        ,[PURTC].[UDF05] AS PURTCUDF05
-                                        ,[PURTC].[UDF06] AS PURTCUDF06
-                                        ,[PURTC].[UDF07] AS PURTCUDF07
-                                        ,[PURTC].[UDF08] AS PURTCUDF08
-                                        ,[PURTC].[UDF09] AS PURTCUDF09
-                                        ,[PURTC].[UDF10] AS PURTCUDF10
-                                        ,[PURTD].[TD001]
-                                        ,[PURTD].[TD002]
-                                        ,[PURTD].[TD003]
-                                        ,[PURTD].[TD004]
-                                        ,[PURTD].[TD005]
-                                        ,[PURTD].[TD006]
-                                        ,[PURTD].[TD007]
-                                        ,[PURTD].[TD008]
-                                        ,[PURTD].[TD009]
-                                        ,[PURTD].[TD010]
-                                        ,[PURTD].[TD011]
-                                        ,[PURTD].[TD012]
-                                        ,[PURTD].[TD013]
-                                        ,[PURTD].[TD014]
-                                        ,[PURTD].[TD015]
-                                        ,[PURTD].[TD016]
-                                        ,[PURTD].[TD017]
-                                        ,[PURTD].[TD018]
-                                        ,[PURTD].[TD019]
-                                        ,[PURTD].[TD020]
-                                        ,[PURTD].[TD021]
-                                        ,[PURTD].[TD022]
-                                        ,[PURTD].[TD023]
-                                        ,[PURTD].[TD024]
-                                        ,[PURTD].[TD025]
-                                        ,[PURTD].[TD026]
-                                        ,[PURTD].[TD027]
-                                        ,[PURTD].[TD028]
-                                        ,[PURTD].[TD029]
-                                        ,[PURTD].[TD030]
-                                        ,[PURTD].[TD031]
-                                        ,[PURTD].[TD032]
-                                        ,[PURTD].[TD033]
-                                        ,[PURTD].[TD034]
-                                        ,[PURTD].[TD035]
-                                        ,[PURTD].[TD036]
-                                        ,[PURTD].[TD037]
-                                        ,[PURTD].[TD038]
-                                        ,[PURTD].[TD039]
-                                        ,[PURTD].[TD040]
-                                        ,[PURTD].[TD041]
-                                        ,[PURTD].[TD042]
-                                        ,[PURTD].[TD043]
-                                        ,[PURTD].[TD044]
-                                        ,[PURTD].[TD045]
-                                        ,[PURTD].[TD046]
-                                        ,[PURTD].[TD047]
-                                        ,[PURTD].[TD048]
-                                        ,[PURTD].[TD049]
-                                        ,[PURTD].[TD050]
-                                        ,[PURTD].[TD051]
-                                        ,[PURTD].[TD052]
-                                        ,[PURTD].[TD053]
-                                        ,[PURTD].[TD054]
-                                        ,[PURTD].[TD055]
-                                        ,[PURTD].[TD056]
-                                        ,[PURTD].[TD057]
-                                        ,[PURTD].[TD058]
-                                        ,[PURTD].[TD059]
-                                        ,[PURTD].[TD060]
-                                        ,[PURTD].[TD061]
-                                        ,[PURTD].[TD062]
-                                        ,[PURTD].[TD063]
-                                        ,[PURTD].[TD064]
-                                        ,[PURTD].[TD065]
-                                        ,[PURTD].[TD066]
-                                        ,[PURTD].[TD067]
-                                        ,[PURTD].[TD068]
-                                        ,[PURTD].[TD069]
-                                        ,[PURTD].[TD070]
-                                        ,[PURTD].[TD071]
-                                        ,[PURTD].[TD072]
-                                        ,[PURTD].[TD073]
-                                        ,[PURTD].[TD074]
-                                        ,[PURTD].[TD075]
-                                        ,[PURTD].[TD076]
-                                        ,[PURTD].[TD077]
-                                        ,[PURTD].[TD078]
-                                        ,[PURTD].[TD079]
-                                        ,[PURTD].[TD080]
-                                        ,[PURTD].[TD081]
-                                        ,[PURTD].[TD082]
-                                        ,[PURTD].[TD083]
-                                        ,[PURTD].[TD084]
-                                        ,[PURTD].[TD085]
-                                        ,[PURTD].[TD086]
-                                        ,[PURTD].[TD087]
-                                        ,[PURTD].[TD088]
-                                        ,[PURTD].[TD089]
-                                        ,[PURTD].[TD090]
-                                        ,[PURTD].[TD091]
-                                        ,[PURTD].[TD092]
-                                        ,[PURTD].[TD093]
-                                        ,[PURTD].[TD094]
-                                        ,[PURTD].[TD095]
-                                        ,[PURTD].[UDF01]  AS PURTDUDF01
-                                        ,[PURTD].[UDF02]  AS PURTDUDF02
-                                        ,[PURTD].[UDF03]  AS PURTDUDF03
-                                        ,[PURTD].[UDF04]  AS PURTDUDF04
-                                        ,[PURTD].[UDF05]  AS PURTDUDF05
-                                        ,[PURTD].[UDF06]  AS PURTDUDF06
-                                        ,[PURTD].[UDF07]  AS PURTDUDF07
-                                        ,[PURTD].[UDF08]  AS PURTDUDF08
-                                        ,[PURTD].[UDF09]  AS PURTDUDF09
-                                        ,[PURTD].[UDF10]  AS PURTDUDF10
-                                        ,[TB_EB_USER].USER_GUID,NAME
-                                        ,(SELECT TOP 1 MV002 FROM [DY].dbo.CMSMV WHERE MV001=TC011) AS 'MV002'
-                                        ,(SELECT TOP 1 MA002 FROM [DY].dbo.PURMA WHERE MA001=TC004) AS 'MA002'
-                                        ,(SELECT ISNULL(SUM(LA005*LA011),0) FROM [DY].dbo.INVLA WITH(NOLOCK) WHERE LA001=TD004 AND LA009 IN ('20004','20006','20008','20019','20020')) AS SUMLA011
-                                        ,(SELECT TOP 1 CONVERT(NVARCHAR,TB005)+',需求日:'+CONVERT(NVARCHAR,TB011)+',數量:'+CONVERT(NVARCHAR,TB009)+' '+CONVERT(NVARCHAR,TB007) FROM  [DY].dbo.PURTB WHERE TB001=[PURTD].TD026 AND TB002=[PURTD].TD027 AND TB003=[PURTD].TD028) AS TB005
-                                        FROM [DY].dbo.PURTD,[DY].dbo.PURTC
-                                        LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= TC011 COLLATE Chinese_Taiwan_Stroke_BIN
-                                        WHERE TC001=TD001 AND TC002=TD002
-                                        AND TC001='{0}' AND TC002='{1}'
+                                    SELECT 
+                                    [PURTE].[COMPANY]
+                                    ,[PURTE].[CREATOR]
+                                    ,[PURTE].[USR_GROUP]
+                                    ,[PURTE].[CREATE_DATE]
+                                    ,[PURTE].[MODIFIER]
+                                    ,[PURTE].[MODI_DATE]
+                                    ,[PURTE].[FLAG]
+                                    ,[PURTE].[CREATE_TIME]
+                                    ,[PURTE].[MODI_TIME]
+                                    ,[PURTE].[TRANS_TYPE]
+                                    ,[PURTE].[TRANS_NAME]
+                                    ,[PURTE].[sync_date]
+                                    ,[PURTE].[sync_time]
+                                    ,[PURTE].[sync_mark]
+                                    ,[PURTE].[sync_count]
+                                    ,[PURTE].[DataUser]
+                                    ,[PURTE].[DataGroup]
+                                    ,[PURTE].[TE001]
+                                    ,[PURTE].[TE002]
+                                    ,[PURTE].[TE003]
+                                    ,[PURTE].[TE004]
+                                    ,[PURTE].[TE005]
+                                    ,[PURTE].[TE006]
+                                    ,[PURTE].[TE007]
+                                    ,[PURTE].[TE008]
+                                    ,[PURTE].[TE009]
+                                    ,[PURTE].[TE010]
+                                    ,[PURTE].[TE011]
+                                    ,[PURTE].[TE012]
+                                    ,[PURTE].[TE013]
+                                    ,[PURTE].[TE014]
+                                    ,[PURTE].[TE015]
+                                    ,[PURTE].[TE016]
+                                    ,[PURTE].[TE017]
+                                    ,[PURTE].[TE018]
+                                    ,[PURTE].[TE019]
+                                    ,[PURTE].[TE020]
+                                    ,[PURTE].[TE021]
+                                    ,[PURTE].[TE022]
+                                    ,[PURTE].[TE023]
+                                    ,[PURTE].[TE024]
+                                    ,[PURTE].[TE025]
+                                    ,[PURTE].[TE026]
+                                    ,[PURTE].[TE027]
+                                    ,[PURTE].[TE028]
+                                    ,[PURTE].[TE029]
+                                    ,[PURTE].[TE030]
+                                    ,[PURTE].[TE031]
+                                    ,[PURTE].[TE032]
+                                    ,[PURTE].[TE033]
+                                    ,[PURTE].[TE034]
+                                    ,[PURTE].[TE035]
+                                    ,[PURTE].[TE036]
+                                    ,[PURTE].[TE037]
+                                    ,[PURTE].[TE038]
+                                    ,[PURTE].[TE039]
+                                    ,[PURTE].[TE040]
+                                    ,[PURTE].[TE041]
+                                    ,[PURTE].[TE042]
+                                    ,[PURTE].[TE043]
+                                    ,[PURTE].[TE045]
+                                    ,[PURTE].[TE046]
+                                    ,[PURTE].[TE047]
+                                    ,[PURTE].[TE048]
+                                    ,[PURTE].[TE103]
+                                    ,[PURTE].[TE107]
+                                    ,[PURTE].[TE108]
+                                    ,[PURTE].[TE109]
+                                    ,[PURTE].[TE110]
+                                    ,[PURTE].[TE113]
+                                    ,[PURTE].[TE114]
+                                    ,[PURTE].[TE115]
+                                    ,[PURTE].[TE118]
+                                    ,[PURTE].[TE119]
+                                    ,[PURTE].[TE120]
+                                    ,[PURTE].[TE121]
+                                    ,[PURTE].[TE122]
+                                    ,[PURTE].[TE123]
+                                    ,[PURTE].[TE124]
+                                    ,[PURTE].[TE125]
+                                    ,[PURTE].[TE134]
+                                    ,[PURTE].[TE135]
+                                    ,[PURTE].[TE136]
+                                    ,[PURTE].[TE137]
+                                    ,[PURTE].[TE138]
+                                    ,[PURTE].[TE139]
+                                    ,[PURTE].[TE140]
+                                    ,[PURTE].[TE141]
+                                    ,[PURTE].[TE142]
+                                    ,[PURTE].[TE143]
+                                    ,[PURTE].[TE144]
+                                    ,[PURTE].[TE145]
+                                    ,[PURTE].[TE146]
+                                    ,[PURTE].[TE147]
+                                    ,[PURTE].[TE148]
+                                    ,[PURTE].[TE149]
+                                    ,[PURTE].[TE150]
+                                    ,[PURTE].[TE151]
+                                    ,[PURTE].[TE152]
+                                    ,[PURTE].[TE153]
+                                    ,[PURTE].[TE154]
+                                    ,[PURTE].[TE155]
+                                    ,[PURTE].[TE156]
+                                    ,[PURTE].[TE157]
+                                    ,[PURTE].[TE158]
+                                    ,[PURTE].[TE159]
+                                    ,[PURTE].[TE160]
+                                    ,[PURTE].[TE161]
+                                    ,[PURTE].[TE162]
+                                    ,[PURTE].[UDF01]  AS 'PURTFUDE01'
+                                    ,[PURTE].[UDF02]  AS 'PURTFUDE02'
+                                    ,[PURTE].[UDF03]  AS 'PURTFUDE03'
+                                    ,[PURTE].[UDF04]  AS 'PURTFUDE04'
+                                    ,[PURTE].[UDF05]  AS 'PURTFUDE05'
+                                    ,[PURTE].[UDF06]  AS 'PURTFUDE06'
+                                    ,[PURTE].[UDF07]  AS 'PURTFUDE07'
+                                    ,[PURTE].[UDF08]  AS 'PURTFUDE08'
+                                    ,[PURTE].[UDF09]  AS 'PURTFUDE09'
+                                    ,[PURTE].[UDF10]  AS 'PURTFUDE10'
+                                    ,[PURTF].[TF001]
+                                    ,[PURTF].[TF002]
+                                    ,[PURTF].[TF003]
+                                    ,[PURTF].[TF004]
+                                    ,[PURTF].[TF005]
+                                    ,[PURTF].[TF006]
+                                    ,[PURTF].[TF007]
+                                    ,[PURTF].[TF008]
+                                    ,[PURTF].[TF009]
+                                    ,[PURTF].[TF010]
+                                    ,[PURTF].[TF011]
+                                    ,[PURTF].[TF012]
+                                    ,[PURTF].[TF013]
+                                    ,[PURTF].[TF014]
+                                    ,[PURTF].[TF015]
+                                    ,[PURTF].[TF016]
+                                    ,[PURTF].[TF017]
+                                    ,[PURTF].[TF018]
+                                    ,[PURTF].[TF019]
+                                    ,[PURTF].[TF020]
+                                    ,[PURTF].[TF021]
+                                    ,[PURTF].[TF022]
+                                    ,[PURTF].[TF023]
+                                    ,[PURTF].[TF024]
+                                    ,[PURTF].[TF025]
+                                    ,[PURTF].[TF026]
+                                    ,[PURTF].[TF027]
+                                    ,[PURTF].[TF028]
+                                    ,[PURTF].[TF029]
+                                    ,[PURTF].[TF030]
+                                    ,[PURTF].[TF031]
+                                    ,[PURTF].[TF032]
+                                    ,[PURTF].[TF033]
+                                    ,[PURTF].[TF034]
+                                    ,[PURTF].[TF035]
+                                    ,[PURTF].[TF036]
+                                    ,[PURTF].[TF037]
+                                    ,[PURTF].[TF038]
+                                    ,[PURTF].[TF039]
+                                    ,[PURTF].[TF040]
+                                    ,[PURTF].[TF041]
+                                    ,[PURTF].[TF104]
+                                    ,[PURTF].[TF105]
+                                    ,[PURTF].[TF106]
+                                    ,[PURTF].[TF107]
+                                    ,[PURTF].[TF108]
+                                    ,[PURTF].[TF109]
+                                    ,[PURTF].[TF110]
+                                    ,[PURTF].[TF111]
+                                    ,[PURTF].[TF112]
+                                    ,[PURTF].[TF113]
+                                    ,[PURTF].[TF114]
+                                    ,[PURTF].[TF118]
+                                    ,[PURTF].[TF119]
+                                    ,[PURTF].[TF120]
+                                    ,[PURTF].[TF121]
+                                    ,[PURTF].[TF122]
+                                    ,[PURTF].[TF123]
+                                    ,[PURTF].[TF124]
+                                    ,[PURTF].[TF125]
+                                    ,[PURTF].[TF126]
+                                    ,[PURTF].[TF127]
+                                    ,[PURTF].[TF128]
+                                    ,[PURTF].[TF129]
+                                    ,[PURTF].[TF130]
+                                    ,[PURTF].[TF131]
+                                    ,[PURTF].[TF132]
+                                    ,[PURTF].[TF133]
+                                    ,[PURTF].[TF134]
+                                    ,[PURTF].[TF135]
+                                    ,[PURTF].[TF136]
+                                    ,[PURTF].[TF137]
+                                    ,[PURTF].[TF138]
+                                    ,[PURTF].[TF139]
+                                    ,[PURTF].[TF140]
+                                    ,[PURTF].[TF141]
+                                    ,[PURTF].[TF142]
+                                    ,[PURTF].[TF143]
+                                    ,[PURTF].[TF144]
+                                    ,[PURTF].[TF145]
+                                    ,[PURTF].[TF146]
+                                    ,[PURTF].[TF147]
+                                    ,[PURTF].[TF148]
+                                    ,[PURTF].[TF149]
+                                    ,[PURTF].[TF150]
+                                    ,[PURTF].[TF151]
+                                    ,[PURTF].[TF152]
+                                    ,[PURTF].[TF153]
+                                    ,[PURTF].[TF154]
+                                    ,[PURTF].[TF155]
+                                    ,[PURTF].[TF156]
+                                    ,[PURTF].[TF157]
+                                    ,[PURTF].[TF158]
+                                    ,[PURTF].[TF159]
+                                    ,[PURTF].[TF160]
+                                    ,[PURTF].[TF161]
+                                    ,[PURTF].[TF162]
+                                    ,[PURTF].[TF163]
+                                    ,[PURTF].[TF164]
+                                    ,[PURTF].[TF165]
+                                    ,[PURTF].[TF166]
+                                    ,[PURTF].[TF167]
+                                    ,[PURTF].[TF168]
+                                    ,[PURTF].[TF169]
+                                    ,[PURTF].[TF170]
+                                    ,[PURTF].[TF171]
+                                    ,[PURTF].[TF172]
+                                    ,[PURTF].[TF173]
+                                    ,[PURTF].[UDF01] AS 'PURTFUDF01'
+                                    ,[PURTF].[UDF02] AS 'PURTFUDF02'
+                                    ,[PURTF].[UDF03] AS 'PURTFUDF03'
+                                    ,[PURTF].[UDF04] AS 'PURTFUDF04'
+                                    ,[PURTF].[UDF05] AS 'PURTFUDF05'
+                                    ,[PURTF].[UDF06] AS 'PURTFUDF06'
+                                    ,[PURTF].[UDF07] AS 'PURTFUDF07'
+                                    ,[PURTF].[UDF08] AS 'PURTFUDF08'
+                                    ,[PURTF].[UDF09] AS 'PURTFUDF09'
+                                    ,[PURTF].[UDF10] AS 'PURTFUDF10'
+                                    ,[TB_EB_USER].USER_GUID,NAME
+                                    ,(SELECT TOP 1 MV002 FROM [DY].dbo.CMSMV WHERE MV001=TE037) AS 'MV002'
+                                    ,(SELECT TOP 1 MA002 FROM [DY].dbo.PURMA WHERE MA001=TE005) AS 'MA002'
+                                    ,(SELECT ISNULL(SUM(LA005*LA011),0) FROM [DY].dbo.INVLA WITH(NOLOCK) WHERE LA001=TF005 AND LA009 IN ('20004','20006','20008','20019','20020')) AS SUMLA011
+                                    FROM [DY].dbo.PURTF,[DY].dbo.PURTE
+                                    LEFT JOIN [192.168.1.223].[UOF].[dbo].[TB_EB_USER] ON [TB_EB_USER].ACCOUNT= TE037 COLLATE Chinese_Taiwan_Stroke_BIN
+                                    WHERE TE001=TF001 AND TE002=TF002 AND TE003=TF003
+                                    AND TE001='{0}' AND TE002='{1}' AND TE003='{2}'
                                     ) AS TEMP
                               
-                                    ", TC001, TC002);
+                                    ", TE001, TE002,TE003);
 
             DataTable dt = new DataTable();
             dt.Load(m_db.ExecuteReader(sbSql.ToString()));
