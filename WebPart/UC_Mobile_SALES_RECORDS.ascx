@@ -63,6 +63,14 @@
                 <table class="PopTable">
                     <tr>
                         <td>
+                            <asp:Label ID="Label13" runat="server" Text="業務員: "></asp:Label>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="DropDownList4" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <asp:Label ID="Label9" runat="server" Text="客戶: "></asp:Label>
                         </td>
                         <td>

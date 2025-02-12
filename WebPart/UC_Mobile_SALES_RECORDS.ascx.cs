@@ -36,6 +36,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
             BindDropDownList1();
             BindDropDownList2();
             BindDropDownList3();
+            BindDropDownList4();
 
             BindDropDownListISCLOSE();
             BindDropDownListISCLOSE2();
@@ -147,6 +148,51 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
             DropDownList3.DataTextField = "NAMES";
             DropDownList3.DataValueField = "NAMES";
             DropDownList3.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+
+    private void BindDropDownList4()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID", typeof(String));
+        dt.Columns.Add("KINDS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT *
+                        FROM 
+                        (
+                        SELECT 
+                        [ID]
+                        ,[NAME]
+                        ,[LEADER]
+                        FROM [TKBUSINESS].[dbo].[TBSALESNAME]
+                        WHERE [NAME] NOT IN ('全部')
+                        UNION ALL
+                        SELECT 
+                        '' [ID]
+                        ,'' [NAME]
+                        ,'' [LEADER]
+                        ) AS TMEP
+                        ORDER BY [ID]
+
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList4.DataSource = dt;
+            DropDownList4.DataTextField = "NAME";
+            DropDownList4.DataValueField = "NAME";
+            DropDownList4.DataBind();
 
         }
         else
@@ -269,6 +315,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
         StringBuilder Query1 = new StringBuilder();
         StringBuilder Query2 = new StringBuilder();
         StringBuilder Query3 = new StringBuilder();
+        StringBuilder Query99 = new StringBuilder();
 
         if (!string.IsNullOrEmpty(TextBox_CLIENTS.Text))
         {
@@ -295,29 +342,44 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
             Query2.AppendFormat(@"");
         }
 
+        if (!string.IsNullOrEmpty(DropDownList4.SelectedValue.ToString()))
+        {
+            if (!string.IsNullOrEmpty(DropDownList4.SelectedValue.ToString()))
+            {
+                Query3.AppendFormat(@"AND [SALES]='{0}'", DropDownList4.SelectedValue.ToString());
+            }
+            else
+            {
+                Query3.AppendFormat(@"");
+            }
+
+        }
+
+
+        //ORDER BY
         if (!string.IsNullOrEmpty(DropDownList3.SelectedValue.ToString()))
         {
             if (DropDownList3.SelectedValue.ToString().Equals("依業務+客戶"))
             {
-                Query3.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+                Query99.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
             }
             else if (DropDownList3.SelectedValue.ToString().Equals("依業務+回覆期限"))
             {
-                Query3.AppendFormat(@"  ORDER BY [SALES],[EDAYS],[CLIENTS],[ID]");
+                Query99.AppendFormat(@"  ORDER BY [SALES],[EDAYS],[CLIENTS],[ID]");
             }
             else
             {
-                Query3.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+                Query99.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
 
             }
 
         }
         else
         {
-            Query3.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+            Query99.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
         }
 
-
+   
         cmdTxt.AppendFormat(@"
 
                             SELECT 
@@ -337,10 +399,12 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                             {0}
                             {1}
                             {2}
+
+                            {3}
                            
 
                               
-                            ", Query1.ToString(), Query2.ToString(), Query3.ToString()); ;
+                            ", Query1.ToString(), Query2.ToString(), Query3.ToString(), Query99.ToString());
 
 
         //m_db.AddParameter("@EDATE", EDATE);
