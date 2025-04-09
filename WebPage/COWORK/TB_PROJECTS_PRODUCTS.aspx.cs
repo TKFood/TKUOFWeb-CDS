@@ -54,7 +54,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TRYSDATES] AS '產品打樣日'
                             ,[TASTESDATES] AS '產品試吃日'
                             ,[DESIGNSDATES] AS '包裝設計日'
-                            ,[SALESDATES] AS '上市'
+                            ,[SALESDATES] AS '上市日'
                             ,[OWNER] AS '專案負責人'
                             ,[STATUS] AS '狀態'
                             ,[ISCLOSED] AS '是否結案'
