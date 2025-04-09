@@ -162,9 +162,9 @@
                     </div>
 
                 </telerik:RadPageView>
-                 <telerik:RadPageView ID="RadPageView2" runat="server">
+                <telerik:RadPageView ID="RadPageView2" runat="server">
                     <div id="tabs-2">
-                         <table class="PopTable">
+                        <table class="PopTable">
                             <tr>
                                 <td colspan="2" class="PopTableRightTD">
                                     <div style="overflow-x: auto; width: 100%">
@@ -173,65 +173,65 @@
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="專案編號" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
+                                                    <ItemTemplate>
                                                         <asp:TextBox ID="txtNewField_專案編號" runat="server" Text='<%# Bind("專案編號") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="項目名稱" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
-                                                         <asp:TextBox ID="txtNewField_項目名稱" runat="server" Text='<%# Bind("項目名稱") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_項目名稱" runat="server" Text='<%# Bind("項目名稱") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="產品打樣日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
-                                                         <asp:TextBox ID="txtNewField_產品打樣日" runat="server" Text='<%# Bind("產品打樣日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_產品打樣日" runat="server" Text='<%# Bind("產品打樣日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="產品試吃日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
-                                                         <asp:TextBox ID="txtNewField_產品試吃日" runat="server" Text='<%# Bind("產品試吃日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_產品試吃日" runat="server" Text='<%# Bind("產品試吃日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="包裝設計日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
-                                                         <asp:TextBox ID="txtNewField_包裝設計日" runat="server" Text='<%# Bind("包裝設計日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_包裝設計日" runat="server" Text='<%# Bind("包裝設計日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="上市日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
-                                                         <asp:TextBox ID="txtNewField_上市日" runat="server" Text='<%# Bind("上市日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_上市日" runat="server" Text='<%# Bind("上市日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>                                                        
-                                                         <asp:TextBox ID="txtNewField_專案負責人" runat="server" Text='<%# Bind("專案負責人") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:DropDownList ID="ddlNewField_專案負責人" runat="server" Width="100%"></asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="輸入狀態" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                         <asp:TextBox ID="txtNewField_輸入狀態" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_輸入狀態" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
-                                                         <asp:TextBox ID="txtNewField_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                                    </ItemTemplate>
+                                                    <ItemTemplate>
+                                                         <asp:DropDownList ID="ddlNewField_是否結案" runat="server" Width="100%"></asp:DropDownList>
+                                                    </ItemTemplate>                                                   
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
