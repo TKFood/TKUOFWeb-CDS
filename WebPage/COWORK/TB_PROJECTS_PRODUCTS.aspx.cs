@@ -107,11 +107,52 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
 
         if (e.CommandName == "Button2")
         {
-            MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);           
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);   
 
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+
+                Label Label_NO = (Label)row.FindControl("Label_專案編號");
+                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
+                Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
+                Label Label_產品試吃日 = (Label)row.FindControl("Label_產品試吃日");
+                Label Label_包裝設計日 = (Label)row.FindControl("Label_包裝設計日");
+                Label Label_上市日 = (Label)row.FindControl("Label_上市日");
+                Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
+                Label Label_是否結案 = (Label)row.FindControl("Label_是否結案");
+
+                string NO = Label_NO.Text;
+                string PROJECTNAMES = Label_項目名稱.Text;
+                string TRYSDATES = Label_產品打樣日.Text;
+                string TASTESDATES = Label_產品試吃日.Text;
+                string DESIGNSDATES = Label_包裝設計日.Text;
+                string SALESDATES = Label_上市日.Text;
+                string OWNER = Label_專案負責人.Text;
+                string STATUS = newTextValue;
+                string ISCLOSED = Label_是否結案.Text;
+
+                ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
+                                                 NO,
+                                                 PROJECTNAMES,
+                                                 TRYSDATES,
+                                                 TASTESDATES,
+                                                 DESIGNSDATES,
+                                                 SALESDATES,
+                                                 OWNER,
+                                                 STATUS,
+                                                 ISCLOSED
+                                                );
+            }
+                
         }
     }
 
@@ -120,6 +161,90 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     {
         //SETEXCEL();
 
+    }
+
+    public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
+        string NO,
+        string PROJECTNAMES,
+        string TRYSDATES,
+        string TASTESDATES,
+        string DESIGNSDATES,
+        string SALESDATES,
+        string OWNER,
+        string STATUS,
+        string ISCLOSED      
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @"                           
+                            INSERT INTO [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
+                            (
+                            [NO]
+                            ,[PROJECTNAMES]
+                            ,[TRYSDATES]
+                            ,[TASTESDATES]
+                            ,[DESIGNSDATES]
+                            ,[SALESDATES]
+                            ,[OWNER]
+                            ,[STATUS]
+                            ,[ISCLOSED]
+                        
+                            )
+                            VALUES
+                            (
+                            @NO
+                            ,@PROJECTNAMES
+                            ,@TRYSDATES
+                            ,@TASTESDATES
+                            ,@DESIGNSDATES
+                            ,@SALESDATES
+                            ,@OWNER
+                            ,@STATUS
+                            ,@ISCLOSED
+                        
+                            )
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+
+                    cmd.Parameters.AddWithValue("@NO", NO);
+                    cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
+                    cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
+                    cmd.Parameters.AddWithValue("@TASTESDATES", TASTESDATES);
+                    cmd.Parameters.AddWithValue("@DESIGNSDATES", DESIGNSDATES);
+                    cmd.Parameters.AddWithValue("@SALESDATES", SALESDATES);
+                    cmd.Parameters.AddWithValue("@OWNER", OWNER);
+                    cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                    cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+       
+
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+
+                    if (rowsAffected >= 1)
+                    {                   
+                        MsgBox(NO + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+
+        catch
+        {
+
+        }
+        finally
+        {
+
+        }
     }
 
     public void MsgBox(String ex, Page pg, Object obj)

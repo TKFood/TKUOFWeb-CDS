@@ -113,7 +113,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="更新狀態" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Button ID="Button2" runat="server" Text="更新" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Eval("ID") %>' />
+                                                        <asp:Button ID="Button2" runat="server" Text="更新" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
