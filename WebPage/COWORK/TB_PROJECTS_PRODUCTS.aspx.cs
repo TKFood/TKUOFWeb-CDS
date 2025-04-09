@@ -58,6 +58,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[OWNER] AS '專案負責人'
                             ,[STATUS] AS '狀態'
                             ,[ISCLOSED] AS '是否結案'
+                            ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
                             FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                             WHERE 1=1
                             AND [ISCLOSED]='N'
@@ -142,6 +143,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STATUS = newTextValue;
                 string ISCLOSED = Label_是否結案.Text;
 
+                //新增記錄檔
                 ADD_TB_PROJECTS_PRODUCTS_HISTORYS(                    
                     ID,
                     NO,
@@ -154,8 +156,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     STATUS,
                     ISCLOSED
                 );
+                //更新狀態
+                UPDATE_TB_PROJECTS_PRODUCTS_STATUS(
+                    ID,
+                    NO,
+                    STATUS
+                    );
             }
-                
+
+            BindGrid();
         }
     }
 
@@ -237,25 +246,61 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                     if (rowsAffected >= 1)
                     {                   
+                        //MsgBox(NO + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+        }
+    }
+
+    public void UPDATE_TB_PROJECTS_PRODUCTS_STATUS(
+        string ID,
+        string NO,
+        string STATUS       
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                            UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES
+                            WHERE [ID]=@ID
+                        
+                            
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                    cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
                         MsgBox(NO + " 完成", this.Page, this);
                     }
                 }
             }
         }
-
         catch
         {
-
         }
         finally
         {
-
         }
-    }
-
-    public void UPDATE_TB_PROJECTS_PRODUCTS()
-    {
-
     }
 
     public void MsgBox(String ex, Page pg, Object obj)

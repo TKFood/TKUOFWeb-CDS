@@ -117,6 +117,13 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
                                         </Fast:Grid>
                                     </div>
 
