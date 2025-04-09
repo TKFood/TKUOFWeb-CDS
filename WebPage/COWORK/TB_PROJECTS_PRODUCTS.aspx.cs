@@ -30,11 +30,90 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            Bind_DropDownList_ISCLOSED();
+            Bind_DropDownList_OWNER();
+        }
     }
 
 
     #region FUNCTION
+    public void Bind_DropDownList_ISCLOSED()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT
+                        [ID]
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TB_PROJECTS_PRODUCTS_ISCLOSED'
+                        ORDER BY [PARAID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList_ISCLOSED.DataSource = dt;
+            DropDownList_ISCLOSED.DataTextField = "PARANAME";
+            DropDownList_ISCLOSED.DataValueField = "PARANAME";
+            DropDownList_ISCLOSED.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+    }
+
+    public void Bind_DropDownList_OWNER()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"                         
+                            SELECT OWNER
+                            FROM 
+                            (
+	                            SELECT '全部' AS 'OWNER'
+	                            UNION ALL
+	                            SELECT
+	                            [OWNER]      
+	                            FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+	                            GROUP BY [OWNER]
+                            ) AS TEMP
+                            ORDER BY OWNER
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList_OWNER.DataSource = dt;
+            DropDownList_OWNER.DataTextField = "OWNER";
+            DropDownList_OWNER.DataValueField = "OWNER";
+            DropDownList_OWNER.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -43,10 +122,43 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
-        
+        StringBuilder QUERYS3 = new StringBuilder();
 
-        cmdTxt.AppendFormat(@" 
-                            
+        //DropDownList_ISCLOSED
+        if (DropDownList_ISCLOSED.Text.Equals("全部"))
+        {
+            QUERYS.AppendFormat(@"");
+        }
+        else if (DropDownList_ISCLOSED.Text.Equals("進行中"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='N' ");
+        }
+        else if (DropDownList_ISCLOSED.Text.Equals("已完成"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='Y' ");
+        }
+        //DropDownList_OWNER
+        if (DropDownList_OWNER.Text.Equals("全部"))
+        {
+            QUERYS2.AppendFormat(@"");
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@" AND OWNER='{0}' ", DropDownList_OWNER.Text);
+        }
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS3.AppendFormat(@" AND PROJECTNAMES LIKE '%{0}%' ", TextBox1.Text);
+        }
+        else
+        {
+            QUERYS3.AppendFormat(@"");
+        }
+
+        cmdTxt.AppendFormat(@"
+
+
                             SELECT 
                             [ID]
                             ,[NO] AS '專案編號'
@@ -61,9 +173,11 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
                             FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                             WHERE 1=1
-                            AND [ISCLOSED]='N'
+                            {0}
+                            {1}
+                            {2}
                             ORDER BY [OWNER],[NO]
-                             ", QUERYS.ToString(), QUERYS2.ToString());
+                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
 
 

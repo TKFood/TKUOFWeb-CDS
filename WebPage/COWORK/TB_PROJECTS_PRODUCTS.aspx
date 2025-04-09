@@ -24,6 +24,33 @@
 
                         <table class="PopTable">
                             <tr>
+                                <td>
+                                    <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownList_ISCLOSED" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label9" runat="server" Text="項目名稱: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label6" runat="server" Text="專案負責人: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownList_OWNER" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
