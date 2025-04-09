@@ -86,12 +86,33 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-       
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+
+            //Button2
+            //Get the button that raised the event
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            //Get the row that contains this button
+            GridViewRow gvr2 = (GridViewRow)btn2.NamingContainer;
+            //string cellvalue = gvr.Cells[2].Text.Trim();
+            string Cellvalue2 = btn2.CommandArgument;
+            DataRowView row2 = (DataRowView)e.Row.DataItem;
+            Button lbtnName2 = (Button)e.Row.FindControl("Button2");
+            ExpandoObject param2 = new { ID = Cellvalue2 }.ToExpando();
+
+
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
+
+        if (e.CommandName == "Button2")
+        {
+            MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);           
+
+        }
     }
 
 
@@ -99,6 +120,17 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     {
         //SETEXCEL();
 
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        //Type cstype = obj.GetType();
+        //ClientScriptManager cs = pg.ClientScript;
+        //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
     #endregion
 
