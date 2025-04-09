@@ -8,6 +8,43 @@
 </script>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <table class="PopTable">
+                <tr>
+                    <td>
+                        <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="DropDownList_ISCLOSED" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="Label9" runat="server" Text="項目名稱: "></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <asp:Label ID="Label6" runat="server" Text="專案負責人: "></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="DropDownList_OWNER" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="PopTableLeftTD"></td>
+                    <td>
+                        <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
+                            meta:resourcekey="btn1Resource1" />
+                    </td>
+                </tr>
+            </table>
+
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
                 <Tabs>
@@ -15,50 +52,14 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="修改">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="新增">
+                    </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
 
             <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
                 <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
                     <div id="tabs-1">
-
-                        <table class="PopTable">
-                            <tr>
-                                <td>
-                                    <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="DropDownList_ISCLOSED" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <asp:Label ID="Label9" runat="server" Text="項目名稱: "></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <asp:Label ID="Label6" runat="server" Text="專案負責人: "></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="DropDownList_OWNER" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
-                                        meta:resourcekey="btn1Resource1" />
-                                </td>
-                            </tr>
-                        </table>
-
                         <table class="PopTable">
                             <tr>
                                 <td colspan="2" class="PopTableRightTD">
@@ -160,6 +161,108 @@
                         </table>
                     </div>
 
+                </telerik:RadPageView>
+                 <telerik:RadPageView ID="RadPageView2" runat="server">
+                    <div id="tabs-2">
+                         <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" OnRowCommand="Grid2_RowCommand" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid_PageIndexChanging2">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="專案編號" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                        <asp:TextBox ID="txtNewField_專案編號" runat="server" Text='<%# Bind("專案編號") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="項目名稱" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                         <asp:TextBox ID="txtNewField_項目名稱" runat="server" Text='<%# Bind("項目名稱") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="產品打樣日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                         <asp:TextBox ID="txtNewField_產品打樣日" runat="server" Text='<%# Bind("產品打樣日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="產品試吃日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                         <asp:TextBox ID="txtNewField_產品試吃日" runat="server" Text='<%# Bind("產品試吃日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="包裝設計日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                         <asp:TextBox ID="txtNewField_包裝設計日" runat="server" Text='<%# Bind("包裝設計日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="上市日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                         <asp:TextBox ID="txtNewField_上市日" runat="server" Text='<%# Bind("上市日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                         <asp:TextBox ID="txtNewField_專案負責人" runat="server" Text='<%# Bind("專案負責人") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="輸入狀態" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                         <asp:TextBox ID="txtNewField_輸入狀態" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>                                                        
+                                                         <asp:TextBox ID="txtNewField_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="更新" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Button3" runat="server" Text="更新" CommandName="Button3" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </Fast:Grid>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">

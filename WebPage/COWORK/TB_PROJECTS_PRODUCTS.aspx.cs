@@ -293,6 +293,109 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     }
 
+    private void BindGrid2()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        //DropDownList_ISCLOSED
+        if (DropDownList_ISCLOSED.Text.Equals("全部"))
+        {
+            QUERYS.AppendFormat(@"");
+        }
+        else if (DropDownList_ISCLOSED.Text.Equals("進行中"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='N' ");
+        }
+        else if (DropDownList_ISCLOSED.Text.Equals("已完成"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='Y' ");
+        }
+        //DropDownList_OWNER
+        if (DropDownList_OWNER.Text.Equals("全部"))
+        {
+            QUERYS2.AppendFormat(@"");
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@" AND OWNER='{0}' ", DropDownList_OWNER.Text);
+        }
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS3.AppendFormat(@" AND PROJECTNAMES LIKE '%{0}%' ", TextBox1.Text);
+        }
+        else
+        {
+            QUERYS3.AppendFormat(@"");
+        }
+
+        cmdTxt.AppendFormat(@"
+
+
+                            SELECT 
+                            [ID]
+                            ,[NO] AS '專案編號'
+                            ,[PROJECTNAMES] AS '項目名稱'
+                            ,[TRYSDATES] AS '產品打樣日'
+                            ,[TASTESDATES] AS '產品試吃日'
+                            ,[DESIGNSDATES] AS '包裝設計日'
+                            ,[SALESDATES] AS '上市日'
+                            ,[OWNER] AS '專案負責人'
+                            ,[STATUS] AS '狀態'
+                            ,[ISCLOSED] AS '是否結案'
+                            ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
+                            FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                            WHERE 1=1
+                            {0}
+                            {1}
+                            {2}
+                            ORDER BY [OWNER],[NO]
+                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    { 
+
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+    }
+
     public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
         string SID,
         string NO,
@@ -586,6 +689,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     protected void Button1_Click(object sender, EventArgs e)
     {
         BindGrid();
+        BindGrid2();
     }
 
     #endregion
