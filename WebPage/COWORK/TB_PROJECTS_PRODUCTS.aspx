@@ -103,13 +103,13 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-<%--                                            <Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="ID" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns>--%>
+                                            </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="更新狀態" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>

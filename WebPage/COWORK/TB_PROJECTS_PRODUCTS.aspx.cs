@@ -121,6 +121,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
                 string newTextValue = txtNewField.Text;
 
+                Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
                 Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
                 Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
@@ -130,6 +131,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
                 Label Label_是否結案 = (Label)row.FindControl("Label_是否結案");
 
+                string ID = Label_ID.Text;
                 string NO = Label_NO.Text;
                 string PROJECTNAMES = Label_項目名稱.Text;
                 string TRYSDATES = Label_產品打樣日.Text;
@@ -140,17 +142,18 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STATUS = newTextValue;
                 string ISCLOSED = Label_是否結案.Text;
 
-                ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
-                                                 NO,
-                                                 PROJECTNAMES,
-                                                 TRYSDATES,
-                                                 TASTESDATES,
-                                                 DESIGNSDATES,
-                                                 SALESDATES,
-                                                 OWNER,
-                                                 STATUS,
-                                                 ISCLOSED
-                                                );
+                ADD_TB_PROJECTS_PRODUCTS_HISTORYS(                    
+                    ID,
+                    NO,
+                    PROJECTNAMES,
+                    TRYSDATES,
+                    TASTESDATES,
+                    DESIGNSDATES,
+                    SALESDATES,
+                    OWNER,
+                    STATUS,
+                    ISCLOSED
+                );
             }
                 
         }
@@ -164,6 +167,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
 
     public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
+        string SID,
         string NO,
         string PROJECTNAMES,
         string TRYSDATES,
@@ -180,7 +184,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         var SQLCOMMAND = @"                           
                             INSERT INTO [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
                             (
-                            [NO]
+                            [SID]
+                            ,[NO]
                             ,[PROJECTNAMES]
                             ,[TRYSDATES]
                             ,[TASTESDATES]
@@ -193,7 +198,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             )
                             VALUES
                             (
-                            @NO
+                            @SID
+                            ,@NO
                             ,@PROJECTNAMES
                             ,@TRYSDATES
                             ,@TASTESDATES
@@ -212,7 +218,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             {
                 using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
                 {
-
+                    cmd.Parameters.AddWithValue("@SID", SID);
                     cmd.Parameters.AddWithValue("@NO", NO);
                     cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
                     cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
@@ -245,6 +251,11 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
 
         }
+    }
+
+    public void UPDATE_TB_PROJECTS_PRODUCTS()
+    {
+
     }
 
     public void MsgBox(String ex, Page pg, Object obj)
