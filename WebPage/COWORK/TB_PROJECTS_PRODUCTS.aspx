@@ -149,28 +149,28 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="更新狀態" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField HeaderText="更新狀態" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Button2" runat="server" Text="更新" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -236,7 +236,7 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:DropDownList ID="ddlNewField_專案負責人" runat="server" Width="100%"></asp:DropDownList>
                                                     </ItemTemplate>
@@ -250,30 +250,30 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:DropDownList ID="ddlNewField_是否結案" runat="server" Width="100%"></asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="更新" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField HeaderText="更新" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Button3" runat="server" Text="更新" CommandName="Button3" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -452,23 +452,23 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Grid3_Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Grid3_Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Grid3_Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Grid3_Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>                                           
                                             <Columns>
-                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Grid3_Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                        <asp:Label ID="Grid3_Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
