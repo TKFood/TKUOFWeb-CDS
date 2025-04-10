@@ -296,7 +296,7 @@
                                             <asp:Label ID="Label1" runat="server" Text="專案編號"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_專案編號" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_專案編號" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -304,7 +304,7 @@
                                             <asp:Label ID="Label2" runat="server" Text="項目名稱"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_項目名稱" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_項目名稱" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -312,7 +312,7 @@
                                             <asp:Label ID="Label3" runat="server" Text="產品打樣日"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_產品打樣日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_產品打樣日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -320,7 +320,7 @@
                                             <asp:Label ID="Label4" runat="server" Text="產品試吃日"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_產品試吃日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_產品試吃日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -328,7 +328,7 @@
                                             <asp:Label ID="Label5" runat="server" Text="包裝設計日"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_包裝設計日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_包裝設計日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -336,7 +336,7 @@
                                             <asp:Label ID="Label7" runat="server" Text="上市日"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_上市日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_上市日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -344,7 +344,7 @@
                                             <asp:Label ID="Label8" runat="server" Text="專案負責人"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_專案負責人" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_專案負責人" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -352,7 +352,7 @@
                                             <asp:Label ID="Label10" runat="server" Text="狀態"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_狀態" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_狀態" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
