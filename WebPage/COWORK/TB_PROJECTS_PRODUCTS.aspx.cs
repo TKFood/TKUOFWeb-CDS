@@ -546,6 +546,81 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     }
 
+    private void BindGrid3(string PROJECTNAMES)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+      
+       
+        //TextBox1
+        if (!string.IsNullOrEmpty(PROJECTNAMES))
+        {
+            QUERYS.AppendFormat(@" AND [TB_PROJECTS_PRODUCTS].PROJECTNAMES LIKE '%{0}%' ", TextBox2.Text);
+        }
+      
+
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [TB_PROJECTS_PRODUCTS_HISTORYS].[ID]
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[NO] AS '專案編號'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[PROJECTNAMES] AS '項目名稱'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TRYSDATES] AS '產品打樣日'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESDATES] AS '產品試吃日'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNSDATES] AS '包裝設計日'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[SALESDATES] AS '上市日'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[OWNER] AS '專案負責人'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUS] AS '狀態'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[ISCLOSED] AS '是否結案'
+                            ,CONVERT(NVARCHAR,[TB_PROJECTS_PRODUCTS_HISTORYS].[CREATEDATES],112) AS '更新日'
+                            FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS], [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
+                            WHERE 1=1
+                            AND [TB_PROJECTS_PRODUCTS].ID=[TB_PROJECTS_PRODUCTS_HISTORYS].SID
+                            {0}
+                            ORDER BY [TB_PROJECTS_PRODUCTS_HISTORYS].SID
+                             ", QUERYS.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+      
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+    }
+
+    protected void grid_PageIndexChanging3(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        
+    }
+
+    protected void Grid3_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+
+    }
+
+
+    public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {       
+
+    }
     public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
         string SID,
         string NO,
@@ -1010,10 +1085,24 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         }
         else
         {
-            MsgBox("專案編號、項目名稱求可空白", this.Page, this);
+            MsgBox("專案編號、項目名稱不可空白", this.Page, this);
         }
        
 
+    }
+
+    protected void Button5_Click(object sender, EventArgs e)
+    {
+        string PROJECTNAMES = TextBox2.Text.Trim();
+        if (!string.IsNullOrEmpty(PROJECTNAMES))
+        {
+            BindGrid3(PROJECTNAMES);
+        }
+        else
+        {
+            MsgBox("項目名稱不可空白", this.Page, this);
+        }
+      
     }
 
     #endregion

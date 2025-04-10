@@ -5,7 +5,7 @@
     <script>    
 
 
-    </script>
+</script>
     <style>
         .big-bold-button {
             font-size: 20px;
@@ -19,9 +19,9 @@
             cursor: pointer;
         }
 
-        .big-bold-button:hover {
-            background-color: #0056b3;
-        }
+            .big-bold-button:hover {
+                background-color: #0056b3;
+            }
     </style>
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -57,7 +57,7 @@
                 <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
-                        <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
+                        <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="Button1_Click"
                             meta:resourcekey="btn1Resource1" />
                     </td>
                 </tr>
@@ -73,6 +73,8 @@
                     <telerik:RadTab Text="新增">
                     </telerik:RadTab>
                     <telerik:RadTab Text="查詢歷史">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
@@ -353,7 +355,7 @@
                                             <asp:TextBox ID="NEW_狀態" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
-                                            <tr>
+                                    <tr>
                                         <td>
                                             <asp:Label ID="Label11" runat="server" Text=""></asp:Label>
                                         </td>
@@ -367,11 +369,124 @@
                         </table>
                     </div>
                 </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView4" runat="server">
+                    <div id="tabs-4">
+                        <table class="PopTable">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label12" runat="server" Text="項目名稱"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox2" runat="server" Text=""></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button5" runat="server" Text="查詢記錄 " OnClick="Button5_Click"
+                                        meta:resourcekey="btn1Resource1" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid3" OnRowDataBound="Grid3_RowDataBound" OnRowCommand="Grid3_RowCommand" runat="server" OnBeforeExport="OnBeforeExport3" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource3" OnPageIndexChanging="grid_PageIndexChanging3">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="專案編號" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_專案編號" runat="server" Text='<%# Bind("專案編號") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="項目名稱" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_項目名稱" runat="server" Text='<%# Bind("項目名稱") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="產品打樣日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_產品打樣日" runat="server" Text='<%# Bind("產品打樣日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="產品試吃日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_產品試吃日" runat="server" Text='<%# Bind("產品試吃日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="包裝設計日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_包裝設計日" runat="server" Text='<%# Bind("包裝設計日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="上市日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_上市日" runat="server" Text='<%# Bind("上市日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_專案負責人" runat="server" Text='<%# Bind("專案負責人") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="狀態" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                       <asp:Label ID="Grid3_Label_狀態" runat="server" Text='<%# Bind("狀態") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>                                           
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line;" Width="40px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </Fast:Grid>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">
                     </div>
                 </telerik:RadPageView>
             </telerik:RadMultiPage>
+
             ​
           
         </ContentTemplate>
