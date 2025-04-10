@@ -5,7 +5,25 @@
     <script>    
 
 
-</script>
+    </script>
+    <style>
+        .big-bold-button {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .big-bold-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <table class="PopTable">
@@ -53,6 +71,8 @@
                     <telerik:RadTab Text="修改">
                     </telerik:RadTab>
                     <telerik:RadTab Text="新增">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="查詢歷史">
                     </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
@@ -215,7 +235,7 @@
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>                                                        
+                                                    <ItemTemplate>
                                                         <asp:DropDownList ID="ddlNewField_專案負責人" runat="server" Width="100%"></asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -230,8 +250,8 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                         <asp:DropDownList ID="ddlNewField_是否結案" runat="server" Width="100%"></asp:DropDownList>
-                                                    </ItemTemplate>                                                   
+                                                        <asp:DropDownList ID="ddlNewField_是否結案" runat="server" Width="100%"></asp:DropDownList>
+                                                    </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
@@ -264,6 +284,89 @@
                         </table>
                     </div>
                 </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView3" runat="server">
+                    <div id="tabs-3">
+                        <table class="PopTable">
+                            <td colspan="2" class="PopTableRightTD">
+                                <div style="overflow-x: auto; width: 100%">
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label1" runat="server" Text="專案編號"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_專案編號" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label2" runat="server" Text="項目名稱"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_項目名稱" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label3" runat="server" Text="產品打樣日"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_產品打樣日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label4" runat="server" Text="產品試吃日"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_產品試吃日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label5" runat="server" Text="包裝設計日"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_包裝設計日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label7" runat="server" Text="上市日"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_上市日" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label8" runat="server" Text="專案負責人"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_專案負責人" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label10" runat="server" Text="狀態"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_狀態" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                            <tr>
+                                        <td>
+                                            <asp:Label ID="Label11" runat="server" Text=""></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:Button ID="Button4" runat="server" Text="新增專案" CssClass="big-bold-button" OnClick="Button4_Click" />
+                                        </td>
+                                    </tr>
+                                </div>
+                            </td>
+
+                        </table>
+                    </div>
+                </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">
                     </div>
@@ -275,4 +378,3 @@
     </asp:UpdatePanel>
 
 </asp:Content>
-

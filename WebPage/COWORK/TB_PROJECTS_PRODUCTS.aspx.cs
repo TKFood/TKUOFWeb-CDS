@@ -733,6 +733,81 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         }
     }
 
+    public void ADD_TB_PROJECTS_PRODUCTS(                   
+                    string NO,
+                    string PROJECTNAMES,
+                    string TRYSDATES,
+                    string TASTESDATES,
+                    string DESIGNSDATES,
+                    string SALESDATES,
+                    string OWNER,
+                    string STATUS,
+                    string ISCLOSED                   
+                    )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                        INSERT INTO [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                        (
+                        [NO]
+                        ,[PROJECTNAMES]
+                        ,[TRYSDATES]
+                        ,[TASTESDATES]
+                        ,[DESIGNSDATES]
+                        ,[SALESDATES]
+                        ,[OWNER]
+                        ,[STATUS]
+                        ,[ISCLOSED]                    
+                        )
+                        VALUES
+                        (
+                        @NO
+                        ,@PROJECTNAMES
+                        ,@TRYSDATES
+                        ,@TASTESDATES
+                        ,@DESIGNSDATES
+                        ,@SALESDATES
+                        ,@OWNER
+                        ,@STATUS
+                        ,@ISCLOSED                      
+                        )                                                    
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {                  
+                    cmd.Parameters.AddWithValue("@NO", NO);
+                    cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
+                    cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
+                    cmd.Parameters.AddWithValue("@TASTESDATES", TASTESDATES);
+                    cmd.Parameters.AddWithValue("@DESIGNSDATES", DESIGNSDATES);
+                    cmd.Parameters.AddWithValue("@SALESDATES", SALESDATES);
+                    cmd.Parameters.AddWithValue("@OWNER", OWNER);
+                    cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                    cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                    cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(NO + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+        }
+    }
 
     public void SETEXCEL()
     {
@@ -900,6 +975,45 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     {
         BindGrid();
         BindGrid2();
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        //MsgBox("OK", this.Page, this);
+
+        string NO = NEW_專案編號.Text.Trim();
+        string PROJECTNAMES = NEW_項目名稱.Text.Trim();
+        string TRYSDATES = NEW_產品打樣日.Text.Trim();
+        string TASTESDATES = NEW_產品試吃日.Text.Trim();
+        string DESIGNSDATES = NEW_包裝設計日.Text.Trim();
+        string SALESDATES = NEW_上市日.Text.Trim();
+        string OWNER = NEW_專案負責人.Text.Trim();
+        string STATUS = NEW_狀態.Text.Trim();
+        string ISCLOSED = "N";
+        string UPDATEDATES = DateTime.Now.ToString("yyyyMMdd");
+
+        if(!string.IsNullOrEmpty(NO) && !string.IsNullOrEmpty(NO))
+        {
+            ADD_TB_PROJECTS_PRODUCTS(
+                               NO,
+                               PROJECTNAMES,
+                               TRYSDATES,
+                               TASTESDATES,
+                               DESIGNSDATES,
+                               SALESDATES,
+                               OWNER,
+                               STATUS,
+                               ISCLOSED
+
+                               );
+            BindGrid();
+            BindGrid2();
+        }
+        else
+        {
+            MsgBox("專案編號、項目名稱求可空白", this.Page, this);
+        }
+       
+
     }
 
     #endregion
