@@ -48,6 +48,15 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
 
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND PRODNAMES LIKE '%{0}%' ", TextBox1.Text);
+        }
+        else
+        {
+            QUERYS.AppendFormat(@"");
+        }
 
         cmdTxt.AppendFormat(@"
                             SELECT 
@@ -63,8 +72,9 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             , [ID]
                             FROM [TKRESEARCH].[dbo].[TB_PRODUCT_CLASS]
                             WHERE 1=1
+                            {0}
                             ORDER BY [CLASSNAMES],[PRODNAMES]
-                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+                             ", QUERYS.ToString());
 
 
 

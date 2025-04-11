@@ -12,6 +12,14 @@
         <ContentTemplate>
             <table class="PopTable">
                 <tr>
+                    <td>
+                        <asp:Label ID="Label9" runat="server" Text="名稱: "></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
                         <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="Button1_Click"
