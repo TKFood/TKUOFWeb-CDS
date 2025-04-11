@@ -30,7 +30,7 @@
             <table class="PopTable">
                 <tr>
                     <td>
-                        <asp:Label ID="Label9" runat="server" Text="名稱: "></asp:Label>
+                        <asp:Label ID="Label9" runat="server" Text="類別/名稱: "></asp:Label>
                     </td>
                     <td>
                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>

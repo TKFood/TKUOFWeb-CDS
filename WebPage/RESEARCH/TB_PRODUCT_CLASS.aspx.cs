@@ -32,7 +32,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
     {
         if (!IsPostBack)
         {
-           
+            BindGrid();
+            BindGrid2();
         }
     }
 
@@ -51,7 +52,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         //TextBox1
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND PRODNAMES LIKE '%{0}%' ", TextBox1.Text);
+            QUERYS.AppendFormat(@" AND (CLASSNAMES LIKE '%{0}%'  OR PRODNAMES LIKE '%{0}%' ) ", TextBox1.Text);
         }
         else
         {
@@ -128,7 +129,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         //TextBox1
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND PRODNAMES LIKE '%{0}%' ", TextBox1.Text);
+            QUERYS.AppendFormat(@" AND (CLASSNAMES LIKE '%{0}%'  OR PRODNAMES LIKE '%{0}%' ) ", TextBox1.Text);
         }
         else
         {
