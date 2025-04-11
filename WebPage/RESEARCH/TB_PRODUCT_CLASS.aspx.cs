@@ -175,14 +175,71 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-       
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            if (btn2 != null)
+            {
+                string cellValue2 = btn2.CommandArgument;
+                dynamic param2 = new { ID = cellValue2 }.ToExpando();
+            }
+        }
     }
 
     protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
         // 獲取所選行的索引
-        rowIndex = Convert.ToInt32(e.CommandArgument);            
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+
+        if (e.CommandName == "Button2")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);
+
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid2.Rows[rowIndex];
+
+                Label Label_ID = (Label)row.FindControl("Label_ID");
+
+                TextBox txtNewField_類別 = (TextBox)row.FindControl("txtNewField_類別");
+                TextBox txtNewField_產品 = (TextBox)row.FindControl("txtNewField_產品");
+                TextBox txtNewField_成本結構 = (TextBox)row.FindControl("txtNewField_成本結構");
+                TextBox txtNewField_效期評估市場 = (TextBox)row.FindControl("txtNewField_效期評估市場");
+                TextBox txtNewField_效期評估生產 = (TextBox)row.FindControl("txtNewField_效期評估生產");
+                TextBox txtNewField_最小批量 = (TextBox)row.FindControl("txtNewField_最小批量");
+                TextBox txtNewField_日產量 = (TextBox)row.FindControl("txtNewField_日產量");
+                TextBox txtNewField_關鍵原料 = (TextBox)row.FindControl("txtNewField_關鍵原料");
+
+                string ID = Label_ID.Text;
+                string CLASSNAMES = txtNewField_類別.Text;
+                string PRODNAMES = txtNewField_產品.Text;
+                string COSTS = txtNewField_成本結構.Text;
+                string VALIDMARKETS = txtNewField_效期評估市場.Text;
+                string VALIDPRODS = txtNewField_效期評估生產.Text;
+                string MINPRODS = txtNewField_最小批量.Text;
+                string DAILYPRODS = txtNewField_日產量.Text;
+                string KEYMATERIALS = txtNewField_關鍵原料.Text;
+                string KEYPRODS = txtNewField_關鍵原料.Text;
+
+                UPDATE_TB_PRODUCT_CLASS(
+                          ID,
+                          CLASSNAMES,
+                          PRODNAMES,
+                          COSTS,
+                          VALIDMARKETS,
+                          VALIDPRODS,
+                          MINPRODS,
+                          DAILYPRODS,
+                          KEYMATERIALS,
+                          KEYPRODS
+                          );
+            }
+
+            BindGrid();
+            BindGrid2();
+        }
 
     }
 
@@ -190,6 +247,74 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
 
+    }
+
+    public void UPDATE_TB_PRODUCT_CLASS(
+        string ID,
+        string CLASSNAMES,
+        string PRODNAMES,
+        string COSTS,
+        string VALIDMARKETS,
+        string VALIDPRODS,
+        string MINPRODS,
+        string DAILYPRODS,
+        string KEYMATERIALS,
+        string KEYPRODS
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @"                           
+                           UPDATE [TKRESEARCH].[dbo].[TB_PRODUCT_CLASS]
+                            SET 
+                            [CLASSNAMES]=@CLASSNAMES
+                            ,[PRODNAMES]=@PRODNAMES
+                            ,[COSTS]=@COSTS
+                            ,[VALIDMARKETS]=@VALIDMARKETS
+                            ,[VALIDPRODS]=@VALIDPRODS
+                            ,[MINPRODS]=@MINPRODS
+                            ,[DAILYPRODS]=@DAILYPRODS
+                            ,[KEYMATERIALS]=@KEYMATERIALS
+                            ,[KEYPRODS]=@KEYPRODS
+                            WHERE [ID]=@ID
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@CLASSNAMES", CLASSNAMES);
+                    cmd.Parameters.AddWithValue("@PRODNAMES", PRODNAMES);
+                    cmd.Parameters.AddWithValue("@COSTS", COSTS);
+                    cmd.Parameters.AddWithValue("@VALIDMARKETS", VALIDMARKETS);
+                    cmd.Parameters.AddWithValue("@VALIDPRODS", VALIDPRODS);
+                    cmd.Parameters.AddWithValue("@MINPRODS", MINPRODS);
+                    cmd.Parameters.AddWithValue("@DAILYPRODS", DAILYPRODS);
+                    cmd.Parameters.AddWithValue("@KEYMATERIALS", KEYMATERIALS);
+                    cmd.Parameters.AddWithValue("@KEYPRODS", KEYPRODS);
+
+
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+
+                    if (rowsAffected >= 1)
+                    {
+                        //MsgBox(NO + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+        }
     }
     public void MsgBox(String ex, Page pg, Object obj)
     {
