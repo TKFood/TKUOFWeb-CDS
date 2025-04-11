@@ -316,6 +316,85 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         {
         }
     }
+
+    public void ADD_TB_PRODUCT_CLASS(
+        string CLASSNAMES,
+        string PRODNAMES,
+        string COSTS,
+        string VALIDMARKETS,
+        string VALIDPRODS,
+        string MINPRODS,
+        string DAILYPRODS,
+        string KEYMATERIALS,
+        string KEYPRODS
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                            INSERT INTO [TKRESEARCH].[dbo].[TB_PRODUCT_CLASS]
+                            (
+                            [CLASSNAMES]
+                            ,[PRODNAMES]
+                            ,[COSTS]
+                            ,[VALIDMARKETS]
+                            ,[VALIDPRODS]
+                            ,[MINPRODS]
+                            ,[DAILYPRODS]
+                            ,[KEYMATERIALS]
+                            ,[KEYPRODS]
+                            )
+                            VALUES
+                            (
+                            @CLASSNAMES
+                            ,@PRODNAMES
+                            ,@COSTS
+                            ,@VALIDMARKETS
+                            ,@VALIDPRODS
+                            ,@MINPRODS
+                            ,@DAILYPRODS
+                            ,@KEYMATERIALS
+                            ,@KEYPRODS
+                            )
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@CLASSNAMES", CLASSNAMES);
+                    cmd.Parameters.AddWithValue("@PRODNAMES", PRODNAMES);
+                    cmd.Parameters.AddWithValue("@COSTS", COSTS);
+                    cmd.Parameters.AddWithValue("@VALIDMARKETS", VALIDMARKETS);
+                    cmd.Parameters.AddWithValue("@VALIDPRODS", VALIDPRODS);
+                    cmd.Parameters.AddWithValue("@MINPRODS", MINPRODS);
+                    cmd.Parameters.AddWithValue("@DAILYPRODS", DAILYPRODS);
+                    cmd.Parameters.AddWithValue("@KEYMATERIALS", KEYMATERIALS);
+                    cmd.Parameters.AddWithValue("@KEYPRODS", KEYPRODS);
+
+
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+
+                    if (rowsAffected >= 1)
+                    {
+                        //MsgBox(NO + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -333,6 +412,44 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
     {
         BindGrid();
         BindGrid2();
+    }
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+
+        string CLASSNAMES = NEW_類別.Text.Trim();
+        string PRODNAMES = NEW_產品.Text.Trim();
+        string COSTS = NEW_成本結構.Text.Trim();
+        string VALIDMARKETS = NEW_效期評估市場.Text.Trim();
+        string VALIDPRODS = NEW_效期評估生產.Text.Trim();
+        string MINPRODS = NEW_最小批量.Text.Trim();
+        string DAILYPRODS = NEW_日產量.Text.Trim();
+        string KEYMATERIALS = NEW_關鍵原料.Text.Trim();
+        string KEYPRODS = NEW_關鍵製程.Text.Trim();
+
+
+        if (!string.IsNullOrEmpty(CLASSNAMES) )
+        {
+
+            ADD_TB_PRODUCT_CLASS(
+                CLASSNAMES,
+                PRODNAMES,
+                COSTS,
+                VALIDMARKETS,
+                VALIDPRODS,
+                MINPRODS,
+                DAILYPRODS,
+                KEYMATERIALS,
+                KEYPRODS
+                );
+
+            BindGrid();
+            BindGrid2();
+        }
+        else
+        {
+            MsgBox("類別不可空白", this.Page, this);
+        }
+
 
     }
     #endregion

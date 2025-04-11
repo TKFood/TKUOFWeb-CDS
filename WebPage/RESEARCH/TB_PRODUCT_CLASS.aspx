@@ -6,7 +6,24 @@
     <script>    
 
 
-</script>
+    </script>
+     <style>
+        .big-bold-button {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+            .big-bold-button:hover {
+                background-color: #0056b3;
+            }
+    </style>
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -221,6 +238,93 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView3" runat="server">
                     <div id="tabs-3">
+                        <table class="PopTable">
+                            <td colspan="2" class="PopTableRightTD">
+                                <div style="overflow-x: auto; width: 100%">
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label1" runat="server" Text="類別"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_類別" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label2" runat="server" Text="產品"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_產品" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label3" runat="server" Text="成本結構"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_成本結構" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label4" runat="server" Text="效期評估市場"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_效期評估市場" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label5" runat="server" Text="效期評估生產"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_效期評估生產" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label7" runat="server" Text="最小批量"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_最小批量" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label8" runat="server" Text="日產量"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_日產量" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label10" runat="server" Text="關鍵原料"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_關鍵原料" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label6" runat="server" Text="關鍵製程"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_關鍵製程" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label11" runat="server" Text=""></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:Button ID="Button3" runat="server" Text="新增專案" CssClass="big-bold-button" OnClick="Button3_Click" />
+                                        </td>
+                                    </tr>
+                                </div>
+                            </td>
+
+                        </table>
                     </div>
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
