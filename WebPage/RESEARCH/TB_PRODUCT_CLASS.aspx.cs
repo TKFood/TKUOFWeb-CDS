@@ -114,7 +114,83 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         //SETEXCEL();
 
     }
+    private void BindGrid2()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND PRODNAMES LIKE '%{0}%' ", TextBox1.Text);
+        }
+        else
+        {
+            QUERYS.AppendFormat(@"");
+        }
+
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [CLASSNAMES] AS '類別'
+                            ,[PRODNAMES] AS '產品'
+                            ,[COSTS] AS '成本結構'
+                            ,[VALIDMARKETS] AS '效期評估市場'
+                            ,[VALIDPRODS] AS '效期評估生產'
+                            ,[MINPRODS] AS '最小批量'
+                            ,[DAILYPRODS] AS '日產量'
+                            ,[KEYMATERIALS] AS '關鍵原料'
+                            ,[KEYPRODS] AS '關鍵製程'
+                            , [ID]
+                            FROM [TKRESEARCH].[dbo].[TB_PRODUCT_CLASS]
+                            WHERE 1=1
+                            {0}
+                            ORDER BY [CLASSNAMES],[PRODNAMES]
+                             ", QUERYS.ToString());
+
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+       
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);            
+
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -131,7 +207,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
     protected void Button1_Click(object sender, EventArgs e)
     {
         BindGrid();
-     
+        BindGrid2();
+
     }
     #endregion
 }
