@@ -295,20 +295,53 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
         if (e.CommandName == "Button6")
         {
-            string subject = "會議通知";
-            string body = "請記得明天上午10點開會。";
-            DataTable DT_MAILS = new DataTable();
-            // 建立欄位
-            DT_MAILS.Columns.Add("EMAILS", typeof(string));          
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField_GV1_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV1_輸入狀態");
+                string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
+                TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
+                string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
 
-            // 新增一筆資料
-            DataRow newRow = DT_MAILS.NewRow();
-            newRow["EMAILS"] = "tk290@tkfood.com.tw";
-          
-            DT_MAILS.Rows.Add(newRow);
+                Label Label_ID = (Label)row.FindControl("Label_ID");
+                Label Label_NO = (Label)row.FindControl("Label_專案編號");
+                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
+                Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
+                Label Label_產品試吃日 = (Label)row.FindControl("Label_產品試吃日");
+                Label Label_包裝設計日 = (Label)row.FindControl("Label_包裝設計日");
+                Label Label_上市日 = (Label)row.FindControl("Label_上市日");
+                Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
+                Label Label_是否結案 = (Label)row.FindControl("Label_是否結案");
 
-            SendEmail(subject, body, DT_MAILS);
-            MsgBox(" MAIL已寄送", this.Page, this);
+                string ID = Label_ID.Text;
+                string NO = Label_NO.Text;
+                string PROJECTNAMES = Label_項目名稱.Text;
+                string TRYSDATES = Label_產品打樣日.Text;
+                string TASTESDATES = Label_產品試吃日.Text;
+                string DESIGNSDATES = Label_包裝設計日.Text;
+                string SALESDATES = Label_上市日.Text;
+                string OWNER = Label_專案負責人.Text;
+                string STATUS = newTextValue_GV1_輸入狀態;
+                string ISCLOSED = Label_是否結案.Text;
+                string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+
+                string subject = "系統通知-商品專案-試吃完成" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
+                string body = "專案編號: " + NO + " 項目名稱: " + PROJECTNAMES + "試吃完成。";
+                DataTable DT_MAILS = new DataTable();
+                // 建立欄位
+                DT_MAILS.Columns.Add("EMAILS", typeof(string));
+
+                // 新增一筆資料
+                DataRow newRow = DT_MAILS.NewRow();
+                newRow["EMAILS"] = "tk290@tkfood.com.tw";
+
+                DT_MAILS.Rows.Add(newRow);
+
+                SendEmail(subject, body, DT_MAILS);
+                MsgBox(" MAIL已寄送", this.Page, this);
+            }
+            
         }
     }
 
