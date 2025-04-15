@@ -21,6 +21,7 @@ using Ede.Uof.Utility.Page.Common;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
+using System.Net.Mail;
 
 public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.Page.BasePage
 {
@@ -215,6 +216,12 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string cellValue2 = btn2.CommandArgument;
                 dynamic param2 = new { ID = cellValue2 }.ToExpando();
             }
+            Button btn6 = (Button)e.Row.FindControl("Button6");
+            if (btn6 != null)
+            {
+                string cellValue6 = btn6.CommandArgument;
+                dynamic param26 = new { ID = cellValue6 }.ToExpando();
+            }
         }
     }
 
@@ -284,6 +291,24 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
             BindGrid();
             BindGrid2();
+        }
+
+        if (e.CommandName == "Button6")
+        {
+            string subject = "會議通知";
+            string body = "請記得明天上午10點開會。";
+            DataTable DT_MAILS = new DataTable();
+            // 建立欄位
+            DT_MAILS.Columns.Add("EMAILS", typeof(string));          
+
+            // 新增一筆資料
+            DataRow newRow = DT_MAILS.NewRow();
+            newRow["EMAILS"] = "tk290@tkfood.com.tw";
+          
+            DT_MAILS.Rows.Add(newRow);
+
+            SendEmail(subject, body, DT_MAILS);
+            MsgBox(" MAIL已寄送", this.Page, this);
         }
     }
 
@@ -1055,6 +1080,45 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Response.End();
                 //package.Save();//這個方法是直接下載到本地
             }
+        }
+    }
+    public static void SendEmail(string subject, string body,DataTable mailTo)
+    {
+        try
+        {
+            string smtpServer = ConfigurationManager.AppSettings["smtpServer"];
+            int smtpPort = int.Parse(ConfigurationManager.AppSettings["smtpPort"]);
+            string emailAccount = ConfigurationManager.AppSettings["mailAccount"];
+            string emailPassword = ConfigurationManager.AppSettings["mailPwd"];
+            bool enableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]);
+
+            SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort)
+            {
+                Credentials = new NetworkCredential(emailAccount, emailPassword),
+                EnableSsl = enableSsl
+            };
+
+            MailMessage mail = new MailMessage
+            {
+                From = new MailAddress(emailAccount),
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = false
+            };
+
+            foreach (DataRow DR in mailTo.Rows)
+            {
+                if (!string.IsNullOrWhiteSpace(DR["EMAILS"].ToString()))
+                {
+                    mail.To.Add(DR["EMAILS"].ToString());
+                }
+            }
+
+            smtpClient.Send(mail);
+        }
+        catch (Exception ex)
+        {
+            //Console.WriteLine("寄送失敗: " + ex.Message);
         }
     }
     public void MsgBox(String ex, Page pg, Object obj)
