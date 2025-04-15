@@ -23,6 +23,7 @@ using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Net.Mail;
 
+
 public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.Page.BasePage
 {
     string ACCOUNT = null;
@@ -33,10 +34,17 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+        DataTable DT_ROLES = FIND_TB_PROJECTS_ROLES(NAME);
+        ROLES = DT_ROLES.Rows[0]["ROLES"].ToString();
+
         if (!IsPostBack)
         {
             Bind_DropDownList_ISCLOSED();
             Bind_DropDownList_OWNER();
+
+          
         }
     }
 
@@ -449,6 +457,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+      
+
+        //設選項
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_GV2_是否結案");
@@ -536,6 +547,12 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             }
 
 
+        }
+
+        //設權限
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            SET_ALLOWED_MODIFY(e.Row);
         }
     }
 
@@ -1136,6 +1153,82 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Response.End();
                 //package.Save();//這個方法是直接下載到本地
             }
+        }
+    }
+
+    public DataTable FIND_TB_PROJECTS_ROLES(string NAMES)
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ROLES", typeof(String));
+        dt.Columns.Add("NAMES", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder SQL = new StringBuilder();
+        SQL.AppendFormat(@"
+                       SELECT TOP 1
+                        [ROLES]
+                        ,[NAMES]
+                        FROM [TKRESEARCH].[dbo].[TB_PROJECTS_ROLES]
+                        WHERE [NAMES]='{0}'
+                        ", NAMES);
+
+
+        dt.Load(m_db.ExecuteReader(SQL.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+    public void SET_ALLOWED_MODIFY(GridViewRow row)
+    {
+        //TextBox txtNewField_專案編號 = (TextBox)row.FindControl("txtNewField_GV2_專案編號");
+        //TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");
+        //TextBox txtNewField_產品打樣日 = (TextBox)row.FindControl("txtNewField_GV2_產品打樣日");
+        //TextBox txtNewField_產品試吃日 = (TextBox)row.FindControl("txtNewField_GV2_產品試吃日");
+        //TextBox txtNewField_包裝設計日 = (TextBox)row.FindControl("txtNewField_GV2_包裝設計日");
+        //TextBox txtNewField_上市日 = (TextBox)row.FindControl("txtNewField_GV2_上市日");
+        //TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV2_輸入狀態");
+        //TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
+        //DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
+        //DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
+        Button btnUpdate = (Button)row.FindControl("Button3");
+
+        //ReadOnly
+        //txtNewField_專案編號.ReadOnly = true;
+        //txtNewField_項目名稱.ReadOnly = true;
+        //txtNewField_產品打樣日.ReadOnly = true;
+        //txtNewField_產品試吃日.ReadOnly = true;
+        //txtNewField_包裝設計日.ReadOnly = true;
+        //txtNewField_上市日.ReadOnly = true;
+        //txtNewField_輸入狀態.ReadOnly = true;
+        //txtNewField_試吃回覆.ReadOnly = true;
+        //ddlNewField_專案負責人.Enabled = false;
+        //ddlNewField_是否結案.Enabled = false;
+        if (btnUpdate != null) btnUpdate.Visible = false;
+
+        if (ROLES.Equals("ADMIN"))
+        {
+            // 管理員全部可編輯（範例）
+            if (btnUpdate != null) btnUpdate.Visible = true;
+
+        }
+        else if (ROLES.Equals("MANAGER"))
+        {
+            //MANAGER
+            if (btnUpdate != null) btnUpdate.Visible = true;
+
+        }
+        else
+        {
+
         }
     }
 
