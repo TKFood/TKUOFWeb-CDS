@@ -232,8 +232,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             {
                 // 獲取TextBox的值
                 GridViewRow row = Grid1.Rows[rowIndex];
-                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
-                string newTextValue = txtNewField.Text;
+                TextBox txtNewField_GV1_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV1_輸入狀態");
+                string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -253,7 +253,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string DESIGNSDATES = Label_包裝設計日.Text;
                 string SALESDATES = Label_上市日.Text;
                 string OWNER = Label_專案負責人.Text;
-                string STATUS = newTextValue;
+                string STATUS = newTextValue_GV1_輸入狀態;
                 string ISCLOSED = Label_是否結案.Text;
 
                 //新增記錄檔
@@ -485,15 +485,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
 
-                TextBox txtNewField_專案編號 = (TextBox)row.FindControl("txtNewField_專案編號");
-                TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_項目名稱");
-                TextBox txtNewField_產品打樣日 = (TextBox)row.FindControl("txtNewField_產品打樣日");
-                TextBox txtNewField_產品試吃日 = (TextBox)row.FindControl("txtNewField_產品試吃日");
+                TextBox txtNewField_專案編號 = (TextBox)row.FindControl("txtNewField_GV2_專案編號");
+                TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");
+                TextBox txtNewField_產品打樣日 = (TextBox)row.FindControl("txtNewField_GV2_產品打樣日");
+                TextBox txtNewField_產品試吃日 = (TextBox)row.FindControl("txtNewField_GV2_產品試吃日");
                 TextBox txtNewField_包裝設計日 = (TextBox)row.FindControl("txtNewField_包裝設計日");
-                TextBox txtNewField_上市日 = (TextBox)row.FindControl("txtNewField_上市日");
-                TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_輸入狀態");
-                DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_專案負責人");
-                DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_是否結案");
+                TextBox txtNewField_上市日 = (TextBox)row.FindControl("txtNewField_GV2_上市日");
+                TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV2_輸入狀態");
+                DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
+                DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
 
 
 
