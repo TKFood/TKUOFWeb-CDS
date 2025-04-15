@@ -285,7 +285,22 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     STATUS,
                     TASTESREPLYS
                     );
+
+                //寄通知mail
+                string subject = "測試 系統通知-商品專案-有修改內容" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
+                string body = "專案編號: " + NO + Environment.NewLine +
+                            "項目名稱: " + PROJECTNAMES + Environment.NewLine +
+                            "目前狀態:" + STATUS + Environment.NewLine +
+                            "目前試吃回覆:" + TASTESREPLYS + Environment.NewLine;
+
+                //建立收件人
+                //要寄給負責人+研發群               
+                DataTable DT_MAILS = SET_MAILTO(OWNER);
+                SendEmail(subject, body, DT_MAILS);
+                
             }
+
+          
 
             BindGrid();
             BindGrid2();
@@ -324,8 +339,10 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
 
+                //寄通知mail
                 string subject = "測試 系統通知-商品專案-試吃完成" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
-                string body = "專案編號: " + NO + " 項目名稱: " + PROJECTNAMES + "試吃完成。";
+                string body = "專案編號: " + NO + Environment.NewLine +
+                           "項目名稱: " + PROJECTNAMES + " 試吃完成。";
 
                 //建立收件人
                 //要寄給負責人+研發群               
@@ -595,7 +612,21 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     TASTESREPLYS,
                     ISCLOSED
                     );
+
+                //寄通知mail
+                string subject = "測試 系統通知-商品專案-有修改內容" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
+                string body = "專案編號: " + NO + Environment.NewLine +
+                            "項目名稱: " + PROJECTNAMES + Environment.NewLine +
+                            "目前狀態:" + STATUS + Environment.NewLine +
+                            "目前試吃回覆:" + TASTESREPLYS + Environment.NewLine;
+
+                //建立收件人
+                //要寄給負責人+研發群               
+                DataTable DT_MAILS = SET_MAILTO(OWNER);
+                SendEmail(subject, body, DT_MAILS);
             }
+
+           
 
             BindGrid();
             BindGrid2();
@@ -1190,7 +1221,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             // 新增一筆資料
             DataRow newRowNames = DT_MAILS.NewRow();
             newRowNames["EMAILS"] = DT_NAMES.Rows[0]["EMAILS"].ToString();
-            DT_MAILS.Rows.Add(newRowNames);
+            //DT_MAILS.Rows.Add(newRowNames);
         }
 
         //研發群
@@ -1200,7 +1231,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             foreach (DataRow DRrows in DT_MANAGER.Rows)
             {
-                DT_MAILS.ImportRow(DRrows);
+                //DT_MAILS.ImportRow(DRrows);
             }
         }
         // 新增一筆資料
