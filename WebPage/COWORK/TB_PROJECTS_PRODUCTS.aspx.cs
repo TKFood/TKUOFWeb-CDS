@@ -234,6 +234,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField_GV1_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV1_輸入狀態");
                 string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
+                TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
+                string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -255,6 +257,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string OWNER = Label_專案負責人.Text;
                 string STATUS = newTextValue_GV1_輸入狀態;
                 string ISCLOSED = Label_是否結案.Text;
+                string TASTESREPLYS = newTextValue_GV1_試吃回覆;
 
                 //新增記錄檔
                 ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
@@ -267,13 +270,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     SALESDATES,
                     OWNER,
                     STATUS,
+                    TASTESREPLYS,
                     ISCLOSED
                 );
                 //更新狀態
                 UPDATE_TB_PROJECTS_PRODUCTS_STATUS(
                     ID,
                     NO,
-                    STATUS
+                    STATUS,
+                    TASTESREPLYS
                     );
             }
 
@@ -379,7 +384,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_是否結案");
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_GV2_是否結案");
             if (ddl != null)
             {
                 // 取得資料來源，例如從資料表 "CaseStatus" 抓出 "Name"、"Code"
@@ -419,7 +424,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_專案負責人");
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_GV2_專案負責人");
             if (ddl != null)
             {
                 // 取得資料來源，例如從資料表 "CaseStatus" 抓出 "Name"、"Code"
@@ -489,9 +494,10 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");
                 TextBox txtNewField_產品打樣日 = (TextBox)row.FindControl("txtNewField_GV2_產品打樣日");
                 TextBox txtNewField_產品試吃日 = (TextBox)row.FindControl("txtNewField_GV2_產品試吃日");
-                TextBox txtNewField_包裝設計日 = (TextBox)row.FindControl("txtNewField_包裝設計日");
+                TextBox txtNewField_包裝設計日 = (TextBox)row.FindControl("txtNewField_GV2_包裝設計日");
                 TextBox txtNewField_上市日 = (TextBox)row.FindControl("txtNewField_GV2_上市日");
                 TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV2_輸入狀態");
+                TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
                 DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
                 DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
 
@@ -508,6 +514,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string SALESDATES = txtNewField_上市日.Text;
                 string OWNER = ddlNewField_專案負責人.SelectedItem.Text;
                 string STATUS = txtNewField_輸入狀態.Text;
+                string TASTESREPLYS = txtNewField_試吃回覆.Text;
                 string ISCLOSED = ddlNewField_是否結案.SelectedItem.Text;
 
                 //新增記錄檔
@@ -521,6 +528,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     SALESDATES,
                     OWNER,
                     STATUS,
+                    TASTESREPLYS,
                     ISCLOSED
                 );
                 //更新TB_PROJECTS_PRODUCTS
@@ -534,6 +542,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     SALESDATES,
                     OWNER,
                     STATUS,
+                    TASTESREPLYS,
                     ISCLOSED
                     );
             }
@@ -637,6 +646,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string SALESDATES,
         string OWNER,
         string STATUS,
+        string TASTESREPLYS,
         string ISCLOSED
         )
     {
@@ -654,6 +664,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[SALESDATES]
                             ,[OWNER]
                             ,[STATUS]
+                            ,[TASTESREPLYS]
                             ,[ISCLOSED]
                         
                             )
@@ -668,6 +679,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,@SALESDATES
                             ,@OWNER
                             ,@STATUS
+                            ,@TASTESREPLYS
                             ,@ISCLOSED
                         
                             )
@@ -688,6 +700,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@SALESDATES", SALESDATES);
                     cmd.Parameters.AddWithValue("@OWNER", OWNER);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                    cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
 
 
@@ -714,14 +727,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     public void UPDATE_TB_PROJECTS_PRODUCTS_STATUS(
         string ID,
         string NO,
-        string STATUS
+        string STATUS,
+        string TASTESREPLYS
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
         var SQLCOMMAND = @" 
                             UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES
+                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES,[TASTESREPLYS]=@TASTESREPLYS
                             WHERE [ID]=@ID
                         
                             
@@ -735,6 +749,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 {
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                    cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
                     cnn.Open();
@@ -765,6 +780,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     string SALESDATES,
                     string OWNER,
                     string STATUS,
+                    string TASTESREPLYS,
                     string ISCLOSED
                     )
     {
@@ -773,6 +789,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         var SQLCOMMAND = @" 
                          UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                         SET [NO]=@NO,[PROJECTNAMES]=@PROJECTNAMES,[TRYSDATES]=@TRYSDATES,[TASTESDATES]=@TASTESDATES,[DESIGNSDATES]=@DESIGNSDATES,[SALESDATES]=@SALESDATES,[OWNER]=@OWNER,[STATUS]=@STATUS,[ISCLOSED]=@ISCLOSED,[UPDATEDATES]=@UPDATEDATES
+                            ,TASTESREPLYS=@TASTESREPLYS
                         WHERE [ID]=@ID
                         
                             
@@ -793,6 +810,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@SALESDATES", SALESDATES);
                     cmd.Parameters.AddWithValue("@OWNER", OWNER);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
+                    cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
