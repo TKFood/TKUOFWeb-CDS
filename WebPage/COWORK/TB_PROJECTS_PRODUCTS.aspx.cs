@@ -160,8 +160,6 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         }
 
         cmdTxt.AppendFormat(@"
-
-
                             SELECT 
                             [ID]
                             ,[NO] AS '專案編號'
@@ -326,18 +324,12 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
 
-                string subject = "系統通知-商品專案-試吃完成" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
+                string subject = "測試 系統通知-商品專案-試吃完成" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
                 string body = "專案編號: " + NO + " 項目名稱: " + PROJECTNAMES + "試吃完成。";
-                DataTable DT_MAILS = new DataTable();
-                // 建立欄位
-                DT_MAILS.Columns.Add("EMAILS", typeof(string));
 
-                // 新增一筆資料
-                DataRow newRow = DT_MAILS.NewRow();
-                newRow["EMAILS"] = "tk290@tkfood.com.tw";
-
-                DT_MAILS.Rows.Add(newRow);
-
+                //建立收件人
+                //要寄給負責人+研發群               
+                DataTable DT_MAILS = SET_MAILTO(OWNER);
                 SendEmail(subject, body, DT_MAILS);
                 MsgBox(" MAIL已寄送", this.Page, this);
             }
@@ -1113,6 +1105,117 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Response.End();
                 //package.Save();//這個方法是直接下載到本地
             }
+        }
+    }
+
+    public DataTable FIND_TB_EMAILS_BY_NAMES(string NAMES)
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("EMAILS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder SQL = new StringBuilder();
+        SQL.AppendFormat(@"
+                        SELECT TOP 1
+                        [ID]
+                        ,[NAMES]
+                        ,[EMAILS]
+                        ,[KINDS]
+                        FROM [TKRESEARCH].[dbo].[TB_EMAILS]
+                        WHERE [NAMES]='{0}'
+                        ", NAMES);
+
+
+        dt.Load(m_db.ExecuteReader(SQL.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+
+    public DataTable FIND_TB_EMAILS_BY_KINDS(string KINDS)
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("EMAILS", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder SQL = new StringBuilder();
+        SQL.AppendFormat(@"
+                        SELECT 
+                        [ID]
+                        ,[NAMES]
+                        ,[EMAILS]
+                        ,[KINDS]
+                        FROM [TKRESEARCH].[dbo].[TB_EMAILS]
+                        WHERE [KINDS]='{0}'
+                        ", KINDS);
+
+
+        dt.Load(m_db.ExecuteReader(SQL.ToString()));
+
+        if (dt.Rows.Count > 0)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+
+    public DataTable SET_MAILTO(string OWNER)
+    {
+        DataTable DT_MAILS = new DataTable();
+        // 建立欄位
+        DT_MAILS.Columns.Add("EMAILS", typeof(string));
+
+        //負責人
+        //FIND_TB_EMAILS_BY_NAMES
+        DataTable DT_NAMES = FIND_TB_EMAILS_BY_NAMES(OWNER);
+        if (DT_NAMES != null && DT_NAMES.Rows.Count >= 1)
+        {
+            // 新增一筆資料
+            DataRow newRowNames = DT_MAILS.NewRow();
+            newRowNames["EMAILS"] = DT_NAMES.Rows[0]["EMAILS"].ToString();
+            DT_MAILS.Rows.Add(newRowNames);
+        }
+
+        //研發群
+        //FIND_TB_EMAILS_BY_KINDS
+        DataTable DT_MANAGER = FIND_TB_EMAILS_BY_KINDS("MANAGER");
+        if (DT_MANAGER != null && DT_MANAGER.Rows.Count >= 1)
+        {
+            foreach (DataRow DRrows in DT_MANAGER.Rows)
+            {
+                DT_MAILS.ImportRow(DRrows);
+            }
+        }
+        // 新增一筆資料
+        DataRow newRow = DT_MAILS.NewRow();
+        newRow["EMAILS"] = "tk290@tkfood.com.tw";
+
+        DT_MAILS.Rows.Add(newRow);
+
+        if(DT_MAILS!=null && DT_MAILS.Rows.Count>=1)
+        {
+            return DT_MAILS;
+        }
+        else
+        {
+            return null;
         }
     }
     public static void SendEmail(string subject, string body,DataTable mailTo)
