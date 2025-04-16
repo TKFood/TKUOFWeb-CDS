@@ -255,6 +255,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
                 Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
+                Label Label_分類 = (Label)row.FindControl("Label_分類");
                 Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
                 Label Label_產品試吃日 = (Label)row.FindControl("Label_產品試吃日");
                 Label Label_包裝設計日 = (Label)row.FindControl("Label_包裝設計日");
@@ -266,6 +267,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ID = Label_ID.Text;
                 string NO = Label_NO.Text;
                 string PROJECTNAMES = Label_項目名稱.Text;
+                string KINDS = Label_分類.Text;
                 string TRYSDATES = Label_產品打樣日.Text;
                 string TASTESDATES = Label_產品試吃日.Text;
                 string DESIGNSDATES = Label_包裝設計日.Text;
@@ -281,6 +283,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ID,
                     NO,
                     PROJECTNAMES,
+                    KINDS,
                     TRYSDATES,
                     TASTESDATES,
                     DESIGNSDATES,
@@ -628,6 +631,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 TextBox txtNewField_表單編號 = (TextBox)row.FindControl("txtNewField_GV2_表單編號");
                 DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
                 DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
+                DropDownList ddlNewField_分類 = (DropDownList)row.FindControl("ddlNewField_GV2_分類");
 
 
 
@@ -636,6 +640,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ID = Label_ID.Text;
                 string NO = txtNewField_專案編號.Text;
                 string PROJECTNAMES = txtNewField_項目名稱.Text;
+                string KINDS= ddlNewField_分類.SelectedItem.Text;
                 string TRYSDATES = txtNewField_產品打樣日.Text;
                 string TASTESDATES = txtNewField_產品試吃日.Text;
                 string DESIGNSDATES = txtNewField_包裝設計日.Text;
@@ -651,6 +656,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ID,
                     NO,
                     PROJECTNAMES,
+                    KINDS,
                     TRYSDATES,
                     TASTESDATES,
                     DESIGNSDATES,
@@ -666,6 +672,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ID,
                     NO,
                     PROJECTNAMES,
+                    KINDS,
                     TRYSDATES,
                     TASTESDATES,
                     DESIGNSDATES,
@@ -787,6 +794,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string SID,
         string NO,
         string PROJECTNAMES,
+        string KINDS,
         string TRYSDATES,
         string TASTESDATES,
         string DESIGNSDATES,
@@ -806,6 +814,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             [SID]
                             ,[NO]
                             ,[PROJECTNAMES]
+                            ,[KINDS]
                             ,[TRYSDATES]
                             ,[TASTESDATES]
                             ,[DESIGNSDATES]
@@ -822,6 +831,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             @SID
                             ,@NO
                             ,@PROJECTNAMES
+                            ,@KINDS
                             ,@TRYSDATES
                             ,@TASTESDATES
                             ,@DESIGNSDATES
@@ -844,6 +854,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@SID", SID);
                     cmd.Parameters.AddWithValue("@NO", NO);
                     cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
+                    cmd.Parameters.AddWithValue("@KINDS", KINDS);
                     cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
                     cmd.Parameters.AddWithValue("@TASTESDATES", TASTESDATES);
                     cmd.Parameters.AddWithValue("@DESIGNSDATES", DESIGNSDATES);
@@ -925,6 +936,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     string ID,
                     string NO,
                     string PROJECTNAMES,
+                    string KINDS,
                     string TRYSDATES,
                     string TASTESDATES,
                     string DESIGNSDATES,
@@ -941,7 +953,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         var SQLCOMMAND = @" 
                          UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                         SET [NO]=@NO,[PROJECTNAMES]=@PROJECTNAMES,[TRYSDATES]=@TRYSDATES,[TASTESDATES]=@TASTESDATES,[DESIGNSDATES]=@DESIGNSDATES,[SALESDATES]=@SALESDATES,[OWNER]=@OWNER,[STATUS]=@STATUS,[ISCLOSED]=@ISCLOSED,[UPDATEDATES]=@UPDATEDATES
-                            ,TASTESREPLYS=@TASTESREPLYS,DOC_NBR=@DOC_NBR
+                            ,TASTESREPLYS=@TASTESREPLYS,DOC_NBR=@DOC_NBR,KINDS=@KINDS
                         WHERE [ID]=@ID
                         
                             
@@ -956,6 +968,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cmd.Parameters.AddWithValue("@NO", NO);
                     cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
+                    cmd.Parameters.AddWithValue("@KINDS", KINDS);
                     cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
                     cmd.Parameters.AddWithValue("@TASTESDATES", TASTESDATES);
                     cmd.Parameters.AddWithValue("@DESIGNSDATES", DESIGNSDATES);
