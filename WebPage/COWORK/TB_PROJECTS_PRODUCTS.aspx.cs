@@ -171,6 +171,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             SELECT 
                             [ID]
                             ,[NO] AS '專案編號'
+                            ,[KINDS] AS '分類'
                             ,[PROJECTNAMES] AS '項目名稱'
                             ,[TRYSDATES] AS '產品打樣日'
                             ,[TASTESDATES] AS '產品試吃日'
@@ -421,6 +422,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             SELECT 
                             [ID]
                             ,[NO] AS '專案編號'
+                            ,[KINDS] AS '分類'
                             ,[PROJECTNAMES] AS '項目名稱'
                             ,[TRYSDATES] AS '產品打樣日'
                             ,[TASTESDATES] AS '產品試吃日'
@@ -686,6 +688,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             SELECT 
                             [TB_PROJECTS_PRODUCTS_HISTORYS].[ID]
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[NO] AS '專案編號'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[KINDS] AS '分類'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[PROJECTNAMES] AS '項目名稱'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TRYSDATES] AS '產品打樣日'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESDATES] AS '產品試吃日'
