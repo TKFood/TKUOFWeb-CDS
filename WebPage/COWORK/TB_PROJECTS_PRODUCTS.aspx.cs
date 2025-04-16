@@ -262,6 +262,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Label Label_上市日 = (Label)row.FindControl("Label_上市日");
                 Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
                 Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
+                Label Label_STAGES = (Label)row.FindControl("Label_專案階段");
                 Label Label_是否結案 = (Label)row.FindControl("Label_是否結案");
 
                 string ID = Label_ID.Text;
@@ -275,6 +276,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string OWNER = Label_專案負責人.Text;
                 string STATUS = newTextValue_GV1_輸入狀態;
                 string DOC_NBR = Label_表單編號.Text;
+                string STAGES= Label_STAGES.Text;
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
 
@@ -292,6 +294,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     STATUS,
                     TASTESREPLYS,
                     DOC_NBR,
+                    STAGES,
                     ISCLOSED
                 );
                 //更新狀態
@@ -667,10 +670,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
                 DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
                 DropDownList ddlNewField_分類 = (DropDownList)row.FindControl("ddlNewField_GV2_分類");
-
-
-
-
+                DropDownList ddlNewField_專案階段 = (DropDownList)row.FindControl("ddlNewField_GV2_專案階段");
 
                 string ID = Label_ID.Text;
                 string NO = txtNewField_專案編號.Text;
@@ -684,6 +684,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STATUS = txtNewField_輸入狀態.Text;
                 string TASTESREPLYS = txtNewField_試吃回覆.Text;
                 string DOC_NBR = txtNewField_表單編號.Text;
+                string STAGES = ddlNewField_專案階段.SelectedItem.Text;
                 string ISCLOSED = ddlNewField_是否結案.SelectedItem.Text;
 
                 //新增記錄檔
@@ -700,6 +701,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     STATUS,
                     TASTESREPLYS,
                     DOC_NBR,
+                    STAGES,
                     ISCLOSED
                 );
                 //更新TB_PROJECTS_PRODUCTS
@@ -716,6 +718,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     STATUS,
                     TASTESREPLYS,
                     DOC_NBR,
+                    STAGES,
                     ISCLOSED
                     );
 
@@ -838,6 +841,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string STATUS,
         string TASTESREPLYS,
         string DOC_NBR,
+        string STAGES,
         string ISCLOSED
         )
     {
@@ -858,6 +862,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[STATUS]
                             ,[TASTESREPLYS]
                             ,[DOC_NBR]
+                            ,[STAGES]
                             ,[ISCLOSED]
                         
                             )
@@ -875,6 +880,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,@STATUS
                             ,@TASTESREPLYS
                             ,@DOC_NBR
+                            ,@STAGES
                             ,@ISCLOSED
                         
                             )
@@ -898,6 +904,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                     cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
+                    cmd.Parameters.AddWithValue("@STAGES", STAGES);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
 
 
@@ -980,6 +987,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     string STATUS,
                     string TASTESREPLYS,
                     string DOC_NBR,
+                    string STAGES,
                     string ISCLOSED
                     )
     {
@@ -988,7 +996,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         var SQLCOMMAND = @" 
                          UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                         SET [NO]=@NO,[PROJECTNAMES]=@PROJECTNAMES,[TRYSDATES]=@TRYSDATES,[TASTESDATES]=@TASTESDATES,[DESIGNSDATES]=@DESIGNSDATES,[SALESDATES]=@SALESDATES,[OWNER]=@OWNER,[STATUS]=@STATUS,[ISCLOSED]=@ISCLOSED,[UPDATEDATES]=@UPDATEDATES
-                            ,TASTESREPLYS=@TASTESREPLYS,DOC_NBR=@DOC_NBR,KINDS=@KINDS
+                            ,TASTESREPLYS=@TASTESREPLYS,DOC_NBR=@DOC_NBR,KINDS=@KINDS,[STAGES]=@STAGES
                         WHERE [ID]=@ID
                         
                             
@@ -1013,6 +1021,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
                     cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
+                    cmd.Parameters.AddWithValue("@STAGES", STAGES);
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
                     cnn.Open();
