@@ -181,6 +181,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TASTESREPLYS] AS '試吃回覆'
                             ,[STATUSSTAGES] AS '專案狀態'
                             ,[ISCLOSED] AS '是否結案'
+                            ,[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
                             FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                             WHERE 1=1
@@ -427,6 +428,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TASTESREPLYS] AS '試吃回覆'
                             ,[STATUSSTAGES] AS '專案狀態'
                             ,[ISCLOSED] AS '是否結案'
+                            ,[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
                             FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                             WHERE 1=1
@@ -687,6 +689,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESREPLYS] AS '試吃回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUSSTAGES] AS '專案狀態'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[ISCLOSED] AS '是否結案'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[TB_PROJECTS_PRODUCTS_HISTORYS].[CREATEDATES],112) AS '更新日'
                             FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS], [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
                             WHERE 1=1
