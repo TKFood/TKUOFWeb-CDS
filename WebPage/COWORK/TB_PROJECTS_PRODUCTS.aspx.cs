@@ -180,7 +180,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[OWNER] AS '專案負責人'
                             ,[STATUS] AS '狀態'
                             ,[TASTESREPLYS] AS '試吃回覆'
-                            ,[STATUSSTAGES] AS '專案狀態'
+                            ,[STAGES] AS '專案階段'
                             ,[ISCLOSED] AS '是否結案'
                             ,[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
@@ -434,7 +434,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[OWNER] AS '專案負責人'
                             ,[STATUS] AS '狀態'
                             ,[TASTESREPLYS] AS '試吃回覆'
-                            ,[STATUSSTAGES] AS '專案狀態'
+                            ,[STAGES] AS '專案階段'
                             ,[ISCLOSED] AS '是否結案'
                             ,[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
@@ -467,8 +467,6 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-      
-
         //設選項
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
@@ -575,6 +573,43 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                     // 設定選取值
                     string currentValue = DataBinder.Eval(e.Row.DataItem, "分類").ToString();
+                    if (ddl.Items.FindByValue(currentValue) != null)
+                        ddl.SelectedValue = currentValue;
+
+                    reader.Close();
+                }
+            }
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_GV2_專案階段");
+            if (ddl != null)
+            {
+                // 取得資料來源，例如從資料表 "CaseStatus" 抓出 "Name"、"Code"
+                string connStr = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendFormat(@" 
+                                     SELECT 
+                                        [ID]
+                                        ,[STAGES]
+                                        FROM [TKRESEARCH].[dbo].[TB_PROJECTS_STAGES]
+                                        ORDER BY [ID]
+                                    ");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), conn);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    ddl.DataSource = reader;
+                    ddl.DataTextField = "STAGES";   // 顯示文字
+                    ddl.DataValueField = "STAGES";  // 對應值
+                    ddl.DataBind();
+
+                    // 設定選取值
+                    string currentValue = DataBinder.Eval(e.Row.DataItem, "專案階段").ToString();
                     if (ddl.Items.FindByValue(currentValue) != null)
                         ddl.SelectedValue = currentValue;
 
@@ -740,7 +775,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[OWNER] AS '專案負責人'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUS] AS '狀態'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESREPLYS] AS '試吃回覆'
-                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUSSTAGES] AS '專案狀態'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STAGES] AS '專案階段'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[ISCLOSED] AS '是否結案'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[TB_PROJECTS_PRODUCTS_HISTORYS].[CREATEDATES],112) AS '更新日'
