@@ -104,6 +104,13 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="分類" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_分類" runat="server" Text='<%# Bind("分類") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="產品打樣日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_產品打樣日" runat="server" Text='<%# Bind("產品打樣日") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
@@ -219,6 +226,13 @@
                                                 <asp:TemplateField HeaderText="項目名稱" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="txtNewField_GV2_項目名稱" runat="server" Text='<%# Bind("項目名稱") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="分類" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:DropDownList ID="ddlNewField_GV2_分類" runat="server" Width="100%"></asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -435,6 +449,13 @@
                                                 <asp:TemplateField HeaderText="項目名稱" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Grid3_Label_項目名稱" runat="server" Text='<%# Bind("項目名稱") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="分類" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_分類" runat="server" Text='<%# Bind("分類") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

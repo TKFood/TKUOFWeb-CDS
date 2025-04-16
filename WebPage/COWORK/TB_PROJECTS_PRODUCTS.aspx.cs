@@ -546,6 +546,42 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_GV2_分類");
+            if (ddl != null)
+            {
+                // 取得資料來源，例如從資料表 "CaseStatus" 抓出 "Name"、"Code"
+                string connStr = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendFormat(@" 
+                                      SELECT 
+                                        [KINDS]
+                                        FROM [TKRESEARCH].[dbo].[TB_PROJECTS_KINDS]
+                                        ORDER BY [ID]
+                                    ");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), conn);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    ddl.DataSource = reader;
+                    ddl.DataTextField = "KINDS";   // 顯示文字
+                    ddl.DataValueField = "KINDS";  // 對應值
+                    ddl.DataBind();
+
+                    // 設定選取值
+                    string currentValue = DataBinder.Eval(e.Row.DataItem, "分類").ToString();
+                    if (ddl.Items.FindByValue(currentValue) != null)
+                        ddl.SelectedValue = currentValue;
+
+                    reader.Close();
+                }
+            }
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
             Button btn3 = (Button)e.Row.FindControl("Button3");
             if (btn3 != null)
             {
