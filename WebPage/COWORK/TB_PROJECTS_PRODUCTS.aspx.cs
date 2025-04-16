@@ -1367,6 +1367,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
     public static void SendEmail(string subject, string body,DataTable mailTo)
     {
+        MailAddress MAIL_FORM = new MailAddress("tk290@tkfood.com.tw");
         try
         {
             string smtpServer = ConfigurationManager.AppSettings["smtpServer"];
@@ -1383,7 +1384,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
             MailMessage mail = new MailMessage
             {
-                From = new MailAddress(emailAccount),
+                From = MAIL_FORM,
                 Subject = subject,
                 Body = body,
                 IsBodyHtml = false
