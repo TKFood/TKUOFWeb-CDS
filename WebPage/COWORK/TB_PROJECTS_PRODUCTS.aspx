@@ -294,7 +294,7 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="專案階段" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="專案階段" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:DropDownList ID="ddlNewField_GV2_專案階段" runat="server" Width="100%"></asp:DropDownList>
                                                     </ItemTemplate>
