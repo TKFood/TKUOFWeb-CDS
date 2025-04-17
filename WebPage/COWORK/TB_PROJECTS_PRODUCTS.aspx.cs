@@ -37,7 +37,12 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         ACCOUNT = Current.Account;
         NAME = Current.User.Name;
         DataTable DT_ROLES = FIND_TB_PROJECTS_ROLES(NAME);
-        ROLES = DT_ROLES.Rows[0]["ROLES"].ToString();
+        if(DT_ROLES!=null && DT_ROLES.Rows.Count>=1)
+        {
+            ROLES = DT_ROLES.Rows[0]["ROLES"].ToString();
+        }
+        
+
 
         if (!IsPostBack)
         {
@@ -1333,21 +1338,24 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         //ddlNewField_是否結案.Enabled = false;
         if (btnUpdate != null) btnUpdate.Visible = false;
 
-        if (ROLES.Equals("ADMIN"))
+        if(ROLES!=null)
         {
-            // 管理員全部可編輯（範例）
-            if (btnUpdate != null) btnUpdate.Visible = true;
+            if (ROLES.Equals("ADMIN"))
+            {
+                // 管理員全部可編輯（範例）
+                if (btnUpdate != null) btnUpdate.Visible = true;
 
-        }
-        else if (ROLES.Equals("MANAGER"))
-        {
-            //MANAGER
-            if (btnUpdate != null) btnUpdate.Visible = true;
+            }
+            else if (ROLES.Equals("MANAGER"))
+            {
+                //MANAGER
+                if (btnUpdate != null) btnUpdate.Visible = true;
 
-        }
+            }
+        }        
         else
         {
-
+            if (btnUpdate != null) btnUpdate.Visible = false;
         }
     }
 
