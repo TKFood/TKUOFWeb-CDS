@@ -70,6 +70,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,[DAILYPRODS] AS '日產量'
                             ,[KEYMATERIALS] AS '關鍵原料'
                             ,[KEYPRODS] AS '關鍵製程'
+                            ,CONVERT(NVARCHAR,[CREATEDATES],111) AS CREATEDATES
+                            ,CONVERT(NVARCHAR,[UPDATEDATES],111) AS UPDATEDATES
                             , [ID]
                             FROM [TKRESEARCH].[dbo].[TB_PRODUCT_CLASS]
                             WHERE 1=1
@@ -147,6 +149,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,[DAILYPRODS] AS '日產量'
                             ,[KEYMATERIALS] AS '關鍵原料'
                             ,[KEYPRODS] AS '關鍵製程'
+                            ,CONVERT(NVARCHAR,[CREATEDATES],111) AS CREATEDATES
+                            ,CONVERT(NVARCHAR,[UPDATEDATES],111) AS UPDATEDATES
                             , [ID]
                             FROM [TKRESEARCH].[dbo].[TB_PRODUCT_CLASS]
                             WHERE 1=1
@@ -212,6 +216,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                 TextBox txtNewField_最小批量 = (TextBox)row.FindControl("txtNewField_最小批量");
                 TextBox txtNewField_日產量 = (TextBox)row.FindControl("txtNewField_日產量");
                 TextBox txtNewField_關鍵原料 = (TextBox)row.FindControl("txtNewField_關鍵原料");
+                TextBox txtNewField_關鍵製程 = (TextBox)row.FindControl("txtNewField_關鍵製程");
 
                 string ID = Label_ID.Text;
                 string CLASSNAMES = txtNewField_類別.Text;
@@ -222,7 +227,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                 string MINPRODS = txtNewField_最小批量.Text;
                 string DAILYPRODS = txtNewField_日產量.Text;
                 string KEYMATERIALS = txtNewField_關鍵原料.Text;
-                string KEYPRODS = txtNewField_關鍵原料.Text;
+                string KEYPRODS = txtNewField_關鍵製程.Text;
 
                 UPDATE_TB_PRODUCT_CLASS(
                           ID,
@@ -277,6 +282,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,[DAILYPRODS]=@DAILYPRODS
                             ,[KEYMATERIALS]=@KEYMATERIALS
                             ,[KEYPRODS]=@KEYPRODS
+                            ,[UPDATEDATES]=@UPDATEDATES
                             WHERE [ID]=@ID
                             ";
 
@@ -296,6 +302,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                     cmd.Parameters.AddWithValue("@DAILYPRODS", DAILYPRODS);
                     cmd.Parameters.AddWithValue("@KEYMATERIALS", KEYMATERIALS);
                     cmd.Parameters.AddWithValue("@KEYPRODS", KEYPRODS);
+                    cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
 
 

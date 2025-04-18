@@ -6,8 +6,8 @@
     <script>    
 
 
-    </script>
-     <style>
+</script>
+    <style>
         .big-bold-button {
             font-size: 20px;
             font-weight: bold;
@@ -70,63 +70,77 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="類別" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_類別" runat="server" Text='<%# Bind("類別") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_類別" runat="server" Text='<%# Bind("類別") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="產品" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_產品" runat="server" Text='<%# Bind("產品") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_產品" runat="server" Text='<%# Bind("產品") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="成本結構" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_成本結構" runat="server" Text='<%# Bind("成本結構") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_成本結構" runat="server" Text='<%# Bind("成本結構") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="效期評估-市場" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_效期評估市場" runat="server" Text='<%# Bind("效期評估市場") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_效期評估市場" runat="server" Text='<%# Bind("效期評估市場") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="效期評估-生產" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_效期評估生產" runat="server" Text='<%# Bind("效期評估生產") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_效期評估生產" runat="server" Text='<%# Bind("效期評估生產") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="最小批量" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_最小批量" runat="server" Text='<%# Bind("最小批量") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_最小批量" runat="server" Text='<%# Bind("最小批量") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="日產量" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_日產量" runat="server" Text='<%# Bind("日產量") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_日產量" runat="server" Text='<%# Bind("日產量") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="關鍵原料" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_關鍵原料" runat="server" Text='<%# Bind("關鍵原料") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_關鍵原料" runat="server" Text='<%# Bind("關鍵原料") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="關鍵製程" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_關鍵製程" runat="server" Text='<%# Bind("關鍵製程") %>' Style="word-break: break-all; white-space: pre-line;" Width="140px"></asp:Label>
+                                                        <asp:Label ID="Label_關鍵製程" runat="server" Text='<%# Bind("關鍵製程") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="建立日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label1_建立日" runat="server" Text='<%# Bind("CREATEDATES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="更新日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label1_更新日" runat="server" Text='<%# Bind("UPDATEDATES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -213,6 +227,20 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="建立日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label1_建立日" runat="server" Text='<%# Bind("CREATEDATES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="更新日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label1_更新日" runat="server" Text='<%# Bind("UPDATEDATES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
@@ -246,7 +274,7 @@
                                             <asp:Label ID="Label1" runat="server" Text="類別"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_類別" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_類別" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -254,7 +282,7 @@
                                             <asp:Label ID="Label2" runat="server" Text="產品"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_產品" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_產品" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -262,7 +290,7 @@
                                             <asp:Label ID="Label3" runat="server" Text="成本結構"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_成本結構" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_成本結構" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -270,7 +298,7 @@
                                             <asp:Label ID="Label4" runat="server" Text="效期評估市場"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_效期評估市場" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_效期評估市場" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -278,7 +306,7 @@
                                             <asp:Label ID="Label5" runat="server" Text="效期評估生產"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_效期評估生產" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_效期評估生產" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -286,7 +314,7 @@
                                             <asp:Label ID="Label7" runat="server" Text="最小批量"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_最小批量" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_最小批量" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -294,7 +322,7 @@
                                             <asp:Label ID="Label8" runat="server" Text="日產量"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_日產量" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_日產量" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -302,7 +330,7 @@
                                             <asp:Label ID="Label10" runat="server" Text="關鍵原料"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_關鍵原料" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_關鍵原料" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -310,7 +338,7 @@
                                             <asp:Label ID="Label6" runat="server" Text="關鍵製程"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_關鍵製程" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_關鍵製程" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
