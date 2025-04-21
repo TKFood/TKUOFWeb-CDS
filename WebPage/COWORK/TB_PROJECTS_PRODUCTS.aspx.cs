@@ -233,7 +233,13 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             if (btn6 != null)
             {
                 string cellValue6 = btn6.CommandArgument;
-                dynamic param26 = new { ID = cellValue6 }.ToExpando();
+                dynamic param6 = new { ID = cellValue6 }.ToExpando();
+            }
+            Button btn7 = (Button)e.Row.FindControl("Button7");
+            if (btn7 != null)
+            {
+                string cellValue7 = btn7.CommandArgument;
+                dynamic param7 = new { ID = cellValue7 }.ToExpando();
             }
         }
     }
@@ -373,8 +379,53 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 DataTable DT_MAILS = SET_MAILTO(OWNER);
                 SendEmail(subject, body, DT_MAILS);
                 MsgBox(" MAIL已寄送", this.Page, this);
+            }            
+        }
+        if (e.CommandName == "Button7")
+        {
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField_GV1_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV1_輸入狀態");
+                string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
+                TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
+                string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
+
+                Label Label_ID = (Label)row.FindControl("Label_ID");
+                Label Label_NO = (Label)row.FindControl("Label_專案編號");
+                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
+                Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
+                Label Label_產品試吃日 = (Label)row.FindControl("Label_產品試吃日");
+                Label Label_包裝設計日 = (Label)row.FindControl("Label_包裝設計日");
+                Label Label_上市日 = (Label)row.FindControl("Label_上市日");
+                Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
+                Label Label_是否結案 = (Label)row.FindControl("Label_是否結案");
+
+                string ID = Label_ID.Text;
+                string NO = Label_NO.Text;
+                string PROJECTNAMES = Label_項目名稱.Text;
+                string TRYSDATES = Label_產品打樣日.Text;
+                string TASTESDATES = Label_產品試吃日.Text;
+                string DESIGNSDATES = Label_包裝設計日.Text;
+                string SALESDATES = Label_上市日.Text;
+                string OWNER = Label_專案負責人.Text;
+                string STATUS = newTextValue_GV1_輸入狀態;
+                string ISCLOSED = Label_是否結案.Text;
+                string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+
+                //寄通知mail
+                string subject = "測試 系統通知-商品專案-可開始設計" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
+                string body = "專案編號: " + NO + Environment.NewLine +
+                           "項目名稱: " + PROJECTNAMES + " 可開始設計。";
+
+                //建立收件人
+                //要寄給負責人+研發群+設計群               
+                DataTable DT_MAILS = SET_MAILTO_DESIGNER(OWNER);
+                SendEmail(subject, body, DT_MAILS);
+                MsgBox(" MAIL已寄送", this.Page, this);
             }
-            
+
         }
     }
 
@@ -1461,6 +1512,60 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         DT_MAILS.Rows.Add(newRow);
 
         if(DT_MAILS!=null && DT_MAILS.Rows.Count>=1)
+        {
+            return DT_MAILS;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public DataTable SET_MAILTO_DESIGNER(string OWNER)
+    {
+        DataTable DT_MAILS = new DataTable();
+        // 建立欄位
+        DT_MAILS.Columns.Add("EMAILS", typeof(string));
+
+        //負責人
+        //FIND_TB_EMAILS_BY_NAMES
+        DataTable DT_NAMES = FIND_TB_EMAILS_BY_NAMES(OWNER);
+        if (DT_NAMES != null && DT_NAMES.Rows.Count >= 1)
+        {
+            // 新增一筆資料
+            DataRow newRowNames = DT_MAILS.NewRow();
+            newRowNames["EMAILS"] = DT_NAMES.Rows[0]["EMAILS"].ToString();
+            //DT_MAILS.Rows.Add(newRowNames);
+        }
+
+        //研發群
+        //FIND_TB_EMAILS_BY_KINDS
+        DataTable DT_MANAGER = FIND_TB_EMAILS_BY_KINDS("MANAGER");
+        if (DT_MANAGER != null && DT_MANAGER.Rows.Count >= 1)
+        {
+            foreach (DataRow DRrows in DT_MANAGER.Rows)
+            {
+                //DT_MAILS.ImportRow(DRrows);
+            }
+        }
+
+        //設計群
+        //FIND_TB_EMAILS_BY_KINDS
+        DataTable DT_DESIGNER = FIND_TB_EMAILS_BY_KINDS("DESIGNER");
+        if (DT_DESIGNER != null && DT_DESIGNER.Rows.Count >= 1)
+        {
+            foreach (DataRow DRrows in DT_DESIGNER.Rows)
+            {
+                //DT_MAILS.ImportRow(DRrows);
+            }
+        }
+        // 新增一筆資料
+        DataRow newRow = DT_MAILS.NewRow();
+        newRow["EMAILS"] = "tk290@tkfood.com.tw";
+
+        DT_MAILS.Rows.Add(newRow);
+
+        if (DT_MAILS != null && DT_MAILS.Rows.Count >= 1)
         {
             return DT_MAILS;
         }
