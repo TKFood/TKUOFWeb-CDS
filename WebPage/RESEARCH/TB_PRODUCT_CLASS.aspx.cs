@@ -70,6 +70,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,[DAILYPRODS] AS '日產量'
                             ,[KEYMATERIALS] AS '關鍵原料'
                             ,[KEYPRODS] AS '關鍵製程'
+                            ,[VEGAN] AS '素別'
                             ,CONVERT(NVARCHAR,[CREATEDATES],111) AS CREATEDATES
                             ,CONVERT(NVARCHAR,[UPDATEDATES],111) AS UPDATEDATES
                             , [ID]
@@ -149,6 +150,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,[DAILYPRODS] AS '日產量'
                             ,[KEYMATERIALS] AS '關鍵原料'
                             ,[KEYPRODS] AS '關鍵製程'
+                            ,[VEGAN] AS '素別'
                             ,CONVERT(NVARCHAR,[CREATEDATES],111) AS CREATEDATES
                             ,CONVERT(NVARCHAR,[UPDATEDATES],111) AS UPDATEDATES
                             , [ID]

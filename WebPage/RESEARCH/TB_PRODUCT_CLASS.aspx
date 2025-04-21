@@ -131,6 +131,13 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="素別" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_素別" runat="server" Text='<%# Bind("素別") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="建立日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label1_建立日" runat="server" Text='<%# Bind("CREATEDATES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
@@ -223,6 +230,13 @@
                                                 <asp:TemplateField HeaderText="關鍵製程" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="txtNewField_關鍵製程" runat="server" Text='<%# Bind("關鍵製程") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="素別" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_素別" runat="server" Text='<%# Bind("素別") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -341,6 +355,15 @@
                                             <asp:TextBox ID="NEW_關鍵製程" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label12" runat="server" Text="素別"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_素別" runat="server" Text="" Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                     <tr>
                                         <td>
                                             <asp:Label ID="Label11" runat="server" Text=""></asp:Label>
