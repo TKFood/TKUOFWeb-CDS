@@ -82,7 +82,7 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="成本結構" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="成本結構(半成品單位-片/個)" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_成本結構" runat="server" Text='<%# Bind("成本結構") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                                     </ItemTemplate>
