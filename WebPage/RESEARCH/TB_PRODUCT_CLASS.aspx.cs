@@ -219,6 +219,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                 TextBox txtNewField_日產量 = (TextBox)row.FindControl("txtNewField_日產量");
                 TextBox txtNewField_關鍵原料 = (TextBox)row.FindControl("txtNewField_關鍵原料");
                 TextBox txtNewField_關鍵製程 = (TextBox)row.FindControl("txtNewField_關鍵製程");
+                TextBox txtNewField_素別 = (TextBox)row.FindControl("txtNewField_素別");
 
                 string ID = Label_ID.Text;
                 string CLASSNAMES = txtNewField_類別.Text;
@@ -230,6 +231,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                 string DAILYPRODS = txtNewField_日產量.Text;
                 string KEYMATERIALS = txtNewField_關鍵原料.Text;
                 string KEYPRODS = txtNewField_關鍵製程.Text;
+                string VEGAN = txtNewField_素別.Text;
 
                 UPDATE_TB_PRODUCT_CLASS(
                           ID,
@@ -241,7 +243,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                           MINPRODS,
                           DAILYPRODS,
                           KEYMATERIALS,
-                          KEYPRODS
+                          KEYPRODS,
+                          VEGAN
                           );
             }
 
@@ -267,7 +270,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         string MINPRODS,
         string DAILYPRODS,
         string KEYMATERIALS,
-        string KEYPRODS
+        string KEYPRODS,
+        string VEGAN
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -285,6 +289,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,[KEYMATERIALS]=@KEYMATERIALS
                             ,[KEYPRODS]=@KEYPRODS
                             ,[UPDATEDATES]=@UPDATEDATES
+                            ,[VEGAN]=@VEGAN
                             WHERE [ID]=@ID
                             ";
 
@@ -304,6 +309,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                     cmd.Parameters.AddWithValue("@DAILYPRODS", DAILYPRODS);
                     cmd.Parameters.AddWithValue("@KEYMATERIALS", KEYMATERIALS);
                     cmd.Parameters.AddWithValue("@KEYPRODS", KEYPRODS);
+                    cmd.Parameters.AddWithValue("@VEGAN", VEGAN);
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
 
@@ -336,7 +342,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         string MINPRODS,
         string DAILYPRODS,
         string KEYMATERIALS,
-        string KEYPRODS
+        string KEYPRODS,
+        string VEGAN
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -353,6 +360,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,[DAILYPRODS]
                             ,[KEYMATERIALS]
                             ,[KEYPRODS]
+                            ,[VEGAN]
                             )
                             VALUES
                             (
@@ -365,6 +373,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                             ,@DAILYPRODS
                             ,@KEYMATERIALS
                             ,@KEYPRODS
+                            ,@VEGAN
                             )
                             ";
 
@@ -384,7 +393,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                     cmd.Parameters.AddWithValue("@DAILYPRODS", DAILYPRODS);
                     cmd.Parameters.AddWithValue("@KEYMATERIALS", KEYMATERIALS);
                     cmd.Parameters.AddWithValue("@KEYPRODS", KEYPRODS);
-
+                    cmd.Parameters.AddWithValue("@VEGAN", VEGAN);
 
 
                     cnn.Open();
@@ -393,7 +402,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
 
                     if (rowsAffected >= 1)
                     {
-                        //MsgBox(NO + " 完成", this.Page, this);
+                        MsgBox(PRODNAMES + " 完成", this.Page, this);
                     }
                 }
             }
@@ -435,7 +444,7 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
         string DAILYPRODS = NEW_日產量.Text.Trim();
         string KEYMATERIALS = NEW_關鍵原料.Text.Trim();
         string KEYPRODS = NEW_關鍵製程.Text.Trim();
-
+        string VEGAN = NEW_素別.Text.Trim();
 
         if (!string.IsNullOrEmpty(CLASSNAMES) )
         {
@@ -449,7 +458,8 @@ public partial class CDS_WebPage_RESEARCH_TB_PRODUCT_CLASS : Ede.Uof.Utility.Pag
                 MINPRODS,
                 DAILYPRODS,
                 KEYMATERIALS,
-                KEYPRODS
+                KEYPRODS,
+                VEGAN
                 );
 
             BindGrid();
