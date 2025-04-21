@@ -263,6 +263,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
                 TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
+                TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
+                string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -291,6 +293,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STAGES= Label_STAGES.Text;
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+                string DESIGNREPLYS = newTextValue_GV1_設計回覆;
 
                 //新增記錄檔
                 ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
@@ -305,6 +308,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
+                    DESIGNREPLYS,
                     DOC_NBR,
                     STAGES,
                     ISCLOSED
@@ -314,7 +318,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ID,
                     NO,
                     STATUS,
-                    TASTESREPLYS
+                    TASTESREPLYS,
+                    DESIGNREPLYS
                     );
 
                 //寄通知mail
@@ -322,7 +327,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string body = "專案編號: " + NO + Environment.NewLine +
                             "項目名稱: " + PROJECTNAMES + Environment.NewLine +
                             "目前狀態:" + STATUS + Environment.NewLine +
-                            "目前試吃回覆:" + TASTESREPLYS + Environment.NewLine;
+                            "目前試吃回覆:" + TASTESREPLYS + Environment.NewLine+
+                            "目前設計回覆:" + DESIGNREPLYS + Environment.NewLine;
 
                 //建立收件人
                 //要寄給負責人+研發群               
@@ -347,6 +353,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
                 TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
+                TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
+                string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -392,6 +400,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
                 TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
+                TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
+                string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -724,6 +734,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 TextBox txtNewField_上市日 = (TextBox)row.FindControl("txtNewField_GV2_上市日");
                 TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV2_輸入狀態");
                 TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
+                TextBox txtNewField_設計回覆 = (TextBox)row.FindControl("txtNewField_GV2_設計回覆");
                 TextBox txtNewField_表單編號 = (TextBox)row.FindControl("txtNewField_GV2_表單編號");
                 DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
                 DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
@@ -741,6 +752,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string OWNER = ddlNewField_專案負責人.SelectedItem.Text;
                 string STATUS = txtNewField_輸入狀態.Text;
                 string TASTESREPLYS = txtNewField_試吃回覆.Text;
+                string DESIGNREPLYS = txtNewField_設計回覆.Text;
                 string DOC_NBR = txtNewField_表單編號.Text;
                 string STAGES = ddlNewField_專案階段.SelectedItem.Text;
                 string ISCLOSED = ddlNewField_是否結案.SelectedItem.Text;
@@ -758,6 +770,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
+                    DESIGNREPLYS,
                     DOC_NBR,
                     STAGES,
                     ISCLOSED
@@ -775,6 +788,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
+                    DESIGNREPLYS,
                     DOC_NBR,
                     STAGES,
                     ISCLOSED
@@ -899,6 +913,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string OWNER,
         string STATUS,
         string TASTESREPLYS,
+        string DESIGNREPLYS,
         string DOC_NBR,
         string STAGES,
         string ISCLOSED
@@ -920,6 +935,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[OWNER]
                             ,[STATUS]
                             ,[TASTESREPLYS]
+                            ,[DESIGNREPLYS]
                             ,[DOC_NBR]
                             ,[STAGES]
                             ,[ISCLOSED]
@@ -938,6 +954,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,@OWNER
                             ,@STATUS
                             ,@TASTESREPLYS
+                            ,@DESIGNREPLYS
                             ,@DOC_NBR
                             ,@STAGES
                             ,@ISCLOSED
@@ -962,6 +979,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@OWNER", OWNER);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
+                    cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
                     cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
                     cmd.Parameters.AddWithValue("@STAGES", STAGES);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
@@ -991,14 +1009,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string ID,
         string NO,
         string STATUS,
-        string TASTESREPLYS
+        string TASTESREPLYS,
+        string DESIGNREPLYS
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
         var SQLCOMMAND = @" 
                             UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES,[TASTESREPLYS]=@TASTESREPLYS
+                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES,[TASTESREPLYS]=@TASTESREPLYS,[DESIGNREPLYS]=@DESIGNREPLYS
                             WHERE [ID]=@ID
                         
                             
@@ -1013,6 +1032,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
+                    cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
                     cnn.Open();
@@ -1045,6 +1065,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     string OWNER,
                     string STATUS,
                     string TASTESREPLYS,
+                    string DESIGNREPLYS,
                     string DOC_NBR,
                     string STAGES,
                     string ISCLOSED
@@ -1055,7 +1076,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         var SQLCOMMAND = @" 
                          UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                         SET [NO]=@NO,[PROJECTNAMES]=@PROJECTNAMES,[TRYSDATES]=@TRYSDATES,[TASTESDATES]=@TASTESDATES,[DESIGNSDATES]=@DESIGNSDATES,[SALESDATES]=@SALESDATES,[OWNER]=@OWNER,[STATUS]=@STATUS,[ISCLOSED]=@ISCLOSED,[UPDATEDATES]=@UPDATEDATES
-                            ,TASTESREPLYS=@TASTESREPLYS,DOC_NBR=@DOC_NBR,KINDS=@KINDS,[STAGES]=@STAGES
+                            ,TASTESREPLYS=@TASTESREPLYS,DOC_NBR=@DOC_NBR,KINDS=@KINDS,[STAGES]=@STAGES,[DESIGNREPLYS]=@DESIGNREPLYS
                         WHERE [ID]=@ID
                         
                             
@@ -1080,8 +1101,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
                     cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
-                    cmd.Parameters.AddWithValue("@STAGES", STAGES);
+                    cmd.Parameters.AddWithValue("@STAGES", STAGES);                 
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
