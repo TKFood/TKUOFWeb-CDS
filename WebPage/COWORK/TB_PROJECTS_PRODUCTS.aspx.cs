@@ -1517,7 +1517,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             // 新增一筆資料
             DataRow newRowNames = DT_MAILS.NewRow();
             newRowNames["EMAILS"] = DT_NAMES.Rows[0]["EMAILS"].ToString();
-            //DT_MAILS.Rows.Add(newRowNames);
+            DT_MAILS.Rows.Add(newRowNames);
         }
 
         //研發群
@@ -1527,7 +1527,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             foreach (DataRow DRrows in DT_MANAGER.Rows)
             {
-                //DT_MAILS.ImportRow(DRrows);
+                DT_MAILS.ImportRow(DRrows);
             }
         }
         // 新增一筆資料
@@ -1560,7 +1560,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             // 新增一筆資料
             DataRow newRowNames = DT_MAILS.NewRow();
             newRowNames["EMAILS"] = DT_NAMES.Rows[0]["EMAILS"].ToString();
-            //DT_MAILS.Rows.Add(newRowNames);
+            DT_MAILS.Rows.Add(newRowNames);
         }
 
         //研發群
@@ -1570,7 +1570,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             foreach (DataRow DRrows in DT_MANAGER.Rows)
             {
-                //DT_MAILS.ImportRow(DRrows);
+                DT_MAILS.ImportRow(DRrows);
             }
         }
 
@@ -1581,7 +1581,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             foreach (DataRow DRrows in DT_DESIGNER.Rows)
             {
-                //DT_MAILS.ImportRow(DRrows);
+                DT_MAILS.ImportRow(DRrows);
             }
         }
         // 新增一筆資料
