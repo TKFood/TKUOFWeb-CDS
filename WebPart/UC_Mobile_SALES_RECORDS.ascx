@@ -45,13 +45,13 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage">
         <Tabs>
-            <telerik:RadTab Text="交辨回覆" PageViewID="RadPageView1">
+            <telerik:RadTab Text="業務-客戶-專案-回覆" PageViewID="RadPageView1">
             </telerik:RadTab>
-            <telerik:RadTab Text="交辨新增修改" PageViewID="RadPageView2">
+            <telerik:RadTab Text="業務-客戶-專案-新增" PageViewID="RadPageView2">
             </telerik:RadTab>
-            <telerik:RadTab Text="交辨修改" PageViewID="RadPageView3">
+            <telerik:RadTab Text="業務-客戶-專案-修改" PageViewID="RadPageView3">
             </telerik:RadTab>
-            <telerik:RadTab Text="交辨及回覆明細" PageViewID="RadPageView4">
+            <telerik:RadTab Text="業務-客戶-專案-回覆明細" PageViewID="RadPageView4">
             </telerik:RadTab>
             <telerik:RadTab Text="資料" PageViewID="RadPageView5">
             </telerik:RadTab>
