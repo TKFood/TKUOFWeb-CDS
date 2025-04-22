@@ -323,7 +323,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     );
 
                 //寄通知mail
-                string subject = "測試 系統通知-商品專案-有修改內容" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
+                string subject = "系統通知-商品專案-有修改內容" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
                 string body = "專案編號: " + NO + Environment.NewLine +
                             "項目名稱: " + PROJECTNAMES + Environment.NewLine +
                             "目前狀態:" + STATUS + Environment.NewLine +
@@ -379,7 +379,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
 
                 //寄通知mail
-                string subject = "測試 系統通知-商品專案-試吃完成" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
+                string subject = "系統通知-商品專案-試吃完成" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
                 string body = "專案編號: " + NO + Environment.NewLine +
                            "項目名稱: " + PROJECTNAMES + " 試吃完成。";
 
