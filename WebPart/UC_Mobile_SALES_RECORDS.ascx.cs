@@ -470,7 +470,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                 // 獲取TextBox的值
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
-                string newTextValue = txtNewField.Text;
+                string newTextValue = txtNewField.Text.Trim();
 
                 // 獲取相應的ID
                 Label txtid = (Label)row.FindControl("ID");
