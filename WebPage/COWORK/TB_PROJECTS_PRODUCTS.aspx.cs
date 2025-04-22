@@ -160,7 +160,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         }
         else
         {
-            QUERYS2.AppendFormat(@" AND OWNER='{0}' ", DropDownList_OWNER.Text);
+            QUERYS2.AppendFormat(@" AND OWNER=N'{0}' ", DropDownList_OWNER.Text);
         }
         //TextBox1
         if (!string.IsNullOrEmpty(TextBox1.Text))
@@ -477,7 +477,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         }
         else
         {
-            QUERYS2.AppendFormat(@" AND OWNER='{0}' ", DropDownList_OWNER.Text);
+            QUERYS2.AppendFormat(@" AND OWNER=N'{0}' ", DropDownList_OWNER.Text);
         }
         //TextBox1
         if (!string.IsNullOrEmpty(TextBox1.Text))
