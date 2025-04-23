@@ -131,6 +131,16 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            if (btn2 != null)
+            {
+                string cellValue2 = btn2.CommandArgument;
+                dynamic param2 = new { ID = cellValue2 }.ToExpando();
+            }
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -139,6 +149,48 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         // 獲取所選行的索引
         rowIndex = Convert.ToInt32(e.CommandArgument);
 
+        if (e.CommandName == "Button2")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField_GV1_改善方案 = (TextBox)row.FindControl("txtNewField_GV1_改善方案");
+                string newTextValue_GV1_改善方案 = txtNewField_GV1_改善方案.Text;
+
+                Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
+                Label Label_客訴日期 = (Label)row.FindControl("Label_客訴日期");
+                Label Label_客訴商品 = (Label)row.FindControl("Label_客訴商品");
+                Label Label_客訴原因 = (Label)row.FindControl("Label_客訴原因");
+                Label Label_原因明細 = (Label)row.FindControl("Label_原因明細");
+                Label Label_TASK_ID = (Label)row.FindControl("Label_TASK_ID");
+                Label Label_DOC_NBR = (Label)row.FindControl("Label_表單編號");
+
+                string DOC_NBR = Label_表單編號.Text;
+                string QCFrm002Date = Label_客訴日期.Text;
+                string QCFrm002PRD = Label_客訴商品.Text;
+                string QCFrm002Abns = Label_客訴原因.Text;
+                string QCFrm002AbnscustomValue = Label_原因明細.Text;
+                string TASK_ID = Label_TASK_ID.Text;
+                string IMPROVES = newTextValue_GV1_改善方案.Trim();
+
+
+               ADD_TBUOFQC1002TRACES(
+                               DOC_NBR,
+                               QCFrm002Date,
+                               QCFrm002PRD,
+                               QCFrm002Abns,
+                               QCFrm002AbnscustomValue,
+                               TASK_ID,
+                               IMPROVES
+                              );
+                MsgBox(DOC_NBR+" 完成", this.Page, this);
+            }
+
+            BindGrid();
+        
+        }
     }
 
 

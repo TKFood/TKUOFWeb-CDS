@@ -33,7 +33,7 @@
                         <asp:Label ID="Label9" runat="server" Text="客訴日期: "></asp:Label>
                     </td>
                     <td>
-                         <asp:TextBox ID="Date1" runat="server" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox ID="Date1" runat="server" TextMode="Date"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -100,7 +100,27 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="改善方案" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_GV1_改善方案" runat="server" Text='<%# Bind("IMPROVES") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Button2" runat="server" Text="填寫改善方案" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="TASK_ID" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_TASK_ID" runat="server" Text='<%# Bind("TASK_ID") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
                                         </Fast:Grid>
                                     </div>
                                 </td>
