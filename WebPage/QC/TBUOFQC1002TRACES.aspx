@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="TBUOFQC1002TRACES.aspx.cs" Inherits="CDS_WebPage_QC_TBUOFQC1002TRACES" %>
+
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script>    
 
 
@@ -24,9 +25,9 @@
             }
     </style>
 
-     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table class="PopTable">              
+            <table class="PopTable">
                 <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
@@ -40,7 +41,7 @@
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
                 <Tabs>
                     <telerik:RadTab Text="資料">
-                    </telerik:RadTab>     
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -62,7 +63,36 @@
                                                         <asp:Label ID="Label_表單編號" runat="server" Text='<%# Bind("DOC_NBR") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns>                                            
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="客訴日期" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_客訴日期" runat="server" Text='<%# Bind("QCFrm002Date") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="客訴商品" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_客訴商品" runat="server" Text='<%# Bind("QCFrm002PRD") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="客訴原因" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_客訴原因" runat="server" Text='<%# Bind("QCFrm002Abns") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="原因明細" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_原因明細" runat="server" Text='<%# Bind("QCFrm002AbnscustomValue") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>                                  
+
                                         </Fast:Grid>
                                     </div>
                                 </td>
@@ -71,7 +101,7 @@
                     </div>
 
                 </telerik:RadPageView>
-               
+
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">
                     </div>
