@@ -29,6 +29,14 @@
         <ContentTemplate>
             <table class="PopTable">
                 <tr>
+                    <td>
+                        <asp:Label ID="Label9" runat="server" Text="客訴日期: "></asp:Label>
+                    </td>
+                    <td>
+                         <asp:TextBox ID="Date1" runat="server" TextMode="Date"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
                         <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="Button1_Click"
@@ -91,7 +99,7 @@
                                                         <asp:Label ID="Label_原因明細" runat="server" Text='<%# Bind("QCFrm002AbnscustomValue") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns>                                  
+                                            </Columns>
 
                                         </Fast:Grid>
                                     </div>

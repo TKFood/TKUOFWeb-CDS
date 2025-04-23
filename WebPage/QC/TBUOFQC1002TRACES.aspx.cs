@@ -38,11 +38,17 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
         if (!IsPostBack)
         {
-
+            SETQUERY();
         }
     }
 
     #region FUNCTION
+    public void SETQUERY()
+    {
+        // 取得今年這個月的第一天
+        DateTime firstDayOfThisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        Date1.Text = firstDayOfThisMonth.ToString("yyyy-MM-dd"); // TextMode="Date" 需要 yyyy-MM-dd 格式
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
@@ -52,6 +58,23 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
+
+        if (!string.IsNullOrEmpty(Date1.Text))
+        {
+            DateTime parsedDate;
+            if (DateTime.TryParse(Date1.Text, out parsedDate))
+            {
+                string formatted = parsedDate.ToString("yyyy/MM/dd");
+                QUERYS.AppendFormat(@"
+                                    AND QCFrm002Date >= '{0}'
+                                    ", formatted);
+                                    }
+        }
+        else
+        {
+
+            QUERYS.AppendFormat(@"");
+        }
 
 
         cmdTxt.AppendFormat(@"  
@@ -79,10 +102,10 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                             FROM TEMP
                             WHERE 1=1
                             AND[DOC_NBR]>='QC1002250100001'
-                            AND QCFrm002Date>='2025/04/01'
+                            {0}
                             ORDER BY QCFrm002Date
 
-                             ");
+                             ", QUERYS.ToString());
 
 
 
