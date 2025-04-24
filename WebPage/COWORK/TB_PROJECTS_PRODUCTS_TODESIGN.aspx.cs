@@ -39,10 +39,47 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
         if (!IsPostBack)
         {
             SETQUERY();
+            Bind_DropDownList_ISCLOSED();
         }
     }
 
     #region FUNCTION
+    public void Bind_DropDownList_ISCLOSED()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT
+                        [ID]
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TB_PROJECTS_PRODUCTS_ISCLOSED'
+                        ORDER BY [PARAID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList_ISCLOSED.DataSource = dt;
+            DropDownList_ISCLOSED.DataTextField = "PARANAME";
+            DropDownList_ISCLOSED.DataValueField = "PARANAME";
+            DropDownList_ISCLOSED.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+    }
     public void SETQUERY()
     {
      
@@ -56,6 +93,21 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
+
+
+        //DropDownList_ISCLOSED
+        if (DropDownList_ISCLOSED.Text.Equals("全部"))
+        {
+            QUERYS.AppendFormat(@"");
+        }
+        else if (DropDownList_ISCLOSED.Text.Equals("進行中"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='N' ");
+        }
+        else if (DropDownList_ISCLOSED.Text.Equals("已完成"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='Y' ");
+        }
 
         cmdTxt.AppendFormat(@"  
                             --20250423 查可行的設計                        
@@ -77,6 +129,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
                             FROM[192.168.1.105].[TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                             LEFT JOIN[UOF].[dbo].TB_WKF_TASK ON TB_WKF_TASK.[DOC_NBR] =[TB_PROJECTS_PRODUCTS].[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_BIN
                             WHERE 1 = 1
+                            {0}
                             ORDER BY[OWNER],[NO]
 
                              ", QUERYS.ToString());

@@ -28,7 +28,15 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <table class="PopTable">
+                  <tr>
+                    <td>
+                        <asp:Label ID="Label14" runat="server" Text="是否結案: "></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="DropDownList_ISCLOSED" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
 
+                    </td>
+                </tr>
                 <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
