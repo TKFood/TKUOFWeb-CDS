@@ -66,6 +66,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
                             ,[PROJECTNAMES] AS '項目名稱'
                             ,[OWNER] AS '專案負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
+                            ,[ISCLOSED] AS '是否結案'
                             ,[TB_PROJECTS_PRODUCTS].[DOC_NBR] AS '表單編號'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '是否需要設計'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@customValue)[1]', 'NVARCHAR(100)') AS '設計其他要求'
@@ -137,9 +138,42 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
         rowIndex = Convert.ToInt32(e.CommandArgument);
 
         if (e.CommandName == "Button2")
-        {          
+        {
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
+                string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
 
+                Label Label_ID = (Label)row.FindControl("Label_ID");
+                Label Label_NO = (Label)row.FindControl("Label_專案編號");
+                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
+
+                string ID = Label_ID.Text;
+                string NO = Label_NO.Text;
+                string PROJECTNAMES = Label_項目名稱.Text;
+                string DESIGNREPLYS = newTextValue_GV1_設計回覆;
+
+                //更新狀態
+                UPDATE_TB_PROJECTS_PRODUCTS_STATUS(
+                    ID,
+                    NO,
+                    DESIGNREPLYS
+                    );
+
+                //新增記錄檔
+                ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
+                    ID,
+                    NO,
+                    PROJECTNAMES,
+                    DESIGNREPLYS
+                );
+
+            }
         }
+
+        BindGrid();
     }
 
 
@@ -307,8 +341,106 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
         //}
     }
 
-  
+    public void UPDATE_TB_PROJECTS_PRODUCTS_STATUS(
+         string ID,    
+         string NO,
+         string DESIGNREPLYS
+         )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
+        var SQLCOMMAND = @" 
+                            UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                            SET [UPDATEDATES]=@UPDATEDATES,[DESIGNREPLYS]=@DESIGNREPLYS
+                            WHERE [ID]=@ID                       
+                            
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+                    cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(NO + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+        }
+    }
+
+    public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
+        string SID,
+        string NO,
+        string PROJECTNAMES,       
+        string DESIGNREPLYS
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @"                           
+                            INSERT INTO [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS_HISTORYS]
+                            (
+                            [SID]
+                            ,[NO]
+                            ,[PROJECTNAMES]                           
+                            ,[DESIGNREPLYS] 
+                            )
+                            VALUES
+                            (
+                            @SID
+                            ,@NO
+                            ,@PROJECTNAMES                           
+                            ,@DESIGNREPLYS                         
+                        
+                            )
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    cmd.Parameters.AddWithValue("@SID", SID);
+                    cmd.Parameters.AddWithValue("@NO", NO);
+                    cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);                   
+                    cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+                    
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+
+                    if (rowsAffected >= 1)
+                    {
+                        //MsgBox(NO + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";

@@ -115,12 +115,28 @@
                                                         <asp:Label ID="Label_特別說明" runat="server" Text='<%# Bind("特別說明") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </itemtemplate>
                                                  </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="設計回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_GV1_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>   
+                                                 <asp:TemplateField HeaderText="功能" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Button2" runat="server" Text="更新設計回覆" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />                                                        
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>                                      
                                                    <asp:TemplateField HeaderText="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
+                                                </asp:TemplateField>                                               
+                                              
+                                            </Columns>            
 
                                         </Fast:Grid>
                                     </div>
