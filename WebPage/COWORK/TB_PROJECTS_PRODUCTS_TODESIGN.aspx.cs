@@ -67,8 +67,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
                             ,[OWNER] AS '專案負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
                             ,[TB_PROJECTS_PRODUCTS].[DOC_NBR] AS '表單編號'
-                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@fieldValue)[1]', 'NVARCHAR(100)') AS FIELD12
-                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@customValue)[1]', 'NVARCHAR(100)') AS FIELD12customValue
+                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '是否需要設計'
+                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@customValue)[1]', 'NVARCHAR(100)') AS '設計其他要求'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD35""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '提供需求方圖檔(電子檔)	'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD20""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '期望設計風格(風格圖2-3張)	'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD21""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '特別說明	'
@@ -104,6 +104,20 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string taskId = DataBinder.Eval(e.Row.DataItem, "TASK_ID") as string;
+            HyperLink hlTask = (HyperLink)e.Row.FindControl("hlTask");
+
+            if (!string.IsNullOrEmpty(taskId))
+            {
+                hlTask.NavigateUrl = string.Format("https://eip.tkfood.com.tw/UOF/wkf/formuse/viewform.aspx?TASK_ID={0}", taskId);
+            }
+            else
+            {
+                hlTask.Visible = false; // 或改成顯示文字 Label
+            }
+        }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
         {

@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/DefaultMasterPage.master" AutoEventWireup="true" CodeFile="TB_PROJECTS_PRODUCTS_TODESIGN.aspx.cs" Inherits="CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN" %>
+
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <script>    
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script>    
 
 
 </script>
@@ -24,10 +25,10 @@
     </style>
 
 
-     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <table class="PopTable">
-               
+
                 <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
@@ -61,6 +62,16 @@
                                                 <asp:TemplateField HeaderText="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="表單連結" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                         <asp:HyperLink
+                                                            ID="hlTask"
+                                                            runat="server"
+                                                            Text='點我開啟表單'
+                                                            Target="_blank">
+                                                        </asp:HyperLink>                                                        
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
