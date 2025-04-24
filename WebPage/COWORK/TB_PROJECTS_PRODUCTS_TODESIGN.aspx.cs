@@ -69,8 +69,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS_TODESIGN : Ede.Uof.
                             ,[TB_PROJECTS_PRODUCTS].[DOC_NBR] AS '表單編號'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '是否需要設計'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD12""]/@customValue)[1]', 'NVARCHAR(100)') AS '設計其他要求'
-                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD35""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '提供需求方圖檔(電子檔)'
-                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD20""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '期望設計風格(風格圖2-3張)'
+                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD35""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '提供需求方圖檔電子檔'
+                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD20""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '期望設計風格風格圖23張'
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD21""]/@fieldValue)[1]', 'NVARCHAR(100)') AS '特別說明'
                             , TB_WKF_TASK.TASK_ID
                             FROM[192.168.1.105].[TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
