@@ -211,6 +211,16 @@
                                                         <asp:Label ID="Label_表單編號" runat="server" Text='<%# Bind("表單編號") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="表單連結" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:HyperLink
+                                                            ID="hlTask"
+                                                            runat="server"
+                                                            Text='點我開表單'
+                                                            Target="_blank">
+                                                        </asp:HyperLink>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
                                     </div>

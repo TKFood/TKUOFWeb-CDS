@@ -190,6 +190,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[ISCLOSED] AS '是否結案'
                             ,[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
+                            ,(SELECT TOP 1 TASK_ID FROM [192.168.1.223].[UOF].[dbo].[View_TB_WKF_TASK] WHERE [View_TB_WKF_TASK].[DOC_NBR]=[TB_PROJECTS_PRODUCTS].[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_BIN) AS 'TASK_ID'
+
                             FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                             WHERE 1=1
                             {0}
@@ -222,6 +224,21 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string taskId = DataBinder.Eval(e.Row.DataItem, "TASK_ID") as string;
+            HyperLink hlTask = (HyperLink)e.Row.FindControl("hlTask");
+
+            if (!string.IsNullOrEmpty(taskId))
+            {
+                hlTask.NavigateUrl = string.Format("https://eip.tkfood.com.tw/UOF/wkf/formuse/viewform.aspx?TASK_ID={0}", taskId);
+            }
+            else
+            {
+                hlTask.Visible = false; // 或改成顯示文字 Label
+            }
+        }
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Button btn2 = (Button)e.Row.FindControl("Button2");
