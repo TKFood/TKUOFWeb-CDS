@@ -826,6 +826,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     STAGES,
                     ISCLOSED
                 );
+
                 //更新TB_PROJECTS_PRODUCTS
                 UPDATE_TB_PROJECTS_PRODUCTS(
                     ID,
@@ -847,14 +848,12 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                 //寄通知mail
                 string subject = "系統通知-商品專案-有修改內容" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
-                string body = string.Format(
-                            "可開始設計 <br> " +
+                string body = string.Format(                         
                             "專案編號: {0}<br>" +
                             "項目名稱: {1}<br>" +
                             "目前狀態: {2}<br>" +
                             "目前試吃回覆: {3}<br>" +
-                            "目前設計回覆: {4}<br>" +
-                            "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
+                            "目前設計回覆: {4}<br>" ,                          
                             NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS
                         );
 
@@ -1132,9 +1131,22 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
         var SQLCOMMAND = @" 
                          UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-                        SET [NO]=@NO,[PROJECTNAMES]=@PROJECTNAMES,[TRYSDATES]=@TRYSDATES,[TASTESDATES]=@TASTESDATES,[DESIGNSDATES]=@DESIGNSDATES,[SALESDATES]=@SALESDATES,[OWNER]=@OWNER,[STATUS]=@STATUS,[ISCLOSED]=@ISCLOSED,[UPDATEDATES]=@UPDATEDATES
-                            ,TASTESREPLYS=@TASTESREPLYS,DOC_NBR=@DOC_NBR,KINDS=@KINDS,[STAGES]=@STAGES,[DESIGNREPLYS]=@DESIGNREPLYS
-                        WHERE [ID]=@ID
+                         SET [NO]=@NO
+                            ,[PROJECTNAMES]=@PROJECTNAMES
+                            ,[TRYSDATES]=@TRYSDATES
+                            ,[TASTESDATES]=@TASTESDATES
+                            ,[DESIGNSDATES]=@DESIGNSDATES
+                            ,[SALESDATES]=@SALESDATES
+                            ,[OWNER]=@OWNER
+                            ,[STATUS]=@STATUS
+                            ,[ISCLOSED]=@ISCLOSED
+                            ,[UPDATEDATES]=@UPDATEDATES
+                            ,[TASTESREPLYS]=@TASTESREPLYS
+                            ,[DOC_NBR]=@DOC_NBR
+                            ,[KINDS]=@KINDS
+                            ,[STAGES]=@STAGES
+                            ,[DESIGNREPLYS]=@DESIGNREPLYS
+                            WHERE [ID]=@ID
                         
                             
                             ";
