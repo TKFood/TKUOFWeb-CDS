@@ -90,7 +90,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                             , (CASE WHEN TASK_STATUS = '1' THEN '未簽核' ELSE '已簽核' END) TASK_STATUS
                             ,TASK_RESULT
                             ,[TBUOFQC1002TRACES].[IMPROVES]
-                                FROM[UOF].[dbo].TB_WKF_TASK
+
+                            FROM [UOF].[dbo].TB_WKF_TASK
                             LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
                             LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
                             LEFT JOIN[192.168.1.105].[TKQC].[dbo].[TBUOFQC1002TRACES] ON[TBUOFQC1002TRACES].[DOC_NBR]=TB_WKF_TASK.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
@@ -131,6 +132,20 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string taskId = DataBinder.Eval(e.Row.DataItem, "TASK_ID") as string;
+            HyperLink hlTask = (HyperLink)e.Row.FindControl("hlTask");
+
+            if (!string.IsNullOrEmpty(taskId))
+            {
+                hlTask.NavigateUrl = string.Format("https://eip.tkfood.com.tw/UOF/wkf/formuse/viewform.aspx?TASK_ID={0}", taskId);
+            }
+            else
+            {
+                hlTask.Visible = false; // 或改成顯示文字 Label
+            }
+        }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
