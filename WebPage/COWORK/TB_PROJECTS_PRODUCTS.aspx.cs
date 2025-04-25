@@ -260,6 +260,12 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 dynamic param7 = new { ID = cellValue7 }.ToExpando();
             }
         }
+
+        //設權限
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            SET_ALLOWED_MODIFY_GV1(e.Row);
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -755,7 +761,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         //設權限
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            SET_ALLOWED_MODIFY(e.Row);
+            SET_ALLOWED_MODIFY_GV2(e.Row);
         }
     }
 
@@ -1456,51 +1462,62 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         }
 
     }
-    public void SET_ALLOWED_MODIFY(GridViewRow row)
+    public void SET_ALLOWED_MODIFY_GV1(GridViewRow row)
     {
-        //TextBox txtNewField_專案編號 = (TextBox)row.FindControl("txtNewField_GV2_專案編號");
-        //TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");
-        //TextBox txtNewField_產品打樣日 = (TextBox)row.FindControl("txtNewField_GV2_產品打樣日");
-        //TextBox txtNewField_產品試吃日 = (TextBox)row.FindControl("txtNewField_GV2_產品試吃日");
-        //TextBox txtNewField_包裝設計日 = (TextBox)row.FindControl("txtNewField_GV2_包裝設計日");
-        //TextBox txtNewField_上市日 = (TextBox)row.FindControl("txtNewField_GV2_上市日");
-        //TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV2_輸入狀態");
-        //TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
-        //DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
-        //DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
-        Button btnUpdate = (Button)row.FindControl("Button3");
+        Button Button6 = (Button)row.FindControl("Button6");
+        Button Button7 = (Button)row.FindControl("Button7");
 
-        //ReadOnly
-        //txtNewField_專案編號.ReadOnly = true;
-        //txtNewField_項目名稱.ReadOnly = true;
-        //txtNewField_產品打樣日.ReadOnly = true;
-        //txtNewField_產品試吃日.ReadOnly = true;
-        //txtNewField_包裝設計日.ReadOnly = true;
-        //txtNewField_上市日.ReadOnly = true;
-        //txtNewField_輸入狀態.ReadOnly = true;
-        //txtNewField_試吃回覆.ReadOnly = true;
-        //ddlNewField_專案負責人.Enabled = false;
-        //ddlNewField_是否結案.Enabled = false;
-        if (btnUpdate != null) btnUpdate.Visible = false;
+        if (Button6 != null) Button6.Visible = false;
+        if (Button7 != null) Button7.Visible = false;
 
-        if(ROLES!=null)
+        if (ROLES != null)
         {
             if (ROLES.Equals("ADMIN"))
             {
                 // 管理員全部可編輯（範例）
-                if (btnUpdate != null) btnUpdate.Visible = true;
+                if (Button6 != null) Button6.Visible = true;
+                if (Button7 != null) Button7.Visible = true;
 
             }
             else if (ROLES.Equals("MANAGER"))
             {
                 //MANAGER
-                if (btnUpdate != null) btnUpdate.Visible = true;
+                if (Button6 != null) Button6.Visible = true;
+                if (Button7 != null) Button7.Visible = true;
+            }
+        }
+        else
+        {
+            if (Button6 != null) Button6.Visible = false;
+            if (Button7 != null) Button7.Visible = false;
+        }
+    }
+    public void SET_ALLOWED_MODIFY_GV2(GridViewRow row)
+    {
+        Button Button3 = (Button)row.FindControl("Button3");     
+       
+        if (Button3 != null) Button3.Visible = false;
+      
+
+        if (ROLES!=null)
+        {
+            if (ROLES.Equals("ADMIN"))
+            {
+                // 管理員全部可編輯（範例）
+                if (Button3 != null) Button3.Visible = true;            
+
+            }
+            else if (ROLES.Equals("MANAGER"))
+            {
+                //MANAGER
+                if (Button3 != null) Button3.Visible = true;            
 
             }
         }        
         else
         {
-            if (btnUpdate != null) btnUpdate.Visible = false;
+            if (Button3 != null) Button3.Visible = false;
+           
         }
     }
 
