@@ -282,6 +282,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
+                HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -312,6 +313,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
 
+
                 //新增記錄檔
                 ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
                     ID,
@@ -340,12 +342,17 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     );
 
                 //寄通知mail
+                string url = hlTask.NavigateUrl;
                 string subject = "系統通知-商品專案-有修改內容" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
-                string body = "專案編號: " + NO + Environment.NewLine +
-                            "項目名稱: " + PROJECTNAMES + Environment.NewLine +
-                            "目前狀態:" + STATUS + Environment.NewLine +
-                            "目前試吃回覆:" + TASTESREPLYS + Environment.NewLine+
-                            "目前設計回覆:" + DESIGNREPLYS + Environment.NewLine;
+                string body = string.Format(
+                                          "專案編號: {0}<br>" +
+                                          "項目名稱: {1}<br>" +
+                                          "目前狀態: {2}<br>" +
+                                          "目前試吃回覆: {3}<br>" +
+                                          "目前設計回覆: {4}<br>" +
+                                          "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
+                                          NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
+                                      );
 
                 //建立收件人
                 //要寄給負責人+研發群               
@@ -372,6 +379,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
+                HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -394,11 +402,25 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STATUS = newTextValue_GV1_輸入狀態;
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+                string DESIGNREPLYS = newTextValue_GV1_設計回覆;
+
+
 
                 //寄通知mail
+                string url = hlTask.NavigateUrl;
                 string subject = "系統通知-商品專案-試吃完成" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
-                string body = "專案編號: " + NO + Environment.NewLine +
-                           "項目名稱: " + PROJECTNAMES + " 試吃完成。";
+                string body = string.Format(
+                                         "試吃完成 <br> " +
+                                         "專案編號: {0}<br>" +
+                                         "項目名稱: {1}<br>" +
+                                         "目前狀態: {2}<br>" +
+                                         "目前試吃回覆: {3}<br>" +
+                                         "目前設計回覆: {4}<br>" +
+                                         "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
+                                         NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
+                                     );
+
+
 
                 //建立收件人
                 //要寄給負責人+研發群               
@@ -419,6 +441,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
+                HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
@@ -441,11 +464,22 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STATUS = newTextValue_GV1_輸入狀態;
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+                string DESIGNREPLYS = newTextValue_GV1_設計回覆;
 
                 //寄通知mail
+                string url = hlTask.NavigateUrl;
                 string subject = "系統通知-商品專案-可開始設計" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
-                string body = "專案編號: " + NO + Environment.NewLine +
-                           "項目名稱: " + PROJECTNAMES + " 可開始設計。";
+                string body = string.Format(
+                                       "可開始設計 < br > " +
+                                       "專案編號: {0}<br>" +
+                                       "項目名稱: {1}<br>" +
+                                       "目前狀態: {2}<br>" +
+                                       "目前試吃回覆: {3}<br>" +
+                                       "目前設計回覆: {4}<br>" +
+                                       "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
+                                       NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
+                                   );
+                
 
                 //建立收件人
                 //要寄給負責人+研發群+設計群               
@@ -813,10 +847,16 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                 //寄通知mail
                 string subject = "系統通知-商品專案-有修改內容" + "， 專案編號: " + NO + " 項目名稱: " + PROJECTNAMES;
-                string body = "專案編號: " + NO + Environment.NewLine +
-                            "項目名稱: " + PROJECTNAMES + Environment.NewLine +
-                            "目前狀態:" + STATUS + Environment.NewLine +
-                            "目前試吃回覆:" + TASTESREPLYS + Environment.NewLine;
+                string body = string.Format(
+                            "可開始設計 <br> " +
+                            "專案編號: {0}<br>" +
+                            "項目名稱: {1}<br>" +
+                            "目前狀態: {2}<br>" +
+                            "目前試吃回覆: {3}<br>" +
+                            "目前設計回覆: {4}<br>" +
+                            "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
+                            NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS
+                        );
 
                 //建立收件人
                 //要寄給負責人+研發群               
@@ -1534,7 +1574,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             // 新增一筆資料
             DataRow newRowNames = DT_MAILS.NewRow();
             newRowNames["EMAILS"] = DT_NAMES.Rows[0]["EMAILS"].ToString();
-            DT_MAILS.Rows.Add(newRowNames);
+            //DT_MAILS.Rows.Add(newRowNames);
         }
 
         //研發群
@@ -1544,7 +1584,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             foreach (DataRow DRrows in DT_MANAGER.Rows)
             {
-                DT_MAILS.ImportRow(DRrows);
+                //DT_MAILS.ImportRow(DRrows);
             }
         }
         // 新增一筆資料
@@ -1638,7 +1678,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 From = MAIL_FORM,
                 Subject = subject,
                 Body = body,
-                IsBodyHtml = false
+                IsBodyHtml = true
             };
 
             foreach (DataRow DR in mailTo.Rows)
