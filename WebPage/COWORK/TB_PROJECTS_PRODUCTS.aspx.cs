@@ -814,6 +814,11 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STAGES = ddlNewField_專案階段.SelectedItem.Text;
                 string ISCLOSED = ddlNewField_是否結案.SelectedItem.Text;
 
+                if (ISCLOSED == "Y" && STAGES != "作廢" && STAGES != "結案" && STAGES != "上市")
+                {
+                    MsgBox("專案要結案，但是「專案階段」不是「作廢」、「結案」、「上市」，請修改「專案階段」", this.Page, this);
+                }
+
                 //新增記錄檔
                 ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
                     ID,
