@@ -185,6 +185,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[OWNER] AS '專案負責人'
                             ,[STATUS] AS '狀態'
                             ,[TASTESREPLYS] AS '試吃回覆'
+                            ,[DESIGNER] AS '設計負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
                             ,[STAGES] AS '專案階段'
                             ,[ISCLOSED] AS '是否結案'
@@ -288,6 +289,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
+                TextBox txtNewField_GV1_設計負責人 = (TextBox)row.FindControl("txtNewField_GV1_設計負責人");
+                string newTextValue_GV1_設計負責人 = txtNewField_GV1_設計負責人.Text;
                 HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
@@ -310,6 +313,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
+                string DESIGNER = newTextValue_GV1_設計負責人;
 
 
                 //新增記錄檔
@@ -321,6 +325,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
+                    DESIGNER,
                     DESIGNREPLYS,
                     DOC_NBR,
                     STAGES,
@@ -332,7 +337,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     NO,
                     STATUS,
                     TASTESREPLYS,
-                    DESIGNREPLYS
+                    DESIGNREPLYS,
+                    DESIGNER
                     );
 
                 //寄通知mail
@@ -534,6 +540,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[STATUS] AS '狀態'
                             ,[TASTESREPLYS] AS '試吃回覆'
                             ,[STAGES] AS '專案階段'
+                            ,[DESIGNER] AS '設計負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
                             ,[ISCLOSED] AS '是否結案'
                             ,[DOC_NBR] AS '表單編號'
@@ -760,6 +767,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 TextBox txtNewField_狀態回覆 = (TextBox)row.FindControl("txtNewField_GV2_狀態回覆");
                 TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
                 TextBox txtNewField_設計回覆 = (TextBox)row.FindControl("txtNewField_GV2_設計回覆");
+                TextBox txtNewField_設計負責人 = (TextBox)row.FindControl("txtNewField_GV2_設計負責人");
                 TextBox txtNewField_表單編號 = (TextBox)row.FindControl("txtNewField_GV2_表單編號");
                 DropDownList ddlNewField_專案負責人 = (DropDownList)row.FindControl("ddlNewField_GV2_專案負責人");
                 DropDownList ddlNewField_是否結案 = (DropDownList)row.FindControl("ddlNewField_GV2_是否結案");
@@ -773,6 +781,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string OWNER = ddlNewField_專案負責人.SelectedItem.Text;
                 string STATUS = txtNewField_狀態回覆.Text;
                 string TASTESREPLYS = txtNewField_試吃回覆.Text;
+                string DESIGNER = txtNewField_設計負責人.Text;
                 string DESIGNREPLYS = txtNewField_設計回覆.Text;
                 string DOC_NBR = txtNewField_表單編號.Text;
                 string STAGES = ddlNewField_專案階段.SelectedItem.Text;
@@ -792,6 +801,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
+                    DESIGNER,
                     DESIGNREPLYS,
                     DOC_NBR,
                     STAGES,
@@ -807,6 +817,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
+                    DESIGNER,
                     DESIGNREPLYS,
                     DOC_NBR,
                     STAGES,
@@ -874,6 +885,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUS] AS '狀態'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESREPLYS] AS '試吃回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STAGES] AS '專案階段'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNER] AS '設計負責人'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNREPLYS] AS '設計回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[ISCLOSED] AS '是否結案'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DOC_NBR] AS '表單編號'
@@ -882,7 +894,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             WHERE 1=1
                             AND [TB_PROJECTS_PRODUCTS].ID=[TB_PROJECTS_PRODUCTS_HISTORYS].SID
                             {0}
-                            ORDER BY [TB_PROJECTS_PRODUCTS_HISTORYS].SID
+                            ORDER BY [TB_PROJECTS_PRODUCTS_HISTORYS].ID DESC
                              ", QUERYS.ToString());
 
 
@@ -932,6 +944,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string OWNER,
         string STATUS,
         string TASTESREPLYS,
+        string DESIGNER,
         string DESIGNREPLYS,
         string DOC_NBR,
         string STAGES,
@@ -950,6 +963,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[OWNER]
                             ,[STATUS]
                             ,[TASTESREPLYS]
+                            ,[DESIGNER]
                             ,[DESIGNREPLYS]
                             ,[DOC_NBR]
                             ,[STAGES]
@@ -965,6 +979,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,@OWNER
                             ,@STATUS
                             ,@TASTESREPLYS
+                            ,@DESIGNER
                             ,@DESIGNREPLYS
                             ,@DOC_NBR
                             ,@STAGES
@@ -986,6 +1001,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@OWNER", OWNER);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
+                    cmd.Parameters.AddWithValue("@DESIGNER", DESIGNER);
                     cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
                     cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
                     cmd.Parameters.AddWithValue("@STAGES", STAGES);
@@ -1017,14 +1033,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string NO,
         string STATUS,
         string TASTESREPLYS,
-        string DESIGNREPLYS
+        string DESIGNREPLYS,
+        string DESIGNER
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
         var SQLCOMMAND = @" 
                             UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES,[TASTESREPLYS]=@TASTESREPLYS,[DESIGNREPLYS]=@DESIGNREPLYS
+                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES,[TASTESREPLYS]=@TASTESREPLYS,[DESIGNREPLYS]=@DESIGNREPLYS,[DESIGNER]=@DESIGNER
                             WHERE [ID]=@ID
                         
                             
@@ -1040,6 +1057,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
                     cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+                    cmd.Parameters.AddWithValue("@DESIGNER", DESIGNER);
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
                     cnn.Open();
@@ -1068,6 +1086,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     string OWNER,
                     string STATUS,
                     string TASTESREPLYS,
+                    string DESIGNER,
                     string DESIGNREPLYS,
                     string DOC_NBR,
                     string STAGES,
@@ -1089,6 +1108,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[KINDS]=@KINDS
                             ,[STAGES]=@STAGES
                             ,[DESIGNREPLYS]=@DESIGNREPLYS
+                            ,[DESIGNER]=@DESIGNER
                             WHERE [ID]=@ID
                         
                             
@@ -1112,6 +1132,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@STAGES", STAGES);                 
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                     cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
+                    cmd.Parameters.AddWithValue("@DESIGNER", DESIGNER);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -1401,7 +1422,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 //MANAGER
                 if (Button6 != null) Button6.Visible = true;
                 if (Button7 != null) Button7.Visible = true;
-            }
+            }           
         }
         else
         {
