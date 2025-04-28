@@ -293,11 +293,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
                 Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
-                Label Label_分類 = (Label)row.FindControl("Label_分類");
-                Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
-                Label Label_產品試吃日 = (Label)row.FindControl("Label_產品試吃日");
-                Label Label_包裝設計日 = (Label)row.FindControl("Label_包裝設計日");
-                Label Label_上市日 = (Label)row.FindControl("Label_上市日");
+                Label Label_分類 = (Label)row.FindControl("Label_分類");               
                 Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
                 Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
                 Label Label_STAGES = (Label)row.FindControl("Label_專案階段");
@@ -306,11 +302,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ID = Label_ID.Text;
                 string NO = Label_NO.Text;
                 string PROJECTNAMES = Label_項目名稱.Text;
-                string KINDS = Label_分類.Text;
-                string TRYSDATES = Label_產品打樣日.Text;
-                string TASTESDATES = Label_產品試吃日.Text;
-                string DESIGNSDATES = Label_包裝設計日.Text;
-                string SALESDATES = Label_上市日.Text;
+                string KINDS = Label_分類.Text;                
                 string OWNER = Label_專案負責人.Text;
                 string STATUS = newTextValue_GV1_輸入狀態;
                 string DOC_NBR = Label_表單編號.Text;
@@ -326,10 +318,6 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     NO,
                     PROJECTNAMES,
                     KINDS,
-                    TRYSDATES,
-                    TASTESDATES,
-                    DESIGNSDATES,
-                    SALESDATES,
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
@@ -389,21 +377,13 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
-                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
-                Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
-                Label Label_產品試吃日 = (Label)row.FindControl("Label_產品試吃日");
-                Label Label_包裝設計日 = (Label)row.FindControl("Label_包裝設計日");
-                Label Label_上市日 = (Label)row.FindControl("Label_上市日");
+                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");               
                 Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
                 Label Label_是否結案 = (Label)row.FindControl("Label_是否結案");
 
                 string ID = Label_ID.Text;
                 string NO = Label_NO.Text;
-                string PROJECTNAMES = Label_項目名稱.Text;
-                string TRYSDATES = Label_產品打樣日.Text; 
-                string TASTESDATES = Label_產品試吃日.Text;
-                string DESIGNSDATES = Label_包裝設計日.Text;
-                string SALESDATES = Label_上市日.Text;
+                string PROJECTNAMES = Label_項目名稱.Text;                
                 string OWNER = Label_專案負責人.Text;
                 string STATUS = newTextValue_GV1_輸入狀態;
                 string ISCLOSED = Label_是否結案.Text;
@@ -451,21 +431,13 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
                 Label Label_NO = (Label)row.FindControl("Label_專案編號");
-                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");
-                Label Label_產品打樣日 = (Label)row.FindControl("Label_產品打樣日");
-                Label Label_產品試吃日 = (Label)row.FindControl("Label_產品試吃日");
-                Label Label_包裝設計日 = (Label)row.FindControl("Label_包裝設計日");
-                Label Label_上市日 = (Label)row.FindControl("Label_上市日");
+                Label Label_項目名稱 = (Label)row.FindControl("Label_項目名稱");                
                 Label Label_專案負責人 = (Label)row.FindControl("Label_專案負責人");
                 Label Label_是否結案 = (Label)row.FindControl("Label_是否結案");
 
                 string ID = Label_ID.Text;
                 string NO = Label_NO.Text;
-                string PROJECTNAMES = Label_項目名稱.Text;
-                string TRYSDATES = Label_產品打樣日.Text;
-                string TASTESDATES = Label_產品試吃日.Text;
-                string DESIGNSDATES = Label_包裝設計日.Text;
-                string SALESDATES = Label_上市日.Text;
+                string PROJECTNAMES = Label_項目名稱.Text;                
                 string OWNER = Label_專案負責人.Text;
                 string STATUS = newTextValue_GV1_輸入狀態;
                 string ISCLOSED = Label_是否結案.Text;
@@ -784,11 +756,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 Label Label_ID = (Label)row.FindControl("Label_ID");
 
                 TextBox txtNewField_專案編號 = (TextBox)row.FindControl("txtNewField_GV2_專案編號");
-                TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");
-                TextBox txtNewField_產品打樣日 = (TextBox)row.FindControl("txtNewField_GV2_產品打樣日");
-                TextBox txtNewField_產品試吃日 = (TextBox)row.FindControl("txtNewField_GV2_產品試吃日");
-                TextBox txtNewField_包裝設計日 = (TextBox)row.FindControl("txtNewField_GV2_包裝設計日");
-                TextBox txtNewField_上市日 = (TextBox)row.FindControl("txtNewField_GV2_上市日");
+                TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");               
                 TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV2_輸入狀態");
                 TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
                 TextBox txtNewField_設計回覆 = (TextBox)row.FindControl("txtNewField_GV2_設計回覆");
@@ -801,11 +769,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ID = Label_ID.Text;
                 string NO = txtNewField_專案編號.Text;
                 string PROJECTNAMES = txtNewField_項目名稱.Text;
-                string KINDS= ddlNewField_分類.SelectedItem.Text;
-                string TRYSDATES = txtNewField_產品打樣日.Text;
-                string TASTESDATES = txtNewField_產品試吃日.Text;
-                string DESIGNSDATES = txtNewField_包裝設計日.Text;
-                string SALESDATES = txtNewField_上市日.Text;
+                string KINDS= ddlNewField_分類.SelectedItem.Text;              
                 string OWNER = ddlNewField_專案負責人.SelectedItem.Text;
                 string STATUS = txtNewField_輸入狀態.Text;
                 string TASTESREPLYS = txtNewField_試吃回覆.Text;
@@ -824,11 +788,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ID,
                     NO,
                     PROJECTNAMES,
-                    KINDS,
-                    TRYSDATES,
-                    TASTESDATES,
-                    DESIGNSDATES,
-                    SALESDATES,
+                    KINDS,                    
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
@@ -843,11 +803,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ID,
                     NO,
                     PROJECTNAMES,
-                    KINDS,
-                    TRYSDATES,
-                    TASTESDATES,
-                    DESIGNSDATES,
-                    SALESDATES,
+                    KINDS,                  
                     OWNER,
                     STATUS,
                     TASTESREPLYS,
@@ -972,11 +928,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string SID,
         string NO,
         string PROJECTNAMES,
-        string KINDS,
-        string TRYSDATES,
-        string TASTESDATES,
-        string DESIGNSDATES,
-        string SALESDATES,
+        string KINDS,       
         string OWNER,
         string STATUS,
         string TASTESREPLYS,
@@ -994,11 +946,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             [SID]
                             ,[NO]
                             ,[PROJECTNAMES]
-                            ,[KINDS]
-                            ,[TRYSDATES]
-                            ,[TASTESDATES]
-                            ,[DESIGNSDATES]
-                            ,[SALESDATES]
+                            ,[KINDS]                           
                             ,[OWNER]
                             ,[STATUS]
                             ,[TASTESREPLYS]
@@ -1013,11 +961,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             @SID
                             ,@NO
                             ,@PROJECTNAMES
-                            ,@KINDS
-                            ,@TRYSDATES
-                            ,@TASTESDATES
-                            ,@DESIGNSDATES
-                            ,@SALESDATES
+                            ,@KINDS                         
                             ,@OWNER
                             ,@STATUS
                             ,@TASTESREPLYS
@@ -1038,11 +982,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@SID", SID);
                     cmd.Parameters.AddWithValue("@NO", NO);
                     cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
-                    cmd.Parameters.AddWithValue("@KINDS", KINDS);
-                    cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
-                    cmd.Parameters.AddWithValue("@TASTESDATES", TASTESDATES);
-                    cmd.Parameters.AddWithValue("@DESIGNSDATES", DESIGNSDATES);
-                    cmd.Parameters.AddWithValue("@SALESDATES", SALESDATES);
+                    cmd.Parameters.AddWithValue("@KINDS", KINDS);                   
                     cmd.Parameters.AddWithValue("@OWNER", OWNER);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
@@ -1124,11 +1064,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     string ID,
                     string NO,
                     string PROJECTNAMES,
-                    string KINDS,
-                    string TRYSDATES,
-                    string TASTESDATES,
-                    string DESIGNSDATES,
-                    string SALESDATES,
+                    string KINDS,                    
                     string OWNER,
                     string STATUS,
                     string TASTESREPLYS,
@@ -1143,11 +1079,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         var SQLCOMMAND = @" 
                          UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                          SET [NO]=@NO
-                            ,[PROJECTNAMES]=@PROJECTNAMES
-                            ,[TRYSDATES]=@TRYSDATES
-                            ,[TASTESDATES]=@TASTESDATES
-                            ,[DESIGNSDATES]=@DESIGNSDATES
-                            ,[SALESDATES]=@SALESDATES
+                            ,[PROJECTNAMES]=@PROJECTNAMES                           
                             ,[OWNER]=@OWNER
                             ,[STATUS]=@STATUS
                             ,[ISCLOSED]=@ISCLOSED
@@ -1171,11 +1103,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cmd.Parameters.AddWithValue("@NO", NO);
                     cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
-                    cmd.Parameters.AddWithValue("@KINDS", KINDS);
-                    cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
-                    cmd.Parameters.AddWithValue("@TASTESDATES", TASTESDATES);
-                    cmd.Parameters.AddWithValue("@DESIGNSDATES", DESIGNSDATES);
-                    cmd.Parameters.AddWithValue("@SALESDATES", SALESDATES);
+                    cmd.Parameters.AddWithValue("@KINDS", KINDS);                    
                     cmd.Parameters.AddWithValue("@OWNER", OWNER);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@TASTESREPLYS", TASTESREPLYS);
@@ -1205,11 +1133,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     public void ADD_TB_PROJECTS_PRODUCTS(                   
                     string NO,
-                    string PROJECTNAMES,
-                    string TRYSDATES,
-                    string TASTESDATES,
-                    string DESIGNSDATES,
-                    string SALESDATES,
+                    string PROJECTNAMES,                    
                     string OWNER,
                     string STATUS,
                     string ISCLOSED                   
@@ -1221,11 +1145,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                         INSERT INTO [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                         (
                         [NO]
-                        ,[PROJECTNAMES]
-                        ,[TRYSDATES]
-                        ,[TASTESDATES]
-                        ,[DESIGNSDATES]
-                        ,[SALESDATES]
+                        ,[PROJECTNAMES]                     
                         ,[OWNER]
                         ,[STATUS]
                         ,[ISCLOSED]                    
@@ -1233,11 +1153,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                         VALUES
                         (
                         @NO
-                        ,@PROJECTNAMES
-                        ,@TRYSDATES
-                        ,@TASTESDATES
-                        ,@DESIGNSDATES
-                        ,@SALESDATES
+                        ,@PROJECTNAMES                      
                         ,@OWNER
                         ,@STATUS
                         ,@ISCLOSED                      
@@ -1251,11 +1167,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
                 {                  
                     cmd.Parameters.AddWithValue("@NO", NO);
-                    cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);
-                    cmd.Parameters.AddWithValue("@TRYSDATES", TRYSDATES);
-                    cmd.Parameters.AddWithValue("@TASTESDATES", TASTESDATES);
-                    cmd.Parameters.AddWithValue("@DESIGNSDATES", DESIGNSDATES);
-                    cmd.Parameters.AddWithValue("@SALESDATES", SALESDATES);
+                    cmd.Parameters.AddWithValue("@PROJECTNAMES", PROJECTNAMES);                    
                     cmd.Parameters.AddWithValue("@OWNER", OWNER);
                     cmd.Parameters.AddWithValue("@STATUS", STATUS);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
@@ -1753,11 +1665,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         //MsgBox("OK", this.Page, this);
 
         string NO = NEW_專案編號.Text.Trim();
-        string PROJECTNAMES = NEW_項目名稱.Text.Trim();
-        string TRYSDATES = NEW_產品打樣日.Text.Trim();
-        string TASTESDATES = NEW_產品試吃日.Text.Trim();
-        string DESIGNSDATES = NEW_包裝設計日.Text.Trim();
-        string SALESDATES = NEW_上市日.Text.Trim();
+        string PROJECTNAMES = NEW_項目名稱.Text.Trim();       
         string OWNER = NEW_專案負責人.Text.Trim();
         string STATUS = NEW_狀態.Text.Trim();
         string ISCLOSED = "N";
@@ -1767,11 +1675,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             ADD_TB_PROJECTS_PRODUCTS(
                                NO,
-                               PROJECTNAMES,
-                               TRYSDATES,
-                               TASTESDATES,
-                               DESIGNSDATES,
-                               SALESDATES,
+                               PROJECTNAMES,                              
                                OWNER,
                                STATUS,
                                ISCLOSED

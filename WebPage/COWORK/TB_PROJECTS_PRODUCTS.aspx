@@ -109,35 +109,7 @@
                                                         <asp:Label ID="Label_分類" runat="server" Text='<%# Bind("分類") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="產品打樣日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label_產品打樣日" runat="server" Text='<%# Bind("產品打樣日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="產品試吃日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label_產品試吃日" runat="server" Text='<%# Bind("產品試吃日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="包裝設計日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label_包裝設計日" runat="server" Text='<%# Bind("包裝設計日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="上市日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label_上市日" runat="server" Text='<%# Bind("上市日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
+                                            </Columns>                                            
                                             <Columns>
                                                 <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
@@ -260,36 +232,8 @@
                                                     <ItemTemplate>
                                                         <asp:DropDownList ID="ddlNewField_GV2_分類" runat="server" Width="100%"></asp:DropDownList>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="產品打樣日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_產品打樣日" runat="server" Text='<%# Bind("產品打樣日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="產品試吃日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_產品試吃日" runat="server" Text='<%# Bind("產品試吃日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="包裝設計日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_包裝設計日" runat="server" Text='<%# Bind("包裝設計日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="上市日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_上市日" runat="server" Text='<%# Bind("上市日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
+                                                </asp:TemplateField>                                            </Columns>
+                                            
                                             <Columns>
                                                 <asp:TemplateField HeaderText="專案負責人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
@@ -389,39 +333,7 @@
                                         <td>
                                             <asp:TextBox ID="NEW_項目名稱" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="Label3" runat="server" Text="產品打樣日"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="NEW_產品打樣日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="Label4" runat="server" Text="產品試吃日"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="NEW_產品試吃日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="Label5" runat="server" Text="包裝設計日"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="NEW_包裝設計日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="Label7" runat="server" Text="上市日"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox ID="NEW_上市日" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
-                                        </td>
-                                    </tr>
+                                    </tr>                                   
                                     <tr>
                                         <td>
                                             <asp:Label ID="Label8" runat="server" Text="專案負責人"></asp:Label>
