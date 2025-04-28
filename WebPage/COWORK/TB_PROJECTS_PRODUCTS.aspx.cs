@@ -282,8 +282,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             {
                 // 獲取TextBox的值
                 GridViewRow row = Grid1.Rows[rowIndex];
-                TextBox txtNewField_GV1_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV1_輸入狀態");
-                string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
+                TextBox txtNewField_GV1_狀態回覆 = (TextBox)row.FindControl("txtNewField_GV1_狀態回覆");
+                string newTextValue_GV1_狀態回覆 = txtNewField_GV1_狀態回覆.Text;
                 TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
@@ -304,7 +304,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string PROJECTNAMES = Label_項目名稱.Text;
                 string KINDS = Label_分類.Text;                
                 string OWNER = Label_專案負責人.Text;
-                string STATUS = newTextValue_GV1_輸入狀態;
+                string STATUS = newTextValue_GV1_狀態回覆;
                 string DOC_NBR = Label_表單編號.Text;
                 string STAGES= Label_STAGES.Text;
                 string ISCLOSED = Label_是否結案.Text;
@@ -367,8 +367,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             {
                 // 獲取TextBox的值
                 GridViewRow row = Grid1.Rows[rowIndex];
-                TextBox txtNewField_GV1_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV1_輸入狀態");
-                string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
+                TextBox txtNewField_GV1_狀態回覆 = (TextBox)row.FindControl("txtNewField_GV1_狀態回覆");
+                string newTextValue_GV1_狀態回覆 = txtNewField_GV1_狀態回覆.Text;
                 TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
@@ -385,7 +385,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string NO = Label_NO.Text;
                 string PROJECTNAMES = Label_項目名稱.Text;                
                 string OWNER = Label_專案負責人.Text;
-                string STATUS = newTextValue_GV1_輸入狀態;
+                string STATUS = newTextValue_GV1_狀態回覆;
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
@@ -421,8 +421,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             {
                 // 獲取TextBox的值
                 GridViewRow row = Grid1.Rows[rowIndex];
-                TextBox txtNewField_GV1_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV1_輸入狀態");
-                string newTextValue_GV1_輸入狀態 = txtNewField_GV1_輸入狀態.Text;
+                TextBox txtNewField_GV1_狀態回覆 = (TextBox)row.FindControl("txtNewField_GV1_狀態回覆");
+                string newTextValue_GV1_狀態回覆 = txtNewField_GV1_狀態回覆.Text;
                 TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
                 string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
@@ -439,7 +439,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string NO = Label_NO.Text;
                 string PROJECTNAMES = Label_項目名稱.Text;                
                 string OWNER = Label_專案負責人.Text;
-                string STATUS = newTextValue_GV1_輸入狀態;
+                string STATUS = newTextValue_GV1_狀態回覆;
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_試吃回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
@@ -757,7 +757,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                 TextBox txtNewField_專案編號 = (TextBox)row.FindControl("txtNewField_GV2_專案編號");
                 TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");               
-                TextBox txtNewField_輸入狀態 = (TextBox)row.FindControl("txtNewField_GV2_輸入狀態");
+                TextBox txtNewField_狀態回覆 = (TextBox)row.FindControl("txtNewField_GV2_狀態回覆");
                 TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
                 TextBox txtNewField_設計回覆 = (TextBox)row.FindControl("txtNewField_GV2_設計回覆");
                 TextBox txtNewField_表單編號 = (TextBox)row.FindControl("txtNewField_GV2_表單編號");
@@ -771,7 +771,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string PROJECTNAMES = txtNewField_項目名稱.Text;
                 string KINDS= ddlNewField_分類.SelectedItem.Text;              
                 string OWNER = ddlNewField_專案負責人.SelectedItem.Text;
-                string STATUS = txtNewField_輸入狀態.Text;
+                string STATUS = txtNewField_狀態回覆.Text;
                 string TASTESREPLYS = txtNewField_試吃回覆.Text;
                 string DESIGNREPLYS = txtNewField_設計回覆.Text;
                 string DOC_NBR = txtNewField_表單編號.Text;
