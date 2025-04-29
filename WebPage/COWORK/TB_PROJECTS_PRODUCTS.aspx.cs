@@ -225,6 +225,55 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow) // 只處理資料列
+        {
+            TextBox txtNewField_GV1_研發進度回覆 = (TextBox)e.Row.FindControl("txtNewField_GV1_研發進度回覆");
+            if (txtNewField_GV1_研發進度回覆 != null)
+            {
+                if (string.IsNullOrWhiteSpace(txtNewField_GV1_研發進度回覆.Text))
+                {
+                    txtNewField_GV1_研發進度回覆.Text =
+                       "1.樣本提供:" + "\r\n" +
+                       "2.成本提供(初算/正式):" + "\r\n" +
+                       "3.特殊原料、製程批量說明:";
+                }
+            }
+        }
+
+
+        if (e.Row.RowType == DataControlRowType.DataRow) // 只處理資料列
+        {
+            TextBox txtNewField_GV1_業務進度回覆 = (TextBox)e.Row.FindControl("txtNewField_GV1_業務進度回覆");
+            if (txtNewField_GV1_業務進度回覆 != null)
+            {
+                if (string.IsNullOrWhiteSpace(txtNewField_GV1_業務進度回覆.Text))
+                {
+                    // 設定你的預設文字
+                    txtNewField_GV1_業務進度回覆.Text =
+                       "1.試吃確認:" + "\r\n" +
+                       "2.報價確認:" + "\r\n" +
+                       "3.進度更新:";
+
+                }
+            }
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow) // 只處理資料列
+        {
+            TextBox txtNewField_GV1_設計回覆 = (TextBox)e.Row.FindControl("txtNewField_GV1_設計回覆");
+            if (txtNewField_GV1_設計回覆 != null)
+            {
+                if (string.IsNullOrWhiteSpace(txtNewField_GV1_設計回覆.Text))
+                {
+                    // 設定你的預設文字
+                    txtNewField_GV1_設計回覆.Text =
+                       "1.圖面設計:" + "\r\n" +
+                       "2.發校稿:" + "\r\n" +
+                       "3.確稿發包:";
+
+                }
+            }
+        }
 
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
@@ -574,6 +623,55 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow) // 只處理資料列
+        {
+            TextBox txtNewField_GV2_研發進度回覆 = (TextBox)e.Row.FindControl("txtNewField_GV2_研發進度回覆");
+            if (txtNewField_GV2_研發進度回覆 != null)
+            {
+                if (string.IsNullOrWhiteSpace(txtNewField_GV2_研發進度回覆.Text))
+                {
+                    txtNewField_GV2_研發進度回覆.Text =
+                       "1.樣本提供:" + "\r\n" +
+                       "2.成本提供(初算/正式):" + "\r\n" +
+                       "3.特殊原料、製程批量說明:";
+                }
+            }
+        }
+
+
+        if (e.Row.RowType == DataControlRowType.DataRow) // 只處理資料列
+        {
+            TextBox txtNewField_GV2_業務進度回覆 = (TextBox)e.Row.FindControl("txtNewField_GV2_業務進度回覆");
+            if (txtNewField_GV2_業務進度回覆 != null)
+            {
+                if (string.IsNullOrWhiteSpace(txtNewField_GV2_業務進度回覆.Text))
+                {
+                    // 設定你的預設文字
+                    txtNewField_GV2_業務進度回覆.Text =
+                       "1.試吃確認:" + "\r\n" +
+                       "2.報價確認:" + "\r\n" +
+                       "3.進度更新:";
+
+                }
+            }
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow) // 只處理資料列
+        {
+            TextBox txtNewField_GV2_設計回覆 = (TextBox)e.Row.FindControl("txtNewField_GV2_設計回覆");
+            if (txtNewField_GV2_設計回覆 != null)
+            {
+                if (string.IsNullOrWhiteSpace(txtNewField_GV2_設計回覆.Text))
+                {
+                    // 設定你的預設文字
+                    txtNewField_GV2_設計回覆.Text =
+                       "1.圖面設計:" + "\r\n" +
+                       "2.發校稿:" + "\r\n" +
+                       "3.確稿發包:";
+
+                }
+            }
+        }
         //設選項
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
