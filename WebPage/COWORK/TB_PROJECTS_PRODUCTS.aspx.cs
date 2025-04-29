@@ -269,7 +269,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     txtNewField_GV1_設計回覆.Text =
                        "1.圖面設計:" + "\r\n" +
                        "2.上校稿:" + "\r\n" +
-                       "3.確稿發包:";
+                       "3.廠商確稿發包:";
 
                 }
             }
@@ -667,7 +667,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     txtNewField_GV2_設計回覆.Text =
                        "1.圖面設計:" + "\r\n" +
                        "2.上校稿:" + "\r\n" +
-                       "3.確稿發包:";
+                       "3.廠商確稿發包:";
 
                 }
             }
