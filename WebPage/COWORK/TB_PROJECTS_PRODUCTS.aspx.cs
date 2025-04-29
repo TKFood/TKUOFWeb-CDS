@@ -396,7 +396,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string body = string.Format(
                                           "專案編號: {0}<br>" +
                                           "項目名稱: {1}<br>" +
-                                          "目前狀態: {2}<br>" +
+                                          "目前研發進度回覆: {2}<br>" +
                                           "目前業務進度回覆: {3}<br>" +
                                           "目前設計回覆: {4}<br>" +
                                           "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
@@ -454,7 +454,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                          "試吃完成 <br> " +
                                          "專案編號: {0}<br>" +
                                          "項目名稱: {1}<br>" +
-                                         "目前狀態: {2}<br>" +
+                                         "目前研發進度回覆: {2}<br>" +
                                          "目前業務進度回覆: {3}<br>" +
                                          "目前設計回覆: {4}<br>" +
                                          "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
@@ -506,7 +506,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                        "可開始設計 < br > " +
                                        "專案編號: {0}<br>" +
                                        "項目名稱: {1}<br>" +
-                                       "目前狀態: {2}<br>" +
+                                       "目前研發進度回覆: {2}<br>" +
                                        "目前業務進度回覆: {3}<br>" +
                                        "目前設計回覆: {4}<br>" +
                                        "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
@@ -927,7 +927,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string body = string.Format(                         
                             "專案編號: {0}<br>" +
                             "項目名稱: {1}<br>" +
-                            "目前狀態: {2}<br>" +
+                            "目前研發進度回覆: {2}<br>" +
                             "目前業務進度回覆: {3}<br>" +
                             "目前設計回覆: {4}<br>" ,                          
                             NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS
