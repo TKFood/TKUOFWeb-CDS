@@ -118,10 +118,10 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="狀態回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <%--<asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3" Width="200px"></asp:TextBox>--%>
-                                                        <asp:TextBox ID="txtNewField_GV1_狀態回覆" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_研發進度回覆" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -250,9 +250,9 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="狀態回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_狀態回覆" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_研發進度回覆" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -385,7 +385,7 @@
                         <table class="PopTable">
                             <tr>
                                 <td>
-                                    <asp:Label ID="Label12" runat="server" Text="項目名稱"></asp:Label>
+                                    <asp:Label ID="Label12" runat="server" Text="要查詢記錄的「項目名稱」:"></asp:Label>
                                 </td>
                                 <td>
                                     <asp:TextBox ID="TextBox2" runat="server" Text=""></asp:TextBox>
@@ -435,9 +435,9 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="狀態回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Grid3_Label_狀態回覆" runat="server" Text='<%# Bind("狀態") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
+                                                        <asp:Label ID="Grid3_Label_研發進度回覆" runat="server" Text='<%# Bind("狀態") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
