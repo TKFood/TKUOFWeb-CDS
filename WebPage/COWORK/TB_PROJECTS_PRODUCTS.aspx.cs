@@ -184,7 +184,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[SALESDATES] AS '上市日'
                             ,[OWNER] AS '專案負責人'
                             ,[STATUS] AS '狀態'
-                            ,[TASTESREPLYS] AS '試吃回覆'
+                            ,[TASTESREPLYS] AS '業務進度回覆'
                             ,[DESIGNER] AS '設計負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
                             ,[STAGES] AS '專案階段'
@@ -285,8 +285,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField_GV1_研發進度回覆 = (TextBox)row.FindControl("txtNewField_GV1_研發進度回覆");
                 string newTextValue_GV1_研發進度回覆 = txtNewField_GV1_研發進度回覆.Text;
-                TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
-                string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
+                TextBox txtNewField_GV1_業務進度回覆 = (TextBox)row.FindControl("txtNewField_GV1_業務進度回覆");
+                string newTextValue_GV1_業務進度回覆 = txtNewField_GV1_業務進度回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
                 TextBox txtNewField_GV1_設計負責人 = (TextBox)row.FindControl("txtNewField_GV1_設計負責人");
@@ -311,7 +311,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string DOC_NBR = Label_表單編號.Text;
                 string STAGES= Label_STAGES.Text;
                 string ISCLOSED = Label_是否結案.Text;
-                string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+                string TASTESREPLYS = newTextValue_GV1_業務進度回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
                 string DESIGNER = newTextValue_GV1_設計負責人;
 
@@ -348,7 +348,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                           "專案編號: {0}<br>" +
                                           "項目名稱: {1}<br>" +
                                           "目前狀態: {2}<br>" +
-                                          "目前試吃回覆: {3}<br>" +
+                                          "目前業務進度回覆: {3}<br>" +
                                           "目前設計回覆: {4}<br>" +
                                           "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
                                           NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
@@ -375,8 +375,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField_GV1_研發進度回覆 = (TextBox)row.FindControl("txtNewField_GV1_研發進度回覆");
                 string newTextValue_GV1_研發進度回覆 = txtNewField_GV1_研發進度回覆.Text;
-                TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
-                string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
+                TextBox txtNewField_GV1_業務進度回覆 = (TextBox)row.FindControl("txtNewField_GV1_業務進度回覆");
+                string newTextValue_GV1_業務進度回覆 = txtNewField_GV1_業務進度回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
                 HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
@@ -393,7 +393,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string OWNER = Label_專案負責人.Text;
                 string STATUS = newTextValue_GV1_研發進度回覆;
                 string ISCLOSED = Label_是否結案.Text;
-                string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+                string TASTESREPLYS = newTextValue_GV1_業務進度回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
 
 
@@ -406,7 +406,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                          "專案編號: {0}<br>" +
                                          "項目名稱: {1}<br>" +
                                          "目前狀態: {2}<br>" +
-                                         "目前試吃回覆: {3}<br>" +
+                                         "目前業務進度回覆: {3}<br>" +
                                          "目前設計回覆: {4}<br>" +
                                          "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
                                          NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
@@ -429,8 +429,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField_GV1_研發進度回覆 = (TextBox)row.FindControl("txtNewField_GV1_研發進度回覆");
                 string newTextValue_GV1_研發進度回覆 = txtNewField_GV1_研發進度回覆.Text;
-                TextBox txtNewField_GV1_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV1_試吃回覆");
-                string newTextValue_GV1_試吃回覆 = txtNewField_GV1_試吃回覆.Text;
+                TextBox txtNewField_GV1_業務進度回覆 = (TextBox)row.FindControl("txtNewField_GV1_業務進度回覆");
+                string newTextValue_GV1_業務進度回覆 = txtNewField_GV1_業務進度回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
                 HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
@@ -447,7 +447,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string OWNER = Label_專案負責人.Text;
                 string STATUS = newTextValue_GV1_研發進度回覆;
                 string ISCLOSED = Label_是否結案.Text;
-                string TASTESREPLYS = newTextValue_GV1_試吃回覆;
+                string TASTESREPLYS = newTextValue_GV1_業務進度回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
 
                 //寄通知mail
@@ -458,7 +458,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                        "專案編號: {0}<br>" +
                                        "項目名稱: {1}<br>" +
                                        "目前狀態: {2}<br>" +
-                                       "目前試吃回覆: {3}<br>" +
+                                       "目前業務進度回覆: {3}<br>" +
                                        "目前設計回覆: {4}<br>" +
                                        "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
                                        NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
@@ -538,7 +538,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[SALESDATES] AS '上市日'
                             ,[OWNER] AS '專案負責人'
                             ,[STATUS] AS '狀態'
-                            ,[TASTESREPLYS] AS '試吃回覆'
+                            ,[TASTESREPLYS] AS '業務進度回覆'
                             ,[STAGES] AS '專案階段'
                             ,[DESIGNER] AS '設計負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
@@ -765,7 +765,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 TextBox txtNewField_專案編號 = (TextBox)row.FindControl("txtNewField_GV2_專案編號");
                 TextBox txtNewField_項目名稱 = (TextBox)row.FindControl("txtNewField_GV2_項目名稱");               
                 TextBox txtNewField_研發進度回覆 = (TextBox)row.FindControl("txtNewField_GV2_研發進度回覆");
-                TextBox txtNewField_試吃回覆 = (TextBox)row.FindControl("txtNewField_GV2_試吃回覆");
+                TextBox txtNewField_業務進度回覆 = (TextBox)row.FindControl("txtNewField_GV2_業務進度回覆");
                 TextBox txtNewField_設計回覆 = (TextBox)row.FindControl("txtNewField_GV2_設計回覆");
                 TextBox txtNewField_設計負責人 = (TextBox)row.FindControl("txtNewField_GV2_設計負責人");
                 TextBox txtNewField_表單編號 = (TextBox)row.FindControl("txtNewField_GV2_表單編號");
@@ -780,7 +780,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string KINDS= ddlNewField_分類.SelectedItem.Text;              
                 string OWNER = ddlNewField_專案負責人.SelectedItem.Text;
                 string STATUS = txtNewField_研發進度回覆.Text;
-                string TASTESREPLYS = txtNewField_試吃回覆.Text;
+                string TASTESREPLYS = txtNewField_業務進度回覆.Text;
                 string DESIGNER = txtNewField_設計負責人.Text;
                 string DESIGNREPLYS = txtNewField_設計回覆.Text;
                 string DOC_NBR = txtNewField_表單編號.Text;
@@ -830,7 +830,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             "專案編號: {0}<br>" +
                             "項目名稱: {1}<br>" +
                             "目前狀態: {2}<br>" +
-                            "目前試吃回覆: {3}<br>" +
+                            "目前業務進度回覆: {3}<br>" +
                             "目前設計回覆: {4}<br>" ,                          
                             NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS
                         );
@@ -883,7 +883,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[SALESDATES] AS '上市日'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[OWNER] AS '專案負責人'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUS] AS '狀態'
-                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESREPLYS] AS '試吃回覆'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESREPLYS] AS '業務進度回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STAGES] AS '專案階段'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNER] AS '設計負責人'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNREPLYS] AS '設計回覆'
