@@ -31,6 +31,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     String ROLES = null;
 
     DataTable EXCELDT1 = new DataTable();
+    DataTable EXCELDT4 = new DataTable();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -1080,6 +1081,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
+        //匯出專用
+        EXCELDT4 = dt;
 
         Grid4.DataSource = dt;
         Grid4.DataBind();
@@ -1106,7 +1109,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-
+        SETEXCEL4();
     }
 
     public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
@@ -1388,8 +1391,10 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     public void SETEXCEL1()
     {
         BindGrid();
-        //BindGrid中已帶入EXCELDT1
-        if (EXCELDT1.Rows.Count>=1)
+        //BindGrid 中已帶入 EXCELDT1
+        DataTable EXDT = EXCELDT1;
+
+        if (EXDT.Rows.Count>=1)
         {
             //檔案名稱
             var fileName = "明細" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
@@ -1457,7 +1462,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 ws.Cells[1, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線 
 
-                foreach (DataRow od in EXCELDT1.Rows)
+                foreach (DataRow od in EXDT.Rows)
                 {
                     ws.Cells[ROWS, 1].Value = od["專案編號"].ToString();
                     ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
@@ -1492,6 +1497,102 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ws.Cells[ROWS, 11].Value = od["ID"].ToString();
                     ws.Cells[ROWS, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+                    ROWS++;
+                }
+
+
+
+
+                ////預設列寬、行高
+                //sheet.DefaultColWidth = 10; //預設列寬
+                //sheet.DefaultRowHeight = 30; //預設行高
+
+                //// 遇\n或(char)10自動斷行
+                //ws.Cells.Style.WrapText = true;
+
+                //自適應寬度設定
+                ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                //自適應高度設定
+                ws.Row(1).CustomHeight = true;
+
+
+
+                //儲存Excel
+                //Byte[] bin = excel.GetAsByteArray();
+                //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+
+                //儲存和歸來的Excel檔案作為一個ByteArray
+                var data = excel.GetAsByteArray();
+                HttpResponse response = HttpContext.Current.Response;
+                Response.Clear();
+
+                //輸出標頭檔案　　
+                Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.BinaryWrite(data);
+                Response.Flush();
+                Response.End();
+                //package.Save();//這個方法是直接下載到本地
+            }
+        }
+    }
+
+    public void SETEXCEL4()
+    {
+        BindGrid4();
+        //BindGrid4 中已帶入 EXCELDT4
+        DataTable EXDT = EXCELDT4;
+
+        if (EXDT.Rows.Count >= 1)
+        {
+            //檔案名稱
+            var fileName = "統計" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+
+            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            {
+
+                // 建立分頁
+                var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+
+
+                //預設行高
+                //ws.DefaultRowHeight = 60;
+
+                // 寫入資料試試
+                //ws.Cells[2, 1].Value = "測試測試";
+                int ROWS = 2;
+                int COLUMNS = 1;
+
+
+                //excel標題
+                ws.Cells[1, 1].Value = "分類";
+                ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 2].Value = "明細";
+                ws.Cells[1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線                
+                ws.Cells[1, 3].Value = "件數";
+                ws.Cells[1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                
+                foreach (DataRow od in EXDT.Rows)
+                {
+                    ws.Cells[ROWS, 1].Value = od["分類"].ToString();
+                    ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 2].Value = od["KINDS"].ToString();
+                    ws.Cells[ROWS, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 3].Value = od["NUMS"].ToString();
+                    ws.Cells[ROWS, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                   
 
                     ROWS++;
                 }
