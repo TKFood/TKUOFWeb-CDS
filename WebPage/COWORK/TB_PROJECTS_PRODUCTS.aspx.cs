@@ -49,7 +49,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             Bind_DropDownList_ISCLOSED();
             Bind_DropDownList_OWNER();
 
-          
+            //先算統計
+            BindGrid4();
         }
     }
 
