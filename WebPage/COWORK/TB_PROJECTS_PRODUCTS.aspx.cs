@@ -1034,6 +1034,80 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
     {       
 
     }
+
+    private void BindGrid4()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+
+      
+
+        cmdTxt.AppendFormat(@"                           
+                            WITH BASE AS (
+                                SELECT * 
+                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                WHERE ISCLOSED = 'N'
+                            )
+
+                            SELECT '依分類' AS '分類', [KINDS] AS 'KINDS' , COUNT(*) AS 'NUMS'
+                            FROM BASE
+                            GROUP BY [KINDS]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依負責人' AS KINDS, [OWNER], COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY [OWNER]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依狀態' AS KINDS, [STAGES], COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY [STAGES]
+
+
+                             ");
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+        Grid4.DataSource = dt;
+        Grid4.DataBind();
+    }
+
+    protected void grid_PageIndexChanging4(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+
+    }
+
+
+    public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+    }
+
     public void ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
         string SID,
         string NO,
@@ -1823,6 +1897,11 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             MsgBox("項目名稱不可空白", this.Page, this);
         }
       
+    }
+
+    protected void Button6_Click(object sender, EventArgs e)
+    {
+        BindGrid4();
     }
 
     #endregion

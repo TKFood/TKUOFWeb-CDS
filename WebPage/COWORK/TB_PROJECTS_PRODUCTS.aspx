@@ -74,6 +74,8 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="查詢歷史">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="統計表">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -501,6 +503,48 @@
                                     </div>
 
 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView5" runat="server">
+                    <div id="tabs-5">
+                         <table class="PopTable">                            
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button6" runat="server" Text="查詢記錄 " OnClick="Button6_Click"
+                                        meta:resourcekey="btn1Resource6" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid4" OnRowDataBound="Grid4_RowDataBound" OnRowCommand="Grid4_RowCommand" runat="server" OnBeforeExport="OnBeforeExport4" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource4" OnPageIndexChanging="grid_PageIndexChanging4">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="分類" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid4_Label_分類" runat="server" Text='<%# Bind("分類") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="明細" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid4_Label_明細" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="件數" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid4_Label_件數" runat="server" Text='<%# Bind("NUMS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>        
+                                        </Fast:Grid>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
