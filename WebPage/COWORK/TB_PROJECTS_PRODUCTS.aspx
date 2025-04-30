@@ -123,7 +123,7 @@
                                                 <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <%--<asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3" Width="200px"></asp:TextBox>--%>
-                                                        <asp:TextBox ID="txtNewField_GV1_研發進度回覆" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_研發進度回覆" runat="server" Text='<%# Bind("研發進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -254,7 +254,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_研發進度回覆" runat="server" Text='<%# Bind("狀態") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_研發進度回覆" runat="server" Text='<%# Bind("研發進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -362,10 +362,10 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <asp:Label ID="Label10" runat="server" Text="狀態"></asp:Label>
+                                            <asp:Label ID="Label10" runat="server" Text="研發進度回覆"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_狀態" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_研發進度回覆" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
@@ -439,7 +439,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Grid3_Label_研發進度回覆" runat="server" Text='<%# Bind("狀態") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
+                                                        <asp:Label ID="Grid3_Label_研發進度回覆" runat="server" Text='<%# Bind("研發進度回覆") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

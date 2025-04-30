@@ -184,7 +184,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[DESIGNSDATES] AS '包裝設計日'
                             ,[SALESDATES] AS '上市日'
                             ,[OWNER] AS '專案負責人'
-                            ,[STATUS] AS '狀態'
+                            ,[STATUS] AS '研發進度回覆'
                             ,[TASTESREPLYS] AS '業務進度回覆'
                             ,[DESIGNER] AS '設計負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
@@ -381,7 +381,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     STAGES,
                     ISCLOSED
                 );
-                //更新狀態
+                //更新研發進度回覆
                 UPDATE_TB_PROJECTS_PRODUCTS_STATUS(
                     ID,
                     NO,
@@ -587,7 +587,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[DESIGNSDATES] AS '包裝設計日'
                             ,[SALESDATES] AS '上市日'
                             ,[OWNER] AS '專案負責人'
-                            ,[STATUS] AS '狀態'
+                            ,[STATUS] AS '研發進度回覆'
                             ,[TASTESREPLYS] AS '業務進度回覆'
                             ,[STAGES] AS '專案階段'
                             ,[DESIGNER] AS '設計負責人'
@@ -981,7 +981,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNSDATES] AS '包裝設計日'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[SALESDATES] AS '上市日'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[OWNER] AS '專案負責人'
-                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUS] AS '狀態'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STATUS] AS '研發進度回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[TASTESREPLYS] AS '業務進度回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STAGES] AS '專案階段'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNER] AS '設計負責人'
@@ -1419,28 +1419,12 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 ws.Cells[1, 2].Value = "項目名稱";
                 ws.Cells[1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 3].Value = "產品打樣日";
-                ws.Cells[1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 4].Value = "產品試吃日";
-                ws.Cells[1, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 5].Value = "包裝設計日";
-                ws.Cells[1, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 6].Value = "上市日";
-                ws.Cells[1, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線                
                 ws.Cells[1, 7].Value = "專案負責人";
                 ws.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 8].Value = "狀態";
+                ws.Cells[1, 8].Value = "";
                 ws.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
                 ws.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
@@ -1484,7 +1468,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ws.Cells[ROWS, 7].Value = od["專案負責人"].ToString();
                     ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 8].Value = od["狀態"].ToString();
+                    ws.Cells[ROWS, 8].Value = od["研發進度回覆"].ToString();
                     ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
                     ws.Cells[ROWS, 9].Value = od["是否結案"].ToString();
@@ -1861,7 +1845,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string NO = NEW_專案編號.Text.Trim();
         string PROJECTNAMES = NEW_項目名稱.Text.Trim();       
         string OWNER = NEW_專案負責人.Text.Trim();
-        string STATUS = NEW_狀態.Text.Trim();
+        string STATUS = NEW_研發進度回覆.Text.Trim();
         string ISCLOSED = "N";
         string UPDATEDATES = DateTime.Now.ToString("yyyyMMdd");
 
