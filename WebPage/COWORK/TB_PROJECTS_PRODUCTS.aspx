@@ -510,7 +510,7 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView5" runat="server">
                     <div id="tabs-5">
-                         <table class="PopTable">                            
+                        <table class="PopTable">                           
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
@@ -532,17 +532,17 @@
                                                         <asp:Label ID="Grid4_Label_分類" runat="server" Text='<%# Bind("分類") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="明細" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="明細" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Grid4_Label_明細" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="件數" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="件數" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Grid4_Label_件數" runat="server" Text='<%# Bind("NUMS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns>        
+                                            </Columns>
                                         </Fast:Grid>
                                     </div>
                                 </td>

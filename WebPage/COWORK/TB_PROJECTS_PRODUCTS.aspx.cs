@@ -22,7 +22,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Net.Mail;
-
+using System.Threading.Tasks;
 
 public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.Page.BasePage
 {
@@ -50,8 +50,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             Bind_DropDownList_ISCLOSED();
             Bind_DropDownList_OWNER();
 
+
             //先算統計
-            BindGrid4();
+            BindGrid4(DropDownList_ISCLOSED.SelectedValue.ToString());
         }
     }
 
@@ -93,6 +94,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         }
 
     }
+
+   
 
     public void Bind_DropDownList_OWNER()
     {
@@ -407,9 +410,17 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
                 //建立收件人
                 //要寄給負責人+研發群               
-                DataTable DT_MAILS = SET_MAILTO(OWNER);
-                SendEmail(subject, body, DT_MAILS);
-                
+                //DataTable DT_MAILS = SET_MAILTO(OWNER);
+                //SendEmail(subject, body, DT_MAILS);
+                Task.Run(() =>
+                {
+                    DataTable DT_MAILS = SET_MAILTO(OWNER);  
+                    if (DT_MAILS != null)
+                    {
+                       SendEmail(subject, body, DT_MAILS);
+                    }
+                });
+
             }
 
           
@@ -1037,7 +1048,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     }
 
-    private void BindGrid4()
+    private void BindGrid4(string ISCLOSED)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -1045,10 +1056,10 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
 
+        if(ISCLOSED.Equals("進行中"))
+        {
 
-      
-
-        cmdTxt.AppendFormat(@"                           
+            cmdTxt.AppendFormat(@"                           
                             WITH BASE AS (
                                 SELECT * 
                                 FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
@@ -1070,9 +1081,90 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             SELECT '依狀態' AS KINDS, [STAGES], COUNT(*) AS NUMS
                             FROM BASE
                             GROUP BY [STAGES]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依年度' AS KINDS,  CONVERT(NVARCHAR,YEAR(CREATEDATES)), COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY YEAR(CREATEDATES)
 
 
                              ");
+        }
+        else if (ISCLOSED.Equals("已完成"))
+        {
+
+            cmdTxt.AppendFormat(@"                           
+                            WITH BASE AS (
+                                SELECT * 
+                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                WHERE ISCLOSED = 'Y'
+                            )
+
+                            SELECT '依分類' AS '分類', [KINDS] AS 'KINDS' , COUNT(*) AS 'NUMS'
+                            FROM BASE
+                            GROUP BY [KINDS]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依負責人' AS KINDS, [OWNER], COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY [OWNER]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依狀態' AS KINDS, [STAGES], COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY [STAGES]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依年度' AS KINDS,  CONVERT(NVARCHAR,YEAR(CREATEDATES)), COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY YEAR(CREATEDATES)
+
+
+
+                             ");
+        }
+        else if (ISCLOSED.Equals("全部"))
+        {
+
+            cmdTxt.AppendFormat(@"                           
+                            WITH BASE AS (
+                                SELECT * 
+                                FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                              
+                            )
+
+                            SELECT '依分類' AS '分類', [KINDS] AS 'KINDS' , COUNT(*) AS 'NUMS'
+                            FROM BASE
+                            GROUP BY [KINDS]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依負責人' AS KINDS, [OWNER], COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY [OWNER]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依狀態' AS KINDS, [STAGES], COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY [STAGES]
+                            UNION ALL
+                            SELECT '--', '--', NULL
+                            UNION ALL
+                            SELECT '依年度' AS KINDS,  CONVERT(NVARCHAR,YEAR(CREATEDATES)), COUNT(*) AS NUMS
+                            FROM BASE
+                            GROUP BY YEAR(CREATEDATES)
+
+
+
+                             ");
+        }
+        
+        cmdTxt.AppendFormat(@" ");
 
         //m_db.AddParameter("@SDATE", SDATE);
         //m_db.AddParameter("@EDATE", EDATE);
@@ -1541,7 +1633,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     public void SETEXCEL4()
     {
-        BindGrid4();
+        BindGrid4(DropDownList_ISCLOSED.SelectedValue.ToString());
         //BindGrid4 中已帶入 EXCELDT4
         DataTable EXDT = EXCELDT4;
 
@@ -1995,7 +2087,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
     protected void Button6_Click(object sender, EventArgs e)
     {
-        BindGrid4();
+        BindGrid4(DropDownList_ISCLOSED.SelectedValue.ToString());
     }
 
     #endregion
