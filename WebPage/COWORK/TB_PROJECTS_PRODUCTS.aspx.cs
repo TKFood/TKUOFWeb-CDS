@@ -408,18 +408,19 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                           NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
                                       );
 
-                //建立收件人
-                //要寄給負責人+研發群               
-                //DataTable DT_MAILS = SET_MAILTO(OWNER);
-                //SendEmail(subject, body, DT_MAILS);
-                Task.Run(() =>
-                {
-                    DataTable DT_MAILS = SET_MAILTO(OWNER);  
-                    if (DT_MAILS != null)
-                    {
-                       SendEmail(subject, body, DT_MAILS);
-                    }
-                });
+                ////建立收件人
+                ////要寄給負責人+研發群               
+                ////DataTable DT_MAILS = SET_MAILTO(OWNER);
+                ////SendEmail(subject, body, DT_MAILS);
+
+                //Task.Run(() =>
+                //{
+                //    DataTable DT_MAILS = SET_MAILTO(OWNER);  
+                //    if (DT_MAILS != null)
+                //    {
+                //       SendEmail(subject, body, DT_MAILS);
+                //    }
+                //});
 
             }
 
@@ -476,11 +477,11 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
 
 
-                //建立收件人
-                //要寄給負責人+研發群               
-                DataTable DT_MAILS = SET_MAILTO(OWNER);
-                SendEmail(subject, body, DT_MAILS);
-                MsgBox(" MAIL已寄送", this.Page, this);
+                ////建立收件人
+                ////要寄給負責人+研發群               
+                //DataTable DT_MAILS = SET_MAILTO(OWNER);
+                //SendEmail(subject, body, DT_MAILS);
+                //MsgBox(" MAIL已寄送", this.Page, this);
             }            
         }
         if (e.CommandName == "Button7")
@@ -527,11 +528,11 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                    );
                 
 
-                //建立收件人
-                //要寄給負責人+研發群+設計群               
-                DataTable DT_MAILS = SET_MAILTO_DESIGNER(OWNER);
-                SendEmail(subject, body, DT_MAILS);
-                MsgBox(" MAIL已寄送", this.Page, this);
+                ////建立收件人
+                ////要寄給負責人+研發群+設計群               
+                //DataTable DT_MAILS = SET_MAILTO_DESIGNER(OWNER);
+                //SendEmail(subject, body, DT_MAILS);
+                //MsgBox(" MAIL已寄送", this.Page, this);
             }
 
         }
@@ -946,10 +947,10 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS
                         );
 
-                //建立收件人
-                //要寄給負責人+研發群               
-                DataTable DT_MAILS = SET_MAILTO(OWNER);
-                SendEmail(subject, body, DT_MAILS);
+                ////建立收件人
+                ////要寄給負責人+研發群               
+                //DataTable DT_MAILS = SET_MAILTO(OWNER);
+                //SendEmail(subject, body, DT_MAILS);
             }
 
            
