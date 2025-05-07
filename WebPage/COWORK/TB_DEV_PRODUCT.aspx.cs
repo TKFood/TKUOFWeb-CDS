@@ -434,6 +434,61 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         }
     }
 
+    public void ADD_TB_DEV_PRODUCT(      
+       string NAMES,
+       string PURPOSES,
+       string SPECIALS,
+       string REQUESTS    
+       )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                            INSERT INTO [TKRESEARCH].[dbo].[TB_DEV_PRODUCT]
+                            (
+                            [NAMES]
+                            ,[PURPOSES]
+                            ,[SPECIALS]
+                            ,[REQUESTS]
+                            )
+                            VALUES
+                            (
+                            @NAMES
+                            ,@PURPOSES
+                            ,@SPECIALS
+                            ,@REQUESTS
+                            )                                      
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {                  
+                    cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                    cmd.Parameters.AddWithValue("@PURPOSES", PURPOSES);
+                    cmd.Parameters.AddWithValue("@SPECIALS", SPECIALS);
+                    cmd.Parameters.AddWithValue("@REQUESTS", REQUESTS);                    
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(NAMES + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+        finally
+        {
+        }
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -454,6 +509,35 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
     protected void Button2_Click(object sender, EventArgs e)
     {
         BindGrid2();
+    }
+
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        string NAMES = NEW_品名.Text.Trim();
+        string PURPOSES = NEW_開發目的.Text.Trim();
+        string SPECIALS = NEW_特色.Text.Trim();
+        string REQUESTS = NEW_訴求.Text.Trim();
+
+        if(!string.IsNullOrEmpty(NAMES)&& !string.IsNullOrEmpty(PURPOSES) && !string.IsNullOrEmpty(SPECIALS) && !string.IsNullOrEmpty(REQUESTS))
+        {
+            ADD_TB_DEV_PRODUCT(
+               NAMES,
+               PURPOSES,
+               SPECIALS,
+               REQUESTS
+              );
+            BindGrid();
+            BindGrid2();
+
+            MsgBox(NAMES + " 完成", this.Page, this);
+        }
+        else
+        {
+            MsgBox("錯誤-所有欄位都必填", this.Page, this);
+        }
+       
+
+     
     }
 
     #endregion

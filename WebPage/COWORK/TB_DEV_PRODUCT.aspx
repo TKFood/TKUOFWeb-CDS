@@ -212,6 +212,54 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView3" runat="server">
                     <div id="tabs-3">
+                        <table class="PopTable">
+                            <td colspan="2" class="PopTableRightTD">
+                                <div style="overflow-x: auto; width: 100%">
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label3" runat="server" Text="品名"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_品名" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="1" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label4" runat="server" Text="開發目的"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_開發目的" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label8" runat="server" Text="特色"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_特色" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label10" runat="server" Text="訴求"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_訴求" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label11" runat="server" Text=""></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:Button ID="Button3" runat="server" Text="新增專案" CssClass="big-bold-button" OnClick="Button3_Click" />
+                                        </td>
+                                    </tr>
+                                </div>
+                            </td>
+
+                        </table>
                     </div>
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView4" runat="server">
