@@ -266,6 +266,46 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        //設選項
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_GV2_是否結案");
+            if (ddl != null)
+            {
+                // 取得資料來源，例如從資料表 "CaseStatus" 抓出 "Name"、"Code"
+                string connStr = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    StringBuilder query = new StringBuilder();
+                    query.AppendFormat(@" 
+                                        SELECT
+                                        [ID]
+                                        ,[KIND]
+                                        ,[PARAID]
+                                        ,[PARANAME]
+                                        FROM[TKRESEARCH].[dbo].[TBPARA]
+                                        WHERE[KIND] = 'TB_DEV_PRODUCT_ISCLOSEDYN'
+                                        ORDER BY[PARAID]
+                                    ");
+
+                    SqlCommand cmd = new SqlCommand(query.ToString(), conn);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    ddl.DataSource = reader;
+                    ddl.DataTextField = "PARANAME";   // 顯示文字
+                    ddl.DataValueField = "PARANAME";  // 對應值
+                    ddl.DataBind();
+
+                    // 設定選取值
+                    string currentValue = DataBinder.Eval(e.Row.DataItem, "是否結案").ToString();
+                    if (ddl.Items.FindByValue(currentValue) != null)
+                        ddl.SelectedValue = currentValue;
+
+                    reader.Close();
+                }
+            }
+        }
     }
 
     protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
