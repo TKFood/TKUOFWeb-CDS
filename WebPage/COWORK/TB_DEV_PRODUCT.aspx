@@ -105,6 +105,11 @@
                                                         <asp:Label ID="Label_建立日期" runat="server" Text='<%# Bind("建立日期") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="ID" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
                                             </Columns>
 
 
@@ -155,34 +160,45 @@
                                                 <Columns>
                                                     <asp:TemplateField HeaderText="品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                         <ItemTemplate>
-                                                            <asp:TextBox ID="txtNewField_GV1_品名" runat="server" Text='<%# Bind("品名") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                            <asp:TextBox ID="txtNewField_Grid2_品名" runat="server" Text='<%# Bind("品名") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="開發目的" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                        <ItemTemplate>                                                            
-                                                            <asp:TextBox ID="txtNewField_GV1_開發目的" runat="server" Text='<%# Bind("開發目的") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <ItemTemplate>
+                                                            <asp:TextBox ID="txtNewField_Grid2_開發目的" runat="server" Text='<%# Bind("開發目的") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="特色" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                        <ItemTemplate>                                                            
-                                                            <asp:TextBox ID="txtNewField_GV1_特色" runat="server" Text='<%# Bind("特色") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <ItemTemplate>
+                                                            <asp:TextBox ID="txtNewField_Grid2_特色" runat="server" Text='<%# Bind("特色") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="訴求" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                        <ItemTemplate>                                                            
-                                                            <asp:TextBox ID="txtNewField_GV1_訴求" runat="server" Text='<%# Bind("訴求") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <ItemTemplate>
+                                                            <asp:TextBox ID="txtNewField_Grid2_訴求" runat="server" Text='<%# Bind("訴求") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                        <ItemTemplate>                                                            
-                                                            <asp:DropDownList ID="ddlNewField_GV2_是否結案" runat="server" Width="100%"></asp:DropDownList>
+                                                        <ItemTemplate>
+                                                            <asp:DropDownList ID="ddlNewField_Grid2_是否結案" runat="server" Width="100%"></asp:DropDownList>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                        <ItemTemplate>
+                                                            <asp:Button ID="Grid2_Button1" runat="server" Text="更新專案" CommandName="Grid2_Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="建立日期" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                         <ItemTemplate>
-                                                            <asp:Label ID="Label_建立日期" runat="server" Text='<%# Bind("建立日期") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                            <asp:Label ID="Grid2_Label_建立日期" runat="server" Text='<%# Bind("建立日期") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="ID" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Grid2_Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+
                                                 </Columns>
 
 

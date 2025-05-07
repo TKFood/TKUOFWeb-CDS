@@ -266,10 +266,22 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button Grid2_Button1 = (Button)e.Row.FindControl("Grid2_Button1");
+            if (Grid2_Button1 != null)
+            {
+                string cellValue_Grid2_Button1 = Grid2_Button1.CommandArgument;
+                dynamic paramGrid2_Button1 = new { ID = cellValue_Grid2_Button1 }.ToExpando();
+            }
+
+
+        }
         //設選項
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_GV2_是否結案");
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlNewField_Grid2_是否結案");
             if (ddl != null)
             {
                 // 取得資料來源，例如從資料表 "CaseStatus" 抓出 "Name"、"Code"
@@ -314,6 +326,52 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         // 獲取所選行的索引
         rowIndex = Convert.ToInt32(e.CommandArgument);
 
+        if (e.CommandName == "Grid2_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);   
+
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid2.Rows[rowIndex];
+
+
+                Label Grid2_Label_ID = (Label)row.FindControl("Grid2_Label_ID");
+
+                TextBox txtNewField_Grid2_品名 = (TextBox)row.FindControl("txtNewField_Grid2_品名");
+                TextBox txtNewField_Grid2_開發目的 = (TextBox)row.FindControl("txtNewField_Grid2_開發目的");
+                TextBox txtNewField_Grid2_特色 = (TextBox)row.FindControl("txtNewField_Grid2_特色");
+                TextBox txtNewField_Grid2_訴求 = (TextBox)row.FindControl("txtNewField_Grid2_訴求");
+              
+                DropDownList ddlNewField_Grid2_是否結案 = (DropDownList)row.FindControl("ddlNewField_Grid2_是否結案");             
+
+                string ID = Grid2_Label_ID.Text;
+                string NAMES = txtNewField_Grid2_品名.Text;
+                string PURPOSES = txtNewField_Grid2_開發目的.Text;
+                string SPECIALS = txtNewField_Grid2_特色.Text;
+                string REQUESTS = txtNewField_Grid2_訴求.Text;
+                string ISCLOSED = ddlNewField_Grid2_是否結案.SelectedItem.Text;
+
+
+                //更新 TB_DEV_PRODUCT
+                UPDATE_TB_DEV_PRODUCT
+                    (
+                     ID,
+                     NAMES, 
+                     PURPOSES, 
+                     SPECIALS, 
+                     REQUESTS, 
+                     ISCLOSED
+                     );
+
+            }
+
+
+
+            BindGrid();
+            BindGrid2();
+        }
+
     }
 
 
@@ -322,7 +380,70 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         
     }
    
+    public void UPDATE_TB_DEV_PRODUCT(
+        string ID,
+        string NAMES,
+        string PURPOSES,
+        string SPECIALS,
+        string REQUESTS,
+        string ISCLOSED
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
+        var SQLCOMMAND = @" 
+                            UPDATE  [TKRESEARCH].[dbo].[TB_DEV_PRODUCT]
+                            SET
+                            [NAMES]=@NAMES,
+                            [PURPOSES]=@PURPOSES,
+                            [REQUESTS]=@REQUESTS,
+                            [SPECIALS]=@SPECIALS,
+                            [ISCLOSED]=@ISCLOSED
+                            WHERE [ID]=@ID                                            
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@NAMES", NAMES);
+                    cmd.Parameters.AddWithValue("@PURPOSES", PURPOSES);
+                    cmd.Parameters.AddWithValue("@SPECIALS", SPECIALS);
+                    cmd.Parameters.AddWithValue("@REQUESTS", REQUESTS);
+                    cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                   
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(NAMES + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+        finally
+        {
+        }
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        //Type cstype = obj.GetType();
+        //ClientScriptManager cs = pg.ClientScript;
+        //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
     #endregion
 
     #region BUTTON

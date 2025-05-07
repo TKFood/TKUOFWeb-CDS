@@ -1289,7 +1289,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
         }
         finally
@@ -1339,7 +1339,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
         }
         finally
@@ -1413,7 +1413,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
         }
         finally
@@ -1473,7 +1473,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
         }
         finally
