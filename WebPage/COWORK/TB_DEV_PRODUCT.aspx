@@ -118,6 +118,80 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView2" runat="server">
                     <div id="tabs-2">
+                        <div id="tabs-1">
+                            <table class="PopTable">
+                                <tr>
+                                    <td>
+                                        <asp:Label ID="Label1" runat="server" Text="是否結案: "></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:DropDownList ID="DropDownList_ISCLOSED2" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:Label ID="Label2" runat="server" Text="名稱: "></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="PopTableLeftTD"></td>
+                                    <td>
+                                        <asp:Button ID="Button2" runat="server" Text="查詢 " OnClick="Button2_Click"
+                                            meta:resourcekey="btn1Resource1" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="PopTable">
+                                <tr>
+                                    <td colspan="2" class="PopTableRightTD">
+                                        <div style="overflow-x: auto; width: 100%">
+                                            <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" OnRowCommand="Grid2_RowCommand" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid_PageIndexChanging2">
+                                                <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                                <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="品名" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_品名" runat="server" Text='<%# Bind("品名") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="開發目的" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_開發目的" runat="server" Text='<%# Bind("開發目的") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="特色" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_特色" runat="server" Text='<%# Bind("特色") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="訴求" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_訴求" runat="server" Text='<%# Bind("訴求") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="建立日期" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_建立日期" runat="server" Text='<%# Bind("建立日期") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+
+
+                                            </Fast:Grid>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView3" runat="server">
