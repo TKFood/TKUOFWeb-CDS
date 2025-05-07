@@ -34,11 +34,48 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
     {
         if (!IsPostBack)
         {
+            Bind_DropDownList_ISCLOSED();
             BindGrid();
         }
     }
 
     #region FUNCTION
+    public void Bind_DropDownList_ISCLOSED()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT
+                        [ID]
+                        ,[KIND]
+                        ,[PARAID]
+                        ,[PARANAME]
+                        FROM [TKRESEARCH].[dbo].[TBPARA]
+                        WHERE [KIND]='TB_DEV_PRODUCT_ISCLOSEDYN'
+                        ORDER BY [PARAID]
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList_ISCLOSED.DataSource = dt;
+            DropDownList_ISCLOSED.DataTextField = "PARANAME";
+            DropDownList_ISCLOSED.DataValueField = "PARANAME";
+            DropDownList_ISCLOSED.DataBind();
+
+        }
+        else
+        {
+
+        }
+
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -47,7 +84,25 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
-        StringBuilder QUERYS3 = new StringBuilder();        
+        StringBuilder QUERYS3 = new StringBuilder();
+        //DropDownList_ISCLOSED
+        if (DropDownList_ISCLOSED.Text.Equals("N"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='N' ");
+        }
+        else if (DropDownList_ISCLOSED.Text.Equals("Y"))
+        {
+            QUERYS.AppendFormat(@" AND [ISCLOSED]='Y' ");
+        }      
+        //TextBox1
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {
+            QUERYS2.AppendFormat(@" AND [NAMES] LIKE '%{0}%' ", TextBox1.Text);
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@"");
+        }
 
         cmdTxt.AppendFormat(@"
                             SELECT 
@@ -59,9 +114,11 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                             ,[ISCLOSED] AS '是否結案'
                             ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '建立日期'
                             FROM [TKRESEARCH].[dbo].[TB_DEV_PRODUCT]
-                            WHERE [ISCLOSED] ='N'
+                            WHERE 1=1
+                            {0}
+                            {1}
                             ORDER BY [ID]
-                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+                             ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
@@ -109,6 +166,10 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
     #endregion
 
     #region BUTTON
-
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        BindGrid();
+       
+    }
     #endregion
 }
