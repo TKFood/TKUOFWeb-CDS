@@ -133,7 +133,7 @@ public partial class CDS_WebPage_Mobile_TB_SALES_ASSINGED : Ede.Uof.Utility.Page
                             WHERE 1=1
                             {0}
                             {1}
-                            ORDER BY [SALES],[EDAYS],[ID]
+                            ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]
 
                               
                             ", Query1.ToString(), Query2.ToString()); ;
