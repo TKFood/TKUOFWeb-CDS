@@ -149,6 +149,13 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="品保回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_GV1_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="專案階段" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_專案階段" runat="server" Text='<%# Bind("專案階段") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
@@ -276,6 +283,13 @@
                                                 <asp:TemplateField HeaderText="設計回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="txtNewField_GV2_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="品保回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_GV2_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -461,6 +475,13 @@
                                                 <asp:TemplateField HeaderText="設計回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Grid3_Label_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="品保回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
