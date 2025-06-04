@@ -55,6 +55,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>
+                        <asp:Label ID="Label3" runat="server" Text="設計負責人: "></asp:Label>
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="DropDownList_DESIGNER" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+
+                    </td>
+                </tr>
+                <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
                         <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="Button1_Click"

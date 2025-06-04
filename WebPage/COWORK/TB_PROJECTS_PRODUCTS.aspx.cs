@@ -49,6 +49,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             Bind_DropDownList_ISCLOSED();
             Bind_DropDownList_OWNER();
+            Bind_DropDownList_DESIGNER();
 
 
             //先算統計
@@ -135,6 +136,46 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
         }
     }
+
+    public void Bind_DropDownList_DESIGNER()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"                         
+                            SELECT DESIGNER
+                            FROM 
+                            (
+	                            SELECT '全部' AS 'DESIGNER'
+	                            UNION ALL
+	                            SELECT
+	                            [DESIGNER]      
+	                            FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                WHERE ISNULL([DESIGNER] ,'')<>''
+	                            GROUP BY [DESIGNER]
+                            ) AS TEMP
+                            ORDER BY DESIGNER
+                        ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList_DESIGNER.DataSource = dt;
+            DropDownList_DESIGNER.DataTextField = "DESIGNER";
+            DropDownList_DESIGNER.DataValueField = "DESIGNER";
+            DropDownList_DESIGNER.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -144,6 +185,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
+        StringBuilder QUERYS4 = new StringBuilder();
 
         //DropDownList_ISCLOSED
         if (DropDownList_ISCLOSED.Text.Equals("全部"))
@@ -176,6 +218,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             QUERYS3.AppendFormat(@"");
         }
+        //DropDownList_DESIGNER
+        if( DropDownList_DESIGNER.Text.Equals("全部"))
+        {
+            QUERYS4.AppendFormat(@"");
+        }
+        else
+        {
+            QUERYS4.AppendFormat(@" AND DESIGNER=N'{0}' ", DropDownList_DESIGNER.Text);
+        }
 
         cmdTxt.AppendFormat(@"
                             SELECT 
@@ -204,8 +255,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             {0}
                             {1}
                             {2}
+                            {3}
                             ORDER BY [OWNER],[NO]
-                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString());
 
 
 
@@ -560,6 +612,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
+        StringBuilder QUERYS4 = new StringBuilder();
 
         //DropDownList_ISCLOSED
         if (DropDownList_ISCLOSED.Text.Equals("全部"))
@@ -592,6 +645,15 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         {
             QUERYS3.AppendFormat(@"");
         }
+        //DropDownList_DESIGNER
+        if (DropDownList_DESIGNER.Text.Equals("全部"))
+        {
+            QUERYS4.AppendFormat(@"");
+        }
+        else
+        {
+            QUERYS4.AppendFormat(@" AND DESIGNER=N'{0}' ", DropDownList_DESIGNER.Text);
+        }
 
         cmdTxt.AppendFormat(@"
 
@@ -620,8 +682,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             {0}
                             {1}
                             {2}
+                            {3}
                             ORDER BY [OWNER],[NO]
-                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+                             ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString());
 
 
 
