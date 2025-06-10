@@ -36,12 +36,13 @@ public partial class CDS_WebPage_PUR_REPORT_ACTTB : Ede.Uof.Utility.Page.BasePag
         
         if (!IsPostBack)
         {
-           
+            TextBox_起始日.Text = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd");
+            TextBox_結束日.Text = new DateTime(DateTime.Now.Year, 12, 31).ToString("yyyy-MM-dd");
         }
     }
 
     #region FUNCTION
-    private void BindGrid1(string TB010)
+    private void BindGrid1(string TB010, string yyyymmdd_start, string yyyymmdd_end)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
@@ -65,16 +66,18 @@ public partial class CDS_WebPage_PUR_REPORT_ACTTB : Ede.Uof.Utility.Page.BasePag
 
                             FROM [TK].dbo.ACTTA WITH(NOLOCK),[TK].dbo.ACTTB WITH(NOLOCK)
                             WHERE TA001=TB001 AND TA002=TB002
-                            AND TA001 IN ('A911')                           
+                            AND TA001 IN ('A911')           
+                            AND TB004 IN ('-1')
                             AND ISNULL(TB010,'')<>''
                             AND NOT EXISTS (
                                 SELECT 1
                                 FROM [TKKPI].[dbo].[UOFTB010NOTIN] N
                                 WHERE TB010 LIKE '%' + N.TB010NOTIN + '%'
                                 )
+                            AND TA003>='{1}' AND TA003<='{2}'
                             {0}
                             ORDER BY TA003
-                             ", QUERYS.ToString());
+                             ", QUERYS.ToString(), yyyymmdd_start, yyyymmdd_end);
 
 
 
@@ -132,13 +135,38 @@ public partial class CDS_WebPage_PUR_REPORT_ACTTB : Ede.Uof.Utility.Page.BasePag
     protected void Button1_Click(object sender, EventArgs e)
     {
         string TB010 = TextBox1.Text.Trim();
-        if (!string.IsNullOrEmpty(TB010))
+        DateTime dt_start;
+        DateTime dt_end;
+        string yyyymmdd_start = "";
+        string yyyymmdd_end = "";
+        if (DateTime.TryParse(TextBox_起始日.Text, out dt_start))
         {
-            BindGrid1(TB010);
+            yyyymmdd_start = dt_start.ToString("yyyyMMdd");
+            // 使用 yyyymmdd
         }
         else
         {
-            MsgBox("關鍵字", this.Page, this);
+            // 錯誤處理：輸入不是有效日期
+            MsgBox("不是有效日期", this.Page, this);
+        }
+        if (DateTime.TryParse(TextBox_結束日.Text, out dt_end))
+        {
+            yyyymmdd_end = dt_end.ToString("yyyyMMdd");
+            // 使用 yyyymmdd
+        }
+        else
+        {
+            // 錯誤處理：輸入不是有效日期
+            MsgBox("不是有效日期", this.Page, this);
+        }
+
+        if (!string.IsNullOrEmpty(TB010))
+        {
+            BindGrid1(TB010, yyyymmdd_start, yyyymmdd_end);
+        }
+        else
+        {
+            MsgBox("關鍵字不得空白", this.Page, this);
         }
     }
     #endregion

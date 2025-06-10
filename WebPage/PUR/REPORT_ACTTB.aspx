@@ -41,6 +41,22 @@
                         <table class="PopTable">
                             <tr>
                                 <td>
+                                    <asp:Label ID="Label_起始日" runat="server" Text="起始日: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox_起始日" runat="server" TextMode="Date"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label_結束日" runat="server" Text="結束日: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox_結束日" runat="server" TextMode="Date"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <asp:Label ID="Label9" runat="server" Text="關鍵字: "></asp:Label>
                                 </td>
                                 <td>
@@ -68,18 +84,18 @@
                                                         <asp:Label ID="Label_日期" runat="server" Text='<%# Bind("TA003") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="備註" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_備註" runat="server" Text='<%# Bind("TB010") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Right">
+                                                <asp:TemplateField HeaderText="金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Right">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_金額" runat="server" Text='<%# Eval("TB007", "{0:N0}") %>'  Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label_金額" runat="server" Text='<%# Eval("TB007", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-                                          
+
                                         </Fast:Grid>
                                     </div>
 
