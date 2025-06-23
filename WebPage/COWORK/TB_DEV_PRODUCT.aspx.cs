@@ -149,6 +149,7 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                             ,[PURPOSES] AS '開發目的'
                             ,[SPECIALS] AS '特色'
                             ,[REQUESTS] AS '訴求'
+                            ,[RECORDS] AS '記錄'
                             ,[ISCLOSED] AS '是否結案'
                             ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '建立日期'
                             FROM [TKRESEARCH].[dbo].[TB_DEV_PRODUCT]
@@ -235,6 +236,7 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                             ,[PURPOSES] AS '開發目的'
                             ,[SPECIALS] AS '特色'
                             ,[REQUESTS] AS '訴求'
+                            ,[RECORDS] AS '記錄'
                             ,[ISCLOSED] AS '是否結案'
                             ,CONVERT(NVARCHAR,[CREATEDATES],112) AS '建立日期'
                             FROM [TKRESEARCH].[dbo].[TB_DEV_PRODUCT]
@@ -342,7 +344,8 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                 TextBox txtNewField_Grid2_開發目的 = (TextBox)row.FindControl("txtNewField_Grid2_開發目的");
                 TextBox txtNewField_Grid2_特色 = (TextBox)row.FindControl("txtNewField_Grid2_特色");
                 TextBox txtNewField_Grid2_訴求 = (TextBox)row.FindControl("txtNewField_Grid2_訴求");
-              
+                TextBox txtNewField_Grid2_記錄 = (TextBox)row.FindControl("txtNewField_Grid2_記錄");
+
                 DropDownList ddlNewField_Grid2_是否結案 = (DropDownList)row.FindControl("ddlNewField_Grid2_是否結案");             
 
                 string ID = Grid2_Label_ID.Text;
@@ -351,7 +354,7 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                 string SPECIALS = txtNewField_Grid2_特色.Text;
                 string REQUESTS = txtNewField_Grid2_訴求.Text;
                 string ISCLOSED = ddlNewField_Grid2_是否結案.SelectedItem.Text;
-
+                string RECORDS= txtNewField_Grid2_記錄.Text;
 
                 //更新 TB_DEV_PRODUCT
                 UPDATE_TB_DEV_PRODUCT
@@ -361,7 +364,8 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                      PURPOSES, 
                      SPECIALS, 
                      REQUESTS, 
-                     ISCLOSED
+                     ISCLOSED,
+                     RECORDS
                      );
 
             }
@@ -386,7 +390,8 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         string PURPOSES,
         string SPECIALS,
         string REQUESTS,
-        string ISCLOSED
+        string ISCLOSED,
+        string RECORDS
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -398,7 +403,8 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                             [PURPOSES]=@PURPOSES,
                             [REQUESTS]=@REQUESTS,
                             [SPECIALS]=@SPECIALS,
-                            [ISCLOSED]=@ISCLOSED
+                            [ISCLOSED]=@ISCLOSED,
+                            [RECORDS]=@RECORDS
                             WHERE [ID]=@ID                                            
                             ";
 
@@ -414,7 +420,7 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                     cmd.Parameters.AddWithValue("@SPECIALS", SPECIALS);
                     cmd.Parameters.AddWithValue("@REQUESTS", REQUESTS);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
-                   
+                    cmd.Parameters.AddWithValue("@RECORDS", RECORDS);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -438,7 +444,8 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
        string NAMES,
        string PURPOSES,
        string SPECIALS,
-       string REQUESTS    
+       string REQUESTS,
+       string RECORDS
        )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -450,6 +457,7 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                             ,[PURPOSES]
                             ,[SPECIALS]
                             ,[REQUESTS]
+                            ,[RECORDS]
                             )
                             VALUES
                             (
@@ -457,6 +465,7 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                             ,@PURPOSES
                             ,@SPECIALS
                             ,@REQUESTS
+                            ,@RECORDS
                             )                                      
                             ";
 
@@ -469,7 +478,8 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
                     cmd.Parameters.AddWithValue("@NAMES", NAMES);
                     cmd.Parameters.AddWithValue("@PURPOSES", PURPOSES);
                     cmd.Parameters.AddWithValue("@SPECIALS", SPECIALS);
-                    cmd.Parameters.AddWithValue("@REQUESTS", REQUESTS);                    
+                    cmd.Parameters.AddWithValue("@REQUESTS", REQUESTS);
+                    cmd.Parameters.AddWithValue("@RECORDS", RECORDS);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -517,14 +527,16 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         string PURPOSES = NEW_開發目的.Text.Trim();
         string SPECIALS = NEW_特色.Text.Trim();
         string REQUESTS = NEW_訴求.Text.Trim();
+        string RECORDS = NEW_記錄.Text.Trim();
 
-        if(!string.IsNullOrEmpty(NAMES)&& !string.IsNullOrEmpty(PURPOSES) && !string.IsNullOrEmpty(SPECIALS) && !string.IsNullOrEmpty(REQUESTS))
+        if (!string.IsNullOrEmpty(NAMES)&& !string.IsNullOrEmpty(PURPOSES) && !string.IsNullOrEmpty(SPECIALS) && !string.IsNullOrEmpty(REQUESTS))
         {
             ADD_TB_DEV_PRODUCT(
                NAMES,
                PURPOSES,
                SPECIALS,
-               REQUESTS
+               REQUESTS,
+               RECORDS
               );
             BindGrid();
             BindGrid2();

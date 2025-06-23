@@ -95,6 +95,11 @@
                                                         <asp:Label ID="Label_訴求" runat="server" Text='<%# Bind("訴求") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="記錄" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_記錄" runat="server" Text='<%# Bind("記錄") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_是否結案" runat="server" Text='<%# Bind("是否結案") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
@@ -105,11 +110,11 @@
                                                         <asp:Label ID="Label_建立日期" runat="server" Text='<%# Bind("建立日期") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="ID" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                        <ItemTemplate>
-                                                            <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             </Columns>
 
 
@@ -176,6 +181,11 @@
                                                     <asp:TemplateField HeaderText="訴求" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                         <ItemTemplate>
                                                             <asp:TextBox ID="txtNewField_Grid2_訴求" runat="server" Text='<%# Bind("訴求") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="記錄" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:TextBox ID="txtNewField_Grid2_記錄" runat="server" Text='<%# Bind("記錄") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -246,6 +256,14 @@
                                         </td>
                                         <td>
                                             <asp:TextBox ID="NEW_訴求" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="Label5" runat="server" Text="記錄"></asp:Label>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox ID="NEW_記錄" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
