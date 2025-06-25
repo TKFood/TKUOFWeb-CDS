@@ -181,6 +181,17 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button Grid1_Button1 = (Button)e.Row.FindControl("Grid1_Button1");
+            if (Grid1_Button1!= null)
+            {
+                string cellValue_Grid1_Button1 = Grid1_Button1.CommandArgument;
+                dynamic param_Grid1_Button1 = new { ID = cellValue_Grid1_Button1 }.ToExpando();
+            }
+
+
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -189,6 +200,35 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         // 獲取所選行的索引
         rowIndex = Convert.ToInt32(e.CommandArgument);
 
+        if (e.CommandName == "Grid1_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);   
+
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+
+                Label Label_ID = (Label)row.FindControl("Label_ID");              
+                TextBox txtNewField_Grid1_記錄 = (TextBox)row.FindControl("txtNewField_Grid1_記錄");
+
+                string ID = Label_ID.Text;              
+                string RECORDS = txtNewField_Grid1_記錄.Text;
+
+                //更新 TB_DEV_PRODUCT
+                UPDATE_TB_DEV_PRODUCT_RECORDS
+                    (
+                     ID,                     
+                     RECORDS
+                     );
+
+            }
+
+
+
+            BindGrid();
+            BindGrid2();
+        }
     }
 
 
@@ -384,6 +424,48 @@ public partial class CDS_WebPage_COWORK_TB_DEV_PRODUCT : Ede.Uof.Utility.Page.Ba
         
     }
    
+    public void UPDATE_TB_DEV_PRODUCT_RECORDS(
+         string ID,
+         string RECORDS
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                            UPDATE  [TKRESEARCH].[dbo].[TB_DEV_PRODUCT]
+                            SET                           
+                            [RECORDS]=@RECORDS
+                            WHERE [ID]=@ID                                            
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                  
+                    cmd.Parameters.AddWithValue("@RECORDS", RECORDS);
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(" 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+        finally
+        {
+        }
+    }
+
     public void UPDATE_TB_DEV_PRODUCT(
         string ID,
         string NAMES,
