@@ -42,7 +42,7 @@ public partial class CDS_WebPage_IT_Chat : Ede.Uof.Utility.Page.BasePage
     string NAME = null;
     string ROLES = null;
 
-    //private string apiKey = "sk-TEST";
+    private string apiKey = ConfigurationManager.AppSettings["OpenAIApiKey"];
 
     protected void Page_Load(object sender, EventArgs e)
     {
