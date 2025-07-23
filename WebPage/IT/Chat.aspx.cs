@@ -63,6 +63,8 @@ public partial class CDS_WebPage_IT_Chat : Ede.Uof.Utility.Page.BasePage
     #endregion
     private async Task RunChatAsync()
     {
+        //txtResponse.Text = "<span style='color:red;'>API 回傳錯誤</span>";
+
         try
         {
             HttpClient client = new HttpClient();
@@ -74,15 +76,17 @@ public partial class CDS_WebPage_IT_Chat : Ede.Uof.Utility.Page.BasePage
                 {""role"": ""user"", ""content"": """ + txtPrompt.Text + @"""}
             ]
         }";
-            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");          
 
             var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
             var json = await response.Content.ReadAsStringAsync();
+
 
             if (!response.IsSuccessStatusCode)
             {
                 txtResponse.Text = "<span style='color:red;'>API 回傳錯誤（" + (int)response.StatusCode + "）：" +
                                    Server.HtmlEncode(json) + "</span>";
+
                 return;
             }
 
@@ -112,13 +116,13 @@ public partial class CDS_WebPage_IT_Chat : Ede.Uof.Utility.Page.BasePage
     }
     #region BUTTON
 
-    protected void btnSend_Click(object sender, EventArgs e)
+    protected async void btnSend_Click(object sender, EventArgs e)
     {
         string prompt = txtPrompt.Text;
 
         txtResponse.Text = "<b>ChatGPT 回答：</b><br/><pre></pre>";
 
-        RunChatAsync().Wait(); // 阻塞主線程等 Task 完成
+        await RunChatAsync();  // async void 正確使用方式
     }
 
     #endregion
