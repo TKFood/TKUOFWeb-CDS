@@ -7,6 +7,7 @@
     <br /><br />
     <asp:Button ID="btnSend" runat="server" Text="送出" OnClick="btnSend_Click" />
     <br /><br />
-    <asp:TextBox ID="txtResponse" runat="server" TextMode="MultiLine" Rows="4" Columns="60" />
+    <asp:Label ID="Label1" runat="server" Text="以下回覆"/>
+    <asp:Literal ID="txtResponse" runat="server" Mode="PassThrough" />
 
 </asp:Content>

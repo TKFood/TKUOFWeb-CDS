@@ -61,37 +61,40 @@ public partial class CDS_WebPage_IT_Chat : Ede.Uof.Utility.Page.BasePage
         //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
     #endregion
-
-    #region BUTTON
-
-    protected async void btnSend_Click(object sender, EventArgs e)
+    private async Task RunChatAsync()
     {
-        string prompt = txtPrompt.Text;
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-
-        var requestBody = new
-        {
-            model = "gpt-3.5-turbo",
-            messages = new[]
-            {
-                    new { role = "user", content = prompt }
-                }
-        };
-
-        var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
-
         try
         {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+            var jsonBody = @"{
+            ""model"": ""gpt-3.5-turbo"",
+            ""messages"": [
+                {""role"": ""user"", ""content"": """ + txtPrompt.Text + @"""}
+            ]
+        }";
+            var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
             var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
             var json = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                txtResponse.Text = "<span style='color:red;'>API 回傳錯誤（" + (int)response.StatusCode + "）：" +
+                                   Server.HtmlEncode(json) + "</span>";
+                return;
+            }
 
             JObject result = JObject.Parse(json);
 
             string reply = "無法取得回覆";
 
-            if (result["choices"] != null && result["choices"].HasValues)
+            if (result["error"] != null && result["error"]["message"] != null)
+            {
+                reply = "錯誤：" + result["error"]["message"].ToString();
+            }
+            else if (result["choices"] != null && result["choices"].HasValues)
             {
                 var message = result["choices"][0]["message"];
                 if (message != null && message["content"] != null)
@@ -104,8 +107,18 @@ public partial class CDS_WebPage_IT_Chat : Ede.Uof.Utility.Page.BasePage
         }
         catch (Exception ex)
         {
-            txtResponse.Text = "<span style='color:red;'>發生錯誤：" + ex.Message + "</span>";
+            txtResponse.Text = "<span style='color:red;'>發生錯誤：" + Server.HtmlEncode(ex.Message) + "</span>";
         }
+    }
+    #region BUTTON
+
+    protected void btnSend_Click(object sender, EventArgs e)
+    {
+        string prompt = txtPrompt.Text;
+
+        txtResponse.Text = "<b>ChatGPT 回答：</b><br/><pre></pre>";
+
+        RunChatAsync().Wait(); // 阻塞主線程等 Task 完成
     }
 
     #endregion
