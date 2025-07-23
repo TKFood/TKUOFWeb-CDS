@@ -42,7 +42,7 @@ public partial class CDS_WebPage_IT_Chat : Ede.Uof.Utility.Page.BasePage
     string NAME = null;
     string ROLES = null;
 
-    private string apiKey = "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";
+    private string apiKey = "sk-TEST";
 
     protected void Page_Load(object sender, EventArgs e)
     {
