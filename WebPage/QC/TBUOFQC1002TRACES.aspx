@@ -103,7 +103,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-                                                                          <Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="原因明細" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_原因明細" runat="server" Text='<%# Bind("QCFrm002AbnscustomValue") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
@@ -117,7 +117,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-              
+
                                             <Columns>
                                                 <asp:TemplateField HeaderText="改善方案" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
