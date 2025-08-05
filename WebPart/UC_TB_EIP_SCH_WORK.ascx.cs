@@ -208,8 +208,8 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
                                 CASE 
                                     WHEN W.WORK_STATE = 'Completed' THEN '已回覆'
                                     WHEN W.WORK_STATE = 'NotYetBegin' THEN '還沒回覆'
-                                    WHEN W.WORK_STATE = 'Audit' THEN '回覆完，交付人審查中'
-                                    WHEN W.WORK_STATE = 'Proceeding' THEN '回覆進行中'
+                                    WHEN W.WORK_STATE = 'Audit' THEN '回覆完成，交付人審查中'
+                                    WHEN W.WORK_STATE = 'Proceeding' THEN '有回覆，但沒有完成'
                                     ELSE W.WORK_STATE
                                 END AS WORK_STATE_DESC,
                                 USER1.NAME AS 交付者,
