@@ -93,7 +93,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
         //校稿名稱
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND W.SUBJECT LIKE  '%'+@SUBJECT+'%' ");
+            QUERYS.AppendFormat(@" AND W.SUBJECT LIKE  '%{0}%' ", TextBox1.Text);
 
         }
 

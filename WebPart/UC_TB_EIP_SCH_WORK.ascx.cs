@@ -173,7 +173,7 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
         //校稿名稱
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND W.SUBJECT LIKE  '%'+@SUBJECT+'%' ");
+            QUERYS.AppendFormat(@" AND W.SUBJECT LIKE  '%{0}%' ", TextBox1.Text);
 
         }
 
