@@ -29,7 +29,9 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
         ROLES = SEARCHROLES(ACCOUNT.Trim());
         USER_GUID = SEARCHTB_EB_USER(ACCOUNT);
         NAMES.Text = NAME;
-        USER_GUID = "5af1f6e3-426e-4fc6-86ee-235845cba61e";
+
+        //測試用
+        //USER_GUID = "5af1f6e3-426e-4fc6-86ee-235845cba61e";
 
         //不顯示子視窗的按鈕
         //確定
