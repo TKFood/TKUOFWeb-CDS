@@ -24,38 +24,29 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
-        {
-    
-            BindDropDownList();
-            BindDropDownList2();
-
+        {    
+            BindDropDownList();   
             BindGrid1("");
-
         }
         else
         {
-
-
         }
-
-
-
-
     }
     #region FUNCTION
   
     private void BindDropDownList()
     {
         DataTable dt = new DataTable();
-        dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("NAMES", typeof(String));
+        DataRow row;
+        dt.Columns.Add("KINDS", typeof(String));
 
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        row = dt.NewRow();
+        row["KINDS"] = "N";
+        dt.Rows.Add(row);
 
-        string cmdTxt = @"SELECT '未完成' AS KINDS UNION ALL SELECT '全部' ";
-
-        dt.Load(m_db.ExecuteReader(cmdTxt));
+        row = dt.NewRow();
+        row["KINDS"] = "Y";
+        dt.Rows.Add(row);
 
         if (dt.Rows.Count > 0)
         {
@@ -71,32 +62,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
         }
     }
 
-    private void BindDropDownList2()
-    {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("ID", typeof(String));
-        dt.Columns.Add("NAMES", typeof(String));
-
-        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        string cmdTxt = @"SELECT '未完成' AS KINDS UNION ALL SELECT '全部' ";
-
-        dt.Load(m_db.ExecuteReader(cmdTxt));
-
-        if (dt.Rows.Count > 0)
-        {
-            DropDownList2.DataSource = dt;
-            DropDownList2.DataTextField = "KINDS";
-            DropDownList2.DataValueField = "KINDS";
-            DropDownList2.DataBind();
-
-        }
-        else
-        {
-
-        }
-    }
+  
 
 
 
@@ -108,65 +74,86 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
-        
 
 
 
-        //查詢條件
+        //狀態
+        if (!string.IsNullOrEmpty(DropDownList1.Text))
+        {
+            if (DropDownList1.Text.Equals("Y"))
+            {
+                QUERYS.AppendFormat(@" AND W.WORK_STATE  IN ('Completed') ");
+            }
+            else if (DropDownList1.Text.Equals("N"))
+            {
+                QUERYS.AppendFormat(@"  AND W.WORK_STATE NOT IN ('Completed') ");
+            }
+        }
+
+        //校稿名稱
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@"  AND TB_EIP_SCH_WORK.SUBJECT LIKE '%{0}%'", TextBox1.Text);
-            QUERYS.AppendFormat(@"  AND TB_EIP_SCH_DEVOLVE.SUBJECT LIKE  '%{0}%'", TextBox1.Text);
+            QUERYS.AppendFormat(@" AND W.SUBJECT LIKE  '%'+@SUBJECT+'%' ");
+
         }
-        //校稿項目 是否完成
-        if (DropDownList1.Text.Equals("未完成"))
+
+        //執行者
+        if (!string.IsNullOrEmpty(TextBox2.Text))
         {
-            QUERYS.AppendFormat(@"  AND ISNULL(TB_EIP_SCH_DEVOLVE_EXAMINE_LOG.STATUS,'') NOT IN ('Approve')");
-            QUERYS.AppendFormat(@"  AND TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID NOT IN (SELECT [DEVOLVE_GUID]  FROM [UOF].[dbo].[Z_TB_EIP_SCH_DEVOLVE_IGNORES])");
+            QUERYS.AppendFormat(@" AND USER2.NAME LIKE  '%{0}%' ", TextBox2.Text);
+
         }
-        else if (DropDownList1.Text.Equals("全部"))
+
+        //交付者
+        if (!string.IsNullOrEmpty(TextBox3.Text))
         {
-            QUERYS.AppendFormat(@"  ");
-        }
-        //校稿人員 是否完成
-        if (DropDownList2.Text.Equals("未完成"))
-        {
-            QUERYS.AppendFormat(@"  AND TB_EIP_SCH_WORK.WORK_STATE NOT IN ('Completed','Audit')");
-            
-        }
-        else if (DropDownList2.Text.Equals("全部"))
-        {
-            QUERYS.AppendFormat(@"  ");
+            QUERYS.AppendFormat(@" AND USER1.NAME LIKE  '%{0}%' ", TextBox3.Text);
+
         }
 
 
         cmdTxt.AppendFormat(@"
-                           SELECT CONVERT(nvarchar,TB_EIP_SCH_WORK.CREATE_TIME,111) AS '交辨開始時間'
-                            ,TB_EIP_SCH_DEVOLVE.SUBJECT AS '校稿區內容'
-                            ,TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID AS 'DEVOLVE_GUID'
-                            ,TB_EIP_SCH_WORK.SUBJECT AS '交辨項目'
-                            ,TB_EIP_SCH_WORK.EXECUTE_USER AS '交辨'
-                            ,TB_EIP_SCH_WORK.WORK_STATE AS 'WORK_STATE'
-                            ,(ISNULL(TB_EIP_SCH_WORK.PROCEEDING_DESC,'')+ISNULL(TB_EIP_SCH_WORK.COMPLETE_DESC,''))  AS '交辨回覆'
-                            ,TB_EB_USER.NAME AS '被交辨人'
-                            ,(CASE  WHEN TB_EIP_SCH_WORK.WORK_STATE='Completed' THEN '審稿完成' WHEN TB_EIP_SCH_WORK.WORK_STATE='Audit' THEN '交辨完成' WHEN TB_EIP_SCH_WORK.WORK_STATE='Proceeding' THEN '已回覆，但交辨人未確認' WHEN TB_EIP_SCH_WORK.WORK_STATE='NotYetBegin' THEN '未開始回覆' END) AS '交辨狀態'
-                            ,(CASE WHEN ISNULL(TB_EIP_SCH_WORK.COMPLETE_TIME,'')<>'' THEN CONVERT(NVARCHAR,TB_EIP_SCH_WORK.COMPLETE_TIME,111)+' '+ SUBSTRING(CONVERT(NVARCHAR,TB_EIP_SCH_WORK.COMPLETE_TIME,24),1,8) ELSE CONVERT(NVARCHAR,TB_EIP_SCH_WORK.PROCEEDING_TIME,111)+' '+ SUBSTRING(CONVERT(NVARCHAR,TB_EIP_SCH_WORK.PROCEEDING_TIME,24),1,8) END)  AS '回覆時間'
+                            -- 1. 先把 DEVOLE_GUID 對應的 userId 拉出來
+                            WITH DEVOLVE_USERS AS (
+                                SELECT 
+                                    D.DEVOLVE_GUID,
+                                    UserId.value('(.)', 'nvarchar(50)') AS UserId
+                                FROM [UOF].dbo.TB_EIP_SCH_DEVOLVE D
+                                CROSS APPLY D.USER_SET.nodes('/UserSet/Element/userId') AS X(UserId)
+                            )
 
-                            ,TB_EIP_SCH_DEVOLVE_EXAMINE_LOG.*
-                            ,TB_EB_USER.ACCOUNT
-                            ,USER2.NAME AS '交辨人'
-
-                            FROM [UOF].dbo.TB_EIP_SCH_DEVOLVE
-                            LEFT JOIN [UOF].dbo.TB_EIP_SCH_DEVOLVE_EXAMINE_LOG ON TB_EIP_SCH_DEVOLVE_EXAMINE_LOG.DEVOLVE_GUID=TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID
-                            LEFT JOIN [UOF].dbo.TB_EIP_SCH_WORK ON TB_EIP_SCH_WORK.DEVOLVE_GUID=TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID
-                            LEFT JOIN [UOF].dbo.TB_EB_USER ON TB_EB_USER.USER_GUID=TB_EIP_SCH_WORK.EXECUTE_USER
-                            LEFT JOIN [UOF].dbo.TB_EB_USER USER2 ON USER2.USER_GUID=TB_EIP_SCH_DEVOLVE.DIRECTOR
-
+                            -- 2. 主查詢
+                            SELECT 
+                                W.DEVOLVE_GUID,
+                                W.SUBJECT,
+                                W.WORK_STATE,
+                                CASE 
+                                    WHEN W.WORK_STATE = 'Completed' THEN '已回覆'
+                                    WHEN W.WORK_STATE = 'NotYetBegin' THEN '還沒回覆'
+                                    WHEN W.WORK_STATE = 'Audit' THEN '回覆完成，交付人審查中'
+                                    WHEN W.WORK_STATE = 'Proceeding' THEN '有回覆，但沒有完成'
+                                    ELSE W.WORK_STATE
+                                END AS WORK_STATE_DESC,
+                                USER1.NAME AS 交付者,
+                                USER2.NAME AS 執行者,
+                                CONVERT(nvarchar, W.CREATE_TIME, 112) AS CREATE_TIME,
+                                CONVERT(nvarchar, W.END_TIME, 112) AS END_TIME,
+                                (
+                                    SELECT TOP 1 DESCRIPTION 
+                                    FROM [UOF].dbo.TB_EIP_SCH_WORK_RECORD R
+                                    WHERE R.WORK_GUID = W.WORK_GUID
+                                    ORDER BY R.CREATE_TIME DESC
+                                ) AS DESCRIPTION,
+                                W.WORK_GUID,
+                                W.CREATE_USER,
+                                W.EXECUTE_USER
+                            FROM [UOF].dbo.TB_EIP_SCH_WORK W
+                            LEFT JOIN [UOF].dbo.TB_EB_USER USER1 ON USER1.USER_GUID = W.CREATE_USER
+                            LEFT JOIN [UOF].dbo.TB_EB_USER USER2 ON USER2.USER_GUID = W.EXECUTE_USER
+                            INNER JOIN DEVOLVE_USERS DU ON DU.DEVOLVE_GUID = W.DEVOLVE_GUID AND DU.UserId = W.EXECUTE_USER
                             WHERE 1=1
-                            AND TB_EIP_SCH_WORK.SUBJECT  LIKE '%校稿%'
-                            {0}
-
-                            ORDER BY TB_EIP_SCH_DEVOLVE.CREATE_TIME DESC
+                                {0}
+                            ORDER BY SUBJECT,CREATE_TIME DESC
                                
                                 ", QUERYS.ToString());
 
