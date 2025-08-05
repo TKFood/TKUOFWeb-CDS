@@ -124,6 +124,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVE : Ede.Uof.Utility.Pa
 
                             -- 2. 主查詢
                             SELECT 
+                                W.WORK_GUID,
                                 W.DEVOLVE_GUID,
                                 W.SUBJECT,
                                 W.WORK_STATE,

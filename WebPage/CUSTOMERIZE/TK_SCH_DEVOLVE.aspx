@@ -142,7 +142,7 @@
                                                 </asp:BoundField>
                                                 <asp:TemplateField HeaderText="填寫交辨" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Button ID="GWButton1" runat="server" Text="填寫交辨" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("DEVOLVE_GUID") %>' />
+                                                        <asp:Button ID="GWButton1" runat="server" Text="填寫交辨" CommandName="GWButton1" ForeColor="Red" CommandArgument='<%# Eval("WORK_GUID") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

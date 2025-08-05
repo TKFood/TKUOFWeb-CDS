@@ -29,7 +29,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
         ROLES = SEARCHROLES(ACCOUNT.Trim());
         USER_GUID = SEARCHTB_EB_USER(ACCOUNT);
         NAMES.Text = NAME;
-
+        USER_GUID = "5af1f6e3-426e-4fc6-86ee-235845cba61e";
 
         //不顯示子視窗的按鈕
         //確定
@@ -105,14 +105,14 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
     #region BUTTON
     void CDS_WebPage_Dialog_Button1OnClick()
     {
-
-        string IDEVOLVE_GUIDD = null;
+        string WORK_GUID = null;       
         string EXECUTE_USER = null;
         string WORK_STATE = "";
         string PROCEEDING_DESC = "";
         string COMPLETE_DESC = "";
+        string DESCRIPTION = "";
 
-        IDEVOLVE_GUIDD = lblParam.Text;
+        WORK_GUID = lblParam.Text;
         EXECUTE_USER = USER_GUID;
 
         if (DropDownList1.Text.ToString().Equals("進行中"))
@@ -120,15 +120,17 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
             WORK_STATE = "Proceeding";
             PROCEEDING_DESC = TextBox1.Text.ToString();
             COMPLETE_DESC = "";
+            DESCRIPTION = TextBox1.Text.ToString();
         }
         else if (DropDownList1.Text.ToString().Equals("已完成"))
         {
             WORK_STATE = "Audit";
             PROCEEDING_DESC = "";
             COMPLETE_DESC = TextBox1.Text.ToString();
+            DESCRIPTION = TextBox1.Text.ToString();
         }
 
-        UPDATE_TB_EIP_SCH_WORK(IDEVOLVE_GUIDD, EXECUTE_USER, WORK_STATE, PROCEEDING_DESC, COMPLETE_DESC);
+        UPDATE_TB_EIP_SCH_WORK(WORK_GUID, EXECUTE_USER, WORK_STATE, PROCEEDING_DESC, COMPLETE_DESC, DESCRIPTION);
 
 
         //設定回傳值並關閉視窗
@@ -143,13 +145,14 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
 
     void Button2OnClick()
     {
-        string IDEVOLVE_GUIDD = null; 
+        string WORK_GUID = null; 
         string EXECUTE_USER = null; 
         string WORK_STATE = ""; 
         string PROCEEDING_DESC = ""; 
         string COMPLETE_DESC = "";
+        string DESCRIPTION = "";
 
-        IDEVOLVE_GUIDD = lblParam.Text;
+        WORK_GUID = lblParam.Text;
         EXECUTE_USER = USER_GUID;
 
         if (DropDownList1.Text.ToString().Equals("進行中"))
@@ -157,15 +160,17 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
             WORK_STATE = "Proceeding";
             PROCEEDING_DESC = TextBox1.Text.ToString();
             COMPLETE_DESC = "";
+            DESCRIPTION = TextBox1.Text.ToString();
         }
         else if (DropDownList1.Text.ToString().Equals("已完成"))
         {
             WORK_STATE = "Audit";
             PROCEEDING_DESC = "";
             COMPLETE_DESC = TextBox1.Text.ToString();
+            DESCRIPTION = TextBox1.Text.ToString();
         }
 
-        UPDATE_TB_EIP_SCH_WORK(IDEVOLVE_GUIDD, EXECUTE_USER, WORK_STATE, PROCEEDING_DESC, COMPLETE_DESC);
+        UPDATE_TB_EIP_SCH_WORK(WORK_GUID, EXECUTE_USER, WORK_STATE, PROCEEDING_DESC, COMPLETE_DESC, DESCRIPTION);
         //設定回傳值並關閉視窗
         Dialog.SetReturnValue2("OK");
 
@@ -251,7 +256,7 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
         }
 
     }
-    public void SEARCH_TB_EIP_SCH_WORK(string DEVOLVE_GUID, string EXECUTE_USER)
+    public void SEARCH_TB_EIP_SCH_WORK(string WORK_GUID, string EXECUTE_USER)
     {
        
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
@@ -261,11 +266,11 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
                         SELECT *
                         ,(ISNULL(TB_EIP_SCH_WORK.PROCEEDING_DESC,'')+ISNULL(TB_EIP_SCH_WORK.COMPLETE_DESC,''))  AS '交辨回覆'
                         FROM [UOF].dbo.TB_EIP_SCH_WORK
-                        WHERE DEVOLVE_GUID=@DEVOLVE_GUID
+                        WHERE WORK_GUID=@WORK_GUID
                         AND EXECUTE_USER=@EXECUTE_USER
                         ORDER BY CREATE_TIME DESC
                         ";
-        m_db.AddParameter("@DEVOLVE_GUID", DEVOLVE_GUID);
+        m_db.AddParameter("@WORK_GUID", WORK_GUID);
         m_db.AddParameter("@EXECUTE_USER", EXECUTE_USER);
 
         DataTable dt = new DataTable();
@@ -277,57 +282,86 @@ public partial class CDS_WebPage_CUSTOMERIZE_TK_SCH_DEVOLVEDialogEDIT : Ede.Uof.
 
             TextBox1.ReadOnly = false;
             TextBox1.Text = dt.Rows[0]["交辨回覆"].ToString();
-
             TextBox2.Text = dt.Rows[0]["SUBJECT"].ToString();
-            
+
         }
         else
         {
             TextBox1.ReadOnly = true;
             TextBox1.Text = "交辨事項及交辨人不正確，無法填寫!";
-
-          
             TextBox2.Text = "交辨事項及交辨人不正確，無法填寫!";
 
             ((Master_DialogMasterPage)this.Master).Button1Text = string.Empty;
-
         }
-
-
-
-
     }
 
-   
 
 
 
-    public void UPDATE_TB_EIP_SCH_WORK(string DEVOLVE_GUID, string EXECUTE_USER, string WORK_STATE, string PROCEEDING_DESC, string COMPLETE_DESC)
-    {        
 
-        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
-        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+    public void UPDATE_TB_EIP_SCH_WORK(string WORK_GUID, string EXECUTE_USER, string WORK_STATE, string PROCEEDING_DESC, string COMPLETE_DESC, string DESCRIPTION)
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        string cmdTxt = @"                         
-                        UPDATE [UOF].dbo.TB_EIP_SCH_WORK
-                        SET [WORK_STATE]=@WORK_STATE,PROCEEDING_DESC=@PROCEEDING_DESC, [COMPLETE_DESC]=@COMPLETE_DESC,[COMPLETE_TIME]=@COMPLETE_TIME
-                        WHERE [DEVOLVE_GUID]= @DEVOLVE_GUID AND [EXECUTE_USER]=@EXECUTE_USER
+            string cmdTxt = @"
+            UPDATE [UOF].dbo.TB_EIP_SCH_WORK
+            SET 
+                [WORK_STATE] = @WORK_STATE,
+                PROCEEDING_DESC = @PROCEEDING_DESC,
+                [COMPLETE_DESC] = @COMPLETE_DESC,
+                [COMPLETE_TIME] = @COMPLETE_TIME
+            WHERE 
+                [WORK_GUID] = @WORK_GUID 
+                AND [EXECUTE_USER] = @EXECUTE_USER;
 
+            INSERT INTO [UOF].[dbo].[TB_EIP_SCH_WORK_RECORD]
+            (
+                [WORK_RECORD_GUID],
+                [WORK_GUID],
+                [WORK_STATE],
+                [DESCRIPTION],
+                [CREATE_TIME],
+                [CREATE_USER],
+                [CREATE_FROM],
+                [FILE_GROUP_GUID]
+            )
+            VALUES
+            (
+                NEWID(),
+                @WORK_GUID,
+                @WORK_STATE,
+                @DESCRIPTION,
+                GETDATE(),
+                @CREATE_USER,
+                '192.168.1.233',
+                NULL
+            );
+        ";
 
+            m_db.AddParameter("@WORK_GUID", WORK_GUID);
+            m_db.AddParameter("@WORK_STATE", WORK_STATE);
+            m_db.AddParameter("@PROCEEDING_DESC", PROCEEDING_DESC);
+            m_db.AddParameter("@COMPLETE_DESC", COMPLETE_DESC);
+            m_db.AddParameter("@COMPLETE_TIME", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffffK"));
+            m_db.AddParameter("@EXECUTE_USER", EXECUTE_USER);
+            m_db.AddParameter("@DESCRIPTION", DESCRIPTION);
+            m_db.AddParameter("@CREATE_USER", EXECUTE_USER);  // 加上這個，否則 @CREATE_USER 無值會報錯
 
-                        ";
+            m_db.ExecuteNonQuery(cmdTxt);
+        }
+        catch (Exception ex)
+        {
+            // 這邊可以加 Log 紀錄、或是顯示錯誤訊息
+            Console.WriteLine("更新 TB_EIP_SCH_WORK 發生錯誤: " + ex.Message);
 
-
-        m_db.AddParameter("@WORK_STATE", WORK_STATE);
-        m_db.AddParameter("@PROCEEDING_DESC", PROCEEDING_DESC);
-        m_db.AddParameter("@COMPLETE_DESC", COMPLETE_DESC);
-        m_db.AddParameter("@COMPLETE_TIME", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffffK"));
-        m_db.AddParameter("@DEVOLVE_GUID", DEVOLVE_GUID);
-        m_db.AddParameter("@EXECUTE_USER", EXECUTE_USER);
-
-        m_db.ExecuteNonQuery(cmdTxt);
-
+            // 你可以選擇拋出錯誤或記錄後繼續
+            throw;
+        }
     }
+
 
 
     #endregion
