@@ -162,18 +162,18 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
         {
             if (DropDownList1.Text.Equals("Y"))
             {
-                QUERYS.AppendFormat(@" AND WORK_STATE  IN ('Completed') ");
+                QUERYS.AppendFormat(@" AND W.WORK_STATE  IN ('Completed') ");
             }
             else if (DropDownList1.Text.Equals("N"))
             {
-                QUERYS.AppendFormat(@"  AND WORK_STATE NOT IN ('Completed') ");
+                QUERYS.AppendFormat(@"  AND W.WORK_STATE NOT IN ('Completed') ");
             }
         }
 
         //校稿名稱
         if (!string.IsNullOrEmpty(TextBox1.Text))
         {
-            QUERYS.AppendFormat(@" AND SUBJECT LIKE  '%'+@SUBJECT+'%' ");
+            QUERYS.AppendFormat(@" AND W.SUBJECT LIKE  '%'+@SUBJECT+'%' ");
 
         }
 
@@ -192,27 +192,44 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
         }
 
         cmdTxt.AppendFormat(@" 
-                            SELECT SUBJECT,CASE WHEN WORK_STATE='Completed' THEN '已完成'  WHEN WORK_STATE='NotYetBegin' THEN '尚未開始' WHEN WORK_STATE='Audit' THEN '交付人審查中' WHEN WORK_STATE='Proceeding' THEN '進行中' ELSE WORK_STATE END  WORK_STATE
-                            ,USER1.NAME AS '交付者',USER2.NAME AS '執行者',CONVERT(nvarchar,CREATE_TIME,112 ) CREATE_TIME,CONVERT(nvarchar,END_TIME,112 ) END_TIME
-                            ,(SELECT TOP 1 DESCRIPTION FROM  [UOF].dbo.TB_EIP_SCH_WORK_RECORD WHERE TB_EIP_SCH_WORK_RECORD.WORK_GUID=TB_EIP_SCH_WORK.WORK_GUID ORDER BY CREATE_TIME DESC) AS 'DESCRIPTION'
-                            ,WORK_GUID,CREATE_USER,EXECUTE_USER
-                            FROM [UOF].dbo.TB_EIP_SCH_WORK
-                            LEFT JOIN [UOF].dbo.TB_EB_USER USER1 ON USER1.USER_GUID=CREATE_USER
-                            LEFT JOIN [UOF].dbo.TB_EB_USER USER2 ON USER2.USER_GUID=EXECUTE_USER
-                            WHERE 1=1
-                            AND EXECUTE_USER IN 
-                            (
-                            SELECT
-                            UserId.value('(.)', 'nvarchar(50)') AS UserId
-                            FROM
-                            [UOF].dbo.TB_EIP_SCH_DEVOLVE
-                            CROSS APPLY
-                            USER_SET.nodes('/UserSet/Element') AS UserSet(Element)
-                            CROSS APPLY
-                            Element.nodes('userId') AS UserId(UserId)
-                            WHERE
-                            TB_EIP_SCH_DEVOLVE.DEVOLVE_GUID=TB_EIP_SCH_WORK.DEVOLVE_GUID
+                            -- 1. 先把 DEVOLE_GUID 對應的 userId 拉出來
+                            WITH DEVOLVE_USERS AS (
+                                SELECT 
+                                    D.DEVOLVE_GUID,
+                                    UserId.value('(.)', 'nvarchar(50)') AS UserId
+                                FROM [UOF].dbo.TB_EIP_SCH_DEVOLVE D
+                                CROSS APPLY D.USER_SET.nodes('/UserSet/Element/userId') AS X(UserId)
                             )
+
+                            -- 2. 主查詢
+                            SELECT 
+                                W.SUBJECT,
+                                W.WORK_STATE,
+                                CASE 
+                                    WHEN W.WORK_STATE = 'Completed' THEN '已回覆'
+                                    WHEN W.WORK_STATE = 'NotYetBegin' THEN '還沒回覆'
+                                    WHEN W.WORK_STATE = 'Audit' THEN '回覆完，交付人審查中'
+                                    WHEN W.WORK_STATE = 'Proceeding' THEN '回覆進行中'
+                                    ELSE W.WORK_STATE
+                                END AS WORK_STATE_DESC,
+                                USER1.NAME AS 交付者,
+                                USER2.NAME AS 執行者,
+                                CONVERT(nvarchar, W.CREATE_TIME, 112) AS CREATE_TIME,
+                                CONVERT(nvarchar, W.END_TIME, 112) AS END_TIME,
+                                (
+                                    SELECT TOP 1 DESCRIPTION 
+                                    FROM [UOF].dbo.TB_EIP_SCH_WORK_RECORD R
+                                    WHERE R.WORK_GUID = W.WORK_GUID
+                                    ORDER BY R.CREATE_TIME DESC
+                                ) AS DESCRIPTION,
+                                W.WORK_GUID,
+                                W.CREATE_USER,
+                                W.EXECUTE_USER
+                            FROM [UOF].dbo.TB_EIP_SCH_WORK W
+                            LEFT JOIN [UOF].dbo.TB_EB_USER USER1 ON USER1.USER_GUID = W.CREATE_USER
+                            LEFT JOIN [UOF].dbo.TB_EB_USER USER2 ON USER2.USER_GUID = W.EXECUTE_USER
+                            INNER JOIN DEVOLVE_USERS DU ON DU.DEVOLVE_GUID = W.DEVOLVE_GUID AND DU.UserId = W.EXECUTE_USER
+                            WHERE 1=1
                                 {0}
                             ORDER BY SUBJECT,CREATE_TIME DESC
                              

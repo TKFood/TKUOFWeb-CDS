@@ -79,7 +79,7 @@
                                     <asp:BoundField HeaderText="校稿名稱" DataField="SUBJECT" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="Left" Width="300px"></ItemStyle>
                                     </asp:BoundField>
-                                    <asp:BoundField HeaderText="目前的狀況" DataField="WORK_STATE" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                    <asp:BoundField HeaderText="目前的狀況" DataField="WORK_STATE_DESC" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                         <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
                                     </asp:BoundField>
                                     <asp:BoundField HeaderText="交付者" DataField="交付者" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
