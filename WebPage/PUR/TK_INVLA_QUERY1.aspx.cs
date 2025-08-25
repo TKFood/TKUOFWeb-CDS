@@ -71,8 +71,11 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
 
     public void SETYEARSWEEKS()
     {
-        txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
+        txtDate1.Text = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy/MM/dd");
         txtDate2.Text = DateTime.Now.ToString("yyyy/MM/dd");
+        txtDate3.Text = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy/MM/dd");
+        txtDate4.Text = DateTime.Now.ToString("yyyy/MM/dd");
+
     }
 
     private void BindGrid1(string SALESFOCUS)
@@ -387,12 +390,168 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
 
     }
 
+    private void BindGrid2(string LA001,string SDATES,string EDATES)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+
+        //查詢條件
+        //if (!string.IsNullOrEmpty(TextBox1.Text))
+        //{
+        //    QUERYS.AppendFormat(@"  AND TB_EIP_SCH_WORK.SUBJECT LIKE '%{0}%'", TextBox1.Text);
+        //    QUERYS.AppendFormat(@"  AND TB_EIP_SCH_DEVOLVE.SUBJECT LIKE  '%{0}%'", TextBox1.Text);
+        //}    
+        //else if (DropDownList1.Text.Equals("全部"))
+        //{
+        //    QUERYS.AppendFormat(@"  ");
+        //}
+
+
+        cmdTxt.AppendFormat(@"                               
+                            SELECT 
+                            t2.品號, 
+                            t2.品名, 
+                            t2.規格, 
+                            t2.單位, 
+                            invla_sum.目前庫存量,
+                            t2.最近進貨價, 
+                            t2.最低補量,
+                            NULLIF(SUM(t2.FILEDS1),0) AS '1進貨/入庫',
+                            NULLIF(SUM(t2.FILEDS2),0) AS '2銷貨',
+                            NULLIF(SUM(t2.FILEDS3),0) AS '3領用',
+                            NULLIF(SUM(t2.FILEDS4),0) AS '4組合領用',
+                            NULLIF(SUM(t2.FILEDS5),0) AS '5組合生產',
+                            CONVERT(decimal(16,2),MB047)  AS '標準售價',
+                            CONVERT(decimal(16,2),MB051)  AS '零售價',
+                            CASE WHEN SUM(t2.FILEDS2)<0 THEN ISNULL(avg_sale.平均售價,0) ELSE 0 END AS 平均售價,
+                            半成品進價.進價 AS 半成品進價,
+                            最近成本.AVGCOSTS AS 最近成本,
+                            t2.員購數量
+                        FROM
+                        (
+                            SELECT 
+                                NEWMQ008 AS 分類,
+                                LA001 AS 品號,
+                                INVMB.MB002 AS 品名,
+                                INVMB.MB003 AS 規格,
+                                INVMB.MB004 AS 單位,
+                                CONVERT(DECIMAL(16,2),INVMB.MB050) AS 最近進貨價,
+                                CONVERT(DECIMAL(16,0),INVMB.MB039) AS 最低補量,
+                                CASE WHEN NEWMQ008='1進貨/入庫' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS1,
+                                CASE WHEN NEWMQ008='2銷貨' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS2,
+                                CASE WHEN NEWMQ008='3領用' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS3,
+                                CASE WHEN NEWMQ008='4組合領用' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS4,
+                                CASE WHEN NEWMQ008='5組合生產' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS5,
+                                (
+                                    SELECT SUM(LA016)
+                                    FROM [TK].dbo.SASLA s
+                                    WHERE s.LA043 IN (SELECT SASLA_LA043 FROM [TKPUR].[dbo].[TK_SASLA_LA043])
+                                      AND s.LA005=INVLA.LA001
+                                ) AS 員購數量
+                            FROM [TK].dbo.INVLA INVLA WITH(NOLOCK)
+                            LEFT JOIN [TK].dbo.CMSMQ MQ WITH(NOLOCK) ON LA006=MQ001
+                            INNER JOIN [TK].dbo.INVMB INVMB WITH(NOLOCK) ON LA001=MB001
+                            CROSS APPLY (
+                                SELECT CASE  
+                                    WHEN MQ001 IN ('A421','A422','A431') AND LA005=-1 THEN '4組合領用'
+                                    WHEN MQ001 IN ('A421','A422','A431') AND LA005=1 THEN '5組合生產'
+                                    WHEN MQ008='1' THEN '1進貨/入庫'
+                                    WHEN MQ008='2' OR (ISNULL(MQ008,'')='' AND LA005=-1) THEN '2銷貨'
+                                    WHEN MQ008='3' THEN '3領用'
+                                END AS NEWMQ008
+                            ) x
+                            WHERE LA004 BETWEEN '{1}' AND '{2}'
+                              AND (LA001 LIKE  '%{0}%' OR UPPER(MB002) LIKE '%{0}%')
+                            GROUP BY LA001,MB002,MB003,MB004,MB050,MB039,NEWMQ008
+                        ) t2
+                        LEFT JOIN [TK].dbo.INVMB b ON b.MB001=t2.品號
+                        OUTER APPLY (
+                            SELECT SUM(LA005*LA011) AS 目前庫存量
+                            FROM TK.dbo.INVLA la
+                            WHERE la.LA001=t2.品號
+                        ) invla_sum
+                        OUTER APPLY (
+                            SELECT ISNULL(
+                                       CONVERT(DECIMAL(16,2),
+                                               SUM(LA017-LA020-LA021-LA022-LA023) / NULLIF(SUM(LA016+LA025-LA019),0)
+                                       ),0) AS 平均售價
+                            FROM [TK].dbo.SASLA s
+                            WHERE s.LA005=t2.品號
+                              AND (LA017-LA020-LA021-LA022-LA023)>0
+                              AND (LA016+LA025-LA019)>0
+                        ) avg_sale
+                        OUTER APPLY (
+                            SELECT TOP 1 CONVERT(DECIMAL(16,2),CASE WHEN NUMS>0 AND TOTALCOSTS>0 THEN TOTALCOSTS/NUMS ELSE 0 END) AS AVGCOSTS
+                            FROM (
+                                SELECT (ME003+ME004+ME005) AS NUMS,(ME007+ME008+ME009+ME010) AS TOTALCOSTS
+                                FROM [TK].dbo.CSTME
+                                WHERE ME001=t2.品號
+                            ) c
+                            ORDER BY c.NUMS DESC
+                        ) 最近成本
+                        OUTER APPLY (
+                            SELECT TOP 1 CONVERT(NVARCHAR,ISNULL(CONVERT(decimal(16,2),MB050),0))+' /'+MB004 AS 進價
+                            FROM [TK].dbo.INVMB mb
+                            WHERE mb.MB050>0
+                              AND mb.MB001 IN (
+                                  SELECT MD003 FROM [TK].dbo.BOMMD WHERE MD003 LIKE '3%' AND MD001=t2.品號
+                              )
+                        ) 半成品進價
+                        GROUP BY t2.品號,t2.品名,t2.規格,t2.單位,invla_sum.目前庫存量,
+                                 t2.最近進貨價,MB047,MB051,t2.員購數量,t2.最低補量,
+                                 半成品進價.進價,最近成本.AVGCOSTS,avg_sale.平均售價
+                        ORDER BY t2.品號,t2.品名,t2.規格,t2.單位,t2.最近進貨價;
+
+                               
+                                ", LA001, SDATES, EDATES);
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+
+
+
+    protected void grid2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+       
+
+    }
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        //if (e.CommandName == "GWButton1")
+        //{
+
+        //    BindGrid1("");
+
+        //}
+
+    }
+
+
     public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
 
-        //SETEXCEL();
-
     }
+
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
@@ -410,7 +569,18 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
         BindGrid1("");
     }
 
-   
+
+    protected void btn2_Click(object sender, EventArgs e)
+    {
+        DateTime DTSDATES = Convert.ToDateTime(txtDate3.Text);
+        string SDATES = DTSDATES.ToString("yyyyMMdd");
+        DateTime DTEDATES = Convert.ToDateTime(txtDate4.Text);
+        string EDATES = DTEDATES.ToString("yyyyMMdd");
+
+        string MB001 = TextBox2.Text;
+
+        BindGrid2(MB001, SDATES, EDATES);
+    }
 
 
     #endregion
