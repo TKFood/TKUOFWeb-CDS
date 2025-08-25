@@ -26,7 +26,7 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
         if (!IsPostBack)
         {
             SETYEARSWEEKS();
-            BindGrid1("");
+           
 
         }
         else
@@ -419,17 +419,17 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                             invla_sum.目前庫存量,
                             t2.最近進貨價, 
                             t2.最低補量,
-                            NULLIF(SUM(t2.FILEDS1),0) AS '1進貨/入庫',
-                            NULLIF(SUM(t2.FILEDS2),0) AS '2銷貨',
-                            NULLIF(SUM(t2.FILEDS3),0) AS '3領用',
-                            NULLIF(SUM(t2.FILEDS4),0) AS '4組合領用',
-                            NULLIF(SUM(t2.FILEDS5),0) AS '5組合生產',
+                            NULLIF(SUM(t2.FILEDS1),0) / NULLIF(月份數.月份數,0) AS '1進貨/入庫',
+                            NULLIF(SUM(t2.FILEDS2),0) / NULLIF(月份數.月份數,0) AS '2銷貨',
+                            NULLIF(SUM(t2.FILEDS3),0) / NULLIF(月份數.月份數,0) AS '3領用',
+                            NULLIF(SUM(t2.FILEDS4),0) / NULLIF(月份數.月份數,0) AS '4組合領用',
+                            NULLIF(SUM(t2.FILEDS5),0) / NULLIF(月份數.月份數,0) AS '5組合生產',
                             CONVERT(decimal(16,2),MB047)  AS '標準售價',
                             CONVERT(decimal(16,2),MB051)  AS '零售價',
                             CASE WHEN SUM(t2.FILEDS2)<0 THEN ISNULL(avg_sale.平均售價,0) ELSE 0 END AS 平均售價,
                             半成品進價.進價 AS 半成品進價,
                             最近成本.AVGCOSTS AS 最近成本,
-                            t2.員購數量
+                            t2.員購數量 / NULLIF(月份數.月份數,0) AS 員購數量
                         FROM
                         (
                             SELECT 
@@ -450,7 +450,8 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                                     FROM [TK].dbo.SASLA s
                                     WHERE s.LA043 IN (SELECT SASLA_LA043 FROM [TKPUR].[dbo].[TK_SASLA_LA043])
                                       AND s.LA005=INVLA.LA001
-                                ) AS 員購數量
+                                ) AS 員購數量,
+                                SUBSTRING(LA004,1,6) AS 年月   -- 保留年月供月份數計算
                             FROM [TK].dbo.INVLA INVLA WITH(NOLOCK)
                             LEFT JOIN [TK].dbo.CMSMQ MQ WITH(NOLOCK) ON LA006=MQ001
                             INNER JOIN [TK].dbo.INVMB INVMB WITH(NOLOCK) ON LA001=MB001
@@ -465,7 +466,7 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                             ) x
                             WHERE LA004 BETWEEN '{1}' AND '{2}'
                               AND (LA001 LIKE  '%{0}%' OR UPPER(MB002) LIKE '%{0}%')
-                            GROUP BY LA001,MB002,MB003,MB004,MB050,MB039,NEWMQ008
+                            GROUP BY LA001,MB002,MB003,MB004,MB050,MB039,NEWMQ008,SUBSTRING(LA004,1,6)
                         ) t2
                         LEFT JOIN [TK].dbo.INVMB b ON b.MB001=t2.品號
                         OUTER APPLY (
@@ -500,9 +501,15 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
                                   SELECT MD003 FROM [TK].dbo.BOMMD WHERE MD003 LIKE '3%' AND MD001=t2.品號
                               )
                         ) 半成品進價
+                        OUTER APPLY (
+                            SELECT COUNT(DISTINCT SUBSTRING(LA004,1,6)) AS 月份數
+                            FROM [TK].dbo.INVLA v
+                            WHERE v.LA001 = t2.品號
+                              AND v.LA004 BETWEEN '{1}' AND '{2}'
+                        ) 月份數
                         GROUP BY t2.品號,t2.品名,t2.規格,t2.單位,invla_sum.目前庫存量,
                                  t2.最近進貨價,MB047,MB051,t2.員購數量,t2.最低補量,
-                                 半成品進價.進價,最近成本.AVGCOSTS,avg_sale.平均售價
+                                 半成品進價.進價,最近成本.AVGCOSTS,avg_sale.平均售價,月份數.月份數
                         ORDER BY t2.品號,t2.品名,t2.規格,t2.單位,t2.最近進貨價;
 
                                
