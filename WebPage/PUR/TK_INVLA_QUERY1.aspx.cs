@@ -103,89 +103,101 @@ public partial class CDS_WebPage_PUR_TK_INVLA_QUERY1 : Ede.Uof.Utility.Page.Base
         {
             string NEWMB001 = MB001.ToUpper();
 
-            cmdTxt.AppendFormat(@"
-                               
-                                SELECT 品號,品名,規格,單位  
-                                ,(SELECT SUM(LA005*LA011) FROM TK.dbo.INVLA WHERE LA001=品號) AS '目前庫存量'
-                            ,   年月,最近進貨價,最低補量
-                                ,(CASE WHEN SUM(FILEDS1)<>0 THEN SUM(FILEDS1) ELSE NULL END ) AS '1進貨/入庫'
-                                ,(CASE WHEN SUM(FILEDS2)<>0 THEN SUM(FILEDS2) ELSE NULL END ) AS '2銷貨'
-                                ,(CASE WHEN SUM(FILEDS3)<>0 THEN SUM(FILEDS3) ELSE NULL END ) AS '3領用'
-                                ,(CASE WHEN SUM(FILEDS4)<>0 THEN SUM(FILEDS4) ELSE NULL END ) AS '4組合領用'
-                                ,(CASE WHEN SUM(FILEDS5)<>0 THEN SUM(FILEDS5) ELSE NULL END ) AS '5組合生產'
-
-                                ,CONVERT(decimal(16,2),MB047)  AS '標準售價' ,CONVERT(decimal(16,2),MB051) AS '零售價'
-                                ,(CASE WHEN SUM(FILEDS2)<0 THEN 
-                                (SELECT ISNULL(CONVERT(DECIMAL(16,2),SUM(LA017-LA020-LA021-LA022-LA023)/SUM(LA016+LA025-LA019)),0)
-                                FROM [TK].dbo.SASLA
-                                WHERE LA005=品號
-                                AND SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)=年月
-                                AND (LA017-LA020-LA021-LA022-LA023)>0
-                                AND (LA016+LA025-LA019)>0
-                                GROUP BY  SUBSTRING(CONVERT(NVARCHAR,LA015,112),1,6)) ELSE 0 END) AS '平均售價'
-                                ,(SELECT CONVERT(NVARCHAR,ISNULL(CONVERT(decimal(16,2),MB050),0))+' /'+MB004 
-                                FROM [TK].dbo.INVMB
-                                WHERE MB050>0
-                                AND MB001 IN (
-                                SELECT MD003
-                                FROM [TK].dbo.BOMMD
-                                WHERE MD003 LIKE '3%'
-                                AND MD001=品號) 
-                                ) AS '半成品進價'
-                                ,(SELECT TOP 1 (CASE WHEN NUMS>0 AND TOTALCOSTS>0 THEN CONVERT(DECIMAL(16,2),TOTALCOSTS/NUMS) ELSE 0 END ) AS 'AVGCOSTS'
-                                FROM
-                                (
-                                SELECT ME001,ME002,ME003,ME004,ME005,ME007,ME008,ME009,ME010
-                                ,(ME003+ME004+ME005) AS 'NUMS'
-                                ,(ME007+ME008+ME009+ME010) AS 'TOTALCOSTS'
-                                FROM [TK].dbo.CSTME
-                                WHERE  ME001=品號
-                                ) AS TEMP
-                                ORDER BY ME002 DESC
-                                ) AS '最近成本'
-                                ,員購數量
-
-                                FROM
-                                (
-                                SELECT NEWMQ008 AS '分類',LA001 AS '品號',SUBSTRING(LA004,1,6)  AS '年月',SUM(LA005*LA011)  AS '數量',INVMB.MB002 AS '品名',INVMB.MB003 AS '規格',INVMB.MB004 AS '單位'
-                                ,CONVERT(DECIMAL(16,2),INVMB.MB050) AS '最近進貨價'
-                                ,CONVERT(DECIMAL(16,0),INVMB.MB039) AS '最低補量' 
-                                ,(CASE WHEN NEWMQ008 IN ('1進貨/入庫') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS1'
-                                ,(CASE WHEN NEWMQ008 IN ('2銷貨') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS2'
-                                ,(CASE WHEN NEWMQ008 IN ('3領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS3'
-                                ,(CASE WHEN NEWMQ008 IN ('4組合領用') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS4'
-                                ,(CASE WHEN NEWMQ008 IN ('5組合生產') THEN SUM(LA005*LA011) ELSE 0 END ) AS 'FILEDS5'
-                               ,(
-                                SELECT SUM(LA016)
-                                FROM [TK].dbo.SASLA
-                                WHERE SASLA.LA043 IN (SELECT  [SASLA_LA043]  FROM [TKPUR].[dbo].[TK_SASLA_LA043])
-                                AND SASLA.LA005=TEMP.LA001
-                                AND SUBSTRING(CONVERT(NVARCHAR,SASLA.LA015,112),1,6)=SUBSTRING(TEMP.LA004,1,6)
-
-                                ) AS '員購數量'
-
-                                FROM 
-                                (
-                                SELECT MQ001,MQ002,MQ008,LA001,LA004,LA005,LA006,LA007,LA008,LA011,MB002,MB003,MB004,MB039
-                                ,CASE  WHEN MQ001 IN ('A421','A422','A431') AND LA005=-1 THEN '4組合領用' WHEN MQ001 IN ('A421','A422','A431') AND LA005=1 THEN '5組合生產'  WHEN MQ008='1' THEN '1進貨/入庫'  WHEN (MQ008='2' OR (ISNULL(MQ008,'')='' AND LA005=-1))THEN '2銷貨'  WHEN MQ008='3' THEN '3領用' END NEWMQ008 
-                                FROM [TK].dbo.INVLA WITH(NOLOCK)
-                                LEFT JOIN [TK].dbo.CMSMQ WITH(NOLOCK) ON LA006=MQ001
-                                ,[TK].dbo.INVMB WITH(NOLOCK)
-                                WHERE LA001=MB001
-                                AND LA004>='{1}' AND LA004<='{2}'
-
-                                AND (LA001 LIKE  '%{0}%' OR UPPER(MB002) LIKE '%{0}%')
-                                ) AS TEMP,[TK].dbo.INVMB
-                                WHERE LA001=MB001
-
-                                GROUP BY LA001,NEWMQ008,SUBSTRING(LA004,1,6),INVMB.MB002,INVMB.MB003,INVMB.MB004,INVMB.MB050,INVMB.MB039
-
-                                ) AS TMPE2
-                                LEFT JOIN [TK].dbo.INVMB  ON MB001=品號
-                                GROUP BY 品號,品名,規格,單位,年月,最近進貨價,MB047,MB051,員購數量,最低補量
-                                ORDER BY 品號,品名,規格,單位,年月,最近進貨價
-
-
+            cmdTxt.AppendFormat(@"                               
+                               SELECT 
+                                t2.品號, 
+                                t2.品名, 
+                                t2.規格, 
+                                t2.單位, 
+                                invla_sum.目前庫存量,
+                                t2.年月, 
+                                t2.最近進貨價, 
+                                t2.最低補量,
+                                NULLIF(SUM(t2.FILEDS1),0) AS '1進貨/入庫',
+                                NULLIF(SUM(t2.FILEDS2),0) AS '2銷貨',
+                                NULLIF(SUM(t2.FILEDS3),0) AS '3領用',
+                                NULLIF(SUM(t2.FILEDS4),0) AS '4組合領用',
+                                NULLIF(SUM(t2.FILEDS5),0) AS '5組合生產',
+                                CONVERT(decimal(16,2),MB047)  AS '標準售價',
+                                CONVERT(decimal(16,2),MB051)  AS '零售價',
+                                CASE WHEN SUM(t2.FILEDS2)<0 THEN ISNULL(avg_sale.平均售價,0) ELSE 0 END AS 平均售價,
+                                半成品進價.進價 AS 半成品進價,
+                                最近成本.AVGCOSTS AS 最近成本,
+                                t2.員購數量
+                            FROM
+                            (
+                                SELECT 
+                                    NEWMQ008 AS 分類,
+                                    LA001 AS 品號,
+                                    SUBSTRING(LA004,1,6)  AS 年月,
+                                    INVMB.MB002 AS 品名,
+                                    INVMB.MB003 AS 規格,
+                                    INVMB.MB004 AS 單位,
+                                    CONVERT(DECIMAL(16,2),INVMB.MB050) AS 最近進貨價,
+                                    CONVERT(DECIMAL(16,0),INVMB.MB039) AS 最低補量,
+                                    CASE WHEN NEWMQ008='1進貨/入庫' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS1,
+                                    CASE WHEN NEWMQ008='2銷貨' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS2,
+                                    CASE WHEN NEWMQ008='3領用' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS3,
+                                    CASE WHEN NEWMQ008='4組合領用' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS4,
+                                    CASE WHEN NEWMQ008='5組合生產' THEN SUM(LA005*LA011) ELSE 0 END AS FILEDS5,
+                                    (
+                                        SELECT SUM(LA016)
+                                        FROM [TK].dbo.SASLA s
+                                        WHERE s.LA043 IN (SELECT SASLA_LA043 FROM [TKPUR].[dbo].[TK_SASLA_LA043])
+                                          AND s.LA005=INVLA.LA001
+                                          AND LEFT(CONVERT(NVARCHAR(8),s.LA015,112),6)=LEFT(CONVERT(NVARCHAR(8),INVLA.LA004,112),6)
+                                    ) AS 員購數量
+                                FROM [TK].dbo.INVLA INVLA WITH(NOLOCK)
+                                LEFT JOIN [TK].dbo.CMSMQ MQ WITH(NOLOCK) ON LA006=MQ001
+                                INNER JOIN [TK].dbo.INVMB INVMB WITH(NOLOCK) ON LA001=MB001
+                                CROSS APPLY (
+                                    SELECT CASE  
+                                        WHEN MQ001 IN ('A421','A422','A431') AND LA005=-1 THEN '4組合領用'
+                                        WHEN MQ001 IN ('A421','A422','A431') AND LA005=1 THEN '5組合生產'
+                                        WHEN MQ008='1' THEN '1進貨/入庫'
+                                        WHEN MQ008='2' OR (ISNULL(MQ008,'')='' AND LA005=-1) THEN '2銷貨'
+                                        WHEN MQ008='3' THEN '3領用'
+                                    END AS NEWMQ008
+                                ) x
+                                WHERE LA004 BETWEEN '{1}' AND '{2}'
+                                  AND (LA001 LIKE  '%{0}%' OR UPPER(MB002) LIKE '%{0}%')
+                                GROUP BY LA001,MB002,MB003,MB004,MB050,MB039,NEWMQ008,SUBSTRING(LA004,1,6)
+                            ) t2
+                            LEFT JOIN [TK].dbo.INVMB b ON b.MB001=t2.品號
+                            OUTER APPLY (
+                                SELECT SUM(LA005*LA011) AS 目前庫存量
+                                FROM TK.dbo.INVLA la
+                                WHERE la.LA001=t2.品號
+                            ) invla_sum
+                            OUTER APPLY (
+                                SELECT ISNULL(CONVERT(DECIMAL(16,2),SUM(LA017-LA020-LA021-LA022-LA023)/NULLIF(SUM(LA016+LA025-LA019),0)),0) AS 平均售價
+                                FROM [TK].dbo.SASLA s
+                                WHERE s.LA005=t2.品號
+                                  AND LEFT(CONVERT(NVARCHAR(8),s.LA015,112),6)=t2.年月
+                                  AND (LA017-LA020-LA021-LA022-LA023)>0
+                                  AND (LA016+LA025-LA019)>0
+                            ) avg_sale
+                            OUTER APPLY (
+                                SELECT TOP 1 CONVERT(DECIMAL(16,2),CASE WHEN NUMS>0 AND TOTALCOSTS>0 THEN TOTALCOSTS/NUMS ELSE 0 END) AS AVGCOSTS
+                                FROM (
+                                    SELECT (ME003+ME004+ME005) AS NUMS,(ME007+ME008+ME009+ME010) AS TOTALCOSTS
+                                    FROM [TK].dbo.CSTME
+                                    WHERE ME001=t2.品號
+                                ) c
+                                ORDER BY c.NUMS DESC
+                            ) 最近成本
+                            OUTER APPLY (
+                                SELECT TOP 1 CONVERT(NVARCHAR,ISNULL(CONVERT(decimal(16,2),MB050),0))+' /'+MB004 AS 進價
+                                FROM [TK].dbo.INVMB mb
+                                WHERE mb.MB050>0
+                                  AND mb.MB001 IN (
+                                      SELECT MD003 FROM [TK].dbo.BOMMD WHERE MD003 LIKE '3%' AND MD001=t2.品號
+                                  )
+                            ) 半成品進價
+                            GROUP BY t2.品號,t2.品名,t2.規格,t2.單位,invla_sum.目前庫存量,
+                                     t2.年月,t2.最近進貨價,MB047,MB051,t2.員購數量,t2.最低補量,
+                                     半成品進價.進價,最近成本.AVGCOSTS,avg_sale.平均售價
+                            ORDER BY t2.品號,t2.品名,t2.規格,t2.單位,t2.年月,t2.最近進貨價;
                                
                                 ", NEWMB001, SDATES.ToString("yyyyMMdd"), EDATES.ToString("yyyyMMdd"));
 
