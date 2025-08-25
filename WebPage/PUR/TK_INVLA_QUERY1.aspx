@@ -40,6 +40,8 @@
     <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
     <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
         <Tabs>
+            <telerik:RadTab Text="平均">
+            </telerik:RadTab>
             <telerik:RadTab Text="明細">
             </telerik:RadTab>
             <telerik:RadTab Text="空白">

@@ -3817,7 +3817,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
 
             cmdTxt.AppendFormat(@" 
-                                SELECT  [MB001]
+                                SELECT  LTRIM(RTRIM([MB001])) MB001
                                 FROM 
                                 (
                                 SELECT [MB001]
