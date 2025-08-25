@@ -3817,8 +3817,16 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
 
             cmdTxt.AppendFormat(@" 
+                                SELECT  [MB001]
+                                FROM 
+                                (
                                 SELECT [MB001]
-                                 FROM [TKMOC].[dbo].[MOCMANULINEMB001LIKES]                              
+                                FROM [TKMOC].[dbo].[MOCMANULINEMB001LIKES] 
+                                UNION 
+                                SELECT  [MB001]
+                                FROM [TK].[dbo].[ZINVMBBAKING]
+                                )  AS TEMP
+                                GROUP BY  [MB001]                           
                                 ");
 
 
