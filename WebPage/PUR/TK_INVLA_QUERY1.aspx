@@ -50,113 +50,114 @@
     </telerik:RadTabStrip>
     <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
         <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
-            <table class="PopTable">
-                <tr>
-                    <td class="PopTableLeftTD">
-                        <asp:Label ID="Label1" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
-                    </td>
-                    <td class="PopTableRightTD">
-                        <asp:TextBox ID="txtDate3" runat="server" Width="100px"></asp:TextBox>
-                        <asp:Label ID="Label4" runat="server" Text="~"></asp:Label>
-                        <asp:TextBox ID="txtDate4" runat="server" Width="100px"></asp:TextBox>
-                        <asp:Label ID="Label5" runat="server" Text=" "></asp:Label>
-                    </td>
-                </tr>
+            <div id="tabs-1">
+                <table class="PopTable">
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label1" runat="server" Text="日期:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="txtDate3" runat="server" Width="100px"></asp:TextBox>
+                            <asp:Label ID="Label4" runat="server" Text="~"></asp:Label>
+                            <asp:TextBox ID="txtDate4" runat="server" Width="100px"></asp:TextBox>
+                            <asp:Label ID="Label5" runat="server" Text=" "></asp:Label>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="PopTableLeftTD">
-                        <asp:Label ID="Label6" runat="server" Text="品號/品名:" meta:resourcekey="Label4Resource1"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                    </td>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label6" runat="server" Text="品號/品名:" meta:resourcekey="Label4Resource1"></asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                        </td>
 
-                </tr>
+                    </tr>
 
-                <tr>
-                    <td class="PopTableLeftTD"></td>
-                    <td>
-                        <p id="demo"></p>
-                        <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn2_Click"
-                            meta:resourcekey="btn1Resource1" />
-                    </td>
+                    <tr>
+                        <td class="PopTableLeftTD"></td>
+                        <td>
+                            <p id="demo"></p>
+                            <asp:Button ID="Button2" runat="server" Text=" 查詢 " OnClick="btn2_Click"
+                                meta:resourcekey="btn1Resource1" />
+                        </td>
 
-                </tr>
+                    </tr>
 
 
-                <%--<tr>
+                    <%--<tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
                              <button onclick="myFunction()">Click me</button>
                         </td>
 
                     </tr>--%>
-            </table>
-            <table class="PopTable">
-                <tr>
-                    <td colspan="2" class="PopTableRightTD">
-                        <div style="overflow-x: auto; width: 100%">
-                            <Fast:Grid ID="Grid2" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid2_RowDataBound" OnRowCommand="Grid2_RowCommand" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource2" OnPageIndexChanging="grid2_PageIndexChanging">
-                                <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
-                                <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
-                                <Columns>
-                                    <asp:BoundField HeaderText="品號" DataField="品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="品名" DataField="品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="包裝規格" DataField="規格" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="成本單位" DataField="單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="目前庫存量" DataField="目前庫存量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="最低補量" DataField="最低補量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="最近進貨價" DataField="最近進貨價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="半成品進價" DataField="半成品進價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="最近成本" DataField="最近成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="零售價" DataField="零售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="平均售價" DataField="平均售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>                                   
-                                    <asp:BoundField HeaderText="1進貨/入庫" DataField="1進貨/入庫" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="2銷貨" DataField="2銷貨" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="3領用" DataField="3領用" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="4組合領用" DataField="4組合領用" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="5組合生產" DataField="5組合生產" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                    <asp:BoundField HeaderText="員購數量" DataField="員購數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                        <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
-                                    </asp:BoundField>
-                                </Columns>
-                            </Fast:Grid>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                </table>
+                <table class="PopTable">
+                    <tr>
+                        <td colspan="2" class="PopTableRightTD">
+                            <div style="overflow-x: auto; width: 100%">
+                                <Fast:Grid ID="Grid2" Style="overflow-x: auto; width: 100%" OnRowDataBound="Grid2_RowDataBound" OnRowCommand="Grid2_RowCommand" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="GridResource2" OnPageIndexChanging="grid2_PageIndexChanging">
+                                    <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                    <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                    <Columns>
+                                        <asp:BoundField HeaderText="品號" DataField="品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="品名" DataField="品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="包裝規格" DataField="規格" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="成本單位" DataField="單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="目前庫存量" DataField="目前庫存量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="最低補量" DataField="最低補量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="最近進貨價" DataField="最近進貨價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="半成品進價" DataField="半成品進價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="最近成本" DataField="最近成本" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="零售價" DataField="零售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="平均售價" DataField="平均售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="1進貨/入庫" DataField="1進貨/入庫" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="2銷貨" DataField="2銷貨" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="3領用" DataField="3領用" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="4組合領用" DataField="4組合領用" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="5組合生產" DataField="5組合生產" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="員購數量" DataField="員購數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Center" Width="60px"></ItemStyle>
+                                        </asp:BoundField>
+                                    </Columns>
+                                </Fast:Grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </telerik:RadPageView>
 
