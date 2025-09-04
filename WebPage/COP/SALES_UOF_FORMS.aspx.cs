@@ -25,6 +25,8 @@ public partial class CDS_WebPage_COP_SALES_UOF_FORMS : Ede.Uof.Utility.Page.Base
         {
             BindDropDownList1();
             BindDropDownList2();
+
+            BindGrid();
         }
     }
 
