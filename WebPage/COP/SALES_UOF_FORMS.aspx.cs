@@ -67,7 +67,7 @@ public partial class CDS_WebPage_COP_SALES_UOF_FORMS : Ede.Uof.Utility.Page.Base
     }
     private void BindGrid()
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder filterUser = new StringBuilder();
