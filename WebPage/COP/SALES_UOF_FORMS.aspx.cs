@@ -103,6 +103,7 @@ public partial class CDS_WebPage_COP_SALES_UOF_FORMS : Ede.Uof.Utility.Page.Base
                                     ELSE NULL
                                 END AS '表單標題',
                                 t.CURRENT_SITE_ID,
+	                            t.TASK_ID,
                                 t.CURRENT_DOC
                             FROM [UOF].dbo.TB_WKF_TASK AS t WITH (NOLOCK)
                             LEFT JOIN [UOF].dbo.TB_EB_USER AS u
@@ -149,7 +150,20 @@ public partial class CDS_WebPage_COP_SALES_UOF_FORMS : Ede.Uof.Utility.Page.Base
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            string taskId = DataBinder.Eval(e.Row.DataItem, "TASK_ID") as string;
+            HyperLink hlTask = (HyperLink)e.Row.FindControl("hlTask");
 
+            if (!string.IsNullOrEmpty(taskId))
+            {
+                hlTask.NavigateUrl = string.Format("https://eip.tkfood.com.tw/UOF/wkf/formuse/viewform.aspx?TASK_ID={0}", taskId);
+            }
+            else
+            {
+                hlTask.Visible = false; // 或改成顯示文字 Label
+            }
+        }
     }
 
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
