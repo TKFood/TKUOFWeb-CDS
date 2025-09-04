@@ -65,6 +65,22 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
+                                <td>
+                                    <asp:Label ID="Label14" runat="server" Text="申請者: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label1" runat="server" Text="表單名稱: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
