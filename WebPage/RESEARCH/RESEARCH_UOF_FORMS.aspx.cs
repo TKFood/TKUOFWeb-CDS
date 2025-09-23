@@ -269,11 +269,11 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
                                                     t.BEGIN_TIME
 			                                        ), 111) 
 		                                        WHEN f.FORM_NAME = '1008.無品號-烘培試吃製作申請單' 
-                                                    THEN ''
+                                                    THEN  CONVERT(nvarchar, DATEADD(DAY, 14, t.BEGIN_TIME), 111)
 		                                        WHEN f.FORM_NAME = '2001.產品開發+包裝設計申請單' 
-                                                    THEN ''
+                                                    THEN  CONVERT(nvarchar, DATEADD(DAY, 30, t.BEGIN_TIME), 111)
 		                                        WHEN f.FORM_NAME = '1005.舊品變更申請單' 
-                                                    THEN ''
+                                                    THEN CONVERT(nvarchar, DATEADD(DAY, 14, t.BEGIN_TIME), 111)
                                                 ELSE NULL
                                             END AS '作業預估完成日BY申請日',
                                         t.CURRENT_SITE_ID,
@@ -333,6 +333,19 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
                 hlTask.Visible = false; // 或改成顯示文字 Label
             }
         }
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    object obj = DataBinder.Eval(e.Row.DataItem, "作業預估完成日BY申請日");
+        //    if (obj != DBNull.Value)
+        //    {
+        //        DateTime dateValue = Convert.ToDateTime(obj);
+
+        //        if (dateValue.Date < DateTime.Today)
+        //        {
+        //            e.Row.ForeColor = System.Drawing.Color.Red;
+        //        }
+        //    }
+        //}
     }
 
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
