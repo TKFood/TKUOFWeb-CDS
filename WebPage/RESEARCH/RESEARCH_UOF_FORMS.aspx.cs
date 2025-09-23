@@ -147,6 +147,135 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
 
                                             ELSE NULL
                                         END AS '表單標題',
+                                         CASE         
+                                                WHEN f.FORM_NAME = '1001.品號申請單' 
+			                                        THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm001FD_1""]/@fieldValue)[1]', 'nvarchar(max)')        
+		                                        WHEN f.FORM_NAME = '1002.商品變更及設計' 
+                                                    THEN '' 
+		                                        WHEN f.FORM_NAME = '1003.BOM表變更申請單' 
+                                                    THEN ''     
+		                                        WHEN f.FORM_NAME = '1004.無品號試吃製作申請單' 
+                                                    THEN STUFF((
+					                                        SELECT N',' + C.value('@fieldValue','nvarchar(200)')
+					                                        FROM CURRENT_DOC.nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row/Cell[@fieldId=""DVV07""]')  AS T(C)
+					                                        FOR XML PATH(''), TYPE
+				                                        ).value('.', 'nvarchar(max)'), 1, 1, '')  
+		                                        WHEN f.FORM_NAME = '1005 研發業務工作申請單' 
+                                                    THEN ''
+		                                        WHEN f.FORM_NAME = '1006.樣品試吃回覆單' 
+                                                    THEN ''
+		                                        WHEN f.FORM_NAME = '1007.自主研發申請書' 
+                                                    THEN ''  
+		                                        WHEN f.FORM_NAME = '1008.無品號-烘培試吃製作申請單' 
+                                                    THEN STUFF((
+					                                        SELECT N',' + C.value('@fieldValue','nvarchar(200)')
+					                                        FROM CURRENT_DOC.nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row/Cell[@fieldId=""DVV07""]')  AS T(C)
+					                                        FOR XML PATH(''), TYPE
+				                                        ).value('.', 'nvarchar(max)'), 1, 1, '')  
+		                                        WHEN f.FORM_NAME = '2001.產品開發+包裝設計申請單' 
+                                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD5""]/@fieldValue)[1]', 'nvarchar(max)')      
+		                                        WHEN f.FORM_NAME = '1005.舊品變更申請單' 
+                                                    THEN '' 
+                                                ELSE NULL
+                                            END AS '申請者要求完成日',
+	                                        CASE         
+                                                WHEN f.FORM_NAME = '1001.品號申請單' 
+			                                        THEN CONVERT(nvarchar(10),
+			                                        DATEADD(DAY,
+                                                    CASE 
+                                                        -- 如果開始時間在週一到週三，加 3 天後可能會落在週六/週日，需要多跳過 2 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) IN (2,3,4) THEN 5
+                                                        -- 如果開始時間在週四，加 3 天會落到週日，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 5 THEN 4
+                                                        -- 如果開始時間在週五，加 3 天會跨週末，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 6 THEN 4
+                                                        -- 如果開始時間在週六，加 3 天時要先跳過週六日
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 7 THEN 5
+                                                        -- 其他情況直接加 
+                                                        ELSE 3
+                                                    END,
+                                                    t.BEGIN_TIME
+			                                        ), 111)      
+		                                        WHEN f.FORM_NAME = '1002.商品變更及設計' 
+                                                    THEN CONVERT(nvarchar(10),
+			                                        DATEADD(DAY,
+                                                    CASE 
+                                                        -- 如果開始時間在週一到週三，加 3 天後可能會落在週六/週日，需要多跳過 2 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) IN (2,3,4) THEN 5
+                                                        -- 如果開始時間在週四，加 3 天會落到週日，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 5 THEN 4
+                                                        -- 如果開始時間在週五，加 3 天會跨週末，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 6 THEN 4
+                                                        -- 如果開始時間在週六，加 3 天時要先跳過週六日
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 7 THEN 5
+                                                        -- 其他情況直接加 
+                                                        ELSE 3
+                                                    END,
+                                                    t.BEGIN_TIME
+			                                        ), 111) 
+		                                        WHEN f.FORM_NAME = '1003.BOM表變更申請單' 
+                                                    THEN CONVERT(nvarchar(10),
+			                                        DATEADD(DAY,
+                                                    CASE 
+                                                        -- 如果開始時間在週一到週三，加 3 天後可能會落在週六/週日，需要多跳過 2 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) IN (2,3,4) THEN 9
+                                                        -- 如果開始時間在週四，加 3 天會落到週日，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 5 THEN 8
+                                                        -- 如果開始時間在週五，加 3 天會跨週末，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 6 THEN 8
+                                                        -- 如果開始時間在週六，加 3 天時要先跳過週六日
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 7 THEN 9
+                                                        -- 其他情況直接加 
+                                                        ELSE 7
+                                                    END,
+                                                    t.BEGIN_TIME
+			                                        ), 111)     
+		                                        WHEN f.FORM_NAME = '1004.無品號試吃製作申請單' 
+                                                    THEN ''
+		                                        WHEN f.FORM_NAME = '1005 研發業務工作申請單' 
+                                                    THEN CONVERT(nvarchar(10),
+			                                        DATEADD(DAY,
+                                                    CASE 
+                                                        -- 如果開始時間在週一到週三，加 3 天後可能會落在週六/週日，需要多跳過 2 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) IN (2,3,4) THEN 9
+                                                        -- 如果開始時間在週四，加 3 天會落到週日，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 5 THEN 8
+                                                        -- 如果開始時間在週五，加 3 天會跨週末，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 6 THEN 8
+                                                        -- 如果開始時間在週六，加 3 天時要先跳過週六日
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 7 THEN 9
+                                                        -- 其他情況直接加 3
+                                                        ELSE 7
+                                                    END,
+                                                    t.BEGIN_TIME
+			                                        ), 111) 
+		                                        WHEN f.FORM_NAME = '1006.樣品試吃回覆單' 
+                                                    THEN ''
+		                                        WHEN f.FORM_NAME = '1007.自主研發申請書' 
+                                                    THEN CONVERT(nvarchar(10),
+			                                        DATEADD(DAY,
+                                                    CASE 
+                                                        -- 如果開始時間在週一到週三，加 3 天後可能會落在週六/週日，需要多跳過 2 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) IN (2,3,4) THEN 5
+                                                        -- 如果開始時間在週四，加 3 天會落到週日，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 5 THEN 4
+                                                        -- 如果開始時間在週五，加 3 天會跨週末，需要多跳過 1 天
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 6 THEN 4
+                                                        -- 如果開始時間在週六，加 3 天時要先跳過週六日
+                                                        WHEN DATEPART(WEEKDAY, t.BEGIN_TIME) = 7 THEN 5
+                                                        -- 其他情況直接加 3
+                                                        ELSE 3
+                                                    END,
+                                                    t.BEGIN_TIME
+			                                        ), 111) 
+		                                        WHEN f.FORM_NAME = '1008.無品號-烘培試吃製作申請單' 
+                                                    THEN ''
+		                                        WHEN f.FORM_NAME = '2001.產品開發+包裝設計申請單' 
+                                                    THEN ''
+		                                        WHEN f.FORM_NAME = '1005.舊品變更申請單' 
+                                                    THEN ''
+                                                ELSE NULL
+                                            END AS '作業預估完成日BY申請日',
                                         t.CURRENT_SITE_ID,
 	                                    t.TASK_ID,
                                         t.CURRENT_DOC
