@@ -142,9 +142,9 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
 				                                    ).value('.', 'nvarchar(max)'), 1, 1, '')  
 		                                    WHEN f.FORM_NAME = '9003.新品號明細的通知' 
                                                 THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""MB002""]/@fieldValue)[1]', 'nvarchar(max)')  
+                                            WHEN f.FORM_NAME = '1005.舊品變更申請單'                                                        
+                                                THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm1002PD""]/@fieldValue)[1]', 'nvarchar(max)')     
 
-
-      
                                             ELSE NULL
                                         END AS '表單標題',
                                         t.CURRENT_SITE_ID,
