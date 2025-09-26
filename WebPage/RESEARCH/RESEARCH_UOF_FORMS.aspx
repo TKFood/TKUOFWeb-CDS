@@ -119,7 +119,21 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="作業預估完成日BY申請日" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="作業預估完成日BY申請日" runat="server" Text='<%# Bind("作業預估完成日BY申請日") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                        <asp:Label ID="作業預估完成日BY申請日" runat="server" Text='<%# Bind("PLANDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="備註" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="作業預估完成日BY申請日old" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="作業預估完成日BY申請日old" runat="server" Text='<%# Bind("作業預估完成日BY申請日") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

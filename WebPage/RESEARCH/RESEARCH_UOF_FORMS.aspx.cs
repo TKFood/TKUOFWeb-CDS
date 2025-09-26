@@ -341,6 +341,23 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
                 hlTask.Visible = false; // 或改成顯示文字 Label
             }
         }
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 從資料來源讀原始值（比較可靠）
+            object val = DataBinder.Eval(e.Row.DataItem, "PLANDATES");
+            object FORM_KIND = DataBinder.Eval(e.Row.DataItem, "表單名稱");
+            object FORM_START = DataBinder.Eval(e.Row.DataItem, "申請時間");
+            DateTime dt_FORM_START = Convert.ToDateTime(FORM_START.ToString());
+
+            if (val == null || val == DBNull.Value || string.IsNullOrWhiteSpace(val.ToString()))
+            {
+                if(FORM_KIND.ToString().Equals("1001.品號申請單"))
+                {
+                    e.Row.Cells[4].Text = dt_FORM_START.AddDays(3).ToString("yyyy/MM/dd");
+                }
+                //e.Row.Cells[4].Text = "NA"; // 第4欄 => index 3
+            }
+        }
         //if (e.Row.RowType == DataControlRowType.DataRow)
         //{
         //    object obj = DataBinder.Eval(e.Row.DataItem, "作業預估完成日BY申請日");
