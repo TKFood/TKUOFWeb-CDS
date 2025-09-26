@@ -282,8 +282,10 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
                                         t.CURRENT_SITE_ID,
 	                                    t.TASK_ID,
                                         t.CURRENT_DOC
-
+                                        ,CONVERT(nvarchar,[PLANDATES],111) AS 'PLANDATES'
+										,[COMMENTS]
                                     FROM [UOF].dbo.TB_WKF_TASK AS t WITH (NOLOCK)
+                                    LEFT JOIN [192.168.1.105].[TKRESEARCH].[dbo].[TB_RESEARCH_UOF_FORMS] WITH (NOLOCK) ON [TB_RESEARCH_UOF_FORMS].[DOC_NBR]=t.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
                                     LEFT JOIN [UOF].dbo.TB_EB_USER AS u
                                         ON u.USER_GUID = t.USER_GUID
                                     LEFT JOIN [UOF].dbo.TB_EB_EMPL_DEP AS ed
