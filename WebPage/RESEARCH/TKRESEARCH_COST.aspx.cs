@@ -643,7 +643,11 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                     ,0
                                     ,0
                                     ,0
-                                    ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                    ,ISNULL((SELECT AVG((ME007)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007)>0 AND ME002 LIKE '{0}%'),0) +
+ISNULL((SELECT AVG((ME008)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME004)>0 AND (ME008)>0 AND ME002 LIKE '{0}%'),0)+
+ISNULL((SELECT AVG((ME009)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME004)>0 AND (ME009)>0 AND ME002 LIKE '{0}%'),0)+
+ISNULL((SELECT AVG((ME010)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME004)>0 AND (ME010)>0 AND ME002 LIKE '{0}%'),0)
+AS '成本'
                                     ,'9合計' AS '分類'
                                     FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
                                     WHERE  MC001=MB001
