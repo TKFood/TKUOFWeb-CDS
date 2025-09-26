@@ -119,7 +119,9 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="作業預估完成日BY申請日" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="作業預估完成日BY申請日" runat="server" Text='<%# Bind("PLANDATES") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                        <asp:TextBox ID="txtPLANDATES" runat="server"
+                                                            Text='<%# Bind("PLANDATES") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

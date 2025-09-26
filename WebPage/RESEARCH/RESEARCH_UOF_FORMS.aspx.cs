@@ -348,12 +348,49 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
             object FORM_KIND = DataBinder.Eval(e.Row.DataItem, "表單名稱");
             object FORM_START = DataBinder.Eval(e.Row.DataItem, "申請時間");
             DateTime dt_FORM_START = Convert.ToDateTime(FORM_START.ToString());
+            TextBox txt = e.Row.FindControl("txtPLANDATES") as TextBox;
 
             if (val == null || val == DBNull.Value || string.IsNullOrWhiteSpace(val.ToString()))
             {
                 if(FORM_KIND.ToString().Equals("1001.品號申請單"))
                 {
-                    e.Row.Cells[4].Text = dt_FORM_START.AddDays(3).ToString("yyyy/MM/dd");
+                    txt.Text = dt_FORM_START.AddDays(3).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("1002.商品變更及設計"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(3).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("1003.BOM表變更申請單"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(7).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("1004.無品號試吃製作申請單"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(7).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("1005 研發業務工作申請單"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(7).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("1006.樣品試吃回覆單"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(7).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("1007.自主研發申請"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(3).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("008.無品號-烘培試吃製作申請單"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(14).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("2001.產品開發+包裝設計申請單單"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(30).ToString("yyyy/MM/dd");
+                }
+                else if (FORM_KIND.ToString().Equals("1005.舊品變更申請單"))
+                {
+                    txt.Text = dt_FORM_START.AddDays(14).ToString("yyyy/MM/dd");
                 }
                 //e.Row.Cells[4].Text = "NA"; // 第4欄 => index 3
             }
