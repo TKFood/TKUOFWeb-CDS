@@ -126,16 +126,14 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="備註" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="作業預估完成日BY申請日old" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="作業預估完成日BY申請日old" runat="server" Text='<%# Bind("作業預估完成日BY申請日") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                        <asp:TextBox ID="txtCOMMENTS" runat="server"
+                                                            Text='<%# Bind("COMMENTS") %>'
+                                                            TextMode="MultiLine"
+                                                            Rows="3"
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%;">
+                                                        </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
