@@ -93,7 +93,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         //查詢條件
         if (!string.IsNullOrEmpty(MB001))
         {
-            SQUERY.AppendFormat(@" AND TA001 LIKE '%{0}%' ", MB001);
+            SQUERY.AppendFormat(@" AND T1.TA001 LIKE '%{0}%' ", MB001);
         }
         else
         {
@@ -102,7 +102,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
 
         if (!string.IsNullOrEmpty(MB002))
         {
-            SQUERY.AppendFormat(@" AND MB002 LIKE '%{0}%' ", MB002);
+            SQUERY.AppendFormat(@" AND T3.MB002 LIKE '%{0}%' ", MB002);
         }
         else
         {
@@ -112,66 +112,293 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
         if (!string.IsNullOrEmpty(YM) && !string.IsNullOrEmpty(SQUERY.ToString()))
         {
             cmdTxt.AppendFormat(@"
-                              SELECT *
-                                FROM 
-                                (
-                                SELECT TA002 AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',MB004 AS '單位',生產入庫數,ME005 在製約量_材料,本階人工成本,本階製造費用,ME007 材料成本,ME008 人工成本,ME009 製造費用,ME010 加工費用
-                                ,CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005))) 單位成本, CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005))) 單位材料成本, CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005))) 單位人工成本,CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005))) 單位製造成本,CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005))) 單位加工成本
-                                ,MB068
-                                ,(CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均包裝人工成本
-                                ,(CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均包裝製造費用
-                                ,(CASE WHEN MB068 IN ('03') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均小線人工成本
-                                ,(CASE WHEN MB068 IN ('03') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均小線製造費用
-                                ,(CASE WHEN MB068 IN ('02') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END ) 平均大線人工成本
-                                ,(CASE WHEN MB068 IN ('02') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END ) 平均大線製造費用
-                                ,MB047
-                                ,(SELECT ISNULL(SUM(MB005+MB006),0) FROM [TK].dbo.CSTMB WHERE MB002 LIKE TA002+'%' AND MB007=TA001) AS 'SUMPROTIMES'
-                                FROM 
-                                (
-                                SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'
-                                FROM [TK].dbo.CSTTA
-                                WHERE TA002 LIKE '{0}%'
-                                GROUP BY TA002,TA001
-                                ) AS TEMP
-                                LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
-                                LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
-                                WHERE 1=1
-                                {1}
+                                -- 區塊 A: 計算每個月份的詳細數據 (Detail Rows)
+                                SELECT
+                                    T1.TA002 AS '年月',
+                                    T1.TA001 AS '品號',
+                                    T3.MB002 AS '品名',
+                                    T3.MB003 AS '規格',
+                                    T3.MB004 AS '單位',
+                                    -- 加總欄位
+                                    SUM(T1.生產入庫數) AS 生產入庫數,
+                                    SUM(T1.託外入庫數) AS 託外入庫數,
+                                    SUM(T2.ME005) AS '在製約量_材料',
+                                    SUM(T1.本階人工成本) AS 本階人工成本,
+                                    SUM(T1.本階製造費用) AS 本階製造費用,
+                                    SUM(T2.ME007) AS '材料成本',
+                                    SUM(T2.ME008) AS '人工成本',
+                                    SUM(T2.ME009) AS '製造費用',
+                                    SUM(T2.ME010) AS '加工費用',
 
-                                AND (生產入庫數+ME005)>0
+                                    -- 單位總成本計算
+                                      CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005)) > 0
+                                            THEN SUM(T2.ME007) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005))
+                                            ELSE 0
+                                        END
+                                    )+
+	                                CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME008) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    )+
+	                                 CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME009) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    )+
+	                                 CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME010) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位成本,
+
+                                    -- 單位材料成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005)) > 0
+                                            THEN SUM(T2.ME007) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位材料成本,
+
+                                    -- 單位人工成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME008) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位人工成本,
+
+                                    -- 單位製造成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME009) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位製造成本,
+
+                                    -- 單位加工成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME010) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位加工成本,
+
+                                    -- 成本中心相關欄位
+                                    T3.MB068,
+                                    T3.MB047,
+
+                                    -- 平均包裝人工成本
+                                    (CASE
+                                        WHEN T3.MB068 IN ('09') AND (SUM(T1.生產入庫數) + SUM(T2.ME005)) > 0
+                                        THEN SUM(T1.本階人工成本) / (SUM(T1.生產入庫數) + SUM(T2.ME005))
+                                        ELSE 0
+                                    END) AS 平均包裝人工成本,
+
+                                    -- 平均包裝製造費用
+                                    (CASE
+                                        WHEN T3.MB068 IN ('09') AND (SUM(T1.生產入庫數) + SUM(T2.ME005)) > 0
+                                        THEN SUM(T1.本階製造費用) / (SUM(T1.生產入庫數) + SUM(T2.ME005))
+                                        ELSE 0
+                                    END) AS 平均包裝製造費用,
+
+                                    -- 平均小線人工成本
+                                    (CASE
+                                        WHEN T3.MB068 IN ('03') AND (SUM(T1.生產入庫數) + SUM(T2.ME005)) > 0
+                                        THEN SUM(T1.本階人工成本) / (SUM(T1.生產入庫數) + SUM(T2.ME005))
+                                        ELSE 0
+                                    END) AS 平均小線人工成本,
+
+                                    -- 平均小線製造費用
+                                    (CASE
+                                        WHEN T3.MB068 IN ('03') AND (SUM(T1.生產入庫數) + SUM(T2.ME005)) > 0
+                                        THEN SUM(T1.本階製造費用) / (SUM(T1.生產入庫數) + SUM(T2.ME005))
+                                        ELSE 0
+                                    END) AS 平均小線製造費用,
+
+                                    -- 平均大線人工成本
+                                    (CASE
+                                        WHEN T3.MB068 IN ('02') AND (SUM(T1.生產入庫數) + SUM(T2.ME005)) > 0
+                                        THEN SUM(T1.本階人工成本) / (SUM(T1.生產入庫數) + SUM(T2.ME005))
+                                        ELSE 0
+                                    END) AS 平均大線人工成本,
+
+                                    -- 平均大線製造費用
+                                    (CASE
+                                        WHEN T3.MB068 IN ('02') AND (SUM(T1.生產入庫數) + SUM(T2.ME005)) > 0
+                                        THEN SUM(T1.本階製造費用) / (SUM(T1.生產入庫數) + SUM(T2.ME005))
+                                        ELSE 0
+                                    END) AS 平均大線製造費用,
+
+                                    -- 彙總生產工時
+                                    SUM(T4.SUMPROTIMES) AS 'SUMPROTIMES'
+
+                                FROM
+                                    -- 子查詢 T1、T2、T3、T4 ... (FROM/JOIN 區塊與原查詢相同)
+                                    (
+                                        SELECT TA002, TA001, SUM(TA012) AS '生產入庫數', SUM(TA013) AS '託外入庫數', 
+                                               SUM(TA016 - TA019) AS '本階人工成本', SUM(TA017 - TA020) AS '本階製造費用'
+                                        FROM [TK].dbo.CSTTA
+                                        WHERE TA002 LIKE '{0}%'
+                                        GROUP BY TA002, TA001
+                                    ) AS T1
+                                LEFT JOIN [TK].dbo.CSTME AS T2 ON T2.ME001 = T1.TA001 AND T2.ME002 = T1.TA002
+                                LEFT JOIN [TK].dbo.INVMB AS T3 ON T3.MB001 = T1.TA001
+                                LEFT JOIN 
+                                    (
+                                        SELECT MB007, MB002, ISNULL(SUM(MB005 + MB006), 0) AS SUMPROTIMES
+                                        FROM [TK].dbo.CSTMB
+                                        GROUP BY MB007, MB002
+                                    ) AS T4 ON T4.MB007 = T1.TA001 AND T4.MB002 LIKE T1.TA002 + '%'
+
+                                WHERE 1=1
+                                   {1}
+
+                                GROUP BY
+                                    T1.TA002, T1.TA001, T3.MB002, T3.MB003, T3.MB004, T3.MB068, T3.MB047
+                                HAVING
+                                    (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005)) > 0 
+
                                 UNION ALL
 
-                                SELECT '小計' AS '年月',TA001 AS '品號',MB002 AS '品名',MB003 AS '規格',MB004 AS '單位',SUM(生產入庫數),AVG(ME005) 在製約量_材料,AVG(本階人工成本),AVG(本階製造費用),AVG(ME007) 材料成本,AVG(ME008) 人工成本,AVG(ME009) 製造費用,AVG(ME010) 加工費用
-                                ,AVG(CONVERT(DECIMAL(16,2),((ME007+ME008+ME009+ME010)/(生產入庫數+ME005)))) 單位成本
-                                ,AVG(CONVERT(DECIMAL(16,2),((ME007)/(生產入庫數+ME005)))) 單位材料成本
-                                ,AVG(CONVERT(DECIMAL(16,2),((ME008)/(生產入庫數+ME005)))) 單位人工成本
-                                ,AVG(CONVERT(DECIMAL(16,2),((ME009)/(生產入庫數+ME005)))) 單位製造成本
-                                ,AVG(CONVERT(DECIMAL(16,2),((ME010)/(生產入庫數+ME005)))) 單位加工成本
-                                ,MB068
-                                ,AVG((CASE WHEN MB068 IN ('09') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END )) 平均包裝人工成本
-                                ,AVG((CASE WHEN MB068 IN ('09') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END )) 平均包裝製造費用
-                                ,AVG((CASE WHEN MB068 IN ('03') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END )) 平均小線人工成本
-                                ,AVG((CASE WHEN MB068 IN ('03') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END )) 平均小線製造費用
-                                ,AVG((CASE WHEN MB068 IN ('02') THEN 本階人工成本/(生產入庫數+ME005) ELSE 0 END )) 平均大線人工成本
-                                ,AVG((CASE WHEN MB068 IN ('02') THEN 本階製造費用/(生產入庫數+ME005) ELSE 0 END )) 平均大線製造費用
-                                ,MB047
-                                ,(SELECT ISNULL(SUM(MB005+MB006),0) FROM [TK].dbo.CSTMB WHERE MB002 LIKE '{0}%' AND MB007=TA001) AS 'SUMPROTIMES'
-                                FROM 
-                                (
-                                SELECT TA002,TA001,SUM(TA012) '生產入庫數',SUM(TA016-TA019) AS '本階人工成本',SUM(TA017-TA020) AS '本階製造費用'
-                                FROM [TK].dbo.CSTTA
-                                WHERE TA002 LIKE '{0}%'
-                                GROUP BY TA002,TA001
-                                ) AS TEMP
-                                LEFT JOIN [TK].dbo.CSTME ON ME001=TA001 AND ME002=TA002
-                                LEFT JOIN [TK].dbo.INVMB ON MB001=TA001
-                                WHERE 1=1
-                                {1}
+                                -- 區塊 B: 計算總計行 (Total Row)
+                                SELECT
+                                    '小計' AS '年月', -- 標記為 '小計'
+                                    MAX(T1.TA001) AS '品號', -- 修正 8120 錯誤：使用 MAX()
+                                    MAX(T3.MB002) AS '品名', -- 修正 8120 錯誤：使用 MAX()
+                                    MAX(T3.MB003) AS '規格', -- 修正 8120 錯誤：使用 MAX()
+                                    MAX(T3.MB004) AS '單位', -- 修正 8120 錯誤：使用 MAX()
+    
+                                    -- 總計行的 SUM 聚合欄位
+                                    SUM(T1.生產入庫數) AS 生產入庫數,
+                                    SUM(T1.託外入庫數) AS 託外入庫數,
+                                    SUM(T2.ME005) AS '在製約量_材料',
+                                    SUM(T1.本階人工成本) AS 本階人工成本,
+                                    SUM(T1.本階製造費用) AS 本階製造費用,
+                                    SUM(T2.ME007) AS '材料成本',
+                                    SUM(T2.ME008) AS '人工成本',
+                                    SUM(T2.ME009) AS '製造費用',
+                                    SUM(T2.ME010) AS '加工費用',
 
-                                AND (生產入庫數+ME005)>0
-                                GROUP BY TA001,MB002,MB003,MB068,MB047,MB004
-                                ) AS TEMP2
-                                ORDER BY  品號,年月
+                                    -- 單位總成本計算
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005)) > 0
+                                            THEN SUM(T2.ME007) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005))
+                                            ELSE 0
+                                        END
+                                    )+
+	                                CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME008) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    )+
+	                                 CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME009) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    )+
+	                                 CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME010) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    )
+	                                AS 單位成本,
+
+                                    -- 單位材料成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005)) > 0
+                                            THEN SUM(T2.ME007) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位材料成本,
+
+                                    -- 單位人工成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME008) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位人工成本,
+
+                                    -- 單位製造成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME009) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位製造成本,
+
+                                    -- 單位加工成本
+                                    CONVERT(DECIMAL(16, 2),
+                                        CASE
+                                            WHEN (SUM(T1.生產入庫數) + SUM(T1.託外入庫數)) > 0
+                                            THEN SUM(T2.ME010) / (SUM(T1.生產入庫數) + SUM(T1.託外入庫數))
+                                            ELSE 0
+                                        END
+                                    ) AS 單位加工成本,
+
+                                    -- 非聚合欄位在總計行應為 NULL
+                                    NULL AS MB068,
+                                    NULL AS MB047,
+
+                                    -- 平均成本類欄位 (因為 MB068 是 NULL，所以平均成本結果會是 0)
+                                    0 AS 平均包裝人工成本,
+                                    0 AS 平均包裝製造費用,
+                                    0 AS 平均小線人工成本,
+                                    0 AS 平均小線製造費用,
+                                    0 AS 平均大線人工成本,
+                                    0 AS 平均大線製造費用,
+
+                                    -- 彙總生產工時
+                                    SUM(T4.SUMPROTIMES) AS 'SUMPROTIMES'
+
+                                FROM
+                                    -- 子查詢 T1、T2、T3、T4 ... (FROM/JOIN 區塊與區塊 A 相同)
+                                    (
+                                        SELECT TA002, TA001, SUM(TA012) AS '生產入庫數', SUM(TA013) AS '託外入庫數', 
+                                               SUM(TA016 - TA019) AS '本階人工成本', SUM(TA017 - TA020) AS '本階製造費用'
+                                        FROM [TK].dbo.CSTTA
+                                        WHERE TA002 LIKE '{0}%'
+                                        GROUP BY TA002, TA001
+                                    ) AS T1
+                                LEFT JOIN [TK].dbo.CSTME AS T2 ON T2.ME001 = T1.TA001 AND T2.ME002 = T1.TA002
+                                LEFT JOIN [TK].dbo.INVMB AS T3 ON T3.MB001 = T1.TA001
+                                LEFT JOIN 
+                                    (
+                                        SELECT MB007, MB002, ISNULL(SUM(MB005 + MB006), 0) AS SUMPROTIMES
+                                        FROM [TK].dbo.CSTMB
+                                        GROUP BY MB007, MB002
+                                    ) AS T4 ON T4.MB007 = T1.TA001 AND T4.MB002 LIKE T1.TA002 + '%'
+
+                                WHERE 1=1
+                                   {1}
+
+                                HAVING
+                                    -- 確保總計的分母不是零 (如果總數為零，則不顯示總計行)
+                                    (SUM(T1.生產入庫數) + SUM(T1.託外入庫數) + SUM(T2.ME005)) > 0
+
 
  
 
@@ -340,11 +567,15 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                     FROM
                                     (
                                     SELECT MC001,MC004,MD003,MD006,MD007
-                                    ,ISNULL((SELECT AVG((ME007+ME008+ME009+ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '總成品平均成本'
+                                    ,ISNULL((SELECT AVG((ME007)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0)+
+                                        ISNULL((SELECT AVG((ME008)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) +
+                                        ISNULL((SELECT AVG((ME009)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0)+
+                                        ISNULL((SELECT AVG((ME010)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0)
+                                        AS '總成品平均成本'
                                     ,ISNULL((SELECT AVG((ME007)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '材料平均成本'
-                                    ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '人工平均成本'
-                                    ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '製造平均成本'
-                                    ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '加工平均成本'
+                                    ,ISNULL((SELECT AVG((ME008)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '人工平均成本'
+                                    ,ISNULL((SELECT AVG((ME009)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '製造平均成本'
+                                    ,ISNULL((SELECT AVG((ME010)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MD001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '加工平均成本'
                                     ,(CASE WHEN ( MB2.MB001 LIKE '1%' OR MB2.MB001 LIKE '2%') AND MB2.MB064>0 AND MB2.MB065 >0 THEN MB2.MB065/MB2.MB064*MD006/MD007/MC004 ELSE MB2.MB050*MD006/MD007/MC004 END ) AS '各採購單位成本'
                                     ,(SELECT SUM (CASE WHEN  ( MB001 LIKE '1%' OR MB001 LIKE '2%') AND MB064>0 AND MB065 >0 THEN MB065/MB064*MD006/MD007/MC004 ELSE MB050*MD006/MD007/MC004 END) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001)   AS '總採購單位成本'
                                     ,ISNULL((SELECT SUM (MD006/MD007) FROM [TK].dbo.BOMMC MC, [TK].dbo.BOMMD MD ,[TK].dbo.INVMB MB WHERE  MC.MC001=MD.MD001 AND MD.MD003=MB.MB001 AND MC.MC001=BOMMC.MC001 AND (MB.MB001 LIKE '3%' OR MB.MB001 LIKE '4%')),0)  AS '總半成品重'
@@ -366,7 +597,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                     ,0
                                     ,0
                                     ,0
-                                    ,ISNULL((SELECT AVG((ME008)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                    ,ISNULL((SELECT AVG((ME008)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
                                     ,'4人工' AS '分類'
                                     FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
                                     WHERE  MC001=MB001
@@ -381,7 +612,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                     ,0
                                     ,0
                                     ,0
-                                    ,ISNULL((SELECT AVG((ME009)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                    ,ISNULL((SELECT AVG((ME009)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
                                     ,'5製造' AS '分類'
                                     FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
                                     WHERE  MC001=MB001
@@ -396,7 +627,7 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                     ,0
                                     ,0
                                     ,0
-                                    ,ISNULL((SELECT AVG((ME010)/(ME003+ME005+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME005+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
+                                    ,ISNULL((SELECT AVG((ME010)/(ME003+ME004)) FROM [TK].dbo.CSTME WHERE  ME001=MC001 AND (ME003+ME004)>0 AND (ME007+ME008+ME009+ME010)>0 AND ME002 LIKE '{0}%'),0) AS '成本'
                                     ,'6加工' AS '分類'
                                     FROM [TK].dbo.BOMMC,[TK].dbo.INVMB
                                     WHERE  MC001=MB001
