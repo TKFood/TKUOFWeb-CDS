@@ -18,6 +18,8 @@ using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Globalization;
+using Ede.Uof.EIP.PrivateMessage;
+
 
 public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page.BasePage
 {
@@ -1202,6 +1204,9 @@ AS '成本'
         ADD_TBCOSTRECORDS(MB002, MB003, COSTROW, COSTMAT, COSTHR, COSTMANU, COSTPRO, COMMEMTS, ISCLOSED);
 
         BindGrid4(TextBox3.Text.ToString(), DropDownList1.Text.ToString());
+
+        PrivateMessageUCO SEND = new PrivateMessageUCO();
+        SEND.SendOneNewMessage("","","","");
     }
 
 
