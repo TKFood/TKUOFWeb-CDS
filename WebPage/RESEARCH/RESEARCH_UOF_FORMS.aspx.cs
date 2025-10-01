@@ -229,6 +229,16 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            if (btn2 != null)
+            {
+                string cellValue2 = btn2.CommandArgument;
+                dynamic param2 = new { ID = cellValue2 }.ToExpando();
+            }
+        }
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             string taskId = DataBinder.Eval(e.Row.DataItem, "TASK_ID") as string;
@@ -315,6 +325,37 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
     protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+
+        if (e.CommandName == "Button2")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField_GV1_txtPLANDATES = (TextBox)row.FindControl("txtPLANDATES");
+                string newTextValue_GV1_txtPLANDATES = txtNewField_GV1_txtPLANDATES.Text;
+                TextBox txtNewField_GV1_txtCOMMENTS = (TextBox)row.FindControl("txtCOMMENTS");
+                string newTextValue_GV1_ttxtCOMMENTS = txtNewField_GV1_txtCOMMENTS.Text;
+
+                Label Label_表單編號 = (Label)row.FindControl("表單編號");
+                string DOC_NBR = Label_表單編號.Text;
+                string PLANDATES = newTextValue_GV1_txtPLANDATES;
+                string COMMENTS = newTextValue_GV1_ttxtCOMMENTS;
+
+                ADD_TB_RESEARCH_UOF_FORMS(
+                                DOC_NBR,
+                                PLANDATES,
+                                COMMENTS                                
+                               );
+                MsgBox(DOC_NBR + " 完成", this.Page, this);
+            }
+
+            BindGrid();
+
+        }
     }
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
@@ -473,6 +514,61 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
         ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
     }
 
+    public void ADD_TB_RESEARCH_UOF_FORMS(
+      string DOC_NBR,
+      string PLANDATES,
+      string COMMENTS
+      )
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                          MERGE [TKRESEARCH].[dbo].[TB_RESEARCH_UOF_FORMS] AS TARGET -- 建議為目標表取別名，增加清晰度
+
+                            USING (VALUES (@DOC_NBR, @PLANDATES, @COMMENTS)) AS SOURCE (DOC_NBR, PLANDATES, COMMENTS)
+                            ON TARGET.DOC_NBR = SOURCE.DOC_NBR
+
+                            WHEN MATCHED THEN 
+                                UPDATE SET 
+                                    PLANDATES = SOURCE.PLANDATES,
+                                    COMMENTS = SOURCE.COMMENTS
+
+                            WHEN NOT MATCHED THEN
+                                -- 修正此處，將 COMMENTSS 改為 COMMENTS
+                                INSERT (DOC_NBR, PLANDATES, COMMENTS) 
+                                VALUES (SOURCE.DOC_NBR, SOURCE.PLANDATES, SOURCE.COMMENTS);                                             
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    // 傳入參數
+                    cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
+                    cmd.Parameters.AddWithValue("@PLANDATES", PLANDATES);
+                    cmd.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+          
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(DOC_NBR + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception EX)
+        {
+        }
+        finally
+        {
+        }
+    }
     #endregion
 
     #region BUTTON
