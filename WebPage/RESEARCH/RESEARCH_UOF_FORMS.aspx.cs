@@ -443,7 +443,7 @@ public partial class CDS_WebPage_RESEARCH_RESEARCH_UOF_FORMS : Ede.Uof.Utility.P
                     ws.Cells[ROWS, 4].Value = od["申請者要求完成日"].ToString();
                     ws.Cells[ROWS, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 5].Value = od["作業預估完成日BY申請日"].ToString();
+                    ws.Cells[ROWS, 5].Value = od["PLANDATES"].ToString();
                     ws.Cells[ROWS, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
                     ws.Cells[ROWS, 6].Value = od["表單編號"].ToString();
