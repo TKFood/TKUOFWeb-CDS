@@ -108,17 +108,31 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"                         
-                            SELECT OWNER
-                            FROM 
-                            (
-	                            SELECT '全部' AS 'OWNER'
-	                            UNION ALL
-	                            SELECT
-	                            [OWNER]      
-	                            FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-	                            GROUP BY [OWNER]
-                            ) AS TEMP
-                            ORDER BY OWNER
+                           SELECT
+                                TEMP.OWNER,
+                                TEMP.RowNum
+                            FROM
+                                (
+                                    SELECT
+                                        '全部' AS OWNER,
+                                        -- 為 '全部' 賦予序號 0 或 1 (取決於您希望它排在最前面還是最後面)
+                                        -- 這裡使用 0 以確保它排在第一個
+                                        0 AS RowNum
+                                    UNION ALL
+                                    SELECT
+                                        [OWNER],
+                                        -- 為實際的 OWNER 列表生成序號
+                                        -- 透過 ROW_NUMBER() 函數，根據 OWNER 欄位排序來賦予序號
+                                        -- 這裡假設您希望它們按字母順序排列，並從 1 開始編號
+                                        ROW_NUMBER() OVER (ORDER BY [OWNER] ASC) AS RowNum
+                                    FROM
+                                        [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
+                                    GROUP BY
+                                        [OWNER]
+                                ) AS TEMP
+                            -- 最終排序是依據新生成的 RowNum 欄位
+                            ORDER BY
+                                TEMP.RowNum ASC;
                         ";
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
@@ -248,7 +262,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[ISCLOSED] AS '是否結案'
                             ,[DOC_NBR] AS '表單編號'
                             ,CONVERT(NVARCHAR,[UPDATEDATES],112) AS '更新日'
-                            ,(SELECT TOP 1 TASK_ID FROM [192.168.1.223].[UOF].[dbo].[View_TB_WKF_TASK] WHERE [View_TB_WKF_TASK].[DOC_NBR]=[TB_PROJECTS_PRODUCTS].[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_BIN) AS 'TASK_ID'
+                            ,(SELECT TOP 1 TASK_ID FROM [192.168.1.223].[UOF].[dbo].[View_TB_WKF_TASK] WHERE ISNULL([TB_PROJECTS_PRODUCTS].[DOC_NBR],'')<>'' AND  DOC_NBR LIKE 'NEWDESIGN%' AND [View_TB_WKF_TASK].[DOC_NBR]=[TB_PROJECTS_PRODUCTS].[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_BIN) AS 'TASK_ID'
 
                             FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
                             WHERE 1=1
