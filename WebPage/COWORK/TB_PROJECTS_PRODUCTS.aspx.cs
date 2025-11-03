@@ -161,18 +161,35 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         string cmdTxt = @"                         
-                            SELECT DESIGNER
-                            FROM 
+                         SELECT
+                            TEMP.DESIGNER,
+                            TEMP.RowNum
+                        FROM
                             (
-	                            SELECT '全部' AS 'DESIGNER'
-	                            UNION ALL
-	                            SELECT
-	                            [DESIGNER]      
-	                            FROM [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-                                WHERE ISNULL([DESIGNER] ,'')<>''
-	                            GROUP BY [DESIGNER]
+                                -- 1. 處理 '全部' 選項
+                                SELECT
+                                    '全部' AS DESIGNER,
+                                    -- 為 '全部' 賦予序號 0，確保它排在第一個
+                                    0 AS RowNum
+                                UNION ALL
+                                -- 2. 處理實際的 DESIGNER 列表
+                                SELECT
+                                    T.[DESIGNER],
+                                    -- 為有效的 DESIGNER 列表生成序號
+                                    -- 使用 ROW_NUMBER() 函數，根據 DESIGNER 欄位排序來賦予序號
+                                    -- 這裡假設您希望 DESIGNER 按字母順序排列，並從 1 開始編號
+                                    ROW_NUMBER() OVER (ORDER BY T.[DESIGNER] ASC) AS RowNum
+                                FROM
+                                    [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS] AS T
+                                WHERE
+                                    -- 排除 NULL 或空字串的 DESIGNER
+                                    ISNULL(T.[DESIGNER] ,'') <> ''
+                                GROUP BY
+                                    T.[DESIGNER]
                             ) AS TEMP
-                            ORDER BY DESIGNER
+                        -- 最終排序是依據新生成的 RowNum 欄位
+                        ORDER BY
+                            TEMP.RowNum ASC;
                         ";
 
         dt.Load(m_db.ExecuteReader(cmdTxt));
