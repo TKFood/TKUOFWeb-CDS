@@ -365,6 +365,27 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
             }
         }
 
+        if (e.Row.RowType == DataControlRowType.DataRow) // 只處理資料列
+        {
+            TextBox txtNewField_GV1_採購回覆 = (TextBox)e.Row.FindControl("txtNewField_GV1_採購回覆");
+            if (txtNewField_GV1_採購回覆 != null)
+            {
+                if (string.IsNullOrWhiteSpace(txtNewField_GV1_採購回覆.Text))
+                {
+                    // 設定你的預設文字
+                    txtNewField_GV1_採購回覆.Text =
+                       "1.物料:" + "\r\n" +
+                       "2.物料-估價完成日:" + "\r\n" +
+                       "3.物料-發包完成日:" + "\r\n" +
+                       "4.包材到貨日:" + "\r\n" +
+                       "5.原料:" + "\r\n" +
+                       "6.原料-估價+發包完成日:" + "\r\n" +
+                       "7.原料到貨日:";
+
+                }
+            }
+        }
+
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             string taskId = DataBinder.Eval(e.Row.DataItem, "TASK_ID") as string;
