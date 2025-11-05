@@ -274,6 +274,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TASTESREPLYS] AS '業務進度回覆'
                             ,[DESIGNER] AS '設計負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
+                            ,[PURREPLYS] AS '採購回覆'
                             ,[QCREPLYS] AS '品保回覆'
                             ,[STAGES] AS '專案階段'
                             ,[ISCLOSED] AS '是否結案'
@@ -431,6 +432,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_設計負責人 = txtNewField_GV1_設計負責人.Text;
                 TextBox txtNewField_GV1_品保回覆 = (TextBox)row.FindControl("txtNewField_GV1_品保回覆");
                 string newTextValue_GV1_品保回覆 = txtNewField_GV1_品保回覆.Text;
+                TextBox txtNewField_GV1_採購回覆 = (TextBox)row.FindControl("txtNewField_GV1_採購回覆");
+                string newTextValue_GV1_採購回覆 = txtNewField_GV1_採購回覆.Text;
                 HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
@@ -455,7 +458,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
                 string DESIGNER = newTextValue_GV1_設計負責人;
                 string QCREPLYS = newTextValue_GV1_品保回覆;
-
+                string PURREPLYS = newTextValue_GV1_採購回覆;
 
                 //新增記錄檔
                 ADD_TB_PROJECTS_PRODUCTS_HISTORYS(
@@ -468,6 +471,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     TASTESREPLYS,
                     DESIGNER,
                     DESIGNREPLYS,
+                    PURREPLYS,
                     QCREPLYS,
                     DOC_NBR,
                     STAGES,
@@ -479,8 +483,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     NO,
                     STATUS,
                     TASTESREPLYS,
-                    DESIGNREPLYS,
+                    DESIGNREPLYS,                   
                     DESIGNER,
+                    PURREPLYS,
                     QCREPLYS
                     );
 
@@ -531,6 +536,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_業務進度回覆 = txtNewField_GV1_業務進度回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
+                TextBox txtNewField_GV1_採購回覆 = (TextBox)row.FindControl("txtNewField_GV1_採購回覆");
+                string newTextValue_GV1_採購回覆 = txtNewField_GV1_採購回覆.Text;
                 HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
@@ -547,7 +554,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_業務進度回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
-
+                string PURREPLYS = newTextValue_GV1_採購回覆;
 
 
                 //寄通知mail
@@ -560,8 +567,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                          "目前研發進度回覆: {2}<br>" +
                                          "目前業務進度回覆: {3}<br>" +
                                          "目前設計回覆: {4}<br>" +
+                                         "目前採購回覆: {6}<br>" +
                                          "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
-                                         NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
+                                         NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url, PURREPLYS
                                      );
 
 
@@ -585,6 +593,8 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string newTextValue_GV1_業務進度回覆 = txtNewField_GV1_業務進度回覆.Text;
                 TextBox txtNewField_GV1_設計回覆 = (TextBox)row.FindControl("txtNewField_GV1_設計回覆");
                 string newTextValue_GV1_設計回覆 = txtNewField_GV1_設計回覆.Text;
+                TextBox txtNewField_GV1_採購回覆 = (TextBox)row.FindControl("txtNewField_GV1_採購回覆");
+                string newTextValue_GV1_採購回覆 = txtNewField_GV1_採購回覆.Text;
                 HyperLink hlTask = (HyperLink)row.FindControl("hlTask");
 
                 Label Label_ID = (Label)row.FindControl("Label_ID");
@@ -601,6 +611,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string ISCLOSED = Label_是否結案.Text;
                 string TASTESREPLYS = newTextValue_GV1_業務進度回覆;
                 string DESIGNREPLYS = newTextValue_GV1_設計回覆;
+                string PURREPLYS = newTextValue_GV1_採購回覆;
 
                 //寄通知mail
                 string url = hlTask.NavigateUrl;
@@ -612,8 +623,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                                        "目前研發進度回覆: {2}<br>" +
                                        "目前業務進度回覆: {3}<br>" +
                                        "目前設計回覆: {4}<br>" +
+                                        "目前採購回覆: {6}<br>" +
                                        "您好，請點選以下連結：<br><a href='{5}'>點我前往表單</a><br>",
-                                       NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url
+                                       NO, PROJECTNAMES, STATUS, TASTESREPLYS, DESIGNREPLYS, url, PURREPLYS
                                    );
                 
 
@@ -704,6 +716,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[STAGES] AS '專案階段'
                             ,[DESIGNER] AS '設計負責人'
                             ,[DESIGNREPLYS] AS '設計回覆'
+                            ,[PURREPLYS] AS '採購回覆'
                             ,[QCREPLYS] AS '品保回覆'
                             ,[ISCLOSED] AS '是否結案'
                             ,[DOC_NBR] AS '表單編號'
@@ -988,6 +1001,9 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 DropDownList ddlNewField_專案階段 = (DropDownList)row.FindControl("ddlNewField_GV2_專案階段");
                 TextBox txtNewField_GV2_品保回覆 = (TextBox)row.FindControl("txtNewField_GV2_品保回覆");
                 string newTextValue_GV2_品保回覆 = txtNewField_GV2_品保回覆.Text;
+                TextBox txtNewField_GV2_採購回覆 = (TextBox)row.FindControl("txtNewField_GV2_採購回覆");
+                string newTextValue_GV2_採購回覆 = txtNewField_GV2_採購回覆.Text;
+
 
                 string ID = Label_ID.Text;
                 string NO = txtNewField_專案編號.Text;
@@ -1002,6 +1018,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 string STAGES = ddlNewField_專案階段.SelectedItem.Text;
                 string ISCLOSED = ddlNewField_是否結案.SelectedItem.Text;
                 string QCREPLYS = newTextValue_GV2_品保回覆;
+                string PURREPLYS = newTextValue_GV2_採購回覆;
 
                 if (ISCLOSED == "Y" && STAGES != "作廢" && STAGES != "結案" && STAGES != "上市")
                 {
@@ -1019,6 +1036,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     TASTESREPLYS,
                     DESIGNER,
                     DESIGNREPLYS,
+                    PURREPLYS,
                     QCREPLYS,
                     DOC_NBR,
                     STAGES,
@@ -1036,6 +1054,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     TASTESREPLYS,
                     DESIGNER,
                     DESIGNREPLYS,
+                    PURREPLYS,
                     QCREPLYS,
                     DOC_NBR,
                     STAGES,
@@ -1105,6 +1124,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[STAGES] AS '專案階段'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNER] AS '設計負責人'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DESIGNREPLYS] AS '設計回覆'
+                            ,[TB_PROJECTS_PRODUCTS_HISTORYS].[PURREPLYS] AS '採購回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[QCREPLYS] AS '品保回覆'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[ISCLOSED] AS '是否結案'
                             ,[TB_PROJECTS_PRODUCTS_HISTORYS].[DOC_NBR] AS '表單編號'
@@ -1322,6 +1342,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string TASTESREPLYS,
         string DESIGNER,
         string DESIGNREPLYS,
+        string PURREPLYS,
         string QCREPLYS,
         string DOC_NBR,
         string STAGES,
@@ -1342,6 +1363,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[TASTESREPLYS]
                             ,[DESIGNER]
                             ,[DESIGNREPLYS]
+                            ,[PURREPLYS]
                             ,[QCREPLYS]
                             ,[DOC_NBR]
                             ,[STAGES]
@@ -1359,6 +1381,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,@TASTESREPLYS
                             ,@DESIGNER
                             ,@DESIGNREPLYS
+                            ,@PURREPLYS
                             ,@QCREPLYS
                             ,@DOC_NBR
                             ,@STAGES
@@ -1386,6 +1409,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
                     cmd.Parameters.AddWithValue("@STAGES", STAGES);
                     cmd.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                    cmd.Parameters.AddWithValue("@PURREPLYS", PURREPLYS);
 
 
 
@@ -1415,6 +1439,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
         string TASTESREPLYS,
         string DESIGNREPLYS,
         string DESIGNER,
+        string PURREPLYS,
         string QCREPLYS
         )
     {
@@ -1422,7 +1447,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
 
         var SQLCOMMAND = @" 
                             UPDATE [TKRESEARCH].[dbo].[TB_PROJECTS_PRODUCTS]
-                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES,[TASTESREPLYS]=@TASTESREPLYS,[DESIGNREPLYS]=@DESIGNREPLYS,[DESIGNER]=@DESIGNER,[QCREPLYS]=@QCREPLYS
+                            SET [STATUS]=@STATUS,[UPDATEDATES]=@UPDATEDATES,[TASTESREPLYS]=@TASTESREPLYS,[DESIGNREPLYS]=@DESIGNREPLYS,[DESIGNER]=@DESIGNER,[QCREPLYS]=@QCREPLYS,[PURREPLYS]=@PURREPLYS
                             WHERE [ID]=@ID
                         
                             
@@ -1441,6 +1466,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@DESIGNER", DESIGNER);
                     cmd.Parameters.AddWithValue("@QCREPLYS", QCREPLYS);
                     cmd.Parameters.AddWithValue("@UPDATEDATES", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@PURREPLYS", PURREPLYS);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -1470,6 +1496,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     string TASTESREPLYS,
                     string DESIGNER,
                     string DESIGNREPLYS,
+                    string PURREPLYS,
                     string QCREPLYS,
                     string DOC_NBR,
                     string STAGES,
@@ -1492,6 +1519,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                             ,[STAGES]=@STAGES
                             ,[DESIGNREPLYS]=@DESIGNREPLYS
                             ,[DESIGNER]=@DESIGNER
+                            ,[PURREPLYS]=@PURREPLYS
                             ,[QCREPLYS]=@QCREPLYS
                             WHERE [ID]=@ID
                         
@@ -1518,6 +1546,7 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     cmd.Parameters.AddWithValue("@DESIGNREPLYS", DESIGNREPLYS);
                     cmd.Parameters.AddWithValue("@DESIGNER", DESIGNER);
                     cmd.Parameters.AddWithValue("@QCREPLYS", QCREPLYS);
+                    cmd.Parameters.AddWithValue("@PURREPLYS", PURREPLYS);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -1654,26 +1683,30 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                 ws.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left; //欄位置中
                 ws.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線 品保回覆
-                ws.Cells[1, 8].Value = "品保回覆";
+                ws.Cells[1, 8].Value = "採購回覆";
                 ws.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left; //欄位置中
                 ws.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線 
-                ws.Cells[1, 9].Value = "專案階段";
+                ws.Cells[1, 9].Value = "品保回覆";
                 ws.Cells[1, 9].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left; //欄位置中
                 ws.Cells[1, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線  
-                ws.Cells[1, 10].Value = "是否結案";
+                ws.Cells[1, 10].Value = "專案階段";
                 ws.Cells[1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left; //欄位置中
                 ws.Cells[1, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線  
-                ws.Cells[1, 11].Value = "表單編號";
+                ws.Cells[1, 11].Value = "是否結案";
                 ws.Cells[1, 11].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left; //欄位置中
                 ws.Cells[1, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線  
-                ws.Cells[1, 12].Value = "ID";
+                ws.Cells[1, 12].Value = "表單編號";
                 ws.Cells[1, 12].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left; //欄位置中
                 ws.Cells[1, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                 ws.Cells[1, 12].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線 
+                ws.Cells[1, 13].Value = "ID";
+                ws.Cells[1, 13].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left; //欄位置中
+                ws.Cells[1, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線 
 
                 foreach (DataRow od in EXDT.Rows)
                 {
@@ -1698,21 +1731,24 @@ public partial class CDS_WebPage_COWORK_TB_PROJECTS_PRODUCTS : Ede.Uof.Utility.P
                     ws.Cells[ROWS, 7].Value = od["設計回覆"].ToString();
                     ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 8].Value = od["品保回覆"].ToString();
+                    ws.Cells[ROWS, 8].Value = od["採購回覆"].ToString();
                     ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 9].Value = od["專案階段"].ToString();
+                    ws.Cells[ROWS, 9].Value = od["品保回覆"].ToString();
                     ws.Cells[ROWS, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 10].Value = od["是否結案"].ToString();
+                    ws.Cells[ROWS, 10].Value = od["專案階段"].ToString();
                     ws.Cells[ROWS, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 11].Value = od["表單編號"].ToString();
+                    ws.Cells[ROWS, 11].Value = od["是否結案"].ToString();
                     ws.Cells[ROWS, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 12].Value = od["ID"].ToString();
+                    ws.Cells[ROWS, 12].Value = od["表單編號"].ToString();
                     ws.Cells[ROWS, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
                     ws.Cells[ROWS, 12].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 13].Value = od["ID"].ToString();
+                    ws.Cells[ROWS, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
 
                     ROWS++;
                 }

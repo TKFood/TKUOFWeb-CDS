@@ -158,6 +158,13 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="採購回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_GV1_採購回覆" runat="server" Text='<%# Bind("採購回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="品保回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="txtNewField_GV1_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
@@ -190,7 +197,7 @@
                                                 <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Button2" runat="server" Text="更新回覆" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
-                                                       <%-- <asp:Button ID="Button6" runat="server" Text="通知-試吃完成" CommandName="Button6" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                        <%-- <asp:Button ID="Button6" runat="server" Text="通知-試吃完成" CommandName="Button6" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                         <asp:Button ID="Button7" runat="server" Text="通知-可設計" CommandName="Button7" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />--%>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -198,6 +205,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
+                                                        Button7
                                                         <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -292,6 +300,13 @@
                                                 <asp:TemplateField HeaderText="設計回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="txtNewField_GV2_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="採購回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_GV2_採購回覆" runat="server" Text='<%# Bind("採購回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -488,6 +503,13 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="採購回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Grid3_Label_採購回覆" runat="server" Text='<%# Bind("採購回覆") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="品保回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Grid3_Label_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Style="word-break: break-all; white-space: pre-line;" Width="80px"></asp:Label>
@@ -540,7 +562,7 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView5" runat="server">
                     <div id="tabs-5">
-                        <table class="PopTable">                           
+                        <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
