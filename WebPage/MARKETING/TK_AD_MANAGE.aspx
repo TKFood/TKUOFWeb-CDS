@@ -34,9 +34,11 @@
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
                 <Tabs>
-                    <telerik:RadTab Text="明細">
-                    </telerik:RadTab>
                     <telerik:RadTab Text="資料">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="上傳">
+                    </telerik:RadTab>
+                                        <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
@@ -44,6 +46,11 @@
                 <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
                     <div id="tabs-1">
                         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView2" runat="server" Selected="true">
+                    <div id="tabs-2">
+                        <asp:Label ID="Label3" runat="server" Text="Label3"></asp:Label>
                     </div>
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
