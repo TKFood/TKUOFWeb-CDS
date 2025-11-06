@@ -25,9 +25,9 @@
             }
     </style>
     <script>    
-      
 
-    </script>
+
+</script>
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -38,7 +38,7 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="上傳">
                     </telerik:RadTab>
-                                        <telerik:RadTab Text="其他">
+                    <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
@@ -48,9 +48,58 @@
                         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                     </div>
                 </telerik:RadPageView>
-                <telerik:RadPageView ID="RadPageView2" runat="server" Selected="true">
+                <telerik:RadPageView ID="RadPageView2" runat="server">
                     <div id="tabs-2">
-                        <asp:Label ID="Label3" runat="server" Text="Label3"></asp:Label>
+                        <h3>檔案上傳與記錄 (TK_MARKETING_AD_MANAGE)</h3>
+                        <div>
+                            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
+                            <asp:Label ID="lblMessage" runat="server" ForeColor="Blue"></asp:Label>
+                            <hr />
+
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="年分 (YEARS)：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="txtYear" runat="server" TextMode="Number" Width="400px" />                                       
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="主題 (SUBJECTS)：" runat="server" />
+                                    </td>
+                                    <td style="padding: 5px;">
+                                        <asp:TextBox ID="txtSubject" runat="server" TextMode="MultiLine"
+                                            Rows="3"
+                                            Width="500px" />                                       
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="描述 (DESCRIPTIONS)：" runat="server" />
+                                    </td>
+                                    <td style="padding: 5px;">
+                                        <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine"
+                                            Rows="5"
+                                            Width="500px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="選擇檔案：" runat="server" />
+                                    </td>
+                                    <td style="padding: 5px;">
+                                        <asp:FileUpload ID="fileUploader" runat="server" />
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div style="padding: 10px 5px;">
+                                <asp:Button ID="btnUpload" runat="server" Text="上傳並記錄" OnClick="btnUpload_Click" />
+                            </div>
+                        </div>
                     </div>
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
