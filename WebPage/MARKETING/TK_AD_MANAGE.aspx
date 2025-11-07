@@ -30,6 +30,9 @@
 </script>
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <Triggers>
+            <asp:PostBackTrigger ControlID="btnUpload" />
+        </Triggers>
         <ContentTemplate>
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
@@ -62,7 +65,7 @@
                                         <asp:Label Text="年分 (YEARS)：" runat="server" />
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
-                                        <asp:TextBox ID="txtYear" runat="server" TextMode="Number" Width="400px" />                                       
+                                        <asp:TextBox ID="txtYear" runat="server" TextMode="Number" Width="400px" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -72,7 +75,7 @@
                                     <td style="padding: 5px;">
                                         <asp:TextBox ID="txtSubject" runat="server" TextMode="MultiLine"
                                             Rows="3"
-                                            Width="500px" />                                       
+                                            Width="500px" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -91,7 +94,6 @@
                                     </td>
                                     <td style="padding: 5px;">
                                         <asp:FileUpload ID="fileUploader" runat="server" />
-                                        
                                     </td>
                                 </tr>
                             </table>
@@ -109,6 +111,7 @@
                 </telerik:RadPageView>
             </telerik:RadMultiPage>​
         </ContentTemplate>
+
     </asp:UpdatePanel>
 
 </asp:Content>
