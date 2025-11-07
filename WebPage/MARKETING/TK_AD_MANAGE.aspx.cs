@@ -74,7 +74,11 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
             // 儲存檔案到伺服器 (路徑邏輯與之前一致)
             string baseFileName = Path.GetFileNameWithoutExtension(originalFileName);
             string uniqueFileName = baseFileName + "-" + Guid.NewGuid().ToString() + fileExtension;
-            string uploadFolder = Server.MapPath("~/" + UploadFolderName);
+            //結合路徑：UploadFolderName (ADMANAGES/FileStorage) + yearFolder (2024)
+            string yearFolder = txtYear.Text; 
+            string fullUploadVirtualPath = Path.Combine(UploadFolderName, yearFolder);
+            // 轉換為伺服器實體路徑
+            string uploadFolder = Server.MapPath("~/" + fullUploadVirtualPath);
 
             if (!Directory.Exists(uploadFolder))
             {
@@ -88,7 +92,7 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
             int year = Convert.ToInt32(txtYear.Text);
             string subject = txtSubject.Text;
             string description = txtDescription.Text;
-            string storedPathForDB = string.Format("~/{0}/{1}", UploadFolderName, uniqueFileName);
+            string storedPathForDB = string.Format("~/{0}/{1}/{2}", UploadFolderName, yearFolder, uniqueFileName);
 
             // 寫入資料庫
             InsertFileRecord(year, subject, description, storedPathForDB, originalFileName);
