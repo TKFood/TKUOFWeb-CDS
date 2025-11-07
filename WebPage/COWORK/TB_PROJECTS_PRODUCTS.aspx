@@ -132,42 +132,42 @@
                                                 <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <%--<asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3" Width="200px"></asp:TextBox>--%>
-                                                        <asp:TextBox ID="txtNewField_GV1_研發進度回覆" runat="server" Text='<%# Bind("研發進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_研發進度回覆" runat="server" Text='<%# Bind("研發進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="業務進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_業務進度回覆" runat="server" Text='<%# Bind("業務進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_業務進度回覆" runat="server" Text='<%# Bind("業務進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="設計負責人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_設計負責人" runat="server" Text='<%# Bind("設計負責人") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_設計負責人" runat="server" Text='<%# Bind("設計負責人") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="設計回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="採購回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_採購回覆" runat="server" Text='<%# Bind("採購回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_採購回覆" runat="server" Text='<%# Bind("採購回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="品保回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -278,42 +278,42 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="研發進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_研發進度回覆" runat="server" Text='<%# Bind("研發進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_研發進度回覆" runat="server" Text='<%# Bind("研發進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="業務進度回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_業務進度回覆" runat="server" Text='<%# Bind("業務進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_業務進度回覆" runat="server" Text='<%# Bind("業務進度回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="設計負責人" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_設計負責人" runat="server" Text='<%# Bind("設計負責人") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_設計負責人" runat="server" Text='<%# Bind("設計負責人") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="設計回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_設計回覆" runat="server" Text='<%# Bind("設計回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="採購回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_採購回覆" runat="server" Text='<%# Bind("採購回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_採購回覆" runat="server" Text='<%# Bind("採購回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="品保回覆" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_品保回覆" runat="server" Text='<%# Bind("品保回覆") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -334,7 +334,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="表單編號" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV2_表單編號" runat="server" Text='<%# Bind("表單編號") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV2_表單編號" runat="server" Text='<%# Bind("表單編號") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -403,7 +403,7 @@
                                             <asp:Label ID="Label10" runat="server" Text="研發進度回覆"></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:TextBox ID="NEW_研發進度回覆" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                            <asp:TextBox ID="NEW_研發進度回覆" runat="server" Text="" Width="50%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="8" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                         </td>
                                     </tr>
                                     <tr>
