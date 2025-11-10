@@ -100,12 +100,56 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        // 確保只處理資料列 (排除 Header 和 Footer)
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 取得資料源物件 (DataRowView 或您的自定義物件)
+            // 假設 DataField "STORED_PATH" 包含檔案的虛擬路徑
+            DataRowView drv = (DataRowView)e.Row.DataItem;
+            string storedPath = drv["STOREDPATHS"].ToString();
+
+            // 找到 TemplateField 中名為 litFileDisplay 的 Literal 控制項
+            Literal litFileDisplay = (Literal)e.Row.FindControl("litFileDisplay");
+
+            if (litFileDisplay != null && !string.IsNullOrEmpty(storedPath))
+            {
+                // 調用函式生成 HTML 內容
+                litFileDisplay.Text = GetFileDisplayHtml(storedPath);
+            }
+            else if (litFileDisplay != null)
+            {
+                // 如果沒有路徑，顯示空或無附件
+                litFileDisplay.Text = "無附件";
+            }
+        }
 
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
+
+        // 檢查是否是我們定義的刪除命令
+        if (e.CommandName == "DeleteRecord")
+        {
+            // 取得要刪除記錄的 PRIMARY KEY (ID)
+            string recordId = e.CommandArgument.ToString();
+
+            try
+            {
+                // 執行刪除資料庫記錄和實體檔案的操作
+                DeleteRecordAndFile(recordId);
+
+                lblMessage.Text = string.Format("記錄 ID: {0} 及其附件已成功刪除。", recordId);
+
+                // 重新繫結資料，更新 GridView 顯示
+                BindGrid();
+            }
+            catch (Exception ex)
+            {
+                lblMessage.Text = string.Format("刪除失敗。記錄 ID: {0}。錯誤訊息: {1}", recordId, ex.Message);
+            }
+        }
     }
 
 
@@ -154,6 +198,61 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
                 // 其他類型：提供下載連結
                 return defaultLink;
 
+        }
+    }
+
+    // 處理實際的刪除邏輯：刪除資料庫記錄和實體檔案
+    private void DeleteRecordAndFile(string recordId)
+    {
+        // 1. 取得連線字串 (請替換為您實際取得連線字串的邏輯)
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ConnectionString;
+        string storedPath = string.Empty;
+
+        // 2. 查詢附件路徑 (STORED_PATH)
+        string queryPath = string.Format("SELECT [STOREDPATHS]  FROM [TK_MARKETING].[dbo].[TK_MARKETING_AD_MANAGE]   WHERE ID = '{0}'", recordId);
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(queryPath, connection);
+            connection.Open();
+            object result = command.ExecuteScalar();
+            if (result != null)
+            {
+                storedPath = result.ToString();
+            }
+        }
+
+        // 3. 刪除資料庫記錄
+        string deleteSql = string.Format("DELETE FROM [TK_MARKETING].[dbo].[TK_MARKETING_AD_MANAGE] WHERE ID = '{0}'", recordId);
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            SqlCommand command = new SqlCommand(deleteSql, connection);
+            connection.Open();
+            command.ExecuteNonQuery();
+        }
+
+        // 4. 刪除實體檔案 (如果路徑存在)
+        if (!string.IsNullOrEmpty(storedPath))
+        {
+            try
+            {
+                // 將虛擬路徑 (如 ~/UPLOAD_ADMANAGES/...) 轉換為伺服器上的實體路徑
+                string physicalPath = Server.MapPath(storedPath);
+
+                // 確保檔案存在才刪除
+                if (File.Exists(physicalPath))
+                {
+                    File.Delete(physicalPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 即使檔案刪除失敗，也不影響資料庫記錄的刪除，但需要記錄錯誤
+                // 您可以選擇在這裡紀錄錯誤到日誌中
+                System.Diagnostics.Debug.WriteLine("刪除實體檔案失敗: " + ex.Message);
+                // 這裡我們選擇繼續執行，不拋出錯誤，讓資料庫刪除成功
+            }
         }
     }
 
