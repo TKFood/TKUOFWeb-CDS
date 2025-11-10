@@ -88,6 +88,7 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
                             {0}
                             {1}
                             {2}
+                            ORDER BY [YEARS],[ID]
                                 ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
 

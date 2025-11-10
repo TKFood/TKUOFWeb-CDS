@@ -107,14 +107,14 @@
                                                         <asp:Label ID="Label_YEARS" runat="server" Text='<%# Bind("YEARS") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="主題" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="主題" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_SUBJECTS" runat="server" Text='<%# Bind("SUBJECTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                        <asp:Label ID="Label_SUBJECTS" runat="server" Text='<%# Bind("SUBJECTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="描述" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_DESCRIPTIONS" runat="server" Text='<%# Bind("DESCRIPTIONS") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                        <asp:Label ID="Label_DESCRIPTIONS" runat="server" Text='<%# Bind("DESCRIPTIONS") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="附件預覽/下載" ItemStyle-Width="150px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
