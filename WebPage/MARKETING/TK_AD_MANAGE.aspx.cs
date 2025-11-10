@@ -44,6 +44,119 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
     #region FUNCTION
 
     #endregion
+    private void BindGrid()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+
+
+        ////日期
+        //if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
+        //{
+        //    if (TextBox2.Text.Length == 1)
+        //    {
+        //        TextBox2.Text = "0" + TextBox2.Text;
+        //    }
+        //    QUERYS.AppendFormat(@" AND TC002 LIKE '{0}%'", TextBox1.Text.Trim() + TextBox2.Text.Trim());
+
+        //}
+
+  
+
+        cmdTxt.AppendFormat(@" 
+                            SELECT
+                            [ID]
+                            ,[YEARS]
+                            ,[SUBJECTS]
+                            ,[DESCRIPTIONS]
+                            ,[STOREDPATHS]
+                            ,[ORIGINALFILENAMS]
+                            ,[UPLOADDATES]
+                            FROM [TK_MARKETING].[dbo].[TK_MARKETING_AD_MANAGE]
+                                ", QUERYS.ToString(), QUERYS2.ToString());
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+    protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+    }
+
+
+    public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+
+    /// <summary>
+    /// 根據檔案路徑判斷檔案類型，並生成對應的 HTML 預覽或下載連結。
+    /// </summary>
+    /// <param name="virtualPath">資料庫中儲存的虛擬路徑 (e.g., ~/UPLOAD_ADMANAGES/.../file.jpg)</param>
+    /// <returns>生成預覽或下載的 HTML 標籤</returns>
+    private string GetFileDisplayHtml(string virtualPath)
+    {
+        string fileUrl = Page.ResolveUrl(virtualPath);
+        string extension = Path.GetExtension(virtualPath).ToLowerInvariant();
+
+        // 檔案預設下載連結的 HTML 結構 (使用 string.Format)
+        // {0} 替換為 fileUrl
+        string defaultLink = string.Format("<a href='{0}' target='_blank' class='btn btn-sm btn-info' download><span class='file-icon'>&#128190;</span>下載檔案</a>", fileUrl);
+
+        // 判斷檔案類型
+        switch (extension)
+        {
+            case ".jpg":
+            case ".jpeg":
+            case ".png":
+            case ".gif":
+                // 圖片：顯示縮圖 (使用 string.Format)
+                // {0} 替換為 fileUrl
+                return string.Format("<a href='{0}' target='_blank'><img src='{0}' class='file-preview' alt='圖片縮圖' /></a>", fileUrl);
+
+            case ".pdf":
+                // PDF：顯示預覽/開啟連結 (使用 string.Format)
+                // {0} 替換為 fileUrl
+                return string.Format("<a href='{0}' target='_blank' class='pdf-preview-link'><span class='file-icon'>&#128220;</span>預覽 PDF</a>", fileUrl);
+
+            case ".mp4":
+                // 影片：提供下載/開啟連結 (使用 string.Format)
+                // {0} 替換為 fileUrl
+                return string.Format("<a href='{0}' target='_blank'><span class='file-icon'>&#128250;</span>播放影片</a>", fileUrl);
+
+            default:
+                // 其他類型：提供下載連結
+                return defaultLink;
+
+        }
+    }
+
     public void UPLOAD()
     {
         if (!Page.IsValid)
@@ -142,6 +255,11 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
     protected void btnUpload_Click(object sender, EventArgs e)
     {
         UPLOAD();
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        BindGrid();
     }
     #endregion
 }
