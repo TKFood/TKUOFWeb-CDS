@@ -32,7 +32,7 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
     String ROLES = null;
 
     // 在這裡定義您的檔案儲存根目錄
-    private const string UploadFolderName = "ADMANAGES/FileStorage"; // 使用 / 符號在 Web 路徑中更標準
+    private const string UploadFolderName = "UPLOAD_ADMANAGES/FileStorage"; // 使用 / 符號在 Web 路徑中更標準
   
 
     protected void Page_Load(object sender, EventArgs e)
