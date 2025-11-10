@@ -4,24 +4,39 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <style>
-        .multiline-textbox {
-            word-break: break-all;
-            white-space: pre-line;
-            height: 60px; /* 根据需要设置高度 */
-        }
+            .multiline-textbox {
+                word-break: break-all;
+                white-space: pre-line;
+                height: 60px; /* 根据需要设置高度 */
+            }
 
-        .custom-button {
-            width: 150px; /* 设置按钮宽度 */
-            height: 40px; /* 设置按钮高度 */
-            font-size: 20px; /* 设置按钮字体大小 */
-            color: #ffffff; /* 设置按钮文本颜色 */
-            background-color: #007bff; /* 设置按钮背景颜色 */
-            border: none; /* 去除按钮边框 */
-            border-radius: 5px; /* 设置按钮圆角 */
-        }
+            .custom-button {
+                width: 150px; /* 设置按钮宽度 */
+                height: 40px; /* 设置按钮高度 */
+                font-size: 20px; /* 设置按钮字体大小 */
+                color: #ffffff; /* 设置按钮文本颜色 */
+                background-color: #007bff; /* 设置按钮背景颜色 */
+                border: none; /* 去除按钮边框 */
+                border-radius: 5px; /* 设置按钮圆角 */
+            }
 
             .custom-button:hover {
                 background-color: #0056b3; /* 设置按钮鼠标悬停时的背景颜色 */
+            }
+
+            .file-preview {
+                max-width: 400px; /* 限制圖片的最大寬度 */
+                max-height: 400px; /* 限制圖片的最大高度 */
+                height: auto;      /* 保持圖片的寬高比 */
+                width: auto;       /* 保持圖片的寬高比 */
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 2px;
+            }
+
+            /* 確保圖片連結不會導致佈局錯亂 */
+            .file-preview-container {
+                display: inline-block;
             }
     </style>
     <script>    
@@ -135,7 +150,7 @@
                             <table style="width: 100%; border-collapse: collapse;">
                                 <tr>
                                     <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
-                                        <asp:Label Text="年分 (YEARS)：" runat="server" />
+                                        <asp:Label Text="年度 (YEARS)：" runat="server" />
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
                                         <asp:TextBox ID="txtYear" runat="server" TextMode="Number" Width="400px" />
