@@ -59,6 +59,20 @@
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
+                                    <asp:Label ID="Label3" runat="server" Text="主題: "></asp:Label>
+                                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label4" runat="server" Text="描述: "></asp:Label>
+                                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
                                     <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
                                         meta:resourcekey="btn1Resource1" />
                                 </td>

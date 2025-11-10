@@ -52,20 +52,27 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        //年度
+        if (!string.IsNullOrEmpty(TextBox1.Text))
+        {         
+            QUERYS.AppendFormat(@" AND [YEARS] LIKE '%{0}%'", TextBox1.Text.Trim());
+        }
+        //年度
+        if (!string.IsNullOrEmpty(TextBox2.Text))
+        {
+            QUERYS.AppendFormat(@" AND [SUBJECTS] LIKE '%{0}%'", TextBox2.Text.Trim());
+        }
+
+        //年度
+        if (!string.IsNullOrEmpty(TextBox3.Text))
+        {
+            QUERYS.AppendFormat(@" AND [DESCRIPTIONS] LIKE '%{0}%'", TextBox3.Text.Trim());
+        }
 
 
-        ////日期
-        //if (!string.IsNullOrEmpty(TextBox1.Text) && !string.IsNullOrEmpty(TextBox2.Text))
-        //{
-        //    if (TextBox2.Text.Length == 1)
-        //    {
-        //        TextBox2.Text = "0" + TextBox2.Text;
-        //    }
-        //    QUERYS.AppendFormat(@" AND TC002 LIKE '{0}%'", TextBox1.Text.Trim() + TextBox2.Text.Trim());
 
-        //}
-
-  
 
         cmdTxt.AppendFormat(@" 
                             SELECT
@@ -77,7 +84,11 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
                             ,[ORIGINALFILENAMS]
                             ,[UPLOADDATES]
                             FROM [TK_MARKETING].[dbo].[TK_MARKETING_AD_MANAGE]
-                                ", QUERYS.ToString(), QUERYS2.ToString());
+                            WHERE 1=1
+                            {0}
+                            {1}
+                            {2}
+                                ", QUERYS.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
 
 
