@@ -72,6 +72,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             WHERE
                                 POSTA.TA001 >= @DATESTART
                                 AND POSTA.TA001 <= @DATESEND
+                                AND POSTA.TA026 >=0
                                 AND POSTA.TA002 LIKE '106%'
                             GROUP BY
                                 POSTA.TA002, CMSME.ME002
@@ -79,9 +80,9 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                                 POSTA.TA002;
                         ";
 
-        m_db.AddParameter("@DATESTART", "20251001");
-        m_db.AddParameter("@DATESEND", "20251102");
-        m_db.AddParameter("@QUERYMONEY", 699);
+        m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());
+        m_db.AddParameter("@DATESEND", TextBox2.Text.Trim());
+        m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
 
         DataTable dt = new DataTable();
 

@@ -78,7 +78,7 @@
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Label ID="Label4" runat="server" Text="滿額金額含稅: "></asp:Label>
-                                    <asp:TextBox ID="TextBox3" Text="0" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox3" Text="1" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
