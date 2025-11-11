@@ -43,7 +43,7 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
 
     #region FUNCTION
 
-    #endregion
+ 
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstringUOF"].ToString();
@@ -361,6 +361,8 @@ public partial class CDS_WebPage_MARKETING_TK_AD_MANAGE : Ede.Uof.Utility.Page.B
             }
         }
     }
+
+    #endregion
 
     #region BUTTON
     protected void btnUpload_Click(object sender, EventArgs e)
