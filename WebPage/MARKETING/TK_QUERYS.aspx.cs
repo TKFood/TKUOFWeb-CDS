@@ -30,6 +30,10 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     string NAME = null;
     String ROLES = null;
 
+    private decimal TOTALNUMS = 0.00m;
+    private decimal TOTALMONEYS = 0.00m;
+    private decimal TOTALCOSTS = 0.00m;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         ACCOUNT = Current.Account;
@@ -225,7 +229,50 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        // 判斷當前處理的是否為資料列 (DataRow)
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // A. 取得該列的資料
+            // 假設您的資料來源是一個 DataRow 或您知道欄位的索引
 
+            // 取得金額 (假設 "Amount" 是第二個欄位，索引為 1)
+            // 建議使用 DataBinder.Eval 更安全，假設資料來源是 DataTable/List<T>
+            decimal amount = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALNUMS"));
+            TOTALNUMS += amount;
+
+            decimal MONEYS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALMONEYS"));
+            TOTALMONEYS += MONEYS;
+
+            decimal COSTS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALCOSTS"));
+            TOTALCOSTS += COSTS;
+
+            // 可選：對 DataRow 中的金額進行格式化顯示
+            //e.Row.Cells[4].Text = amount.ToString("N0"); // 三位一逗點，無小數點
+        }
+
+        // 判斷當前處理的是否為合計列 (Footer)
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            // B. 顯示合計文字和結果
+
+            // 設置第一個儲存格顯示 "合計" 字樣 (索引 0)
+            e.Row.Cells[3].Text = "合計：";
+            // 可選：設置對齊和粗體
+            e.Row.Cells[3].HorizontalAlign = HorizontalAlign.Right;
+            e.Row.Font.Bold = true;
+
+            // 設置金額合計結果 (索引 1)
+            e.Row.Cells[4].Text = TOTALNUMS.ToString("N0"); // 格式化為三位一逗點
+            e.Row.Cells[5].Text = TOTALMONEYS.ToString("N0"); // 格式化為三位一逗點
+            e.Row.Cells[6].Text = TOTALCOSTS.ToString("N0"); // 格式化為三位一逗點
+
+            e.Row.Cells[3].Font.Size = new FontUnit("16pt"); 
+            e.Row.Cells[4].Font.Size = new FontUnit("16pt");
+            e.Row.Cells[5].Font.Size = new FontUnit("16pt"); 
+            e.Row.Cells[6].Font.Size = new FontUnit("16pt"); 
+
+
+        }
     }
 
     protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -251,7 +298,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     {
         BindGrid2();
 
-        Label_query_dates.Text = TextBox4.Text.Trim() + "~" + TextBox5.Text.Trim();
+        Label_query_dates.Text = "查詢日期區間: "+TextBox4.Text.Trim() + " ~ " + TextBox5.Text.Trim();
+        Label_query_dates.Font.Size = new FontUnit("16pt"); 
     }
     #endregion
 }
