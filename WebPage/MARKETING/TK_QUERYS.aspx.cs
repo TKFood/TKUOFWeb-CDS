@@ -46,6 +46,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     {
         TextBox1.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox2.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox4.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox5.Text = DateTime.Now.ToString("yyyyMMdd");
     }
     private void BindGrid()
     {
@@ -114,6 +116,129 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         //SETEXCEL();
 
     }
+
+    private void BindGrid2()
+    {
+        // 1.取得連線字串
+        // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder SQL_QUERY1 = new StringBuilder();
+        StringBuilder cmdTxt = new StringBuilder();
+
+        string DATESTART= TextBox4.Text.Trim();
+        string DATESEND= TextBox5.Text.Trim();
+        string MB001 = TextBox6.Text.Trim();
+
+        if (!string.IsNullOrEmpty(MB001))
+        {
+            SQL_QUERY1.AppendFormat(@"
+                                    AND ( TH004 LIKE '%{0}%' OR MB002 LIKE '%{0}%' )
+                                    ", MB001);
+        }
+        // 2. 定義 SQL 查詢字串           
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            TG005
+                            ,ME002
+                            ,TH004
+                            ,MB002
+                            ,SUM(NUMS) AS 'TOTALNUMS'
+                            ,SUM(MOEYS) AS 'TOTALMONEYS'
+                            ,SUM(LA013) AS 'TOTALCOSTS'
+                            FROM 
+                            (
+	                            SELECT 
+	                            CONVERT(NVARCHAR,YEAR(TG003))+RIGHT('0' + CONVERT(NVARCHAR, MONTH(TG003)), 2) AS 'YM'	
+	                            ,TG005,ME002,TH004,MB002,(TH008+TH024) AS 'NUMS',(TH013) AS 'MOEYS'
+	                            ,LA013
+	                            FROM [TK].dbo.COPTG
+	                            LEFT JOIN [TK].dbo.CMSME ON ME001=TG005
+	                            ,[TK].dbo.COPTH,[TK].dbo.INVMB
+	                            ,[TK].dbo.INVLA
+	                            WHERE TG001=TH001 AND TG002=TH002
+	                            AND MB001=TH004
+	                            AND TG023 IN ('Y')
+	                            AND TH017<>'********************'
+	                            AND LA006=TH001 AND LA007=TH002 AND LA008=TH003
+	                            AND TG003>=@DATESTART AND TG003<=@DATESEND
+
+	                            UNION ALL
+	                            SELECT 
+	                            CONVERT(NVARCHAR,YEAR(TI003))+RIGHT('0' + CONVERT(NVARCHAR, MONTH(TI003)), 2) AS 'YM'
+	                            ,TI005,ME002,TJ004,MB002,(TJ007)*-1 AS 'NUMS',(TJ012)*-1 AS 'MOEYS'
+	                            ,LA013*-1
+	                            FROM [TK].dbo.COPTI
+	                            LEFT JOIN [TK].dbo.CMSME ON ME001=TI005
+	                            ,[TK].dbo.COPTJ,[TK].dbo.INVMB
+	                            ,[TK].dbo.INVLA
+	                            WHERE TI001=TJ001 AND TI002=TJ002
+	                            AND MB001=TJ004
+	                            AND TI019 IN ('Y')
+	                            AND TJ014<>'********************'
+	                            AND LA006=TJ001 AND LA007=TJ002 AND LA008=TJ003
+	                            AND TI003>=@DATESTART AND TI003<=@DATESEND
+
+	                            UNION ALL
+	                            SELECT 
+	                            CONVERT(NVARCHAR,YEAR(TB001))+RIGHT('0' + CONVERT(NVARCHAR, MONTH(TB001)), 2) AS 'YM'
+	                            ,TB002,ME002,TB010,MB002,(TB019) AS 'NUMS',(TB031+TB032) AS 'MOEYS'	
+	                            ,(CASE WHEN LA012>0  THEN  LA012 ELSE 0 END )*TB019
+	                            FROM [TK].dbo.POSTB
+	                            LEFT JOIN [TK].dbo.CMSME ON ME001=TB002
+	                            ,[TK].dbo.INVMB
+	                            , [TK].dbo.INVLA 
+	                            WHERE MB001=TB010	
+	                            AND LA001=TB010 AND LA006=TB002 AND LA007=TB001
+	                            AND TB001>=@DATESTART AND TB001<=@DATESEND
+
+                            )  AS TEMP
+                            WHERE 1=1
+                            {0}
+                            GROUP BY 
+                            TG005
+                            ,ME002
+                            ,TH004
+                            ,MB002
+                            ORDER BY 
+                            TH004
+                            ,TG005
+                        ", SQL_QUERY1.ToString());
+
+        m_db.AddParameter("@DATESTART", DATESTART);
+        m_db.AddParameter("@DATESEND", DATESEND);
+        //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
     #endregion
 
 
@@ -121,6 +246,12 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     protected void Button1_Click(object sender, EventArgs e)
     {
         BindGrid();
+    }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        BindGrid2();
+
+        Label_query_dates.Text = TextBox4.Text.Trim() + "~" + TextBox5.Text.Trim();
     }
     #endregion
 }
