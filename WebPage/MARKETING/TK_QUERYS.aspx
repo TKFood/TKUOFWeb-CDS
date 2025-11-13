@@ -54,6 +54,8 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="商品銷售">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="來客數">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -177,7 +179,7 @@
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Button ID="Button2" runat="server" Text="查詢" OnClick="Button2_Click"
-                                        meta:resourcekey="btn1Resource1" />
+                                        meta:resourcekey="btn1Resource2" />
                                 </td>
                             </tr>
                         </table>
@@ -185,7 +187,7 @@
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
-                                    <asp:Label ID="Label_query_dates" runat="server" Text=""></asp:Label>                                  
+                                    <asp:Label ID="Label_query_dates" runat="server" Text=""></asp:Label>
                                 </td>
                             </tr>
                         </table>
@@ -202,7 +204,7 @@
                                                         <asp:Label ID="Label_部門代" runat="server" Text='<%# Bind("TG005") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                  <asp:TemplateField HeaderText="部門" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="部門" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_部門" runat="server" Text='<%# Bind("ME002") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
@@ -219,12 +221,12 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="銷售總數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_銷售總數量" runat="server" Text='<%# Eval("TOTALNUMS", "{0:N0}") %>'  Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                        <asp:Label ID="Label_銷售總數量" runat="server" Text='<%# Eval("TOTALNUMS", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="銷售總金額(含稅)" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_銷售總金額含稅" runat="server" Text='<%# Eval("TOTALMONEYS", "{0:N0}") %>'  Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="200px"></asp:Label>
+                                                        <asp:Label ID="Label_銷售總金額含稅" runat="server" Text='<%# Eval("TOTALMONEYS", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="成本總金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -241,7 +243,90 @@
                         </table>
                     </div>
                 </telerik:RadPageView>
-
+                <telerik:RadPageView ID="RadPageView3" runat="server">
+                    <div id="tabs-3">
+                        <table class="PopTable">
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label8" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label9" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button3" runat="server" Text="查詢" OnClick="Button3_Click"
+                                        meta:resourcekey="btn1Resource3" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label_query_dates3" runat="server" Text=""></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid3" OnRowDataBound="Grid3_RowDataBound" OnRowCommand="Grid3_RowCommand" runat="server" OnBeforeExport="OnBeforeExport3" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource3" OnPageIndexChanging="grid_PageIndexChanging3" ShowFooter="True" EnableViewState="False">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_日期" runat="server" Text='<%# Bind("日期") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="門市代" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_門市代" runat="server" Text='<%# Bind("門市代") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="門市" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_門市" runat="server" Text='<%# Bind("門市") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="成交筆數" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_成交筆數" runat="server" Text='<%# Eval("成交筆數", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="交易金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_交易金額" runat="server" Text='<%# Eval("交易金額", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="來客數" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_來客數" runat="server" Text='<%# Eval("來客數", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="團車數" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_團車數" runat="server" Text='<%# Eval("團車數", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </Fast:Grid>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">
                         <asp:Label ID="Label2" runat="server" Text="Labe2"></asp:Label>

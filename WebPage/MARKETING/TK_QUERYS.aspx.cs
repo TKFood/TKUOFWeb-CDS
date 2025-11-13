@@ -60,6 +60,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         TextBox2.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox4.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox5.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox7.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox8.Text = DateTime.Now.ToString("yyyyMMdd");
     }
     private void BindGrid()
     {
@@ -383,6 +385,138 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         //SETEXCEL();
 
     }
+
+
+    private void BindGrid3()
+    {
+        // 1.取得連線字串
+        // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder SQL_QUERY1 = new StringBuilder();
+        StringBuilder cmdTxt = new StringBuilder();
+
+        string DATESTART = TextBox7.Text.Trim();
+        string DATESEND = TextBox8.Text.Trim();
+      
+        // 2. 定義 SQL 查詢字串           
+        cmdTxt.AppendFormat(@"
+                            WITH BaseData AS (
+                            -- 1. 統一計算 POSTA 和 WSCMA 的基礎聚合數據 (成交筆數, 交易金額)
+                            SELECT
+                                T.TA001,
+                                T.TA002,
+                                M.MA002,
+                                COUNT(T.TA001) AS NUMS,
+                                SUM(T.TA026) AS MMS
+                            FROM
+                                [TK].dbo.POSTA AS T WITH (NOLOCK)
+                            INNER JOIN
+                                [TK].dbo.WSCMA AS M WITH (NOLOCK) ON T.TA002 = M.MA001 -- 修正為 INNER JOIN
+                            WHERE
+                                T.TA002 IN ('106701', '106501', '106502', '106503', '106504') -- 合併所有門市
+                                AND T.TA001 >= '{0}' AND T.TA001 <= '{1}'
+                            GROUP BY
+                                T.TA001,
+                                T.TA002,
+                                M.MA002
+                        ),
+                        VisitorData AS (
+                            -- 2. 獨立計算 View_t_visitors 的聚合數據 (來客數)
+                            SELECT
+                                TT002,
+                                Fdate1,
+                                SUM(Fout_data) AS CLINETS_Type1, -- 門市 106701 的計算邏輯
+                                SUM(Fin_data + Fout_data) / 2 AS CLINETS_Type2 -- 其他門市的計算邏輯
+                            FROM
+                                [TKMK].[dbo].[View_t_visitors] WITH (NOLOCK)
+                            GROUP BY
+                                TT002,
+                                Fdate1
+                        ),
+                        CarData AS (
+                            -- 3. 獨立計算 GROUPSALES 的聚合數據 (團車數)
+                            SELECT
+                                CONVERT(NVARCHAR, [CREATEDATES], 112) AS Fdate,
+                                SUM([CARNUM]) AS CARS
+                            FROM
+                                [TKMK].[dbo].[GROUPSALES] WITH (NOLOCK)
+                            GROUP BY
+                                CONVERT(NVARCHAR, [CREATEDATES], 112)
+                        )
+                        -- 4. 最終連接所有結果
+                        SELECT
+                            B.TA001 AS '日期',
+                            B.TA002 AS '門市代',
+                            B.MA002 AS '門市',
+                            B.NUMS AS '成交筆數',
+                            B.MMS AS '交易金額',
+    
+                            -- 根據門市代號，從 VisitorData 選擇正確的來客數計算
+                            CASE
+                                WHEN B.TA002 = '106701' THEN V.CLINETS_Type1
+                                ELSE V.CLINETS_Type2
+                            END AS '來客數',
+    
+                            -- 根據門市代號，選擇團車數 (只有 106701 需要 CARS)
+                            CASE
+                                WHEN B.TA002 = '106701' THEN C.CARS
+                                ELSE 0
+                            END AS '團車數'
+    
+                        FROM
+                            BaseData AS B
+                        LEFT JOIN
+                            VisitorData AS V ON V.TT002 = B.TA002 AND V.Fdate1 = B.TA001 -- 連接來客數
+                        LEFT JOIN
+                            CarData AS C ON C.Fdate = B.TA001 -- 連接團車數
+                        ORDER BY
+                            B.TA002,
+                            B.MA002,
+                            B.TA001;
+                        ", DATESTART, DATESEND);
+      
+        //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+
+    }
+
+    protected void grid_PageIndexChanging3(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid3_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+    }
+
+
+    public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        // MsgBox("MsgBox!!!!    " + error + "\r\n" + Form.OuterXml, this.Page, this);
+    }
+
     #endregion
 
 
@@ -397,6 +531,13 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         Label_query_dates.Text = "查詢日期區間: "+TextBox4.Text.Trim() + " ~ " + TextBox5.Text.Trim();
         Label_query_dates.Font.Size = new FontUnit("16pt"); 
+    }
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        BindGrid3();
+
+        Label_query_dates3.Text = "查詢日期區間: " + TextBox7.Text.Trim() + " ~ " + TextBox8.Text.Trim();
+        Label_query_dates3.Font.Size = new FontUnit("16pt");
     }
     #endregion
 }
