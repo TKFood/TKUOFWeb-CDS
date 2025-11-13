@@ -37,6 +37,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
     // 追蹤前一筆資料的 TH004 值
     private string previousTH004 = string.Empty;
+    string currentTH004 = string.Empty;
 
     // 新增：追蹤手動插入行的總數量
     private int insertedRowCount = 0;
@@ -225,6 +226,30 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
+        // ***關鍵步驟 1：重設所有追蹤變數***
+
+         // 1. 重設小計和總計累積變數
+        SUB_TOTALNUMS = 0.00m;
+        SUB_TOTALMONEYS = 0.00m;
+        SUB_TOTALCOSTS = 0.00m;
+        // 如果您有總計變數 (如 GRAND_TOTALNUMS)，也要重設
+        // GRAND_TOTALNUMS = 0.00m;
+
+        // 2. 重設分組追蹤變數
+        previousTH004 = string.Empty;
+
+        // 3. 重設手動插入行追蹤變數
+        insertedRowCount = 0;
+
+        // *** 關鍵步驟 2：清除 GridView 的 Controls 集合 ***
+        // 手動清除之前插入的小計行，避免它們殘留。
+        // 這是一個額外的保險，特別是當您手動使用 AddAt 插入 Controls 時。
+        if (Grid2.Controls.Count > 0 && Grid2.Controls[0].Controls.Count > 0)
+        {
+            // Controls[0] 通常是 Table 物件
+            Grid2.Controls[0].Controls.Clear();
+        }
+
         Grid2.DataSource = dt;
         Grid2.DataBind();
 
@@ -243,7 +268,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
             object th004Value = DataBinder.Eval(e.Row.DataItem, "TH004");
             // 檢查 DataBinder.Eval 的結果是否為 null，如果不是，則調用 ToString()；
             // 如果是 null，則直接返回 string.Empty
-            string currentTH004 = (th004Value != null) ? th004Value.ToString() : string.Empty;
+            currentTH004 = (th004Value != null) ? th004Value.ToString() : string.Empty;
 
             decimal currentNUMS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALNUMS"));
             decimal currentMONEYS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALMONEYS"));
@@ -278,7 +303,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
             // B. 顯示合計文字和結果
 
             // 設置第一個儲存格顯示 "合計" 字樣 (索引 0)
-            e.Row.Cells[3].Text = "小計：";
+            e.Row.Cells[3].Text = "小計 (" + currentTH004 + ")：";
             // 可選：設置對齊和粗體
             e.Row.Cells[3].HorizontalAlign = HorizontalAlign.Right;
             e.Row.Font.Bold = true;
@@ -288,11 +313,10 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
             e.Row.Cells[5].Text = SUB_TOTALMONEYS.ToString("N0"); // 格式化為三位一逗點
             e.Row.Cells[6].Text = SUB_TOTALCOSTS.ToString("N0"); // 格式化為三位一逗點
 
-            e.Row.Cells[3].Font.Size = new FontUnit("16pt"); 
-            e.Row.Cells[4].Font.Size = new FontUnit("16pt");
-            e.Row.Cells[5].Font.Size = new FontUnit("16pt"); 
-            e.Row.Cells[6].Font.Size = new FontUnit("16pt"); 
-
+            // 設定樣式
+            e.Row.BackColor = System.Drawing.Color.LightYellow; // 淺黃色背景
+            e.Row.Font.Bold = true;
+            e.Row.Font.Size = new FontUnit("14pt");
 
         }
     }
