@@ -30,9 +30,16 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     string NAME = null;
     String ROLES = null;
 
-    private decimal TOTALNUMS = 0.00m;
-    private decimal TOTALMONEYS = 0.00m;
-    private decimal TOTALCOSTS = 0.00m;
+    // 當前組別的小計變數
+    private decimal SUB_TOTALNUMS = 0.00m;
+    private decimal SUB_TOTALMONEYS = 0.00m;
+    private decimal SUB_TOTALCOSTS = 0.00m;
+
+    // 追蹤前一筆資料的 TH004 值
+    private string previousTH004 = string.Empty;
+
+    // 新增：追蹤手動插入行的總數量
+    private int insertedRowCount = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -229,22 +236,37 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     }
     protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+
         // 判斷當前處理的是否為資料列 (DataRow)
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            // A. 取得該列的資料
-            // 假設您的資料來源是一個 DataRow 或您知道欄位的索引
+            object th004Value = DataBinder.Eval(e.Row.DataItem, "TH004");
+            // 檢查 DataBinder.Eval 的結果是否為 null，如果不是，則調用 ToString()；
+            // 如果是 null，則直接返回 string.Empty
+            string currentTH004 = (th004Value != null) ? th004Value.ToString() : string.Empty;
 
-            // 取得金額 (假設 "Amount" 是第二個欄位，索引為 1)
-            // 建議使用 DataBinder.Eval 更安全，假設資料來源是 DataTable/List<T>
-            decimal amount = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALNUMS"));
-            TOTALNUMS += amount;
+            decimal currentNUMS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALNUMS"));
+            decimal currentMONEYS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALMONEYS"));
+            decimal currentCOSTS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALCOSTS"));
 
-            decimal MONEYS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALMONEYS"));
-            TOTALMONEYS += MONEYS;
+            // 只有在第一次載入之後 (previousTH004 不為空) 且 TH004 改變時才插入小計行
+            if (!string.IsNullOrEmpty(previousTH004) && currentTH004 != previousTH004)
+            {
+                // 計算真實的插入位置：e.Row.RowIndex (來自 GridView) + 已經插入的行數 + 1 (插入在下方)
+                int actualInsertIndex = e.Row.RowIndex + insertedRowCount + 1;
 
-            decimal COSTS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALCOSTS"));
-            TOTALCOSTS += COSTS;
+                InsertSubtotalRow(actualInsertIndex, previousTH004);
+                // 重要：插入成功後，更新偏移量
+                insertedRowCount++;
+            }
+            SUB_TOTALNUMS += currentNUMS;
+            SUB_TOTALMONEYS += currentMONEYS;
+            SUB_TOTALCOSTS += currentCOSTS;
+
+            // ----------------------------------------------------------------------
+            // 4. 更新追蹤變數
+            // ----------------------------------------------------------------------
+            previousTH004 = currentTH004;
 
             // 可選：對 DataRow 中的金額進行格式化顯示
             //e.Row.Cells[4].Text = amount.ToString("N0"); // 三位一逗點，無小數點
@@ -256,15 +278,15 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
             // B. 顯示合計文字和結果
 
             // 設置第一個儲存格顯示 "合計" 字樣 (索引 0)
-            e.Row.Cells[3].Text = "合計：";
+            e.Row.Cells[3].Text = "小計：";
             // 可選：設置對齊和粗體
             e.Row.Cells[3].HorizontalAlign = HorizontalAlign.Right;
             e.Row.Font.Bold = true;
 
             // 設置金額合計結果 (索引 1)
-            e.Row.Cells[4].Text = TOTALNUMS.ToString("N0"); // 格式化為三位一逗點
-            e.Row.Cells[5].Text = TOTALMONEYS.ToString("N0"); // 格式化為三位一逗點
-            e.Row.Cells[6].Text = TOTALCOSTS.ToString("N0"); // 格式化為三位一逗點
+            e.Row.Cells[4].Text = SUB_TOTALNUMS.ToString("N0"); // 格式化為三位一逗點
+            e.Row.Cells[5].Text = SUB_TOTALMONEYS.ToString("N0"); // 格式化為三位一逗點
+            e.Row.Cells[6].Text = SUB_TOTALCOSTS.ToString("N0"); // 格式化為三位一逗點
 
             e.Row.Cells[3].Font.Size = new FontUnit("16pt"); 
             e.Row.Cells[4].Font.Size = new FontUnit("16pt");
@@ -273,6 +295,57 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
 
         }
+    }
+
+    /// <summary>
+    /// 手動插入一個小計行到 GridView
+    /// </summary>
+    private void InsertSubtotalRow(int currentRowIndex, string th004Value)
+    {
+        // 建立新的 GridView Row
+        GridViewRow subTotalRow = new GridViewRow(currentRowIndex, -1, DataControlRowType.Separator, DataControlRowState.Normal);
+
+        // 依照 GridView 的欄位數量建立儲存格
+        for (int i = 0; i < Grid2.Columns.Count; i++)
+        {
+            TableCell cell = new TableCell();
+            cell.Text = "&nbsp;"; // 預設空白
+            subTotalRow.Cells.Add(cell);
+        }
+
+        // 合併 TH004 之前的欄位，顯示小計資訊 (假設是第 0, 1, 2 欄位)
+        subTotalRow.Cells[0].Text = "小計 (" + th004Value + ")：";
+        subTotalRow.Cells[0].ColumnSpan =4; // 合併欄位，假設前面有 3 個不顯示數字的欄位
+        subTotalRow.Cells[0].HorizontalAlign = HorizontalAlign.Right;
+
+        // 移除合併後多餘的儲存格，以確保 GridView 結構正確
+        // 注意：您需要根據 GridView 的實際欄位數量來調整這個移除邏輯
+        for (int i = 1; i < 3; i++)
+        {
+            subTotalRow.Cells.RemoveAt(1);
+        }
+
+        // 填充小計結果 (注意儲存格索引會因為 ColumnSpan 而改變)
+        // 假設小計結果分別放在索引 1, 2, 3 的位置
+        // 如果您合併了 3 欄 (0, 1, 2)，新的 Cell[1] 就是原來的 Cell[4]
+
+        // 設定樣式
+        subTotalRow.BackColor = System.Drawing.Color.LightYellow; // 淺黃色背景
+        subTotalRow.Font.Bold = true;
+        subTotalRow.Font.Size = new FontUnit("14pt");
+
+        // 填充小計結果 (索引需要調整，如果合併 3 欄，TOTALNUMS 會在 Cell[1])
+        subTotalRow.Cells[1].Text = SUB_TOTALNUMS.ToString("N0");
+        subTotalRow.Cells[2].Text = SUB_TOTALMONEYS.ToString("N0");
+        subTotalRow.Cells[3].Text = SUB_TOTALCOSTS.ToString("N0");
+
+        // 將小計行插入
+        Grid2.Controls[0].Controls.AddAt(currentRowIndex, subTotalRow);
+
+        // 重置小計變數，準備下一組的計算
+        SUB_TOTALNUMS = 0.00m;
+        SUB_TOTALMONEYS = 0.00m;
+        SUB_TOTALCOSTS = 0.00m;
     }
 
     protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
