@@ -37,6 +37,15 @@
                 </tr>
                 <tr>
                     <td class="PopTableLeftTD">
+                        <asp:Label ID="Label2" runat="server" Text="目前的狀況:" meta:resourcekey="Label4Resource1"></asp:Label>
+                    </td>
+                    <td class="PopTableRightTD">
+                        <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="PopTableLeftTD">
                         <asp:Label ID="Label3" runat="server" Text="校稿名稱:" meta:resourcekey="Label4Resource1"></asp:Label>
                     </td>
                     <td class="PopTableRightTD">

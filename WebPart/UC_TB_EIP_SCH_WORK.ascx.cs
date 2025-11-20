@@ -20,6 +20,7 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
         if (!IsPostBack)
         {
             BindDropDownList();
+            BindDropDownList2();
 
             BindGrid2("");
 
@@ -50,7 +51,6 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
         dt.Rows.Add(row);
 
 
-
         //string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         //Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
@@ -64,14 +64,66 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
             DropDownList1.DataTextField = "KINDS";
             DropDownList1.DataValueField = "KINDS";
             DropDownList1.DataBind();
-
         }
         else
         {
 
         }
 
+    }
 
+    private void BindDropDownList2()
+    {
+        DataTable dt = new DataTable();
+
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" 
+                        SELECT
+                            WORK_STATE_DESC
+                        FROM
+                        (
+                            -- 1. 新增 '全部' (排序為 0)
+                            SELECT
+                                '全部' AS WORK_STATE_DESC,
+                                0 AS SortOrder
+    
+                            UNION ALL
+    
+                            -- 2. 原始查詢的結果 (排序為 1)
+                            SELECT
+                                CASE
+                                    WHEN W.WORK_STATE = 'Completed' THEN '已回覆'
+                                    WHEN W.WORK_STATE = 'NotYetBegin' THEN '還沒回覆'
+                                    WHEN W.WORK_STATE = 'Audit' THEN '回覆完成，交付人審查中'
+                                    WHEN W.WORK_STATE = 'Proceeding' THEN '有回覆，但沒有完成'
+                                    ELSE W.WORK_STATE
+                                END AS WORK_STATE_DESC,
+                                1 AS SortOrder
+                            FROM
+                                [UOF].dbo.TB_EIP_SCH_WORK W
+                            WHERE
+                                1 = 1
+                            GROUP BY
+                                W.WORK_STATE
+                        ) AS ResultTable
+                        ORDER BY
+                            SortOrder, WORK_STATE_DESC;";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList2.DataSource = dt;
+            DropDownList2.DataTextField = "WORK_STATE_DESC";
+            DropDownList2.DataValueField = "WORK_STATE_DESC";
+            DropDownList2.DataBind();
+        }
+        else
+        {
+
+        }
 
     }
 
@@ -154,7 +206,7 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
 
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS = new StringBuilder();
-
+        StringBuilder QUERYS2 = new StringBuilder();
 
 
         //狀態
@@ -167,6 +219,31 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
             else if (DropDownList1.Text.Equals("N"))
             {
                 QUERYS.AppendFormat(@"  AND W.WORK_STATE NOT IN ('Completed') ");
+            }
+        }
+
+        //目前的狀況
+        if (!string.IsNullOrEmpty(DropDownList2.Text))
+        {
+            if (DropDownList2.Text.Equals("全部"))
+            {
+                QUERYS2.AppendFormat(@"  ");
+            }
+            else if(DropDownList2.Text.Equals("還沒回覆"))
+            {
+                QUERYS2.AppendFormat(@" AND W.WORK_STATE  IN ('NotYetBegin') ");
+            }
+            else if (DropDownList2.Text.Equals("有回覆，但沒有完成"))
+            {
+                QUERYS2.AppendFormat(@"  AND W.WORK_STATE IN ('Proceeding') ");
+            }
+            else if (DropDownList2.Text.Equals("回覆完成，交付人審查中"))
+            {
+                QUERYS2.AppendFormat(@"  AND W.WORK_STATE IN ('Audit') ");
+            }
+            else if (DropDownList2.Text.Equals("已回覆"))
+            {
+                QUERYS2.AppendFormat(@"  AND W.WORK_STATE IN ('Completed') ");
             }
         }
 
@@ -231,10 +308,11 @@ public partial class CDS_WebPart_UC_TB_EIP_SCH_WORK : System.Web.UI.UserControl
                             INNER JOIN DEVOLVE_USERS DU ON DU.DEVOLVE_GUID = W.DEVOLVE_GUID AND DU.UserId = W.EXECUTE_USER
                             WHERE 1=1
                                 {0}
+                                {1}
                             ORDER BY SUBJECT,CREATE_TIME DESC
                              
                               
-                                ", QUERYS.ToString());
+                                ", QUERYS.ToString(), QUERYS2.ToString());
 
 
 
