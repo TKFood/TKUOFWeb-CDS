@@ -1,0 +1,122 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Dynamic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Xml;
+using System.Xml.Linq;
+using Ede.Uof.EIP.SystemInfo;
+using Ede.Uof.Utility.Data;
+using Ede.Uof.Utility.Log;
+using Ede.Uof.Utility.Page.Common;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Style;
+using System.Net.Mail;
+using System.Threading.Tasks;
+
+public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.BasePage
+{
+    string ACCOUNT = null;
+    string NAME = null;
+    String ROLES = null;
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+    }
+
+    #region FUNCTION
+    private void BindGrid()
+    {
+        // 1.取得連線字串
+        // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        // 2. 定義 SQL 查詢字串           
+        string cmdTxt = @"
+                           /****** SSMS 中 SelectTopNRows 命令的指令碼  ******/
+                        SELECT  
+                        [ID]
+                        ,[MB001]
+                        ,[MB002]
+                        ,[MB003]
+                        ,[PRICES]
+                        ,[IPPRICES]
+                        ,[DMPRICES]
+                        ,[STORENUMS]
+                        ,[ECOMMERCENUMS]
+                        ,[TOURISHOPNUMS]
+                        ,[INARMYNUMS]
+                        ,[INOILNUMS]
+                        ,[INSALENUMS]
+                        ,[INPRNUMS]
+                        ,[BOSSPRNUMS]
+                        ,[STAFFNUMS]
+                        ,[TOTALNUMS]
+                        ,[PACKNUMS]
+                        ,[PACKINDATES]
+                        ,[PRODATES]
+                        ,[ISCLOSED]
+                        FROM [TKMARKETING].[dbo].[TKGIFTSETS]
+                        WHERE [ISCLOSED]='N'
+                        ORDER BY [MB001],[MB002]
+                        ";
+
+        //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());
+        //m_db.AddParameter("@DATESEND", TextBox2.Text.Trim());
+        //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+
+    }
+
+    protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+    }
+
+
+    public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+    #endregion
+
+
+    #region BUTTON
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        BindGrid();
+    }
+
+
+    #endregion
+}
