@@ -381,6 +381,7 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                     // 檢查是否有資料被更新
                     if (rowsAffected > 0)
                     {
+                        UPDATE_TKGIFTSETS_SELLEDNUMS();
                         MsgBox("更新完成 \r\n ", this.Page, this);
                     }
                     else
@@ -417,8 +418,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         string PACKNUMS,
         string PACKINDATES,
         string PRODATES,
-        string SDATES,
-        string EDATES
+        object SDATES,
+        object EDATES
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
@@ -534,6 +535,117 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         {
         }
     }
+
+    public void UPDATE_TKGIFTSETS_SELLEDNUMS()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
+
+
+        // 1. 📌 使用參數化查詢，避免 SQL Injection
+        string sqlQuery = @"
+                            UPDATE [TKMARKETING].[dbo].[TKGIFTSETS]
+                            SET [SELLEDNUMS]=TEMP.TOTALSELLEDNUMS
+                            FROM 
+                            (
+	                            SELECT
+		                            T1.MB001,
+		                            T2.TOTALSELLEDNUMS
+	                            FROM
+		                            [TKMARKETING].[dbo].[TKGIFTSETS] AS T1 -- 左側主表，每一行都會觸發 T2 執行
+	                            CROSS APPLY
+	                            (
+		                            SELECT
+			                            SUM(SalesData.NUMS) AS TOTALSELLEDNUMS
+		                            FROM
+		                            (
+			                            -- 1. COPTG (銷貨)
+			                            SELECT
+				                            TH004 AS ItemCode, -- 統一命名為 ItemCode
+				                            (TH008 + TH024) AS NUMS,
+				                            TG003 AS DocDate
+		                               FROM [192.168.1.105].[TK].dbo.COPTG
+			                            LEFT JOIN [192.168.1.105].[TK].dbo.CMSME ON ME001=TG005
+			                            ,[192.168.1.105].[TK].dbo.COPTH,[192.168.1.105].[TK].dbo.INVMB
+			                            ,[192.168.1.105].[TK].dbo.INVLA
+			                            WHERE TG001=TH001 AND TG002=TH002
+			                            AND MB001=TH004
+			                            AND TG023 IN ('Y')
+			                            AND TH017<>'********************'
+			                            AND LA006=TH001 AND LA007=TH002 AND LA008=TH003
+			                            AND TG003>=CONVERT(NVARCHAR,T1.SDATES,112)AND TG003<=CONVERT(NVARCHAR,T1.EDATES,112)
+
+			                            UNION ALL
+			                            -- 2. COPTI (銷退)
+			                            SELECT
+				                            TJ004 AS ItemCode,
+				                            (TJ007) * -1 AS NUMS,
+				                            TI003 AS DocDate
+			                            FROM [192.168.1.105].[TK].dbo.COPTI
+			                            LEFT JOIN [192.168.1.105].[TK].dbo.CMSME ON ME001=TI005
+			                            ,[192.168.1.105].[TK].dbo.COPTJ,[192.168.1.105].[TK].dbo.INVMB
+			                            ,[192.168.1.105].[TK].dbo.INVLA
+			                            WHERE TI001=TJ001 AND TI002=TJ002
+			                            AND MB001=TJ004
+			                            AND TI019 IN ('Y')
+			                            AND TJ014<>'********************'
+			                            AND LA006=TJ001 AND LA007=TJ002 AND LA008=TJ003
+			                            AND TI003>=CONVERT(NVARCHAR,T1.SDATES,112) AND TI003<=CONVERT(NVARCHAR,T1.EDATES,112)
+       
+
+			                            UNION ALL
+			                            -- 3. POSTB (POS 銷貨)
+			                            SELECT
+				                            TB010 AS ItemCode,
+				                            (TB019) AS NUMS,
+				                            TB001 AS DocDate
+		                               FROM [192.168.1.105].[TK].dbo.POSTB
+			                            LEFT JOIN [192.168.1.105].[TK].dbo.CMSME ON ME001=TB002
+			                            ,[192.168.1.105].[TK].dbo.INVMB
+			                            , [192.168.1.105].[TK].dbo.INVLA 
+			                            WHERE MB001=TB010	
+			                            AND LA001=TB010 AND LA006=TB002 AND LA007=TB001
+			                            AND TB001>= CONVERT(NVARCHAR,T1.SDATES,112) AND TB001<=CONVERT(NVARCHAR,T1.EDATES,112)
+        
+		                            ) AS SalesData
+		                            WHERE
+			                            SalesData.ItemCode = T1.MB001 -- 關鍵：只計算與 T1 當前行匹配的貨品
+		                            GROUP BY
+			                            SalesData.ItemCode -- 這裡的 GROUP BY 僅用於聚合 SUM(NUMS)
+	                            ) AS T2
+	                            WHERE ISNULL(T1.MB001,'')<>''
+	                            AND ISNULL(T1.SDATES,'')<>''
+	                            AND ISNULL(T1.EDATES,'')<>''
+                            ) AS TEMP
+                            WHERE TEMP.MB001=[TKGIFTSETS].MB001
+                            ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢 
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        //MsgBox("完成 \r\n ", this.Page, this);
+                    }
+                    else
+                    {
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -576,7 +688,18 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         string PACKINDATES = ADD_TextBox17.Text.Trim().ToString();
         string PRODATES = ADD_TextBox18.Text.Trim().ToString();
         string SDATES = ADD_TextBox21.Text.Trim().ToString();
+        //處理日期空值
+        object sDatesParam = DBNull.Value;
+        object eDatesParam = DBNull.Value;
+        if (!string.IsNullOrWhiteSpace(SDATES))
+        {
+            sDatesParam = SDATES;
+        }        
         string EDATES = ADD_TextBox22.Text.Trim().ToString();
+        if (!string.IsNullOrWhiteSpace(EDATES))
+        {
+            eDatesParam = EDATES;
+        }
 
         ADD_TKGIFTSETS
         (
@@ -600,9 +723,13 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
             PACKNUMS,
             PACKINDATES,
             PRODATES,
-            SDATES,
-            EDATES
+            sDatesParam,
+            eDatesParam
          );
+
+        UPDATE_TKGIFTSETS_SELLEDNUMS();
+
+        BindGrid();
 
     }
 
