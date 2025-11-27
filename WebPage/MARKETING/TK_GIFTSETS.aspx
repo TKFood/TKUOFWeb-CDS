@@ -82,7 +82,7 @@
                                                             runat="server"
                                                             Text='<%# Bind("MB002") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="200px">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
