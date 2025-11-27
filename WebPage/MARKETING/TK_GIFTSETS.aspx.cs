@@ -183,7 +183,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                     , PRODATES
                     , ISCLOSED
                     );
-               
+
+                BindGrid();
             }
         }
     }
@@ -252,6 +253,9 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                             ,PRODATES=@PRODATES
                             ,ISCLOSED=@ISCLOSED
                             WHERE [ID] = @recordId
+
+                            UPDATE  [TKMARKETING].[dbo].[TKGIFTSETS]
+                            SET TOTALNUMS=STORENUMS+ECOMMERCENUMS+TOURISHOPNUMS+INARMYNUMS+INOILNUMS+INSALENUMS+INPRNUMS+BOSSPRNUMS+STAFFNUMS
                             ";
 
         // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
