@@ -113,7 +113,7 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                  <asp:TemplateField HeaderText="品號" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_品號"
                                                             runat="server"
@@ -293,7 +293,7 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="銷售日期起" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="銷售日期起" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_銷售日期起"
                                                             runat="server"
@@ -303,7 +303,7 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="銷售日期迄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="銷售日期迄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_銷售日期迄"
                                                             runat="server"
@@ -313,7 +313,7 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="日期區間內的銷售數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="日期區間內的銷售數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_日期區間內的銷售數量"
                                                             runat="server"
@@ -362,10 +362,26 @@
                             <table class="PopTable">
                                 <tr>
                                     <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
-                                        <asp:Label Text="名稱：" runat="server" />
+                                        <asp:Label Text="品名：" runat="server" />
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
-                                        <asp:TextBox ID="ADD_TextBox1" runat="server" Width="200px" />
+                                        <asp:TextBox ID="ADD_TextBox1" runat="server" Width="300px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="品號：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox19" runat="server" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="年度：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox20" runat="server" Width="200px" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -502,6 +518,22 @@
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
                                         <asp:TextBox ID="ADD_TextBox18" runat="server" Width="200px" />
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="銷售日期起：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox21" runat="server" TextMode="Date" Width="200px" />
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="銷售日期迄：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox22" runat="server" TextMode="Date" Width="200px" />
                                     </td>
                                 </tr>
                                 <tr>

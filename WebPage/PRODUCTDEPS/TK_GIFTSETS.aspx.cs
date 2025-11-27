@@ -397,6 +397,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
 
     public void ADD_TKGIFTSETS
         (
+        string YEARS,
+        string MB001,
         string MB002,
         string MB003,
         string PRICES,
@@ -414,7 +416,9 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         string TOTALNUMS,
         string PACKNUMS,
         string PACKINDATES,
-        string PRODATES
+        string PRODATES,
+        string SDATES,
+        string EDATES
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
@@ -424,7 +428,9 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         string sqlQuery = @"
                             INSERT INTO [TKMARKETING].[dbo].[TKGIFTSETS]
                             (
-                            [MB002]
+                            [YEARS]
+                            ,[MB001]
+                            ,[MB002]
                             ,[MB003]
                             ,[PRICES]
                             ,[IPPRICES]
@@ -442,10 +448,14 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                             ,[PACKNUMS]
                             ,[PACKINDATES]
                             ,[PRODATES]
+                            ,[SDATES]
+                            ,[EDATES]
                             ,[ISCLOSED]
                             ) 
                             VALUES
                             (
+                            @YEARS,
+                            @MB001,
                             @MB002,
                             @MB003,
                             @PRICES,
@@ -464,6 +474,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                             @PACKNUMS,
                             @PACKINDATES,
                             @PRODATES,
+                            @SDATES,
+                            @EDATES,
                             @ISCLOSED
                             )
 
@@ -479,6 +491,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢
+                    command.Parameters.AddWithValue("@YEARS", YEARS);
+                    command.Parameters.AddWithValue("@MB001", MB001);
                     command.Parameters.AddWithValue("@MB002", MB002);
                     command.Parameters.AddWithValue("@MB003", MB003);
                     command.Parameters.AddWithValue("@PRICES", PRICES);
@@ -497,6 +511,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                     command.Parameters.AddWithValue("@PACKNUMS", PACKNUMS);
                     command.Parameters.AddWithValue("@PACKINDATES", PACKINDATES);
                     command.Parameters.AddWithValue("@PRODATES", PRODATES);
+                    command.Parameters.AddWithValue("@SDATES", SDATES);
+                    command.Parameters.AddWithValue("@EDATES", EDATES);
                     command.Parameters.AddWithValue("@ISCLOSED", "N");              
 
                     connection.Open();
@@ -539,6 +555,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
     }
     protected void btnADD_Click(object sender, EventArgs e)
     {
+        string YEARS = ADD_TextBox20.Text.Trim().ToString();
+        string MB001 = ADD_TextBox19.Text.Trim().ToString();
         string MB002 = ADD_TextBox1.Text.Trim().ToString();
         string MB003 = ADD_TextBox2.Text.Trim().ToString();
         string PRICES = ADD_TextBox3.Text.Trim().ToString();
@@ -557,27 +575,33 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         string PACKNUMS = ADD_TextBox16.Text.Trim().ToString();
         string PACKINDATES = ADD_TextBox17.Text.Trim().ToString();
         string PRODATES = ADD_TextBox18.Text.Trim().ToString();
+        string SDATES = ADD_TextBox21.Text.Trim().ToString();
+        string EDATES = ADD_TextBox22.Text.Trim().ToString();
 
         ADD_TKGIFTSETS
         (
-           MB002,
-           MB003,
-           PRICES,
-           IPPRICES,
-           DMPRICES,
-           STORENUMS,
-           ECOMMERCENUMS,
-           TOURISHOPNUMS,
-           INARMYNUMS,
-           INOILNUMS,
-           INSALENUMS,
-           INPRNUMS,
-           BOSSPRNUMS,
-           STAFFNUMS,
-           TOTALNUMS,
-           PACKNUMS,
-           PACKINDATES,
-           PRODATES
+            YEARS,
+            MB001,
+            MB002,
+            MB003,
+            PRICES,
+            IPPRICES,
+            DMPRICES,
+            STORENUMS,
+            ECOMMERCENUMS,
+            TOURISHOPNUMS,
+            INARMYNUMS,
+            INOILNUMS,
+            INSALENUMS,
+            INPRNUMS,
+            BOSSPRNUMS,
+            STAFFNUMS,
+            TOTALNUMS,
+            PACKNUMS,
+            PACKINDATES,
+            PRODATES,
+            SDATES,
+            EDATES
          );
 
     }
