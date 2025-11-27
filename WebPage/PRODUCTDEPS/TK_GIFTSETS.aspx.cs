@@ -112,6 +112,7 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                         ,[MB001]
                         ,[MB002]
                         ,[MB003]
+                        ,[YEARS]
                         ,[PRICES]
                         ,[IPPRICES]
                         ,[DMPRICES]
@@ -128,12 +129,15 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                         ,[PACKNUMS]
                         ,[PACKINDATES]
                         ,[PRODATES]
+                        ,CONVERT(NVARCHAR,SDATES,111) AS 'SDATES'
+	                    ,CONVERT(NVARCHAR,EDATES,111) AS 'EDATES'
+	                    ,[SELLEDNUMS]
                         ,[ISCLOSED]
                         FROM [TKMARKETING].[dbo].[TKGIFTSETS]
                         WHERE 1=1
                         {0}
                         {1}
-                        ORDER BY [MB001],[MB002]
+                        ORDER BY [YEARS],[MB001],[MB002]
                         ", QUERY1.ToString(), QUERY2.ToString());
                 
       
@@ -175,6 +179,10 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
             // 3. 📌 使用 FindControl 取得 TextBox 和 DropDownList 控制項
 
             // 取得品名 (TextBox)
+            TextBox txt_YEARS = (TextBox)row.FindControl("TextBox_年度");
+            string YEARS = txt_YEARS.Text;
+            TextBox txt_MB001 = (TextBox)row.FindControl("TextBox_品號");
+            string MB001 = txt_MB001.Text;
             TextBox txt_MB002 = (TextBox)row.FindControl("TextBox_品名");
             string MB002 = txt_MB002.Text;
             TextBox txt_MB003 = (TextBox)row.FindControl("TextBox_箱入數");
@@ -211,7 +219,10 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
             string PACKINDATES = txt_PACKINDATES.Text;
             TextBox txt_PRODATES = (TextBox)row.FindControl("TextBox_預估成品完成日");
             string PRODATES = txt_PRODATES.Text;
-
+            TextBox txt_SDATES = (TextBox)row.FindControl("TextBox_銷售日期起");
+            string SDATES = txt_SDATES.Text;
+            TextBox txt_EDATES = (TextBox)row.FindControl("TextBox_銷售日期迄");
+            string EDATES = txt_EDATES.Text;
             // 取得是否結案 (DropDownList)
             DropDownList ddlIsClosed = (DropDownList)row.FindControl("DropDownList_是否結案");
             string ISCLOSED = ddlIsClosed.SelectedValue;
@@ -223,7 +234,9 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                 // UpdateData(newPinMing, newIsClosed, primaryKey);
 
                 UPDATE_TKGIFTSETS(
-                    recordId                    
+                    recordId     
+                    , YEARS
+                    , MB001
                     , MB002
                     , MB003
                     , PRICES
@@ -242,6 +255,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                     , PACKNUMS
                     , PACKINDATES
                     , PRODATES
+                    , SDATES
+                    , EDATES
                     , ISCLOSED
                     );
 
@@ -267,6 +282,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
 
     private void UPDATE_TKGIFTSETS(
         string recordId
+        , string YEARS
+        , string MB001
         ,string MB002
         ,string MB003
         ,string PRICES
@@ -285,7 +302,9 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         ,string PACKNUMS
         ,string PACKINDATES
         ,string PRODATES
-        ,string ISCLOSED
+        , string SDATES
+        , string EDATES
+        , string ISCLOSED
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
@@ -294,8 +313,10 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         string sqlQuery = @"
                             UPDATE [TKMARKETING].[dbo].[TKGIFTSETS]
                             SET 
-                            MB002 = @MB002
-                            ,MB003=@MB003
+                            YEARS=@YEARS
+                            ,MB001 = @MB001
+                            ,MB002 = @MB002
+                            ,MB003 =@MB003
                             ,PRICES=@PRICES
                             ,IPPRICES=@IPPRICES
                             ,DMPRICES=@DMPRICES
@@ -312,6 +333,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                             ,PACKNUMS=@PACKNUMS
                             ,PACKINDATES=@PACKINDATES
                             ,PRODATES=@PRODATES
+                            ,SDATES=@SDATES
+                            ,EDATES=@EDATES
                             ,ISCLOSED=@ISCLOSED
                             WHERE [ID] = @recordId
 
@@ -327,6 +350,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢
+                    command.Parameters.AddWithValue("@YEARS", YEARS);
+                    command.Parameters.AddWithValue("@MB001", MB001);
                     command.Parameters.AddWithValue("@MB002", MB002);
                     command.Parameters.AddWithValue("@MB003", MB003);
                     command.Parameters.AddWithValue("@PRICES", PRICES);
@@ -346,6 +371,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                     command.Parameters.AddWithValue("@PACKINDATES", PACKINDATES);
                     command.Parameters.AddWithValue("@PRODATES", PRODATES);
                     command.Parameters.AddWithValue("@ISCLOSED", ISCLOSED);
+                    command.Parameters.AddWithValue("@SDATES", SDATES);
+                    command.Parameters.AddWithValue("@EDATES", EDATES);
                     command.Parameters.AddWithValue("@recordId", recordId);
 
                     connection.Open();

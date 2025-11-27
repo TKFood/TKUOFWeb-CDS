@@ -113,6 +113,26 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                  <asp:TemplateField HeaderText="品號" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_品號"
+                                                            runat="server"
+                                                            Text='<%# Bind("MB001") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="140px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="年度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_年度"
+                                                            runat="server"
+                                                            Text='<%# Bind("YEARS") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="售價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_售價"
@@ -273,6 +293,36 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="銷售日期起" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_銷售日期起"
+                                                            runat="server"
+                                                            Text='<%# Bind("SDATES") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="銷售日期迄" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_銷售日期迄"
+                                                            runat="server"
+                                                            Text='<%# Bind("EDATES") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="日期區間內的銷售數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_日期區間內的銷售數量"
+                                                            runat="server"
+                                                            Text='<%# Bind("SELLEDNUMS") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:DropDownList ID="DropDownList_是否結案"
@@ -315,7 +365,7 @@
                                         <asp:Label Text="名稱：" runat="server" />
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
-                                        <asp:TextBox ID="ADD_TextBox1" runat="server"  Width="200px" />
+                                        <asp:TextBox ID="ADD_TextBox1" runat="server" Width="200px" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -323,7 +373,7 @@
                                         <asp:Label Text="箱入數：" runat="server" />
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
-                                        <asp:TextBox ID="ADD_TextBox2" runat="server"  Width="200px" />
+                                        <asp:TextBox ID="ADD_TextBox2" runat="server" Width="200px" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -443,7 +493,7 @@
                                         <asp:Label Text="預估包材到廠日：" runat="server" />
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
-                                        <asp:TextBox ID="ADD_TextBox17" runat="server"  Width="200px" />
+                                        <asp:TextBox ID="ADD_TextBox17" runat="server" Width="200px" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -451,7 +501,7 @@
                                         <asp:Label Text="預估成品完成日：" runat="server" />
                                     </td>
                                     <td style="width: 85%; padding: 5px;">
-                                        <asp:TextBox ID="ADD_TextBox18" runat="server"  Width="200px" />
+                                        <asp:TextBox ID="ADD_TextBox18" runat="server" Width="200px" />
                                     </td>
                                 </tr>
                                 <tr>
