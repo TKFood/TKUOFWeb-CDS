@@ -358,8 +358,7 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                     }
                     else
                     {
-                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)
-                        MsgBox("更新完成，但沒有資料列被影響 (ID 可能不存在)。\r\n ", this.Page, this);
+                       
                     }
                 }
             }
@@ -369,6 +368,129 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         }
     }
 
+    public void ADD_TKGIFTSETS
+        (
+        string MB002,
+        string MB003,
+        string PRICES,
+        string IPPRICES,
+        string DMPRICES,
+        string STORENUMS,
+        string ECOMMERCENUMS,
+        string TOURISHOPNUMS,
+        string INARMYNUMS,
+        string INOILNUMS,
+        string INSALENUMS,
+        string INPRNUMS,
+        string BOSSPRNUMS,
+        string STAFFNUMS,
+        string TOTALNUMS,
+        string PACKNUMS,
+        string PACKINDATES,
+        string PRODATES
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
+
+
+        // 1. 📌 使用參數化查詢，避免 SQL Injection
+        string sqlQuery = @"
+                            INSERT INTO [TKMARKETING].[dbo].[TKGIFTSETS]
+                            (
+                            [MB002]
+                            ,[MB003]
+                            ,[PRICES]
+                            ,[IPPRICES]
+                            ,[DMPRICES]
+                            ,[STORENUMS]
+                            ,[ECOMMERCENUMS]
+                            ,[TOURISHOPNUMS]
+                            ,[INARMYNUMS]
+                            ,[INOILNUMS]
+                            ,[INSALENUMS]
+                            ,[INPRNUMS]
+                            ,[BOSSPRNUMS]
+                            ,[STAFFNUMS]
+                            ,[TOTALNUMS]
+                            ,[PACKNUMS]
+                            ,[PACKINDATES]
+                            ,[PRODATES]
+                            ,[ISCLOSED]
+                            ) 
+                            VALUES
+                            (
+                            @MB002,
+                            @MB003,
+                            @PRICES,
+                            @IPPRICES,
+                            @DMPRICES,
+                            @STORENUMS,
+                            @ECOMMERCENUMS,
+                            @TOURISHOPNUMS,
+                            @INARMYNUMS,
+                            @INOILNUMS,
+                            @INSALENUMS,
+                            @INPRNUMS,
+                            @BOSSPRNUMS,
+                            @STAFFNUMS,
+                            @TOTALNUMS,
+                            @PACKNUMS,
+                            @PACKINDATES,
+                            @PRODATES,
+                            @ISCLOSED
+                            )
+
+                            UPDATE  [TKMARKETING].[dbo].[TKGIFTSETS]
+                            SET TOTALNUMS=STORENUMS+ECOMMERCENUMS+TOURISHOPNUMS+INARMYNUMS+INOILNUMS+INSALENUMS+INPRNUMS+BOSSPRNUMS+STAFFNUMS
+                            ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢
+                    command.Parameters.AddWithValue("@MB002", MB002);
+                    command.Parameters.AddWithValue("@MB003", MB003);
+                    command.Parameters.AddWithValue("@PRICES", PRICES);
+                    command.Parameters.AddWithValue("@IPPRICES", IPPRICES);
+                    command.Parameters.AddWithValue("@DMPRICES", DMPRICES);
+                    command.Parameters.AddWithValue("@STORENUMS", STORENUMS);
+                    command.Parameters.AddWithValue("@ECOMMERCENUMS", ECOMMERCENUMS);
+                    command.Parameters.AddWithValue("@TOURISHOPNUMS", TOURISHOPNUMS);
+                    command.Parameters.AddWithValue("@INARMYNUMS", INARMYNUMS);
+                    command.Parameters.AddWithValue("@INOILNUMS", INOILNUMS);
+                    command.Parameters.AddWithValue("@INSALENUMS", INSALENUMS);
+                    command.Parameters.AddWithValue("@INPRNUMS", INPRNUMS);
+                    command.Parameters.AddWithValue("@BOSSPRNUMS", BOSSPRNUMS);
+                    command.Parameters.AddWithValue("@STAFFNUMS", STAFFNUMS);
+                    command.Parameters.AddWithValue("@TOTALNUMS", TOTALNUMS);
+                    command.Parameters.AddWithValue("@PACKNUMS", PACKNUMS);
+                    command.Parameters.AddWithValue("@PACKINDATES", PACKINDATES);
+                    command.Parameters.AddWithValue("@PRODATES", PRODATES);
+                    command.Parameters.AddWithValue("@ISCLOSED", "N");              
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        MsgBox("完成 \r\n ", this.Page, this);
+                    }
+                    else
+                    {
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -388,7 +510,50 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
     {
         BindGrid();
     }
+    protected void btnADD_Click(object sender, EventArgs e)
+    {
+        string MB002 = ADD_TextBox1.Text.Trim().ToString();
+        string MB003 = ADD_TextBox2.Text.Trim().ToString();
+        string PRICES = ADD_TextBox3.Text.Trim().ToString();
+        string IPPRICES = ADD_TextBox4.Text.Trim().ToString();
+        string DMPRICES = ADD_TextBox5.Text.Trim().ToString();
+        string STORENUMS = ADD_TextBox6.Text.Trim().ToString();
+        string ECOMMERCENUMS = ADD_TextBox7.Text.Trim().ToString();
+        string TOURISHOPNUMS = ADD_TextBox8.Text.Trim().ToString();
+        string INARMYNUMS = ADD_TextBox9.Text.Trim().ToString();
+        string INOILNUMS = ADD_TextBox10.Text.Trim().ToString();
+        string INSALENUMS = ADD_TextBox11.Text.Trim().ToString();
+        string INPRNUMS = ADD_TextBox12.Text.Trim().ToString();
+        string BOSSPRNUMS = ADD_TextBox13.Text.Trim().ToString();
+        string STAFFNUMS = ADD_TextBox14.Text.Trim().ToString();
+        string TOTALNUMS = ADD_TextBox15.Text.Trim().ToString();
+        string PACKNUMS = ADD_TextBox16.Text.Trim().ToString();
+        string PACKINDATES = ADD_TextBox17.Text.Trim().ToString();
+        string PRODATES = ADD_TextBox18.Text.Trim().ToString();
 
+        ADD_TKGIFTSETS
+        (
+           MB002,
+           MB003,
+           PRICES,
+           IPPRICES,
+           DMPRICES,
+           STORENUMS,
+           ECOMMERCENUMS,
+           TOURISHOPNUMS,
+           INARMYNUMS,
+           INOILNUMS,
+           INSALENUMS,
+           INPRNUMS,
+           BOSSPRNUMS,
+           STAFFNUMS,
+           TOTALNUMS,
+           PACKNUMS,
+           PACKINDATES,
+           PRODATES
+         );
+
+    }
 
     #endregion
 }

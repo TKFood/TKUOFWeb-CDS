@@ -52,6 +52,8 @@
                 <Tabs>
                     <telerik:RadTab Text="資料">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="新增">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -298,6 +300,175 @@
                                 </td>
                             </tr>
                         </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView2" runat="server">
+                    <div id="tabs-2">
+                        <h3>新增</h3>
+                        <div>
+                            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
+                            <asp:Label ID="lblMessage" runat="server" ForeColor="Blue"></asp:Label>
+                            <hr />
+                            <table class="PopTable">
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="名稱：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox1" runat="server"  Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="箱入數：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox2" runat="server"  Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="售價：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox3" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="IP價：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox4" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="DM價：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox5" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="門市：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox6" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="電商：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox7" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="觀光：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox8" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="國內-國軍：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox9" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="國內-中油：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox10" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="國內-經銷：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox11" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="業務公關：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox12" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="總經理公關：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox13" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="員購：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox14" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="加總：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox15" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="預估包材下單總量：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox16" runat="server" TextMode="Number" Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="預估包材到廠日：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox17" runat="server"  Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                        <asp:Label Text="預估成品完成日：" runat="server" />
+                                    </td>
+                                    <td style="width: 85%; padding: 5px;">
+                                        <asp:TextBox ID="ADD_TextBox18" runat="server"  Width="200px" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <div style="padding: 10px 5px;">
+                                            <asp:Button ID="btnADD"
+                                                runat="server"
+                                                Text="新增"
+                                                OnClick="btnADD_Click"
+                                                Style="font-size: 24px; padding: 10px 20px;" />
+                                            <%-- 📌 將字體放大到 24px --%>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </telerik:RadPageView>
 
