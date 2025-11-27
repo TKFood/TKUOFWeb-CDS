@@ -81,6 +81,7 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
 
         StringBuilder QUERY1 = new StringBuilder();
         StringBuilder QUERY2 = new StringBuilder();
+        StringBuilder QUERY3 = new StringBuilder();
         // 2. 定義 SQL 查詢字串  
         string ISCLOSED = DropDownList1.SelectedValue.ToString();
         if (!string.IsNullOrEmpty(ISCLOSED) && ISCLOSED.Equals("N"))
@@ -95,7 +96,8 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         {
             QUERY1.AppendFormat(@"");
         }
-        string MB002 = TextBox1.Text.Trim();
+        //MB002
+        string MB002 = QUERY_TextBox1.Text.Trim();
         if (!string.IsNullOrEmpty(MB002) )
         {
             QUERY2.AppendFormat(@" AND MB002 LIKE '%{0}%' ", MB002);
@@ -103,6 +105,16 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         else
         {
             QUERY2.AppendFormat(@"");
+        }
+        //YEARS
+        string YEARS = QUERY_TextBox2.Text.Trim();
+        if (!string.IsNullOrEmpty(YEARS))
+        {
+            QUERY3.AppendFormat(@" AND YEARS LIKE '%{0}%' ", YEARS);
+        }
+        else
+        {
+            QUERY3.AppendFormat(@"");
         }
 
         StringBuilder cmdTxt = new StringBuilder();
@@ -137,8 +149,9 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                         WHERE 1=1
                         {0}
                         {1}
+                        {2}
                         ORDER BY [YEARS],[MB001],[MB002]
-                        ", QUERY1.ToString(), QUERY2.ToString());
+                        ", QUERY1.ToString(), QUERY2.ToString(), QUERY3.ToString());
                 
       
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());

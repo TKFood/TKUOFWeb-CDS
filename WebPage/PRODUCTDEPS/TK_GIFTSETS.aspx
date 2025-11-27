@@ -74,7 +74,14 @@
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Label ID="Label7" runat="server" Text="名稱: "></asp:Label>
-                                    <asp:TextBox ID="TextBox1" Text="" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="QUERY_TextBox1" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label3" runat="server" Text="年度: "></asp:Label>
+                                    <asp:TextBox ID="QUERY_TextBox2" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
