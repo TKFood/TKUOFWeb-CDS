@@ -34,9 +34,44 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
     {
         ACCOUNT = Current.Account;
         NAME = Current.User.Name;
+
+        if (!IsPostBack)
+        {
+            BindDropDownList1();
+
+            BindGrid();
+        }
     }
 
     #region FUNCTION
+    private void BindDropDownList(DropDownList ddl, string sql, string textField, string valueField)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        DataTable dt = new DataTable();
+        dt.Load(m_db.ExecuteReader(sql));
+
+        ddl.DataSource = dt;
+        ddl.DataTextField = textField;
+        ddl.DataValueField = valueField;
+        ddl.DataBind();
+    }
+
+    private void BindDropDownList1()
+    {
+        string sql = @"
+       SELECT 
+        [KINDS]
+        ,[PARASNAMES]
+        ,[DVALUES]
+        FROM [TKMARKETING].[dbo].[TBZPARAS]
+        WHERE [KINDS]='TKGIFTSETS'
+        ORDER BY [DVALUES]
+                ";
+
+        BindDropDownList(DropDownList1, sql, "PARASNAMES", "PARASNAMES");
+    }
     private void BindGrid()
     {
         // 1.取得連線字串
@@ -44,9 +79,34 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ConnectionString;
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        // 2. 定義 SQL 查詢字串           
-        string cmdTxt = @"
-                           /****** SSMS 中 SelectTopNRows 命令的指令碼  ******/
+        StringBuilder QUERY1 = new StringBuilder();
+        StringBuilder QUERY2 = new StringBuilder();
+        // 2. 定義 SQL 查詢字串  
+        string ISCLOSED = DropDownList1.SelectedValue.ToString();
+        if (!string.IsNullOrEmpty(ISCLOSED) && ISCLOSED.Equals("N"))
+        {
+            QUERY1.AppendFormat(@" AND  ISCLOSED='N' ");
+        }
+        else if(!string.IsNullOrEmpty(ISCLOSED) && ISCLOSED.Equals("Y"))
+        {
+            QUERY1.AppendFormat(@" AND  ISCLOSED='Y' ");
+        }
+        else
+        {
+            QUERY1.AppendFormat(@"");
+        }
+        string MB002 = TextBox1.Text.Trim();
+        if (!string.IsNullOrEmpty(MB002) )
+        {
+            QUERY2.AppendFormat(@" AND MB002 LIKE '%{0}%' ", MB002);
+        }       
+        else
+        {
+            QUERY2.AppendFormat(@"");
+        }
+
+        StringBuilder cmdTxt = new StringBuilder();
+        cmdTxt.AppendFormat(@"
                         SELECT  
                         [ID]
                         ,[MB001]
@@ -70,12 +130,13 @@ public partial class CDS_WebPage_MARKETING_TK_GIFTSETS : Ede.Uof.Utility.Page.Ba
                         ,[PRODATES]
                         ,[ISCLOSED]
                         FROM [TKMARKETING].[dbo].[TKGIFTSETS]
-                        WHERE [ISCLOSED]='N'
+                        WHERE 1=1
+                        {0}
+                        {1}
                         ORDER BY [MB001],[MB002]
-                        ";
-
-        //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());
-        //m_db.AddParameter("@DATESEND", TextBox2.Text.Trim());
+                        ", QUERY1.ToString(), QUERY2.ToString());
+                
+      
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
 
         DataTable dt = new DataTable();
