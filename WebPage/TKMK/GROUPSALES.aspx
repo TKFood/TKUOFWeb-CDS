@@ -60,8 +60,10 @@
                 <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
                     <div id="tabs-1">
                         <table class="PopTable">
-                                                        <tr>
-                                <td class="PopTableLeftTD"></td>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label_Todays" runat="server" Text=""></asp:Label>
+                                </td>
                                 <td>
                                     <asp:Button ID="Button1" runat="server" Text="查詢" OnClick="Button1_Click"
                                         meta:resourcekey="btn1Resource1" />
@@ -76,17 +78,47 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="序號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="序號" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_序號"
                                                             runat="server"
                                                             Text='<%# Bind("序號") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="200px">
+                                                            Width="60px">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                               
+                                                <asp:TemplateField HeaderText="車號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_車號"
+                                                            runat="server"
+                                                            Text='<%# Bind("車號") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="車名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_車名"
+                                                            runat="server"
+                                                            Text='<%# Bind("車名") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="優惠券帳號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_優惠券帳號"
+                                                            runat="server"
+                                                            Text='<%# Bind("優惠券帳號") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
                                             </Columns>
                                         </Fast:Grid>
                                     </div>
@@ -94,7 +126,7 @@
                             </tr>
                         </table>
                     </div>
-                </telerik:RadPageView>               
+                </telerik:RadPageView>
 
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">

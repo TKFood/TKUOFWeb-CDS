@@ -37,6 +37,9 @@ public partial class CDS_WebPage_TKMK_GROUPSALES : Ede.Uof.Utility.Page.BasePage
 
         if (!IsPostBack)
         {
+            Label_Todays.Text = "本日日期: "+DateTime.Now.ToString("yyyyMMdd");
+            string CREATEDATES = DateTime.Now.ToString("yyyyMMdd");
+            SEARCHGROUPSALES(CREATEDATES);
             //BindDropDownList1();
 
             //BindGrid();
