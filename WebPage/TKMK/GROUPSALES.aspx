@@ -61,12 +61,76 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label7" runat="server" Text="車號: "></asp:Label>
+                                    <asp:TextBox ID="ADD_TextBox1" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label1" runat="server" Text="車名: "></asp:Label>
+                                    <asp:TextBox ID="ADD_TextBox2" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" Text="優惠券帳號: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label3" runat="server" Text="兌換券: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="true" Style="width: 200px;"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label4" runat="server" Text=""></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Button ID="Button2" runat="server" Text="新增團車" OnClick="Button2_Click"
+                                        meta:resourcekey="btn1Resource2"
+                                        Style="width: 150px; /* 寬度略增 */
+                                            height: 30px; /* 高度略增 */
+        
+                                            /* === 顏色調整 (更明顯) === */
+                                            background-color: #FF5722; /* 鮮豔的亮橘色/赤紅色 */
+                                            color: white; /* 純白色字體，與背景形成高對比 */
+        
+                                            /* === 字體調整 === */
+                                            font-size: 18px; /* 字體加大 */
+                                            font-weight: bold; /* 字體加粗 */
+                                            font-family: '微軟正黑體', Arial, sans-serif; /* === 視覺優化 === */
+                                            border: none; /* 移除邊框 */
+                                            border-radius: 10px; /* 增加圓角 */
+                                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 添加陰影，增加立體感 */
+                                            cursor: pointer;" />
+                                </td>
+                            </tr>
+                            </tr>
+                            <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label_Todays" runat="server" Text=""></asp:Label>
                                 </td>
                                 <td>
                                     <asp:Button ID="Button1" runat="server" Text="查詢" OnClick="Button1_Click"
-                                        meta:resourcekey="btn1Resource1" />
+                                        meta:resourcekey="btn1Resource1"
+                                        Style="width: 150px; /* 調整寬度 */
+                                        height: 30px; /* 調整高度 */
+                                        background-color: #4CAF50; /* 調整背景顏色 (綠色) */
+                                        color: white; /* 調整字體顏色 (白色) */
+                                        font-size: 16px; /* 調整字體大小 */
+                                        font-family: '微軟正黑體', Arial, sans-serif; /* 調整字體 */
+                                        border: none; /* 移除邊框 (可選) */
+                                        border-radius: 8px; /* 圓角邊框 (可選) */
+                                        cursor: pointer; /* 鼠標樣式 (可選) */" />
                                 </td>
                             </tr>
                         </table>
@@ -118,7 +182,36 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-
+                                                <asp:TemplateField HeaderText="業務員名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_業務員名"
+                                                            runat="server"
+                                                            Text='<%# Bind("業務員名") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="兌換券" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_兌換券"
+                                                            runat="server"
+                                                            Text='<%# Bind("兌換券") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="狀態" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_狀態"
+                                                            runat="server"
+                                                            Text='<%# Bind("狀態") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
                                     </div>

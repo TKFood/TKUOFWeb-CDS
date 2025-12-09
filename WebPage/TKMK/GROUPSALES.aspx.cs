@@ -39,14 +39,60 @@ public partial class CDS_WebPage_TKMK_GROUPSALES : Ede.Uof.Utility.Page.BasePage
         {
             Label_Todays.Text = "本日日期: "+DateTime.Now.ToString("yyyyMMdd");
             string CREATEDATES = DateTime.Now.ToString("yyyyMMdd");
+
             SEARCHGROUPSALES(CREATEDATES);
-            //BindDropDownList1();
+
+            BindDropDownList1();
+            BindDropDownList2();
 
             //BindGrid();
         }
     }
 
     #region FUNCTION
+
+    private void BindDropDownList(DropDownList ddl, string sql, string textField, string valueField)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        DataTable dt = new DataTable();
+        dt.Load(m_db.ExecuteReader(sql));
+
+        ddl.DataSource = dt;
+        ddl.DataTextField = textField;
+        ddl.DataValueField = valueField;
+        ddl.DataBind();
+    }
+
+    private void BindDropDownList1()
+    {
+        string CREATEDATES = DateTime.Now.ToString("yyyyMMdd");
+        StringBuilder sql = new StringBuilder();
+        sql.AppendFormat(@"
+                        SELECT 
+                        LTRIM(RTRIM((MU001)))+' '+SUBSTRING(MU002,1,3) AS 'MU001' 
+                        FROM [TK].dbo.POSMU WHERE (MU001 LIKE '69%')   
+                        AND MU001 NOT IN (
+	                        SELECT [EXCHANACOOUNT] FROM [TKMK].[dbo].[GROUPSALES] 
+	                        WHERE CONVERT(nvarchar,[CREATEDATES],112)='{0}'  AND [STATUS]='預約接團' 
+                        ) ORDER BY MU001
+                    ", CREATEDATES);
+        
+
+        BindDropDownList(DropDownList1, sql.ToString(), "MU001", "MU001");
+    }
+    private void BindDropDownList2()
+    {
+        string CREATEDATES = DateTime.Now.ToString("yyyyMMDd");
+        StringBuilder sql = new StringBuilder();
+        sql.AppendFormat(@"
+                         SELECT [PARASNAMES],[DVALUES] FROM [TKMK].[dbo].[TBZPARAS] WHERE [KINDS]='ISEXCHANGE' ORDER BY [PARASNAMES]
+                         ");
+
+
+        BindDropDownList(DropDownList2, sql.ToString(), "PARASNAMES", "PARASNAMES");
+    }
     /// <summary>
     /// 找出團務資料
     /// </summary>
@@ -162,6 +208,12 @@ public partial class CDS_WebPage_TKMK_GROUPSALES : Ede.Uof.Utility.Page.BasePage
 
     #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
+    {
+        // 查詢本日來車資料
+        string CREATEDATES = DateTime.Now.ToString("yyyyMMdd");
+        SEARCHGROUPSALES(CREATEDATES);
+    }
+    protected void Button2_Click(object sender, EventArgs e)
     {
         // 查詢本日來車資料
         string CREATEDATES = DateTime.Now.ToString("yyyyMMdd");
