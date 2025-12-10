@@ -260,9 +260,9 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                 LEFT JOIN [TK].dbo.INVMB AS T3 ON T3.MB001 = T1.TA001
                                 LEFT JOIN 
                                     (
-                                        SELECT MB007, MB002, ISNULL(SUM(MB005 + MB006), 0) AS SUMPROTIMES
-                                        FROM [TK].dbo.CSTMB
-                                        GROUP BY MB007, MB002
+                                        SELECT SUBSTRING(MB002,1,6) MB002,MB007, ISNULL(SUM(MB005 + MB006), 0) AS SUMPROTIMES
+										FROM [TK].dbo.CSTMB
+										GROUP BY SUBSTRING(MB002,1,6),MB007
                                     ) AS T4 ON T4.MB007 = T1.TA001 AND T4.MB002 LIKE T1.TA002 + '%'
 
                                 WHERE 1=1
@@ -389,9 +389,9 @@ public partial class CDS_WebPage_RESEARCH_TKRESEARCH_COST : Ede.Uof.Utility.Page
                                 LEFT JOIN [TK].dbo.INVMB AS T3 ON T3.MB001 = T1.TA001
                                 LEFT JOIN 
                                     (
-                                        SELECT MB007, MB002, ISNULL(SUM(MB005 + MB006), 0) AS SUMPROTIMES
-                                        FROM [TK].dbo.CSTMB
-                                        GROUP BY MB007, MB002
+                                        SELECT SUBSTRING(MB002,1,6) MB002,MB007, ISNULL(SUM(MB005 + MB006), 0) AS SUMPROTIMES
+										FROM [TK].dbo.CSTMB
+										GROUP BY SUBSTRING(MB002,1,6),MB007
                                     ) AS T4 ON T4.MB007 = T1.TA001 AND T4.MB002 LIKE T1.TA002 + '%'
 
                                 WHERE 1=1
