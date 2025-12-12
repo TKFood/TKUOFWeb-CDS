@@ -39,6 +39,11 @@
         .file-preview-container {
             display: inline-block;
         }
+
+        .VerticalCenter {
+            /* 這是關鍵：將內容垂直對齊到儲存格的中間 */
+            vertical-align: middle;
+        }
     </style>
     <script>    
 
@@ -142,73 +147,73 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="序號" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="序號" ItemStyle-Width="3%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_序號"
                                                             runat="server"
                                                             Text='<%# Bind("序號") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="60px">
+                                                            Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="車號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="車號" ItemStyle-Width="10%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_車號"
                                                             runat="server"
                                                             Text='<%# Bind("車號") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="車名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="車名" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_車名"
                                                             runat="server"
                                                             Text='<%# Bind("車名") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="優惠券帳號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="優惠券帳號" ItemStyle-Width="7%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_優惠券帳號"
                                                             runat="server"
                                                             Text='<%# Bind("優惠券帳號") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="業務員名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="業務員名" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_業務員名"
                                                             runat="server"
                                                             Text='<%# Bind("業務員名") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="兌換券" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="兌換券" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_兌換券"
                                                             runat="server"
                                                             Text='<%# Bind("兌換券") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="狀態" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="狀態" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_狀態"
                                                             runat="server"
                                                             Text='<%# Bind("狀態") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
