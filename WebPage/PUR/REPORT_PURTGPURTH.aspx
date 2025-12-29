@@ -64,6 +64,24 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
+                                <td>
+                                    <asp:Label ID="Label5" runat="server" Text="日期起~迄"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TXT_SDATES" runat="server" Width="130px" TextMode="Date"></asp:TextBox>
+                                    <asp:Label ID="Label1" runat="server" Text=" ~ "></asp:Label>
+                                    <asp:TextBox ID="TXT_EDATES" runat="server" Width="130px" TextMode="Date"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" Text="品號/品名"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TXT_MB001" runat="server" Width="130px"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label_Todays" runat="server" Text=""></asp:Label>
                                 </td>
@@ -125,17 +143,17 @@
                                                         <asp:Label ID="品號"
                                                             runat="server"
                                                             Text='<%# Bind("品號") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;text-align: left;"
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: left;"
                                                             Width="100%">
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="品名" ItemStyle-Width="20%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
+                                                <asp:TemplateField HeaderText="品名" ItemStyle-Width="15%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
                                                     <ItemTemplate>
                                                         <asp:Label ID="品名"
                                                             runat="server"
                                                             Text='<%# Bind("品名") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;text-align: left;"
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: left;"
                                                             Width="100%">
                                                         </asp:Label>
                                                     </ItemTemplate>
@@ -145,7 +163,7 @@
                                                         <asp:Label ID="規格"
                                                             runat="server"
                                                             Text='<%# Bind("規格") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;text-align: left;"
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: left;"
                                                             Width="100%">
                                                         </asp:Label>
                                                     </ItemTemplate>
@@ -175,6 +193,26 @@
                                                         <asp:Label ID="批號"
                                                             runat="server"
                                                             Text='<%# Bind("批號") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100%">
+                                                        </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="單價" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="單價"
+                                                            runat="server"
+                                                            Text='<%# Bind("單價") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100%">
+                                                        </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="庫別" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="庫別"
+                                                            runat="server"
+                                                            Text='<%# Bind("庫別") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
                                                             Width="100%">
                                                         </asp:Label>

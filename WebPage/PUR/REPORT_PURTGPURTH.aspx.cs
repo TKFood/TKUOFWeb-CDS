@@ -35,7 +35,13 @@ public partial class CDS_WebPage_PUR_REPORT_PURTGPURTH : Ede.Uof.Utility.Page.Ba
         NAME = Current.User.Name;
 
         if (!IsPostBack)
-        {          
+        {
+            // 取得今日日期並格式化為 yyyy/MM/dd
+            string today = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // 將值塞入 TextBox
+            TXT_SDATES.Text = today;
+            TXT_EDATES.Text = today;
             //BindGrid();
         }
     }
@@ -51,10 +57,19 @@ public partial class CDS_WebPage_PUR_REPORT_PURTGPURTH : Ede.Uof.Utility.Page.Ba
         StringBuilder QUERY1 = new StringBuilder();
 
         // 2. 定義 SQL 查詢字串         
-
+        string MB001 = TXT_MB001.Text.Trim();
+        if (!string.IsNullOrEmpty(MB001))
+        {
+            QUERY1.AppendFormat(@" AND (TH001 LIKE '%{0}%' OR TH005  LIKE '%{0}%')", MB001);
+        }
+        else
+        {
+            QUERY1.AppendFormat(@"");
+        }
         StringBuilder cmdTxt = new StringBuilder();
         cmdTxt.AppendFormat(@"
-                             SELECT 
+
+                            SELECT 
                              TG003 AS '進貨日'
                             ,TG001 AS '進貨單別'
                             ,TG002 AS '進貨單號'
@@ -64,12 +79,15 @@ public partial class CDS_WebPage_PUR_REPORT_PURTGPURTH : Ede.Uof.Utility.Page.Ba
                             ,CONVERT(INT,TH007) AS '數量'
                             ,TH008 AS '單位'
                             ,TH010 AS '批號'
+                            ,CONVERT(decimal(16,0),TH018) AS '單價'
+                            ,TH009 AS '庫別'
                             ,(CASE WHEN TG013='Y' THEN '已確認' ELSE '未確認' END ) AS '是否確認'
                             FROM [TK].dbo.PURTG,[TK].dbo.PURTH
                             WHERE TG001=TH001 AND TG002=TH002
-                            AND TG003>='20251201' AND TG003<='20251201'
+                            AND TG003>='{0}' AND TG003<='{1}'
+                            {2}
                             ORDER BY TG003,TG001,TG002,TH004
-                        ");
+                        ", SDATE, EDATES, QUERY1.ToString());
 
 
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
@@ -125,8 +143,15 @@ public partial class CDS_WebPage_PUR_REPORT_PURTGPURTH : Ede.Uof.Utility.Page.Ba
     protected void Button1_Click(object sender, EventArgs e)
     {
         // 查詢
-       
-        SEARCH("","");
+        // 1. 先將 TextBox 的字串轉為 DateTime 物件
+        // 2. 再將 DateTime 物件格式化為 yyyyMMdd
+        DateTime sDateObj = DateTime.Parse(TXT_SDATES.Text);
+        DateTime eDateObj = DateTime.Parse(TXT_EDATES.Text);
+
+        string SDATES = sDateObj.ToString("yyyyMMdd");
+        string EDATES = eDateObj.ToString("yyyyMMdd");
+
+        SEARCH(SDATES, EDATES);
     }
     #endregion
 }
