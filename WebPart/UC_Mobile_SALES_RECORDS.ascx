@@ -122,6 +122,30 @@
             background-color: #5a6268;
             filter: brightness(1.2);
         }
+
+    .btn-search {
+        font-family: "Microsoft JhengHei", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 2px;
+        color: #ffffff !important;
+        /* 改用更透亮的商務藍 */
+        background-color: #446e9b;
+        padding: 5px 25px;
+        border: 1px solid #345577;
+        border-radius: 4px;
+        cursor: pointer;
+        /* 減輕陰影，讓它不那麼沉重 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+    }
+
+        .btn-search:hover {
+            /* 懸停時稍微亮一點 */
+            background-color: #5180b3;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            filter: brightness(1.1);
+        }
 </style>
 <html>
 
@@ -185,7 +209,11 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="btn1_Click" meta:resourcekey="btn1_Resource1" />
+                            <asp:Button ID="Button1" runat="server"
+                                Text="查詢"
+                                OnClick="btn1_Click"
+                                meta:resourcekey="btn1_Resource1"
+                                CssClass="btn-search" />
                         </td>
                     </tr>
 
@@ -365,7 +393,11 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button3" runat="server" Text="查詢 " OnClick="btn3_Click" meta:resourcekey="btn3_Resource1" />
+                            <asp:Button ID="Button3" runat="server"
+                                Text="查詢"
+                                OnClick="btn3_Click"
+                                meta:resourcekey="btn3_Resource1"
+                                CssClass="btn-search" />
                         </td>
                     </tr>
 
@@ -381,17 +413,17 @@
                                     <Columns>
                                         <asp:TemplateField HeaderText="業務員" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="業務員" runat="server" Text='<%# Bind("SALES") %>' TextMode="MultiLine" Rows="1"></asp:TextBox>
+                                                <asp:TextBox ID="業務員" runat="server" Text='<%# Bind("SALES") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="客戶" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="客戶" runat="server" Text='<%# Bind("CLIENTS") %>' TextMode="MultiLine" Rows="1"></asp:TextBox>
+                                                <asp:TextBox ID="客戶" runat="server" Text='<%# Bind("CLIENTS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="回覆期限" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="回覆期限" runat="server" Text='<%# Bind("EDAYS") %>' TextMode="MultiLine" Rows="1"></asp:TextBox>
+                                                <asp:TextBox ID="回覆期限" runat="server" Text='<%# Bind("EDAYS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -456,7 +488,12 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button4" runat="server" Text="查詢 " OnClick="btn4_Click" meta:resourcekey="btn4_Resource1" />
+
+                            <asp:Button ID="Button4" runat="server"
+                                Text="查詢"
+                                OnClick="btn4_Click"
+                                meta:resourcekey="btn4_Resource1"
+                                CssClass="btn-search" />
                         </td>
                     </tr>
 
