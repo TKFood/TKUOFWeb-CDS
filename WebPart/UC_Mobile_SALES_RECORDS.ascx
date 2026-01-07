@@ -6,8 +6,9 @@
 <!-- 在CSS文件中定义样式 -->
 <style>
     .multiline-textbox {
-            width: 200px;
-        }
+        width: 200px;
+    }
+
     .custom-button {
         background-color: #FF5733;
         color: #FFFFFF;
@@ -34,6 +35,92 @@
             border: 1px solid #000;
             padding: 5px;
             text-align: left; /* 根据需要更改文本对齐方式 */
+        }
+
+    /* 3. 按鈕字體優化 */
+    .grid-btn {
+        /* 使用較圓潤的字體並加粗 */
+        font-family: "Microsoft JhengHei", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        padding: 6px 12px;
+        border-radius: 6px; /* 更圓潤的邊角 */
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease; /* 增加平滑過渡感 */
+        /* 允許折行 */
+        white-space: normal !important;
+        line-height: 1.4;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 輕微陰影更有立體感 */
+    }
+
+    /* 4. 不同功能的顏色調整（顯眼且好看） */
+    .btn-add {
+        background: #4a90e2;
+        color: white !important;
+    }
+    /* 優雅藍 */
+    .btn-close {
+        background: #e74c3c;
+        color: white !important;
+    }
+    /* 警示紅 */
+    .btn-reopen {
+        background: #f39c12;
+        color: white !important;
+    }
+    /* 活潑橘 */
+
+    .grid-btn:hover {
+        transform: translateY(-1px); /* 懸停時輕微上浮 */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        filter: brightness(1.1);
+    }
+
+    /* 5. 內容文字優化（Label） */
+    .fast-grid span {
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    /* 獨立按鈕的基本樣式 */
+    .btn-main {
+        font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+        font-weight: 600;
+        font-size: 16px; /* 比 Grid 內的按鈕大一點 */
+        letter-spacing: 2px; /* 字間距拉開更有質感 */
+        color: white !important;
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* 漸層色更現代 */
+        padding: 8px 24px; /* 左右留白多一點，呈現長橢圓感 */
+        border: none;
+        border-radius: 50px; /* 圓角設大一點，變膠囊狀 */
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3); /* 藍色系的發光陰影 */
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+        .btn-main:hover {
+            transform: translateY(-2px); /* 懸停浮起 */
+            box-shadow: 0 6px 20px rgba(37, 117, 252, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-main:active {
+            transform: translateY(0px); /* 點擊按下感 */
+        }
+
+    /* 修改按鈕：深灰色或石板色，看起來穩重且專業 */
+    .btn-edit {
+        background-color: #6c757d;
+        color: white !important;
+    }
+
+        .btn-edit:hover {
+            background-color: #5a6268;
+            filter: brightness(1.2);
         }
 </style>
 <html>
@@ -86,7 +173,7 @@
 
                         </td>
                     </tr>
-                       <tr>
+                    <tr>
                         <td>
                             <asp:Label ID="Label12" runat="server" Text="排序: "></asp:Label>
                         </td>
@@ -114,66 +201,77 @@
                                     <Columns>
                                         <asp:TemplateField HeaderText="業務員" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="業務員" runat="server" Text='<%# Bind("SALES") %>' Style="word-break: break-all; white-space: pre-line;Width:100%" ></asp:Label>
+                                                <asp:Label ID="業務員" runat="server" Text='<%# Bind("SALES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="客戶" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="客戶" runat="server" Text='<%# Bind("CLIENTS") %>' Style="word-break: break-all; white-space: pre-line;Width:100%"></asp:Label>
+                                                <asp:Label ID="客戶" runat="server" Text='<%# Bind("CLIENTS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField HeaderText="回覆期限" DataField="EDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="交辨內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="交辨內容" runat="server" Text='<%# Bind("EVENTS") %>' Style="word-break: break-all; white-space: pre-line;Width:100%"></asp:Label>
+                                                <asp:Label ID="專案內容" runat="server" Text='<%# Bind("EVENTS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="已回覆內容(最近)" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="Label6" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line;Width:100%"></asp:Label>
+                                                <asp:Label ID="Label6" runat="server" Text='<%# Bind("COMMENTS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="回覆日期(最近)" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="Label7" runat="server" Text='<%# Bind("COMMENTSADDDATES") %>' Style="word-break: break-all; white-space: pre-line;Width:100%"></asp:Label>
+                                                <asp:Label ID="Label7" runat="server" Text='<%# Bind("COMMENTSADDDATES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSE") %>' Style="word-break: break-all; white-space: pre-line;Width:100%"></asp:Label>
+                                                <asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSE") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="結案日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="結案日" runat="server" Text='<%# Bind("ISCLOSEDATES") %>' Style="word-break: break-all; white-space: pre-line;Width:100%"></asp:Label>
+                                                <asp:Label ID="結案日" runat="server" Text='<%# Bind("ISCLOSEDATES") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="輸入回覆" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <%--<asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" Rows="3" Width="200px"></asp:TextBox>--%>
-                                                   <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                <asp:TextBox ID="txtNewField" runat="server" Text='<%# Bind("COMMENTS") %>' TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" Style="word-break: break-all; white-space: pre-line; width: 100%;"/>
+                                                <asp:Button ID="Grid1Button1" runat="server" Text="新增回覆" CommandName="Grid1Button1"
+                                                    CommandArgument='<%# Container.DataItemIndex %>'
+                                                    OnClientClick="return confirm('確定？');"
+                                                    CssClass="grid-btn btn-add" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
                                         <asp:TemplateField HeaderText="確定結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid1Button2" runat="server" Text="確定結案" CommandName="Grid1Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" Style="word-break: break-all; white-space: pre-line; width: 100%;"/>
+                                                <asp:Button ID="Grid1Button2" runat="server" Text="確定結案" CommandName="Grid1Button2"
+                                                    CommandArgument='<%# Container.DataItemIndex %>'
+                                                    OnClientClick="return confirm('確定？');"
+                                                    CssClass="grid-btn btn-close" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
                                         <asp:TemplateField HeaderText="改未結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid1Button3" runat="server" Text="改未結案" CommandName="Grid1Button3" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" Style="word-break: break-all; white-space: pre-line; width: 100%;"/>
+                                                <asp:Button ID="Grid1Button3" runat="server" Text="改未結案" CommandName="Grid1Button3"
+                                                    CommandArgument='<%# Container.DataItemIndex %>'
+                                                    OnClientClick="return confirm('確定？');"
+                                                    CssClass="grid-btn btn-reopen" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line;Width:100%"></asp:Label>
+                                                <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line; width: 100%"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -206,7 +304,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <asp:Label ID="Label4" runat="server" Text="交辨內容: "></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="專案內容: "></asp:Label>
                         </td>
                         <td>
                             <asp:TextBox ID="TextBox2" runat="server" TextMode="MultiLine" Rows="4" Columns="50"></asp:TextBox>
@@ -232,7 +330,11 @@
                     <tr>
                         <td class="PopTableLeftTD"></td>
                         <td>
-                            <asp:Button ID="Button2" runat="server" Text="新增 " OnClick="btn2_Click" meta:resourcekey="btn2_Resource1" />
+                            <asp:Button ID="Button2" runat="server"
+                                Text="新增專案"
+                                OnClick="btn2_Click"
+                                meta:resourcekey="btn2_Resource1"
+                                CssClass="btn-main" />
                         </td>
                     </tr>
 
@@ -292,9 +394,9 @@
                                                 <asp:TextBox ID="回覆期限" runat="server" Text='<%# Bind("EDAYS") %>' TextMode="MultiLine" Rows="1"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="交辨內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="交辨內容" runat="server" Text='<%# Bind("EVENTS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                                <asp:TextBox ID="專案內容" runat="server" Text='<%# Bind("EVENTS") %>' TextMode="MultiLine" Rows="3"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="已回覆內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -307,12 +409,16 @@
                                                 <asp:Label ID="是否結案" runat="server" Text='<%# Bind("ISCLOSE") %>' Style="word-break: break-all; white-space: pre-line;" Width="60px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="修改" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="修改" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid2Button1" runat="server" Text="修改" CommandName="Grid2Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                <asp:Button ID="Grid2Button1" runat="server"
+                                                    Text="修改"
+                                                    CommandName="Grid2Button1"
+                                                    CommandArgument='<%# Container.DataItemIndex %>'
+                                                    OnClientClick="return confirm('確定？');"
+                                                    CssClass="grid-btn btn-edit" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-
                                         <asp:TemplateField HeaderText="ID" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line" Width="30px"></asp:Label>
@@ -377,9 +483,9 @@
                                         <asp:BoundField HeaderText="回覆期限" DataField="EDAYS" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
                                         </asp:BoundField>
-                                        <asp:TemplateField HeaderText="交辨內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="專案內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
-                                                <asp:Label ID="交辨內容" runat="server" Text='<%# Bind("EVENTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                <asp:Label ID="專案內容" runat="server" Text='<%# Bind("EVENTS") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="已回覆內容" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -402,9 +508,14 @@
                                                 <asp:TextBox ID="txtNewField3" runat="server" Text='' TextMode="MultiLine" Rows="3"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                        <asp:TemplateField HeaderText="新增回覆" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                             <ItemTemplate>
-                                                <asp:Button ID="Grid3Button1" runat="server" Text="新增回覆" CommandName="Grid3Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                <asp:Button ID="Grid3Button1" runat="server"
+                                                    Text="新增回覆"
+                                                    CommandName="Grid3Button1"
+                                                    CommandArgument='<%# Container.DataItemIndex %>'
+                                                    OnClientClick="return confirm('確定？');"
+                                                    CssClass="grid-btn btn-add" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="ID" ItemStyle-Width="30px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
