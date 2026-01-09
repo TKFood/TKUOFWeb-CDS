@@ -46,21 +46,40 @@ public partial class CDS_WebPage_IT_TKITWEEKSREPORTS : Ede.Uof.Utility.Page.Base
     public void SETYEARSWEEKS()
     {
         int YEARS = DateTime.Now.Year;
-        //計算日期為第幾週
-        System.Globalization.Calendar TW = new System.Globalization.CultureInfo("zh-TW").Calendar;
-        int WEEKS= TW.GetWeekOfYear(DateTime.Now, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+        // 假設現在是 2026/01/05
+        DateTime now = DateTime.Now;
 
-        DateTime startDate, lastDate;
+        System.Globalization.Calendar cal = System.Globalization.CultureInfo.InvariantCulture.Calendar;
+
+        // 使用 FirstFullWeek：第一週必須包含完整的 7 天（從週一到週日）都在該年份
+        int WEEKS = cal.GetWeekOfYear(
+            now,
+            System.Globalization.CalendarWeekRule.FirstFullWeek,
+            DayOfWeek.Monday
+        );
+
+        // 結果：
+        // 2026/01/01 (四) -> 屬於 2025 年的最後一週 (回傳 52 或 53)
+        // 2026/01/05 (一) -> 正式成為 2026 年的第 1 週
+        
 
         TextBox1.Text = YEARS.ToString();
         //TextBox2.Text = WEEKS.ToString();
         TextBox3.Text = YEARS.ToString();
         TextBox4.Text = WEEKS.ToString();
-
         TextBox9.Text = WEEKS.ToString();
+       
+        // 1. 計算今天距離「本週週一」差幾天
+        // DayOfWeek 在 C# 中週日=0, 週一=1...週六=6
+        // 如果今天是週日 (0)，我們要減 6 天才會到週一
+        // 如果今天是週一 (1) 到週六 (6)，我們要減去 (1-1) 到 (6-1) 天
+        int diff = (7 + (now.DayOfWeek - DayOfWeek.Monday)) % 7;
+        DateTime startDate = now.AddDays(-1 * diff).Date;
 
+        // 2. 週日就是週一再加上 6 天
+        DateTime lastDate = startDate.AddDays(6);
 
-        GetDaysOfWeeks(DateTime.Now.Year, WEEKS, out startDate, out lastDate);
+        // 輸出結果
         TextBox6.Text = startDate.ToString("yyyy/MM/dd");
         TextBox7.Text = lastDate.ToString("yyyy/MM/dd");
     }
