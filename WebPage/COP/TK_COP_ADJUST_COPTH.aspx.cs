@@ -125,17 +125,30 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
             GridViewRow row = Grid1.Rows[rowIndex];
             // 獲取相應的ID
             Label txt_TG001 = (Label)row.FindControl("label_單別");
-            string TG001 = txt_TG001.Text;
+            string TG001 = txt_TG001.Text.Trim();
             Label txt_TG002 = (Label)row.FindControl("label_單號");
-            string TG002 = txt_TG002.Text;
+            string TG002 = txt_TG002.Text.Trim();
             Label txt_TH003 = (Label)row.FindControl("label_序號");
-            string TH003 = txt_TH003.Text;
+            string TH003 = txt_TH003.Text.Trim();
 
 
             // 確保找到了有效的行
             if (rowIndex >= 0)
             {
-                MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+                //MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+                DataTable DT = CHECK_TK_ACRTB(TG001, TG002, TH003);
+                if(DT!=null && DT.Rows.Count>=1)
+                {
+                    MsgBox(TG001 + " " + TG002 + " " + TH003 + " 失敗，因為已有結帳單", this.Page, this);
+                }
+                else
+                {
+                    //未稅金額-1，稅額+1
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "-1", "1");
+
+                    string TH002 = TextBox_TH002.Text;
+                    SEARCHGROUPSALES(TH002);
+                }
             }
         }
         if (e.CommandName == "Grid1Button2")
@@ -153,10 +166,24 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
             string TH003 = txt_TH003.Text;
 
 
+
             // 確保找到了有效的行
             if (rowIndex >= 0)
             {
-                MsgBox(TG001 + " " + TG002 + " " + TH003, this.Page, this);
+                //MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+                DataTable DT = CHECK_TK_ACRTB(TG001, TG002, TH003);
+                if(DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TG001 + " " + TG002 + " " + TH003 + " 失敗，因為已有結帳單", this.Page, this);
+                }
+                else
+                {
+                    //未稅金額+1，稅額-1
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "1", "-1");
+
+                    string TH002 = TextBox_TH002.Text;
+                    SEARCHGROUPSALES(TH002);
+                }
             }
         }
     }
@@ -172,7 +199,103 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
         //SETEXCEL();
 
     }
+    public DataTable CHECK_TK_ACRTB(string TG001, string TG002, string TH003)
+    {
+        try
+        {
+            DataTable DT = new DataTable();
+            // 1.取得連線字串
+            // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
+            StringBuilder QUERY1 = new StringBuilder();
+
+            // 2. 定義 SQL 查詢字串         
+
+            StringBuilder cmdTxt = new StringBuilder();
+            cmdTxt.AppendFormat(@"
+                            SELECT *
+                            FROM [TK].dbo.ACRTB
+                            WHERE TB005+TB006+TB007
+                            IN 
+                            (
+	                            SELECT TH001+TH002+TH003
+	                            FROM [TK].dbo.COPTH
+	                            WHERE TH001=@TG001 AND TH002=@TG002 AND TH003=@TH003
+                            )
+                        ");
+            m_db.AddParameter("@TG001", TG001);
+            m_db.AddParameter("@TG002", TG002);
+            m_db.AddParameter("@TH003", TH003);
+
+            DT.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (DT.Rows.Count >= 1)
+            {
+                return DT;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch(Exception EX)
+        {
+            return null;
+        }
+        finally
+        {
+        }    
+    }
+
+    public void UPDATE_TK_COPTG_COPTH(string TG001,string TG002, string TH003,string MODIFYMONEYS,string MODIFYTAXMONEYS)
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            string cmdTxt = @"   ";
+
+
+            cmdTxt = @"
+                        UPDATE [TK].dbo.COPTH
+                        SET 
+                        TH035=TH035+@MODIFYMONEYS
+                        ,TH036=TH036+@MODIFYTAXMONEYS
+                        ,TH037=TH037+@MODIFYMONEYS
+                        ,TH038=TH038+@MODIFYTAXMONEYS
+                        WHERE TH001=@TG001 AND TH002 =@TG002 AND TH003=@TH003
+
+                        UPDATE [TK].dbo.COPTG
+                        SET 
+                        TG013=TG013+@MODIFYMONEYS
+                        ,TG025=TG025+@MODIFYTAXMONEYS
+                        ,TG045=TG045+@MODIFYMONEYS
+                        ,TG046=TG046+@MODIFYTAXMONEYS
+                        WHERE TG001=@TG001 AND TG002 =@TG002
+                        ";
+
+
+            m_db.AddParameter("@TG001", TG001);
+            m_db.AddParameter("@TG002", TG002);
+            m_db.AddParameter("@TH003", TH003);
+            m_db.AddParameter("@MODIFYMONEYS", MODIFYMONEYS);
+            m_db.AddParameter("@MODIFYTAXMONEYS", MODIFYTAXMONEYS);
+
+            m_db.ExecuteNonQuery(cmdTxt);
+
+            MsgBox(TG001 + " " + TG002 + " " + TH003+" 完成", this.Page, this);
+        }
+        catch (Exception EX)
+        {
+            MsgBox(TG001 + " " + TG002 + " " + TH003 + " 失敗", this.Page, this);
+        }
+        finally
+        { }
+        
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
