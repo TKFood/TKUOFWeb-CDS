@@ -81,8 +81,8 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
                             ,TG029
                             FROM [TK].dbo.COPTG,[TK].dbo.COPTH
                             WHERE TG001=TH001 AND TG002=TH002
-                            AND TG001 NOT IN ('A232')
-                            AND TG002 LIKE '20260113%'
+                            AND TG001 IN ('A230','A231')
+                            AND TG002 LIKE '%{0}%'
                             ORDER BY TG001,TG002
                         ", TG002);
 
@@ -104,12 +104,61 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 假設 txtNewField 是一個 Label 控制項            
+            Button Grid1Button1 = (Button)e.Row.FindControl("Grid1Button1");          
+            Button Grid1Button2 = (Button)e.Row.FindControl("Grid1Button2");
+            
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
+    {       
         int rowIndex = -1;
+
+        if (e.CommandName == "Grid1Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+            GridViewRow row = Grid1.Rows[rowIndex];
+            // 獲取相應的ID
+            Label txt_TG001 = (Label)row.FindControl("label_單別");
+            string TG001 = txt_TG001.Text;
+            Label txt_TG002 = (Label)row.FindControl("label_單號");
+            string TG002 = txt_TG002.Text;
+            Label txt_TH003 = (Label)row.FindControl("label_序號");
+            string TH003 = txt_TH003.Text;
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+            }
+        }
+        if (e.CommandName == "Grid1Button2")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+            GridViewRow row = Grid1.Rows[rowIndex];
+            // 獲取相應的ID
+            Label txt_TG001 = (Label)row.FindControl("label_單別");
+            string TG001 = txt_TG001.Text;
+            Label txt_TG002 = (Label)row.FindControl("label_單號");
+            string TG002 = txt_TG002.Text;
+            Label txt_TH003 = (Label)row.FindControl("label_序號");
+            string TH003 = txt_TH003.Text;
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                MsgBox(TG001 + " " + TG002 + " " + TH003, this.Page, this);
+            }
+        }
     }
     // 雖然不應該被觸發，但定義它以避免 HttpCException
     protected void Grid1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -143,7 +192,8 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
     #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
     {
-        SEARCHGROUPSALES("");
+        string TH002 = TextBox_TH002.Text;
+        SEARCHGROUPSALES(TH002);
     }
     #endregion
 }
