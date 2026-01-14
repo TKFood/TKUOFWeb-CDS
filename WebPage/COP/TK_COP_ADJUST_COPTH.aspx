@@ -282,27 +282,7 @@
                                                             Width="100%">
                                                         </asp:Label>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="數量" ItemStyle-Width="2%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="label_數量"
-                                                            runat="server"
-                                                            Text='<%# Eval("數量", "{0:N0}") %>'
-                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
-                                                            Width="100%">
-                                                        </asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="單位" ItemStyle-Width="2%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="label_單位"
-                                                            runat="server"
-                                                            Text='<%# Bind("單位") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100%">
-                                                        </asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>    
                                                 <asp:TemplateField HeaderText="調整稅額加1" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button1" runat="server"
