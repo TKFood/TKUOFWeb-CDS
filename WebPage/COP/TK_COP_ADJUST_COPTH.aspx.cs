@@ -39,9 +39,7 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
         NAME = Current.User.Name;
 
         if (!IsPostBack)
-        {
-            Label_Todays.Text = "本日日期: " + DateTime.Now.ToString("yyyyMMdd"); 
-
+        {           
             //BindGrid();
         }
     }
@@ -71,13 +69,13 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
                             ,TH003 AS '序號'
                             ,TH004 AS '品號'
                             ,TH005 AS '品名'
-                            ,TH008 AS '數量'
+                            ,CONVERT(INT,TH008) AS '數量'
                             ,TH009 AS '單位'
                             ,TH013 AS '金額'
                             ,TH035 AS '原幣未稅金額'
                             ,TH036 AS '原幣稅額'
-                            ,TH037 AS '本幣未稅金額'
-                            ,TH038 AS '本幣稅額'
+                            ,CONVERT(INT,TH037) AS '本幣未稅金額'
+                            ,CONVERT(INT,TH038) AS '本幣稅額'
                             ,TG027
                             ,TG028
                             ,TG029
