@@ -259,6 +259,36 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
 
 
             cmdTxt = @"
+                        INSERT INTO [TK].[dbo].[Z_TK_COP_ADJUST_COPTH]
+                        (
+                        [TH001]
+                        ,[TH002]
+                        ,[TH003]
+                        ,[OLD_TH035]
+                        ,[OLD_TH036]
+                        ,[OLD_TH037]
+                        ,[OLD_TH038]
+                        ,[NEW_TH035]
+                        ,[NEW_TH036]
+                        ,[NEW_TH037]
+                        ,[NEW_TH038]
+                        )
+                        SELECT 
+                        TH001
+                        ,TH002
+                        ,TH003
+                        ,TH035 AS OLD_TH035
+                        ,TH036 AS OLD_TH036
+                        ,TH037 AS OLD_TH037
+                        ,TH038 AS OLD_TH038
+                        ,TH035+@MODIFYMONEYS AS NEW_TH035
+                        ,TH036+@MODIFYTAXMONEYS AS NEW_TH036
+                        ,TH037+@MODIFYMONEYS AS NEW_TH037
+                        ,TH038+@MODIFYTAXMONEYS AS NEW_TH038
+                        FROM [TK].dbo.COPTH
+                        WHERE TH001=@TH001 AND TH002=@TH002 AND TH003=@TH003
+
+
                         UPDATE [TK].dbo.COPTH
                         SET 
                         TH035=TH035+@MODIFYMONEYS
@@ -282,6 +312,10 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
             m_db.AddParameter("@TH003", TH003);
             m_db.AddParameter("@MODIFYMONEYS", MODIFYMONEYS);
             m_db.AddParameter("@MODIFYTAXMONEYS", MODIFYTAXMONEYS);
+            m_db.AddParameter("@TH001", TG001);
+            m_db.AddParameter("@TH002", TG002);
+          
+
 
             m_db.ExecuteNonQuery(cmdTxt);
 
