@@ -80,8 +80,7 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
                             ,TG028
                             ,TG029
                             FROM [TK].dbo.COPTG,[TK].dbo.COPTH
-                            WHERE TG001=TH001 AND TG002=TH002
-                            AND TG001 IN ('A230','A231')
+                            WHERE TG001=TH001 AND TG002=TH002                           
                             AND TG002 LIKE '%{0}%'
                             ORDER BY TG001,TG002
                         ", TG002);
