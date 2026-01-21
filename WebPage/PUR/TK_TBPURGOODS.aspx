@@ -2,6 +2,85 @@
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <!-- 在CSS文件中定义样式 -->
+    <style>
+        .btn-search {
+            font-family: "Microsoft JhengHei", sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff !important;
+            /* 改用更透亮的商務藍 */
+            background-color: #446e9b;
+            padding: 5px 25px;
+            border: 1px solid #345577;
+            border-radius: 4px;
+            cursor: pointer;
+            /* 減輕陰影，讓它不那麼沉重 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+            .btn-search:hover {
+                /* 懸停時稍微亮一點 */
+                background-color: #5180b3;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+                filter: brightness(1.1);
+            }
+
+            .btn-ADD {
+                font-family: "Microsoft JhengHei", sans-serif;
+                font-weight: 600;
+                font-size: 15px;
+                letter-spacing: 2px;
+                color: #ffffff !important;
+                /* 改用更透亮的商務藍 */
+                background-color:#4a90e2;
+                padding: 5px 25px;
+                border: 1px solid #345577;
+                border-radius: 4px;
+                cursor: pointer;
+                /* 減輕陰影，讓它不那麼沉重 */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: all 0.2s ease;
+            }
+
+            .btn-ADD:hover {
+                /* 懸停時稍微亮一點 */
+                background-color: #5180b3;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+                filter: brightness(1.1);
+            }
+
+        .grid-btn {
+            /* 使用較圓潤的字體並加粗 */
+            font-family: "Microsoft JhengHei", sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            padding: 6px 12px;
+            border-radius: 6px; /* 更圓潤的邊角 */
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease; /* 增加平滑過渡感 */
+            /* 允許折行 */
+            white-space: normal !important;
+            line-height: 1.4;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 輕微陰影更有立體感 */
+        }
+
+        /* 4. 不同功能的顏色調整（顯眼且好看） */
+        .btn-add {
+            background: #4a90e2;
+            color: white !important;
+        }
+        /* 優雅藍 */
+        .btn-close {
+            background: #e74c3c;
+            color: white !important;
+        }
+    </style>
 
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -38,8 +117,10 @@
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
-                                    <asp:Button ID="Button1" runat="server" Text="查詢" OnClick="Button1_Click"
-                                        meta:resourcekey="btn1Resource1" />
+                                    <asp:Button ID="Button1" runat="server" Text="查詢"
+                                        OnClick="Button1_Click"
+                                        meta:resourcekey="btn1Resource1"
+                                        CssClass="btn-search" />
                                 </td>
                             </tr>
                         </table>
@@ -136,7 +217,7 @@
                                                         <asp:Button ID="btnUpdate" runat="server" Text="更新" CommandName="MYUPDATE"
                                                             CommandArgument='<%# Eval("ID") %>'
                                                             OnClientClick="return confirm('是否更新？');"
-                                                            CssClass="btn btn-danger btn-sm" />
+                                                            CssClass="grid-btn btn-add" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -144,7 +225,7 @@
                                                         <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="MYDELETE"
                                                             CommandArgument='<%# Eval("ID") %>'
                                                             OnClientClick="return confirm('是否刪除？');"
-                                                            CssClass="btn btn-danger btn-sm" />
+                                                            CssClass="grid-btn btn-close" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -224,17 +305,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                    <td></td>
-                                    <td>
-                                        <div style="padding: 10px 5px;">
-                                            <asp:Button ID="btnADD"
-                                                runat="server"
-                                                Text="新增"
-                                                OnClick="btnADD_Click"   
-                                               />
-                                        </div>
-                                    </td>
-                                </tr>
+                                <td></td>
+                                <td>
+                                    <div style="padding: 10px 5px;">
+                                        <asp:Button ID="btnADD"
+                                            runat="server"
+                                            Text="新增"
+                                            OnClick="btnADD_Click"
+                                            CssClass="btn-ADD"/>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </telerik:RadPageView>
