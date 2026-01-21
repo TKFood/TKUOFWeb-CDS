@@ -37,8 +37,8 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         NAME = Current.User.Name;
 
         if (!IsPostBack)
-        {           
-           BindGrid();
+        {
+            BindGrid();
         }
     }
 
@@ -53,7 +53,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         StringBuilder QUERY1 = new StringBuilder();
         StringBuilder QUERY2 = new StringBuilder();
         StringBuilder QUERY3 = new StringBuilder();
-       
+
         //MB002
         string COMPANYS = QUERY_TextBox1.Text.Trim();
         if (!string.IsNullOrEmpty(COMPANYS))
@@ -121,7 +121,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         int rowIndex = -1;
 
         // 1. 檢查 CommandName 是否是您定義的更新命令
-        if (e.CommandName == "UPDATE")
+        if (e.CommandName == "MYUPDATE")
         {
             string ID = e.CommandArgument.ToString();
             GridViewRow row = (GridViewRow)((Control)e.CommandSource).NamingContainer;
@@ -143,19 +143,44 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
             TextBox txt_USEDSTATES = (TextBox)row.FindControl("TextBox_月叫貨量");
             string USEDSTATES = txt_USEDSTATES.Text;
 
+            UODATE_TBPURGOODS(
+             ID
+            , COMPANYS
+            , ITEMS
+            , NUMS
+            , PRICES
+            , MONEYS
+            , UPDATEDATES
+            , COMMENTS
+            , USEDSTATES
+            );
+
             MsgBox("更新完成 \r\n " + ID, this.Page, this);
         }
+        else if (e.CommandName == "MYDELETE")
+        {
+            string ID = e.CommandArgument.ToString();
+            GridViewRow row = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+
+            DELETE_TBPURGOODS(ID);
+
+            MsgBox("刪除完成 \r\n " + ID, this.Page, this);
+        }
+
+        BindGrid();
     }
     // 雖然不應該被觸發，但定義它以避免 HttpCException
     protected void Grid1_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
-        // 什麼都不做，因為您不打算使用內建更新功能
-
-        // 如果 GridView 處於編輯模式，這兩行可以讓它退出編輯模式
-        Grid1.EditIndex = -1;
-        // Grid1.DataBind(); 
+        // 這裡可以不寫程式碼
     }
 
+    protected void Grid1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        // 這裡可以不寫程式碼，因為你的邏輯寫在 RowCommand 了
+    }
+
+   
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         //SETEXCEL();
@@ -229,6 +254,125 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         }
     }
 
+    public void ADD_TBPURGOODS
+        (
+        string COMPANYS
+        , string ITEMS
+        , string NUMS
+        , string PRICES
+        , string MONEYS
+        , string UPDATEDATES
+        , string COMMENTS
+        , string USEDSTATES
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+
+        // 1. 📌 使用參數化查詢，避免 SQL Injection
+        string sqlQuery = @"
+                            INSERT INTO  [TKPUR].[dbo].[TBPURGOODS]
+                            (
+                            [COMPANYS]
+                            ,[ITEMS]
+                            ,[NUMS]
+                            ,[PRICES]
+                            ,[MONEYS]
+                            ,[UPDATEDATES]
+                            ,[COMMENTS]
+                            ,[USEDSTATES])
+                            VALUES
+                            (
+                            @COMPANYS
+                            ,@ITEMS
+                            ,@NUMS
+                            ,@PRICES
+                            ,@MONEYS
+                            ,@UPDATEDATES
+                            ,@COMMENTS
+                            ,@USEDSTATES
+                            )
+                            ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢           
+                    command.Parameters.AddWithValue("@COMPANYS", COMPANYS);
+                    command.Parameters.AddWithValue("@ITEMS", ITEMS);
+                    command.Parameters.AddWithValue("@NUMS", NUMS);
+                    command.Parameters.AddWithValue("@PRICES", PRICES);
+                    command.Parameters.AddWithValue("@MONEYS", MONEYS);
+                    command.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
+                    command.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                    command.Parameters.AddWithValue("@USEDSTATES", USEDSTATES);
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        MsgBox("完成 \r\n ", this.Page, this);
+                    }
+                    else
+                    {
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
+    public void DELETE_TBPURGOODS
+       (
+       string ID     
+       )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+
+        // 1. 📌 使用參數化查詢，避免 SQL Injection
+        string sqlQuery = @"
+                            DELETE [TKPUR].[dbo].[TBPURGOODS]
+                            WHERE  [ID]= @ID
+                            ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢           
+                    command.Parameters.AddWithValue("@ID", ID);
+                  
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        MsgBox("完成 \r\n ", this.Page, this);
+                    }
+                    else
+                    {
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -244,8 +388,35 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
 
     #region BUTTON
     protected void Button1_Click(object sender, EventArgs e)
-    {       
+    {
         BindGrid();
     }
+
+    protected void btnADD_Click(object sender, EventArgs e)
+    {
+        string COMPANYS = ADD_TextBox1.Text.Trim().ToString();
+        string ITEMS = ADD_TextBox2.Text.Trim().ToString();
+        string NUMS = ADD_TextBox3.Text.Trim().ToString();
+        string PRICES = ADD_TextBox4.Text.Trim().ToString();
+        string MONEYS = ADD_TextBox5.Text.Trim().ToString();
+        string UPDATEDATES = ADD_TextBox6.Text.Trim().ToString();
+        string COMMENTS = ADD_TextBox7.Text.Trim().ToString();
+        string USEDSTATES = ADD_TextBox8.Text.Trim().ToString();
+
+        ADD_TBPURGOODS
+         (
+         COMPANYS
+         , ITEMS
+         , NUMS
+         , PRICES
+         , MONEYS
+         , UPDATEDATES
+         , COMMENTS
+         , USEDSTATES
+         );
+
+        BindGrid();
+    }
+
     #endregion
 }

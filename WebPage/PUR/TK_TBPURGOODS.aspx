@@ -11,6 +11,8 @@
                 <Tabs>
                     <telerik:RadTab Text="資料">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="新增">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -131,9 +133,17 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
-                                                        <asp:Button ID="btnUpdate" runat="server" Text="更新" CommandName="UPDATE"
+                                                        <asp:Button ID="btnUpdate" runat="server" Text="更新" CommandName="MYUPDATE"
                                                             CommandArgument='<%# Eval("ID") %>'
                                                             OnClientClick="return confirm('是否更新？');"
+                                                            CssClass="btn btn-danger btn-sm" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="MYDELETE"
+                                                            CommandArgument='<%# Eval("ID") %>'
+                                                            OnClientClick="return confirm('是否刪除？');"
                                                             CssClass="btn btn-danger btn-sm" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -145,7 +155,89 @@
                         </table>
                     </div>
                 </telerik:RadPageView>
-
+                <telerik:RadPageView ID="RadPageView2" runat="server">
+                    <div id="tabs-2">
+                        <h3>新增</h3>
+                        <table class="PopTable">
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="廠商：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox1" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="品項：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox2" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="數量：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox3" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="單價：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox4" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="總計：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox5" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="提供日期：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox6" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="備註：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox7" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="月叫貨量：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox8" runat="server" Width="300px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                    <td></td>
+                                    <td>
+                                        <div style="padding: 10px 5px;">
+                                            <asp:Button ID="btnADD"
+                                                runat="server"
+                                                Text="新增"
+                                                OnClick="btnADD_Click"   
+                                               />
+                                        </div>
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
 
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">
