@@ -123,7 +123,27 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         // 1. 檢查 CommandName 是否是您定義的更新命令
         if (e.CommandName == "UPDATE")
         {
+            string ID = e.CommandArgument.ToString();
+            GridViewRow row = (GridViewRow)((Control)e.CommandSource).NamingContainer;
 
+            TextBox txt_COMPANYS = (TextBox)row.FindControl("TextBox_廠商");
+            string COMPANYS = txt_COMPANYS.Text;
+            TextBox txt_ITEMS = (TextBox)row.FindControl("TextBox_品項");
+            string ITEMS = txt_ITEMS.Text;
+            TextBox txt_NUMS = (TextBox)row.FindControl("TextBox_數量");
+            string NUMS = txt_NUMS.Text;
+            TextBox txt_PRICES = (TextBox)row.FindControl("TextBox_單價");
+            string PRICES = txt_PRICES.Text;
+            TextBox txt_MONEYS = (TextBox)row.FindControl("TextBox_總計");
+            string MONEYS = txt_MONEYS.Text;
+            TextBox txt_UPDATEDATES = (TextBox)row.FindControl("TextBox_提供日期");
+            string UPDATEDATES = txt_UPDATEDATES.Text;
+            TextBox txt_COMMENTS = (TextBox)row.FindControl("TextBox_備註");
+            string COMMENTS = txt_COMMENTS.Text;
+            TextBox txt_USEDSTATES = (TextBox)row.FindControl("TextBox_月叫貨量");
+            string USEDSTATES = txt_USEDSTATES.Text;
+
+            MsgBox("更新完成 \r\n " + ID, this.Page, this);
         }
     }
     // 雖然不應該被觸發，但定義它以避免 HttpCException
