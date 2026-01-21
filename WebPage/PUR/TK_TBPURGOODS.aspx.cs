@@ -162,6 +162,73 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
 
     }
 
+    public void UODATE_TBPURGOODS(
+         string ID
+        , string COMPANYS
+        , string ITEMS
+        , string NUMS
+        , string PRICES
+        , string MONEYS
+        , string UPDATEDATES
+        , string COMMENTS
+        , string USEDSTATES
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+
+        // 1. 📌 使用參數化查詢，避免 SQL Injection
+        string sqlQuery = @"
+                            UPDATE [TKPUR].[dbo].[TBPURGOODS]
+                            SET 
+                            COMPANYS=@COMPANYS
+                            ,ITEMS=@ITEMS
+                            ,NUMS=@NUMS
+                            ,PRICES=@PRICES
+                            ,MONEYS=@MONEYS
+                            ,UPDATEDATES=@UPDATEDATES
+                            ,COMMENTS=@COMMENTS
+                            ,USEDSTATES=@USEDSTATES
+                            WHERE ID=@ID
+                            ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢
+                    command.Parameters.AddWithValue("@ID", ID);
+                    command.Parameters.AddWithValue("@COMPANYS", COMPANYS);
+                    command.Parameters.AddWithValue("@ITEMS", ITEMS);
+                    command.Parameters.AddWithValue("@NUMS", NUMS);
+                    command.Parameters.AddWithValue("@PRICES", PRICES);
+                    command.Parameters.AddWithValue("@MONEYS", MONEYS);
+                    command.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
+                    command.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                    command.Parameters.AddWithValue("@USEDSTATES", USEDSTATES);
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        MsgBox("完成 \r\n ", this.Page, this);
+                    }
+                    else
+                    {
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
