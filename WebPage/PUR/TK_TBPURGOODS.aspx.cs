@@ -373,6 +373,102 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         {
         }
     }
+    public string ConvertDataTableToHtml(DataTable dt)
+    {
+        if (dt == null || dt.Rows.Count == 0) return "<p>查無資料。</p>";
+
+        StringBuilder sb = new StringBuilder();
+
+        // 定義表格樣式 (針對 Email 最佳化的 Inline CSS)
+        // 使用優雅藍: #1e3a8a
+        sb.Append("<table style='border-collapse: collapse; width: 100%; font-family: \"微軟正黑體\", Arial, sans-serif; font-size: 14px; border: 1px solid #dddddd;'>");
+
+        // 1. 組出表頭 (Headers)
+        sb.Append("<tr style='background-color: #1e3a8a; color: #ffffff;'>");
+        foreach (DataColumn column in dt.Columns)
+        {
+            sb.Append(string.Format("<th style='padding: 10px; border: 1px solid #dddddd; text-align: center;'>{0}</th>", column.ColumnName));
+        }
+        sb.Append("</tr>");
+
+        // 2. 組出資料列 (Rows)
+        int rowIndex = 0;
+        foreach (DataRow row in dt.Rows)
+        {
+            // 隔行變色 (白/淺灰)
+            string bgColor = (rowIndex % 2 == 0) ? "#ffffff" : "#f9f9f9";
+            sb.Append(string.Format("<tr style='background-color: {0};'>", bgColor));
+
+            foreach (DataColumn column in dt.Columns)
+            {
+                string cellValue = row[column.ColumnName].ToString();
+                string alignStyle = "text-align: center;"; // 預設置中
+
+                // 邏輯：判斷欄位名稱若包含「金額」，則靠右並格式化
+                if (column.ColumnName.Contains("金額"))
+                {
+                    alignStyle = "text-align: right;";
+                    decimal val;
+                    if (decimal.TryParse(cellValue, out val))
+                    {
+                        cellValue = val.ToString("N0"); // 三位一撇格式
+                    }
+                }
+
+                sb.Append(string.Format("<td style='padding: 8px; border: 1px solid #dddddd; {0}'>{1}</td>", alignStyle, cellValue));
+            }
+            sb.Append("</tr>");
+            rowIndex++;
+        }
+
+        sb.Append("</table>");
+        return sb.ToString();
+    }
+    protected void SendReportEmail(DataTable dt)
+    {
+        try
+        {
+            // 1. 建立郵件物件
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("sender@yourcompany.com", "系統管理員");
+            mail.To.Add("receiver@example.com");
+            mail.Subject = string.Format("【代工包材庫存】發送日期：{0}", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+
+            // 2. 組合內容 (C# 5.0 需使用 string.Format)
+            string htmlTable = ConvertDataTableToHtml(dt);
+            string bodyContent = string.Format(@"
+            <html>
+                <body style='margin: 20px;'>
+                    <h2 style='color: #1e3a8a;'>進貨明細清單</h2>
+                    <p style='color: #555555;'>此郵件由系統自動產生，請確認以下資料內容：</p>
+                    <hr style='border: 0; border-top: 1px solid #eeeeee; margin-bottom: 20px;' />
+                    {0}
+                    <br />
+                    <p style='font-size: 12px; color: #999999;'>※ 本郵件僅供內部參考。</p>
+                </body>
+            </html>", htmlTable);
+
+            mail.Body = bodyContent;
+            mail.IsBodyHtml = true;
+            mail.BodyEncoding = Encoding.UTF8;
+
+            // 3. SMTP 設定
+            SmtpClient smtp = new SmtpClient("your.smtp.server.com", 587); // 請替換您的 SMTP Server 與 Port
+            smtp.Credentials = new NetworkCredential("username", "password");
+            smtp.EnableSsl = true;
+
+            // 4. 發送
+            smtp.Send(mail);
+
+            // 成功提示 (WebForms 方式)
+            Response.Write("<script>alert('郵件寄送成功！');</script>");
+        }
+        catch (Exception ex)
+        {
+            // 錯誤處理
+            Response.Write("<script>alert('寄送失敗：" + ex.Message.Replace("'", "") + "');</script>");
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
