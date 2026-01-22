@@ -777,7 +777,7 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                 string CLIENTS = TextBox_CLIENTS.Text;
                 TextBox TextBox_EDAYS = (TextBox)row.FindControl("回覆期限");
                 string EDAYS = TextBox_EDAYS.Text;
-                TextBox TextBox_EVENTS = (TextBox)row.FindControl("交辨內容");
+                TextBox TextBox_EVENTS = (TextBox)row.FindControl("專案內容");
                 string EVENTS = TextBox_EVENTS.Text;
 
                 // 獲取相應的ID
