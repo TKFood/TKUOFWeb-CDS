@@ -29,6 +29,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
     string ACCOUNT = null;
     string NAME = null;
     String ROLES = null;
+    DataTable MEAIL_CONEXT = new DataTable();
 
 
     protected void Page_Load(object sender, EventArgs e)
@@ -100,11 +101,12 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         DataTable dt = new DataTable();
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
-
+        MEAIL_CONEXT = dt;
 
         Grid1.DataSource = dt;
         Grid1.DataBind();
 
+        
     }
 
     protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
@@ -373,6 +375,53 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         {
         }
     }
+    public DataTable FIND_SEND_MAILTO(string SENDTO)
+    {
+        try
+        {
+            // 1.取得連線字串
+            // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+            cmdTxt.AppendFormat(@"
+                           SELECT 
+                                    [ID]
+                                    ,[SENDTO]
+                                    ,[MAIL]
+                                    ,[NAME]
+                                    ,[COMMENTS]
+                                    FROM [TKMQ].[dbo].[MQSENDMAIL]
+                                    WHERE [SENDTO]='{0}'
+                            ", SENDTO);
+
+
+            //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        catch (Exception EX)
+        {
+            return null;
+        }
+        finally
+        { }
+        
+
+    }
     public string ConvertDataTableToHtml(DataTable dt)
     {
         if (dt == null || dt.Rows.Count == 0) return "<p>查無資料。</p>";
@@ -426,12 +475,22 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
     }
     protected void SendReportEmail(DataTable dt)
     {
+        string FORMMAIL = "tk290@tkfood.com.tw";
+        string MySMTP = "officemail.cloudmax.com.tw";
+        string NAME = "tkpublic@tkfood.com.tw";
+        string PW = "@@tkmail629";
+
+        DataTable DT_SEND_MAILTO = FIND_SEND_MAILTO("TBPURGOODS");
         try
         {
             // 1. 建立郵件物件
             MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("sender@yourcompany.com", "系統管理員");
-            mail.To.Add("receiver@example.com");
+            foreach (DataRow DR in DT_SEND_MAILTO.Rows)
+            {
+                mail.To.Add(DR["MAIL"].ToString()); //設定收件者Email，多筆mail
+            }
+
+            mail.From = new MailAddress(FORMMAIL, "系統管理員");          
             mail.Subject = string.Format("【代工包材庫存】發送日期：{0}", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
 
             // 2. 組合內容 (C# 5.0 需使用 string.Format)
@@ -439,7 +498,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
             string bodyContent = string.Format(@"
             <html>
                 <body style='margin: 20px;'>
-                    <h2 style='color: #1e3a8a;'>進貨明細清單</h2>
+                    <h2 style='color: #1e3a8a;'>明細清單</h2>
                     <p style='color: #555555;'>此郵件由系統自動產生，請確認以下資料內容：</p>
                     <hr style='border: 0; border-top: 1px solid #eeeeee; margin-bottom: 20px;' />
                     {0}
@@ -453,20 +512,22 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
             mail.BodyEncoding = Encoding.UTF8;
 
             // 3. SMTP 設定
-            SmtpClient smtp = new SmtpClient("your.smtp.server.com", 587); // 請替換您的 SMTP Server 與 Port
-            smtp.Credentials = new NetworkCredential("username", "password");
+            SmtpClient smtp = new SmtpClient(MySMTP, 25); // 請替換您的 SMTP Server 與 Port
+            smtp.Credentials = new NetworkCredential(NAME, PW);
             smtp.EnableSsl = true;
 
             // 4. 發送
             smtp.Send(mail);
 
             // 成功提示 (WebForms 方式)
-            Response.Write("<script>alert('郵件寄送成功！');</script>");
+            //Response.Write("<script>alert('郵件寄送成功！');</script>");
+            MsgBox("郵件寄送成功 \r\n ", this.Page, this);
         }
         catch (Exception ex)
         {
             // 錯誤處理
-            Response.Write("<script>alert('寄送失敗：" + ex.Message.Replace("'", "") + "');</script>");
+            //Response.Write("<script>alert('寄送失敗：" + ex.Message.Replace("'", "") + "');</script>");
+            MsgBox("寄送失敗 \r\n ", this.Page, this);
         }
     }
     public void MsgBox(String ex, Page pg, Object obj)
@@ -512,6 +573,15 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
          );
 
         BindGrid();
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        BindGrid();
+        if (MEAIL_CONEXT != null && MEAIL_CONEXT.Rows.Count >= 1)
+        {
+            SendReportEmail(MEAIL_CONEXT);
+        }
     }
 
     #endregion

@@ -28,22 +28,46 @@
                 filter: brightness(1.1);
             }
 
-            .btn-ADD {
-                font-family: "Microsoft JhengHei", sans-serif;
-                font-weight: 600;
-                font-size: 15px;
-                letter-spacing: 2px;
-                color: #ffffff !important;
-                /* 改用更透亮的商務藍 */
-                background-color:#4a90e2;
-                padding: 5px 25px;
-                border: 1px solid #345577;
-                border-radius: 4px;
-                cursor: pointer;
-                /* 減輕陰影，讓它不那麼沉重 */
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                transition: all 0.2s ease;
-            }
+        .btn-email {
+            font-family: "Microsoft JhengHei", sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff !important;
+            /* 改用更透亮的商務藍 */
+            background-color: #1a508b;
+            padding: 5px 25px;
+            border: 1px solid #345577;
+            border-radius: 4px;
+            cursor: pointer;
+            /* 減輕陰影，讓它不那麼沉重 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-email:hover {
+            /* 懸停時稍微亮一點 */
+            background-color: #5180b3;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            filter: brightness(1.1);
+        }
+
+        .btn-ADD {
+            font-family: "Microsoft JhengHei", sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 2px;
+            color: #ffffff !important;
+            /* 改用更透亮的商務藍 */
+            background-color: #4a90e2;
+            padding: 5px 25px;
+            border: 1px solid #345577;
+            border-radius: 4px;
+            cursor: pointer;
+            /* 減輕陰影，讓它不那麼沉重 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
 
             .btn-ADD:hover {
                 /* 懸停時稍微亮一點 */
@@ -121,6 +145,15 @@
                                         OnClick="Button1_Click"
                                         meta:resourcekey="btn1Resource1"
                                         CssClass="btn-search" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button2" runat="server" Text="寄送MAIL"
+                                        OnClick="Button2_Click"
+                                        meta:resourcekey="btn1Resource2"
+                                        CssClass="btn-email" />
                                 </td>
                             </tr>
                         </table>
@@ -312,7 +345,7 @@
                                             runat="server"
                                             Text="新增"
                                             OnClick="btnADD_Click"
-                                            CssClass="btn-ADD"/>
+                                            CssClass="btn-ADD" />
                                     </div>
                                 </td>
                             </tr>
