@@ -45,12 +45,12 @@
             transition: all 0.2s ease;
         }
 
-        .btn-email:hover {
-            /* 懸停時稍微亮一點 */
-            background-color: #5180b3;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-            filter: brightness(1.1);
-        }
+            .btn-email:hover {
+                /* 懸停時稍微亮一點 */
+                background-color: #5180b3;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+                filter: brightness(1.1);
+            }
 
         .btn-ADD {
             font-family: "Microsoft JhengHei", sans-serif;
@@ -175,13 +175,23 @@
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="品項" ItemStyle-Width="400px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_品號"
+                                                            runat="server"
+                                                            Text='<%# Bind("品號") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100px">
+                                                        </asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="品項" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_品項"
                                                             runat="server"
                                                             Text='<%# Bind("品項") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="400px">
+                                                            Width="300px">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -281,6 +291,13 @@
                                     <asp:TextBox ID="ADD_TextBox1" runat="server" Width="300px" />
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
+                                    <asp:Label Text="品號：" runat="server" />
+                                </td>
+                                <td style="width: 85%; padding: 5px;">
+                                    <asp:TextBox ID="ADD_TextBox9" runat="server" Width="300px" />
+                                 </td>
                             <tr>
                                 <td style="width: 15%; padding: 5px; font-weight: bold; vertical-align: top;">
                                     <asp:Label Text="品項：" runat="server" />

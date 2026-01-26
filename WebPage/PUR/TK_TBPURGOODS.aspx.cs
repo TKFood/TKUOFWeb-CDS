@@ -81,6 +81,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
                             SELECT
                             [ID]
                             ,[COMPANYS] AS '廠商'
+                            ,[MB001] AS '品號'
                             ,[ITEMS] AS '品項'
                             ,[NUMS] AS '數量'
                             ,[PRICES] AS '單價'
@@ -144,6 +145,8 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
             string COMMENTS = txt_COMMENTS.Text;
             TextBox txt_USEDSTATES = (TextBox)row.FindControl("TextBox_月叫貨量");
             string USEDSTATES = txt_USEDSTATES.Text;
+            TextBox txt_MB001 = (TextBox)row.FindControl("TextBox_品號");
+            string MB001 = txt_MB001.Text;
 
             UODATE_TBPURGOODS(
              ID
@@ -155,6 +158,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
             , UPDATEDATES
             , COMMENTS
             , USEDSTATES
+            , MB001
             );
 
             MsgBox("更新完成 \r\n " + ID, this.Page, this);
@@ -199,6 +203,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         , string UPDATEDATES
         , string COMMENTS
         , string USEDSTATES
+        , string MB001
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
@@ -215,6 +220,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
                             ,UPDATEDATES=@UPDATEDATES
                             ,COMMENTS=@COMMENTS
                             ,USEDSTATES=@USEDSTATES
+                            ,MB001=@MB001
                             WHERE ID=@ID
                             ";
 
@@ -235,6 +241,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
                     command.Parameters.AddWithValue("@UPDATEDATES", UPDATEDATES);
                     command.Parameters.AddWithValue("@COMMENTS", COMMENTS);
                     command.Parameters.AddWithValue("@USEDSTATES", USEDSTATES);
+                    command.Parameters.AddWithValue("@MB001", MB001);
 
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
@@ -266,6 +273,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         , string UPDATEDATES
         , string COMMENTS
         , string USEDSTATES
+        ,string MB001
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
@@ -275,6 +283,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
                             INSERT INTO  [TKPUR].[dbo].[TBPURGOODS]
                             (
                             [COMPANYS]
+                            ,[MB001]
                             ,[ITEMS]
                             ,[NUMS]
                             ,[PRICES]
@@ -285,6 +294,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
                             VALUES
                             (
                             @COMPANYS
+                            ,@MB001
                             ,@ITEMS
                             ,@NUMS
                             ,@PRICES
@@ -304,6 +314,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
                 {
                     // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢           
                     command.Parameters.AddWithValue("@COMPANYS", COMPANYS);
+                    command.Parameters.AddWithValue("@MB001", MB001);
                     command.Parameters.AddWithValue("@ITEMS", ITEMS);
                     command.Parameters.AddWithValue("@NUMS", NUMS);
                     command.Parameters.AddWithValue("@PRICES", PRICES);
@@ -559,6 +570,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
         string UPDATEDATES = ADD_TextBox6.Text.Trim().ToString();
         string COMMENTS = ADD_TextBox7.Text.Trim().ToString();
         string USEDSTATES = ADD_TextBox8.Text.Trim().ToString();
+        string MB001 = ADD_TextBox9.Text.Trim().ToString();
 
         ADD_TBPURGOODS
          (
@@ -570,6 +582,7 @@ public partial class CDS_WebPage_PUR_TK_TBPURGOODS : Ede.Uof.Utility.Page.BasePa
          , UPDATEDATES
          , COMMENTS
          , USEDSTATES
+         , MB001
          );
 
         BindGrid();
