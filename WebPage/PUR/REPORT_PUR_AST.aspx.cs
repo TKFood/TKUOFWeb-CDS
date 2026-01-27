@@ -267,7 +267,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         StringBuilder cmdTxt = new StringBuilder();
         StringBuilder QUERYS1 = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
-
+        StringBuilder QUERYS3 = new StringBuilder();
 
 
         //TextBox3
@@ -289,6 +289,15 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         else
         {
             QUERYS2.AppendFormat(@" ");
+        }
+        //TextBox6
+        if (!string.IsNullOrEmpty(TextBox6.Text))
+        {
+            QUERYS3.AppendFormat(@" AND MB016 LIKE '%{0}%'  ", TextBox6.Text);
+        }
+        else
+        {
+            QUERYS3.AppendFormat(@" ");
         }
 
         cmdTxt.AppendFormat(@"
@@ -315,11 +324,12 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                     WHERE 1=1
                                     {0}
                                     {1}
+                                    {2}
                                     ORDER BY MB001
         
 
 
-                             ", QUERYS1.ToString(), QUERYS2.ToString());
+                             ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
 
 
 
