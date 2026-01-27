@@ -49,7 +49,6 @@
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="TextBox1" runat="server" Text=""></asp:TextBox>
                         </td>
-
                     </tr>
                     <tr>
                         <td class="PopTableLeftTD">
@@ -66,6 +65,15 @@
                         </td>
                         <td class="PopTableRightTD">
                             <asp:TextBox ID="TextBox5" runat="server" Text=""></asp:TextBox>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="PopTableLeftTD">
+                            <asp:Label ID="Label7" runat="server" Text="資產採購單備註"></asp:Label>
+                        </td>
+                        <td class="PopTableRightTD">
+                            <asp:TextBox ID="TextBox7" runat="server" Text=""></asp:TextBox>
                         </td>
 
                     </tr>
@@ -122,8 +130,8 @@
                                                 <asp:Label ID="進貨金額" runat="server" Text='<%# Bind("TP037038", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="120px"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                         <asp:BoundField HeaderText="備註" DataField="TO010" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
-                                            <ItemStyle HorizontalAlign="Left" Width="100px"></ItemStyle>
+                                        <asp:BoundField HeaderText="資產採購單備註" DataField="TM010" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                            <ItemStyle HorizontalAlign="Left" Width="200px"></ItemStyle>
                                         </asp:BoundField>
                                         <asp:TemplateField HeaderText="保管人放置" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>

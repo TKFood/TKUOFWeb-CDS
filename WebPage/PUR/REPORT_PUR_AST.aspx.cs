@@ -76,7 +76,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         StringBuilder QUERYS1 = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
-
+        StringBuilder QUERYS4 = new StringBuilder();
 
 
         //TextBox1
@@ -107,10 +107,19 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
         {
             QUERYS3.AppendFormat(@" ");
         }
+        //TextBox7
+        if (!string.IsNullOrEmpty(TextBox7.Text))
+        {
+            QUERYS4.AppendFormat(@" AND TM010 LIKE '%{0}%'", TextBox7.Text);
+        }
+        else
+        {
+            QUERYS4.AppendFormat(@" ");
+        }
 
 
         cmdTxt.AppendFormat(@"
-                                SELECT *
+                                SELECT *                                
                                 FROM 
                                 (
                                 SELECT 
@@ -123,10 +132,13 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                 ,TP006
                                 ,TP007
                                 ,TP008
-                                ,TO010
+                                ,TP009
+                                ,TP010  
                                 ,(TP037+TP038) AS TP037038
                                 ,STUFF((SELECT DISTINCT  ',' +MB002+ '保管人:'+MV002+'放置:'+MC006 FROM [TK].dbo.ASTMB,[TK].dbo.ASTMC,[TK].dbo.CMSMV WHERE MC003=MV001 AND  MB001=MC001 AND MB002 LIKE '%'+TP005+'%' AND MB002 LIKE '%'+MA002+'%' FOR XML PATH('')) , 1, 1, '') AS 'EMPPLACES' 
                                 ,REPLACE(TP001+TP002+TP003,' ','') AS TP001002003
+                                ,(SELECT TOP 1 TM010 FROM [TK].dbo.ASTTM WHERE TM001+TM002=TP009+TP010) AS 'TM010'
+
                                 FROM [TK].dbo.ASTTO,[TK].dbo.ASTTP,[TK].dbo.PURMA
                                 WHERE 1=1
                                 AND TO001=TP001 AND TO002=TP002
@@ -137,11 +149,12 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                 WHERE 1=1
                                 {0}
                                 {1}
-                                {2}
+                                {2} 
+                                {3}
                                 ORDER BY TO001,TO002
 
 
-                             ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString());
+                             ", QUERYS1.ToString(), QUERYS2.ToString(), QUERYS3.ToString(), QUERYS4.ToString());
 
 
 
