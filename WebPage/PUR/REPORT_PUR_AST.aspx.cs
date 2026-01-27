@@ -123,6 +123,7 @@ public partial class CDS_WebPage_PUR_REPORT_PUR_AST : Ede.Uof.Utility.Page.BaseP
                                 ,TP006
                                 ,TP007
                                 ,TP008
+                                ,TO010
                                 ,(TP037+TP038) AS TP037038
                                 ,STUFF((SELECT DISTINCT  ',' +MB002+ '保管人:'+MV002+'放置:'+MC006 FROM [TK].dbo.ASTMB,[TK].dbo.ASTMC,[TK].dbo.CMSMV WHERE MC003=MV001 AND  MB001=MC001 AND MB002 LIKE '%'+TP005+'%' AND MB002 LIKE '%'+MA002+'%' FOR XML PATH('')) , 1, 1, '') AS 'EMPPLACES' 
                                 ,REPLACE(TP001+TP002+TP003,' ','') AS TP001002003
