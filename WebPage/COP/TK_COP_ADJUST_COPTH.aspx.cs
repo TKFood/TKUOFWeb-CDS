@@ -116,21 +116,20 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
     {       
         int rowIndex = -1;
 
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+        // 在GridView中找到所選行的索引
+        GridViewRow row = Grid1.Rows[rowIndex];
+        // 獲取相應的ID
+        Label txt_TG001 = (Label)row.FindControl("label_單別");
+        string TG001 = txt_TG001.Text;
+        Label txt_TG002 = (Label)row.FindControl("label_單號");
+        string TG002 = txt_TG002.Text;
+        Label txt_TH003 = (Label)row.FindControl("label_序號");
+        string TH003 = txt_TH003.Text;
+
         if (e.CommandName == "Grid1Button1")
-        {
-            // 獲取所選行的索引
-            rowIndex = Convert.ToInt32(e.CommandArgument);
-            // 在GridView中找到所選行的索引
-            GridViewRow row = Grid1.Rows[rowIndex];
-            // 獲取相應的ID
-            Label txt_TG001 = (Label)row.FindControl("label_單別");
-            string TG001 = txt_TG001.Text.Trim();
-            Label txt_TG002 = (Label)row.FindControl("label_單號");
-            string TG002 = txt_TG002.Text.Trim();
-            Label txt_TH003 = (Label)row.FindControl("label_序號");
-            string TH003 = txt_TH003.Text.Trim();
-
-
+        { 
             // 確保找到了有效的行
             if (rowIndex >= 0)
             {
@@ -152,20 +151,6 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
         }
         if (e.CommandName == "Grid1Button2")
         {
-            // 獲取所選行的索引
-            rowIndex = Convert.ToInt32(e.CommandArgument);
-            // 在GridView中找到所選行的索引
-            GridViewRow row = Grid1.Rows[rowIndex];
-            // 獲取相應的ID
-            Label txt_TG001 = (Label)row.FindControl("label_單別");
-            string TG001 = txt_TG001.Text;
-            Label txt_TG002 = (Label)row.FindControl("label_單號");
-            string TG002 = txt_TG002.Text;
-            Label txt_TH003 = (Label)row.FindControl("label_序號");
-            string TH003 = txt_TH003.Text;
-
-
-
             // 確保找到了有效的行
             if (rowIndex >= 0)
             {
@@ -179,6 +164,90 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
                 {
                     //未稅金額+1，稅額-1
                     UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "1", "-1");
+
+                    string TH002 = TextBox_TH002.Text;
+                    SEARCHGROUPSALES(TH002);
+                }
+            }
+        }
+        if (e.CommandName == "Grid1Button3")
+        {  
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                //MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+                DataTable DT = CHECK_TK_ACRTB(TG001, TG002, TH003);
+                if (DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TG001 + " " + TG002 + " " + TH003 + " 失敗，因為已有結帳單", this.Page, this);
+                }
+                else
+                {
+                    //未稅金額+1，稅額+0
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "1", "0");
+
+                    string TH002 = TextBox_TH002.Text;
+                    SEARCHGROUPSALES(TH002);
+                }
+            }
+        }
+        if (e.CommandName == "Grid1Button4")
+        {
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                //MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+                DataTable DT = CHECK_TK_ACRTB(TG001, TG002, TH003);
+                if (DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TG001 + " " + TG002 + " " + TH003 + " 失敗，因為已有結帳單", this.Page, this);
+                }
+                else
+                {
+                    //未稅金額+0，稅額+1
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "0", "1");
+
+                    string TH002 = TextBox_TH002.Text;
+                    SEARCHGROUPSALES(TH002);
+                }
+            }
+        }
+        if (e.CommandName == "Grid1Button5")
+        {
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                //MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+                DataTable DT = CHECK_TK_ACRTB(TG001, TG002, TH003);
+                if (DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TG001 + " " + TG002 + " " + TH003 + " 失敗，因為已有結帳單", this.Page, this);
+                }
+                else
+                {
+                    //未稅金額-1，稅額+0
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "-1", "0");
+
+                    string TH002 = TextBox_TH002.Text;
+                    SEARCHGROUPSALES(TH002);
+                }
+            }
+        }
+        if (e.CommandName == "Grid1Button6")
+        {
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                //MsgBox(TG001 + " " + TG002+" "+ TH003, this.Page, this);
+                DataTable DT = CHECK_TK_ACRTB(TG001, TG002, TH003);
+                if (DT != null && DT.Rows.Count >= 1)
+                {
+                    MsgBox(TG001 + " " + TG002 + " " + TH003 + " 失敗，因為已有結帳單", this.Page, this);
+                }
+                else
+                {
+                    //未稅金+01，稅額-1
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "0", "-1");
 
                     string TH002 = TextBox_TH002.Text;
                     SEARCHGROUPSALES(TH002);

@@ -58,25 +58,102 @@
         }
 
         /* 4. 不同功能的顏色調整（顯眼且好看） */
-        .btn-add_1 {            
-            background: #4a90e2; /* 深藍色 */
+        /* 1. 活力亮藍 (原本的款式) */
+        .btn-add_1 {
+            background: #4a90e2;
             color: white !important;
             border: none;
             padding: 6px 15px;
             border-radius: 4px;
-            transition: background 0.3s; /* 平滑過渡 */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 輕微陰影增加質感 */
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
         }
-        /* 優雅藍 */
+
+            .btn-add_1:hover {
+                background: #357abd;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+        /* 2. 深邃優雅藍 (原本的款式) */
         .btn-add_2 {
-            background: #1e3a8a; /* 深藍色 */
+            background: #1e3a8a;
             color: white !important;
             border: none;
             padding: 6px 15px;
             border-radius: 4px;
-            transition: background 0.3s; /* 平滑過渡 */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 輕微陰影增加質感 */
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
         }
+
+            .btn-add_2:hover {
+                background: #172554;
+            }
+
+        /* 3. 森林清新綠 (成功、完成) */
+        .btn-add_3 {
+            background: #2ecc71;
+            color: white !important;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+            .btn-add_3:hover {
+                background: #27ae60;
+            }
+
+        /* 4. 暖陽明亮橘 (注意、修改) */
+        .btn-add_4 {
+            background: #f39c12;
+            color: white !important;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+            .btn-add_4:hover {
+                background: #e67e22;
+            }
+
+        /* 5. 簡約質感知性灰 (次要、返回) */
+        .btn-add_5 {
+            background: #7f8c8d;
+            color: white !important;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+            .btn-add_5:hover {
+                background: #636e72;
+            }
+
+        /* 6. 現代時尚紫 (特殊功能、亮點) */
+        .btn-add_6 {
+            background: #9b59b6;
+            color: white !important;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+            .btn-add_6:hover {
+                background: #8e44ad;
+            }
         /* 優雅 */
         .btn-close {
             background: #e74c3c;
@@ -282,25 +359,65 @@
                                                             Width="100%">
                                                         </asp:Label>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>    
-                                                <asp:TemplateField HeaderText="總金額不變-調整 稅額加1 且 未稅金額減1 " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="總金額不變-調整未稅金額加1且稅額減1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button1" runat="server"
-                                                            Text="稅額加1且未稅金額減1"
+                                                            Text="未稅金額加1且稅額減1"
                                                             CommandName="Grid1Button1"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
-                                                            OnClientClick="return confirm('調整 稅額加1且未稅金額減1 確定？');"
+                                                            OnClientClick="return confirm('調整 未稅金額加1且稅額減 確定？');"
                                                             CssClass="grid-btn btn-add_1" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="總金額不變-調整 稅額減1 且 未稅金額加1" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField HeaderText="總金額不變-調整 未稅金額減1 且 稅額加1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button2" runat="server"
-                                                            Text="稅額減1且未稅金額加1"
+                                                            Text="未稅金額減1且稅額加1"
                                                             CommandName="Grid1Button2"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
-                                                            OnClientClick="return confirm('調整 稅額減1且未稅金額加1 確定？');"
+                                                            OnClientClick="return confirm('調整 未稅金額減1且稅額加1 確定？');"
                                                             CssClass="grid-btn btn-add_2" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="總金額加1-調整 未稅金額加1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Grid1Button3" runat="server"
+                                                            Text="總金額加1-調整未稅金額加1"
+                                                            CommandName="Grid1Button3"
+                                                            CommandArgument='<%# Container.DataItemIndex %>'
+                                                            OnClientClick="return confirm('調整 總金額加1-未稅金額加1 確定？');"
+                                                            CssClass="grid-btn btn-add_3" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="總金額加1-調整 稅額加1" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Grid1Button4" runat="server"
+                                                            Text="總金額加1-調整 稅額加1"
+                                                            CommandName="Grid1Button4"
+                                                            CommandArgument='<%# Container.DataItemIndex %>'
+                                                            OnClientClick="return confirm('調整 總金額加1-稅額加1確定？');"
+                                                            CssClass="grid-btn btn-add_4" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="總金額減1-調整 未稅金額減1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Grid1Button5" runat="server"
+                                                            Text="總金額減1-調整未稅金額減1"
+                                                            CommandName="Grid1Button5"
+                                                            CommandArgument='<%# Container.DataItemIndex %>'
+                                                            OnClientClick="return confirm('調整 總金額減1-未稅金額減1 確定？');"
+                                                            CssClass="grid-btn btn-add_5" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="總金額減1-調整 稅額減1" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Grid1Button6" runat="server"
+                                                            Text="總金額減1-調整 稅額減1"
+                                                            CommandName="Grid1Button6"
+                                                            CommandArgument='<%# Container.DataItemIndex %>'
+                                                            OnClientClick="return confirm('調整 總金額減1-稅額減1確定？');"
+                                                            CssClass="grid-btn btn-add_6" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
