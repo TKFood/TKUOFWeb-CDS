@@ -283,7 +283,7 @@
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>    
-                                                <asp:TemplateField HeaderText="調整 稅額加1 且 未稅金額減1 " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField HeaderText="總金額不變-調整 稅額加1 且 未稅金額減1 " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button1" runat="server"
                                                             Text="稅額加1且未稅金額減1"
@@ -293,7 +293,7 @@
                                                             CssClass="grid-btn btn-add_1" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="調整 稅額減1 且 未稅金額加1" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField HeaderText="總金額不變-調整 稅額減1 且 未稅金額加1" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button2" runat="server"
                                                             Text="稅額減1且未稅金額加1"
