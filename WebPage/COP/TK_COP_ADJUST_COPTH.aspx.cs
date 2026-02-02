@@ -141,8 +141,8 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
                 }
                 else
                 {
-                    //未稅金額-1，稅額+1
-                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "-1", "1");
+                    //未稅金額+1，稅額-1
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "1", "-1");
 
                     string TH002 = TextBox_TH002.Text;
                     SEARCHGROUPSALES(TH002);
@@ -162,8 +162,8 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
                 }
                 else
                 {
-                    //未稅金額+1，稅額-1
-                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "1", "-1");
+                    //未稅金額-1，稅額+1
+                    UPDATE_TK_COPTG_COPTH(TG001, TG002, TH003, "-1", "+1");
 
                     string TH002 = TextBox_TH002.Text;
                     SEARCHGROUPSALES(TH002);
