@@ -1,37 +1,29 @@
-﻿<%@ WebHandler Language="C#" Class="TKGETDESIGNED_ImageHandler" %>
-
-using System;
+﻿using System;
 using System.Web;
 using System.IO;
+using System.Security.Principal;
 
-public class TKGETDESIGNED_ImageHandler : IHttpHandler {
-    
+public class TKGETDESIGNED_ImageHandler : IHttpHandler
+{
     public void ProcessRequest(HttpContext context)
     {
         string relPath = context.Request.QueryString["relPath"];
-        if (string.IsNullOrEmpty(relPath)) return;
-
-        // C# 5.0 建議使用 @ 字串處理路徑
-        string rootPath = @"\\192.168.1.199\美工檔案區\老楊食品";
-        string fullPath = Path.Combine(rootPath, relPath);
-
-        // 安全檢查
-        if (File.Exists(fullPath) && fullPath.StartsWith(rootPath, StringComparison.OrdinalIgnoreCase))
+        string rootPath = @"\\192.168.1.199\美工檔案區\老楊食品\11.產品圖";
+        
+        using (WindowsImpersonationContext impersonation = LogonHelper.Impersonate("tkfood-tw\ecd_01", "192.168.1.199", "at160115@@"))
         {
-            string extension = Path.GetExtension(fullPath).ToLower();
-            // 設定 MIME
-            context.Response.ContentType = "image/" + extension.Replace(".", "");
-            
-            // 輸出檔案
-            context.Response.WriteFile(fullPath);
-        }
-        else
-        {
-            context.Response.StatusCode = 404;
+            if (impersonation != null)
+            {
+                string fullPath = Path.Combine(rootPath, relPath);
+                if (File.Exists(fullPath))
+                {
+                    string ext = Path.GetExtension(fullPath).ToLower();
+                    context.Response.ContentType = "image/" + ext.Replace(".", "");
+                    context.Response.WriteFile(fullPath);
+                }
+                impersonation.Undo();
+            }
         }
     }
-
     public bool IsReusable { get { return false; } }
-
-
 }

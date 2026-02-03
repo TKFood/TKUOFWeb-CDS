@@ -1,44 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Dynamic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Security.AntiXss;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Ede.Uof.Utility.Data;
-using Ede.Uof.Utility.Page.Common;
-using System.Drawing;
 using System.IO;
-using System.Net;
-using System.Text;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Style;
-using System.Web.Services;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using Ede.Uof.EIP.SystemInfo;
-using Telerik.Web.UI;
-using System.Web.UI.HtmlControls;
+using System.Linq;
+using System.Web;
+using System.Security.Principal;
 
-public partial class CDS_WebPage_DESIGN_TKGETDESIGNED : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPage_DESIGN_TKGETDESIGNED : System.Web.UI.Page
 {
-    string ACCOUNT = null;
-    string NAME = null;
-    String ROLES = null;
-
-    private string RootPath = @"\\192.168.1.199\美工檔案區\老楊食品";
+    private string RootPath = @"\\192.168.1.199\美工檔案區\老楊食品\11.產品圖";
+    // 這裡請填入你的 1.199 帳密
+    private string User = "tkfood-tw\ecd_01";
+    private string Domain = "192.168.1.199";
+    private string Pass = "at160115@@";
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ACCOUNT = Current.Account;
-        NAME = Current.User.Name;
-
         if (!IsPostBack)
         {
             string relPath = Request.QueryString["path"] ?? "";
@@ -46,51 +22,45 @@ public partial class CDS_WebPage_DESIGN_TKGETDESIGNED : Ede.Uof.Utility.Page.Bas
         }
     }
 
-    #region FUNCTION
     private void BindData(string relPath)
     {
-        string fullPath = Path.Combine(RootPath, relPath);
-        if (!Directory.Exists(fullPath)) fullPath = RootPath;
-
-        litCurrentPath.Text = "目前路徑: " + fullPath;
-
-        // 處理返回上一層按鈕
-        if (!string.IsNullOrEmpty(relPath))
+        using (WindowsImpersonationContext context = LogonHelper.Impersonate(User, Domain, Pass))
         {
-            phBack.Visible = true;
-            int lastSlash = relPath.TrimEnd('\\').LastIndexOf('\\');
-            string parentPath = lastSlash > -1 ? relPath.Substring(0, lastSlash) : "";
-            hlBack.NavigateUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(parentPath);
+            if (context == null) { litCurrentPath.Text = "登入 1.199 失敗，請檢查帳密。"; return; }
+
+            string fullPath = Path.Combine(RootPath, relPath);
+            if (!Directory.Exists(fullPath)) fullPath = RootPath;
+
+            DirectoryInfo di = new DirectoryInfo(fullPath);
+            litCurrentPath.Text = "目前目錄: " + di.FullName;
+
+            // 返回按鈕邏輯
+            if (!string.IsNullOrEmpty(relPath))
+            {
+                phBack.Visible = true;
+                string p = Path.GetDirectoryName(relPath.TrimEnd('\\'));
+                hlBack.NavigateUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(p);
+            }
+
+            var folders = di.GetDirectories().Select(d => new {
+                Name = d.Name,
+                RelativePath = Path.Combine(relPath, d.Name),
+                Type = "Folder",
+                LinkUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(Path.Combine(relPath, d.Name))
+            });
+
+            string[] exts = { ".jpg", ".jpeg", ".png", ".gif" };
+            var files = di.GetFiles().Where(f => exts.Contains(f.Extension.ToLower())).Select(f => new {
+                Name = f.Name,
+                RelativePath = Path.Combine(relPath, f.Name),
+                Type = "File",
+                LinkUrl = "TKGETDESIGNED_ImageHandler.ashx?relPath=" + HttpUtility.UrlEncode(Path.Combine(relPath, f.Name))
+            });
+
+            rptFiles.DataSource = folders.Cast<object>().Concat(files.Cast<object>()).ToList();
+            rptFiles.DataBind();
+
+            context.Undo(); // 結束模擬
         }
-
-        DirectoryInfo di = new DirectoryInfo(fullPath);
-
-        // 取得資料夾
-        var folders = di.GetDirectories().Select(d => new {
-            Name = d.Name,
-            RelativePath = Path.Combine(relPath, d.Name),
-            Type = "Folder",
-            LinkUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(Path.Combine(relPath, d.Name))
-        });
-
-        // 取得圖片
-        string[] exts = { ".jpg", ".jpeg", ".png", ".gif" };
-        var files = di.GetFiles().Where(f => exts.Contains(f.Extension.ToLower())).Select(f => new {
-            Name = f.Name,
-            RelativePath = Path.Combine(relPath, f.Name),
-            Type = "File",
-            LinkUrl = "TKGETDESIGNED_ImageHandler.ashx?relPath=" + HttpUtility.UrlEncode(Path.Combine(relPath, f.Name))
-        });
-
-        // 合併並綁定
-        var allItems = folders.Cast<object>().Concat(files.Cast<object>()).ToList();
-        rptFiles.DataSource = allItems;
-        rptFiles.DataBind();
     }
-
-    #endregion
-
-
-    #region BUTTON
-    #endregion
 }
