@@ -29,39 +29,71 @@ public partial class CDS_WebPage_DESIGN_TKGETDESIGNED : Ede.Uof.Utility.Page.Bas
         }
     }
 
-    private void BindData(string relPath)
+    private void BindData(string fullPath)
     {
-        string fullPath = Path.Combine(RootPath, relPath);
-        if (!Directory.Exists(fullPath)) fullPath = RootPath;
-
-        DirectoryInfo di = new DirectoryInfo(fullPath);
-        litCurrentPath.Text = "目前位置: " + di.FullName;
-
-        // 返回按鈕
-        if (!string.IsNullOrEmpty(relPath))
+        try
         {
-            phBack.Visible = true;
-            string p = Path.GetDirectoryName(relPath.TrimEnd('\\'));
-            phBack.NavigateUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(p);
+            // 增加一個防呆：如果路徑真的為空，就不要執行讀取
+            if (string.IsNullOrEmpty(fullPath))
+            {
+                litCurrentPath.Text = "請在上方輸入路徑並點擊讀取。";
+                rptItems.DataSource = null;
+                rptItems.DataBind();
+                return;
+            }
+
+            // 確保磁碟機掛載 (只需掛載一次 Y:)
+            NetworkDrive.MapDrive("Y:", @"\\192.168.1.199\美工檔案區", @"tkfood-tw\ecd_01", "at160115@@");
+
+            if (!Directory.Exists(fullPath))
+            {
+                litCurrentPath.Text = "錯誤：找不到路徑 " + fullPath;
+                return;
+            }
+
+            DirectoryInfo di = new DirectoryInfo(fullPath);
+            litCurrentPath.Text = "目前位置: " + di.FullName;
+
+            // 返回上一層邏輯
+            if (di.Parent != null && di.FullName.Length > 3) // 不超過 Y:\
+            {
+                hlBack.Visible = true;
+                hlBack.NavigateUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(di.Parent.FullName);
+            }
+            else { hlBack.Visible = false; }
+
+            // 1. 取得子目錄
+            var folders = di.GetDirectories().Select(d => new {
+                Name = d.Name,
+                FullPath = d.FullName,
+                Type = "Folder",
+                // 補上前端 Eval 需要的 LinkUrl
+                LinkUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(d.FullName)
+            });
+
+            // 2. 取得圖片
+            string[] exts = { ".jpg", ".jpeg", ".png", ".gif" };
+            var files = di.GetFiles().Where(f => exts.Contains(f.Extension.ToLower())).Select(f => new {
+                Name = f.Name,
+                FullPath = f.FullName,
+                Type = "File",
+                // 檔案的 LinkUrl 其實就是呼叫 ashx
+                LinkUrl = "TKGETDESIGNED_ImageHandler.ashx?fullPath=" + HttpUtility.UrlEncode(f.FullName)
+            });
+
+            // 合併並綁定
+            var allItems = folders.Cast<object>().Concat(files.Cast<object>()).ToList();
+            rptItems.DataSource = allItems;
+            rptItems.DataBind();
         }
+        catch (Exception ex)
+        {
+            litCurrentPath.Text = "執行錯誤: " + ex.Message;
+        }
+    }
 
-        // 讀取清單
-        var folders = di.GetDirectories().Select(d => new {
-            Name = d.Name,
-            RelativePath = Path.Combine(relPath, d.Name),
-            Type = "Folder",
-            LinkUrl = "TKGETDESIGNED.aspx?path=" + HttpUtility.UrlEncode(Path.Combine(relPath, d.Name))
-        });
-
-        string[] exts = { ".jpg", ".jpeg", ".png", ".gif" };
-        var files = di.GetFiles().Where(f => exts.Contains(f.Extension.ToLower())).Select(f => new {
-            Name = f.Name,
-            RelativePath = Path.Combine(relPath, f.Name),
-            Type = "File",
-            LinkUrl = "TKGETDESIGNED_ImageHandler.ashx?relPath=" + HttpUtility.UrlEncode(Path.Combine(relPath, f.Name))
-        });
-        
-        rptItems.DataSource = folders.Cast<object>().Concat(files.Cast<object>()).ToList();
-        rptItems.DataBind();
+    protected void btnGo_Click(object sender, EventArgs e)
+    {
+        BindData(txtPath.Text.Trim());
     }
 }
