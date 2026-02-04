@@ -17,7 +17,7 @@ public partial class CDS_WebPage_DESIGN_TKGETDESIGNED : Ede.Uof.Utility.Page.Bas
             {
                 // 1. 確保 Y 槽已經掛載 (請填入正確帳密)
                 // 注意：這裡掛載到根目錄即可
-                NetworkDrive.MapDrive("Y:", @"\\192.168.1.199\美工檔案區", @"網域\帳號", "密碼");
+                NetworkDrive.MapDrive("Y:", @"\\192.168.1.199\美工檔案區", @"tkfood-tw\ecd_01", "at160115@@");
 
                 string relPath = Request.QueryString["path"] ?? "";
                 BindData(relPath);
