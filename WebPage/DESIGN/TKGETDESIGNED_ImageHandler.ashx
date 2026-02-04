@@ -54,6 +54,10 @@ public class TKGETDESIGNED_ImageHandler : IHttpHandler {
     }
 
     private void MapDrive(string local, string remote, string user, string pass) {
+
+        // 先檢查路徑是否已經通了，通了就直接回傳，不要重複執行 WNetAddConnection2
+        if (Directory.Exists(local)) return;
+
         NetResource nr = new NetResource();
         nr.Type = 1; // RESOURCETYPE_DISK
         nr.LocalName = local;

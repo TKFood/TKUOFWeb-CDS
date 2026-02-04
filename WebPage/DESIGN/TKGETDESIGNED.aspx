@@ -98,7 +98,7 @@
                                 <div class="thumb-area">
                                     <%# Eval("Type").ToString() == "Folder" ? 
                         "<span class='folder'>📁</span>" : 
-                        "<img src='" + Eval("LinkUrl") + "' />" %>
+                        "<img src='" + Eval("LinkUrl") + "' loading='lazy' />" %>
                                 </div>
                                 <span class="name" title='<%# Eval("Name") %>'><%# Eval("Name") %></span>
                             </a>
