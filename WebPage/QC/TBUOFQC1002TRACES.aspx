@@ -117,7 +117,13 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="客訴內容" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_客訴內容" runat="server" Text='<%# Bind("QCFrm002Abn") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="改善方案" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
