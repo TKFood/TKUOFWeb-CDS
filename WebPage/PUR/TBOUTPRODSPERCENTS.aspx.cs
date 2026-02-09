@@ -146,6 +146,58 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
            
         }
     }
+    public void ADD_TBOUTPRODSPERCENTS(
+        string MB001,
+        string MB002,
+        string PERCENTS
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                            INSERT INTO [TKPUR].[dbo].[TBOUTPRODSPERCENTS]
+                            (
+                            [MB001]
+                            ,[MB002]
+                            ,[PERCENTS]
+                            )
+                            VALUES
+                            (
+                            @MB001
+                            ,@MB002
+                            ,@PERCENTS
+                            )                                      
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    // 傳入參數
+                    cmd.Parameters.AddWithValue("@MB001", MB001);
+                    cmd.Parameters.AddWithValue("@MB002", MB002);
+                    cmd.Parameters.AddWithValue("@PERCENTS", PERCENTS);
+                  
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(MB001 + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception EX)
+        {
+        }
+        finally
+        {
+        }
+    }
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
@@ -165,5 +217,21 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
         BindGrid(Date1.Text ,Date2.Text);
 
     }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        string MB001 = TextBox1.Text;
+        string MB002 = TextBox2.Text;
+        string PERCENTS = TextBox3.Text;
+
+        ADD_TBOUTPRODSPERCENTS(
+        MB001,
+        MB002,
+        PERCENTS
+        );
+
+        MsgBox(MB001 + " 完成", this.Page, this);
+
+    }
+
     #endregion
 }

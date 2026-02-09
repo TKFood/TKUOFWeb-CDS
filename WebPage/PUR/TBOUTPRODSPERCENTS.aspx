@@ -30,6 +30,10 @@
                 <Tabs>
                     <telerik:RadTab Text="資料">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="新增合約耗損率">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="刪除合約耗損率">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -90,7 +94,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="已生產量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_已生產量" runat="server" Text='<%# Bind("已生產量") %>'  Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
+                                                        <asp:Label ID="Label_已生產量" runat="server" Text='<%# Bind("已生產量") %>' Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -118,16 +122,16 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="需領用量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_需領用量" runat="server" Text='<%# Bind("需領用量") %>' Style="display: block; width: 100%; text-align: right; padding-right: 5px; "></asp:Label>
+                                                        <asp:Label ID="Label_需領用量" runat="server" Text='<%# Bind("需領用量") %>' Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="已領用量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_已領用量" runat="server" Text='<%# Bind("已領用量") %>'  Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
+                                                        <asp:Label ID="Label_已領用量" runat="server" Text='<%# Bind("已領用量") %>' Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
                                                     </ItemTemplate>
-                                                </asp:TemplateField> 
+                                                </asp:TemplateField>
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="材料單位" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -146,7 +150,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="合約耗損率" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_合約耗損率" runat="server" Text='<%# Bind("合約耗損率") %>'  Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
+                                                        <asp:Label ID="Label_合約耗損率" runat="server" Text='<%# Bind("合約耗損率") %>' Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -158,6 +162,47 @@
                         </table>
                     </div>
 
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView2" runat="server">
+                    <div id="tabs-2">
+                        <table class="PopTable">
+                            <tr>
+                                <td class="PopTableRightTD">
+                                    <asp:Label ID="Label1" runat="server" Text="材料品號: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableRightTD">
+                                    <asp:Label ID="Label2" runat="server" Text="材料品名: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableRightTD">
+                                    <asp:Label ID="Label3" runat="server" Text="合約耗損率: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button2" runat="server" Text="新增 " OnClick="Button2_Click"
+                                        meta:resourcekey="btn2Resource1" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView3" runat="server">
+                    <div id="tabs-3">
+                    </div>
                 </telerik:RadPageView>
 
                 <telerik:RadPageView ID="RadPageView99" runat="server">
