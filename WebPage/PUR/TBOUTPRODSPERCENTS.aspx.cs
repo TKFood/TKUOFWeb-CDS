@@ -132,12 +132,12 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
 
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-        SETEXCEL();
+        SETEXCEL1();
 
     }
 
 
-    public void SETEXCEL()
+    public void SETEXCEL1()
     {
         BindGrid(Date1.Text, Date2.Text);
         //BindGrid中已帶入EXCELDT1
@@ -146,6 +146,95 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
            
         }
     }
+
+    private void BindGrid_TBOUTPRODSPERCENTS()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+
+        cmdTxt.AppendFormat(@"  
+                            SELECT 
+                            [MB001]
+                            ,[MB002]
+                            ,[PERCENTS]
+                            FROM [TKPUR].[dbo].[TBOUTPRODSPERCENTS]
+                            ORDER BY [MB001]
+
+                             ");
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn1 = (Button)e.Row.FindControl("GW2_Button1");
+            if (btn1 != null)
+            {
+                string cellValue1 = btn1.CommandArgument;
+                dynamic param1 = new { ID = cellValue1 }.ToExpando();
+            }
+        }
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+
+        if (e.CommandName == "GW2_Button1")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid2.Rows[rowIndex];               
+
+                Label Label_MB001 = (Label)row.FindControl("Label_材料品號");
+                string MB001 = Label_MB001.Text;
+
+
+
+                DELETE_TBOUTPRODSPERCENTS(
+                               MB001
+                               );
+              
+            }
+
+            BindGrid_TBOUTPRODSPERCENTS();
+
+        }
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL2();
+    }
+
+
+    public void SETEXCEL2()
+    {   
+    }
+
     public void ADD_TBOUTPRODSPERCENTS(
         string MB001,
         string MB002,
@@ -199,6 +288,43 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
         }
     }
 
+    public void DELETE_TBOUTPRODSPERCENTS(string MB001)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        var SQLCOMMAND = @" 
+                           DELETE [TKPUR].[dbo].[TBOUTPRODSPERCENTS]
+                           WHERE MB001=@MB001                         
+                            ";
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    // 傳入參數
+                    cmd.Parameters.AddWithValue("@MB001", MB001);                   
+
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(MB001 + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception EX)
+        {
+        }
+        finally
+        {
+        }
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -215,6 +341,7 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
     protected void Button1_Click(object sender, EventArgs e)
     {
         BindGrid(Date1.Text ,Date2.Text);
+        BindGrid_TBOUTPRODSPERCENTS();
 
     }
     protected void Button2_Click(object sender, EventArgs e)
