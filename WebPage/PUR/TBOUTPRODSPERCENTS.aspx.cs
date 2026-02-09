@@ -1,0 +1,169 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Dynamic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Xml;
+using System.Xml.Linq;
+using Ede.Uof.EIP.SystemInfo;
+using Ede.Uof.Utility.Data;
+using Ede.Uof.Utility.Log;
+using Ede.Uof.Utility.Page.Common;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Style;
+using System.Net.Mail;
+
+public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.BasePage
+{
+    string ACCOUNT = null;
+    string NAME = null;
+    String ROLES = null;
+
+    DataTable EXCELDT1 = new DataTable();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+
+        if (!IsPostBack)
+        {
+            SETQUERY();
+        }
+    }
+
+    #region FUNCTION
+    public void SETQUERY()
+    {
+        // 取得今年這個月的第一天
+        DateTime firstDayOfThisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        Date1.Text = firstDayOfThisMonth.ToString("yyyy-MM-dd");
+
+        // 取得本月的最後一天
+        DateTime firstDayOfNextMonth = firstDayOfThisMonth.AddMonths(1);
+        DateTime lastDayOfThisMonth = firstDayOfNextMonth.AddDays(-1);
+        // 修正：這裡原本寫錯變數了
+        Date2.Text = lastDayOfThisMonth.ToString("yyyy-MM-dd");
+    }
+    private void BindGrid(string SDATES,string EDATES)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+        // 假設 SDATES 和 EDATES 是從 Date1.Text 和 Date2.Text 取得的字串
+        SDATES = Date1.Text.Replace("-", "");
+        EDATES = Date2.Text.Replace("-", "");
+
+        cmdTxt.AppendFormat(@"  
+                            SELECT 
+                            TA001 AS '製令單別'
+                            ,TA002 AS '製令單號'
+                            ,TA003 AS '製令日期'
+                            ,TA009 AS '預計開工'
+                            ,TA006 AS '產品品號'
+                            ,MB1.MB002 AS '產品品名'
+                            ,TA015 AS '預計產量'
+                            ,TA017 AS '已生產量'
+                            ,TA007 AS '生產單位'
+                            ,TB003 AS '材料品號'
+                            ,TB012 AS '材料品名'
+                            ,TB004 AS '需領用量'
+                            ,TB005 AS '已領用量'
+                            ,TB007 AS '材料單位'
+                            ,(CASE WHEN TB005>0 AND TB004>0 THEN CONVERT(decimal(16,2),(TB005/TB004)*100) ELSE 0 END ) AS '領用率'
+                            ,ISNULL([PERCENTS],'') AS '合約耗損率'
+                            FROM [TK].dbo.MOCTA,[TK].dbo.MOCTB
+                            LEFT JOIN [TKPUR].[dbo].[TBOUTPRODSPERCENTS] ON  [TBOUTPRODSPERCENTS].[MB001]=TB003
+                            ,[TK].dbo.INVMB MB1
+                            WHERE TA001=TB001 AND TA002=TB002
+                            AND TA006=MB1.MB001
+                            AND TA001 IN ('A512')
+                            AND TA003>='{0}' AND TA003<='{1}'
+                            ORDER BY TA001,TA002,TA006,TB003
+
+                             ", SDATES, EDATES);
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        //匯出專用
+        EXCELDT1 = dt;
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+    protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+       
+    }
+
+    protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+        // 獲取所選行的索引
+        rowIndex = Convert.ToInt32(e.CommandArgument);
+    }
+
+
+    public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+
+    }
+
+
+    public void SETEXCEL()
+    {
+        BindGrid(Date1.Text, Date2.Text);
+        //BindGrid中已帶入EXCELDT1
+        if (EXCELDT1.Rows.Count >= 1)
+        {
+           
+        }
+    }
+
+    public void MsgBox(String ex, Page pg, Object obj)
+    {
+        string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "AlertScript", script, true);
+
+        //string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
+        //Type cstype = obj.GetType();
+        //ClientScriptManager cs = pg.ClientScript;
+        //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
+    }
+    #endregion
+
+    #region BUTTON
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        BindGrid(Date1.Text ,Date2.Text);
+
+    }
+    #endregion
+}
