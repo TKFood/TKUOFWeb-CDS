@@ -70,7 +70,7 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
         EDATES = Date2.Text.Replace("-", "");
 
         cmdTxt.AppendFormat(@"  
-                            SELECT 
+                           SELECT 
                             TA001 AS '製令單別'
                             ,TA002 AS '製令單號'
                             ,TA003 AS '製令日期'
@@ -87,11 +87,17 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
                             ,TB007 AS '材料單位'
                             ,(CASE WHEN TB005>0 AND TB004>0 THEN CONVERT(decimal(16,2),(TB005/TB004)*100) ELSE 0 END ) AS '領用率'
                             ,ISNULL([PERCENTS],'') AS '合約耗損率'
+                            , MB1.UDF07
+                            --分母=MB1.UDF07*TA017/1000(單位是KG)，分子=TB005(單位是KG)
+                            ,(CASE WHEN (TB003 LIKE '3%' OR TB003 LIKE '4%' OR TB003 LIKE '5%' ) AND MB1.UDF07*TA017>0 AND TB005>0  THEN CONVERT(decimal(16,2),((MB1.UDF07*TA017/1000)/TB005)*100) ELSE 0 END ) AS '得料率'
+
                             FROM [TK].dbo.MOCTA,[TK].dbo.MOCTB
                             LEFT JOIN [TKPUR].[dbo].[TBOUTPRODSPERCENTS] ON  [TBOUTPRODSPERCENTS].[MB001]=TB003
                             ,[TK].dbo.INVMB MB1
+                            ,[TK].dbo.INVMB MB2
                             WHERE TA001=TB001 AND TA002=TB002
                             AND TA006=MB1.MB001
+                            AND TB003=MB2.MB001
                             AND TA001 IN ('A512')
                             AND TA003>='{0}' AND TA003<='{1}'
                             ORDER BY TA001,TA002,TA006,TB003

@@ -106,6 +106,15 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
+                                                <asp:TemplateField HeaderText="得料率" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                            <asp:Label ID="Label_得料率" runat="server" Text='<%# Bind("得料率") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; background-color: yellow; display: block;"> 
+                                                        </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="材料品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_材料品號" runat="server" Text='<%# Bind("材料品號") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
@@ -143,7 +152,9 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="領用率" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_領用率" runat="server" Text='<%# Bind("領用率") %>' Style="display: block; width: 100%; text-align: right; padding-right: 5px;"></asp:Label>
+                                                        <asp:Label ID="Label_領用率" runat="server" Text='<%# Bind("領用率") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; background-color: yellow; display: block;"> 
+                                                        </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -214,22 +225,22 @@
                                                         <asp:Label ID="Label_材料品號" runat="server" Text='<%# Bind("MB001") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns> 
-                                             <Columns>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="材料品名" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_材料品名" runat="server" Text='<%# Bind("MB002") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns> 
-                                             <Columns>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="合約耗損率" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_合約耗損率" runat="server" Text='<%# Bind("PERCENTS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns> 
-                                             <Columns>
+                                            </Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="GW2_Button1" runat="server" Text="刪除" CommandName="GW2_Button1" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
