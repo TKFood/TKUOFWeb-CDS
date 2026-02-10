@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
-    <title>產品圖瀏覽 - Y槽模式</title>
+    <title>產品圖瀏覽 - 美工檔案區(Y:\)</title>
     <style>
         body {
             font-family: "Microsoft JhengHei", sans-serif;
@@ -76,10 +76,10 @@
             <h2>老楊食品 - 產品圖瀏覽 (Y:\)</h2>
 
             <div class="search-box">
-                路徑：<asp:TextBox ID="txtPath" runat="server" Width="400px"></asp:TextBox>
+                路徑：<asp:TextBox ID="txtPath" Text=" Y:\老楊食品" runat="server" Width="400px"></asp:TextBox>
                 <asp:Button ID="btnGo" runat="server" Text="讀取" OnClick="btnGo_Click" CssClass="btn-go" />
                 <br />
-                <small>(範例: Y:\老楊食品\04.門市)</small>
+                <small>(範例: Y:\老楊食品)</small>
             </div>
 
             <div class="path-bar">
