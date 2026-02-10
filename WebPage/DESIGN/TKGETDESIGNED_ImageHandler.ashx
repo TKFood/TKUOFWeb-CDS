@@ -5,37 +5,54 @@ using System.Web;
 using System.IO;
 using System.Runtime.InteropServices;
 
-public class TKGETDESIGNED_ImageHandler : IHttpHandler {
+public class TKGETDESIGNED_ImageHandler : IHttpHandler
+{
 
-    public void ProcessRequest (HttpContext context) {
-        // 1. 取得路徑
+    public void ProcessRequest(HttpContext context)
+    {
         string fullPath = context.Request.QueryString["fullPath"];
         if (string.IsNullOrEmpty(fullPath)) return;
 
-        try {
-            // 2. 在 ASHX 內部也要確保 Y 槽存在
-            // 請填入與 ASPX 相同的 網域\帳號 與 密碼
-            NetworkDrive.MapDrive("Y:", @"\\192.168.1.199\美工檔案區", @"tkfood-tw\ecd_01", "at160115@@");
+        try
+        {
+            // 【關鍵優化 1】：預先判斷 Y 槽是否已通。
+            // 如果目錄已存在，就跳過 MapDrive，避免重複執行 Win32 API 導致的競爭鎖定。
+            if (!System.IO.Directory.Exists("Y:\\"))
+            {
+                NetworkDrive.MapDrive("Y:", @"\\192.168.1.199\美工檔案區", @"tkfood-tw\ecd_01", "at160115@@");
+            }
 
-            // 3. 讀取圖檔
-            if (File.Exists(fullPath)) {
+            if (File.Exists(fullPath))
+            {
+                // 【關鍵優化 2】：增加瀏覽器快取機制。
+                // 讓瀏覽器記住圖片，下次刷頁面就不會重新跟伺服器要圖，減輕伺服器負擔。
+                context.Response.Cache.SetCacheability(HttpCacheability.Public);
+                context.Response.Cache.SetMaxAge(TimeSpan.FromHours(2));
+                context.Response.Cache.SetLastModified(File.GetLastWriteTime(fullPath));
+
                 string ext = Path.GetExtension(fullPath).ToLower();
                 context.Response.ContentType = GetMimeType(ext);
-                context.Response.WriteFile(fullPath);
-            } else {
+
+                // 【關鍵優化 3】：使用 TransmitFile 代替 WriteFile。
+                // TransmitFile 是針對大檔案設計的，它直接將檔案從磁碟送往網路卡，不佔用伺服器記憶體。
+                context.Response.TransmitFile(fullPath);
+            }
+            else
+            {
                 context.Response.StatusCode = 404;
-                context.Response.Write("找不到檔案: " + fullPath);
             }
         }
-        catch (Exception ex) {
-            // 如果 500 錯誤發生，這行能幫你看到具體報錯
+        catch (Exception ex)
+        {
             context.Response.StatusCode = 500;
             context.Response.Write("ASHX 錯誤: " + ex.Message);
         }
     }
 
-    private string GetMimeType(string ext) {
-        switch (ext) {
+    private string GetMimeType(string ext)
+    {
+        switch (ext)
+        {
             case ".jpg": case ".jpeg": return "image/jpeg";
             case ".png": return "image/png";
             case ".gif": return "image/gif";
@@ -48,12 +65,14 @@ public class TKGETDESIGNED_ImageHandler : IHttpHandler {
     private static extern int WNetAddConnection2(NetResource netResource, string password, string username, int flags);
 
     [StructLayout(LayoutKind.Sequential)]
-    public class NetResource {
+    public class NetResource
+    {
         public int Scope; public int Type; public int DisplayType; public int Usage;
         public string LocalName; public string RemoteName; public string Comment; public string Provider;
     }
 
-    private void MapDrive(string local, string remote, string user, string pass) {
+    private void MapDrive(string local, string remote, string user, string pass)
+    {
 
         // 先檢查路徑是否已經通了，通了就直接回傳，不要重複執行 WNetAddConnection2
         if (Directory.Exists(local)) return;
