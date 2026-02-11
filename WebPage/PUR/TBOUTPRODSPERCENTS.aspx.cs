@@ -69,6 +69,23 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
         SDATES = Date1.Text.Replace("-", "");
         EDATES = Date2.Text.Replace("-", "");
 
+        if(!string.IsNullOrEmpty(QUERY_TextBox1.Text))
+        {
+            QUERYS.AppendFormat(@" AND (TA032 LIKE '%{0}%' OR MA002 LIKE '%{0}%')", QUERY_TextBox1.Text.Trim());
+        }
+        else
+        {
+            QUERYS.AppendFormat(@" ");
+        }
+        if (!string.IsNullOrEmpty(QUERY_TextBox2.Text))
+        {
+            QUERYS2.AppendFormat(@" AND (TA006 LIKE '%{0}%' OR MB1.MB002 LIKE '%{0}%')", QUERY_TextBox2.Text.Trim());
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@" ");
+        }
+
         cmdTxt.AppendFormat(@"  
                             SELECT 
                             TA032 AS '加工廠商'
@@ -105,9 +122,11 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
                             AND TB003=MB2.MB001
                             AND TA001 IN ('A512')
                             AND TA003>='{0}' AND TA003<='{1}'
+                            {2}
+                            {3}
                             ORDER BY TA001,TA002,TA006,TB003
 
-                             ", SDATES, EDATES);
+                             ", SDATES, EDATES, QUERYS.ToString(), QUERYS2.ToString());
 
         //m_db.AddParameter("@SDATE", SDATE);
         //m_db.AddParameter("@EDATE", EDATE);
