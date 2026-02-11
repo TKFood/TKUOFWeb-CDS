@@ -5,25 +5,7 @@
 
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <table class="PopTable">
-                <tr>
-                    <td>
-                        <asp:Label ID="Label9" runat="server" Text="製令日期起~製令日期迄 "></asp:Label>
-                    </td>
-                    <td>
-                        <asp:TextBox ID="Date1" runat="server" TextMode="Date"></asp:TextBox>
-                        <span>~</span>
-                        <asp:TextBox ID="Date2" runat="server" TextMode="Date"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="PopTableLeftTD"></td>
-                    <td>
-                        <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="Button1_Click"
-                            meta:resourcekey="btn1Resource1" />
-                    </td>
-                </tr>
-            </table>
+
 
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
@@ -44,11 +26,44 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
+                                <td>
+                                    <asp:Label ID="Label9" runat="server" Text="製令日期起~製令日期迄 "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="Date1" runat="server" TextMode="Date"></asp:TextBox>
+                                    <span>~</span>
+                                    <asp:TextBox ID="Date2" runat="server" TextMode="Date"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="Button1_Click"
+                                        meta:resourcekey="btn1Resource1" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
                                 <td colspan="2" class="PopTableRightTD">
                                     <div style="overflow-x: auto; width: 100%">
                                         <Fast:Grid ID="Grid1" OnRowDataBound="Grid1_RowDataBound" OnRowCommand="Grid1_RowCommand" runat="server" OnBeforeExport="OnBeforeExport1" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource1" OnPageIndexChanging="grid_PageIndexChanging1">
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="加工廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_加工廠商" runat="server" Text='<%# Bind("加工廠商") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="廠商" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_廠商" runat="server" Text='<%# Bind("廠商") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="製令單別" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
@@ -108,7 +123,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="得料率" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                            <asp:Label ID="Label_得料率" runat="server" Text='<%# Bind("得料率") %>'
+                                                        <asp:Label ID="Label_得料率" runat="server" Text='<%# Bind("得料率") %>'
                                                             Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; background-color: yellow; display: block;"> 
                                                         </asp:Label>
                                                     </ItemTemplate>
@@ -153,6 +168,15 @@
                                                 <asp:TemplateField HeaderText="領用率" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_領用率" runat="server" Text='<%# Bind("領用率") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; background-color: yellow; display: block;"> 
+                                                        </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="損耗率" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_損耗率" runat="server" Text='<%# Bind("損耗率") %>'
                                                             Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; background-color: yellow; display: block;"> 
                                                         </asp:Label>
                                                     </ItemTemplate>
