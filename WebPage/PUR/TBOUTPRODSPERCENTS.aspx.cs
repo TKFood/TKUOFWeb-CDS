@@ -371,5 +371,10 @@ public partial class CDS_WebPage_PUR_TBOUTPRODSPERCENTS : Ede.Uof.Utility.Page.B
 
     }
 
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        BindGrid_TBOUTPRODSPERCENTS();
+    }
+
     #endregion
 }

@@ -236,6 +236,15 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView3" runat="server">
                     <div id="tabs-3">
+                          <table class="PopTable">                           
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button3" runat="server" Text="查詢 " OnClick="Button3_Click"
+                                        meta:resourcekey="btn3Resource1" />
+                                </td>
+                            </tr>
+                        </table>
                         <table class="PopTable">
                             <tr>
                                 <td colspan="2" class="PopTableRightTD">
