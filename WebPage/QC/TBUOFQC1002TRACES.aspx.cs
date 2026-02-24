@@ -90,6 +90,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002CUST""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002CUST
 					        ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abn""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Abn
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PNO""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002PNO
+                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Cmf""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Cmf
                             , TB_WKF_TASK.TASK_ID
                             , (CASE WHEN TASK_STATUS = '1' THEN '簽核中' ELSE '已簽核' END) TASK_STATUS
                             , (CASE WHEN TASK_RESULT='0' THEN '已結案' ELSE '進行中' END ) TASK_RESULT
