@@ -89,10 +89,22 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abns""]/@customValue)[1]', 'NVARCHAR(100)') AS QCFrm002AbnscustomValue
                             ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002CUST""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002CUST
 					        ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abn""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Abn
+                            ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PNO""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002PNO
                             , TB_WKF_TASK.TASK_ID
-                            , (CASE WHEN TASK_STATUS = '1' THEN '未簽核' ELSE '已簽核' END) TASK_STATUS
-                            ,TASK_RESULT
+                            , (CASE WHEN TASK_STATUS = '1' THEN '簽核中' ELSE '已簽核' END) TASK_STATUS
+                            , (CASE WHEN TASK_RESULT='0' THEN '已結案' ELSE '進行中' END ) TASK_RESULT
+                            ,(SELECT TOP (1)
+                            [TB_EB_USER].NAME
+                            FROM [UOF].[dbo].[TB_WKF_TASK_NODE],[UOF].[dbo].[TB_EB_USER]
+                            WHERE [TB_WKF_TASK_NODE].ORIGINAL_SIGNER=[TB_EB_USER].USER_GUID
+                            AND ISNULL([FINISH_TIME],'')=''
+                            AND TASK_ID= TB_WKF_TASK.TASK_ID
+                            ORDER BY [NODE_SEQ]) AS 'ORIGINAL_SIGNER'
+                            ,[TBUOFQC1002TRACES].[KINDS]
+                            ,[TBUOFQC1002TRACES].[REASONS]
                             ,[TBUOFQC1002TRACES].[IMPROVES]
+                            ,[TBUOFQC1002TRACES].[IMPROVESOWNER]
+                            ,[TBUOFQC1002TRACES].[IMPROVESDATES]
 
                             FROM [UOF].[dbo].TB_WKF_TASK
                             LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
