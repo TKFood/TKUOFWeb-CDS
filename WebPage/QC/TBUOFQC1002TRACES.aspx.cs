@@ -188,6 +188,14 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField_GV1_改善方案 = (TextBox)row.FindControl("txtNewField_GV1_改善方案");
                 string newTextValue_GV1_改善方案 = txtNewField_GV1_改善方案.Text;
+                TextBox txtNewField_GV1_客訴類型 = (TextBox)row.FindControl("txtNewField_GV1_客訴類型");
+                string newTextValue_GV1_客訴類型 = txtNewField_GV1_客訴類型.Text;
+                TextBox txtNewField_GV1_原因分析 = (TextBox)row.FindControl("txtNewField_GV1_原因分析");
+                string newTextValue_GV1_原因分析 = txtNewField_GV1_原因分析.Text;
+                TextBox txtNewField_GV1_改善負責單位 = (TextBox)row.FindControl("txtNewField_GV1_改善負責單位");
+                string newTextValue_GV1_改善負責單位 = txtNewField_GV1_改善負責單位.Text;
+                TextBox txtNewField_GV1_預計改善完成日 = (TextBox)row.FindControl("txtNewField_GV1_預計改善完成日");
+                string newTextValue_GV1預計改善完成日 = txtNewField_GV1_預計改善完成日.Text;
 
                 Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
                 Label Label_客訴日期 = (Label)row.FindControl("Label_客訴日期");
@@ -196,6 +204,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 Label Label_原因明細 = (Label)row.FindControl("Label_原因明細");
                 Label Label_TASK_ID = (Label)row.FindControl("Label_TASK_ID");
                 Label Label_DOC_NBR = (Label)row.FindControl("Label_表單編號");
+                Label Label_批號 = (Label)row.FindControl("Label_批號");
 
                 string DOC_NBR = Label_表單編號.Text;
                 string QCFrm002Date = Label_客訴日期.Text;
@@ -203,17 +212,26 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 string QCFrm002Abns = Label_客訴原因.Text;
                 string QCFrm002AbnscustomValue = Label_原因明細.Text;
                 string TASK_ID = Label_TASK_ID.Text;
+                string QCFrm002PNO= Label_批號.Text;
                 string IMPROVES = newTextValue_GV1_改善方案.Trim();
+                string KINDS= newTextValue_GV1_客訴類型.Trim();
+                string REASONS= newTextValue_GV1_原因分析.Trim();
+                string IMPROVESOWNER= newTextValue_GV1_改善負責單位.Trim();
+                string IMPROVESDATES=newTextValue_GV1預計改善完成日.Trim();
 
-
-               ADD_TBUOFQC1002TRACES(
+                ADD_TBUOFQC1002TRACES(
                                DOC_NBR,
                                QCFrm002Date,
                                QCFrm002PRD,
                                QCFrm002Abns,
                                QCFrm002AbnscustomValue,
                                TASK_ID,
-                               IMPROVES
+                               IMPROVES,
+                               QCFrm002PNO,
+                               KINDS,
+                               REASONS,
+                               IMPROVESOWNER,
+                               IMPROVESDATES
                               );
                 MsgBox(DOC_NBR+" 完成", this.Page, this);
             }
@@ -368,31 +386,40 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         string QCFrm002Abns,
         string QCFrm002AbnscustomValue,
         string TASK_ID,
-        string IMPROVES
+        string IMPROVES,
+        string QCFrm002PNO,
+        string KINDS,
+        string REASONS,
+        string IMPROVESOWNER,
+        string IMPROVESDATES
         )
     {
 
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
-        var SQLCOMMAND = @" 
-                        MERGE [TKQC].[dbo].[TBUOFQC1002TRACES] AS TARGET
+        string SQLCOMMAND = @" 
+        MERGE [TKQC].[dbo].[TBUOFQC1002TRACES] AS TARGET
+        USING (VALUES (@DOC_NBR, @QCFrm002Date, @QCFrm002PRD, @QCFrm002Abns, @QCFrm002AbnscustomValue, @TASK_ID, @IMPROVES, @QCFrm002PNO, @KINDS, @REASONS, @IMPROVESOWNER, @IMPROVESDATES)) 
+        AS SOURCE (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES, QCFrm002PNO, KINDS, REASONS, IMPROVESOWNER, IMPROVESDATES)
+        ON TARGET.DOC_NBR = SOURCE.DOC_NBR
 
-                        USING (VALUES (@DOC_NBR, @QCFrm002Date, @QCFrm002PRD, @QCFrm002Abns, @QCFrm002AbnscustomValue, @TASK_ID, @IMPROVES)) 
-                        AS SOURCE (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES)
-                        ON TARGET.DOC_NBR = SOURCE.DOC_NBR
+        WHEN MATCHED THEN 
+            UPDATE SET 
+                QCFrm002Date = SOURCE.QCFrm002Date,
+                QCFrm002PRD = SOURCE.QCFrm002PRD,
+                QCFrm002Abns = SOURCE.QCFrm002Abns,
+                QCFrm002AbnscustomValue = SOURCE.QCFrm002AbnscustomValue,
+                TASK_ID = SOURCE.TASK_ID,
+                IMPROVES = SOURCE.IMPROVES,
+                QCFrm002PNO = SOURCE.QCFrm002PNO,
+                KINDS = SOURCE.KINDS,
+                REASONS = SOURCE.REASONS,
+                IMPROVESOWNER = SOURCE.IMPROVESOWNER,
+                IMPROVESDATES = SOURCE.IMPROVESDATES
 
-                        WHEN MATCHED THEN 
-                            UPDATE SET 
-                                QCFrm002Date = SOURCE.QCFrm002Date,
-                                QCFrm002PRD = SOURCE.QCFrm002PRD,
-                                QCFrm002Abns = SOURCE.QCFrm002Abns,
-                                QCFrm002AbnscustomValue = SOURCE.QCFrm002AbnscustomValue,
-                                TASK_ID = SOURCE.TASK_ID,
-                                IMPROVES = SOURCE.IMPROVES
-                        WHEN NOT MATCHED THEN
-                            INSERT (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES)
-                            VALUES (SOURCE.DOC_NBR, SOURCE.QCFrm002Date, SOURCE.QCFrm002PRD, SOURCE.QCFrm002Abns, SOURCE.QCFrm002AbnscustomValue, SOURCE.TASK_ID, SOURCE.IMPROVES);                                              
-                            ";
+        WHEN NOT MATCHED THEN
+            INSERT (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES, QCFrm002PNO, KINDS, REASONS, IMPROVESOWNER, IMPROVESDATES)
+            VALUES (SOURCE.DOC_NBR, SOURCE.QCFrm002Date, SOURCE.QCFrm002PRD, SOURCE.QCFrm002Abns, SOURCE.QCFrm002AbnscustomValue, SOURCE.TASK_ID, SOURCE.IMPROVES, SOURCE.QCFrm002PNO, SOURCE.KINDS, SOURCE.REASONS, SOURCE.IMPROVESOWNER, SOURCE.IMPROVESDATES);";
 
         try
         {
@@ -400,14 +427,19 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             {
                 using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
                 {
-                    // 傳入參數
-                    cmd.Parameters.AddWithValue("@DOC_NBR", DOC_NBR);
-                    cmd.Parameters.AddWithValue("@QCFrm002Date", QCFrm002Date);
-                    cmd.Parameters.AddWithValue("@QCFrm002PRD", QCFrm002PRD);
-                    cmd.Parameters.AddWithValue("@QCFrm002Abns", QCFrm002Abns);
-                    cmd.Parameters.AddWithValue("@QCFrm002AbnscustomValue", QCFrm002AbnscustomValue);
-                    cmd.Parameters.AddWithValue("@TASK_ID", TASK_ID);
-                    cmd.Parameters.AddWithValue("@IMPROVES", IMPROVES);
+                    // 2. 修正參數綁定，確保每個參數對應正確的 SQL 變數名稱
+                    cmd.Parameters.AddWithValue("@DOC_NBR", (object)DOC_NBR ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@QCFrm002Date", (object)QCFrm002Date ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@QCFrm002PRD", (object)QCFrm002PRD ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@QCFrm002Abns", (object)QCFrm002Abns ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@QCFrm002AbnscustomValue", (object)QCFrm002AbnscustomValue ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@TASK_ID", (object)TASK_ID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IMPROVES", (object)IMPROVES ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@QCFrm002PNO", (object)QCFrm002PNO ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@KINDS", (object)KINDS ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@REASONS", (object)REASONS ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IMPROVESOWNER", (object)IMPROVESOWNER ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IMPROVESDATES", (object)IMPROVESDATES ?? DBNull.Value);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -419,11 +451,11 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-        }
-        finally
-        {
+            // 建議至少記錄錯誤，方便除錯
+            // Log(ex.Message); 
+            throw;
         }
     }
 
