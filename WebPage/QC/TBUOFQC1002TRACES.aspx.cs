@@ -253,178 +253,98 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     public void SETEXCEL()
     {
         BindGrid();
-        //BindGrid中已帶入EXCELDT1
-        if (EXCELDT1.Rows.Count >= 1)
+        if (EXCELDT1 == null || EXCELDT1.Rows.Count == 0) return;
+
+        var fileName = "客訴明細_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        using (var excel = new ExcelPackage())
         {
-            //檔案名稱
-            var fileName = "明細" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+            var ws = excel.Workbook.Worksheets.Add("明細列表");
 
-            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            // 【16 個欄位對應表：Key 為資料庫欄位名，Value 為 Excel 標題】
+            var columnMap = new Dictionary<string, string>
+        {
+            { "DOC_NBR", "表單編號" },
+            { "QCFrm002Date", "客訴日期" },
+            { "QCFrm002PRD", "客訴商品" },
+            { "QCFrm002PNO", "批號" },
+            { "QCFrm002Abns", "客訴原因" },
+            { "QCFrm002AbnscustomValue", "原因明細" },
+            { "QCFrm002CUST", "客人" },
+            { "QCFrm002Abn", "客訴內容" },
+            { "QCFrm002Cmf", "品保初判" },
+            { "TASK_RESULT", "簽核狀態" },
+            { "ORIGINAL_SIGNER", "簽核人" },
+            { "KINDS", "客訴類型" },
+            { "REASONS", "原因分析" },
+            { "IMPROVES", "改善方案" },
+            { "IMPROVESOWNER", "改善負責單位" },
+            { "IMPROVESDATES", "預計改善完成日" }
+        };
+
+            // 1. 寫入標題列並設定樣式
+            int colIndex = 1;
+            foreach (var item in columnMap)
             {
+                var cell = ws.Cells[1, colIndex];
+                cell.Value = item.Value;
 
-                // 建立分頁
-                var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+                // 標題美化
+                cell.Style.Font.Bold = true;
+                cell.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightSlateGray);
+                cell.Style.Font.Color.SetColor(System.Drawing.Color.White);
+                cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
 
-
-                //預設行高
-                //ws.DefaultRowHeight = 60;
-
-                // 寫入資料試試
-                //ws.Cells[2, 1].Value = "測試測試";
-                int ROWS = 2;
-                int COLUMNS = 1;
-
-
-                //excel標題
-                ws.Cells[1, 1].Value = "表單編號";
-                ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 2].Value = "客訴日期";
-                ws.Cells[1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 3].Value = "客訴商品";
-                ws.Cells[1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 4].Value = "批號";
-                ws.Cells[1, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 5].Value = "客訴原因";
-                ws.Cells[1, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 6].Value = "原因明細";
-                ws.Cells[1, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 7].Value = "客人";
-                ws.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 8].Value = "客訴內容";
-                ws.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-
-                ws.Cells[1, 9].Value = "簽核狀態";
-                ws.Cells[1, 9].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 10].Value = "簽核人";
-                ws.Cells[1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 11].Value = "客訴類型";
-                ws.Cells[1, 11].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 12].Value = "原因分析";
-                ws.Cells[1, 12].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 12].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 13].Value = "改善方案";
-                ws.Cells[1, 13].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 14].Value = "改善負責單位";
-                ws.Cells[1, 14].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 14].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 14].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                ws.Cells[1, 15].Value = "預計改善完成日";
-                ws.Cells[1, 15].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
-                ws.Cells[1, 15].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                ws.Cells[1, 15].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-
-                foreach (DataRow od in EXCELDT1.Rows)
-                {
-                    ws.Cells[ROWS, 1].Value = od["DOC_NBR"].ToString();
-                    ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 2].Value = od["QCFrm002Date"].ToString();
-                    ws.Cells[ROWS, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 3].Value = od["QCFrm002PRD"].ToString();
-                    ws.Cells[ROWS, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 4].Value = od["QCFrm002PNO"].ToString();
-                    ws.Cells[ROWS, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 5].Value = od["QCFrm002Abns"].ToString();
-                    ws.Cells[ROWS, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 6].Value = od["QCFrm002AbnscustomValue"].ToString();
-                    ws.Cells[ROWS, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 7].Value = od["QCFrm002CUST"].ToString();
-                    ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 8].Value = od["QCFrm002Abn"].ToString();
-                    ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-
-                    ws.Cells[ROWS, 9].Value = od["TASK_RESULT"].ToString();
-                    ws.Cells[ROWS, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 9].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 10].Value = od["ORIGINAL_SIGNER"].ToString();
-                    ws.Cells[ROWS, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 10].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 11].Value = od["KINDS"].ToString();
-                    ws.Cells[ROWS, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 11].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 12].Value = od["REASONS"].ToString();
-                    ws.Cells[ROWS, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 12].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 13].Value = od["IMPROVES"].ToString();
-                    ws.Cells[ROWS, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 13].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 14].Value = od["IMPROVESOWNER"].ToString();
-                    ws.Cells[ROWS, 14].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 14].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ws.Cells[ROWS, 15].Value = od["IMPROVESDATES"].ToString();
-                    ws.Cells[ROWS, 15].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
-                    ws.Cells[ROWS, 15].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
-                    ROWS++;
-                }
-
-
-
-
-                ////預設列寬、行高
-                //sheet.DefaultColWidth = 10; //預設列寬
-                //sheet.DefaultRowHeight = 30; //預設行高
-
-                //// 遇\n或(char)10自動斷行
-                //ws.Cells.Style.WrapText = true;
-
-                //自適應寬度設定
-                ws.Cells[ws.Dimension.Address].AutoFitColumns();
-
-                //自適應高度設定
-                ws.Row(1).CustomHeight = true;
-
-
-
-                //儲存Excel
-                //Byte[] bin = excel.GetAsByteArray();
-                //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
-
-                //儲存和歸來的Excel檔案作為一個ByteArray
-                var data = excel.GetAsByteArray();
-                HttpResponse response = HttpContext.Current.Response;
-                Response.Clear();
-
-                //輸出標頭檔案　　
-                Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.BinaryWrite(data);
-                Response.Flush();
-                Response.End();
-                //package.Save();//這個方法是直接下載到本地
+                colIndex++;
             }
+
+            // 2. 寫入資料內容
+            int rowIndex = 2;
+            foreach (DataRow dr in EXCELDT1.Rows)
+            {
+                colIndex = 1;
+                foreach (var item in columnMap)
+                {
+                    ws.Cells[rowIndex, colIndex].Value = dr[item.Key];
+
+                    // 設定格線
+                    ws.Cells[rowIndex, colIndex].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    ws.Cells[rowIndex, colIndex].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                    colIndex++;
+                }
+                rowIndex++;
+            }
+
+            // 3. 後端優化設定
+            // 開啟自動篩選
+            ws.Cells[1, 1, 1, columnMap.Count].AutoFilter = true;
+
+            // 凍結首列
+            ws.View.FreezePanes(2, 1);
+
+            // 自適應欄寬 (內容多時會跑比較久，若效能考量可固定特定欄寬)
+            ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+            // 針對「客訴內容」、「原因分析」等長文字欄位設定自動斷行
+            // 假設它們是第 8, 13, 14 欄
+            int[] longTextCols = { 8, 13, 14 };
+            foreach (int colNum in longTextCols)
+            {
+                ws.Column(colNum).Width = 40; // 固定寬度避免太長
+                ws.Column(colNum).Style.WrapText = true;
+            }
+
+            // 4. 輸出下載
+            byte[] data = excel.GetAsByteArray();
+            Response.Clear();
+            Response.AddHeader("content-disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileName));
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.BinaryWrite(data);
+            Response.Flush();
+            Response.End();
         }
     }
 
