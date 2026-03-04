@@ -111,37 +111,37 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="部門代" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_部門代" runat="server" Text='<%# Bind("TG005") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                        <asp:Label ID="Label_部門代" runat="server" Text='<%# Bind("客戶通路代碼") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="部門" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_部門" runat="server" Text='<%# Bind("ME002") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                        <asp:Label ID="Label_部門" runat="server" Text='<%# Bind("名稱") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_品號" runat="server" Text='<%# Bind("TH004") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
+                                                        <asp:Label ID="Label_品號" runat="server" Text='<%# Bind("品號") %>' Style="word-break: break-all; white-space: pre-line;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="品名" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_品名" runat="server" Text='<%# Bind("MB002") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
+                                                        <asp:Label ID="Label_品名" runat="server" Text='<%# Bind("品名") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="銷售總數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_銷售總數量" runat="server" Text='<%# Eval("TOTALNUMS", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                        <asp:Label ID="Label_銷售總數量" runat="server" Text='<%# Eval("總數量", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="銷售總金額(含稅)" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_銷售總金額含稅" runat="server" Text='<%# Eval("TOTALMONEYS", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="200px"></asp:Label>
+                                                        <asp:Label ID="Label_銷售總金額含稅" runat="server" Text='<%# Eval("總金額", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="200px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="成本總金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_成本總金額" runat="server" Text='<%# Eval("TOTALCOSTS", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
+                                                        <asp:Label ID="Label_成本總金額" runat="server" Text='<%# Eval("總成本", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 

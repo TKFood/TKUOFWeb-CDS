@@ -145,83 +145,84 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         string DATESEND= TextBox5.Text.Trim();
         string MB001 = TextBox6.Text.Trim();
 
-        if (!string.IsNullOrEmpty(MB001))
-        {
-            SQL_QUERY1.AppendFormat(@"
-                                    AND ( TH004 LIKE '%{0}%' OR MB002 LIKE '%{0}%' )
-                                    ", MB001);
-        }
-        // 2. 定義 SQL 查詢字串           
+      
+        //定義 SQL 查詢字串           
         cmdTxt.AppendFormat(@"
-                            SELECT 
-                            TG005
-                            ,ME002
-                            ,TH004
-                            ,MB002
-                            ,SUM(NUMS) AS 'TOTALNUMS'
-                            ,SUM(MOEYS) AS 'TOTALMONEYS'
-                            ,SUM(LA013) AS 'TOTALCOSTS'
+                           SELECT 
+                                TG005 AS '客戶通路代碼',
+                                ME002 AS '名稱',
+                                TH004 AS '品號',
+                                MB002 AS '品名',
+                                SUM(NUMS) AS '總數量',
+                                SUM(MONEYS) AS '總金額',
+                                SUM(COSTS) AS '總成本'
                             FROM 
                             (
-	                            SELECT 
-	                            CONVERT(NVARCHAR,YEAR(TG003))+RIGHT('0' + CONVERT(NVARCHAR, MONTH(TG003)), 2) AS 'YM'	
-	                            ,TG005,ME002,TH004,MB002,(TH008+TH024) AS 'NUMS',(TH013) AS 'MOEYS'
-	                            ,LA013
-	                            FROM [TK].dbo.COPTG
-	                            LEFT JOIN [TK].dbo.CMSME ON ME001=TG005
-	                            ,[TK].dbo.COPTH,[TK].dbo.INVMB
-	                            ,[TK].dbo.INVLA
-	                            WHERE TG001=TH001 AND TG002=TH002
-	                            AND MB001=TH004
-	                            AND TG023 IN ('Y')
-	                            AND TH017<>'********************'
-	                            AND LA006=TH001 AND LA007=TH002 AND LA008=TH003
-	                            AND TG003>=@DATESTART AND TG003<=@DATESEND
+                                -- 1. 銷貨單部分 (加上 WITH(NOLOCK) 避免鎖定)
+                                SELECT 
+                                    TG005, ME.ME002, TH004, MB.MB002,
+                                    (TH008 + TH024) AS NUMS,
+                                    TH013 AS MONEYS,
+                                    LA.LA013 AS COSTS
+                                FROM [TK].dbo.COPTG TG WITH(NOLOCK)
+                                INNER JOIN [TK].dbo.COPTH TH WITH(NOLOCK) ON TG001 = TH001 AND TG002 = TH002
+                                INNER JOIN [TK].dbo.INVMB MB WITH(NOLOCK) ON MB.MB001 = TH004
+                                INNER JOIN [TK].dbo.INVLA LA WITH(NOLOCK) ON LA006 = TH001 AND LA007 = TH002 AND LA008 = TH003
+                                LEFT JOIN [TK].dbo.CMSME ME WITH(NOLOCK) ON ME.ME001 = TG.TG005
+                                WHERE TG023 = 'Y'
+                                  AND TH017 <> '********************'
+                                  AND TG003 BETWEEN @DATESTART AND @DATESEND
+                                  AND (TH004 LIKE '%'+@MB001+'%' OR MB.MB002 LIKE '%'+@MB001+'%')
 
-	                            UNION ALL
-	                            SELECT 
-	                            CONVERT(NVARCHAR,YEAR(TI003))+RIGHT('0' + CONVERT(NVARCHAR, MONTH(TI003)), 2) AS 'YM'
-	                            ,TI005,ME002,TJ004,MB002,(TJ007)*-1 AS 'NUMS',(TJ012)*-1 AS 'MOEYS'
-	                            ,LA013*-1
-	                            FROM [TK].dbo.COPTI
-	                            LEFT JOIN [TK].dbo.CMSME ON ME001=TI005
-	                            ,[TK].dbo.COPTJ,[TK].dbo.INVMB
-	                            ,[TK].dbo.INVLA
-	                            WHERE TI001=TJ001 AND TI002=TJ002
-	                            AND MB001=TJ004
-	                            AND TI019 IN ('Y')
-	                            AND TJ014<>'********************'
-	                            AND LA006=TJ001 AND LA007=TJ002 AND LA008=TJ003
-	                            AND TI003>=@DATESTART AND TI003<=@DATESEND
+                                UNION ALL
 
-	                            UNION ALL
-	                            SELECT 
-	                            CONVERT(NVARCHAR,YEAR(TB001))+RIGHT('0' + CONVERT(NVARCHAR, MONTH(TB001)), 2) AS 'YM'
-	                            ,TB002,ME002,TB010,MB002,(TB019) AS 'NUMS',(TB031+TB032) AS 'MOEYS'	
-	                            ,(CASE WHEN LA012>0  THEN  LA012 ELSE 0 END )*TB019
-	                            FROM [TK].dbo.POSTB
-	                            LEFT JOIN [TK].dbo.CMSME ON ME001=TB002
-	                            ,[TK].dbo.INVMB
-	                            , [TK].dbo.INVLA 
-	                            WHERE MB001=TB010	
-	                            AND LA001=TB010 AND LA006=TB002 AND LA007=TB001
-	                            AND TB001>=@DATESTART AND TB001<=@DATESEND
+                                -- 2. 銷退單部分
+                                SELECT 
+                                    TI005, ME.ME002, TJ004, MB.MB002,
+                                    (TJ007 * -1) AS NUMS,
+                                    (TJ012 * -1) AS MONEYS,
+                                    (LA.LA013 * -1) AS COSTS
+                                FROM [TK].dbo.COPTI TI WITH(NOLOCK)
+                                INNER JOIN [TK].dbo.COPTJ TJ WITH(NOLOCK) ON TI001 = TJ001 AND TI002 = TJ002
+                                INNER JOIN [TK].dbo.INVMB MB WITH(NOLOCK) ON MB.MB001 = TJ004
+                                INNER JOIN [TK].dbo.INVLA LA WITH(NOLOCK) ON LA.LA006 = TJ001 AND LA.LA007 = TJ002 AND LA.LA008 = TJ003
+                                LEFT JOIN [TK].dbo.CMSME ME WITH(NOLOCK) ON ME.ME001 = TI.TI005
+                                WHERE TI019 = 'Y'
+                                  AND TJ014 <> '********************'
+                                  AND TI003 BETWEEN @DATESTART AND @DATESEND
+                                  AND (TJ004 LIKE '%'+@MB001+'%' OR MB.MB002 LIKE '%'+@MB001+'%')
 
-                            )  AS TEMP
-                            WHERE 1=1
-                            {0}
-                            GROUP BY 
-                            TG005
-                            ,ME002
-                            ,TH004
-                            ,MB002
-                            ORDER BY 
-                            TH004
-                            ,TG005
-                        ", SQL_QUERY1.ToString());
+                                UNION ALL
+
+                                -- 3. POS 銷售部分 (優化子查詢)
+                                SELECT 
+                                    MA005, ME.ME002, TB010, MB.MB002,
+                                    TB019 AS NUMS,
+                                    (TB031 + TB032) AS MONEYS,
+                                    ISNULL(LA.LA012, 0) * TB019 AS COSTS
+                                FROM [TK].dbo.POSTB TB WITH(NOLOCK)
+                                INNER JOIN [TK].dbo.INVMB MB WITH(NOLOCK) ON MB.MB001 = TB010
+                                LEFT JOIN [TK].dbo.WSCMA MA WITH(NOLOCK) ON MA.MA001 = TB.TB002
+                                LEFT JOIN [TK].dbo.CMSME ME WITH(NOLOCK) ON MA.MA005 = ME.ME001
+                                -- 改用 OUTER APPLY 提升成本抓取的效能，僅查一次
+                                OUTER APPLY (
+                                    SELECT TOP 1 LA012 
+                                    FROM [TK].dbo.INVLA WITH(NOLOCK) 
+                                    WHERE LA001 = TB.TB010 AND LA006 = TB.TB002 AND LA007 = TB.TB001
+                                    ORDER BY LA004 DESC -- 確保抓到正確日期的成本
+                                ) AS LA
+                                WHERE TB042 IN ('1','2','3','6','7','8','9')
+                                  AND TB001 BETWEEN @DATESTART AND @DATESEND
+                                  AND (TB010 LIKE '%'+@MB001+'%' OR MB.MB002 LIKE '%'+@MB001+'%')
+
+                            ) AS TEMP
+                            GROUP BY TG005, ME002, TH004, MB002
+                            ORDER BY TG005,TH004
+                        ");
 
         m_db.AddParameter("@DATESTART", DATESTART);
         m_db.AddParameter("@DATESEND", DATESEND);
+        m_db.AddParameter("@MB001", MB001);
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
 
         DataTable dt = new DataTable();
@@ -267,14 +268,14 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         // 判斷當前處理的是否為資料列 (DataRow)
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            object th004Value = DataBinder.Eval(e.Row.DataItem, "TH004");
+            object th004Value = DataBinder.Eval(e.Row.DataItem, "品號");
             // 檢查 DataBinder.Eval 的結果是否為 null，如果不是，則調用 ToString()；
             // 如果是 null，則直接返回 string.Empty
             currentTH004 = (th004Value != null) ? th004Value.ToString() : string.Empty;
 
-            decimal currentNUMS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALNUMS"));
-            decimal currentMONEYS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALMONEYS"));
-            decimal currentCOSTS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "TOTALCOSTS"));
+            decimal currentNUMS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "總數量"));
+            decimal currentMONEYS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "總金額"));
+            decimal currentCOSTS = Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "總成本"));
 
             // 只有在第一次載入之後 (previousTH004 不為空) 且 TH004 改變時才插入小計行
             if (!string.IsNullOrEmpty(previousTH004) && currentTH004 != previousTH004)
