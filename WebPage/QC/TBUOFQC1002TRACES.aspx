@@ -39,8 +39,15 @@
                 <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
-                        <asp:Button ID="Button1" runat="server" Text="查詢 " OnClick="Button1_Click"
+                        <asp:Button ID="Button1" runat="server" Text="查詢明細" OnClick="Button1_Click"
                             meta:resourcekey="btn1Resource1" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="PopTableLeftTD"></td>
+                    <td>
+                        <asp:Button ID="Button3" runat="server" Text="匯出報表" OnClick="Button3_Click"
+                            meta:resourcekey="btn3Resource1" />                       
                     </td>
                 </tr>
             </table>
@@ -220,6 +227,10 @@
             ​
           
         </ContentTemplate>
+        <Triggers>
+        <%-- 注意：ControlID 必須對應到按鈕的 ID (Button3) --%>
+        <asp:PostBackTrigger ControlID="Button3" />
+    </Triggers>
     </asp:UpdatePanel>
 
 

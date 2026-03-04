@@ -428,6 +428,312 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         }
     }
 
+    public void ExportMultiTablesWithMapping()
+    {
+        // 1. 取得資料來源 (假設來源)
+        DataTable dt_MONTHS = Get_MONTHS(); 
+        DataTable dt_KINDS = Get_KINDS();
+        //DataTable dt_IMPROVESOWNER = Get_IMPROVESOWNER();
+        //DataTable dt_DETAILS = Get_DETAILS();
+
+        var fileName = "報表_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        using (var excel = new ExcelPackage())
+        {
+            var ws = excel.Workbook.Worksheets.Add("資料");
+            int currentRow = 1; // 追蹤目前寫到哪一行
+
+            // --- 第一個表格：主檔資料 (指定 4 個欄位) ---
+            var map1 = new Dictionary<string, string> {
+            { "已結案總數", "已結案總數" },
+            { "未結案總數", "未結案總數" },
+            { "平均結案天數", "平均結案天數" },
+            { "平均逾期天數", "平均逾期天數" },
+            { "1月件數", "1月件數" },
+            { "2月件數", "2月件數" },
+            { "3月件數", "3月件數" },
+            { "4月件數", "4月件數" },
+            { "5月件數", "5月件數" },
+            { "6月件數", "6月件數" },
+            { "7月件數", "7月件數" },
+            { "8月件數", "8月件數" },
+            { "9月件數", "9月件數" },
+            { "10月件數", "10月件數" },
+            { "11月件數", "11月件數" },
+            { "12月件數", "12月件數" },
+            { "本週件數", "本週件數" },
+            { "上週件數", "上週件數" },
+
+        };
+            ws.Cells[currentRow, 1].Value = "【一、件數統計】";
+            ws.Cells[currentRow, 1].Style.Font.Bold = true;
+            currentRow++;
+
+            // 呼叫自定義寫入方法
+            currentRow = WriteTableToExcel(ws, dt_MONTHS, map1, currentRow);
+
+            // --- 加入間距 (空兩行) ---
+            currentRow += 2;
+
+            // --- 第二個表格：明細資料 (指定 5 個欄位) ---
+            var map2 = new Dictionary<string, string> {
+            { "客訴分類", "客訴分類" },
+            { "年度累積件數", "年度累積件數" },
+            { "年度百分比%", "年度百分比%" },
+            { "本月件數", "改善本月件數對策" },
+            { "本月百分比%", "本月百分比%" }
+        };
+            ws.Cells[currentRow, 1].Value = "【二、客訴分類】";
+            ws.Cells[currentRow, 1].Style.Font.Bold = true;
+            currentRow++;
+
+            currentRow = WriteTableToExcel(ws, dt_KINDS, map2, currentRow);
+
+            // --- 全域樣式設定 ---
+            ws.Cells[ws.Dimension.Address].AutoFitColumns();
+            ws.View.FreezePanes(2, 1); // 凍結首列
+
+            // --- 下載輸出 ---
+            Response.Clear();
+            Response.AddHeader("content-disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileName));
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.BinaryWrite(excel.GetAsByteArray());
+            Response.End();
+        }
+    }
+
+    /// <summary>
+    /// 通用表格寫入方法：指定 Sheet, DataTable, 映射表, 與起始列
+    /// 回傳結束後的下一個 RowIndex
+    /// </summary>
+    private int WriteTableToExcel(ExcelWorksheet ws, DataTable dt, Dictionary<string, string> map, int startRow)
+    {
+        int colIndex = 1;
+        int rowIndex = startRow;
+
+        // 1. 寫入自定義標題列
+        foreach (var item in map)
+        {
+            var cell = ws.Cells[rowIndex, colIndex];
+            cell.Value = item.Value;
+            cell.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+            cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+            cell.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+            colIndex++;
+        }
+
+        rowIndex++;
+
+        // 2. 寫入資料列
+        if (dt != null)
+        {
+            foreach (DataRow dr in dt.Rows)
+            {
+                colIndex = 1;
+                foreach (var item in map)
+                {
+                    ws.Cells[rowIndex, colIndex].Value = dr[item.Key];
+                    ws.Cells[rowIndex, colIndex].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    colIndex++;
+                }
+                rowIndex++;
+            }
+        }
+
+        return rowIndex; // 回傳最後寫到的位置
+    }
+
+    public DataTable Get_MONTHS()
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+
+            string YEARS = DateTime.Now.Year.ToString();
+            YEARS = YEARS.Substring(2, 2);
+
+            cmdTxt.AppendFormat(@"                              
+                                WITH TEMP AS (
+                                    SELECT 
+                                        [TB_WKF_FORM].[FORM_NAME]
+                                        ,TB_WKF_TASK.[DOC_NBR]
+                                        -- 處理天數：僅在已結案時計算，否則給 NULL
+                                        ,CASE WHEN TASK_RESULT = '0' THEN DATEDIFF(DAY, TB_WKF_TASK.BEGIN_TIME, TB_WKF_TASK.END_TIME) ELSE NULL END AS 結案處理天數
+                                        ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Date""]/@fieldValue)[1]', 'NVARCHAR(100)') AS 客訴日期
+                                        , (CASE WHEN TASK_RESULT = '0' THEN '已結案' ELSE '進行中' END) AS 是否結案
+                                          ,[TBUOFQC1002TRACES].[KINDS]
+                                    AS 客訴分類
+                                        -- 逾期天數：僅在進行中且已逾期時計算，否則給 NULL（若給 0 會拉低平均）
+                                        ,(CASE
+                                            WHEN ISNULL(TASK_RESULT,'1') <> '0' AND DATEDIFF(DAY, [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE()) > 0 
+                                            THEN DATEDIFF(DAY, [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE())
+                                            ELSE NULL
+                                        END) AS 實際逾期天數
+                                    FROM[UOF].[dbo].TB_WKF_TASK WITH(NOLOCK)
+                                    LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
+                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
+                                LEFT JOIN[192.168.1.105].[TKQC].[dbo].[TBUOFQC1002TRACES] ON[TBUOFQC1002TRACES].[DOC_NBR] = TB_WKF_TASK.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
+                                WHERE[FORM_NAME] = '1002.客訴異常處理單'
+                                      AND ISNULL(TASK_RESULT,'') NOT IN('1','2')
+                                      AND TB_WKF_TASK.[DOC_NBR] >= 'QC1002260100001'
+                                      AND TB_WKF_TASK.[DOC_NBR] LIKE '%'+@YEARS+'%'
+                                )
+                                SELECT
+                                    COUNT(*) AS 年度累積件數
+                                    , SUM(CASE WHEN 是否結案 = '已結案' THEN 1 ELSE 0 END) AS 已結案總數
+                                     , SUM(CASE WHEN 是否結案 <> '已結案' THEN 1 ELSE 0 END) AS 未結案總數
+                                    -- 核心修正：AVG 會自動忽略 NULL，所以分母只會計算「已結案」或「已逾期」的件數
+                                    ,ISNULL(AVG(結案處理天數), 0) AS 平均結案天數
+                                    , ISNULL(AVG(實際逾期天數), 0) AS 平均逾期天數
+                                     , SUM(CASE WHEN MONTH(客訴日期) = 1 THEN 1 ELSE 0 END) AS '1月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 2 THEN 1 ELSE 0 END) AS '2月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 3 THEN 1 ELSE 0 END) AS '3月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 4 THEN 1 ELSE 0 END) AS '4月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 5 THEN 1 ELSE 0 END) AS '5月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 6 THEN 1 ELSE 0 END) AS '6月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 7 THEN 1 ELSE 0 END) AS '7月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 8 THEN 1 ELSE 0 END) AS '8月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 9 THEN 1 ELSE 0 END) AS '9月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 10 THEN 1 ELSE 0 END) AS '10月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 11 THEN 1 ELSE 0 END) AS '11月件數'
+                                    ,SUM(CASE WHEN MONTH(客訴日期) = 12 THEN 1 ELSE 0 END) AS '12月件數'
+	                                -- 【本週】: 從本週一 00:00 到 本週日 23:59
+                                        , SUM(CASE WHEN 客訴日期 >= DATEADD(wk, DATEDIFF(wk, 0, GETDATE()), 0)
+                                                  AND 客訴日期 <= DATEADD(day, 6, DATEADD(wk, DATEDIFF(wk, 0, GETDATE()), 0)) THEN 1 ELSE 0 END) AS 本週件數
+        
+                                        -- 【上週】: 從上週一 00:00 到 上週日 23:59
+                                        , SUM(CASE WHEN 客訴日期 >= DATEADD(wk, DATEDIFF(wk, 0, GETDATE()) - 1, 0)
+                                                  AND 客訴日期 <= DATEADD(day, 6, DATEADD(wk, DATEDIFF(wk, 0, GETDATE()) - 1, 0)) THEN 1 ELSE 0 END) AS 上週件數
+
+
+                                FROM TEMP;
+
+
+                             ");
+
+
+
+
+           m_db.AddParameter("@YEARS", YEARS);        
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt!=null && dt.Rows.Count>=1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch(Exception EX)
+        {
+            return null;
+        }
+        finally
+        {
+
+        }
+    
+    }
+
+    public DataTable Get_KINDS()
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+
+            string YEARS = DateTime.Now.Year.ToString();
+            YEARS = YEARS.Substring(2, 2);
+
+            cmdTxt.AppendFormat(@" 
+                                WITH TEMP AS (
+                                    SELECT 
+                                        [TB_WKF_FORM].[FORM_NAME]
+                                        ,TB_WKF_TASK.[DOC_NBR]
+                                        ,CAST([CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Date""]/@fieldValue)[1]', 'NVARCHAR(100)') AS DATE) AS 客訴日期
+                                        ,[TBUOFQC1002TRACES].[KINDS] AS 客訴分類
+                                    FROM[UOF].[dbo].TB_WKF_TASK WITH(NOLOCK)
+                                    LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
+                                    LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
+                                    LEFT JOIN[192.168.1.105].[TKQC].[dbo].[TBUOFQC1002TRACES] ON[TBUOFQC1002TRACES].[DOC_NBR] = TB_WKF_TASK.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
+                                    WHERE[FORM_NAME] = '1002.客訴異常處理單'
+                                      AND ISNULL(TASK_RESULT, '') NOT IN('1', '2')
+                                      AND TB_WKF_TASK.[DOC_NBR] >= 'QC1002260100001'
+                                      AND TB_WKF_TASK.[DOC_NBR] LIKE '%'+@YEARS+'%'
+                                ),
+                                AGG_DATA AS(
+                                    SELECT
+                                        ISNULL(客訴分類, '未分類') AS 客訴分類
+                                        , COUNT(*) AS 年度累積件數
+                                         , SUM(CASE WHEN MONTH(客訴日期) = MONTH(GETDATE()) THEN 1 ELSE 0 END) AS 本月件數
+                                          , SUM(COUNT(*)) OVER() AS 年度總分母
+                                           , SUM(SUM(CASE WHEN MONTH(客訴日期) = MONTH(GETDATE()) THEN 1 ELSE 0 END)) OVER() AS 本月總分母
+                                    FROM TEMP
+                                    GROUP BY 客訴分類
+                                )
+                                SELECT
+                                    CASE WHEN(GROUPING(客訴分類) = 1) THEN '合計' ELSE 客訴分類 END AS 客訴分類
+                                    ,SUM(年度累積件數) AS 年度累積件數
+                                    , CASE
+                                        WHEN GROUPING(客訴分類) = 1 THEN 100.00
+                                        WHEN MAX(年度總分母) = 0 THEN 0.00
+                                        ELSE CAST(SUM(年度累積件數) * 100.0 / MAX(年度總分母) AS DECIMAL(5,2)) 
+                                     END AS '年度百分比%'
+                                    ,SUM(本月件數) AS 本月件數
+                                    , CASE
+                                        --修正點：合計列若總件數為0則顯示0，否則100
+                                       WHEN GROUPING(客訴分類) = 1 THEN(CASE WHEN MAX(本月總分母) = 0 THEN 0.00 ELSE 100.00 END)
+                                       -- 修正點：若本月件數為0，百分比直接給0
+                                       WHEN SUM(本月件數) = 0 OR MAX(本月總分母) = 0 THEN 0.00
+                                        ELSE CAST(SUM(本月件數) * 100.0 / MAX(本月總分母) AS DECIMAL(5,2)) 
+                                     END AS '本月百分比%'
+                                FROM AGG_DATA
+                                GROUP BY ROLLUP(客訴分類)
+                                ORDER BY GROUPING(客訴分類), 年度累積件數 DESC;
+
+
+            ");
+
+
+
+
+            m_db.AddParameter("@YEARS", YEARS);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception EX)
+        {
+            return null;
+        }
+        finally
+        {
+
+        }
+
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -445,6 +751,12 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     {
         BindGrid();
       
+    }
+
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+        ExportMultiTablesWithMapping();
+        MsgBox("完成", this.Page, this);
     }
     #endregion
 }
