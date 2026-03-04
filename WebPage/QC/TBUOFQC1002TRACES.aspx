@@ -46,7 +46,7 @@
                 <tr>
                     <td class="PopTableLeftTD"></td>
                     <td>
-                        <asp:Button ID="Button3" runat="server" Text="匯出報表" OnClick="Button3_Click"
+                        <asp:Button ID="Button3" runat="server" Text="匯出本年報表" OnClick="Button3_Click"
                             meta:resourcekey="btn3Resource1" />                       
                     </td>
                 </tr>
