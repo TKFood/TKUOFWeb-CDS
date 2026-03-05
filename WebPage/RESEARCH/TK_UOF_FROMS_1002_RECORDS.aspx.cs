@@ -135,6 +135,16 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                 hlTask.Visible = false; // 或改成顯示文字 Label
             }
         }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn2 = (Button)e.Row.FindControl("Button2");
+            if (btn2 != null)
+            {
+                string cellValue2 = btn2.CommandArgument;
+                dynamic param2 = new { ID = cellValue2 }.ToExpando();
+            }
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -143,6 +153,60 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         // 獲取所選行的索引
         rowIndex = Convert.ToInt32(e.CommandArgument);
 
+        if (e.CommandName == "Button2")
+        {
+            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值  
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField_GV1_備註 = (TextBox)row.FindControl("txtNewField_GV1_備註");
+                string newTextValue_GV1_備註 = txtNewField_GV1_備註.Text;
+
+                Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
+                Label Label_項次 = (Label)row.FindControl("Label_項次");
+                Label Label_產品名稱 = (Label)row.FindControl("Label_產品名稱");
+                Label Label_包裝方式 = (Label)row.FindControl("Label_包裝方式");
+                Label Label_規格 = (Label)row.FindControl("Label_規格");
+                Label Label_尺寸 = (Label)row.FindControl("Label_尺寸");
+                Label Label_包材 = (Label)row.FindControl("Label_包材");
+                Label Label_需求量 = (Label)row.FindControl("Label_需求量");
+                Label Label_預計完工日 = (Label)row.FindControl("Label_預計完工日");
+                Label Label_結案 = (Label)row.FindControl("Label_結案");
+
+                string DOC_NBR = Label_表單編號.Text;
+                string SERNO = Label_項次.Text;
+                string DVV01 = Label_產品名稱.Text;
+                string DVV02 = Label_包裝方式.Text;
+                string DVV03 = Label_規格.Text;
+                string DVV09 = Label_尺寸.Text;
+                string DVV10 = Label_包材.Text;
+                string DVV04 = Label_需求量.Text;
+                string DVV07 = Label_預計完工日.Text;
+                string ISCLOSED = Label_結案.Text;
+                string COMMENTS = newTextValue_GV1_備註.Trim();
+
+                ADD_TK_UOF_RECORDS_1002
+                    (
+                     DOC_NBR
+                    , SERNO
+                    , DVV01
+                    , DVV02
+                    , DVV03
+                    , DVV09
+                    , DVV10
+                    , DVV04
+                    , DVV07
+                    , COMMENTS
+                    , ISCLOSED
+                    );
+
+                MsgBox(DOC_NBR + " 完成", this.Page, this);
+            }
+
+            BindGrid();
+
+        }
     }
 
 
@@ -248,6 +312,85 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             Response.BinaryWrite(data);
             Response.Flush();
             Response.End();
+        }
+    }
+
+    public void ADD_TK_UOF_RECORDS_1002(
+        string DOC_NBR
+        , string SERNO
+        , string DVV01
+        , string DVV02
+        , string DVV03
+        , string DVV09
+        , string DVV10
+        , string DVV04
+        , string DVV07
+        , string COMMENTS
+        , string ISCLOSED
+        )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        string SQLCOMMAND = @" 
+                            MERGE [TKRESEARCH].[dbo].[TK_UOF_RECORDS_1002] AS TARGET
+                                USING (VALUES (@DOC_NBR, @SERNO, @DVV01, @DVV02, @DVV03, @DVV09, @DVV10, @DVV04, @DVV07, @COMMENTS, @ISCLOSED)) 
+                                AS SOURCE (DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED)
+                                ON TARGET.DOC_NBR = SOURCE.DOC_NBR AND TARGET.SERNO = SOURCE.SERNO
+
+                                WHEN MATCHED THEN 
+                                    UPDATE SET 
+                                        DVV01 = SOURCE.DVV01,
+                                        DVV02 = SOURCE.DVV02,
+                                        DVV03 = SOURCE.DVV03,
+                                        DVV09 = SOURCE.DVV09,
+                                        DVV10 = SOURCE.DVV10,
+                                        DVV04 = SOURCE.DVV04,
+                                        DVV07 = SOURCE.DVV07,
+                                        COMMENTS = SOURCE.COMMENTS,
+                                        ISCLOSED = SOURCE.ISCLOSED
+             
+
+                                WHEN NOT MATCHED THEN
+                                    INSERT (DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED)
+                                    VALUES (SOURCE.DOC_NBR, SOURCE.SERNO, SOURCE.DVV01, SOURCE.DVV02, SOURCE.DVV03, SOURCE.DVV09, SOURCE.DVV10, SOURCE.DVV04, SOURCE.DVV07, SOURCE.COMMENTS, SOURCE.ISCLOSED);
+                            ";
+
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    // 2. 修正參數綁定，確保每個參數對應正確的 SQL 變數名稱
+                    cmd.Parameters.AddWithValue("@DOC_NBR", (object)DOC_NBR ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@SERNO", (object)SERNO ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DVV01", (object)DVV01 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DVV02", (object)DVV02 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DVV03", (object)DVV03 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DVV09", (object)DVV09 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DVV10", (object)DVV10 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DVV04", (object)DVV04 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DVV07", (object)DVV07 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@COMMENTS", (object)COMMENTS ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@ISCLOSED", (object)ISCLOSED ?? DBNull.Value);
+              
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(DOC_NBR + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // 建議至少記錄錯誤，方便除錯
+            // Log(ex.Message); 
+            throw;
         }
     }
     public void MsgBox(String ex, Page pg, Object obj)

@@ -140,18 +140,25 @@
                                                         <asp:Label ID="Label_預計完工日" runat="server" Text='<%# Bind("預計完工日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns>
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label_備註" runat="server" Text='<%# Bind("備註") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
+                                            </Columns>                                            
                                             <Columns>
                                                 <asp:TemplateField HeaderText="結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_結案" runat="server" Text='<%# Bind("結案") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                             <Columns>
+                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="txtNewField_GV1_備註" runat="server" Text='<%# Bind("備註") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Button2" runat="server" Text="填寫備註" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
