@@ -165,7 +165,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Button ID="Button3" runat="server" Text="結案     " CommandName="Button3"
+                                                        <asp:Button ID="Button3" runat="server" Text="結案      " CommandName="Button3"
                                                             ForeColor="Green"                                                         
                                                             CommandArgument='<%# Container.DataItemIndex %>'
                                                             OnClientClick="return confirm('確定要結案嗎？');" />

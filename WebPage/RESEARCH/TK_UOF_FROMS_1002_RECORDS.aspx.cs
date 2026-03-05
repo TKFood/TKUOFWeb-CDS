@@ -168,86 +168,74 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        int rowIndex = -1;
-        // 獲取所選行的索引
-        rowIndex = Convert.ToInt32(e.CommandArgument);
+       // 過濾無關的 Command
+         if (e.CommandName == "Page" || e.CommandName == "Sort") return;
 
-        if (e.CommandName == "Button2")
+        int rowIndex = Convert.ToInt32(e.CommandArgument);
+
+        // 初始化變數
+        string DOC_NBR = "", SERNO = "", DVV01 = "", DVV02 = "", DVV03 = "";
+        string DVV09 = "", DVV10 = "", DVV04 = "", DVV07 = "", ISCLOSED = "", COMMENTS = "";
+
+        if (rowIndex >= 0 && rowIndex < Grid1.Rows.Count)
         {
-            //MsgBox(e.CommandArgument.ToString() + "OK", this.Page, this);
-            if (rowIndex >= 0)
+            GridViewRow row = Grid1.Rows[rowIndex];
+
+            // 使用 FindControl 並加入防呆檢查 (避免找不控制項導致 NullReferenceException)
+            TextBox txt備註 = (TextBox)row.FindControl("txtNewField_GV1_備註");
+            Label lbl編號 = (Label)row.FindControl("Label_表單編號");
+            Label lbl項次 = (Label)row.FindControl("Label_項次");
+            Label lbl產品 = (Label)row.FindControl("Label_產品名稱");
+            Label lbl包裝 = (Label)row.FindControl("Label_包裝方式");
+            Label lbl規格 = (Label)row.FindControl("Label_規格");
+            Label lbl尺寸 = (Label)row.FindControl("Label_尺寸");
+            Label lbl包材 = (Label)row.FindControl("Label_包材");
+            Label lbl需求 = (Label)row.FindControl("Label_需求量");
+            Label lbl完工日 = (Label)row.FindControl("Label_預計完工日");
+            Label lbl結案 = (Label)row.FindControl("Label_結案");
+
+            // 賦值(C# 5.0 相容寫法)
+            DOC_NBR = (lbl編號 != null) ? lbl編號.Text : "";
+            SERNO = (lbl項次 != null) ? lbl項次.Text : "";
+            DVV01 = (lbl產品 != null) ? lbl產品.Text : "";
+            DVV02 = (lbl包裝 != null) ? lbl包裝.Text : "";
+            DVV03 = (lbl規格 != null) ? lbl規格.Text : "";
+            DVV09 = (lbl尺寸 != null) ? lbl尺寸.Text : "";
+            DVV10 = (lbl包材 != null) ? lbl包材.Text : "";
+            DVV04 = (lbl需求 != null) ? lbl需求.Text : "";
+            DVV07 = (lbl完工日 != null) ? lbl完工日.Text : "";
+            ISCLOSED = (lbl結案 != null) ? lbl結案.Text : "";
+
+            // 備註欄位通常包含 Trim()
+            COMMENTS = "";
+            if (txt備註 != null)
             {
-                // 獲取TextBox的值  
-                GridViewRow row = Grid1.Rows[rowIndex];
-                TextBox txtNewField_GV1_備註 = (TextBox)row.FindControl("txtNewField_GV1_備註");
-                string newTextValue_GV1_備註 = txtNewField_GV1_備註.Text;
-
-                Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
-                Label Label_項次 = (Label)row.FindControl("Label_項次");
-                Label Label_產品名稱 = (Label)row.FindControl("Label_產品名稱");
-                Label Label_包裝方式 = (Label)row.FindControl("Label_包裝方式");
-                Label Label_規格 = (Label)row.FindControl("Label_規格");
-                Label Label_尺寸 = (Label)row.FindControl("Label_尺寸");
-                Label Label_包材 = (Label)row.FindControl("Label_包材");
-                Label Label_需求量 = (Label)row.FindControl("Label_需求量");
-                Label Label_預計完工日 = (Label)row.FindControl("Label_預計完工日");
-                Label Label_結案 = (Label)row.FindControl("Label_結案");
-
-                string DOC_NBR = Label_表單編號.Text;
-                string SERNO = Label_項次.Text;
-                string DVV01 = Label_產品名稱.Text;
-                string DVV02 = Label_包裝方式.Text;
-                string DVV03 = Label_規格.Text;
-                string DVV09 = Label_尺寸.Text;
-                string DVV10 = Label_包材.Text;
-                string DVV04 = Label_需求量.Text;
-                string DVV07 = Label_預計完工日.Text;
-                string ISCLOSED = Label_結案.Text;
-                string COMMENTS = newTextValue_GV1_備註.Trim();
-
-                ADD_TK_UOF_RECORDS_1002
-                    (
-                     DOC_NBR
-                    , SERNO
-                    , DVV01
-                    , DVV02
-                    , DVV03
-                    , DVV09
-                    , DVV10
-                    , DVV04
-                    , DVV07
-                    , COMMENTS
-                    , ISCLOSED
-                    );
-
-                MsgBox(DOC_NBR + " 完成", this.Page, this);
+                COMMENTS = txt備註.Text.Trim();
             }
 
-            if (e.CommandName == "Button3")
-            {
-                if (rowIndex >= 0)
-                {
-                    GridViewRow row = Grid1.Rows[rowIndex];
+            // --- 邏輯判斷區 (修正括號層級) ---
 
-                    Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
-                    string DOC_NBR = Label_表單編號.Text;
-                    MsgBox(DOC_NBR + "Button3 完成", this.Page, this);
-                }
+            if (e.CommandName == "Button2")
+            {
+                // 保持原始 ISCLOSED
+                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED);
+                MsgBox(DOC_NBR + " 儲存完成", this.Page, this);
             }
-            if (e.CommandName == "Button4")
+            else if (e.CommandName == "Button3")
             {
-                if (rowIndex >= 0)
-                {
-                    GridViewRow row = Grid1.Rows[rowIndex];
-
-                    Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
-                    string DOC_NBR = Label_表單編號.Text;
-                    MsgBox(DOC_NBR + "Button4 完成", this.Page, this);
-                }
+                ISCLOSED = "Y";
+                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED);
+                MsgBox(DOC_NBR + " 已結案", this.Page, this);
+            }
+            else if (e.CommandName == "Button4")
+            {
+                ISCLOSED = "N";
+                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED);
+                MsgBox(DOC_NBR + " 已還原未結案", this.Page, this);
             }
 
+            // 最後重新繫結
             BindGrid();
-
         }
     }
 
