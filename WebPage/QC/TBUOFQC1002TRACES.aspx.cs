@@ -48,6 +48,10 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         // 取得今年這個月的第一天
         DateTime firstDayOfThisMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         Date1.Text = firstDayOfThisMonth.ToString("yyyy-MM-dd"); // TextMode="Date" 需要 yyyy-MM-dd 格式
+
+        // 取得今年
+        string firstDayOfThisYEARS = DateTime.Now.Year.ToString();
+        Date2.Text = firstDayOfThisYEARS;
     }
     private void BindGrid()
     {
@@ -428,15 +432,15 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         }
     }
 
-    public void ExportMultiTablesWithMapping()
+    public void ExportMultiTablesWithMapping(string YEARS)
     {
         try
         {
             // 1. 取得資料來源 (假設來源)
-            DataTable dt_MONTHS = Get_MONTHS();
-            DataTable dt_KINDS = Get_KINDS();
-            DataTable dt_IMPROVESOWNER = Get_IMPROVESOWNER();
-            DataTable dt_DETAILS = Get_DETAILS();
+            DataTable dt_MONTHS = Get_MONTHS(YEARS);
+            DataTable dt_KINDS = Get_KINDS(YEARS);
+            DataTable dt_IMPROVESOWNER = Get_IMPROVESOWNER(YEARS);
+            DataTable dt_DETAILS = Get_DETAILS(YEARS);
 
             var fileName = "報表_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -623,16 +627,14 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         return rowIndex; // 回傳最後寫到的位置
     }
 
-    public DataTable Get_MONTHS()
+    public DataTable Get_MONTHS(string YEARS)
     {
         try
         {
             string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
             Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-            StringBuilder cmdTxt = new StringBuilder();
-
-            string YEARS = DateTime.Now.Year.ToString();
+            StringBuilder cmdTxt = new StringBuilder();           
             YEARS = YEARS.Substring(2, 2);
 
             cmdTxt.AppendFormat(@"                              
@@ -723,7 +725,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     
     }
 
-    public DataTable Get_KINDS()
+    public DataTable Get_KINDS(string YEARS)
     {
         try
         {
@@ -731,8 +733,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
             StringBuilder cmdTxt = new StringBuilder();
-
-            string YEARS = DateTime.Now.Year.ToString();
+            
             YEARS = YEARS.Substring(2, 2);
 
             cmdTxt.AppendFormat(@" 
@@ -813,7 +814,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
     }
 
-    public DataTable Get_IMPROVESOWNER()
+    public DataTable Get_IMPROVESOWNER(string YEARS)
     {
         try
         {
@@ -821,8 +822,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
             StringBuilder cmdTxt = new StringBuilder();
-
-            string YEARS = DateTime.Now.Year.ToString();
+            
             YEARS = YEARS.Substring(2, 2);
 
             cmdTxt.AppendFormat(@" 
@@ -918,7 +918,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
     }
 
-    public DataTable Get_DETAILS()
+    public DataTable Get_DETAILS(string YEARS)
     {
         try
         {
@@ -926,8 +926,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
             StringBuilder cmdTxt = new StringBuilder();
-
-            string YEARS = DateTime.Now.Year.ToString();
+           
             YEARS = YEARS.Substring(2, 2);
 
             cmdTxt.AppendFormat(@" 
@@ -1054,7 +1053,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
     protected void Button3_Click(object sender, EventArgs e)
     {
-        ExportMultiTablesWithMapping();
+        string YEARS = Date2.Text.Trim().ToString();
+        ExportMultiTablesWithMapping(YEARS);
         MsgBox("完成", this.Page, this);
     }
     #endregion
