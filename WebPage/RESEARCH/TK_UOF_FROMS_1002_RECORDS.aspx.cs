@@ -54,6 +54,20 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
 
+        string ISCLOSED = ddlSearchIsClosed.Text.ToString();
+        if(ISCLOSED.Equals("N"))
+        {
+            QUERYS.AppendFormat(@" AND (ISNULL([TK_UOF_RECORDS_1002].[ISCLOSED],'')='' OR [TK_UOF_RECORDS_1002].[ISCLOSED]='N') ");
+        }
+        else if (ISCLOSED.Equals("Y"))
+        {
+            QUERYS.AppendFormat(@" AND [TK_UOF_RECORDS_1002].[ISCLOSED]='Y'");
+        }
+        else
+        {
+            QUERYS.AppendFormat(@" ");
+        }
+
 
         cmdTxt.AppendFormat(@"                              
                             SELECT 
@@ -91,11 +105,11 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                             WHERE 1 = 1
                                 AND t.BEGIN_TIME >= '2025-01-01'
                                 AND f.FORM_NAME IN('1004.無品號試吃製作申請單')
-
+                                {0}
 
                             ORDER BY f.FORM_NAME, t.DOC_NBR;
 
-        ", QUERYS.ToString());
+                            ", QUERYS.ToString());
 
 
 

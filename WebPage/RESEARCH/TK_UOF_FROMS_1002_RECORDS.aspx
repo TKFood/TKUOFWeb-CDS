@@ -36,7 +36,18 @@
             <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
                 <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
                     <table class="PopTable">
-
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label9" runat="server" Text="是否結案: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlSearchIsClosed" runat="server">
+                                    <asp:ListItem Value="ALL">--- 全部 ---</asp:ListItem>
+                                    <asp:ListItem Value="N" Selected="True">未結案</asp:ListItem>
+                                    <asp:ListItem Value="Y">已結案</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
@@ -166,12 +177,13 @@
                                                 <asp:TemplateField HeaderText="是否結案" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Button3" runat="server" Text="結案      " CommandName="Button3"
-                                                            ForeColor="Green"                                                         
+                                                            ForeColor="Green"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
                                                             OnClientClick="return confirm('確定要結案嗎？');" />
-                                                        <br /> <div style="height: 5px;"></div>
+                                                        <br />
+                                                        <div style="height: 5px;"></div>
                                                         <asp:Button ID="Button4" runat="server" Text="還原未結案" CommandName="Button4"
-                                                            ForeColor="Blue"                                                          
+                                                            ForeColor="Blue"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
                                                             OnClientClick="return confirm('確定要還原為未結案嗎？');" />
                                                     </ItemTemplate>
