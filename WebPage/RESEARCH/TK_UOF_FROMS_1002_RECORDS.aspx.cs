@@ -74,8 +74,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 TD.Row.value('(Cell[@fieldId=""DVV04""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '需求量',
                                 TD.Row.value('(Cell[@fieldId=""DVV07""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '預計完工日',
 
-                                [TK_UOF_RECORDS_1002].[COMMENTS],
-                                [TK_UOF_RECORDS_1002].[ISCLOSED]
+                               	[TK_UOF_RECORDS_1002].[COMMENTS] AS '備註',
+                                [TK_UOF_RECORDS_1002].[ISCLOSED] AS '結案'
 
                             FROM[UOF].dbo.TB_WKF_TASK AS t WITH(NOLOCK)
                             CROSS APPLY[CURRENT_DOC].nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row') AS TD(Row)
