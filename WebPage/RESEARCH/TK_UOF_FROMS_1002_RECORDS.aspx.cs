@@ -266,7 +266,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         BindGrid();
         if (EXCELDT1 == null || EXCELDT1.Rows.Count == 0) return;
 
-        var fileName = "客訴明細_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
+        var fileName = "明細_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
         using (var excel = new ExcelPackage())
@@ -276,22 +276,20 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             // 【16 個欄位對應表：Key 為資料庫欄位名，Value 為 Excel 標題】
             var columnMap = new Dictionary<string, string>
         {
-            { "DOC_NBR", "表單編號" },
-            { "QCFrm002Date", "客訴日期" },
-            { "QCFrm002PRD", "客訴商品" },
-            { "QCFrm002PNO", "批號" },
-            { "QCFrm002Abns", "客訴原因" },
-            { "QCFrm002AbnscustomValue", "原因明細" },
-            { "QCFrm002CUST", "客人" },
-            { "QCFrm002Abn", "客訴內容" },
-            { "QCFrm002Cmf", "品保初判" },
-            { "TASK_RESULT", "簽核狀態" },
-            { "ORIGINAL_SIGNER", "簽核人" },
-            { "KINDS", "客訴類型" },
-            { "REASONS", "原因分析" },
-            { "IMPROVES", "改善方案" },
-            { "IMPROVESOWNER", "改善負責單位" },
-            { "IMPROVESDATES", "預計改善完成日" }
+            { "表單編號", "表單編號" },
+            { "申請者", "申請者" },
+            { "申請時間", "申請時間" },
+            { "項次", "項次" },
+            { "產品名稱", "產品名稱" },
+            { "包裝方式", "包裝方式" },
+            { "規格", "規格" },
+            { "尺寸", "尺寸" },
+            { "包材", "包材" },
+            { "需求量", "需求量" },
+            { "預計完工日", "預計完工日" },
+            { "結案", "結案" },
+            { "備註", "備註" }
+          
         };
 
             // 1. 寫入標題列並設定樣式
