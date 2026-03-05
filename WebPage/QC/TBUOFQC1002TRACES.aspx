@@ -3,10 +3,6 @@
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script>    
-
-
-</script>
     <style>
         .big-bold-button {
             font-size: 20px;
