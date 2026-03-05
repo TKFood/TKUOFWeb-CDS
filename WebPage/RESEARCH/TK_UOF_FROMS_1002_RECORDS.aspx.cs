@@ -145,6 +145,25 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                 dynamic param2 = new { ID = cellValue2 }.ToExpando();
             }
         }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn3 = (Button)e.Row.FindControl("Button3");
+            if (btn3 != null)
+            {
+                string cellValue3 = btn3.CommandArgument;
+                dynamic param3 = new { ID = cellValue3 }.ToExpando();
+            }
+        }
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn4 = (Button)e.Row.FindControl("Button4");
+            if (btn4 != null)
+            {
+                string cellValue4 = btn4.CommandArgument;
+                dynamic param4 = new { ID = cellValue4 }.ToExpando();
+            }
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -202,6 +221,29 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                     );
 
                 MsgBox(DOC_NBR + " 完成", this.Page, this);
+            }
+
+            if (e.CommandName == "Button3")
+            {
+                if (rowIndex >= 0)
+                {
+                    GridViewRow row = Grid1.Rows[rowIndex];
+
+                    Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
+                    string DOC_NBR = Label_表單編號.Text;
+                    MsgBox(DOC_NBR + "Button3 完成", this.Page, this);
+                }
+            }
+            if (e.CommandName == "Button4")
+            {
+                if (rowIndex >= 0)
+                {
+                    GridViewRow row = Grid1.Rows[rowIndex];
+
+                    Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
+                    string DOC_NBR = Label_表單編號.Text;
+                    MsgBox(DOC_NBR + "Button4 完成", this.Page, this);
+                }
             }
 
             BindGrid();
