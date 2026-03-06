@@ -274,6 +274,11 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
 
             // 最後重新繫結
             BindGrid();
+            BindGrid2();
+            BindGrid3();
+            BindGrid4();
+            BindGrid5();
+            BindGrid6();
         }
     }
 
