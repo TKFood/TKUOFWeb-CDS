@@ -38,22 +38,73 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
 
         if (!IsPostBack)
         {
-
+            BindKindsDropDown();
         }
     }
 
     #region FUNCTION
+    private void BindKindsDropDown()
+    {
+        // SQL 只需抓取資料庫現有的類別
+        string sql = @"
+                    SELECT  
+                    '全部' AS KINDS
+                    UNION ALL
+                    SELECT  
+                    [KINDS]
+                    FROM [TKPUR].[dbo].[UOF_PUR_INVMB_DELIVERY]
+                    GROUP BY [KINDS]
+                    ";
+
+        // 這裡替換成您的連線字串
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            ddlSearchKinds.DataSource = dt;
+            ddlSearchKinds.DataTextField = "KINDS"; // 顯示的文字
+            ddlSearchKinds.DataValueField = "KINDS"; // 選取的值
+            ddlSearchKinds.DataBind();
+        }
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         StringBuilder cmdTxt = new StringBuilder();
-        StringBuilder QUERYS = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
 
-
+        //KINDS
+        string KINDS = ddlSearchKinds.Text.ToString();
+        if (KINDS.Equals("全部"))
+        {
+            QUERYS1.AppendFormat(@" ");
+        }
+        else if (!KINDS.Equals("全部") && !string.IsNullOrEmpty(KINDS))
+        {
+            QUERYS1.AppendFormat(@" AND KINDS LIKE'%{0}%' ", KINDS);
+        }      
+        else
+        {
+            QUERYS1.AppendFormat(@" ");
+        }
+        //MB001
+        string MB001 = FIND_TextBox1.Text.Trim();
+        if (!string.IsNullOrEmpty(MB001))
+        {
+            QUERYS2.AppendFormat(@" AND (MB001 LIKE '%{0}%' OR MB002 LIKE '%{0}%')", MB001);
+        }
+        else
+        {
+            QUERYS2.AppendFormat(@" ");
+        }
 
         cmdTxt.AppendFormat(@"                              
                             SELECT 
@@ -66,9 +117,12 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
                             ,[UNITS]
                             ,[DELIVERYDATS]
                             FROM [TKPUR].[dbo].[UOF_PUR_INVMB_DELIVERY]
+                            WHERE 1=1
+                            {0}
+                            {1}
                             ORDER BY [KINDS],[ID]
 
-                            ", QUERYS.ToString());
+                            ", QUERYS1.ToString(), QUERYS2.ToString());
 
 
 
@@ -101,6 +155,15 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
             {
                 string cellValue2 = btn2.CommandArgument;
                 dynamic param2 = new { ID = cellValue2 }.ToExpando();
+            }
+        }
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn3 = (Button)e.Row.FindControl("Button3");
+            if (btn3 != null)
+            {
+                string cellValue3 = btn3.CommandArgument;
+                dynamic param3 = new { ID = cellValue3 }.ToExpando();
             }
         }
     }
@@ -163,6 +226,15 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
                 , DELIVERYDATS
                 );
                 MsgBox(ID + " 儲存完成", this.Page, this);
+            }
+
+
+            if (e.CommandName == "Button3")
+            {
+                // 保持原始 ISCLOSED
+                DELETE_UOF_PUR_INVMB_DELIVERY(ID );
+
+                MsgBox(ID + " 完成", this.Page, this);
             }
 
             // 最後重新繫結
@@ -253,6 +325,44 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
         }
     }
 
+    public void DELETE_UOF_PUR_INVMB_DELIVERY(string ID)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+
+        string SQLCOMMAND = @" 
+                            DELETE  [TKPUR].[dbo].[UOF_PUR_INVMB_DELIVERY] 
+                            WHERE ID=@ID
+                            ";
+
+
+        try
+        {
+            using (SqlConnection cnn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(SQLCOMMAND, cnn))
+                {
+                    // 2. 修正參數綁定，確保每個參數對應正確的 SQL 變數名稱
+                    cmd.Parameters.AddWithValue("@ID", (object)ID ?? DBNull.Value);
+                  
+
+                    cnn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected >= 1)
+                    {
+                        MsgBox(ID + " 完成", this.Page, this);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // 建議至少記錄錯誤，方便除錯
+            // Log(ex.Message); 
+            throw;
+        }
+
+    }
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
@@ -272,5 +382,31 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
     {
         BindGrid();
     }
+    protected void btnADD_Click(object sender, EventArgs e)
+    {
+        string ID = "-1";
+        string KINDS = ADD_TextBox1.Text.Trim();
+        string MB001 = ADD_TextBox2.Text.Trim();
+        string MB002 = ADD_TextBox3.Text.Trim();
+        string MB003 = ADD_TextBox4.Text.Trim();
+        string MOQ = ADD_TextBox5.Text.Trim();
+        string UNITS = ADD_TextBox6.Text.Trim();
+        string DELIVERYDATS = ADD_TextBox7.Text.Trim();
+
+        ADD_UOF_PUR_INVMB_DELIVERY(
+              ID
+              , KINDS
+              , MB001
+              , MB002
+              , MB003
+              , MOQ
+              , UNITS
+              , DELIVERYDATS
+              );
+        MsgBox(" 完成", this.Page, this);
+
+        BindGrid();
+    }
+
     #endregion
 }
