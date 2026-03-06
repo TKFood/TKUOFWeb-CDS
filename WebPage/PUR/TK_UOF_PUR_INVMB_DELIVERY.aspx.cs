@@ -150,6 +150,36 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddlKinds");
+            if (ddl != null)
+            {
+                // 1. 取得所有選項 (這部分建議改用全域變數，避免每一列都查一次資料庫)
+                DataTable dtKinds = GetKindsList();
+                ddl.DataSource = dtKinds;
+                ddl.DataTextField = "KINDS";
+                ddl.DataValueField = "KINDS";
+                ddl.DataBind();
+
+                // 2. 取得這一列資料庫真正的 KINDS 值
+                // DataItem 是這一列繫結的原始資料
+                string dbValue = DataBinder.Eval(e.Row.DataItem, "KINDS").ToString();
+
+                // 3. 安全檢查：清單中是否有這個值？
+                if (ddl.Items.FindByValue(dbValue) != null)
+                {
+                    ddl.SelectedValue = dbValue;
+                }
+                else
+                {
+                    // 如果找不到，手動加進去，避免崩潰，或者顯示「未知」
+                    ddl.Items.Insert(0, new ListItem("未知(" + dbValue + ")", dbValue));
+                    ddl.SelectedValue = dbValue;
+                }
+            }
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
             Button btn2 = (Button)e.Row.FindControl("Button2");
             if (btn2 != null)
             {
@@ -191,7 +221,7 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
 
             // 使用 FindControl 並加入防呆檢查 (避免找不控制項導致 NullReferenceException)
             Label lbl編號 = (Label)row.FindControl("Label_ID");
-            TextBox txt類別 = (TextBox)row.FindControl("txtNewField_GV1_類別");
+            DropDownList dd類別 = (DropDownList)row.FindControl("ddlKinds");
             TextBox txt品號 = (TextBox)row.FindControl("txtNewField_GV1_品號");
             TextBox txt品名 = (TextBox)row.FindControl("txtNewField_GV1_品名");
             TextBox txt規格 = (TextBox)row.FindControl("txtNewField_GV1_規格");
@@ -202,7 +232,7 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
 
             // 賦值(C# 5.0 相容寫法)
             ID = (lbl編號 != null) ? lbl編號.Text : "";
-            KINDS = txt類別.Text.Trim();
+            KINDS = dd類別.Text.Trim();
             MB001 = txt品號.Text.Trim();
             MB002 = txt品名.Text.Trim();
             MB003 = txt規格.Text.Trim();
@@ -252,6 +282,53 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
 
     public void SETEXCEL()
     {
+
+    }
+
+    private DataTable GetKindsList()
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+
+            cmdTxt.AppendFormat(@"                              
+                            SELECT  
+                            [KINDS]
+                            FROM [TKPUR].[dbo].[UOF_PUR_INVMB_DELIVERY]
+                            GROUP BY [KINDS]
+                            ");
+
+
+
+
+            //m_db.AddParameter("@SDATE", SDATE);
+            //m_db.AddParameter("@EDATE", EDATE);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch(Exception EX)
+        {
+            return null;
+
+        }
+        finally
+        {
+
+        }
+      
 
     }
 
