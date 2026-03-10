@@ -109,7 +109,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                             ,[TBUOFQC1002TRACES].[REASONS]
                             ,[TBUOFQC1002TRACES].[IMPROVES]
                             ,[TBUOFQC1002TRACES].[IMPROVESOWNER]
-                            ,[TBUOFQC1002TRACES].[IMPROVESDATES]
+                            ,REPLACE(CONVERT(VARCHAR,[TBUOFQC1002TRACES].[IMPROVESDATES], 111), '/', '-') IMPROVESDATES
 
                             FROM [UOF].[dbo].TB_WKF_TASK
                             LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
@@ -222,7 +222,17 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 string KINDS= newTextValue_GV1_客訴類型.Trim();
                 string REASONS= newTextValue_GV1_原因分析.Trim();
                 string IMPROVESOWNER= newTextValue_GV1_改善負責單位.Trim();
-                string IMPROVESDATES=newTextValue_GV1預計改善完成日.Trim();
+                //string IMPROVESDATES=newTextValue_GV1預計改善完成日.Trim();
+                string IMPROVESDATES = txtNewField_GV1_預計改善完成日.Text; // 抓到的是 "2023-10-25"
+                string IMPROVESDATES_saveToDbFormat = null;
+                DateTime dt;
+
+                if (DateTime.TryParse(IMPROVESDATES, out dt))
+                {
+                    // 轉成您要的 yyyy/MM/dd 格式字串
+                    IMPROVESDATES_saveToDbFormat = dt.ToString("yyyy/MM/dd");
+                }
+             
 
                 ADD_TBUOFQC1002TRACES(
                                DOC_NBR,
@@ -236,7 +246,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                                KINDS,
                                REASONS,
                                IMPROVESOWNER,
-                               IMPROVESDATES
+                               IMPROVESDATES_saveToDbFormat
                               );
                 MsgBox(DOC_NBR+" 完成", this.Page, this);
             }

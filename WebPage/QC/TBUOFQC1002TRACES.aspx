@@ -34,17 +34,17 @@
                 </tr>
                 <tr>
                     <td class="PopTableLeftTD"></td>
-                    <td>                        
+                    <td>
                         <asp:Button ID="Button1" runat="server" Text="查詢明細" OnClick="Button1_Click"
                             meta:resourcekey="btn1Resource1" />
                     </td>
                 </tr>
                 <tr>
                     <td class="PopTableLeftTD"></td>
-                    <td> 
-                        <asp:TextBox ID="Date2" runat="server" ></asp:TextBox>
+                    <td>
+                        <asp:TextBox ID="Date2" runat="server"></asp:TextBox>
                         <asp:Button ID="Button3" runat="server" Text="匯出報表" OnClick="Button3_Click"
-                            meta:resourcekey="btn3Resource1" />                       
+                            meta:resourcekey="btn3Resource1" />
                     </td>
                 </tr>
             </table>
@@ -188,7 +188,11 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="預計改善完成日" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_預計改善完成日" runat="server" Text='<%# Bind("IMPROVESDATES") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:TextBox ID="txtNewField_GV1_預計改善完成日" runat="server"
+                                                            Text='<%# Bind("IMPROVESDATES", "{0:yyyy-MM-dd}") %>'
+                                                            TextMode="Date"
+                                                            Width="100%">
+                                                         </asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -225,9 +229,9 @@
           
         </ContentTemplate>
         <Triggers>
-        <%-- 注意：ControlID 必須對應到按鈕的 ID (Button3) --%>
-        <asp:PostBackTrigger ControlID="Button3" />
-    </Triggers>
+            <%-- 注意：ControlID 必須對應到按鈕的 ID (Button3) --%>
+            <asp:PostBackTrigger ControlID="Button3" />
+        </Triggers>
     </asp:UpdatePanel>
 
 
