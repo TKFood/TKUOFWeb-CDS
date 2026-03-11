@@ -105,7 +105,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                             AND ISNULL([FINISH_TIME],'')=''
                             AND TASK_ID= TB_WKF_TASK.TASK_ID
                             ORDER BY [NODE_SEQ]) AS 'ORIGINAL_SIGNER'
-                            ,[TBUOFQC1002TRACES].[KINDS]
+                            ,[TBUOFQC1002TRACES].[KINDS1]
+                            ,[TBUOFQC1002TRACES].[KINDS2]
                             ,[TBUOFQC1002TRACES].[REASONS]
                             ,[TBUOFQC1002TRACES].[IMPROVES]
                             ,[TBUOFQC1002TRACES].[IMPROVESOWNER]
@@ -193,8 +194,10 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField_GV1_改善方案 = (TextBox)row.FindControl("txtNewField_GV1_改善方案");
                 string newTextValue_GV1_改善方案 = txtNewField_GV1_改善方案.Text;
-                TextBox txtNewField_GV1_客訴類型 = (TextBox)row.FindControl("txtNewField_GV1_客訴類型");
-                string newTextValue_GV1_客訴類型 = txtNewField_GV1_客訴類型.Text;
+                TextBox txtNewField_GV1_大分類 = (TextBox)row.FindControl("txtNewField_GV1_大分類");
+                string newTextValue_GV1_大分類 = txtNewField_GV1_大分類.Text;
+                TextBox txtNewField_GV1_中分類 = (TextBox)row.FindControl("txtNewField_GV1_中分類");
+                string newTextValue_GV1_中分類 = txtNewField_GV1_中分類.Text;
                 TextBox txtNewField_GV1_原因分析 = (TextBox)row.FindControl("txtNewField_GV1_原因分析");
                 string newTextValue_GV1_原因分析 = txtNewField_GV1_原因分析.Text;
                 TextBox txtNewField_GV1_改善負責單位 = (TextBox)row.FindControl("txtNewField_GV1_改善負責單位");
@@ -219,7 +222,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 string TASK_ID = Label_TASK_ID.Text;
                 string QCFrm002PNO= Label_批號.Text;
                 string IMPROVES = newTextValue_GV1_改善方案.Trim();
-                string KINDS= newTextValue_GV1_客訴類型.Trim();
+                string KINDS1= newTextValue_GV1_大分類.Trim();
+                string KINDS2 = newTextValue_GV1_中分類.Trim();
                 string REASONS= newTextValue_GV1_原因分析.Trim();
                 string IMPROVESOWNER= newTextValue_GV1_改善負責單位.Trim();
                 //string IMPROVESDATES=newTextValue_GV1預計改善完成日.Trim();
@@ -243,7 +247,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                                TASK_ID,
                                IMPROVES,
                                QCFrm002PNO,
-                               KINDS,
+                               KINDS1,
+                               KINDS2,
                                REASONS,
                                IMPROVESOWNER,
                                IMPROVESDATES_saveToDbFormat
@@ -371,7 +376,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
         string TASK_ID,
         string IMPROVES,
         string QCFrm002PNO,
-        string KINDS,
+        string KINDS1,
+        string KINDS2,
         string REASONS,
         string IMPROVESOWNER,
         string IMPROVESDATES
@@ -382,8 +388,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
         string SQLCOMMAND = @" 
         MERGE [TKQC].[dbo].[TBUOFQC1002TRACES] AS TARGET
-        USING (VALUES (@DOC_NBR, @QCFrm002Date, @QCFrm002PRD, @QCFrm002Abns, @QCFrm002AbnscustomValue, @TASK_ID, @IMPROVES, @QCFrm002PNO, @KINDS, @REASONS, @IMPROVESOWNER, @IMPROVESDATES)) 
-        AS SOURCE (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES, QCFrm002PNO, KINDS, REASONS, IMPROVESOWNER, IMPROVESDATES)
+        USING (VALUES (@DOC_NBR, @QCFrm002Date, @QCFrm002PRD, @QCFrm002Abns, @QCFrm002AbnscustomValue, @TASK_ID, @IMPROVES, @QCFrm002PNO, @KINDS1, @KINDS2, @REASONS, @IMPROVESOWNER, @IMPROVESDATES)) 
+        AS SOURCE (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES, QCFrm002PNO, KINDS1, KINDS2, REASONS, IMPROVESOWNER, IMPROVESDATES)
         ON TARGET.DOC_NBR = SOURCE.DOC_NBR
 
         WHEN MATCHED THEN 
@@ -395,14 +401,15 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 TASK_ID = SOURCE.TASK_ID,
                 IMPROVES = SOURCE.IMPROVES,
                 QCFrm002PNO = SOURCE.QCFrm002PNO,
-                KINDS = SOURCE.KINDS,
+                KINDS1 = SOURCE.KINDS1,
+                KINDS2 = SOURCE.KINDS2,
                 REASONS = SOURCE.REASONS,
                 IMPROVESOWNER = SOURCE.IMPROVESOWNER,
                 IMPROVESDATES = SOURCE.IMPROVESDATES
 
         WHEN NOT MATCHED THEN
-            INSERT (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES, QCFrm002PNO, KINDS, REASONS, IMPROVESOWNER, IMPROVESDATES)
-            VALUES (SOURCE.DOC_NBR, SOURCE.QCFrm002Date, SOURCE.QCFrm002PRD, SOURCE.QCFrm002Abns, SOURCE.QCFrm002AbnscustomValue, SOURCE.TASK_ID, SOURCE.IMPROVES, SOURCE.QCFrm002PNO, SOURCE.KINDS, SOURCE.REASONS, SOURCE.IMPROVESOWNER, SOURCE.IMPROVESDATES);";
+            INSERT (DOC_NBR, QCFrm002Date, QCFrm002PRD, QCFrm002Abns, QCFrm002AbnscustomValue, TASK_ID, IMPROVES, QCFrm002PNO, KINDS1,KINDS2, REASONS, IMPROVESOWNER, IMPROVESDATES)
+            VALUES (SOURCE.DOC_NBR, SOURCE.QCFrm002Date, SOURCE.QCFrm002PRD, SOURCE.QCFrm002Abns, SOURCE.QCFrm002AbnscustomValue, SOURCE.TASK_ID, SOURCE.IMPROVES, SOURCE.QCFrm002PNO, SOURCE.KINDS1, SOURCE.KINDS2, SOURCE.REASONS, SOURCE.IMPROVESOWNER, SOURCE.IMPROVESDATES);";
 
         try
         {
@@ -419,7 +426,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                     cmd.Parameters.AddWithValue("@TASK_ID", (object)TASK_ID ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@IMPROVES", (object)IMPROVES ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@QCFrm002PNO", (object)QCFrm002PNO ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@KINDS", (object)KINDS ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@KINDS1", (object)KINDS1 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@KINDS2", (object)KINDS2 ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@REASONS", (object)REASONS ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@IMPROVESOWNER", (object)IMPROVESOWNER ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@IMPROVESDATES", (object)IMPROVESDATES ?? DBNull.Value);
