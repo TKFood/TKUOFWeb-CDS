@@ -248,17 +248,18 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 // 獲取TextBox的值
                 GridViewRow row = Grid1.Rows[rowIndex];
                 TextBox txtNewField_GV1_改善方案 = (TextBox)row.FindControl("txtNewField_GV1_改善方案");
-                string newTextValue_GV1_改善方案 = txtNewField_GV1_改善方案.Text;
-                TextBox txtNewField_GV1_大分類 = (TextBox)row.FindControl("txtNewField_GV1_大分類");
-                string newTextValue_GV1_大分類 = txtNewField_GV1_大分類.Text;
-                TextBox txtNewField_GV1_中分類 = (TextBox)row.FindControl("txtNewField_GV1_中分類");
-                string newTextValue_GV1_中分類 = txtNewField_GV1_中分類.Text;
+                string newTextValue_GV1_改善方案 = txtNewField_GV1_改善方案.Text;                
                 TextBox txtNewField_GV1_原因分析 = (TextBox)row.FindControl("txtNewField_GV1_原因分析");
                 string newTextValue_GV1_原因分析 = txtNewField_GV1_原因分析.Text;
                 TextBox txtNewField_GV1_改善負責單位 = (TextBox)row.FindControl("txtNewField_GV1_改善負責單位");
                 string newTextValue_GV1_改善負責單位 = txtNewField_GV1_改善負責單位.Text;
                 TextBox txtNewField_GV1_預計改善完成日 = (TextBox)row.FindControl("txtNewField_GV1_預計改善完成日");
                 string newTextValue_GV1預計改善完成日 = txtNewField_GV1_預計改善完成日.Text;
+
+                DropDownList ddl_GV1_大分類 = (DropDownList)row.FindControl("ddl_大分類");
+                string GV1_大分類 = ddl_GV1_大分類.Text;
+                DropDownList ddl_GV1_中分類 = (DropDownList)row.FindControl("ddl_中分類");
+                string GV1_中分類 = ddl_GV1_中分類.Text;
 
                 Label Label_表單編號 = (Label)row.FindControl("Label_表單編號");
                 Label Label_客訴日期 = (Label)row.FindControl("Label_客訴日期");
@@ -272,13 +273,13 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 string DOC_NBR = Label_表單編號.Text;
                 string QCFrm002Date = Label_客訴日期.Text;
                 string QCFrm002PRD = Label_客訴商品.Text;
-                string QCFrm002Abns = Label_客訴原因.Text;
-                string QCFrm002AbnscustomValue = Label_原因明細.Text;
+                string QCFrm002Abns = "";
+                string QCFrm002AbnscustomValue = "";
                 string TASK_ID = Label_TASK_ID.Text;
                 string QCFrm002PNO= Label_批號.Text;
                 string IMPROVES = newTextValue_GV1_改善方案.Trim();
-                string KINDS1= newTextValue_GV1_大分類.Trim();
-                string KINDS2 = newTextValue_GV1_中分類.Trim();
+                string KINDS1= GV1_大分類.Trim();
+                string KINDS2 = GV1_中分類.Trim();
                 string REASONS= newTextValue_GV1_原因分析.Trim();
                 string IMPROVESOWNER= newTextValue_GV1_改善負責單位.Trim();
                 //string IMPROVESDATES=newTextValue_GV1預計改善完成日.Trim();
