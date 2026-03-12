@@ -160,91 +160,75 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        // 所有的處理都集中在 DataRow 判定內
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            string taskId = DataBinder.Eval(e.Row.DataItem, "TASK_ID") as string;
+            var dataItem = e.Row.DataItem;
+
+            // 1. 處理 HyperLink (TASK_ID)
+            string taskId = DataBinder.Eval(dataItem, "TASK_ID") as string;
             HyperLink hlTask = (HyperLink)e.Row.FindControl("hlTask");
-
-            if (!string.IsNullOrEmpty(taskId))
+            if (hlTask != null)
             {
-                hlTask.NavigateUrl = string.Format("https://eip.tkfood.com.tw/UOF/wkf/formuse/viewform.aspx?TASK_ID={0}", taskId);
+                if (!string.IsNullOrEmpty(taskId))
+                {
+                    hlTask.NavigateUrl = string.Format("https://eip.tkfood.com.tw/UOF/wkf/formuse/viewform.aspx?TASK_ID={0}", taskId);
+                }
+                else
+                {
+                    hlTask.Visible = false;
+                }
             }
-            else
-            {
-                hlTask.Visible = false; // 或改成顯示文字 Label
-            }
-        }
 
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
+            // 2. 處理 Button2 (CommandArgument)
             Button btn2 = (Button)e.Row.FindControl("Button2");
             if (btn2 != null)
             {
+                // 如果後續沒有用到 param2 做其他事，這段動態物件宣告可考慮移除或整合
                 string cellValue2 = btn2.CommandArgument;
-                dynamic param2 = new { ID = cellValue2 }.ToExpando();
+                // dynamic param2 = new { ID = cellValue2 }.ToExpando(); 
             }
+
+            // 3. 處理下拉選單：大分類
+            BindGridDropDown(e.Row, "ddl_大分類", dtKinds1, "KINDS1");
+
+            // 4. 處理下拉選單：中分類
+            BindGridDropDown(e.Row, "ddl_中分類", dtKinds2, "KINDS2");
         }
+    }
 
-        // 判斷是否為資料列
-        if (e.Row.RowType == DataControlRowType.DataRow)
+    /// <summary>
+    /// 通用的 GridView 下拉選單繫結方法
+    /// </summary>
+    private void BindGridDropDown(GridViewRow row, string controlId, DataTable dataSource, string dataFieldName)
+    {
+        DropDownList ddl = (DropDownList)row.FindControl(controlId);
+        if (ddl != null && dataSource != null)
         {
-            DropDownList ddl = (DropDownList)e.Row.FindControl("ddl_中分類");
-            if (ddl != null && dtKinds2 != null)
+            // 繫結選項
+            ddl.DataSource = dataSource;
+            ddl.DataTextField = "NAMES";
+            ddl.DataValueField = "NAMES";
+            ddl.DataBind();
+
+            // 插入預設項
+            ddl.Items.Insert(0, new ListItem("--- 請選擇 ---", ""));
+
+            // 讀取並設定選取值
+            object val = DataBinder.Eval(row.DataItem, dataFieldName);
+            string currentVal = (val == null || val == DBNull.Value) ? "" : val.ToString().Trim();
+
+            if (!string.IsNullOrEmpty(currentVal))
             {
-                // 繫結選項
-                ddl.DataSource = dtKinds2;
-                ddl.DataTextField = "NAMES";
-                ddl.DataValueField = "NAMES";
-                ddl.DataBind();
-
-                // 加上一個「請選擇」或「無」的空白項 (選填)
-                ddl.Items.Insert(0, new ListItem("--- 請選擇 ---", ""));
-
-                // 讀取該筆資料庫真正的 KINDS2 值
-                string currentKinds2 = DataBinder.Eval(e.Row.DataItem, "KINDS2").ToString().Trim();
-
-                // 防呆：如果值存在於選單中才設定，避免 ArgumentOutOfRangeException
-                if (ddl.Items.FindByValue(currentKinds2) != null)
+                if (ddl.Items.FindByValue(currentVal) != null)
                 {
-                    ddl.SelectedValue = currentKinds2;
+                    ddl.SelectedValue = currentVal;
                 }
-                else if (!string.IsNullOrEmpty(currentKinds2))
+                else
                 {
-                    // 如果資料庫有值但不在下拉清單內，手動加進去避免報錯
-                    ddl.Items.Add(new ListItem(currentKinds2, currentKinds2));
-                    ddl.SelectedValue = currentKinds2;
-                }
-            }
-        }
-
-        // 判斷是否為資料列
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            DropDownList ddl = (DropDownList)e.Row.FindControl("ddl_大分類");
-            if (ddl != null && dtKinds1 != null)
-            {
-                // 繫結選項
-                ddl.DataSource = dtKinds1;
-                ddl.DataTextField = "NAMES";
-                ddl.DataValueField = "NAMES";
-                ddl.DataBind();
-
-                // 加上一個「請選擇」或「無」的空白項 (選填)
-                ddl.Items.Insert(0, new ListItem("--- 請選擇 ---", ""));
-
-                // 讀取該筆資料庫真正的 KINDS2 值
-                string currentKinds1 = DataBinder.Eval(e.Row.DataItem, "KINDS1").ToString().Trim();
-
-                // 防呆：如果值存在於選單中才設定，避免 ArgumentOutOfRangeException
-                if (ddl.Items.FindByValue(currentKinds1) != null)
-                {
-                    ddl.SelectedValue = currentKinds1;
-                }
-                else if (!string.IsNullOrEmpty(currentKinds1))
-                {
-                    // 如果資料庫有值但不在下拉清單內，手動加進去避免報錯
-                    ddl.Items.Add(new ListItem(currentKinds1, currentKinds1));
-                    ddl.SelectedValue = currentKinds1;
+                    // 如果值不在清單內，動態加入以避免報錯
+                    ddl.Items.Add(new ListItem(currentVal, currentVal));
+                    ddl.SelectedValue = currentVal;
                 }
             }
         }
