@@ -748,8 +748,33 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 colIndex = 1;
                 foreach (var item in map)
                 {
-                    ws.Cells[rowIndex, colIndex].Value = dr[item.Key];
-                    ws.Cells[rowIndex, colIndex].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    var targetCell = ws.Cells[rowIndex, colIndex];
+                    var originalValue = dr[item.Key];
+
+                    // 判斷是否為百分比欄位
+                    if (item.Key.Contains("百分比%"))
+                    {
+                        double numericValue;
+                        if (originalValue != DBNull.Value && double.TryParse(originalValue.ToString(), out numericValue))
+                        {
+                            targetCell.Value = numericValue;
+                        }
+                        else
+                        {
+                            targetCell.Value = originalValue;
+                        }
+                        // 強制顯示小數點後兩位
+                        targetCell.Style.Numberformat.Format = "0.00";
+                    }
+                    else
+                    {
+                        targetCell.Value = originalValue;
+                    }
+
+                    // 設定框線
+                    targetCell.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+
+                    // 【重點】所有處理完後才增加索引
                     colIndex++;
                 }
                 rowIndex++;
