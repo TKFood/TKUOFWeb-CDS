@@ -30,6 +30,9 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     String ROLES = null;
 
     DataTable EXCELDT1 = new DataTable();
+    // 宣告一個全域變數存清單
+    DataTable dtKinds1 = null;
+    DataTable dtKinds2 = null;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -55,6 +58,10 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
     }
     private void BindGrid()
     {
+        // 1. 先抓好「分類」的清單
+        dtKinds1 = GetKinds1List();
+        dtKinds2 = GetKinds2List();
+
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
@@ -175,6 +182,70 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             {
                 string cellValue2 = btn2.CommandArgument;
                 dynamic param2 = new { ID = cellValue2 }.ToExpando();
+            }
+        }
+
+        // 判斷是否為資料列
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddl_中分類");
+            if (ddl != null && dtKinds2 != null)
+            {
+                // 繫結選項
+                ddl.DataSource = dtKinds2;
+                ddl.DataTextField = "NAMES";
+                ddl.DataValueField = "NAMES";
+                ddl.DataBind();
+
+                // 加上一個「請選擇」或「無」的空白項 (選填)
+                ddl.Items.Insert(0, new ListItem("--- 請選擇 ---", ""));
+
+                // 讀取該筆資料庫真正的 KINDS2 值
+                string currentKinds2 = DataBinder.Eval(e.Row.DataItem, "KINDS2").ToString().Trim();
+
+                // 防呆：如果值存在於選單中才設定，避免 ArgumentOutOfRangeException
+                if (ddl.Items.FindByValue(currentKinds2) != null)
+                {
+                    ddl.SelectedValue = currentKinds2;
+                }
+                else if (!string.IsNullOrEmpty(currentKinds2))
+                {
+                    // 如果資料庫有值但不在下拉清單內，手動加進去避免報錯
+                    ddl.Items.Add(new ListItem(currentKinds2, currentKinds2));
+                    ddl.SelectedValue = currentKinds2;
+                }
+            }
+        }
+
+        // 判斷是否為資料列
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DropDownList ddl = (DropDownList)e.Row.FindControl("ddl_大分類");
+            if (ddl != null && dtKinds1 != null)
+            {
+                // 繫結選項
+                ddl.DataSource = dtKinds1;
+                ddl.DataTextField = "NAMES";
+                ddl.DataValueField = "NAMES";
+                ddl.DataBind();
+
+                // 加上一個「請選擇」或「無」的空白項 (選填)
+                ddl.Items.Insert(0, new ListItem("--- 請選擇 ---", ""));
+
+                // 讀取該筆資料庫真正的 KINDS2 值
+                string currentKinds1 = DataBinder.Eval(e.Row.DataItem, "KINDS1").ToString().Trim();
+
+                // 防呆：如果值存在於選單中才設定，避免 ArgumentOutOfRangeException
+                if (ddl.Items.FindByValue(currentKinds1) != null)
+                {
+                    ddl.SelectedValue = currentKinds1;
+                }
+                else if (!string.IsNullOrEmpty(currentKinds1))
+                {
+                    // 如果資料庫有值但不在下拉清單內，手動加進去避免報錯
+                    ddl.Items.Add(new ListItem(currentKinds1, currentKinds1));
+                    ddl.SelectedValue = currentKinds1;
+                }
             }
         }
     }
@@ -366,7 +437,64 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             Response.End();
         }
     }
+    private DataTable GetKinds1List()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        // 這裡放入您的 SQL 查詢
+        StringBuilder sql = new StringBuilder();
 
+        sql.AppendFormat(@"SELECT 
+                        [SERNO]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[UPKINDS]
+                        FROM[TKQC].[dbo].[TBUOFQC1002TRACES_KINDS]
+                        WHERE[KINDS] = 'KINDS1'
+                        ORDER BY[SERNO]");
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(sql.ToString()));
+
+        if (dt != null && dt.Rows.Count >= 1)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    private DataTable GetKinds2List()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        // 這裡放入您的 SQL 查詢
+        StringBuilder sql = new StringBuilder();
+
+         sql.AppendFormat(@"SELECT 
+                        [SERNO]
+                        ,[KINDS]
+                        ,[NAMES]
+                        ,[UPKINDS]
+                        FROM[TKQC].[dbo].[TBUOFQC1002TRACES_KINDS]
+                        WHERE[KINDS] = 'KINDS2'
+                        ORDER BY[SERNO]");
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(sql.ToString()));
+        
+        if(dt!=null && dt.Rows.Count>=1)
+        {
+            return dt;
+        }
+        else
+        {
+            return null;
+        }
+    }
     public void ADD_TBUOFQC1002TRACES(
         string DOC_NBR,
         string QCFrm002Date,

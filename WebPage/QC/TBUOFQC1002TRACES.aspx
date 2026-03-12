@@ -107,7 +107,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-                                            <Columns>
+                                        <%--    <Columns>
                                                 <asp:TemplateField HeaderText="客訴原因" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_客訴原因" runat="server" Text='<%# Bind("QCFrm002Abns") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
@@ -120,7 +120,7 @@
                                                         <asp:Label ID="Label_原因明細" runat="server" Text='<%# Bind("QCFrm002AbnscustomValue") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                            </Columns>
+                                            </Columns>--%>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="客人" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
@@ -157,16 +157,18 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="大分類" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="大分類" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_大分類" runat="server" Text='<%# Bind("KINDS1") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:DropDownList ID="ddl_大分類" runat="server" Width="100%">
+                                                        </asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="中分類" ItemStyle-Width="140px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="中分類" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_中分類" runat="server" Text='<%# Bind("KINDS2") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="5" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
+                                                        <asp:DropDownList ID="ddl_中分類" runat="server" Width="100%">
+                                                        </asp:DropDownList>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
