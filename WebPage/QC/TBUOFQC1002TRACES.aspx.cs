@@ -585,6 +585,93 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             throw;
         }
     }
+    public DataTable FIND_FORM_DETAILS(string DOC_NBR)
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+
+            cmdTxt.AppendFormat(@"                                
+                                WITH TEMP AS (
+                                SELECT 
+                                [TB_WKF_FORM].[FORM_NAME]
+                                ,[CURRENT_DOC]
+                                ,TB_WKF_TASK.[DOC_NBR]
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Date""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Date
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PRD""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002PRD
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abns""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Abns
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abns""]/@customValue)[1]', 'NVARCHAR(100)') AS QCFrm002AbnscustomValue
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abn""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Abn
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PNO""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002PNO
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Cmf""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Cmf
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002CUST""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002CUST
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002CU""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002CU
+                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002BP""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002BP
+                                , TB_WKF_TASK.TASK_ID
+                                , (CASE WHEN TASK_STATUS = '1' THEN '簽核中' ELSE '已簽核' END) TASK_STATUS
+                                , (CASE WHEN TASK_RESULT = '0' THEN '已結案' ELSE '進行中' END ) TASK_RESULT
+                                ,(SELECT TOP(1)
+                                [TB_EB_USER].NAME
+                                FROM[UOF].[dbo].[TB_WKF_TASK_NODE],[UOF].[dbo].[TB_EB_USER]
+                                    WHERE[TB_WKF_TASK_NODE].ORIGINAL_SIGNER=[TB_EB_USER].USER_GUID
+                                AND ISNULL([FINISH_TIME],'')=''
+                                AND TASK_ID = TB_WKF_TASK.TASK_ID
+                                ORDER BY[NODE_SEQ]) AS 'ORIGINAL_SIGNER'
+                                ,[TBUOFQC1002TRACES].[KINDS1]
+                                ,[TBUOFQC1002TRACES].[KINDS2]
+                                ,[TBUOFQC1002TRACES].[REASONS]
+                                ,[TBUOFQC1002TRACES].[IMPROVES]
+                                ,[TBUOFQC1002TRACES].[IMPROVESOWNER]
+                                ,REPLACE(CONVERT(VARCHAR,[TBUOFQC1002TRACES].[IMPROVESDATES], 111), '/', '-') IMPROVESDATES
+
+                                FROM[UOF].[dbo].TB_WKF_TASK
+                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
+                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
+                                LEFT JOIN[192.168.1.105].[TKQC].[dbo].[TBUOFQC1002TRACES] ON[TBUOFQC1002TRACES].[DOC_NBR]=TB_WKF_TASK.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
+                                WHERE[FORM_NAME] = '1002.客訴異常處理單'
+                                AND ISNULL(TASK_RESULT,'') NOT IN('1','2')
+
+                                )
+                                SELECT TEMP.*
+                                FROM TEMP
+                                WHERE 1=1
+                                AND [DOC_NBR]=@DOC_NBR
+
+
+
+            ");
+
+
+
+
+            m_db.AddParameter("@DOC_NBR", DOC_NBR);
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception EX)
+        {
+            return null;
+        }
+        finally
+        {
+
+        }
+
+    }
 
     public void ExportMultiTablesWithMapping(string YEARS)
     {
@@ -594,6 +681,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             DataTable dt_MONTHS = Get_MONTHS(YEARS);
             DataTable dt_KINDS = Get_KINDS(YEARS);
             DataTable dt_IMPROVESOWNER = Get_IMPROVESOWNER(YEARS);
+            DataTable dt_PRODUCTS = Get_PRODUCTS(YEARS);
             DataTable dt_DETAILS = Get_DETAILS(YEARS);
 
             var fileName = "報表_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
@@ -698,6 +786,23 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
                 //第6個表格
                 var map6 = new Dictionary<string, string> {
+            { "序號", "序號" },
+            { "品名", "品名" },
+            { "客訴件數", "已結客訴件數案總數" },
+            { "去年年度銷售金額", "去年年度銷售金額" },
+            { "每百萬銷售客訴件數", "每百萬銷售客訴件數" }
+        };
+                ws.Cells[currentRow, 1].Value = "【6、客訴商品排名】";
+                ws.Cells[currentRow, 1].Style.Font.Bold = true;
+                currentRow++;
+
+                currentRow = WriteTableToExcel(ws, dt_PRODUCTS, map6, currentRow);
+
+                // --- 加入間距 (空兩行) ---
+                currentRow += 2;
+
+                //第7個表格
+                var map7 = new Dictionary<string, string> {
             { "是否結案", "是否結案" },
             { "大分類", "大分類" },
             { "中分類", "中分類" },
@@ -713,11 +818,11 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             { "客訴內容", "客訴內容" },
             { "客訴分析", "客訴分析" }
         };
-                ws.Cells[currentRow, 1].Value = "【6、客訴明細】";
+                ws.Cells[currentRow, 1].Value = "【7、客訴明細】";
                 ws.Cells[currentRow, 1].Style.Font.Bold = true;
                 currentRow++;
 
-                currentRow = WriteTableToExcel(ws, dt_DETAILS, map6, currentRow);
+                currentRow = WriteTableToExcel(ws, dt_DETAILS, map7, currentRow);
 
                 // --- 加入間距 (空兩行) ---
                 currentRow += 2;
@@ -1095,6 +1200,80 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
     }
 
+    public DataTable Get_PRODUCTS(string YEARS)
+    {
+        int lastyears = Convert.ToInt32(YEARS) - 1;
+
+        // 直接指定 年, 月, 日
+        DateTime SDATES = new DateTime(lastyears, 1, 1);
+        DateTime EDATES = new DateTime(lastyears, 12, 31);
+
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            StringBuilder cmdTxt = new StringBuilder();
+
+            YEARS = YEARS.Substring(2, 2);
+
+            cmdTxt.AppendFormat(@"             
+                                SELECT TOP 10
+                                    -- 核心修正：在外層建立流水號排名
+                                    ROW_NUMBER() OVER (ORDER BY ISNULL(MAX(TEMP.MONEYS), 0) DESC) AS '序號'
+                                    ,[QCFrm002PRD] AS '品名'
+                                    ,COUNT([QCFrm002PRD]) AS '客訴件數'
+                                    ,ISNULL(MAX(TEMP.MONEYS), 0) AS '去年年度銷售金額'
+                                    ,CAST(COUNT([QCFrm002PRD]) * 1000000.0 / NULLIF(MAX(TEMP.MONEYS), 0) AS DECIMAL(10,2)) AS '每百萬銷售客訴件數'
+                                FROM [TKQC].[dbo].[TBUOFQC1002TRACES]
+                                LEFT JOIN (
+                                    SELECT 
+                                        MB002, 
+                                        SUM(LA017 - LA020) AS MONEYS
+                                    FROM [TK].dbo.SASLA WITH(NOLOCK)
+                                    INNER JOIN [TK].dbo.INVMB WITH(NOLOCK) ON LA005 = MB001
+                                    WHERE LA015 >= @SDATES AND LA015 <= @EDATES
+                                    GROUP BY MB002
+                                ) AS TEMP ON TEMP.MB002 = [TBUOFQC1002TRACES].[QCFrm002PRD]
+                                WHERE [DOC_NBR] >= 'QC1002260100001'
+                                  AND [DOC_NBR] LIKE '%'+@YEARS+'%'
+                                GROUP BY [QCFrm002PRD]
+                                -- 這裡的 ORDER BY 必須與 ROW_NUMBER() 的排序邏輯一致
+                                ORDER BY '序號' ASC;                   
+
+            ");
+
+
+
+
+            m_db.AddParameter("@YEARS", YEARS);
+            m_db.AddParameter("@SDATES", SDATES.ToString("yyyyMMdd"));
+            m_db.AddParameter("@EDATES", EDATES.ToString("yyyyMMdd"));
+
+            DataTable dt = new DataTable();
+
+            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+            if (dt != null && dt.Rows.Count >= 1)
+            {
+                return dt;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (Exception EX)
+        {
+            return null;
+        }
+        finally
+        {
+
+        }
+
+    }
+
     public DataTable Get_DETAILS(string YEARS)
     {
         try
@@ -1213,93 +1392,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
 
     }
 
-    public DataTable FIND_FORM_DETAILS(string DOC_NBR)
-    {
-        try
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
-            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-            StringBuilder cmdTxt = new StringBuilder();
-
-            cmdTxt.AppendFormat(@"                                
-                                WITH TEMP AS (
-                                SELECT 
-                                [TB_WKF_FORM].[FORM_NAME]
-                                ,[CURRENT_DOC]
-                                ,TB_WKF_TASK.[DOC_NBR]
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Date""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Date
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PRD""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002PRD
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abns""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Abns
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abns""]/@customValue)[1]', 'NVARCHAR(100)') AS QCFrm002AbnscustomValue
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Abn""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Abn
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PNO""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002PNO
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Cmf""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002Cmf
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002CUST""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002CUST
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002CU""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002CU
-                                ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002BP""]/@fieldValue)[1]', 'NVARCHAR(100)') AS QCFrm002BP
-                                , TB_WKF_TASK.TASK_ID
-                                , (CASE WHEN TASK_STATUS = '1' THEN '簽核中' ELSE '已簽核' END) TASK_STATUS
-                                , (CASE WHEN TASK_RESULT = '0' THEN '已結案' ELSE '進行中' END ) TASK_RESULT
-                                ,(SELECT TOP(1)
-                                [TB_EB_USER].NAME
-                                FROM[UOF].[dbo].[TB_WKF_TASK_NODE],[UOF].[dbo].[TB_EB_USER]
-                                    WHERE[TB_WKF_TASK_NODE].ORIGINAL_SIGNER=[TB_EB_USER].USER_GUID
-                                AND ISNULL([FINISH_TIME],'')=''
-                                AND TASK_ID = TB_WKF_TASK.TASK_ID
-                                ORDER BY[NODE_SEQ]) AS 'ORIGINAL_SIGNER'
-                                ,[TBUOFQC1002TRACES].[KINDS1]
-                                ,[TBUOFQC1002TRACES].[KINDS2]
-                                ,[TBUOFQC1002TRACES].[REASONS]
-                                ,[TBUOFQC1002TRACES].[IMPROVES]
-                                ,[TBUOFQC1002TRACES].[IMPROVESOWNER]
-                                ,REPLACE(CONVERT(VARCHAR,[TBUOFQC1002TRACES].[IMPROVESDATES], 111), '/', '-') IMPROVESDATES
-
-                                FROM[UOF].[dbo].TB_WKF_TASK
-                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
-                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
-                                LEFT JOIN[192.168.1.105].[TKQC].[dbo].[TBUOFQC1002TRACES] ON[TBUOFQC1002TRACES].[DOC_NBR]=TB_WKF_TASK.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
-                                WHERE[FORM_NAME] = '1002.客訴異常處理單'
-                                AND ISNULL(TASK_RESULT,'') NOT IN('1','2')
-
-                                )
-                                SELECT TEMP.*
-                                FROM TEMP
-                                WHERE 1=1
-                                AND [DOC_NBR]=@DOC_NBR
-
-
-
-            ");
-
-
-
-
-            m_db.AddParameter("@DOC_NBR", DOC_NBR);
-
-            DataTable dt = new DataTable();
-
-            dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
-
-            if (dt != null && dt.Rows.Count >= 1)
-            {
-                return dt;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        catch (Exception EX)
-        {
-            return null;
-        }
-        finally
-        {
-
-        }
-
-    }
+  
 
     public void MsgBox(String ex, Page pg, Object obj)
     {
