@@ -676,7 +676,8 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                 //第6個表格
                 var map6 = new Dictionary<string, string> {
             { "是否結案", "是否結案" },
-            { "客訴分類", "客訴分類" },
+            { "大分類", "大分類" },
+            { "中分類", "中分類" },
             { "客訴編號", "客訴編號" },
             { "客訴日期", "客訴日期" },
             { "客訴商品", "客訴商品" },
@@ -776,9 +777,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                                         -- 處理天數：僅在已結案時計算，否則給 NULL
                                         ,CASE WHEN TASK_RESULT = '0' THEN DATEDIFF(DAY, TB_WKF_TASK.BEGIN_TIME, TB_WKF_TASK.END_TIME) ELSE NULL END AS 結案處理天數
                                         ,[CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Date""]/@fieldValue)[1]', 'NVARCHAR(100)') AS 客訴日期
-                                        , (CASE WHEN TASK_RESULT = '0' THEN '已結案' ELSE '進行中' END) AS 是否結案
-                                          ,[TBUOFQC1002TRACES].[KINDS]
-                                    AS 客訴分類
+                                        , (CASE WHEN TASK_RESULT = '0' THEN '已結案' ELSE '進行中' END) AS 是否結案                                   
                                         -- 逾期天數：僅在進行中且已逾期時計算，否則給 NULL（若給 0 會拉低平均）
                                         ,(CASE
                                             WHEN ISNULL(TASK_RESULT,'1') <> '0' AND DATEDIFF(DAY, [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE()) > 0 
@@ -868,50 +867,51 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             YEARS = YEARS.Substring(2, 2);
 
             cmdTxt.AppendFormat(@" 
-                                WITH TEMP AS (
-                                    SELECT 
-                                        [TB_WKF_FORM].[FORM_NAME]
-                                        ,TB_WKF_TASK.[DOC_NBR]
-                                        ,CAST([CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Date""]/@fieldValue)[1]', 'NVARCHAR(100)') AS DATE) AS 客訴日期
-                                        ,[TBUOFQC1002TRACES].[KINDS] AS 客訴分類
-                                    FROM[UOF].[dbo].TB_WKF_TASK WITH(NOLOCK)
-                                    LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
-                                    LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
-                                    LEFT JOIN[192.168.1.105].[TKQC].[dbo].[TBUOFQC1002TRACES] ON[TBUOFQC1002TRACES].[DOC_NBR] = TB_WKF_TASK.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
-                                    WHERE[FORM_NAME] = '1002.客訴異常處理單'
-                                      AND ISNULL(TASK_RESULT, '') NOT IN('1', '2')
-                                      AND TB_WKF_TASK.[DOC_NBR] >= 'QC1002260100001'
-                                      AND TB_WKF_TASK.[DOC_NBR] LIKE '%'+@YEARS+'%'
-                                ),
-                                AGG_DATA AS(
-                                    SELECT
-                                        ISNULL(客訴分類, '未分類') AS 客訴分類
-                                        , COUNT(*) AS 年度累積件數
-                                         , SUM(CASE WHEN MONTH(客訴日期) = MONTH(GETDATE()) THEN 1 ELSE 0 END) AS 本月件數
-                                          , SUM(COUNT(*)) OVER() AS 年度總分母
-                                           , SUM(SUM(CASE WHEN MONTH(客訴日期) = MONTH(GETDATE()) THEN 1 ELSE 0 END)) OVER() AS 本月總分母
-                                    FROM TEMP
-                                    GROUP BY 客訴分類
-                                )
+                               WITH TEMP AS (
+                                SELECT 
+                                    [TB_WKF_FORM].[FORM_NAME]
+                                    ,TB_WKF_TASK.[DOC_NBR]
+                                    ,CAST([CURRENT_DOC].value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002Date""]/@fieldValue)[1]', 'NVARCHAR(100)') AS DATE) AS 客訴日期                                  
+                                    ,[TBUOFQC1002TRACES].[KINDS1]  AS 大分類
+                                    ,[TBUOFQC1002TRACES].[KINDS2] AS 中分類
+                                FROM[UOF].[dbo].TB_WKF_TASK WITH(NOLOCK)
+                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
+                                LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
+                                LEFT JOIN[192.168.1.105].[TKQC].[dbo].[TBUOFQC1002TRACES] ON[TBUOFQC1002TRACES].[DOC_NBR] = TB_WKF_TASK.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS
+                                WHERE[FORM_NAME] = '1002.客訴異常處理單'
+                                    AND ISNULL(TASK_RESULT, '') NOT IN('1', '2')
+                                    AND TB_WKF_TASK.[DOC_NBR] >= 'QC1002260100001'
+                                    AND TB_WKF_TASK.[DOC_NBR] LIKE '%'+@YEARS+'%'
+                            ),
+                            AGG_DATA AS(
                                 SELECT
-                                    CASE WHEN(GROUPING(客訴分類) = 1) THEN '合計' ELSE 客訴分類 END AS 客訴分類
-                                    ,SUM(年度累積件數) AS 年度累積件數
-                                    , CASE
-                                        WHEN GROUPING(客訴分類) = 1 THEN 100.00
-                                        WHEN MAX(年度總分母) = 0 THEN 0.00
-                                        ELSE CAST(SUM(年度累積件數) * 100.0 / MAX(年度總分母) AS DECIMAL(5,2)) 
-                                     END AS '年度百分比%'
-                                    ,SUM(本月件數) AS 本月件數
-                                    , CASE
-                                        --修正點：合計列若總件數為0則顯示0，否則100
-                                       WHEN GROUPING(客訴分類) = 1 THEN(CASE WHEN MAX(本月總分母) = 0 THEN 0.00 ELSE 100.00 END)
-                                       -- 修正點：若本月件數為0，百分比直接給0
-                                       WHEN SUM(本月件數) = 0 OR MAX(本月總分母) = 0 THEN 0.00
-                                        ELSE CAST(SUM(本月件數) * 100.0 / MAX(本月總分母) AS DECIMAL(5,2)) 
-                                     END AS '本月百分比%'
-                                FROM AGG_DATA
-                                GROUP BY ROLLUP(客訴分類)
-                                ORDER BY GROUPING(客訴分類), 年度累積件數 DESC;
+                                    ISNULL(大分類, '未分類') AS 大分類
+                                    , COUNT(*) AS 年度累積件數
+                                        , SUM(CASE WHEN MONTH(客訴日期) = MONTH(GETDATE()) THEN 1 ELSE 0 END) AS 本月件數
+                                        , SUM(COUNT(*)) OVER() AS 年度總分母
+                                        , SUM(SUM(CASE WHEN MONTH(客訴日期) = MONTH(GETDATE()) THEN 1 ELSE 0 END)) OVER() AS 本月總分母
+                                FROM TEMP
+                                GROUP BY 大分類
+                            )
+                            SELECT
+                                CASE WHEN(GROUPING(大分類) = 1) THEN '合計' ELSE 大分類 END AS 客訴分類
+                                ,SUM(年度累積件數) AS 年度累積件數
+                                , CASE
+                                    WHEN GROUPING(大分類) = 1 THEN 100.00
+                                    WHEN MAX(年度總分母) = 0 THEN 0.00
+                                    ELSE CAST(SUM(年度累積件數) * 100.0 / MAX(年度總分母) AS DECIMAL(5,2)) 
+                                    END AS '年度百分比%'
+                                ,SUM(本月件數) AS 本月件數
+                                , CASE
+                                    --修正點：合計列若總件數為0則顯示0，否則100
+                                    WHEN GROUPING(大分類) = 1 THEN(CASE WHEN MAX(本月總分母) = 0 THEN 0.00 ELSE 100.00 END)
+                                    -- 修正點：若本月件數為0，百分比直接給0
+                                    WHEN SUM(本月件數) = 0 OR MAX(本月總分母) = 0 THEN 0.00
+                                    ELSE CAST(SUM(本月件數) * 100.0 / MAX(本月總分母) AS DECIMAL(5,2)) 
+                                    END AS '本月百分比%'
+                            FROM AGG_DATA
+                            GROUP BY ROLLUP(大分類)
+                            ORDER BY GROUPING(大分類), 年度累積件數 DESC;
 
 
             ");
@@ -982,9 +982,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                                     WHERE[TB_WKF_TASK_NODE].ORIGINAL_SIGNER=[TB_EB_USER].USER_GUID
                                 AND ISNULL([FINISH_TIME],'')=''
                                 AND TASK_ID = TB_WKF_TASK.TASK_ID
-                                ORDER BY[NODE_SEQ]) AS 目前簽核人
-                                ,[TBUOFQC1002TRACES].[KINDS]
-                                    AS 客訴分類
+                                ORDER BY[NODE_SEQ]) AS 目前簽核人                               
                                 ,[TBUOFQC1002TRACES].[REASONS]
                                     AS 客訴分類明細
                                 ,[TBUOFQC1002TRACES].[IMPROVES]
@@ -1061,7 +1059,7 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
             YEARS = YEARS.Substring(2, 2);
 
             cmdTxt.AppendFormat(@" 
-                                WITH TEMP AS (
+                               WITH TEMP AS (
                                 SELECT 
                                 [TB_WKF_FORM].[FORM_NAME]
                                 ,[CURRENT_DOC]
@@ -1087,8 +1085,10 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                                 AND ISNULL([FINISH_TIME],'')=''
                                 AND TASK_ID = TB_WKF_TASK.TASK_ID
                                 ORDER BY[NODE_SEQ]) AS 目前簽核人
-                                ,[TBUOFQC1002TRACES].[KINDS]
-                                    AS 客訴分類
+                                ,[TBUOFQC1002TRACES].[KINDS1]
+                                    AS 大分類
+                                ,[TBUOFQC1002TRACES].[KINDS2]
+                                    AS 中分類
                                 ,[TBUOFQC1002TRACES].[REASONS]
                                     AS 客訴分類明細
                                 ,[TBUOFQC1002TRACES].[IMPROVES]
@@ -1098,11 +1098,11 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                                 ,[TBUOFQC1002TRACES].[IMPROVESDATES]
                                     AS 改善完成日
                                 , DATEDIFF(DAY,  [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE()) AS 改善天數
-                                 ,(CASE 
-                                     WHEN ISNULL(TASK_RESULT, '1') <> '0' AND DATEDIFF(DAY, [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE()) > 0 
-                                     THEN DATEDIFF(DAY, [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE()) 
-                                     ELSE 0
-                                 END) AS 逾期天數
+                                    ,(CASE
+                                        WHEN ISNULL(TASK_RESULT, '1') <> '0' AND DATEDIFF(DAY, [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE()) > 0
+                                        THEN DATEDIFF(DAY, [TBUOFQC1002TRACES].[IMPROVESDATES], GETDATE())
+                                        ELSE 0
+                                    END) AS 逾期天數
                                 FROM[UOF].[dbo].TB_WKF_TASK
                                 LEFT JOIN[UOF].[dbo].[TB_WKF_FORM_VERSION] ON[TB_WKF_FORM_VERSION].FORM_VERSION_ID = TB_WKF_TASK.FORM_VERSION_ID
                                 LEFT JOIN[UOF].[dbo].[TB_WKF_FORM] ON[TB_WKF_FORM].FORM_ID = [TB_WKF_FORM_VERSION].FORM_ID
@@ -1110,27 +1110,29 @@ public partial class CDS_WebPage_QC_TBUOFQC1002TRACES : Ede.Uof.Utility.Page.Bas
                                 WHERE[FORM_NAME] = '1002.客訴異常處理單'
                                 AND ISNULL(TASK_RESULT,'') NOT IN('1','2')
                                 AND TB_WKF_TASK.[DOC_NBR]>='QC1002260100001'
-                                AND TB_WKF_TASK.[DOC_NBR] LIKE '%'+@YEARS+'%'
+                                     AND TB_WKF_TASK.[DOC_NBR] LIKE '%'+@YEARS+'%'
                                 )
-                                
-                                SELECT 
+
+
+                                SELECT
                                 是否結案
-                                ,客訴分類
-                                ,客訴編號
-                                ,客訴日期
-                                ,客訴商品
-                                ,客訴批號
-                                ,客訴分類明細
-                                ,改善方案
-                                ,負責單位
-                                ,改善完成日
-                                ,客人
-                                ,客訴內容
-                                ,客訴分析
+                                , 大分類
+                                , 中分類
+                                , 客訴編號
+                                , 客訴日期
+                                , 客訴商品
+                                , 客訴批號
+                                , 客訴分類明細
+                                , 改善方案
+                                , 負責單位
+                                , 改善完成日
+                                , 客人
+                                , 客訴內容
+                                , 客訴分析
 
                                 FROM TEMP
                                 WHERE 1=1
-                                ORDER BY 是否結案 DESC ,客訴分類,客訴編號
+                                ORDER BY 是否結案 DESC, 大分類, 客訴編號
 
             ");
 
