@@ -38,6 +38,8 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="代工">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="大陸製包材">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="資料">
                     </telerik:RadTab>
                     <telerik:RadTab Text="新增">
@@ -96,7 +98,7 @@
                                                 <asp:TemplateField HeaderText="交期" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_交期" runat="server" Text='<%# Bind("DELIVERYDATS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>                                             
+                                                    </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
@@ -154,7 +156,7 @@
                                                 <asp:TemplateField HeaderText="交期" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_交期" runat="server" Text='<%# Bind("DELIVERYDATS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>                                             
+                                                    </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
@@ -166,7 +168,7 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView5" runat="server">
                     <div id="tabs-5">
-                         <table class="PopTable">
+                        <table class="PopTable">
                             <tr>
                                 <td colspan="2" class="PopTableRightTD">
                                     <div style="overflow-x: auto; width: 100%">
@@ -212,7 +214,7 @@
                                                 <asp:TemplateField HeaderText="交期" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_交期" runat="server" Text='<%# Bind("DELIVERYDATS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>                                             
+                                                    </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
@@ -224,7 +226,7 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView6" runat="server">
                     <div id="tabs-6">
-                         <table class="PopTable">
+                        <table class="PopTable">
                             <tr>
                                 <td colspan="2" class="PopTableRightTD">
                                     <div style="overflow-x: auto; width: 100%">
@@ -270,7 +272,7 @@
                                                 <asp:TemplateField HeaderText="交期" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_交期" runat="server" Text='<%# Bind("DELIVERYDATS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>                                             
+                                                    </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
@@ -282,7 +284,7 @@
                 </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView7" runat="server">
                     <div id="tabs-7">
-                         <table class="PopTable">
+                        <table class="PopTable">
                             <tr>
                                 <td colspan="2" class="PopTableRightTD">
                                     <div style="overflow-x: auto; width: 100%">
@@ -328,7 +330,65 @@
                                                 <asp:TemplateField HeaderText="交期" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_交期" runat="server" Text='<%# Bind("DELIVERYDATS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
-                                                    </ItemTemplate>                                             
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </Fast:Grid>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView8" runat="server">
+                    <div id="tabs-8">
+                        <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid7" OnRowDataBound="Grid7_RowDataBound" OnRowCommand="Grid7_RowCommand" runat="server" OnBeforeExport="OnBeforeExport7" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource7" OnPageIndexChanging="grid_PageIndexChanging7">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="ID" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_ID" runat="server" Text='<%# Bind("ID") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="類別" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_類別" runat="server" Text='<%# Bind("KINDS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_品號" runat="server" Text='<%# Bind("MB001") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="品名" ItemStyle-Width="260px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_品名" runat="server" Text='<%# Bind("MB002") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="規格" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_規格" runat="server" Text='<%# Bind("MB003") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="最低採購量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_最低採購量" runat="server" Text='<%# Bind("MOQ") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="單位" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_單位" runat="server" Text='<%# Bind("UNITS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="交期" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_交期" runat="server" Text='<%# Bind("DELIVERYDATS") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
