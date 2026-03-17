@@ -45,6 +45,8 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
             BindGrid5();
             BindGrid6();
             BindGrid7();
+            BindGrid8();
+            BindGrid9();
         }
     }
 
@@ -687,6 +689,136 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
 
     }
 
+    private void BindGrid8()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+
+        cmdTxt.AppendFormat(@"                              
+                            SELECT 
+                            [ID]
+                            ,[KINDS]
+                            ,[MB001]
+                            ,[MB002]
+                            ,[MB003]
+                            ,[MOQ]
+                            ,[UNITS]
+                            ,[DELIVERYDATS]
+                            FROM [TKPUR].[dbo].[UOF_PUR_INVMB_DELIVERY]
+                            WHERE 1=1
+                            AND [KINDS]='數位袋'
+                            ORDER BY [KINDS],[ID]
+
+                            ");
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid8.DataSource = dt;
+        Grid8.DataBind();
+    }
+
+    protected void grid_PageIndexChanging8(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid8_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+    }
+
+    protected void Grid8_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        // 過濾無關的 Command
+        if (e.CommandName == "Page" || e.CommandName == "Sort") return;
+
+        int rowIndex = Convert.ToInt32(e.CommandArgument);
+
+    }
+
+    public void OnBeforeExport8(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+    }
+
+    private void BindGrid9()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder QUERYS1 = new StringBuilder();
+        StringBuilder QUERYS2 = new StringBuilder();
+        StringBuilder QUERYS3 = new StringBuilder();
+
+
+        cmdTxt.AppendFormat(@"                              
+                            SELECT 
+                            [ID]
+                            ,[KINDS]
+                            ,[MB001]
+                            ,[MB002]
+                            ,[MB003]
+                            ,[MOQ]
+                            ,[UNITS]
+                            ,[DELIVERYDATS]
+                            FROM [TKPUR].[dbo].[UOF_PUR_INVMB_DELIVERY]
+                            WHERE 1=1
+                            AND [KINDS]='打樣'
+                            ORDER BY [KINDS],[ID]
+
+                            ");
+
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid9.DataSource = dt;
+        Grid9.DataBind();
+    }
+
+    protected void grid_PageIndexChanging9(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid();
+    }
+    protected void Grid9_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+    }
+
+    protected void Grid9_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        // 過濾無關的 Command
+        if (e.CommandName == "Page" || e.CommandName == "Sort") return;
+
+        int rowIndex = Convert.ToInt32(e.CommandArgument);
+
+    }
+
+    public void OnBeforeExport9(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+
+    }
+
     private DataTable GetKindsList()
     {
         try
@@ -866,6 +998,8 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
         BindGrid5();
         BindGrid6();
         BindGrid7();
+        BindGrid8();
+        BindGrid9();
 
     }
     protected void btnADD_Click(object sender, EventArgs e)
@@ -898,6 +1032,8 @@ public partial class CDS_WebPage_PUR_TK_UOF_PUR_INVMB_DELIVERY : Ede.Uof.Utility
         BindGrid5();
         BindGrid6();
         BindGrid7();
+        BindGrid8();
+        BindGrid9();
     }
 
     #endregion
