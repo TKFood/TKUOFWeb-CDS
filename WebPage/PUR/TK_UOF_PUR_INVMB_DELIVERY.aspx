@@ -44,7 +44,7 @@
                     </telerik:RadTab>
                     <telerik:RadTab Text="打樣">
                     </telerik:RadTab>
-                    <telerik:RadTab Text="資料">
+                    <telerik:RadTab Text="資料/修改/刪除">
                     </telerik:RadTab>
                     <telerik:RadTab Text="新增">
                     </telerik:RadTab>
@@ -595,7 +595,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Button ID="Button2" runat="server" Text="更新" CommandName="Button2" ForeColor="Blue" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                        <asp:Button ID="Button2" runat="server" Text="修改" CommandName="Button2" ForeColor="Blue" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                         <br />
                                                         <div style="height: 5px;"></div>
                                                         <asp:Button ID="Button3" runat="server" Text="刪除" CommandName="Button3" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
