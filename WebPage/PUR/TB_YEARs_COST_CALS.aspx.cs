@@ -63,13 +63,13 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
                                 -- 小計列不顯示年度
                                 CASE WHEN GROUPING([ID]) = 0 THEN [年度] ELSE '' END AS [年度],
                                 [類別],    
-                                CASE WHEN GROUPING([ID]) = 0 THEN AVG([營業成本百分比a]) ELSE NULL END  AS [營業成本百分比a],    
+                                CASE WHEN GROUPING([ID]) = 0 THEN AVG([營業成本百分比a]) ELSE NULL END  AS [營業成本百分比],    
                                 -- 修正點：如果是小計或合計列 (GROUPING = 1)，明細顯示空字串
                                 CASE WHEN GROUPING([ID]) = 0 THEN MAX([明細]) ELSE '' END AS [明細],     
-                                CASE WHEN GROUPING([類別]) <> 1 THEN SUM([進貨金額佔類別平均%b]) ELSE NULL END AS [進貨金額佔類別平均%b],
-                                CASE WHEN GROUPING([ID]) = 0 THEN SUM([調漲增加(減少)c]) ELSE NULL END   AS [調漲增加(減少)c],    
+                                CASE WHEN GROUPING([類別]) <> 1 THEN SUM([進貨金額佔類別平均%b]) ELSE NULL END AS [進貨金額佔類別平均],
+                                CASE WHEN GROUPING([ID]) = 0 THEN SUM([調漲增加(減少)c]) ELSE NULL END   AS [調漲增加減少],    
                                 -- 計算 d 欄位的加總
-                                SUM([影響成本率增加%  d=a*b*c]) AS [影響成本率增加% d=a*b*c]  
+                                SUM([影響成本率增加%  d=a*b*c]) AS [影響成本率增加]  
 
                             FROM [TKRESEARCH].[dbo].[TB_YEARS_COST_CALS]
                             WHERE [年度] = '2025'
