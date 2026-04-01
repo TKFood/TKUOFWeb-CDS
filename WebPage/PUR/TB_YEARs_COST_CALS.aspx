@@ -36,6 +36,13 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label1" runat="server" Text="年度"></asp:Label>
+                                    <asp:TextBox ID="TextBox_YEARS" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label_Todays" runat="server" Text=""></asp:Label>
                                 </td>
@@ -82,7 +89,7 @@
                                                         <asp:Label ID="Label_營業成本百分比" runat="server" Text='<%# Bind("營業成本百分比") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="明細" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="明細" ItemStyle-Width="400px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_明細" runat="server" Text='<%# Bind("明細") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
@@ -94,7 +101,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="調漲增加(減少)c" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                         <asp:Label ID="Label_調漲增加減少" runat="server" Text='<%# Bind("調漲增加減少") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label_調漲增加減少" runat="server" Text='<%# Bind("調漲增加減少") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="影響成本率增加% d=a*b*c" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">

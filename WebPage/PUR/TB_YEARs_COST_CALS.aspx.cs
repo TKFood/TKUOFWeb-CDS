@@ -37,11 +37,17 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
 
         if (!IsPostBack)
         {
+            SETDATE();
             BindGrid();
         }
     }
 
     #region FUNCTION
+    public void SETDATE()
+    {
+        int last_years = DateTime.Now.Year - 1;
+        TextBox_YEARS.Text= last_years.ToString();
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -51,7 +57,17 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
         StringBuilder QUERYS1 = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
-  
+
+        if(!string.IsNullOrEmpty(TextBox_YEARS.Text))
+        {
+            QUERYS1.AppendFormat(@" AND  [年度] = '{0}'", TextBox_YEARS.Text);
+        }
+        else
+        {
+            QUERYS1.AppendFormat(@"");
+        }
+
+       
 
         cmdTxt.AppendFormat(@"   
                             SELECT 
@@ -72,7 +88,8 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
                                 SUM([影響成本率增加%  d=a*b*c]) AS [影響成本率增加]  
 
                             FROM [TKRESEARCH].[dbo].[TB_YEARS_COST_CALS]
-                            WHERE [年度] = '2025'
+                            WHERE 1=1
+                            {0}
                             GROUP BY GROUPING SETS (
                                 ([類別], [ID], [年度]), -- 明細層
                                 ([類別]),               -- 類別小計層
@@ -85,7 +102,7 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
                                 [ID];
 
 
-                            ");
+                            ", QUERYS1.ToString());
 
 
 
