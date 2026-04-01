@@ -204,8 +204,7 @@
                                             </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="最新更新日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        Button7
+                                                    <ItemTemplate>                                                       
                                                         <asp:Label ID="Label_更新日" runat="server" Text='<%# Bind("更新日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
