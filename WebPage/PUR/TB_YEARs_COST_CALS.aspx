@@ -86,7 +86,10 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="營業成本百分比a" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_營業成本百分比" runat="server" Text='<%# Bind("營業成本百分比") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label_營業成本百分比" runat="server"
+                                                            Text='<%# Bind("營業成本百分比", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: block;">
+                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="明細" ItemStyle-Width="400px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
