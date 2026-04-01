@@ -99,17 +99,26 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="進貨金額佔類別平均%b" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_進貨金額佔類別平均" runat="server" Text='<%# Bind("進貨金額佔類別平均") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label_進貨金額佔類別平均" runat="server"
+                                                            Text='<%# Bind("進貨金額佔類別平均", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: block;">
+                                                        </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="調漲增加(減少)c" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_調漲增加減少" runat="server" Text='<%# Bind("調漲增加減少") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label_調漲增加減少" runat="server"
+                                                            Text='<%# Bind("調漲增加減少", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: block;">
+                                                        </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="影響成本率增加% d=a*b*c" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label1_影響成本率增加" runat="server" Text='<%# Bind("影響成本率增加") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label1_影響成本率增加" runat="server"
+                                                            Text='<%# Bind("影響成本率增加", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: block;">
+                                                        </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
