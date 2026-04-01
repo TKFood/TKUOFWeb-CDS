@@ -127,13 +127,43 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-
+            Button Grid1Button1 = (Button)e.Row.FindControl("Grid1Button1");
         }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-       
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid1Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txt_調漲增加減少");
+                string newTextValue = txtNewField.Text.Trim();
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("Label_ID");
+                string id = txtid.Text;
+
+                UPDATE_TB_YEARS_COST_CALS(id, newTextValue);
+
+                MsgBox(id + " 完成", this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+            }
+        }
     }
 
 
@@ -147,6 +177,36 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
     public void SETEXCEL()
     {
 
+    }
+
+    public void UPDATE_TB_YEARS_COST_CALS(string ID,string newTextValue)
+    {
+        try
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            string cmdTxt = @"   ";
+
+
+            cmdTxt = @"
+                UPDATE  [TKRESEARCH].[dbo].[TB_YEARS_COST_CALS]
+                SET [調漲增加(減少)c]=@newTextValue
+                ,[影響成本率增加%  d=a*b*c]=[營業成本百分比a]*[進貨金額佔類別平均%b]/1000*@newTextValue
+                WHERE [ID]=@ID
+                        ";
+
+
+            m_db.AddParameter("@ID", ID);
+            m_db.AddParameter("@newTextValue", newTextValue);
+
+            m_db.ExecuteNonQuery(cmdTxt);
+        }
+        catch(Exception EX)
+        {
+
+        }
+        
     }
     public void MsgBox(String ex, Page pg, Object obj)
     {

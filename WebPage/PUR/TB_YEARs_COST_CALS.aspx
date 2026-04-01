@@ -19,6 +19,14 @@
             .big-bold-button:hover {
                 background-color: #0056b3;
             }
+
+
+        /* 4. 不同功能的顏色調整（顯眼且好看） */
+        .btn-add {
+            background: #4a90e2;
+            color: white !important;
+        }
+        /* 優雅藍 */
     </style>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
@@ -105,12 +113,12 @@
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="調漲增加(減少)c" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="調漲增加(減少%)c" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Right">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_調漲增加減少" runat="server"
-                                                            Text='<%# Bind("調漲增加減少", "{0:N2}") %>'
-                                                            Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: block;">
-                                                        </asp:Label>
+                                                        <asp:TextBox ID="txt_調漲增加減少" runat="server"
+                                                            Text='<%# Bind("調漲增加減少", "{0:F2}") %>'
+                                                            CssClass="form-control"
+                                                            Style="width: 100%; text-align: right;"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="影響成本率增加% d=a*b*c" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -119,6 +127,14 @@
                                                             Text='<%# Bind("影響成本率增加", "{0:N2}") %>'
                                                             Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: block;">
                                                         </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="修改計算" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Grid1Button1" runat="server" Text="修改計算" CommandName="Grid1Button1"
+                                                            CommandArgument='<%# Container.DataItemIndex %>'
+                                                            OnClientClick="return confirm('確定？');"
+                                                            CssClass="grid-btn btn-add" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
