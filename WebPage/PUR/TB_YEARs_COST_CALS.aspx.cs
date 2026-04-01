@@ -125,9 +125,42 @@ public partial class CDS_WebPage_PUR_TB_YEARS_COST_CALS : Ede.Uof.Utility.Page.B
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        // 1. 確保目前處理的是資料列 (排除 Header 和 Footer)
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            Button Grid1Button1 = (Button)e.Row.FindControl("Grid1Button1");
+            // 2. 取得「年度」欄位的值 (假設資料庫欄位名稱為 "YEARS")
+            // 使用 DataBinder.Eval 可以安全取得該列的原始資料
+            object rowData = DataBinder.Eval(e.Row.DataItem, "年度");
+            string yearValue = (rowData == null) ? "" : rowData.ToString().Trim();
+
+            // 3. 尋找該列中的 Button1 控制項
+            Button btn1 = (Button)e.Row.FindControl("Grid1Button1");
+            TextBox txtNewField = (TextBox)e.Row.FindControl("txt_調漲增加減少");
+            // 3. 判斷年度是否為空
+            if (string.IsNullOrEmpty(yearValue) || yearValue == "0")
+            {
+                // 變更整列底色為橘色 (Orange)
+                e.Row.BackColor = System.Drawing.Color.Orange;
+
+                // 如果想要字體變粗或顏色變深也可以順便設定
+                // e.Row.ForeColor = System.Drawing.Color.White; 
+            }
+
+            if (btn1 != null)
+            {
+                // 4. 如果年度是空的、NULL 或字串 "0"，就隱藏按鈕
+                if (string.IsNullOrEmpty(yearValue) || yearValue == "0")
+                {
+                    btn1.Visible = false;
+                    txtNewField.Visible = false;
+                    // 或者用 btn1.Style["display"] = "none";
+                }
+                else
+                {
+                    btn1.Visible = true;
+                    txtNewField.Visible = true;
+                }
+            }
         }
     }
 
