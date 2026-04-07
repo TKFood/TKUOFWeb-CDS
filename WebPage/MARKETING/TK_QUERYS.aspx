@@ -67,26 +67,69 @@
                     <div id="tabs-4">
                         <table class="PopTable">
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label10" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label10" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
+                                <td class="PopTableLeftTD">
                                     <asp:Label ID="Label11" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                    
                                     <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label12" runat="server" Text="商品品號/品名: "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label12" runat="server" Text="門市: "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox11" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label14" runat="server" Text="會員: "></asp:Label>
+                                </td>
+                                <td>                                   
+                                    <asp:TextBox ID="TextBox12" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                      <asp:Label ID="Label15" runat="server" Text="發票: "></asp:Label>
+                                </td>
+                                <td>                                  
+                                    <asp:TextBox ID="TextBox13" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label16" runat="server" Text="商品品號/品名: "></asp:Label>
+                                </td>
+                                <td>                                   
+                                    <asp:TextBox ID="TextBox14" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label17" runat="server" Text="付款ID: "></asp:Label>
+                                </td>
+                                <td>                                   
+                                    <asp:TextBox ID="TextBox15" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label18" runat="server" Text="特價代號: "></asp:Label>
+                                </td>
+                                <td>                                   
+                                    <asp:TextBox ID="TextBox16" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>                           
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
@@ -107,7 +150,7 @@
                             <tr>
                                 <td colspan="2" class="PopTableRightTD">
                                     <div style="overflow-x: auto; width: 100%">
-                                        <Fast:Grid ID="Grid4" OnRowDataBound="Grid4_RowDataBound" OnRowCommand="Grid4_RowCommand" runat="server" OnBeforeExport="OnBeforeExport4" meta:resourcekey="Grid1Resource4" OnPageIndexChanging="grid_PageIndexChanging4" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor=""  ShowFooter="True" EnableViewState="False">
+                                        <Fast:Grid ID="Grid4" OnRowDataBound="Grid4_RowDataBound" OnRowCommand="Grid4_RowCommand" runat="server" OnBeforeExport="OnBeforeExport4" meta:resourcekey="Grid1Resource4" OnPageIndexChanging="grid_PageIndexChanging4" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" ShowFooter="True" EnableViewState="False">
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
@@ -116,7 +159,7 @@
                                                         <asp:Label ID="Label_門市" runat="server" Text='<%# Bind("門市") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                              
+
                                             </Columns>
                                         </Fast:Grid>
                                     </div>
@@ -125,27 +168,30 @@
                         </table>
                     </div>
                 </telerik:RadPageView>
-                <telerik:RadPageView ID="RadPageView2" runat="server" >
+                <telerik:RadPageView ID="RadPageView2" runat="server">
                     <div id="tabs-2">
                         <table class="PopTable">
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label5" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label5" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label6" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                      <asp:Label ID="Label6" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                  
                                     <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label7" runat="server" Text="商品品號/品名: "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label7" runat="server" Text="商品品號/品名: "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox6" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
@@ -221,23 +267,26 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label1" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                      <asp:Label ID="Label1" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                  
                                     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label3" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label3" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label4" runat="server" Text="滿額金額含稅: "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label4" runat="server" Text="滿額金額含稅: "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox3" Text="1" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
@@ -312,16 +361,18 @@
                     <div id="tabs-3">
                         <table class="PopTable">
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label8" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label8" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Label ID="Label9" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                <td class="PopTableLeftTD">
+                                     <asp:Label ID="Label9" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                </td>
+                                <td>                                   
                                     <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
                                 </td>
                             </tr>

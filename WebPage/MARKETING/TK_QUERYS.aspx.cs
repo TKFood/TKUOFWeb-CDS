@@ -534,7 +534,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             ,INVMB.MB002 AS '品名'
                             ,TB019 AS '銷售數量'
                             ,TB031 AS '未稅金額'
-                            ,TC008 AS '付款ＩＤ'
+                            ,TC008 AS '付款ID'
                             ,MT003 AS '付款別'
                             ,TB036 AS '特價代號'
                             ,POSMB.MB004 AS '特價'
@@ -549,10 +549,10 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             ,[TK].dbo.POSTC,[TK].dbo.POSMT
                             WHERE TA001=TB001 AND TA002=TB002 AND TA003=TB003 AND TA006=TB006
                             AND TA001=TC001 AND TA002=TC002 AND TA003=TC003 AND TA006=TC006
-                            AND TC008=MT002
-                            AND TA001>='20260401' AND TA001<='20260430'
-                            --AND TA038 NOT IN ('4')
+                            AND TC008=MT002 
                             AND TB042 IN ('1','2','3','6','7','8','9')
+
+                            AND TA001>='20260401' AND TA001<='20260430'
                             AND TB036 IN ('120260101040')
 
                             ORDER BY TA002,TB010
