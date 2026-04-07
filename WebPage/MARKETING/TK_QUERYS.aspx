@@ -68,9 +68,9 @@
                         <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label10" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:Label ID="Label10" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
@@ -78,58 +78,58 @@
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label11" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                    
+                                <td>
                                     <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label12" runat="server" Text="門市: "></asp:Label>
+                                    <asp:Label ID="Label12" runat="server" Text="門市: "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox11" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label14" runat="server" Text="會員: "></asp:Label>
+                                    <asp:Label ID="Label14" runat="server" Text="會員: "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox12" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                      <asp:Label ID="Label15" runat="server" Text="發票: "></asp:Label>
+                                    <asp:Label ID="Label15" runat="server" Text="發票: "></asp:Label>
                                 </td>
-                                <td>                                  
+                                <td>
                                     <asp:TextBox ID="TextBox13" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label16" runat="server" Text="商品品號/品名: "></asp:Label>
+                                    <asp:Label ID="Label16" runat="server" Text="商品品號/品名: "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox14" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label17" runat="server" Text="付款ID: "></asp:Label>
+                                    <asp:Label ID="Label17" runat="server" Text="付款ID: "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox15" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label18" runat="server" Text="特價代號: "></asp:Label>
+                                    <asp:Label ID="Label18" runat="server" Text="特價代號: "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox16" Text="" runat="server"></asp:TextBox>
                                 </td>
-                            </tr>                           
+                            </tr>
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
@@ -159,7 +159,66 @@
                                                         <asp:Label ID="Label_門市" runat="server" Text='<%# Bind("門市") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-
+                                                <asp:TemplateField HeaderText="會員" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_會員" runat="server" Text='<%# Bind("會員") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="發票" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_發票" runat="server" Text='<%# Bind("發票") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_品號" runat="server" Text='<%# Bind("品號") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="品名" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_品名" runat="server" Text='<%# Bind("品名") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="銷售數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_銷售數量" runat="server" Text='<%# Bind("銷售數量") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="未稅金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_未稅金額" runat="server" Text='<%# Bind("未稅金額") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="付款ID" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_付款ID" runat="server" Text='<%# Bind("付款ID") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="付款別" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_付款別" runat="server" Text='<%# Bind("付款別") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="特價代號" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_特價代號" runat="server" Text='<%# Bind("特價代號") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="特價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_特價" runat="server" Text='<%# Bind("特價") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="組合品搭贈" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_組合品搭贈" runat="server" Text='<%# Bind("組合品搭贈") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="滿額折價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_滿額折價" runat="server" Text='<%# Bind("滿額折價") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
                                     </div>
@@ -173,25 +232,25 @@
                         <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label5" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:Label ID="Label5" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                      <asp:Label ID="Label6" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                  
+                                <td>
                                     <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label7" runat="server" Text="商品品號/品名: "></asp:Label>
+                                    <asp:Label ID="Label7" runat="server" Text="商品品號/品名: "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox6" Text="" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
@@ -268,25 +327,25 @@
                         <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD">
-                                      <asp:Label ID="Label1" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:Label ID="Label1" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                  
+                                <td>
                                     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label3" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:Label ID="Label3" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label4" runat="server" Text="滿額金額含稅: "></asp:Label>
+                                    <asp:Label ID="Label4" runat="server" Text="滿額金額含稅: "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox3" Text="1" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
@@ -362,17 +421,17 @@
                         <table class="PopTable">
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label8" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:Label ID="Label8" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                     <asp:Label ID="Label9" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:Label ID="Label9" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
                                 </td>
-                                <td>                                   
+                                <td>
                                     <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
                                 </td>
                             </tr>

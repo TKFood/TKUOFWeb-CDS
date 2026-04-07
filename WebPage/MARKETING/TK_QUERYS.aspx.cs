@@ -62,6 +62,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         TextBox5.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox7.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox8.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox9.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox10.Text = DateTime.Now.ToString("yyyyMMdd");
     }
     private void BindGrid()
     {
@@ -517,12 +519,82 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
-
-        StringBuilder SQL_QUERY1 = new StringBuilder();
+          
         StringBuilder cmdTxt = new StringBuilder();
 
-        string DATESTART = TextBox7.Text.Trim();
-        string DATESEND = TextBox8.Text.Trim();
+        StringBuilder SQL_QUERY1 = new StringBuilder();
+        StringBuilder SQL_QUERY2 = new StringBuilder();
+        StringBuilder SQL_QUERY3 = new StringBuilder();
+        StringBuilder SQL_QUERY4 = new StringBuilder();
+        StringBuilder SQL_QUERY5 = new StringBuilder();
+        StringBuilder SQL_QUERY6 = new StringBuilder();
+        StringBuilder SQL_QUERY7 = new StringBuilder();
+
+        string DATESTART = TextBox9.Text.Trim();
+        string DATESEND = TextBox10.Text.Trim();
+        string TA002 = TextBox11.Text.Trim();
+        string TA009 = TextBox12.Text.Trim();
+        string TA014 = TextBox13.Text.Trim();
+        string TB010 = TextBox14.Text.Trim();
+        string TC008= TextBox15.Text.Trim();
+        string TB036 = TextBox16.Text.Trim();
+
+        if (!string.IsNullOrEmpty(DATESTART) && !string.IsNullOrEmpty(DATESEND))
+        {
+            SQL_QUERY1.AppendFormat(@"AND TA001>='{0}' AND TA001<='{1}'", DATESTART, DATESEND);
+        }
+        else
+        {
+            SQL_QUERY1.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TA002) )
+        {
+            SQL_QUERY2.AppendFormat(@" AND TA002='{0}'", TA002);
+        }
+        else
+        {
+            SQL_QUERY2.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TA009))
+        {
+            SQL_QUERY3.AppendFormat(@" AND TA009='{0}'", TA009);
+        }
+        else
+        {
+            SQL_QUERY3.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TA014))
+        {
+            SQL_QUERY4.AppendFormat(@" AND TA002='{0}'", TA014);
+        }
+        else
+        {
+            SQL_QUERY4.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TB010))
+        {
+            SQL_QUERY5.AppendFormat(@" AND (TB010 LIKE '%{0}%' OR INVMB.MB002  LIKE '%{0}%')", TB010);
+        }
+        else
+        {
+            SQL_QUERY5.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TC008))
+        {
+            SQL_QUERY6.AppendFormat(@" AND TC008='{0}'", TC008);
+        }
+        else
+        {
+            SQL_QUERY6.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TB036))
+        {
+            SQL_QUERY7.AppendFormat(@" AND TB036='{0}'", TB036);
+        }
+        else
+        {
+            SQL_QUERY7.AppendFormat(@"");
+        }
 
         // 2. 定義 SQL 查詢字串           
         cmdTxt.AppendFormat(@"      
@@ -551,12 +623,22 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             AND TA001=TC001 AND TA002=TC002 AND TA003=TC003 AND TA006=TC006
                             AND TC008=MT002 
                             AND TB042 IN ('1','2','3','6','7','8','9')
-
-                            AND TA001>='20260401' AND TA001<='20260430'
-                            AND TB036 IN ('120260101040')
+                            {0}
+                            {1}
+                            {2}
+                            {3}
+                            {4}
+                            {5}
+                            {6}
 
                             ORDER BY TA002,TB010
-                        ");
+                        ",SQL_QUERY1.ToString()
+                        , SQL_QUERY2.ToString()
+                        , SQL_QUERY3.ToString()
+                        , SQL_QUERY4.ToString()
+                        , SQL_QUERY5.ToString()
+                        , SQL_QUERY6.ToString()
+                        , SQL_QUERY7.ToString());
 
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
 
