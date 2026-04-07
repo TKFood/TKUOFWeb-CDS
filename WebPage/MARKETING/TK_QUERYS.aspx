@@ -50,6 +50,8 @@
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
                 <Tabs>
+                    <telerik:RadTab Text="POS明細">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="商品銷售">
                     </telerik:RadTab>
                     <telerik:RadTab Text="門市滿額">
@@ -61,7 +63,69 @@
                 </Tabs>
             </telerik:RadTabStrip>
             <telerik:RadMultiPage ID="RadMultiPage" runat="server" SelectedIndex="0">
-                <telerik:RadPageView ID="RadPageView2" runat="server" Selected="true">
+                <telerik:RadPageView ID="RadPageView4" runat="server" Selected="true">
+                    <div id="tabs-4">
+                        <table class="PopTable">
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label10" runat="server" Text="日期起:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label11" runat="server" Text="日期迄:(格式yyyyMMdd) "></asp:Label>
+                                    <asp:TextBox ID="TextBox10" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label12" runat="server" Text="商品品號/品名: "></asp:Label>
+                                    <asp:TextBox ID="TextBox11" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button4" runat="server" Text="查詢" OnClick="Button4_Click"
+                                        meta:resourcekey="btn1Resource4" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label13" runat="server" Text=""></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid4" OnRowDataBound="Grid4_RowDataBound" OnRowCommand="Grid4_RowCommand" runat="server" OnBeforeExport="OnBeforeExport4" meta:resourcekey="Grid1Resource4" OnPageIndexChanging="grid_PageIndexChanging4" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor=""  ShowFooter="True" EnableViewState="False">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="部門代" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_部門代" runat="server" Text='<%# Bind("客戶通路代碼") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                              
+                                            </Columns>
+                                        </Fast:Grid>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView2" runat="server" >
                     <div id="tabs-2">
                         <table class="PopTable">
                             <tr>

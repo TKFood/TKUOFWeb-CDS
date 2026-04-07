@@ -86,7 +86,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             INNER JOIN
                                 [TK].dbo.CMSME CMSME ON POSTA.TA002 = CMSME.ME001
                             WHERE
-                                POSTA.TA001 >= @DATESTART
+                                TA038 NOT IN ('4')
+                                AND POSTA.TA001 >= @DATESTART
                                 AND POSTA.TA001 <= @DATESEND
                                 AND POSTA.TA026 >=0
                                 AND POSTA.TA002 LIKE '106%'
@@ -510,6 +511,56 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
     }
 
+    private void BindGrid4()
+    {
+        // 1.取得連線字串
+        // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder SQL_QUERY1 = new StringBuilder();
+        StringBuilder cmdTxt = new StringBuilder();
+
+        string DATESTART = TextBox7.Text.Trim();
+        string DATESEND = TextBox8.Text.Trim();
+
+        // 2. 定義 SQL 查詢字串           
+        cmdTxt.AppendFormat(@"
+                          
+                        ");
+
+        //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        //Grid4.DataSource = dt;
+        //Grid4.DataBind();
+
+    }
+
+    protected void grid_PageIndexChanging4(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid4_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid4_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+    }
+
+
+    public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -539,6 +590,11 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         Label_query_dates3.Text = "查詢日期區間: " + TextBox7.Text.Trim() + " ~ " + TextBox8.Text.Trim();
         Label_query_dates3.Font.Size = new FontUnit("16pt");
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        BindGrid4();
+
     }
     #endregion
 }
