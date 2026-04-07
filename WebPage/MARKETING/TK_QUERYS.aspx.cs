@@ -525,8 +525,37 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         string DATESEND = TextBox8.Text.Trim();
 
         // 2. 定義 SQL 查詢字串           
-        cmdTxt.AppendFormat(@"
-                          
+        cmdTxt.AppendFormat(@"      
+                            SELECT 
+                            TA002 AS '門市'
+                            ,TA009 AS '會員'
+                            ,TA014 AS '發票'
+                            ,TB010 AS '品號'
+                            ,INVMB.MB002 AS '品名'
+                            ,TB019 AS '銷售數量'
+                            ,TB031 AS '未稅金額'
+                            ,TC008 AS '付款ＩＤ'
+                            ,MT003 AS '付款別'
+                            ,TB036 AS '特價代號'
+                            ,POSMB.MB004 AS '特價'
+                            ,MI004 AS '組合品搭贈'
+                            ,MM004 AS '滿額折價'
+
+                            FROM [TK].dbo.POSTA,[TK].dbo.POSTB
+                            LEFT JOIN [TK].dbo.INVMB ON INVMB.MB001=TB010
+                            LEFT JOIN [TK].dbo.POSMB ON POSMB.MB003=TB036
+                            LEFT JOIN [TK].dbo.POSMI ON MI003=TB036
+                            LEFT JOIN [TK].dbo.POSMM ON MM003=TB036
+                            ,[TK].dbo.POSTC,[TK].dbo.POSMT
+                            WHERE TA001=TB001 AND TA002=TB002 AND TA003=TB003 AND TA006=TB006
+                            AND TA001=TC001 AND TA002=TC002 AND TA003=TC003 AND TA006=TC006
+                            AND TC008=MT002
+                            AND TA001>='20260401' AND TA001<='20260430'
+                            --AND TA038 NOT IN ('4')
+                            AND TB042 IN ('1','2','3','6','7','8','9')
+                            AND TB036 IN ('120260101040')
+
+                            ORDER BY TA002,TB010
                         ");
 
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
@@ -535,8 +564,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
-        //Grid4.DataSource = dt;
-        //Grid4.DataBind();
+        Grid4.DataSource = dt;
+        Grid4.DataBind();
 
     }
 
