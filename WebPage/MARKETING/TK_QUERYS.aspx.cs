@@ -565,7 +565,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         }
         if (!string.IsNullOrEmpty(TA014))
         {
-            SQL_QUERY4.AppendFormat(@" AND TA002='{0}'", TA014);
+            SQL_QUERY4.AppendFormat(@" AND TA014='{0}'", TA014);
         }
         else
         {
