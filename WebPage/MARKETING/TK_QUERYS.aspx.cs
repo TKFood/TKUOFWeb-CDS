@@ -51,6 +51,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         // 強制讓 Grid4 的匯出按鈕走全頁回傳
         ScriptManager.GetCurrent(this).RegisterPostBackControl(Button5);
+        // 強制讓 Grid4 的匯出按鈕走全頁回傳
+        ScriptManager.GetCurrent(this).RegisterPostBackControl(Grid4);
 
         if (!IsPostBack)
         {
@@ -676,6 +678,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
     public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
+        SETEXCEL4();
         MsgBox("MsgBox!!!!" , this.Page, this);
 
     }
@@ -811,6 +814,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         DataTable dt = new DataTable();
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
 
         if (dt != null && dt.Rows.Count > 0)
         {
