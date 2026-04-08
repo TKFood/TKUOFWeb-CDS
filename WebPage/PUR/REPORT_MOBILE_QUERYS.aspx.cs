@@ -98,6 +98,70 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
         //SETEXCEL();
 
     }
+    private void BindGrid2()
+    {
+        // 1.取得連線字串
+        // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        // 2. 定義 SQL 查詢字串           
+        string cmdTxt = @"                        
+                        SELECT 
+                        TD012 AS '預交日'
+                        ,TC001 AS '採購單'
+                        ,TC002 AS '採購單號'
+                        ,TD004 AS '品號'
+                        ,TD005 AS '品名'
+                        ,TD008 AS '採購數量'
+                        ,TD015 AS '已進貨數量'
+                        ,TD009 AS '單位'
+                        FROM [TK].dbo.PURTC,[TK].dbo.PURTD
+                        WHERE TC001=TD001 AND TC002=TD002
+                        AND TD002>='20260408001'
+                        AND TD004 IN
+                        (
+                        SELECT  [MB001]
+                        FROM [TKPUR].[dbo].[UOF_QUERYS]
+                        )
+                        AND TD008>TD015
+                        ORDER BY TD004,TC003
+
+                        ";
+
+        //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());
+
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL();
+
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -112,6 +176,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         BindGrid();
+        BindGrid2();
     }
 
     #endregion
