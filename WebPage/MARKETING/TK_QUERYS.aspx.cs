@@ -623,6 +623,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             AND TA001=TC001 AND TA002=TC002 AND TA003=TC003 AND TA006=TC006
                             AND TC008=MT002 
                             AND TB042 IN ('1','2','3','6','7','8','9')
+                            AND (TB010 LIKE '4%' OR  TB010 LIKE '5%')
                             {0}
                             {1}
                             {2}
@@ -632,7 +633,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             {6}
 
                             ORDER BY TA002,TB010
-                        ",SQL_QUERY1.ToString()
+                        ", SQL_QUERY1.ToString()
                         , SQL_QUERY2.ToString()
                         , SQL_QUERY3.ToString()
                         , SQL_QUERY4.ToString()
