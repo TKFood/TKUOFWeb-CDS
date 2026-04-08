@@ -50,7 +50,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         NAME = Current.User.Name;
 
         // 強制讓 Grid4 的匯出按鈕走全頁回傳
-        ScriptManager.GetCurrent(this).RegisterPostBackControl(Grid4);
+        ScriptManager.GetCurrent(this).RegisterPostBackControl(Button5);
 
         if (!IsPostBack)
         {
@@ -679,10 +679,138 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         MsgBox("MsgBox!!!!" , this.Page, this);
 
     }
-    public void SETEXCEL4(DataTable dt)
+    public void SETEXCEL4()
     {
-        // 1. 取得資料 (假設您已取得 dt)
-        // ... 前段連線邏輯維持不變 ...
+        // 1.取得連線字串
+        // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        StringBuilder SQL_QUERY1 = new StringBuilder();
+        StringBuilder SQL_QUERY2 = new StringBuilder();
+        StringBuilder SQL_QUERY3 = new StringBuilder();
+        StringBuilder SQL_QUERY4 = new StringBuilder();
+        StringBuilder SQL_QUERY5 = new StringBuilder();
+        StringBuilder SQL_QUERY6 = new StringBuilder();
+        StringBuilder SQL_QUERY7 = new StringBuilder();
+
+        string DATESTART = TextBox9.Text.Trim();
+        string DATESEND = TextBox10.Text.Trim();
+        string TA002 = TextBox11.Text.Trim();
+        string TA009 = TextBox12.Text.Trim();
+        string TA014 = TextBox13.Text.Trim();
+        string TB010 = TextBox14.Text.Trim();
+        string TC008 = TextBox15.Text.Trim();
+        string TB036 = TextBox16.Text.Trim();
+
+        if (!string.IsNullOrEmpty(DATESTART) && !string.IsNullOrEmpty(DATESEND))
+        {
+            SQL_QUERY1.AppendFormat(@"AND TA001>='{0}' AND TA001<='{1}'", DATESTART, DATESEND);
+        }
+        else
+        {
+            SQL_QUERY1.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TA002))
+        {
+            SQL_QUERY2.AppendFormat(@" AND TA002='{0}'", TA002);
+        }
+        else
+        {
+            SQL_QUERY2.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TA009))
+        {
+            SQL_QUERY3.AppendFormat(@" AND TA009='{0}'", TA009);
+        }
+        else
+        {
+            SQL_QUERY3.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TA014))
+        {
+            SQL_QUERY4.AppendFormat(@" AND TA014='{0}'", TA014);
+        }
+        else
+        {
+            SQL_QUERY4.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TB010))
+        {
+            SQL_QUERY5.AppendFormat(@" AND (TB010 LIKE '%{0}%' OR INVMB.MB002  LIKE '%{0}%')", TB010);
+        }
+        else
+        {
+            SQL_QUERY5.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TC008))
+        {
+            SQL_QUERY6.AppendFormat(@" AND TC008='{0}'", TC008);
+        }
+        else
+        {
+            SQL_QUERY6.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TB036))
+        {
+            SQL_QUERY7.AppendFormat(@" AND TB036='{0}'", TB036);
+        }
+        else
+        {
+            SQL_QUERY7.AppendFormat(@"");
+        }
+
+        // 2. 定義 SQL 查詢字串           
+        cmdTxt.AppendFormat(@"      
+                            SELECT 
+                            TA002 AS '門市'
+                            ,TA009 AS '會員'
+                            ,TA014 AS '發票'
+                            ,TB010 AS '品號'
+                            ,INVMB.MB002 AS '品名'
+                            ,TB019 AS '銷售數量'
+                            ,TB031 AS '未稅金額'
+                            ,TC008 AS '付款ID'
+                            ,MT003 AS '付款別'
+                            ,TB036 AS '特價代號'
+                            ,POSMB.MB004 AS '特價'
+                            ,MI004 AS '組合品搭贈'
+                            ,MM004 AS '滿額折價'
+
+                            FROM [TK].dbo.POSTA,[TK].dbo.POSTB
+                            LEFT JOIN [TK].dbo.INVMB ON INVMB.MB001=TB010
+                            LEFT JOIN [TK].dbo.POSMB ON POSMB.MB003=TB036
+                            LEFT JOIN [TK].dbo.POSMI ON MI003=TB036
+                            LEFT JOIN [TK].dbo.POSMM ON MM003=TB036
+                            ,[TK].dbo.POSTC,[TK].dbo.POSMT
+                            WHERE TA001=TB001 AND TA002=TB002 AND TA003=TB003 AND TA006=TB006
+                            AND TA001=TC001 AND TA002=TC002 AND TA003=TC003 AND TA006=TC006
+                            AND TC008=MT002 
+                            AND TB042 IN ('1','2','3','6','7','8','9')
+                            AND (TB010 LIKE '4%' OR  TB010 LIKE '5%')
+                            {0}
+                            {1}
+                            {2}
+                            {3}
+                            {4}
+                            {5}
+                            {6}
+
+                            ORDER BY TA002,TB010
+                        ", SQL_QUERY1.ToString()
+                        , SQL_QUERY2.ToString()
+                        , SQL_QUERY3.ToString()
+                        , SQL_QUERY4.ToString()
+                        , SQL_QUERY5.ToString()
+                        , SQL_QUERY6.ToString()
+                        , SQL_QUERY7.ToString());
+
+        //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
+
+        DataTable dt = new DataTable();
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
 
         if (dt != null && dt.Rows.Count > 0)
         {
@@ -827,7 +955,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     }
     protected void Button5_Click(object sender, EventArgs e)
     {
-        SETEXCEL4(EXPORT_DT4);
+        SETEXCEL4();
     }
 
     #endregion
