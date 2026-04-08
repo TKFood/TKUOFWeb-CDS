@@ -669,7 +669,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
     public void OnBeforeExport4(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-        //SETEXCEL();
+        MsgBox("MsgBox!!!!" , this.Page, this);
 
     }
 
@@ -706,6 +706,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     protected void Button4_Click(object sender, EventArgs e)
     {
         BindGrid4();
+      
 
     }
     #endregion

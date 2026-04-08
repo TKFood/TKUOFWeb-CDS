@@ -510,6 +510,9 @@
             </telerik:RadMultiPage>​
         </ContentTemplate>
 
+        <Triggers>
+        <asp:PostBackTrigger ControlID="Grid4" />
+    </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
 
