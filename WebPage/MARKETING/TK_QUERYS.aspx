@@ -137,6 +137,13 @@
                                         meta:resourcekey="btn1Resource4" />
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button5" runat="server" Text="匯出EXCEL" OnClick="Button5_Click"
+                                        meta:resourcekey="btn1Resource5" />
+                                </td>
+                            </tr>
                         </table>
                         <table class="PopTable">
                             <tr>
@@ -214,7 +221,7 @@
                                                         <asp:Label ID="Label_組合品搭贈" runat="server" Text='<%# Bind("組合品搭贈") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                     <asp:TemplateField HeaderText="滿額折價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="滿額折價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_滿額折價" runat="server" Text='<%# Bind("滿額折價") %>' Style="word-break: break-all; white-space: pre-line;" Width="100px"></asp:Label>
                                                     </ItemTemplate>
@@ -511,8 +518,8 @@
         </ContentTemplate>
 
         <Triggers>
-        <asp:PostBackTrigger ControlID="Grid4" />
-    </Triggers>
+            <asp:PostBackTrigger ControlID="Grid4" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>
 

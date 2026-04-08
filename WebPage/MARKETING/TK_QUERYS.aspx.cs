@@ -30,6 +30,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     string NAME = null;
     String ROLES = null;
 
+    DataTable EXPORT_DT4 = new DataTable();
+
     // 當前組別的小計變數
     private decimal SUB_TOTALNUMS = 0.00m;
     private decimal SUB_TOTALMONEYS = 0.00m;
@@ -46,6 +48,9 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     {
         ACCOUNT = Current.Account;
         NAME = Current.User.Name;
+
+        // 強制讓 Grid4 的匯出按鈕走全頁回傳
+        ScriptManager.GetCurrent(this).RegisterPostBackControl(Grid4);
 
         if (!IsPostBack)
         {
@@ -646,10 +651,12 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         DataTable dt = new DataTable();
 
         dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+        EXPORT_DT4 = dt;
 
         Grid4.DataSource = dt;
         Grid4.DataBind();
 
+       
     }
 
     protected void grid_PageIndexChanging4(object sender, GridViewPageEventArgs e)
@@ -672,7 +679,116 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         MsgBox("MsgBox!!!!" , this.Page, this);
 
     }
+    public void SETEXCEL4(DataTable dt)
+    {
+        // 1. 取得資料 (假設您已取得 dt)
+        // ... 前段連線邏輯維持不變 ...
 
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            // 定義匯出對應 [資料庫欄位, Excel標題]
+            var exportMap = new Dictionary<string, string> {
+            { "門市", "門市" },
+            { "會員", "會員" },
+            { "發票", "發票" } ,
+            { "品號", "品號" },
+            { "品名", "品名" },
+            { "銷售數量", "銷售數量" } ,
+            { "未稅金額", "未稅金額" },
+            { "付款ID", "付款ID" },
+            { "付款別", "付款別" } ,
+            { "特價代號", "特價代號" },
+            { "特價", "特價" },
+            { "組合品搭贈", "組合品搭贈" } ,
+            { "滿額折價", "滿額折價" }
+        };
+
+            // 指定哪些欄位要以「整數」匯出 (對應 Excel 標題名)
+            List<string> intFields = new List<string> { "數量", "未稅金額" };
+
+            var fileName = "清單_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xlsx";
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var excel = new ExcelPackage())
+            {
+                var ws = excel.Workbook.Worksheets.Add("Sheet1");
+
+                // --- 核心優化：整塊載入資料 ---
+                // 先過濾出需要的欄位
+                DataTable dtExport = dt.DefaultView.ToTable(false, exportMap.Keys.ToArray());
+                for (int i = 0; i < dtExport.Columns.Count; i++)
+                {
+                    dtExport.Columns[i].ColumnName = exportMap.Values.ElementAt(i);
+                }
+
+                // 寫入 Excel (從 A1 開始，包含標題)
+                ws.Cells["A1"].LoadFromDataTable(dtExport, true);
+
+                int rowCount = dtExport.Rows.Count;
+                int colCount = dtExport.Columns.Count;
+
+                // --- 處理整數型態與格式 ---
+                for (int col = 1; col <= colCount; col++)
+                {
+                    string headerName = ws.Cells[1, col].Text;
+
+                    if (intFields.Contains(headerName))
+                    {
+                        // 取得該欄位的資料範圍 (從第 2 列到最後一列)
+                        var dataRange = ws.Cells[2, col, rowCount + 1, col];
+
+                        // 1. 強制將儲存格內容轉為數值 (避免 Excel 顯示「以文字儲存的數字」警告)
+                        // LoadFromDataTable 通常會處理型別，但如果原始 DataTable 是字串，這步很保險
+                        dataRange.Style.Numberformat.Format = "#,##0"; // 千分位整數格式
+
+                        // 2. 靠右對齊 (數值習慣靠右)
+                        dataRange.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+                    }
+                }
+
+                // --- 整體樣式優化 ---
+                using (var allCells = ws.Cells[1, 1, rowCount + 1, colCount])
+                {
+                    allCells.Style.Font.Name = "微軟正黑體";
+                    allCells.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    allCells.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    allCells.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    allCells.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    allCells.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                }
+
+                // 標題列美化
+                using (var header = ws.Cells[1, 1, 1, colCount])
+                {
+                    header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    header.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightSkyBlue);
+                    header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    header.Style.Font.Bold = true;
+                }
+
+                ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                //自適應高度設定
+                ws.Row(1).CustomHeight = true;
+
+                //儲存Excel
+                //Byte[] bin = excel.GetAsByteArray();
+                //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+
+                //儲存和歸來的Excel檔案作為一個ByteArray
+                var data = excel.GetAsByteArray();
+                HttpResponse response = HttpContext.Current.Response;
+                Response.Clear();
+
+                //輸出標頭檔案　　
+                Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.BinaryWrite(data);
+                Response.Flush();
+                Response.End();
+            }
+        }
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -709,5 +825,10 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
       
 
     }
+    protected void Button5_Click(object sender, EventArgs e)
+    {
+        SETEXCEL4(EXPORT_DT4);
+    }
+
     #endregion
 }
