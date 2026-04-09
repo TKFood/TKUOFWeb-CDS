@@ -36,7 +36,8 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
 
         if (!IsPostBack)
         {
-           
+            BindGrid();
+            BindGrid2();
         }
     }
     #region FUNCTION
