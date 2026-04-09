@@ -115,14 +115,14 @@
                                                  <asp:TemplateField HeaderText="採購數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_採購數量" runat="server" 
-                                                              Text='<%# Eval("採購數量", "{0:N2}") %>' 
+                                                              Text='<%# Eval("採購數量", "{0:N0}") %>' 
                                                               Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                  <asp:TemplateField HeaderText="已進貨數量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_已進貨數量" runat="server" 
-                                                              Text='<%# Eval("已進貨數量", "{0:N2}") %>' 
+                                                              Text='<%# Eval("已進貨數量", "{0:N0}") %>' 
                                                              Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
