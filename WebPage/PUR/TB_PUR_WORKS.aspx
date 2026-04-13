@@ -40,46 +40,57 @@
                                                             Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="負責承辦" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="負責承辦" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_負責承辦" runat="server"
+                                                        <asp:TextBox ID="TextBox_負責承辦" runat="server"
                                                             Text='<%# Bind("負責承辦") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                            TextMode="MultiLine" Rows="3"
+                                                            Width="100%" Style="resize: none;"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="工作對象" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+
+                                                <asp:TemplateField HeaderText="工作對象" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_工作對象" runat="server"
+                                                        <asp:TextBox ID="TextBox_工作對象" runat="server"
                                                             Text='<%# Bind("工作對象") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                            TextMode="MultiLine" Rows="3"
+                                                            Width="100%" Style="resize: none;"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="處理情況敘述" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+
+                                                <asp:TemplateField HeaderText="處理情況敘述" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_處理情況敘述" runat="server"
+                                                        <asp:TextBox ID="TextBox_處理情況敘述" runat="server"
                                                             Text='<%# Bind("處理情況敘述") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                            TextMode="MultiLine" Rows="3"
+                                                            Width="100%" Style="resize: none;"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="預計完成日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+
+                                                <asp:TemplateField HeaderText="預計完成日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_預計完成日期" runat="server"
+                                                        <asp:TextBox ID="TextBox_預計完成日期" runat="server"
                                                             Text='<%# Bind("預計完成日期") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                            TextMode="MultiLine" Rows="3"
+                                                            Width="100%" Style="resize: none;"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="處理進度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+
+                                                <asp:TemplateField HeaderText="處理進度" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_處理進度" runat="server"
-                                                            Text='<%# Bind("處理進度") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                        <asp:DropDownList ID="DropDownList_處理進度" runat="server" Width="100%">
+                                                        </asp:DropDownList>
+                                                        <%-- 隱藏欄位用來存放資料庫原本的值，方便在 RowDataBound 比對 --%>
+                                                        <asp:HiddenField ID="Hidden_處理進度" runat="server" Value='<%# Bind("處理進度") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="備註說明" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+
+                                                <asp:TemplateField HeaderText="備註說明" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_備註說明" runat="server"
+                                                        <asp:TextBox ID="TextBox_備註說明" runat="server"
                                                             Text='<%# Bind("備註說明") %>'
-                                                            Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                            TextMode="MultiLine" Rows="3"
+                                                            Width="100%" Style="resize: none;"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
