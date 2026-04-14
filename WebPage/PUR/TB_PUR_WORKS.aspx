@@ -44,7 +44,7 @@
                 <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
                     <div id="tabs-1">
                         <table class="PopTable">
-                             <tr>
+                            <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label9" runat="server" Text="負責承辦"></asp:Label>
                                 </td>
@@ -72,13 +72,13 @@
                                     </asp:TextBox>
                                 </td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label8" runat="server" Text="處理進度"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
                                     <%-- 改為 DropDownList --%>
-                                    <asp:DropDownList ID="FIND_DropDownList1" runat="server" 
+                                    <asp:DropDownList ID="FIND_DropDownList1" runat="server"
                                         Width="20%">
                                     </asp:DropDownList>
                                 </td>
@@ -159,11 +159,18 @@
                                                         <asp:HiddenField ID="Hidden_處理進度" runat="server" Value='<%# Bind("處理進度") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-
                                                 <asp:TemplateField HeaderText="備註說明" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="TextBox_備註說明" runat="server"
                                                             Text='<%# Bind("備註說明") %>'
+                                                            TextMode="MultiLine" Rows="3"
+                                                            Width="100%" Style="resize: none;"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="主管交辦" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox ID="TextBox_主管交辦" runat="server"
+                                                            Text='<%# Bind("主管交辦") %>'
                                                             TextMode="MultiLine" Rows="3"
                                                             Width="100%" Style="resize: none;"></asp:TextBox>
                                                     </ItemTemplate>
@@ -176,7 +183,7 @@
                                                             CssClass="grid-btn btn-add" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField>
+                                                <asp:TemplateField>
                                                     <ItemTemplate>
                                                         <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="MUDELETE"
                                                             CommandArgument='<%# Eval("ID") %>'
@@ -257,7 +264,7 @@
                                 </td>
                                 <td class="PopTableRightTD">
                                     <%-- 改為 DropDownList --%>
-                                    <asp:DropDownList ID="ADD_DropDownList_處理進度" runat="server" 
+                                    <asp:DropDownList ID="ADD_DropDownList_處理進度" runat="server"
                                         Width="50%">
                                     </asp:DropDownList>
                                 </td>
@@ -275,12 +282,26 @@
                                         Style="resize: none; word-break: break-all;">
                                     </asp:TextBox>
                                 </td>
-                                  <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
-                                    <asp:Button ID="Button2" runat="server" Text="新增" OnClick="Button2_Click"
-                                        meta:resourcekey="btn1Resource1"
-                                        Style="width: 150px; /* 調整寬度 */
+                                <tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label11" runat="server" Text="主管交辦"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="ADD_TextBox_主管交辦" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="3"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                                <tr>
+                                    <td class="PopTableLeftTD"></td>
+                                    <td>
+                                        <asp:Button ID="Button2" runat="server" Text="新增" OnClick="Button2_Click"
+                                            meta:resourcekey="btn1Resource1"
+                                            Style="width: 150px; /* 調整寬度 */
                                         height: 30px; /* 調整高度 */
                                         background-color: #4CAF50; /* 調整背景顏色 (綠色) */
                                         color: white; /* 調整字體顏色 (白色) */
@@ -289,8 +310,8 @@
                                         border: none; /* 移除邊框 (可選) */
                                         border-radius: 8px; /* 圓角邊框 (可選) */
                                         cursor: pointer; /* 鼠標樣式 (可選) */" />
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             </tr>
                         </table>
                     </div>
@@ -300,7 +321,8 @@
                         <asp:Label ID="Label2" runat="server" Text="Labe2"></asp:Label>
                     </div>
                 </telerik:RadPageView>
-            </telerik:RadMultiPage>​
+            </telerik:RadMultiPage>
+            ​
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

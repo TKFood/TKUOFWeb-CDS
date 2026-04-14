@@ -138,6 +138,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
                             ,[FINISHDATES] AS '預計完成日期'
                             ,[STATUS] AS '處理進度'
                             ,[COMMENTS] AS '備註說明'
+                            ,[MANAGEREPLY] AS '主管交辦'
                             FROM [TKPUR].[dbo].[TB_PUR_WORKS]
                             WHERE 1=1
                             {0}
@@ -214,6 +215,8 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
             string FINISHDATES = txt_FINISHDATES.Text;
             TextBox txt_COMMENTS = (TextBox)row.FindControl("TextBox_備註說明");
             string COMMENTS = txt_COMMENTS.Text;
+            TextBox txt_MANAGEREPLY = (TextBox)row.FindControl("TextBox_主管交辦");
+            string MANAGEREPLY = txt_MANAGEREPLY.Text;
 
             DropDownList drd_STATUS=(DropDownList)row.FindControl("DropDownList_處理進度");
             string STATUS = drd_STATUS.Text;
@@ -225,7 +228,8 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
             , PROCESS
             , FINISHDATES
             , STATUS
-            , COMMENTS            
+            , COMMENTS
+            , MANAGEREPLY
             );
 
             MsgBox("完成 \r\n " + ID, this.Page, this);
@@ -266,13 +270,14 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
     }
 
     public void UODATE_TB_PUR_WORKS(
-      string ID
-     , string OWNER
-     , string WORKOBJECTS
-     , string PROCESS
-     , string FINISHDATES
-     , string STATUS
-     , string COMMENTS
+          string ID
+         , string OWNER
+         , string WORKOBJECTS
+         , string PROCESS
+         , string FINISHDATES
+         , string STATUS
+         , string COMMENTS
+        ,string MANAGEREPLY
      )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
@@ -286,6 +291,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
                             ,[FINISHDATES]=@FINISHDATES
                             ,[STATUS]=@STATUS
                             ,[COMMENTS]=@COMMENTS
+                            ,[MANAGEREPLY]=@MANAGEREPLY
                             WHERE [ID]=@ID
                           
                             ";
@@ -305,6 +311,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
                     command.Parameters.AddWithValue("@FINISHDATES", FINISHDATES);
                     command.Parameters.AddWithValue("@STATUS", STATUS);
                     command.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                    command.Parameters.AddWithValue("@MANAGEREPLY", MANAGEREPLY);
 
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
@@ -377,6 +384,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
     , string FINISHDATES
     , string STATUS
     , string COMMENTS
+    ,string MANAGEREPLY
     )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
@@ -384,9 +392,9 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
         // 1. 📌 使用參數化查詢，避免 SQL Injection
         string sqlQuery = @"
                             INSERT INTO  [TKPUR].[dbo].[TB_PUR_WORKS]
-                            ([OWNER],[WORKOBJECTS],[PROCESS],[FINISHDATES],[STATUS],[COMMENTS])
+                            ([OWNER],[WORKOBJECTS],[PROCESS],[FINISHDATES],[STATUS],[COMMENTS],[MANAGEREPLY])
                             VALUES
-                            (@OWNER,@WORKOBJECTS,@PROCESS,@FINISHDATES,@STATUS,@COMMENTS)
+                            (@OWNER,@WORKOBJECTS,@PROCESS,@FINISHDATES,@STATUS,@COMMENTS,@MANAGEREPLY)
                           
                             ";
 
@@ -404,6 +412,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
                     command.Parameters.AddWithValue("@FINISHDATES", FINISHDATES);
                     command.Parameters.AddWithValue("@STATUS", STATUS);
                     command.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+                    command.Parameters.AddWithValue("@MANAGEREPLY", MANAGEREPLY);
 
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
@@ -450,6 +459,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
         string FINISHDATES = ADD_TextBox_預計完成日期.Text.Trim();
         string STATUS = ADD_DropDownList_處理進度.Text.Trim();
         string COMMENTS = ADD_TextBox_備註說明.Text.Trim();
+        string MANAGEREPLY = ADD_TextBox_主管交辦.Text.Trim();
 
         ADD_TB_PUR_WORKS(
               ID
@@ -459,6 +469,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
             , FINISHDATES
             , STATUS
             , COMMENTS
+            , MANAGEREPLY
             );
 
         BindGrid();
