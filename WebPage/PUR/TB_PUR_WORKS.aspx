@@ -44,6 +44,45 @@
                 <telerik:RadPageView ID="RadPageView1" runat="server" Selected="true">
                     <div id="tabs-1">
                         <table class="PopTable">
+                             <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label9" runat="server" Text="負責承辦"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="FIND_TextBox_負責承辦" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="1"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label10" runat="server" Text="工作對象"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="FIND_TextBox_工作對象" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="1"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label8" runat="server" Text="處理進度"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <%-- 改為 DropDownList --%>
+                                    <asp:DropDownList ID="FIND_DropDownList1" runat="server" 
+                                        Width="20%">
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>

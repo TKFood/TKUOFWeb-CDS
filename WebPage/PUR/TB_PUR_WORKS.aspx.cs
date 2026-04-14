@@ -40,6 +40,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
             BindGrid();
             // 頁面第一次載入時執行綁定
             BindProgressDropDownList1();
+            Bind_FIND_DropDownList1();
 
         }
     }
@@ -67,6 +68,26 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
         // 4. 插入預設選項 (選填)
         ADD_DropDownList_處理進度.Items.Insert(0, new ListItem("請選擇", ""));
     }
+    private void Bind_FIND_DropDownList1()
+    {
+        // 1. 取得連線字串 (使用您現有的 ERPconnectionstring)
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        // 2. 定義 SQL 查詢 (請根據您的資料表名稱與欄位進行修改)
+        // 假設您的進度表是存放於某個設定檔或參數檔中
+        string cmdTxt = @"SELECT  [ID],[KIND],[PARAID],[PARANAME] FROM [TKPUR].[dbo].[TBPARA] WHERE [KIND]='TB_PUR_WORKS' UNION ALL SELECT 99,'','全部',99 ORDER BY [PARANAME]";
+
+        DataTable dt = new DataTable();
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        // 3. 執行資料繫結
+        FIND_DropDownList1.DataSource = dt;
+        FIND_DropDownList1.DataTextField = "PARAID";   // 在下拉選單顯示的文字
+        FIND_DropDownList1.DataValueField = "PARAID"; // 實際上代表的值
+        FIND_DropDownList1.DataBind();
+        
+    }
     private void BindGrid()
     {
         // 1.取得連線字串
@@ -74,19 +95,57 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
-        // 2. 定義 SQL 查詢字串           
-        string cmdTxt = @"
-                        SELECT 
-                        [ID]
-                        ,[OWNER] AS '負責承辦'
-                        ,[WORKOBJECTS] AS '工作對象'
-                        ,[PROCESS] AS '處理情況敘述'
-                        ,[FINISHDATES] AS '預計完成日期'
-                        ,[STATUS] AS '處理進度'
-                        ,[COMMENTS] AS '備註說明'
-                        FROM [TKPUR].[dbo].[TB_PUR_WORKS]
-                        ORDER BY [ID]
-                        ";
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder SQLQUERY1 = new StringBuilder();
+        StringBuilder SQLQUERY2 = new StringBuilder();
+        StringBuilder SQLQUERY3 = new StringBuilder();
+        string OWNER = FIND_TextBox_負責承辦.Text;
+        string WORKOBJECTS = FIND_TextBox_工作對象.Text;
+        string STATUS = FIND_DropDownList1.Text;
+
+        if (!string.IsNullOrEmpty(OWNER))
+        {
+            SQLQUERY1.AppendFormat(@" AND OWNER LIKE '%{0}%'", OWNER);
+        }
+        else { SQLQUERY1.AppendFormat(@" "); }
+        if (!string.IsNullOrEmpty(WORKOBJECTS))
+        {
+            SQLQUERY2.AppendFormat(@" AND WORKOBJECTS LIKE '%{0}%'", WORKOBJECTS);
+        }
+        else { SQLQUERY2.AppendFormat(@" "); }
+
+        if (!string.IsNullOrEmpty(STATUS))
+        {
+            if(STATUS.Equals("全部"))
+            {
+                SQLQUERY3.AppendFormat(@" ");
+            }
+            else
+            {
+                SQLQUERY3.AppendFormat(@" AND STATUS='{0}'", STATUS);
+            }                
+        }
+        
+
+
+        // 2. 定義 SQL 查詢字串 
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [ID]
+                            ,[OWNER] AS '負責承辦'
+                            ,[WORKOBJECTS] AS '工作對象'
+                            ,[PROCESS] AS '處理情況敘述'
+                            ,[FINISHDATES] AS '預計完成日期'
+                            ,[STATUS] AS '處理進度'
+                            ,[COMMENTS] AS '備註說明'
+                            FROM [TKPUR].[dbo].[TB_PUR_WORKS]
+                            WHERE 1=1
+                            {0}
+                            {1}
+                            {2}
+                            ORDER BY [ID]
+                            ", SQLQUERY1.ToString(), SQLQUERY2.ToString(), SQLQUERY3.ToString());          
+       
 
         //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());
 
