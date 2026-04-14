@@ -2,6 +2,31 @@
 
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <style>
+        .big-bold-button {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+            .big-bold-button:hover {
+                background-color: #0056b3;
+            }
+
+
+        /* 4. 不同功能的顏色調整（顯眼且好看） */
+        .btn-add {
+            background: #4a90e2;
+            color: white !important;
+        }
+        /* 優雅藍 */
+    </style>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
@@ -21,7 +46,16 @@
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Button ID="Button1" runat="server" Text="查詢" OnClick="Button1_Click"
-                                        meta:resourcekey="btn1Resource4" />
+                                        meta:resourcekey="btn1Resource1"
+                                        Style="width: 150px; /* 調整寬度 */
+                                        height: 30px; /* 調整高度 */
+                                        background-color: #4CAF50; /* 調整背景顏色 (綠色) */
+                                        color: white; /* 調整字體顏色 (白色) */
+                                        font-size: 16px; /* 調整字體大小 */
+                                        font-family: '微軟正黑體', Arial, sans-serif; /* 調整字體 */
+                                        border: none; /* 移除邊框 (可選) */
+                                        border-radius: 8px; /* 圓角邊框 (可選) */
+                                        cursor: pointer; /* 鼠標樣式 (可選) */" />
                                 </td>
                             </tr>
                         </table>
@@ -91,6 +125,14 @@
                                                             Text='<%# Bind("備註說明") %>'
                                                             TextMode="MultiLine" Rows="3"
                                                             Width="100%" Style="resize: none;"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="btnUpdate" runat="server" Text="更新" CommandName="MYUPDATE"
+                                                            CommandArgument='<%# Eval("ID") %>'
+                                                            OnClientClick="return confirm('是否更新？');"
+                                                            CssClass="grid-btn btn-add" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

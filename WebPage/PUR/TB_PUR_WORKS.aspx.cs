@@ -113,6 +113,42 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int rowIndex = -1;
+
+        // 1. 檢查 CommandName 是否是您定義的更新命令
+        if (e.CommandName == "MYUPDATE")
+        {
+            string ID = e.CommandArgument.ToString();
+            GridViewRow row = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+
+            TextBox txt_OWNER = (TextBox)row.FindControl("TextBox_負責承辦");
+            string OWNER = txt_OWNER.Text;
+            TextBox txt_WORKOBJECTS = (TextBox)row.FindControl("TextBox_工作對象");
+            string WORKOBJECTS = txt_WORKOBJECTS.Text;
+            TextBox txt_PROCESS = (TextBox)row.FindControl("TextBox_處理情況敘述");
+            string PROCESS = txt_PROCESS.Text;
+            TextBox txt_FINISHDATES = (TextBox)row.FindControl("TextBox_預計完成日期");
+            string FINISHDATES = txt_FINISHDATES.Text;
+            TextBox txt_COMMENTS = (TextBox)row.FindControl("TextBox_備註說明");
+            string COMMENTS = txt_COMMENTS.Text;
+
+            DropDownList drd_STATUS=(DropDownList)row.FindControl("DropDownList_處理進度");
+            string STATUS = drd_STATUS.Text;
+
+            UODATE_TB_PUR_WORKS(
+             ID
+            , OWNER
+            , WORKOBJECTS
+            , PROCESS
+            , FINISHDATES
+            , STATUS
+            , COMMENTS            
+            );
+
+            MsgBox("更新完成 \r\n " + ID, this.Page, this);
+        }
+     
+
+        BindGrid();
     }
 
 
@@ -137,6 +173,67 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
         return dt;
     }
 
+    public void UODATE_TB_PUR_WORKS(
+      string ID
+     , string OWNER
+     , string WORKOBJECTS
+     , string PROCESS
+     , string FINISHDATES
+     , string STATUS
+     , string COMMENTS
+     )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+
+        // 1. 📌 使用參數化查詢，避免 SQL Injection
+        string sqlQuery = @"
+                            UPDATE [TKPUR].[dbo].[TB_PUR_WORKS]
+                            SET [OWNER]=@OWNER
+                            ,[WORKOBJECTS]=@WORKOBJECTS
+                            ,[PROCESS]=@PROCESS
+                            ,[FINISHDATES]=@FINISHDATES
+                            ,[STATUS]=@STATUS
+                            ,[COMMENTS]=@COMMENTS
+                            WHERE [ID]=@ID
+                          
+                            ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢
+                    command.Parameters.AddWithValue("@ID", ID);
+                    command.Parameters.AddWithValue("@OWNER", OWNER);
+                    command.Parameters.AddWithValue("@WORKOBJECTS", WORKOBJECTS);
+                    command.Parameters.AddWithValue("@PROCESS", PROCESS);
+                    command.Parameters.AddWithValue("@FINISHDATES", FINISHDATES);
+                    command.Parameters.AddWithValue("@STATUS", STATUS);
+                    command.Parameters.AddWithValue("@COMMENTS", COMMENTS);
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        MsgBox("完成 \r\n ", this.Page, this);
+                    }
+                    else
+                    {
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -144,6 +241,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
 
         // MsgBox("MsgBox!!!!    " + error + "\r\n" + Form.OuterXml, this.Page, this);
     }
+
     #endregion
 
 
