@@ -34,6 +34,8 @@
                 <Tabs>
                     <telerik:RadTab Text="查詢">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="新增">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -135,10 +137,121 @@
                                                             CssClass="grid-btn btn-add" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                 <asp:TemplateField>
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="MUDELETE"
+                                                            CommandArgument='<%# Eval("ID") %>'
+                                                            OnClientClick="return confirm('是否刪除？');"
+                                                            CssClass="grid-btn btn-add" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             </Columns>
                                         </Fast:Grid>
                                     </div>
                                 </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
+                <telerik:RadPageView ID="RadPageView2" runat="server">
+                    <div id="tabs-2">
+                        <table class="PopTable">
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label1" runat="server" Text="負責承辦"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="ADD_TextBox_負責承辦" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="3"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label3" runat="server" Text="工作對象"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="ADD_TextBox_工作對象" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="3"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label4" runat="server" Text="處理情況敘述"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="ADD_TextBox_處理情況敘述" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="3"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label5" runat="server" Text="預計完成日期"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="ADD_TextBox_預計完成日期" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="3"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label7" runat="server" Text="處理進度"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <%-- 改為 DropDownList --%>
+                                    <asp:DropDownList ID="ADD_DropDownList_處理進度" runat="server" 
+                                        Width="50%">
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label6" runat="server" Text="備註說明"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:TextBox ID="ADD_TextBox_備註說明" runat="server"
+                                        Text=""
+                                        Width="50%"
+                                        TextMode="MultiLine"
+                                        Rows="3"
+                                        Style="resize: none; word-break: break-all;">
+                                    </asp:TextBox>
+                                </td>
+                                  <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button2" runat="server" Text="新增" OnClick="Button2_Click"
+                                        meta:resourcekey="btn1Resource1"
+                                        Style="width: 150px; /* 調整寬度 */
+                                        height: 30px; /* 調整高度 */
+                                        background-color: #4CAF50; /* 調整背景顏色 (綠色) */
+                                        color: white; /* 調整字體顏色 (白色) */
+                                        font-size: 16px; /* 調整字體大小 */
+                                        font-family: '微軟正黑體', Arial, sans-serif; /* 調整字體 */
+                                        border: none; /* 移除邊框 (可選) */
+                                        border-radius: 8px; /* 圓角邊框 (可選) */
+                                        cursor: pointer; /* 鼠標樣式 (可選) */" />
+                                </td>
+                            </tr>
                             </tr>
                         </table>
                     </div>
