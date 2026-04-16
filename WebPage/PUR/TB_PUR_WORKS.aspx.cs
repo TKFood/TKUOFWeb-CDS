@@ -66,7 +66,7 @@ public partial class CDS_WebPage_PUR_TB_PUR_WORKS : Ede.Uof.Utility.Page.BasePag
         ADD_DropDownList_處理進度.DataBind();
 
         // 4. 插入預設選項 (選填)
-        ADD_DropDownList_處理進度.Items.Insert(0, new ListItem("請選擇", ""));
+        //ADD_DropDownList_處理進度.Items.Insert(0, new ListItem("請選擇", ""));
     }
     private void Bind_FIND_DropDownList1()
     {
