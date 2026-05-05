@@ -910,6 +910,124 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
         m_db.ExecuteNonQuery(cmdTxt);
     }
 
+    private void BindGrid3()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder Query1 = new StringBuilder();
+        StringBuilder Query2 = new StringBuilder();
+
+        if (!string.IsNullOrEmpty(TextBox_CLIENTS3.Text))
+        {
+            Query1.AppendFormat(@" AND  [TB_SALES_ASSINGED_CN].[ID] IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN] WHERE [CLIENTS] LIKE '%{0}%') ", TextBox_CLIENTS3.Text);
+        }
+        else
+        {
+            Query1.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(DropDownListISCLOSE2.SelectedValue.ToString()))
+        {
+            if (DropDownListISCLOSE3.SelectedValue.ToString().Equals("全部"))
+            {
+                Query2.AppendFormat(@"");
+            }
+            else
+            {
+                Query2.AppendFormat(@"AND [TB_SALES_ASSINGED_CN].[ID]  IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN] WHERE [ISCLOSE] LIKE '%{0}%')", DropDownListISCLOSE3.SelectedValue.ToString());
+            }
+
+        }
+        else
+        {
+            Query2.AppendFormat(@"");
+        }
+
+        cmdTxt.AppendFormat(@"
+                           SELECT 
+                            [TB_SALES_ASSINGED_CN].[ID]
+                            ,[SALES]
+                            ,[CLIENTS]
+                            ,[EVENTS]
+                            ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
+                            ,[ISCLOSE]
+                            ,[MID]
+                            ,[COMMENTS]
+                            ,CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS_CN].[ADDDATES] ,111)  ADDDATES
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN], [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS_CN]
+                            WHERE 1=1
+                            AND  [TB_SALES_ASSINGED_COMMENTS_CN].MID=[TB_SALES_ASSINGED_CN].ID                           
+                            {0}
+                            {1}
+                            ORDER BY [SALES],[CLIENTS],[EDAYS],[ID],[TB_SALES_ASSINGED_COMMENTS_CN].[ADDDATES]
+
+                              
+                            ", Query1.ToString(), Query2.ToString()); ;
+
+
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        Grid3.DataSource = dt;
+        Grid3.DataBind();
+    }
+
+    protected void grid_PageIndexChanging3(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid("");
+    }
+    protected void Grid3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid3_OnRowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid3Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引          
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid3.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField3");
+                string newTextValue = txtNewField.Text;
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID3");
+                string id = txtid.Text;
+
+                ADD_TB_SALES_ASSINGED_COMMENTS_CN(id, newTextValue);
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid3();
+            }
+        }
+
+
+    }
+
+    public void OnBeforeExport3(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        //SETEXCEL(txtDate1.Text, txtDate2.Text);
+
+    }
+   
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -956,7 +1074,8 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
     }
     protected void btn4_Click(object sender, EventArgs e)
     {
-        
+        BindGrid3();
     }
+
     #endregion
 }
