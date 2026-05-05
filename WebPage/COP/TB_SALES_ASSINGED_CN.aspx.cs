@@ -307,6 +307,377 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
         }
     }
 
+    private void BindGrid()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+        StringBuilder Query1 = new StringBuilder();
+        StringBuilder Query2 = new StringBuilder();
+        StringBuilder Query3 = new StringBuilder();
+        StringBuilder Query99 = new StringBuilder();
+
+        if (!string.IsNullOrEmpty(TextBox_CLIENTS.Text))
+        {
+            Query1.AppendFormat(@" AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN] WHERE [CLIENTS] LIKE '%{0}%') ", TextBox_CLIENTS.Text);
+        }
+        else
+        {
+            Query1.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(DropDownListISCLOSE.SelectedValue.ToString()))
+        {
+            if (DropDownListISCLOSE.SelectedValue.ToString().Equals("全部"))
+            {
+                Query2.AppendFormat(@"");
+            }
+            else
+            {
+                Query2.AppendFormat(@"AND ID IN (SELECT ID FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN] WHERE [ISCLOSE] LIKE '%{0}%')", DropDownListISCLOSE.SelectedValue.ToString());
+            }
+
+        }
+        else
+        {
+            Query2.AppendFormat(@"");
+        }
+
+        if (!string.IsNullOrEmpty(DropDownList4.SelectedValue.ToString()))
+        {
+            if (!string.IsNullOrEmpty(DropDownList4.SelectedValue.ToString()))
+            {
+                Query3.AppendFormat(@"AND [SALES]='{0}'", DropDownList4.SelectedValue.ToString());
+            }
+            else
+            {
+                Query3.AppendFormat(@"");
+            }
+
+        }
+
+
+        //ORDER BY
+        if (!string.IsNullOrEmpty(DropDownList3.SelectedValue.ToString()))
+        {
+            if (DropDownList3.SelectedValue.ToString().Equals("依業務+客戶"))
+            {
+                Query99.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+            }
+            else if (DropDownList3.SelectedValue.ToString().Equals("依業務+回覆期限"))
+            {
+                Query99.AppendFormat(@"  ORDER BY [SALES],[EDAYS],[CLIENTS],[ID]");
+            }
+            else
+            {
+                Query99.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+
+            }
+
+        }
+        else
+        {
+            Query99.AppendFormat(@"  ORDER BY [SALES],[CLIENTS],[EDAYS],[ID]");
+        }
+
+
+        cmdTxt.AppendFormat(@"
+                            SELECT 
+                            [TB_SALES_ASSINGED_CN].[ID]
+                            ,[SALES]
+                            ,[CLIENTS]
+                            ,[EVENTS]
+                            ,CONVERT(NVARCHAR,[EDAYS],111) EDAYS
+                            ,[ISCLOSE]
+                            ,CONVERT(NVARCHAR,[ADDDATES],111) ADDDATES
+                            ,CONVERT(NVARCHAR,[ISCLOSEDATES],111) ISCLOSEDATES
+                            ,(SELECT TOP 1 [COMMENTS] FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS_CN] WHERE [TB_SALES_ASSINGED_COMMENTS_CN].MID=[TB_SALES_ASSINGED_CN].ID ORDER BY ID DESC) AS COMMENTS
+                            ,(SELECT TOP 1 CONVERT(NVARCHAR,[TB_SALES_ASSINGED_COMMENTS_CN].[ADDDATES],111) FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS_CN] WHERE [TB_SALES_ASSINGED_COMMENTS_CN].MID=[TB_SALES_ASSINGED_CN].ID ORDER BY ID DESC) AS COMMENTSADDDATES
+
+                            FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN]
+                            WHERE 1=1
+                            {0}
+                            {1}
+                            {2}
+
+                            {3}
+                           
+
+                              
+                            ", Query1.ToString(), Query2.ToString(), Query3.ToString(), Query99.ToString());
+
+
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        //匯出專用
+        EXCELDT1 = dt;
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+    protected void grid_PageIndexChanging1(object sender, GridViewPageEventArgs e)
+    {
+        //Grid1.PageIndex = e.NewPageIndex;
+        //BindGrid("");
+    }
+    protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 假設 txtNewField 是一個 Label 控制項
+            TextBox txtNewField = (TextBox)e.Row.FindControl("txtNewField");
+            Button Grid1Button1 = (Button)e.Row.FindControl("Grid1Button1");
+            Label LabelSALES = (Label)e.Row.FindControl("SALES");
+            Button Grid1Button2 = (Button)e.Row.FindControl("Grid1Button2");
+            Button Grid1Button3 = (Button)e.Row.FindControl("Grid1Button3");
+            // 假設事件在資料繫結時，ISCLOSE 欄位的名稱是 "ISCLOSE"
+            string eventValue = DataBinder.Eval(e.Row.DataItem, "ISCLOSE") as string;
+
+            // 如果事件欄位的值為空，就隱藏 txtNewField
+            if (string.IsNullOrWhiteSpace(eventValue))
+            {
+                txtNewField.Visible = false;
+                Grid1Button1.Visible = false;
+                LabelSALES.Visible = false;
+                Grid1Button2.Visible = false;
+                Grid1Button3.Visible = false;
+            }
+        }
+
+    }
+
+    protected void Grid1_OnRowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+
+        if (e.CommandName == "Grid1Button1")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text.Trim();
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID");
+                string id = txtid.Text;
+
+                //ADD_TB_SALES_ASSINGED_COMMENTS(id, newTextValue);
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+            }
+        }
+        if (e.CommandName == "Grid1Button2")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID");
+                string id = txtid.Text;
+
+                //UPDATE_TB_SALES_ASSINGED_YN(id, "Y");
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+            }
+        }
+        if (e.CommandName == "Grid1Button3")
+        {
+            // 獲取所選行的索引
+            rowIndex = Convert.ToInt32(e.CommandArgument);
+            // 在GridView中找到所選行的索引
+
+
+            // 確保找到了有效的行
+            if (rowIndex >= 0)
+            {
+                // 獲取TextBox的值
+                GridViewRow row = Grid1.Rows[rowIndex];
+                TextBox txtNewField = (TextBox)row.FindControl("txtNewField");
+                string newTextValue = txtNewField.Text;
+
+                // 獲取相應的ID
+                Label txtid = (Label)row.FindControl("ID");
+                string id = txtid.Text;
+
+                //UPDATE_TB_SALES_ASSINGED_YN(id, "N");
+
+                //MsgBox(id + " " + newTextValue, this.Page, this);
+                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
+                // ...
+
+                // 重新繫結GridView，刷新顯示
+                BindGrid();
+            }
+        }
+
+    }
+
+    public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL();
+    }
+    public void SETEXCEL()
+    {
+        BindGrid();
+        //BindGrid中已帶入EXCELDT1
+        if (EXCELDT1.Rows.Count >= 1)
+        {
+            //檔案名稱
+            var fileName = "明細" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".xlsx";
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // 關閉新許可模式通知
+
+            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            {
+
+                // 建立分頁
+                var ws = excel.Workbook.Worksheets.Add("list" + DateTime.Now.ToShortDateString());
+
+
+                //預設行高
+                //ws.DefaultRowHeight = 60;
+
+                // 寫入資料試試
+                //ws.Cells[2, 1].Value = "測試測試";
+                int ROWS = 2;
+                int COLUMNS = 1;
+
+
+                //excel標題
+                ws.Cells[1, 1].Value = "業務員";
+                ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 2].Value = "客戶";
+                ws.Cells[1, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 3].Value = "回覆期限";
+                ws.Cells[1, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 4].Value = "交辨內容";
+                ws.Cells[1, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 5].Value = "已回覆內容(最近)";
+                ws.Cells[1, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 6].Value = "回覆日期(最近)";
+                ws.Cells[1, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 7].Value = "是否結案";
+                ws.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                ws.Cells[1, 8].Value = "結案日";
+                ws.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; //欄位置中
+                ws.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                ws.Cells[1, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+                foreach (DataRow od in EXCELDT1.Rows)
+                {
+                    ws.Cells[ROWS, 1].Value = od["SALES"].ToString();
+                    ws.Cells[ROWS, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 2].Value = od["CLIENTS"].ToString();
+                    ws.Cells[ROWS, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 3].Value = od["EDAYS"].ToString();
+                    ws.Cells[ROWS, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 4].Value = od["EVENTS"].ToString();
+                    ws.Cells[ROWS, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 5].Value = od["COMMENTS"].ToString();
+                    ws.Cells[ROWS, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 5].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 6].Value = od["COMMENTSADDDATES"].ToString();
+                    ws.Cells[ROWS, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 6].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 7].Value = od["ISCLOSE"].ToString();
+                    ws.Cells[ROWS, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 7].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+                    ws.Cells[ROWS, 8].Value = od["ISCLOSEDATES"].ToString();
+                    ws.Cells[ROWS, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center; //高度置中
+                    ws.Cells[ROWS, 8].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin); //儲存格框線
+
+
+                    ROWS++;
+                }
+
+
+
+
+                ////預設列寬、行高
+                //sheet.DefaultColWidth = 10; //預設列寬
+                //sheet.DefaultRowHeight = 30; //預設行高
+
+                //// 遇\n或(char)10自動斷行
+                //ws.Cells.Style.WrapText = true;
+
+                //自適應寬度設定
+                ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                //自適應高度設定
+                ws.Row(1).CustomHeight = true;
+
+
+
+                //儲存Excel
+                //Byte[] bin = excel.GetAsByteArray();
+                //File.WriteAllBytes(@"C:\TEMP\" + fileName, bin);
+
+                //儲存和歸來的Excel檔案作為一個ByteArray
+                var data = excel.GetAsByteArray();
+                HttpResponse response = HttpContext.Current.Response;
+                Response.Clear();
+
+                //輸出標頭檔案　　
+                Response.AddHeader("content-disposition", "attachment;  filename=" + fileName + "");
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.BinaryWrite(data);
+                Response.Flush();
+                Response.End();
+                //package.Save();//這個方法是直接下載到本地
+            }
+        }
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -323,7 +694,7 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
     #region BUTTON
     protected void btn1_Click(object sender, EventArgs e)
     {
-        
+        BindGrid();
     }
     protected void btn2_Click(object sender, EventArgs e)
     {
