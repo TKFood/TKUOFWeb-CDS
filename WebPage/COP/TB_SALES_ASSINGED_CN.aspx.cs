@@ -474,13 +474,9 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
                 Label txtid = (Label)row.FindControl("ID");
                 string id = txtid.Text;
 
-                //ADD_TB_SALES_ASSINGED_COMMENTS(id, newTextValue);
+                ADD_TB_SALES_ASSINGED_COMMENTS_CN(id, newTextValue);
+                MsgBox(id + " 完成" , this.Page, this);
 
-                //MsgBox(id + " " + newTextValue, this.Page, this);
-                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
-                // ...
-
-                // 重新繫結GridView，刷新顯示
                 BindGrid();
             }
         }
@@ -503,13 +499,9 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
                 Label txtid = (Label)row.FindControl("ID");
                 string id = txtid.Text;
 
-                //UPDATE_TB_SALES_ASSINGED_YN(id, "Y");
-
-                //MsgBox(id + " " + newTextValue, this.Page, this);
-                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
-                // ...
-
-                // 重新繫結GridView，刷新顯示
+                UPDATE_TB_SALES_ASSINGED_CN_YN(id, "Y");
+                MsgBox(id + " 完成", this.Page, this);
+             
                 BindGrid();
             }
         }
@@ -532,13 +524,9 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
                 Label txtid = (Label)row.FindControl("ID");
                 string id = txtid.Text;
 
-                //UPDATE_TB_SALES_ASSINGED_YN(id, "N");
+                UPDATE_TB_SALES_ASSINGED_CN_YN(id, "N");
+                MsgBox(id + " 完成", this.Page, this);
 
-                //MsgBox(id + " " + newTextValue, this.Page, this);
-                // 在這裡執行保存的邏輯，例如將新的文本值與ID保存到資料庫中
-                // ...
-
-                // 重新繫結GridView，刷新顯示
                 BindGrid();
             }
         }
@@ -678,6 +666,48 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
         }
     }
 
+    public void ADD_TB_SALES_ASSINGED_COMMENTS_CN(string MID, string COMMENTS)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"
+                   INSERT INTO [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_COMMENTS_CN]
+                    ([MID],[COMMENTS])
+                    VALUES (@MID,@COMMENTS)
+                        ";
+
+
+        m_db.AddParameter("@MID", MID);
+        m_db.AddParameter("@COMMENTS", COMMENTS);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+    public void UPDATE_TB_SALES_ASSINGED_CN_YN(string ID, string ISCLOSE)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+        string ISCLOSEDATES = DateTime.Now.ToString("yyyy/MM/dd");
+
+        cmdTxt = @"
+                UPDATE [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN]
+                SET [ISCLOSE]=@ISCLOSE,[ISCLOSEDATES]=@ISCLOSEDATES
+                WHERE [ID]=@ID
+                        ";
+
+
+        m_db.AddParameter("@ID", ID);
+        m_db.AddParameter("@ISCLOSE", ISCLOSE);
+        m_db.AddParameter("@ISCLOSEDATES", ISCLOSEDATES);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
