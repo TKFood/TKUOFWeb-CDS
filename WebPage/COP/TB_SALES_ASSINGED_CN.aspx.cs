@@ -708,6 +708,57 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
 
         m_db.ExecuteNonQuery(cmdTxt);
     }
+
+
+    public void ADD_TB_SALES_ASSINGED_CN(
+                                   string SALES
+                                   , string CLIENTS
+                                   , string EVENTS
+                                   , string EDAYS
+                                   , string ISCLOSE
+                                   , string ADDDATES
+                                   )
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"   ";
+
+
+        cmdTxt = @"               
+                        INSERT INTO  [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_CN]
+                        (
+                        [SALES]
+                        ,[CLIENTS]
+                        ,[EVENTS]
+                        ,[EDAYS]
+                        ,[ISCLOSE]
+                        ,[ADDDATES]
+                        )
+                        VALUES
+                        (
+                        @SALES
+                        ,@CLIENTS
+                        ,@EVENTS
+                        ,@EDAYS
+                        ,@ISCLOSE
+                        ,@ADDDATES
+                        )
+                        ";
+
+
+        m_db.AddParameter("@SALES", SALES);
+        m_db.AddParameter("@CLIENTS", CLIENTS);
+        m_db.AddParameter("@EVENTS", EVENTS);
+        m_db.AddParameter("@EDAYS", EDAYS);
+        m_db.AddParameter("@ISCLOSE", ISCLOSE);
+        m_db.AddParameter("@ADDDATES", ADDDATES);
+
+        m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -728,7 +779,24 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
     }
     protected void btn2_Click(object sender, EventArgs e)
     {
-       
+        string SALES = DropDownList1.SelectedValue.ToString();
+        string CLIENTS = TextBox1.Text.ToString();
+        string EVENTS = TextBox2.Text.ToString();
+        string EDAYS = txtDate1.Text.ToString();
+        string ISCLOSE = DropDownList2.SelectedValue.ToString();
+        string ADDDATES = DateTime.Now.ToString("yyyy/MM/dd");
+
+        ADD_TB_SALES_ASSINGED_CN(
+                                SALES
+                                , CLIENTS
+                                , EVENTS
+                                , EDAYS
+                                , ISCLOSE
+                                , ADDDATES
+                                );
+        BindGrid();
+
+        MsgBox(" 完成", this.Page, this);
     }
 
     protected void btn3_Click(object sender, EventArgs e)
