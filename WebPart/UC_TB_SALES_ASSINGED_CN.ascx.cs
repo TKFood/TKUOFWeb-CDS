@@ -26,7 +26,7 @@ using Ede.Uof.EIP.SystemInfo;
 using Telerik.Web.UI;
 using System.Web.UI.HtmlControls;
 
-public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page.BasePage
+public partial class CDS_WebPart_UC_TB_SALES_ASSINGED_CN : System.Web.UI.UserControl
 {
     DataTable EXCELDT1 = new DataTable();
 
@@ -475,7 +475,7 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
                 string id = txtid.Text;
 
                 ADD_TB_SALES_ASSINGED_COMMENTS_CN(id, newTextValue);
-                MsgBox(id + " 完成" , this.Page, this);
+                MsgBox(id + " 完成", this.Page, this);
 
                 BindGrid();
             }
@@ -501,7 +501,7 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
 
                 UPDATE_TB_SALES_ASSINGED_CN_YN(id, "Y");
                 MsgBox(id + " 完成", this.Page, this);
-             
+
                 BindGrid();
             }
         }
@@ -1027,7 +1027,7 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
         //SETEXCEL(txtDate1.Text, txtDate2.Text);
 
     }
-   
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -1078,4 +1078,5 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
     }
 
     #endregion
+
 }
