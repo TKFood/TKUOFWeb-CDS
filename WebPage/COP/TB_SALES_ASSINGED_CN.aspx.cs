@@ -383,7 +383,8 @@ public partial class CDS_WebPage_COP_TB_SALES_ASSINGED_CN : Ede.Uof.Utility.Page
 
         cmdTxt.AppendFormat(@"
                             SELECT 
-                            [TB_SALES_ASSINGED_CN].[ID]
+                            ROW_NUMBER() OVER ({3}) AS '序號'
+                            ,[TB_SALES_ASSINGED_CN].[ID]
                             ,[SALES]
                             ,[CLIENTS]
                             ,[EVENTS]
