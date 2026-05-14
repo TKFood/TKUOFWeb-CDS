@@ -38,12 +38,46 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
 
         if (!IsPostBack)
         {
-           
+            BindDropDownList1();
         }
 
     }
 
     #region FUNCTION
+
+    private void BindDropDownList1()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"    SELECT 
+                                 [ID]
+                                ,[KIND]
+                                ,[PARAID]
+                                ,[PARANAME]
+                                FROM [TKRESEARCH].[dbo].[TBPARA]
+                                WHERE [KIND]='UOF_FROMS_1002_RECORDS_SORT'
+                                ORDER BY [ID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList1.DataSource = dt;
+            DropDownList1.DataTextField = "PARANAME";
+            DropDownList1.DataValueField = "PARANAME";
+            DropDownList1.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
     private void BindGrid()
     {
         string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
@@ -54,8 +88,12 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
 
+        StringBuilder ORDERBY = new StringBuilder();
+
         string ISCLOSED = ddlSearchIsClosed.Text.ToString();
-        if(ISCLOSED.Equals("N"))
+        string ORDER= DropDownList1.Text.ToString();
+
+        if (ISCLOSED.Equals("N"))
         {
             QUERYS.AppendFormat(@" AND (ISNULL([TK_UOF_RECORDS_1002].[ISCLOSED],'')='' OR [TK_UOF_RECORDS_1002].[ISCLOSED]='N') ");
         }
@@ -68,6 +106,14 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             QUERYS.AppendFormat(@" ");
         }
 
+        if (ORDER.Equals("依預交日"))
+        {
+            ORDERBY.AppendFormat(@"  ORDER BY [TK_UOF_RECORDS_1002].[DVV07]");
+        }
+        else
+        {
+            ORDERBY.AppendFormat(@"  ORDER BY f.FORM_NAME,u.NAME, t.DOC_NBR");
+        }
 
         cmdTxt.AppendFormat(@"                              
                             SELECT 
@@ -86,10 +132,11 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 TD.Row.value('(Cell[@fieldId=""DVV09""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '尺寸',
                                 TD.Row.value('(Cell[@fieldId=""DVV10""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '包材',
                                 TD.Row.value('(Cell[@fieldId=""DVV04""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '需求量',
-                                TD.Row.value('(Cell[@fieldId=""DVV07""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '試吃品需求日',
+                                TD.Row.value('(Cell[@fieldId=""DVV07""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '原試吃品需求日',                                
 
                                	[TK_UOF_RECORDS_1002].[COMMENTS] AS '備註',
-                                [TK_UOF_RECORDS_1002].[ISCLOSED] AS '結案'
+                                [TK_UOF_RECORDS_1002].[ISCLOSED] AS '結案',
+                                [TK_UOF_RECORDS_1002].[DVV07] AS '預交日'
 
                             FROM[UOF].dbo.TB_WKF_TASK AS t WITH(NOLOCK)
                             CROSS APPLY[CURRENT_DOC].nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row') AS TD(Row)
@@ -106,10 +153,11 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 AND t.BEGIN_TIME >= '2025-01-01'
                                 AND f.FORM_NAME IN('1004.無品號試吃製作申請單')
                                 {0}
+                                {1}
+                           ;
 
-                            ORDER BY f.FORM_NAME, t.DOC_NBR;
-
-                            ", QUERYS.ToString());
+                            ", QUERYS.ToString()
+                            , ORDERBY.ToString());
 
 
 
@@ -197,6 +245,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
 
             // 使用 FindControl 並加入防呆檢查 (避免找不控制項導致 NullReferenceException)
             TextBox txt備註 = (TextBox)row.FindControl("txtNewField_GV1_備註");
+            TextBox txt試吃品需求日 = (TextBox)row.FindControl("txtNewField_GV1_預交日");
+
             Label lbl編號 = (Label)row.FindControl("Label_表單編號");
             Label lbl項次 = (Label)row.FindControl("Label_項次");
             Label lbl產品 = (Label)row.FindControl("Label_產品名稱");
@@ -205,7 +255,6 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             Label lbl尺寸 = (Label)row.FindControl("Label_尺寸");
             Label lbl包材 = (Label)row.FindControl("Label_包材");
             Label lbl需求 = (Label)row.FindControl("Label_需求量");
-            Label lbl試吃品需求日 = (Label)row.FindControl("Label_試吃品需求日");
             Label lbl結案 = (Label)row.FindControl("Label_結案");
 
             // 賦值(C# 5.0 相容寫法)
@@ -217,14 +266,22 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             DVV09 = (lbl尺寸 != null) ? lbl尺寸.Text : "";
             DVV10 = (lbl包材 != null) ? lbl包材.Text : "";
             DVV04 = (lbl需求 != null) ? lbl需求.Text : "";
-            DVV07 = (lbl試吃品需求日 != null) ? lbl試吃品需求日.Text : "";
+            DVV07 = (txt試吃品需求日 != null) ? txt試吃品需求日.Text : "";
             ISCLOSED = (lbl結案 != null) ? lbl結案.Text : "";
 
-            // 備註欄位通常包含 Trim()
+          
             COMMENTS = "";
             if (txt備註 != null)
             {
                 COMMENTS = txt備註.Text.Trim();
+            }
+            DVV07 = "";
+            if (txt試吃品需求日 != null)
+            {
+                string DATES = txt試吃品需求日.Text.Trim();
+
+                DateTime dateValue = Convert.ToDateTime(DATES);
+                DVV07 = dateValue.ToString("yyyy/MM/dd");
             }
 
             // --- 邏輯判斷區 (修正括號層級) ---
@@ -276,6 +333,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             // 【16 個欄位對應表：Key 為資料庫欄位名，Value 為 Excel 標題】
             var columnMap = new Dictionary<string, string>
         {
+            { "預交日", "預交日" },
             { "表單編號", "表單編號" },
             { "申請者", "申請者" },
             { "申請時間", "申請時間" },
@@ -285,8 +343,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             { "規格", "規格" },
             { "尺寸", "尺寸" },
             { "包材", "包材" },
-            { "需求量", "需求量" },
-            { "試吃品需求日", "試吃品需求日" },
+            { "需求量", "需求量" },           
             { "結案", "結案" },
             { "備註", "備註" }
           
