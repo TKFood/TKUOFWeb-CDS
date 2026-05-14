@@ -86,7 +86,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 TD.Row.value('(Cell[@fieldId=""DVV09""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '尺寸',
                                 TD.Row.value('(Cell[@fieldId=""DVV10""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '包材',
                                 TD.Row.value('(Cell[@fieldId=""DVV04""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '需求量',
-                                TD.Row.value('(Cell[@fieldId=""DVV07""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '預計完工日',
+                                TD.Row.value('(Cell[@fieldId=""DVV07""]/@fieldValue)[1]', 'NVARCHAR(MAX)') AS '試吃品需求日',
 
                                	[TK_UOF_RECORDS_1002].[COMMENTS] AS '備註',
                                 [TK_UOF_RECORDS_1002].[ISCLOSED] AS '結案'
@@ -205,7 +205,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             Label lbl尺寸 = (Label)row.FindControl("Label_尺寸");
             Label lbl包材 = (Label)row.FindControl("Label_包材");
             Label lbl需求 = (Label)row.FindControl("Label_需求量");
-            Label lbl完工日 = (Label)row.FindControl("Label_預計完工日");
+            Label lbl試吃品需求日 = (Label)row.FindControl("Label_試吃品需求日");
             Label lbl結案 = (Label)row.FindControl("Label_結案");
 
             // 賦值(C# 5.0 相容寫法)
@@ -217,7 +217,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             DVV09 = (lbl尺寸 != null) ? lbl尺寸.Text : "";
             DVV10 = (lbl包材 != null) ? lbl包材.Text : "";
             DVV04 = (lbl需求 != null) ? lbl需求.Text : "";
-            DVV07 = (lbl完工日 != null) ? lbl完工日.Text : "";
+            DVV07 = (lbl試吃品需求日 != null) ? lbl試吃品需求日.Text : "";
             ISCLOSED = (lbl結案 != null) ? lbl結案.Text : "";
 
             // 備註欄位通常包含 Trim()
@@ -286,7 +286,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             { "尺寸", "尺寸" },
             { "包材", "包材" },
             { "需求量", "需求量" },
-            { "預計完工日", "預計完工日" },
+            { "試吃品需求日", "試吃品需求日" },
             { "結案", "結案" },
             { "備註", "備註" }
           
