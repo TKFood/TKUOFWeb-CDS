@@ -49,14 +49,14 @@
                             </td>
                         </tr>
                         <tr>
-                                <td class="PopTableLeftTD">
-                                    <asp:Label ID="Label2" runat="server" Text="排序:" meta:resourcekey="Label4Resource1"></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-                                </td>
+                            <td class="PopTableLeftTD">
+                                <asp:Label ID="Label2" runat="server" Text="排序:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                            </td>
 
-                            </tr>
+                        </tr>
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
@@ -77,7 +77,7 @@
                                             <Columns>
                                                 <asp:TemplateField HeaderText="預交日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtNewField_GV1_預交日" runat="server" 
+                                                        <asp:TextBox ID="txtNewField_GV1_預交日" runat="server"
                                                             Text='<%# Bind("預交日") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -162,7 +162,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
-                                                   <Columns>
+                                            <Columns>
                                                 <asp:TemplateField HeaderText="原試吃品需求日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_原試吃品需求日" runat="server" Text='<%# Bind("原試吃品需求日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
@@ -173,6 +173,13 @@
                                                 <asp:TemplateField HeaderText="結案" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_結案" runat="server" Text='<%# Bind("結案") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="結案日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_結案日" runat="server" Text='<%# Bind("結案日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

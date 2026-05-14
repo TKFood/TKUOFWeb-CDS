@@ -3,6 +3,24 @@
 <%@ Register Assembly="Ede.Uof.Utility.Component.Grid" Namespace="Ede.Uof.Utility.Component" TagPrefix="Fast" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <style>
+    /* 設定整個頁面的預設字體 */
+    body, input, button, select, table {
+        font-size: 14px !important;
+    }
+
+    /* 專門針對 Grid 內的文字設定 */
+    .PopTableRightTD span, .PopTableRightTD label {
+        font-size: 14px;
+    }
+
+    /* 針對 Fast:Grid 的標頭設定 */
+    .PopTableRightTD th {
+        font-size: 14px;
+        background-color: #f2f2f2;
+    }
+</style>
+
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
@@ -34,14 +52,14 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="品號" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_品號" runat="server" 
                                                             Text='<%# Bind("品號") %>' 
                                                             Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="品名" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                 <asp:TemplateField HeaderText="品名" ItemStyle-Width="240px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_品名" runat="server" 
                                                             Text='<%# Bind("品名") %>' 
@@ -55,11 +73,11 @@
                                                             Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="單位" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                 <asp:TemplateField HeaderText="單位" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_單位" runat="server" 
                                                             Text='<%# Bind("單位") %>' 
-                                                            Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                            Style="word-break: break-all; white-space: pre-line;  text-align: right;" Width="100%"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
 
