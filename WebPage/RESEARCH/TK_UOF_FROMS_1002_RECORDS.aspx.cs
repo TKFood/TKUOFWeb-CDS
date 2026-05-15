@@ -268,6 +268,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         string DOC_NBR = "", SERNO = "", DVV01 = "", DVV02 = "", DVV03 = "";
         string DVV09 = "", DVV10 = "", DVV04 = "", DVV07 = "", ISCLOSED = "", COMMENTS = "";
         string CLOSEDDATES =null;
+        string STATUS = null;
 
         if (rowIndex >= 0 && rowIndex < Grid1.Rows.Count)
         {
@@ -276,6 +277,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             // 使用 FindControl 並加入防呆檢查 (避免找不控制項導致 NullReferenceException)
             TextBox txt備註 = (TextBox)row.FindControl("txtNewField_GV1_備註");
             TextBox txt試吃品需求日 = (TextBox)row.FindControl("txtNewField_GV1_預交日");
+            DropDownList dr進度=(DropDownList)row.FindControl("DropDownList_進度");
 
             Label lbl編號 = (Label)row.FindControl("Label_表單編號");
             Label lbl項次 = (Label)row.FindControl("Label_項次");
@@ -298,8 +300,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             DVV04 = (lbl需求 != null) ? lbl需求.Text : "";
             DVV07 = (txt試吃品需求日 != null) ? txt試吃品需求日.Text : "";
             ISCLOSED = (lbl結案 != null) ? lbl結案.Text : "";
-
-          
+                  
             COMMENTS = "";
             if (txt備註 != null)
             {
@@ -314,26 +315,28 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                 DVV07 = dateValue.ToString("yyyy/MM/dd");
             }
 
+            STATUS = dr進度.Text.Trim();
+
             // --- 邏輯判斷區 (修正括號層級) ---
 
             if (e.CommandName == "Button2")
             {
                 // 保持原始 ISCLOSED
-                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES);
+                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES, STATUS);
                 MsgBox(DOC_NBR + " 儲存完成", this.Page, this);
             }
             else if (e.CommandName == "Button3")
             {
                 ISCLOSED = "Y";
                 CLOSEDDATES = DateTime.Now.ToString("yyyy/MM/dd");
-                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES);
+                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES, STATUS);
                 MsgBox(DOC_NBR + " 已結案", this.Page, this);
             }
             else if (e.CommandName == "Button4")
             {
                 ISCLOSED = "N";
                
-                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES);
+                ADD_TK_UOF_RECORDS_1002(DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES, STATUS);
                 MsgBox(DOC_NBR + " 已還原未結案", this.Page, this);
             }
 
@@ -474,32 +477,34 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         , string COMMENTS
         , string ISCLOSED
         , string CLOSEDDATES
+        , string STATUS
         )
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
 
         string SQLCOMMAND = @" 
-                           MERGE [TKRESEARCH].[dbo].[TK_UOF_RECORDS_1002] AS TARGET
-                        USING (VALUES (@DOC_NBR, @SERNO, @DVV01, @DVV02, @DVV03, @DVV09, @DVV10, @DVV04, @DVV07, @COMMENTS, @ISCLOSED, @CLOSEDDATES)) 
-                        AS SOURCE (DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES)
-                        ON TARGET.DOC_NBR = SOURCE.DOC_NBR AND TARGET.SERNO = SOURCE.SERNO
+                            MERGE [TKRESEARCH].[dbo].[TK_UOF_RECORDS_1002] AS TARGET
+                            USING (VALUES (@DOC_NBR, @SERNO, @DVV01, @DVV02, @DVV03, @DVV09, @DVV10, @DVV04, @DVV07, @COMMENTS, @ISCLOSED, @CLOSEDDATES,@STATUS)) 
+                            AS SOURCE (DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES,STATUS)
+                            ON TARGET.DOC_NBR = SOURCE.DOC_NBR AND TARGET.SERNO = SOURCE.SERNO
 
-                        WHEN MATCHED THEN 
-                            UPDATE SET 
-                                DVV01 = SOURCE.DVV01,
-                                DVV02 = SOURCE.DVV02,
-                                DVV03 = SOURCE.DVV03,
-                                DVV09 = SOURCE.DVV09,
-                                DVV10 = SOURCE.DVV10,
-                                DVV04 = SOURCE.DVV04,
-                                DVV07 = SOURCE.DVV07,
-                                COMMENTS = SOURCE.COMMENTS,
-                                ISCLOSED = SOURCE.ISCLOSED,
-                                CLOSEDDATES = SOURCE.CLOSEDDATES
+                            WHEN MATCHED THEN 
+                                UPDATE SET 
+                                    DVV01 = SOURCE.DVV01,
+                                    DVV02 = SOURCE.DVV02,
+                                    DVV03 = SOURCE.DVV03,
+                                    DVV09 = SOURCE.DVV09,
+                                    DVV10 = SOURCE.DVV10,
+                                    DVV04 = SOURCE.DVV04,
+                                    DVV07 = SOURCE.DVV07,
+                                    COMMENTS = SOURCE.COMMENTS,
+                                    ISCLOSED = SOURCE.ISCLOSED,
+                                    CLOSEDDATES = SOURCE.CLOSEDDATES,
+                                    STATUS=SOURCE.STATUS
 
-                        WHEN NOT MATCHED THEN                          
-                            INSERT (DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES)
-                            VALUES (SOURCE.DOC_NBR, SOURCE.SERNO, SOURCE.DVV01, SOURCE.DVV02, SOURCE.DVV03, SOURCE.DVV09, SOURCE.DVV10, SOURCE.DVV04, SOURCE.DVV07, SOURCE.COMMENTS, SOURCE.ISCLOSED, SOURCE.CLOSEDDATES);
+                            WHEN NOT MATCHED THEN                          
+                                INSERT (DOC_NBR, SERNO, DVV01, DVV02, DVV03, DVV09, DVV10, DVV04, DVV07, COMMENTS, ISCLOSED, CLOSEDDATES,STATUS)
+                                VALUES (SOURCE.DOC_NBR, SOURCE.SERNO, SOURCE.DVV01, SOURCE.DVV02, SOURCE.DVV03, SOURCE.DVV09, SOURCE.DVV10, SOURCE.DVV04, SOURCE.DVV07, SOURCE.COMMENTS, SOURCE.ISCLOSED, SOURCE.CLOSEDDATES,SOURCE.STATUS);
                             ";
 
 
@@ -522,7 +527,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                     cmd.Parameters.AddWithValue("@COMMENTS", (object)COMMENTS ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@ISCLOSED", (object)ISCLOSED ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@CLOSEDDATES", (object)CLOSEDDATES ?? DBNull.Value);
-
+                    cmd.Parameters.AddWithValue("@STATUS", (object)STATUS ?? DBNull.Value);
 
                     cnn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
