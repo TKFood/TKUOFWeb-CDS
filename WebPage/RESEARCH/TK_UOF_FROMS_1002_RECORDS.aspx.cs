@@ -137,7 +137,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                	[TK_UOF_RECORDS_1002].[COMMENTS] AS '備註',
                                 [TK_UOF_RECORDS_1002].[ISCLOSED] AS '結案',
                                 [TK_UOF_RECORDS_1002].[DVV07] AS '預交日',
-                                CONVERT(NVARCHAR,[TK_UOF_RECORDS_1002].[CLOSEDDATES],111) AS '結案日'
+                                CONVERT(NVARCHAR,[TK_UOF_RECORDS_1002].[CLOSEDDATES],111) AS '結案日',
+                                ,[STATUS] AS '進度'
 
                             FROM[UOF].dbo.TB_WKF_TASK AS t WITH(NOLOCK)
                             CROSS APPLY[CURRENT_DOC].nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row') AS TD(Row)
@@ -225,6 +226,33 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             {
                 string cellValue4 = btn4.CommandArgument;
                 dynamic param4 = new { ID = cellValue4 }.ToExpando();
+            }
+        }
+
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 1. 尋找控制項
+            DropDownList ddlProgress = (DropDownList)e.Row.FindControl("DropDownList_處理進度");
+            HiddenField hfValue = (HiddenField)e.Row.FindControl("Hidden_處理進度");
+
+            if (ddlProgress != null)
+            {
+                // 2. 取得 SQL 資料 (建議將此 SQL 邏輯抽出成一個 DataTable 以免重複查詢多次)
+                DataTable dtOptions = GetProgressOptions();
+
+                ddlProgress.DataSource = dtOptions;
+                ddlProgress.DataTextField = "PARA_NAME";  // 顯示的文字 (請依 SQL 欄位修改)
+                ddlProgress.DataValueField = "PARA_VALUE"; // 實際的值 (請依 SQL 欄位修改)
+                ddlProgress.DataBind();
+
+                // 3. 加入預設空白選項
+                ddlProgress.Items.Insert(0, new ListItem("請選擇", ""));
+
+                // 4. 設定選取值 (對應資料庫原本的值)
+                if (hfValue != null && !string.IsNullOrEmpty(hfValue.Value))
+                {
+                    ddlProgress.SelectedValue = hfValue.Value;
+                }
             }
         }
     }
@@ -351,7 +379,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             { "結案", "結案" },
             { "結案日", "結案日" },
             { "備註", "備註" },
-          
+            { "進度", "進度" }
         };
 
             // 1. 寫入標題列並設定樣式
@@ -419,6 +447,20 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         }
     }
 
+    // 取得下拉選單資料的專用方法
+    private DataTable GetProgressOptions()
+    {
+        // 使用您現有的 DatabaseHelper
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        // 這裡替換成您實際要查詢進度清單的 SQL
+        string cmdTxt = @"SELECT [PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='UOF_FROMS_1002_RECORDS_STATUS' ORDER BY [PARAID]";
+
+        DataTable dt = new DataTable();
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+        return dt;
+    }
     public void ADD_TK_UOF_RECORDS_1002(
         string DOC_NBR
         , string SERNO
