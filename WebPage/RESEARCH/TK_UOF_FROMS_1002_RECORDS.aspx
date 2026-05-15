@@ -191,12 +191,12 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="處理進度" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField HeaderText="進度" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
-                                                        <asp:DropDownList ID="DropDownList_處理進度" runat="server" Width="100%">
+                                                        <asp:DropDownList ID="DropDownList_進度" runat="server" Width="100%">
                                                         </asp:DropDownList>
                                                         <%-- 隱藏欄位用來存放資料庫原本的值，方便在 RowDataBound 比對 --%>
-                                                        <asp:HiddenField ID="Hidden_處理進度" runat="server" Value='<%# Bind("處理進度") %>' />
+                                                        <asp:HiddenField ID="Hidden_進度" runat="server" Value='<%# Bind("進度") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

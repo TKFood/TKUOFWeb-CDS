@@ -138,7 +138,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 [TK_UOF_RECORDS_1002].[ISCLOSED] AS '結案',
                                 [TK_UOF_RECORDS_1002].[DVV07] AS '預交日',
                                 CONVERT(NVARCHAR,[TK_UOF_RECORDS_1002].[CLOSEDDATES],111) AS '結案日',
-                                ,[STATUS] AS '進度'
+                                [STATUS] AS '進度'
 
                             FROM[UOF].dbo.TB_WKF_TASK AS t WITH(NOLOCK)
                             CROSS APPLY[CURRENT_DOC].nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row') AS TD(Row)
@@ -232,8 +232,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             // 1. 尋找控制項
-            DropDownList ddlProgress = (DropDownList)e.Row.FindControl("DropDownList_處理進度");
-            HiddenField hfValue = (HiddenField)e.Row.FindControl("Hidden_處理進度");
+            DropDownList ddlProgress = (DropDownList)e.Row.FindControl("DropDownList_進度");
+            HiddenField hfValue = (HiddenField)e.Row.FindControl("Hidden_進度");
 
             if (ddlProgress != null)
             {
@@ -241,8 +241,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                 DataTable dtOptions = GetProgressOptions();
 
                 ddlProgress.DataSource = dtOptions;
-                ddlProgress.DataTextField = "PARA_NAME";  // 顯示的文字 (請依 SQL 欄位修改)
-                ddlProgress.DataValueField = "PARA_VALUE"; // 實際的值 (請依 SQL 欄位修改)
+                ddlProgress.DataTextField = "PARANAME";  // 顯示的文字 (請依 SQL 欄位修改)
+                ddlProgress.DataValueField = "PARANAME"; // 實際的值 (請依 SQL 欄位修改)
                 ddlProgress.DataBind();
 
                 // 3. 加入預設空白選項
