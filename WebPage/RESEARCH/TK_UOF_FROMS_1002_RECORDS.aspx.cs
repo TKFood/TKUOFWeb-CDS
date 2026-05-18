@@ -108,7 +108,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
 
         if (ORDER.Equals("依預交日"))
         {
-            ORDERBY.AppendFormat(@"  ORDER BY [TK_UOF_RECORDS_1002].[DVV07]");
+            ORDERBY.AppendFormat(@"  ORDER BY [TK_UOF_RECORDS_1002].[DVV07] ");
         }
         else
         {
@@ -138,11 +138,13 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 [TK_UOF_RECORDS_1002].[ISCLOSED] AS '結案',
                                 [TK_UOF_RECORDS_1002].[DVV07] AS '預交日',
                                 CONVERT(NVARCHAR,[TK_UOF_RECORDS_1002].[CLOSEDDATES],111) AS '結案日',
-                                [STATUS] AS '進度'
+                                [STATUS] AS '進度',
+	                            [TBPARA].[PARAID]
 
                             FROM[UOF].dbo.TB_WKF_TASK AS t WITH(NOLOCK)
                             CROSS APPLY[CURRENT_DOC].nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row') AS TD(Row)
                             LEFT JOIN[192.168.1.105].[TKRESEARCH].[dbo].[TK_UOF_RECORDS_1002] WITH(NOLOCK) ON[TK_UOF_RECORDS_1002].[DOC_NBR] = t.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS AND[TK_UOF_RECORDS_1002].[SERNO] = TD.Row.value('@order', 'INT') + 1
+                            LEFT JOIN [192.168.1.105].[TKRESEARCH].[dbo].[TBPARA] ON  [TBPARA].[KIND]='UOF_FROMS_1002_RECORDS_STATUS' AND [TBPARA].[PARANAME]=[TK_UOF_RECORDS_1002].STATUS
                             LEFT JOIN[UOF].dbo.TB_EB_USER AS u
                                 ON u.USER_GUID = t.USER_GUID
                             LEFT JOIN[UOF].dbo.TB_EB_EMPL_DEP AS ed
