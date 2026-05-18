@@ -354,6 +354,75 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
 
     }
 
+    private void BindGrid2()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["connectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();      
+
+
+        cmdTxt.AppendFormat(@"                              
+                             SELECT   
+	                            [TBPARA].[PARAID] AS '項目',
+                                [STATUS] AS '進度',
+	                            COUNT(t.DOC_NBR ) AS '件數'
+
+                            FROM [UOF].dbo.TB_WKF_TASK AS t WITH(NOLOCK)
+                            CROSS APPLY[CURRENT_DOC].nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row') AS TD(Row)
+                            LEFT JOIN[192.168.1.105].[TKRESEARCH].[dbo].[TK_UOF_RECORDS_1002] WITH(NOLOCK) ON[TK_UOF_RECORDS_1002].[DOC_NBR] = t.[DOC_NBR] COLLATE Chinese_Taiwan_Stroke_CI_AS AND[TK_UOF_RECORDS_1002].[SERNO] = TD.Row.value('@order', 'INT') + 1
+                            LEFT JOIN[192.168.1.105].[TKRESEARCH].[dbo].[TBPARA] ON[TBPARA].[KIND] = 'UOF_FROMS_1002_RECORDS_STATUS' AND[TBPARA].[PARANAME] =[TK_UOF_RECORDS_1002].STATUS
+                            LEFT JOIN[UOF].dbo.TB_EB_USER AS u
+                                ON u.USER_GUID = t.USER_GUID
+                            LEFT JOIN[UOF].dbo.TB_EB_EMPL_DEP AS ed
+                                ON ed.USER_GUID = u.USER_GUID AND ed.ORDERS = '0'
+                            JOIN[UOF].dbo.TB_WKF_FORM_VERSION AS fv
+                                ON t.FORM_VERSION_ID = fv.FORM_VERSION_ID
+                            JOIN[UOF].dbo.TB_WKF_FORM AS f
+                                ON f.FORM_ID = fv.FORM_ID
+                            WHERE 1 = 1
+                                AND t.BEGIN_TIME >= '2025-01-01'
+                                AND f.FORM_NAME IN('1004.無品號試吃製作申請單')
+                            GROUP BY[STATUS],[TBPARA].[PARAID]
+                            ORDER BY[TBPARA].[PARAID]
+
+                            ");
+
+
+
+        //m_db.AddParameter("@SDATE", SDATE);
+        //m_db.AddParameter("@EDATE", EDATE);
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+      
+
+        Grid2.DataSource = dt;
+        Grid2.DataBind();
+    }
+
+    protected void grid_PageIndexChanging2(object sender, GridViewPageEventArgs e)
+    {
+        
+    }
+    protected void Grid2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+
+    }
+
+
+    public void OnBeforeExport2(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {       
+
+    }
+
 
     public void SETEXCEL()
     {
@@ -564,6 +633,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
     protected void Button1_Click(object sender, EventArgs e)
     {
         BindGrid();
+        BindGrid2();
     }
+
     #endregion
 }

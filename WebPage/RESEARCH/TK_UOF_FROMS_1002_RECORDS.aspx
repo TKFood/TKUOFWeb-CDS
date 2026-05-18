@@ -28,6 +28,8 @@
                 <Tabs>
                     <telerik:RadTab Text="資料">
                     </telerik:RadTab>
+                    <telerik:RadTab Text="合計">
+                    </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
                 </Tabs>
@@ -232,14 +234,52 @@
 
                 </telerik:RadPageView>
 
+                <telerik:RadPageView ID="RadPageView2" runat="server">
+                    <div id="tabs-2">
+                        <div id="tabs-1">
+                            <table class="PopTable">
+                                <tr>
+                                    <td colspan="2" class="PopTableRightTD">
+                                        <div style="overflow-x: auto; width: 100%">
+                                            <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" OnRowCommand="Grid2_RowCommand" runat="server" OnBeforeExport="OnBeforeExport2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid_PageIndexChanging2">
+                                                <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                                <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="項目" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_項目" runat="server" Text='<%# Bind("項目") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="進度" ItemStyle-Width="300px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_進度" runat="server" Text='<%# Bind("進度") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="件數" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label_件數" runat="server" Text='<%# Bind("件數") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+                                            </Fast:Grid>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </telerik:RadPageView>
+
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">
                     </div>
                 </telerik:RadPageView>
             </telerik:RadMultiPage>
 
-            ​
-          
         </ContentTemplate>
     </asp:UpdatePanel>
 
