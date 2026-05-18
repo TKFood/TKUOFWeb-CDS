@@ -52,12 +52,19 @@
                         </tr>
                         <tr>
                             <td class="PopTableLeftTD">
+                                <asp:Label ID="Label1" runat="server" Text="進度: "></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="DropDownList_STATUS" runat="server"></asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="PopTableLeftTD">
                                 <asp:Label ID="Label2" runat="server" Text="排序:" meta:resourcekey="Label4Resource1"></asp:Label>
                             </td>
                             <td>
-                                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                                <asp:DropDownList ID="DropDownList_SORT" runat="server"></asp:DropDownList>
                             </td>
-
                         </tr>
                         <tr>
                             <td class="PopTableLeftTD"></td>

@@ -38,14 +38,15 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
 
         if (!IsPostBack)
         {
-            BindDropDownList1();
+            BindDropDownList_SORT();
+            BindDropDownList_STATUS();
         }
 
     }
 
     #region FUNCTION
 
-    private void BindDropDownList1()
+    private void BindDropDownList_SORT()
     {
         DataTable dt = new DataTable();
         dt.Columns.Add("PARAID", typeof(String));
@@ -67,10 +68,36 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
 
         if (dt.Rows.Count > 0)
         {
-            DropDownList1.DataSource = dt;
-            DropDownList1.DataTextField = "PARANAME";
-            DropDownList1.DataValueField = "PARANAME";
-            DropDownList1.DataBind();
+            DropDownList_SORT.DataSource = dt;
+            DropDownList_SORT.DataTextField = "PARANAME";
+            DropDownList_SORT.DataValueField = "PARANAME";
+            DropDownList_SORT.DataBind();
+
+        }
+        else
+        {
+
+        }
+    }
+    private void BindDropDownList_STATUS()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARANAME", typeof(String));
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT [PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='UOF_FROMS_1002_RECORDS_STATUS'  ORDER BY [PARAID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList_STATUS.DataSource = dt;
+            DropDownList_STATUS.DataTextField = "PARANAME";
+            DropDownList_STATUS.DataValueField = "PARANAME";
+            DropDownList_STATUS.DataBind();
 
         }
         else
@@ -91,8 +118,10 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         StringBuilder ORDERBY = new StringBuilder();
 
         string ISCLOSED = ddlSearchIsClosed.Text.ToString();
-        string ORDER= DropDownList1.Text.ToString();
+        string ORDER= DropDownList_SORT.Text.ToString();
+        string STATUS = DropDownList_STATUS.Text.ToString();
 
+        //WHERE ISCLOSED
         if (ISCLOSED.Equals("N"))
         {
             QUERYS.AppendFormat(@" AND (ISNULL([TK_UOF_RECORDS_1002].[ISCLOSED],'')='' OR [TK_UOF_RECORDS_1002].[ISCLOSED]='N') ");
@@ -105,7 +134,20 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         {
             QUERYS.AppendFormat(@" ");
         }
+        //WHERE STATUS
+        if (!STATUS.Equals("全部") && !string.IsNullOrEmpty(STATUS))
+        {
+            // 如果 STATUS 是外部傳入的變數，建議防範 SQL 注入
+            // 這裡維持您原本的串接方式，但精簡了邏輯
+            QUERYS.AppendFormat(@" AND STATUS = '{0}' ", STATUS);
+        }
+        else
+        {
+            QUERYS.AppendFormat(@" ");
+        }
 
+
+        // ORDER BY 
         if (ORDER.Equals("依預交日"))
         {
             ORDERBY.AppendFormat(@"  ORDER BY [TK_UOF_RECORDS_1002].[DVV07] ");
@@ -529,7 +571,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
 
         // 這裡替換成您實際要查詢進度清單的 SQL
-        string cmdTxt = @"SELECT [PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='UOF_FROMS_1002_RECORDS_STATUS' ORDER BY [PARAID]";
+        string cmdTxt = @"SELECT [PARANAME] FROM [TKRESEARCH].[dbo].[TBPARA] WHERE [KIND]='UOF_FROMS_1002_RECORDS_STATUS' AND [PARAID] NOT IN ('00') ORDER BY [PARAID]";
 
         DataTable dt = new DataTable();
         dt.Load(m_db.ExecuteReader(cmdTxt));
