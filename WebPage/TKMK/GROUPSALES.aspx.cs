@@ -490,7 +490,64 @@ public partial class CDS_WebPage_TKMK_GROUPSALES : Ede.Uof.Utility.Page.BasePage
         string EXCHANACOOUNT
         )
     {
-        MsgBox(CREATEDATES +" "+ SERNO + " "+CARNO + " "+ CARNAME+" "+ EXCHANACOOUNT, this.Page, this);
+        string EXCHANNO = SEARCH_POSMU(EXCHANACOOUNT);
+
+        try
+        {
+            // 1.取得連線字串
+            // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+            string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+            Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+            // 1. 📌 使用參數化查詢，避免 SQL Injection
+            string sqlQuery = @"
+                             UPDATE [TKMK].[dbo].[GROUPSALES]
+                             SET CARNO=@CARNO,CARNAME=@CARNAME,EXCHANNO=@EXCHANNO,EXCHANACOOUNT=@EXCHANACOOUNT,TA008NO=@TA008NO,TA008=@TA008
+                             WHERE CREATEDATES=@CREATEDATES AND SERNO=@SERNO
+                                   
+                                    ";
+
+            // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢
+                    command.Parameters.AddWithValue("@CREATEDATES", CREATEDATES);
+                    command.Parameters.AddWithValue("@SERNO", SERNO);
+                    command.Parameters.AddWithValue("@CARNO", CARNO);
+                    command.Parameters.AddWithValue("@CARNAME", CARNAME);
+                    command.Parameters.AddWithValue("@EXCHANNO", EXCHANNO);
+                    command.Parameters.AddWithValue("@EXCHANACOOUNT", EXCHANACOOUNT);
+                    command.Parameters.AddWithValue("@TA008NO", EXCHANNO);
+                    command.Parameters.AddWithValue("@TA008", EXCHANACOOUNT);
+
+                
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        MsgBox("完成 \r\n ", this.Page, this);
+                        SEARCHGROUPSALES(CREATEDATES);
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+        finally
+        {
+        }
+
+        //MsgBox(CREATEDATES +" "+ SERNO + " "+CARNO + " "+ CARNAME+" "+ EXCHANNO+" "+ EXCHANACOOUNT, this.Page, this);
     }
 
     public void MsgBox(String ex, Page pg, Object obj)
