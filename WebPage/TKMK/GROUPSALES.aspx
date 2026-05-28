@@ -216,7 +216,12 @@
                                                             Width="100%">
                                                         </asp:TextBox>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>                                          
+                                                <asp:TemplateField HeaderText="功能" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="VerticalCenter">
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="Button3" runat="server" Text="填寫" CommandName="Button3" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>                               
                                             </Columns>
                                         </Fast:Grid>
                                     </div>

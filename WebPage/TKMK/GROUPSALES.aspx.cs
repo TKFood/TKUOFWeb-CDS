@@ -169,12 +169,39 @@ public partial class CDS_WebPage_TKMK_GROUPSALES : Ede.Uof.Utility.Page.BasePage
     }
     protected void Grid1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Button btn3 = (Button)e.Row.FindControl("Button3");
+            if (btn3 != null)
+            {
+                string cellValue3 = btn3.CommandArgument;
+                dynamic param3 = new { ID = cellValue3 }.ToExpando();
+            }
+        }
     }
 
     protected void Grid1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        int rowIndex = -1;
+        int rowIndex = Convert.ToInt32(e.CommandArgument);
+
+        if (rowIndex >= 0 && rowIndex < Grid1.Rows.Count)
+        {
+            GridViewRow row = Grid1.Rows[rowIndex];
+
+            TextBox txt序號 = (TextBox)row.FindControl("TextBox_序號");
+            TextBox txt車號 = (TextBox)row.FindControl("TextBox_車號");
+            TextBox txt車名 = (TextBox)row.FindControl("TextBox_車名");
+            TextBox txt優惠券帳號 = (TextBox)row.FindControl("TextBox_優惠券帳號");
+
+            string CREATEDATES = DateTime.Now.ToString("yyyyMMdd");
+            string SERNO = txt序號.Text.Trim();
+            string CARNO = txt車號.Text.Trim();
+            string CARNAME= txt車名.Text.Trim();
+            string EXCHANACOOUNT = txt優惠券帳號.Text.Trim();
+
+            UPDATE_GROUPSALES(CREATEDATES, SERNO, CARNO, CARNAME, EXCHANACOOUNT);
+
+        }
     }
     // 雖然不應該被觸發，但定義它以避免 HttpCException
     protected void Grid1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -453,6 +480,17 @@ public partial class CDS_WebPage_TKMK_GROUPSALES : Ede.Uof.Utility.Page.BasePage
         {
             return null;
         }
+    }
+
+    public void UPDATE_GROUPSALES(
+        string CREATEDATES, 
+        string SERNO,
+        string CARNO,
+        string CARNAME,
+        string EXCHANACOOUNT
+        )
+    {
+        MsgBox(CREATEDATES +" "+ SERNO + " "+CARNO + " "+ CARNAME+" "+ EXCHANACOOUNT, this.Page, this);
     }
 
     public void MsgBox(String ex, Page pg, Object obj)
