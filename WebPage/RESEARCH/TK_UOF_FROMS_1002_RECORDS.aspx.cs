@@ -150,7 +150,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         // ORDER BY 
         if (ORDER.Equals("依預交日"))
         {
-            ORDERBY.AppendFormat(@"  ORDER BY [TK_UOF_RECORDS_1002].[DVV07] ");
+            ORDERBY.AppendFormat(@"  ORDER BY [TK_UOF_RECORDS_1002].[DVV07],t.DOC_NBR,TD.Row.value('@order', 'INT') + 1 ");
         }
         else
         {
