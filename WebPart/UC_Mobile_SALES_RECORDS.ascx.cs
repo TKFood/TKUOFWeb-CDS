@@ -28,10 +28,21 @@ using System.Web.UI.HtmlControls;
 
 public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserControl
 {
+    string ACCOUNT = null;
+    string NAME = null;
+    String ROLES = null;
+    bool CANEDIT = false;
     DataTable EXCELDT1 = new DataTable();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        ACCOUNT = Current.Account;
+        NAME = Current.User.Name;
+        
+        //進行權限判斷
+        CANEDIT =HasPermission(ACCOUNT);
+
         if (!IsPostBack)
         {
             txtDate1.Text = DateTime.Now.ToString("yyyy/MM/dd");
@@ -448,6 +459,32 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
                 LabelSALES.Visible = false;
                 Grid1Button2.Visible = false;
                 Grid1Button3.Visible = false;
+            }
+        }
+        // 確保只處理資料列 (排除 Header 和 Footer)
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            // 1. 使用 FindControl 尋找按鈕
+            Button btnEdit_Grid1Button2 = (Button)e.Row.FindControl("Grid1Button2");
+            Button btnEdit_Grid1Button3 = (Button)e.Row.FindControl("Grid1Button3");
+
+            if (btnEdit_Grid1Button2 != null)
+            {
+                // 設定按鈕狀態
+                // Visible = false 時，按鈕不會渲染到 HTML 中，使用者完全看不到也按不到
+                btnEdit_Grid1Button2.Visible = CANEDIT;
+
+                // 如果您想「看得到但不能按」，則使用：
+                // btnEdit.Enabled = canEdit;
+            }
+            if (btnEdit_Grid1Button3 != null)
+            {
+                // 設定按鈕狀態
+                // Visible = false 時，按鈕不會渲染到 HTML 中，使用者完全看不到也按不到
+                btnEdit_Grid1Button3.Visible = CANEDIT;
+
+                // 如果您想「看得到但不能按」，則使用：
+                // btnEdit.Enabled = canEdit;
             }
         }
 
@@ -1048,6 +1085,34 @@ public partial class CDS_WebPart_UC_Mobile_SALES_RECORDS : System.Web.UI.UserCon
 
 
         m_db.ExecuteNonQuery(cmdTxt);
+    }
+
+
+     public bool HasPermission(string ID)
+    {
+        DataTable dt = new DataTable();
+      
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+        StringBuilder cmdTxt = new StringBuilder();
+
+        cmdTxt.AppendFormat(@"
+                             SELECT  [ID],[NAMES]
+                             FROM [TKBUSINESS].[dbo].[TB_SALES_ASSINGED_ADMIN]
+                             WHERE [ID]='{0}'
+                            ", ID);
+  
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+
+        if (dt!=null  && dt.Rows.Count > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     #endregion
