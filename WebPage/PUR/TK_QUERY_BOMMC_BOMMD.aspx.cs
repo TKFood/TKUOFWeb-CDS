@@ -97,6 +97,8 @@ public partial class CDS_WebPage_PUR_TK_QUERY_BOMMC_BOMMD : Ede.Uof.Utility.Page
                             B.BOMLevel AS [階層],
                             B.ParentID AS [母件品號],
                             MB1.MB002  AS [母件品名],
+                            CONVERT(INT,MB1.MB047)  AS 母件標準售價,
+	                        CONVERT(NVARCHAR,MB1.MB023)+ (CASE WHEN CONVERT(NVARCHAR,MB1.MB198)='1' THEN '天' WHEN CONVERT(NVARCHAR,MB1.MB198)='2' THEN '月' WHEN CONVERT(NVARCHAR,MB1.MB198)='3' THEN '年' END) AS 母件有效天數,
                             B.ChildID  AS [元件品號],
                             MB2.MB002  AS [元件品名],
 	                        MB2.MB003  AS [元件規格],
