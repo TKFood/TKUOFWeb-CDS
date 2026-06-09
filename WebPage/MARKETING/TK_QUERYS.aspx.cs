@@ -413,79 +413,59 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
       
         // 2. 定義 SQL 查詢字串           
         cmdTxt.AppendFormat(@"
-                            WITH BaseData AS (
-                            -- 1. 統一計算 POSTA 和 WSCMA 的基礎聚合數據 (成交筆數, 交易金額)
-                            SELECT
-                                T.TA001,
-                                T.TA002,
-                                M.MA002,
-                                COUNT(T.TA001) AS NUMS,
-                                SUM(T.TA026) AS MMS
-                            FROM
-                                [TK].dbo.POSTA AS T WITH (NOLOCK)
-                            INNER JOIN
-                                [TK].dbo.WSCMA AS M WITH (NOLOCK) ON T.TA002 = M.MA001 -- 修正為 INNER JOIN
-                            WHERE
-                                T.TA002 IN ('106701', '106501', '106502', '106503', '106504') -- 合併所有門市
-                                AND T.TA001 >= '{0}' AND T.TA001 <= '{1}'
-                            GROUP BY
-                                T.TA001,
-                                T.TA002,
-                                M.MA002
-                        ),
-                        VisitorData AS (
-                            -- 2. 獨立計算 View_t_visitors 的聚合數據 (來客數)
-                            SELECT
-                                TT002,
-                                Fdate1,
-                                SUM(Fout_data) AS CLINETS_Type1, -- 門市 106701 的計算邏輯
-                                SUM(Fin_data + Fout_data) / 2 AS CLINETS_Type2 -- 其他門市的計算邏輯
-                            FROM
-                                [TKMK].[dbo].[View_t_visitors] WITH (NOLOCK)
-                            GROUP BY
-                                TT002,
-                                Fdate1
-                        ),
-                        CarData AS (
-                            -- 3. 獨立計算 GROUPSALES 的聚合數據 (團車數)
-                            SELECT
-                                CONVERT(NVARCHAR, [CREATEDATES], 112) AS Fdate,
-                                SUM([CARNUM]) AS CARS
-                            FROM
-                                [TKMK].[dbo].[GROUPSALES] WITH (NOLOCK)
-                            GROUP BY
-                                CONVERT(NVARCHAR, [CREATEDATES], 112)
-                        )
-                        -- 4. 最終連接所有結果
-                        SELECT
-                            B.TA001 AS '日期',
-                            B.TA002 AS '門市代',
-                            B.MA002 AS '門市',
-                            B.NUMS AS '成交筆數',
-                            B.MMS AS '交易金額',
-    
-                            -- 根據門市代號，從 VisitorData 選擇正確的來客數計算
-                            CASE
-                                WHEN B.TA002 = '106701' THEN V.CLINETS_Type1
-                                ELSE V.CLINETS_Type2
-                            END AS '來客數',
-    
-                            -- 根據門市代號，選擇團車數 (只有 106701 需要 CARS)
-                            CASE
-                                WHEN B.TA002 = '106701' THEN C.CARS
-                                ELSE 0
-                            END AS '團車數'
-    
-                        FROM
-                            BaseData AS B
-                        LEFT JOIN
-                            VisitorData AS V ON V.TT002 = B.TA002 AND V.Fdate1 = B.TA001 -- 連接來客數
-                        LEFT JOIN
-                            CarData AS C ON C.Fdate = B.TA001 -- 連接團車數
-                        ORDER BY
-                            B.TA002,
-                            B.MA002,
-                            B.TA001;
+                            --20260609 來客數
+                            SELECT TT002 AS '門代'
+                            ,STORESNAME AS '門店'
+                            ,YEARS AS '年'
+                            ,MONTHS AS '月'
+                            ,WEEKS AS '週'
+                            ,Fdate1 AS '日'
+                            ,DAYOFWEEK AS '星期'
+                            ,SUMNUMS AS '來客數'
+                            ,ISNULL(CONVERT(INT,SUMTT018),0) AS '銷售未稅總金額'
+                            ,ISNULL(COUNTSTA001,0) AS '交易筆數'
+                            ,CONVERT(INT,SUMSTB019) AS '交易商品數'
+                            ,(CASE WHEN SUMNUMS>0 AND COUNTSTA001>0 THEN CONVERT(DECIMAL(16,2),((CONVERT(DECIMAL(16,4),COUNTSTA001)/CONVERT(DECIMAL(16,4),SUMNUMS)))) ELSE 0 END ) AS '提袋率'
+                            ,(CASE WHEN SUMTT018>0 AND COUNTSTA001>0 THEN CONVERT(DECIMAL(16,0),SUMTT018/COUNTSTA001) ELSE 0 END ) AS '客單價'
+                            ,(CASE WHEN SUMSTB019>0 AND COUNTSTA001>0 THEN CONVERT(DECIMAL(16,2),SUMSTB019/COUNTSTA001) ELSE 0 END ) AS '每單平均商品數'
+                            ,(CASE WHEN TT002 IN ('106701') THEN (
+	                            SELECT COUNT(ID)
+	                            FROM 
+	                            [TKMK].[dbo].[GROUPSALES] WITH (NOLOCK)
+	                            WHERE  STATUS='完成接團'  AND CONVERT(NVARCHAR, [CREATEDATES], 112)=Fdate1
+                            ) ELSE 0 END) AS '團車數'
+                            ,(
+	                            SELECT COUNT(TA001)
+	                            FROM [TK].dbo.POSTA
+	                            WHERE (TA008 LIKE '68%' OR	TA008 LIKE '69%') AND TA002=TT002 AND TA001=Fdate1
+                            ) AS '團客交易筆數'
+                            FROM 
+                            (
+                                SELECT View_t_visitors.TT002,STORESNAME,YEARS,MONTHS,WEEKS,Fdate1,DAYOFWEEK,SUM(Fin_data+Fout_data)/2 AS SUMNUMS
+                                ,(SELECT SUM(TT018) FROM [TK].dbo.POSTT WITH(NOLOCK) WHERE View_t_visitors.TT002=POSTT.TT002 AND View_t_visitors.Fdate1=POSTT.TT001) AS 'SUMTT018'
+                                ,(SELECT SUM(TT008) FROM [TK].dbo.POSTT  WITH(NOLOCK) WHERE View_t_visitors.TT002=POSTT.TT002 AND View_t_visitors.Fdate1=POSTT.TT001) AS 'SUMTT008'
+                                ,(SELECT COUNT(TA001) FROM [TK].dbo.POSTA WITH(NOLOCK)  WHERE  TA002=View_t_visitors.TT002 AND TA004=View_t_visitors.Fdate1) AS 'COUNTSTA001'
+                                ,(SELECT SUM(TB019) FROM [TK].dbo.POSTB  WITH(NOLOCK) WHERE  TB002=View_t_visitors.TT002 AND TB004=View_t_visitors.Fdate1 AND TB010 NOT LIKE '1%'  AND TB010 NOT LIKE '2%'  AND TB010 NOT LIKE '3%') AS 'SUMSTB019'
+                                FROM [TKMK].[dbo].[View_t_visitors]
+                                WHERE  TT002 IN ('106501','106502','106503','106504','106513','106702','106703','106704','106705') 
+                                AND CONVERT(NVARCHAR,Fdate1,112)>='{0}'
+                                AND CONVERT(NVARCHAR,Fdate1,112)<='{1}'
+                                GROUP BY View_t_visitors.TT002,STORESNAME,YEARS,MONTHS,WEEKS,Fdate1,DAYOFWEEK
+
+                                UNION ALL
+                                SELECT View_t_visitors.TT002,STORESNAME,YEARS,MONTHS,WEEKS,Fdate1,DAYOFWEEK,SUM(Fout_data) AS SUMNUMS
+                                ,(SELECT SUM(TT018) FROM [TK].dbo.POSTT WITH(NOLOCK) WHERE View_t_visitors.TT002=POSTT.TT002 AND View_t_visitors.Fdate1=POSTT.TT001) AS 'SUMTT011'
+                                ,(SELECT SUM(TT008) FROM [TK].dbo.POSTT WITH(NOLOCK)  WHERE View_t_visitors.TT002=POSTT.TT002 AND View_t_visitors.Fdate1=POSTT.TT001) AS 'SUMTT008'
+                                ,(SELECT COUNT(TA001) FROM [TK].dbo.POSTA WITH(NOLOCK)  WHERE  TA002=View_t_visitors.TT002 AND TA004=View_t_visitors.Fdate1) AS 'COUNTSTA001'
+                                ,(SELECT SUM(TB019) FROM [TK].dbo.POSTB  WITH(NOLOCK) WHERE  TB002=View_t_visitors.TT002 AND TB004=View_t_visitors.Fdate1 AND TB010 NOT LIKE '1%'  AND TB010 NOT LIKE '2%'  AND TB010 NOT LIKE '3%') AS 'SUMSTB019'
+                                FROM [TKMK].[dbo].[View_t_visitors]
+                                WHERE  TT002 IN ('106701') 
+                                AND CONVERT(NVARCHAR,Fdate1,112)>='{0}'
+                                AND CONVERT(NVARCHAR,Fdate1,112)<='{1}'
+              
+                                GROUP BY View_t_visitors.TT002,STORESNAME,YEARS,MONTHS,WEEKS,Fdate1,DAYOFWEEK
+                            ) AS TEMP
+                            ORDER BY TT002,Fdate1
                         ", DATESTART, DATESEND);
       
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
