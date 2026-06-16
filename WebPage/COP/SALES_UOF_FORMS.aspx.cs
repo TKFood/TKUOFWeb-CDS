@@ -75,12 +75,14 @@ public partial class CDS_WebPage_COP_SALES_UOF_FORMS : Ede.Uof.Utility.Page.Base
 
         StringBuilder filterUser = new StringBuilder();
         StringBuilder filterForm = new StringBuilder();
+        StringBuilder filter_FLOW_NAME = new StringBuilder();
+        StringBuilder filter_FLOW_BEGIN_TIME = new StringBuilder();
 
         // 申請者
         string String_DropDownList1 = DropDownList1.SelectedValue;
         if (!string.IsNullOrEmpty(String_DropDownList1) && String_DropDownList1 != "全部")
         {
-            filterUser.Append(" AND u.NAME=@UserName ");
+            filterUser.Append(" AND 申請者=@UserName ");
             m_db.AddParameter("@UserName", String_DropDownList1);
         }
 
@@ -88,88 +90,131 @@ public partial class CDS_WebPage_COP_SALES_UOF_FORMS : Ede.Uof.Utility.Page.Base
         string String_DropDownList2 = DropDownList2.SelectedValue;
         if (!string.IsNullOrEmpty(String_DropDownList2) && String_DropDownList2 != "全部")
         {
-            filterForm.Append(" AND f.FORM_NAME=@FormName ");
+            filterForm.Append(" AND 表單名稱=@FormName ");
             m_db.AddParameter("@FormName", String_DropDownList2);
         }
 
+
+        // 目前簽核者
+        string FLOW_NAME = QUERY_TextBox1.Text.Trim();
+        if (!string.IsNullOrEmpty(FLOW_NAME) )
+        {
+            filter_FLOW_NAME.Append("  AND 目前簽核者 LIKE '%'+@FLOW_NAME+'%'  ");
+            m_db.AddParameter("@FLOW_NAME", FLOW_NAME);
+        }
+        else
+        {
+            filter_FLOW_NAME.Append("  ");
+        }
+
+        // 申請日期
+        string FLOW_BEGIN_TIME = txtSearchDate.Text.Trim();
+        if (!string.IsNullOrEmpty(FLOW_BEGIN_TIME))
+        {
+            if (!string.IsNullOrEmpty(txtSearchDate.Text))
+            {
+                // 1. 先解析成 DateTime 物件
+                DateTime parsedDate = DateTime.Parse(txtSearchDate.Text);
+                // 2. 轉換為斜線格式的字串 (結果會是 "2026/06/16")
+                string formattedDate = parsedDate.ToString("yyyy/MM/dd");
+                filter_FLOW_BEGIN_TIME.Append(" AND 申請日期>=@FLOW_BEGIN_TIME ");
+                m_db.AddParameter("@FLOW_BEGIN_TIME", formattedDate);
+            }
+
+           
+        }
+        else
+        {
+            filter_FLOW_BEGIN_TIME.Append("  ");
+        }
+
+
         string sql = string.Format(@"
-                                    SELECT 
-                                        f.FORM_NAME       AS '表單名稱',
-                                        u.NAME            AS '申請者',
-                                        CONVERT(nvarchar,t.BEGIN_TIME,111) AS '申請時間',
-                                        t.DOC_NBR         AS '表單編號',   
-                                        (
-                                            SELECT STUFF(
-                                                (
-                                                    SELECT ',' + u2.NAME
-                                                    FROM [UOF].dbo.TB_WKF_TASK_NODE AS TN
-                                                    LEFT JOIN [UOF].dbo.TB_EB_USER AS u2
-                                                        ON u2.USER_GUID = TN.ORIGINAL_SIGNER
-                                                    WHERE TN.SITE_ID = t.CURRENT_SITE_ID
-                                                    FOR XML PATH(''), TYPE
-                                                ).value('.', 'nvarchar(max)')
-                                            ,1,1,'')
-                                        ) AS '目前簽核者',
-                                        CASE 
-                                            WHEN f.FORM_NAME = '1001.文宣樣品申請' 
-                                                THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""00010""]/@fieldValue)[1]', 'nvarchar(max)')  
-                                            WHEN f.FORM_NAME = '1001.品號申請單' 
-                                                THEN STUFF((
-                                                    SELECT N',' + C.value('@fieldValue','nvarchar(200)')
-                                                    FROM CURRENT_DOC.nodes('/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm001IT""]/DataGrid/Row/Cell[@fieldId=""RDFrm001IN""]') AS T(C)
-                                                    FOR XML PATH(''), TYPE
-                                                ).value('.', 'nvarchar(max)'), 1, 1, '')           
-                                            WHEN f.FORM_NAME = '1001.工作交付單' 
-                                                THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""00010""]/@fieldValue)[1]', 'nvarchar(max)'))
-                                            WHEN f.FORM_NAME = '1002.客訴異常處理單' 
-                                                THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PRD""]/@fieldValue)[1]', 'nvarchar(max)') 
-                                            WHEN f.FORM_NAME = '1004.無品號試吃製作申請單' 
-                                                THEN STUFF((
-                                                    SELECT N',' + C.value('@fieldValue','nvarchar(200)')
-                                                    FROM CURRENT_DOC.nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row/Cell[@fieldId=""DVV01""]') AS T(C)
-                                                    FOR XML PATH(''), TYPE
-                                                ).value('.', 'nvarchar(max)'), 1, 1, '')
-                                            WHEN f.FORM_NAME = '1004.品保業務工作申請單' 
-                                                THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm004Process""]/@fieldValue)[1]', 'nvarchar(max)'))
-                                            WHEN f.FORM_NAME = '1005 研發業務工作申請單' 
-                                                THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm1003RS""]/@fieldValue)[1]', 'nvarchar(max)'))
-                                            WHEN f.FORM_NAME = '1005.舊品變更申請單' 
-                                                THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm1002PD""]/@fieldValue)[1]', 'nvarchar(max)')  
-                                            WHEN f.FORM_NAME = '1006.委外送驗申請單' 
-                                                THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""QC6007""]/DataGrid/Row[@order=""0""]/Cell[@fieldId=""QC60071""]/@fieldValue)[1]', 'nvarchar(200)')
-                                            WHEN f.FORM_NAME = '1008.無品號-烘培試吃製作申請單' 
-                                                THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""DV09""]/@fieldValue)[1]', 'nvarchar(max)'))
-                                            WHEN f.FORM_NAME = '2001.產品開發+包裝設計申請單' 
-                                                THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD3""]/@fieldValue)[1]', 'nvarchar(max)')  
-                                            ELSE NULL
-                                        END AS '表單標題',
-                                        t.CURRENT_SITE_ID,
-                                        t.TASK_ID,
-                                        t.CURRENT_DOC
-                                    FROM [UOF].dbo.TB_WKF_TASK AS t WITH (NOLOCK)
-                                    LEFT JOIN [UOF].dbo.TB_EB_USER AS u
-                                        ON u.USER_GUID = t.USER_GUID
-                                    LEFT JOIN [UOF].dbo.TB_EB_EMPL_DEP AS ed
-                                        ON ed.USER_GUID = u.USER_GUID AND ed.ORDERS = '0'
-                                    JOIN [UOF].dbo.TB_WKF_FORM_VERSION AS fv
-                                        ON t.FORM_VERSION_ID = fv.FORM_VERSION_ID
-                                    JOIN [UOF].dbo.TB_WKF_FORM AS f
-                                        ON f.FORM_ID = fv.FORM_ID
+                                    SELECT *
+                                    FROM 
+                                    (
+	                                    SELECT 
+		                                    f.FORM_NAME       AS '表單名稱',
+		                                    u.NAME            AS '申請者',
+		                                    CONVERT(nvarchar,t.BEGIN_TIME,111) AS '申請日期',
+		                                    t.DOC_NBR         AS '表單編號',   
+		                                    (
+			                                    SELECT STUFF(
+				                                    (
+					                                    SELECT ',' + u2.NAME
+					                                    FROM [UOF].dbo.TB_WKF_TASK_NODE AS TN
+					                                    LEFT JOIN [UOF].dbo.TB_EB_USER AS u2
+						                                    ON u2.USER_GUID = TN.ORIGINAL_SIGNER
+					                                    WHERE TN.SITE_ID = t.CURRENT_SITE_ID
+					                                    FOR XML PATH(''), TYPE
+				                                    ).value('.', 'nvarchar(max)')
+			                                    ,1,1,'')
+		                                    ) AS '目前簽核者',
+		                                    CASE 
+			                                    WHEN f.FORM_NAME = '1001.文宣樣品申請' 
+				                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""00010""]/@fieldValue)[1]', 'nvarchar(max)')  
+			                                    WHEN f.FORM_NAME = '1001.品號申請單' 
+				                                    THEN STUFF((
+					                                    SELECT N',' + C.value('@fieldValue','nvarchar(200)')
+					                                    FROM CURRENT_DOC.nodes('/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm001IT""]/DataGrid/Row/Cell[@fieldId=""RDFrm001IN""]') AS T(C)
+					                                    FOR XML PATH(''), TYPE
+				                                    ).value('.', 'nvarchar(max)'), 1, 1, '')           
+			                                    WHEN f.FORM_NAME = '1001.工作交付單' 
+				                                    THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""00010""]/@fieldValue)[1]', 'nvarchar(max)'))
+			                                    WHEN f.FORM_NAME = '1002.客訴異常處理單' 
+				                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm002PRD""]/@fieldValue)[1]', 'nvarchar(max)') 
+			                                    WHEN f.FORM_NAME = '1004.無品號試吃製作申請單' 
+				                                    THEN STUFF((
+					                                    SELECT N',' + C.value('@fieldValue','nvarchar(200)')
+					                                    FROM CURRENT_DOC.nodes('/Form/FormFieldValue/FieldItem[@fieldId=""DETAILS""]/DataGrid/Row/Cell[@fieldId=""DVV01""]') AS T(C)
+					                                    FOR XML PATH(''), TYPE
+				                                    ).value('.', 'nvarchar(max)'), 1, 1, '')
+			                                    WHEN f.FORM_NAME = '1004.品保業務工作申請單' 
+				                                    THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""QCFrm004Process""]/@fieldValue)[1]', 'nvarchar(max)'))
+			                                    WHEN f.FORM_NAME = '1005 研發業務工作申請單' 
+				                                    THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm1003RS""]/@fieldValue)[1]', 'nvarchar(max)'))
+			                                    WHEN f.FORM_NAME = '1005.舊品變更申請單' 
+				                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""RDFrm1002PD""]/@fieldValue)[1]', 'nvarchar(max)')  
+			                                    WHEN f.FORM_NAME = '1006.委外送驗申請單' 
+				                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""QC6007""]/DataGrid/Row[@order=""0""]/Cell[@fieldId=""QC60071""]/@fieldValue)[1]', 'nvarchar(200)')
+			                                    WHEN f.FORM_NAME = '1008.無品號-烘培試吃製作申請單' 
+				                                    THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""DV09""]/@fieldValue)[1]', 'nvarchar(max)'))
+			                                    WHEN f.FORM_NAME = '2001.產品開發+包裝設計申請單' 
+				                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD3""]/@fieldValue)[1]', 'nvarchar(max)')  
+			                                    ELSE NULL
+		                                    END AS '表單標題',
+		                                    t.CURRENT_SITE_ID,
+		                                    t.TASK_ID,
+		                                    t.CURRENT_DOC
+	                                    FROM [UOF].dbo.TB_WKF_TASK AS t WITH (NOLOCK)
+	                                    LEFT JOIN [UOF].dbo.TB_EB_USER AS u
+		                                    ON u.USER_GUID = t.USER_GUID
+	                                    LEFT JOIN [UOF].dbo.TB_EB_EMPL_DEP AS ed
+		                                    ON ed.USER_GUID = u.USER_GUID AND ed.ORDERS = '0'
+	                                    JOIN [UOF].dbo.TB_WKF_FORM_VERSION AS fv
+		                                    ON t.FORM_VERSION_ID = fv.FORM_VERSION_ID
+	                                    JOIN [UOF].dbo.TB_WKF_FORM AS f
+		                                    ON f.FORM_ID = fv.FORM_ID
+	                                    WHERE 1=1
+		                                    AND ISNULL(t.TASK_STATUS,'') NOT IN ('2','3')
+		                                    AND t.BEGIN_TIME >= '2025-01-01'
+		                                    AND f.FORM_NAME COLLATE Chinese_Taiwan_Stroke_BIN IN (
+			                                    SELECT [FORM_NAME]
+			                                    FROM [192.168.1.105].[TKMQ].[dbo].[TB_UOF_SALES_FORM_NAME]
+		                                    )
+		                                    AND u.ACCOUNT COLLATE Chinese_Taiwan_Stroke_BIN IN (
+			                                    SELECT [ID]
+			                                    FROM [192.168.1.105].[TKMQ].[dbo].[TB_UOF_SALES_NAMES]
+		                                    )
+                                    ) AS TEMP
                                     WHERE 1=1
-                                      AND ISNULL(t.TASK_STATUS,'') NOT IN ('2','3')
-                                      AND t.BEGIN_TIME >= '2025-01-01'
-                                      AND f.FORM_NAME COLLATE Chinese_Taiwan_Stroke_BIN IN (
-                                            SELECT [FORM_NAME]
-                                            FROM [192.168.1.105].[TKMQ].[dbo].[TB_UOF_SALES_FORM_NAME]
-                                      )
-                                      AND u.ACCOUNT COLLATE Chinese_Taiwan_Stroke_BIN IN (
-                                            SELECT [ID]
-                                            FROM [192.168.1.105].[TKMQ].[dbo].[TB_UOF_SALES_NAMES]
-                                      )
-                                      {0}
-                                      {1}
-                                    ORDER BY f.FORM_NAME, u.NAME, t.DOC_NBR;
-                                ", filterUser, filterForm);
+{0}
+{1}
+{2}
+{3}                                  
+                                    
+                                    ORDER BY TEMP.表單名稱, TEMP.申請者, TEMP.表單編號;
+                                ", filterUser, filterForm, filter_FLOW_NAME, filter_FLOW_BEGIN_TIME);
 
         DataTable dt = new DataTable();
         using (IDataReader reader = m_db.ExecuteReader(sql))

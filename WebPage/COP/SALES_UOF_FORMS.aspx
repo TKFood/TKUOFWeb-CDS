@@ -81,6 +81,22 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" Text="目前簽核者: "></asp:Label>
+                                </td>
+                                <td>
+                                     <asp:TextBox ID="QUERY_TextBox1" runat="server" Text=""  Style="width: 200px;"></asp:TextBox>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>
+                                    <asp:Label ID="Label3" runat="server" Text="申請日期: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtSearchDate" runat="server" TextMode="Date"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Button ID="Button1" runat="server" Text=" 查詢 " OnClick="Button1_Click"
@@ -111,9 +127,9 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="申請時間" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="申請日期" ItemStyle-Width="5%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="申請時間" runat="server" Text='<%# Bind("申請時間") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
+                                                        <asp:Label ID="申請日期" runat="server" Text='<%# Bind("申請日期") %>' Style="word-break: break-all; white-space: pre-line;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
