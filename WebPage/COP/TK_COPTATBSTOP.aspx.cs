@@ -136,22 +136,73 @@ public partial class CDS_WebPage_COP_TK_COPTATBSTOP : Ede.Uof.Utility.Page.BaseP
 
             // 2. 用豎線拆開
             string[] keys = argument.Split('|');
-            if (keys.Length != 4) return;
+            if (keys.Length != 5) return;
             string ta001 = keys[0].Trim(); // 報價單別 (Key 1)
             string ta002 = keys[1].Trim(); // 報價單號 (Key 2)
             string tb004 = keys[2].Trim(); // 品號     (Key 3)
-            string mb017 = keys[3].Trim(); // 品號     (Key 3)
+            string mb017 = keys[3].Trim(); // 生效日     (Key 4)
+            string mb001 = keys[4].Trim(); // 客戶代號     (Key 5)
 
-            MsgBox(ta001+ ta002+ tb004+ mb017 + "完成 \r\n ", this.Page, this);
+            //MsgBox(ta001+ ta002+ tb004+ mb017 + "完成 \r\n ", this.Page, this);
 
-            // 3. 執行參數化更新
-            //UPDATE_COPTB_COPMB(ta001, ta002, tb004);
+            //設定失效日
+            if (string.IsNullOrEmpty(txtDate.Text))
+            {
+                // 使用者沒有選日期的處理邏輯 
+                MsgBox("日期格式請選擇日期不正確 \r\n ", this.Page, this);
+                return;
+            }
+            else if (!string.IsNullOrEmpty(txtDate.Text))
+            {
+                //設定失效日               
+                DateTime selectedDate;
+              
+                if (DateTime.TryParse(txtDate.Text, out selectedDate))
+                {
+                    // 3. 成功取得值，轉為您要的 yyyy/MM/dd 格式
+                    string finalDateFormat = selectedDate.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+                   
+                    // 3. 執行參數化更新
+                    UPDATE_COPTB_COPMB(ta001, ta002, tb004, mb017, finalDateFormat, mb001);
 
+                    // 4. 更新完畢重新綁定畫面
+                    BindGrid();
+                }
+                else
+                {
+                    MsgBox("日期格式不正確 \r\n ", this.Page, this);
+                }
+            }
+
+            
+           
+
+          
+        }
+
+        if (e.CommandName == "MYUPDATENULL")
+        {
+            // 1. 取得由前端傳過來的 3 個複合主鍵字串
+            string argument = (e.CommandArgument != null) ? e.CommandArgument.ToString() : "";
+            if (string.IsNullOrEmpty(argument)) return;
+
+            // 2. 用豎線拆開
+            string[] keys = argument.Split('|');
+            if (keys.Length != 5) return;
+            string ta001 = keys[0].Trim(); // 報價單別 (Key 1)
+            string ta002 = keys[1].Trim(); // 報價單號 (Key 2)
+            string tb004 = keys[2].Trim(); // 品號     (Key 3)
+            string mb017 = keys[3].Trim(); // 生效日     (Key 4)
+            string mb001 = keys[4].Trim(); // 客戶代號     (Key 5)
+
+            //MsgBox(ta001+ ta002+ tb004+ mb017 + "完成 \r\n ", this.Page, this);
+
+            UPDATE_COPTB_COPMB(ta001, ta002, tb004, mb017, null, mb001); ;
             // 4. 更新完畢重新綁定畫面
             BindGrid();
-        }       
 
-       
+        }
+
     }
     // 雖然不應該被觸發，但定義它以避免 HttpCException
     protected void Grid1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -171,23 +222,43 @@ public partial class CDS_WebPage_COP_TK_COPTATBSTOP : Ede.Uof.Utility.Page.BaseP
 
     }
 
-    public void UPDATE_COPTB_COPMB(string TA001,string TA002,string TB004)
+    public void UPDATE_COPTB_COPMB(string TA001, string TA002, string TB004, string TB016, string TB017,string MB001)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
-        // 1. 📌 使用參數化查詢，避免 SQL Injection
-        string sqlQuery = @"
-                           
-                            ";
 
-        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        // 1. 📌 真正的參數化查詢，移除欄位字串相加，改用標準 AND 對齊（完美發揮索引效能）
+        string sqlQuery = @"
+                          UPDATE [TK].dbo.COPTB
+                          SET [TB017] = @TB017
+                          WHERE [TB001] = @TA001
+                          AND [TB002] = @TA002
+                          AND [TB004] = @TB004
+                          AND [TB016] = @TB016;
+
+                          UPDATE [TK].dbo.COPMB
+                          SET MB018= @TB017
+                          WHERE [MB001] = @MB001
+                          AND [MB002] = @TB004
+                          AND [MB017] = @TB016
+                          
+                    ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中
         try
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
-                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢           
-                    command.Parameters.AddWithValue("@ID", ID);
+                    // 3. 📌 精準綁定 C# 5.0 參數，避免 Null 造成的異常
+                    command.Parameters.AddWithValue("@TA001", string.IsNullOrEmpty(TA001) ? (object)DBNull.Value : TA001.Trim());
+                    command.Parameters.AddWithValue("@TA002", string.IsNullOrEmpty(TA002) ? (object)DBNull.Value : TA002.Trim());
+                    command.Parameters.AddWithValue("@TB004", string.IsNullOrEmpty(TB004) ? (object)DBNull.Value : TB004.Trim());
+                    command.Parameters.AddWithValue("@TB016", string.IsNullOrEmpty(TB016) ? (object)DBNull.Value : TB016.Trim());
+                    command.Parameters.AddWithValue("@TB017", string.IsNullOrEmpty(TB017) ? (object)DBNull.Value : TB017.Trim());
+                    command.Parameters.AddWithValue("@MB001", string.IsNullOrEmpty(MB001) ? (object)DBNull.Value : MB001.Trim());
+                    command.CommandTimeout = 60; // 設定超時防護
+
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
 
@@ -198,13 +269,16 @@ public partial class CDS_WebPage_COP_TK_COPTATBSTOP : Ede.Uof.Utility.Page.BaseP
                     }
                     else
                     {
-                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能找不到對應的主鍵資料)
                     }
                 }
             }
         }
         catch (Exception ex)
         {
+            // 💡 實際開發強烈建議加上 Log 或至少在 Debug 時能看到錯誤
+            // LogError(ex.Message); 
+            Response.Write("<script>alert('資料庫更新失敗：" + ex.Message.Replace("'", "\\'") + "');</script>");
         }
     }
     public void MsgBox(String ex, Page pg, Object obj)

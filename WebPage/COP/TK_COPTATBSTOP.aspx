@@ -122,8 +122,8 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
-                                <td class="PopTableLeftTD"></td>                               
-                                <td>       
+                                <td class="PopTableLeftTD"></td>
+                                <td>
                                     <asp:Label ID="Label7" runat="server" Text="報價單號: "></asp:Label>
                                     <asp:TextBox ID="QUERY_TextBox1" Text="" runat="server"></asp:TextBox>
                                 </td>
@@ -137,9 +137,9 @@
                                         CssClass="btn-search" />
                                 </td>
                             </tr>
-                                <tr>
-                                <td class="PopTableLeftTD"></td>                               
-                                <td>       
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
                                     <asp:Label ID="Label1" runat="server" Text="失效日: "></asp:Label>
                                     <asp:TextBox ID="txtDate" runat="server" TextMode="Date"></asp:TextBox>
                                 </td>
@@ -154,13 +154,13 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="報價單別" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="報價單別" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_報價單別"
                                                             runat="server"
                                                             Text='<%# Bind("報價單別") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -170,7 +170,17 @@
                                                             runat="server"
                                                             Text='<%# Bind("報價單號") %>'
                                                             Style="word-break: break-all; white-space: pre-line;"
-                                                            Width="100px">
+                                                            Width="100%">
+                                                        </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="客戶" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_客戶"
+                                                            runat="server"
+                                                            Text='<%# Bind("客戶") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100%">
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -236,10 +246,18 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
-                                                        <asp:Button ID="btnUpdate" runat="server" Text="更新" CommandName="MYUPDATE"
-                                                            CommandArgument='<%# Eval("報價單別") + "|" + Eval("報價單號") + "|" + Eval("品號")+ "|" + Eval("生效日期") %>'
-                                                            OnClientClick="return confirm('是否更新？');"
+                                                        <asp:Button ID="btnUpdate" runat="server" Text="設定失效日" CommandName="MYUPDATE"
+                                                            CommandArgument='<%# Eval("報價單別") + "|" + Eval("報價單號") + "|" + Eval("品號")+ "|" + Eval("生效日期")+ "|" + Eval("客代") %>'
+                                                            OnClientClick="return confirm('是否設定失效日？');"
                                                             CssClass="grid-btn btn-add" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <ItemTemplate>
+                                                        <asp:Button ID="btnUpdatenull" runat="server" Text="清空失效日" CommandName="MYUPDATENULL"
+                                                            CommandArgument='<%# Eval("報價單別") + "|" + Eval("報價單號") + "|" + Eval("品號")+ "|" + Eval("生效日期")+ "|" + Eval("客代") %>'
+                                                            OnClientClick="return confirm('是否清空失效日？');"
+                                                            CssClass="grid-btn btn-close" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
