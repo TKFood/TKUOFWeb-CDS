@@ -122,8 +122,8 @@
                     <div id="tabs-1">
                         <table class="PopTable">
                             <tr>
-                                <td class="PopTableLeftTD"></td>
-                                <td>
+                                <td class="PopTableLeftTD"></td>                               
+                                <td>       
                                     <asp:Label ID="Label7" runat="server" Text="報價單號: "></asp:Label>
                                     <asp:TextBox ID="QUERY_TextBox1" Text="" runat="server"></asp:TextBox>
                                 </td>
@@ -135,6 +135,13 @@
                                         OnClick="Button1_Click"
                                         meta:resourcekey="btn1Resource1"
                                         CssClass="btn-search" />
+                                </td>
+                            </tr>
+                                <tr>
+                                <td class="PopTableLeftTD"></td>                               
+                                <td>       
+                                    <asp:Label ID="Label1" runat="server" Text="失效日: "></asp:Label>
+                                    <asp:TextBox ID="txtDate" runat="server" TextMode="Date"></asp:TextBox>
                                 </td>
                             </tr>
 
@@ -207,6 +214,16 @@
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="生效日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_生效日期"
+                                                            runat="server"
+                                                            Text='<%# Bind("生效日期") %>'
+                                                            Style="word-break: break-all; white-space: pre-line;"
+                                                            Width="100%">
+                                                        </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="失效日期" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_失效日期"
@@ -220,7 +237,7 @@
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
                                                         <asp:Button ID="btnUpdate" runat="server" Text="更新" CommandName="MYUPDATE"
-                                                            CommandArgument='<%# Eval("報價單號") %>'
+                                                            CommandArgument='<%# Eval("報價單別") + "|" + Eval("報價單號") + "|" + Eval("品號")+ "|" + Eval("生效日期") %>'
                                                             OnClientClick="return confirm('是否更新？');"
                                                             CssClass="grid-btn btn-add" />
                                                     </ItemTemplate>

@@ -129,11 +129,29 @@ public partial class CDS_WebPage_COP_TK_COPTATBSTOP : Ede.Uof.Utility.Page.BaseP
 
         // 1. 檢查 CommandName 是否是您定義的更新命令
         if (e.CommandName == "MYUPDATE")
-        {     
-            MsgBox("更新完成 \r\n " + ID, this.Page, this);
+        {
+            // 1. 取得由前端傳過來的 3 個複合主鍵字串
+            string argument = (e.CommandArgument != null) ? e.CommandArgument.ToString() : "";
+            if (string.IsNullOrEmpty(argument)) return;
+
+            // 2. 用豎線拆開
+            string[] keys = argument.Split('|');
+            if (keys.Length != 4) return;
+            string ta001 = keys[0].Trim(); // 報價單別 (Key 1)
+            string ta002 = keys[1].Trim(); // 報價單號 (Key 2)
+            string tb004 = keys[2].Trim(); // 品號     (Key 3)
+            string mb017 = keys[3].Trim(); // 品號     (Key 3)
+
+            MsgBox(ta001+ ta002+ tb004+ mb017 + "完成 \r\n ", this.Page, this);
+
+            // 3. 執行參數化更新
+            //UPDATE_COPTB_COPMB(ta001, ta002, tb004);
+
+            // 4. 更新完畢重新綁定畫面
+            BindGrid();
         }       
 
-        BindGrid();
+       
     }
     // 雖然不應該被觸發，但定義它以避免 HttpCException
     protected void Grid1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -151,6 +169,43 @@ public partial class CDS_WebPage_COP_TK_COPTATBSTOP : Ede.Uof.Utility.Page.BaseP
     {
         //SETEXCEL();
 
+    }
+
+    public void UPDATE_COPTB_COPMB(string TA001,string TA002,string TB004)
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        // 1. 📌 使用參數化查詢，避免 SQL Injection
+        string sqlQuery = @"
+                           
+                            ";
+
+        // 2. 📌 包裹在 Try-Catch 區塊中，處理例外狀況
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    // 3. 📌 加入參數，將值安全地傳遞給 SQL 查詢           
+                    command.Parameters.AddWithValue("@ID", ID);
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // 檢查是否有資料被更新
+                    if (rowsAffected > 0)
+                    {
+                        MsgBox("完成 \r\n ", this.Page, this);
+                    }
+                    else
+                    {
+                        // 雖然執行成功，但沒有任何資料列被影響 (可能 ID 找不到)                       
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+        }
     }
     public void MsgBox(String ex, Page pg, Object obj)
     {
