@@ -80,7 +80,7 @@ public partial class CDS_WebPage_COP_TK_COPTATBSTOP : Ede.Uof.Utility.Page.BaseP
                                 B.TB005 AS '品名',
                                 B.TB007 AS '報價數量',
                                 B.TB008 AS '報價單位',
-                                B.TB009 AS '報價單價',
+                                CONVERT(INT,B.TB009) AS '報價單價',
                                 (CASE A.TA022 
                                     WHEN '1' THEN '內含'  
                                     WHEN '2' THEN '外加'  
