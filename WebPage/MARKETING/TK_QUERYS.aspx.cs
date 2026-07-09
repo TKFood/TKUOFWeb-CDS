@@ -86,10 +86,12 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                                 MAX(TA001) AS '日期迄',
                                 POSTA.TA002 AS '門市代',
                                 CMSME.ME002 AS '門市',
-                                COUNT(POSTA.TA002) AS '銷售總筆數',
-                                SUM(POSTA.TA026) AS '銷售總金額含稅',
-                                SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN 1 ELSE 0 END) AS '滿額總筆數',
-                                SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN POSTA.TA026 ELSE 0 END) AS '滿額金額含稅'
+                                COUNT(POSTA.TA002) AS '銷售總筆數不含退貨',
+                                SUM(POSTA.TA026) AS '銷售總金額含稅不含退貨',
+                                SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN 1 ELSE 0 END) AS '滿額總筆數不含退貨',
+                                SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN POSTA.TA026 ELSE 0 END) AS '滿額金額含稅不含退貨',
+	                            (SELECT SUM(TA026) FROM [TK].dbo.POSTA TA2 WHERE TA2.TA038 NOT IN ('4') AND TA2.TA001>= @DATESTART AND TA2.TA001<= @DATESEND AND TA2.TA002=POSTA.TA002) AS '銷售總金額含退貨'
+
                             FROM
                                 [TK].dbo.POSTA POSTA
                             INNER JOIN
