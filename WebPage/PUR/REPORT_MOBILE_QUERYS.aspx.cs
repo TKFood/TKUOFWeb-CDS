@@ -70,6 +70,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM [TKPUR].[dbo].[UOF_QUERYS]
                         )
+                        AND LA009 IN ('21001','21002','21005','20029')
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -192,6 +193,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM  [TKPUR].[dbo].[UOF_QUERYS_BUYS]
                         )
+                        AND LA009 IN ('21001','21002','21005','20029')
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -315,6 +317,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM   [TKPUR].[dbo].[UOF_QUERYS_DRINKS]
                         )
+                        AND LA009 IN ('21001','21002','21005','20029')
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -437,6 +440,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM   [TKPUR].[dbo].[UOF_QUERYS_PACKAGE]
                         )
+                        AND LA009 IN ('21001','21002','21005','20029')
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -559,6 +563,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM  [TKPUR].[dbo].[UOF_QUERYS_TASTE]
                         )
+                        AND LA009 IN ('21001','21002','21005','20029')
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
