@@ -44,6 +44,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
     protected void Timer1_Tick(object sender, EventArgs e)
     {
         BindData(); // 重新向資料庫查詢並繫結資料
+        BindGrid();
     }
 
     private void BindData()
@@ -124,7 +125,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
             if (num > upLimit || num < lowLimit)
             {
                 // 整行變粉紅色背景
-                e.Row.BackColor = System.Drawing.Color.DarkRed;
+                e.Row.BackColor = System.Drawing.Color.Red;
 
                 // 或者：若只要「實際溫度」儲存格變紅底白字
                 // if (lblNum != null) {
