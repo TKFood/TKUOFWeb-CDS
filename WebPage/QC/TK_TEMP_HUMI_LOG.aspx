@@ -15,7 +15,9 @@
             <telerik:RadTabStrip ID="RadTabStrip1" runat="server"></telerik:RadTabStrip>
             <telerik:RadTabStrip ID="RadTabStrip2" runat="server" MultiPageID="RadMultiPage" SelectedIndex="0">
                 <Tabs>
-                    <telerik:RadTab Text="資料">
+                    <telerik:RadTab Text="即時查詢">
+                    </telerik:RadTab>
+                    <telerik:RadTab Text="溫度明細">
                     </telerik:RadTab>
                     <telerik:RadTab Text="其他">
                     </telerik:RadTab>
@@ -54,55 +56,55 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="實際溫度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_實際溫度" runat="server" 
-                                                               Text='<%# Eval("實際溫度", "{0:N2}") %>' 
-                                                               Style="word-break: break-all; white-space: pre-line; text-align: right;" 
-                                                               Width="100%">
+                                                        <asp:Label ID="Label_實際溫度" runat="server"
+                                                            Text='<%# Eval("實際溫度", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
                                                     </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="溫度上限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                               <asp:Label ID="Label_溫度上限" runat="server" 
-                                                               Text='<%# Eval("溫度上限", "{0:N2}") %>' 
-                                                               Style="word-break: break-all; white-space: pre-line; text-align: right;" 
-                                                               Width="100%">
+                                                        <asp:Label ID="Label_溫度上限" runat="server"
+                                                            Text='<%# Eval("溫度上限", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
                                                     </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="溫度下限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                               <asp:Label ID="Label_溫度下限" runat="server" 
-                                                               Text='<%# Eval("溫度下限", "{0:N2}") %>' 
-                                                               Style="word-break: break-all; white-space: pre-line; text-align: right;" 
-                                                               Width="100%">
+                                                        <asp:Label ID="Label_溫度下限" runat="server"
+                                                            Text='<%# Eval("溫度下限", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
                                                     </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="實際溼度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                               <asp:Label ID="Label_實際溼度" runat="server" 
-                                                               Text='<%# Eval("實際溼度", "{0:N2}") %>' 
-                                                               Style="word-break: break-all; white-space: pre-line; text-align: right;" 
-                                                               Width="100%">
+                                                        <asp:Label ID="Label_實際溼度" runat="server"
+                                                            Text='<%# Eval("實際溼度", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
                                                     </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="溼度上限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                               <asp:Label ID="Label_溼度上限" runat="server" 
-                                                               Text='<%# Eval("溼度上限", "{0:N2}") %>' 
-                                                               Style="word-break: break-all; white-space: pre-line; text-align: right;" 
-                                                               Width="100%">
+                                                        <asp:Label ID="Label_溼度上限" runat="server"
+                                                            Text='<%# Eval("溼度上限", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
                                                     </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="溼度下限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="溼度下限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                               <asp:Label ID="Label_溼度下限" runat="server" 
-                                                               Text='<%# Eval("溼度下限", "{0:N2}") %>' 
-                                                               Style="word-break: break-all; white-space: pre-line; text-align: right;" 
-                                                               Width="100%">
+                                                        <asp:Label ID="Label_溼度下限" runat="server"
+                                                            Text='<%# Eval("溼度下限", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
                                                     </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -115,7 +117,91 @@
                     </div>
 
                 </telerik:RadPageView>
-
+                <telerik:RadPageView ID="RadPageView2" runat="server">
+                    <div id="tab2">
+                        <table class="PopTable">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label9" runat="server" Text="日期: "></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="Date1" runat="server" TextMode="Date"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label2" runat="server" Text="狀態:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Button ID="Button2" runat="server" Text="查詢" OnClick="Button2_Click"
+                                        meta:resourcekey="btn1Resource2" />
+                                </td>
+                            </tr>
+                        </table>
+                         <table class="PopTable">
+                            <tr>
+                                <td colspan="2" class="PopTableRightTD">
+                                    <div style="overflow-x: auto; width: 100%">
+                                        <Fast:Grid ID="Grid2" OnRowDataBound="Grid2_RowDataBound" OnRowCommand="Grid2_RowCommand" runat="server" OnBeforeExport="OnBeforeExport2" meta:resourcekey="Grid1Resource2" OnPageIndexChanging="grid_PageIndexChanging2" AllowPaging="true" AutoGenerateCheckBoxColumn="False" AllowSorting="True" AutoGenerateColumns="False" CustomDropDownListPage="False" DataKeyOnClientWithCheckBox="False" DefaultSortDirection="Ascending" EmptyDataText="No data found" EnhancePager="True" KeepSelectedRows="False" PageSize="1000" SelectedRowColor="" UnSelectedRowColor="" ShowFooter="True" EnableViewState="True">
+                                            <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
+                                            <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
+                                            <Columns>
+                                                 <asp:TemplateField HeaderText="日期時間" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_日期時間" runat="server" Text='<%# Bind("日期時間") %>' Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="機台名稱" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_機台名稱" runat="server" Text='<%# Bind("機台名稱") %>' Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="區域" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_區域" runat="server" Text='<%# Bind("區域") %>' Style="word-break: break-all; white-space: pre-line;" Width="100%"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="實際溫度" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_實際溫度" runat="server"
+                                                            Text='<%# Eval("實際溫度", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
+                                                    </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="溫度上限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_溫度上限" runat="server"
+                                                            Text='<%# Eval("溫度上限", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
+                                                    </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="溫度下限" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_溫度下限" runat="server"
+                                                            Text='<%# Eval("溫度下限", "{0:N2}") %>'
+                                                            Style="word-break: break-all; white-space: pre-line; text-align: right;"
+                                                            Width="100%">
+                                                    </asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>                                               
+                                            </Columns>
+                                        </Fast:Grid>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </telerik:RadPageView>
                 <telerik:RadPageView ID="RadPageView99" runat="server">
                     <div id="tabs-99">
                     </div>
