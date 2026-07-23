@@ -23,6 +23,7 @@ using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Ede.Uof.Utility.FileCenter.V3;
 
 public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page.BasePage
 {
@@ -106,6 +107,8 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
     public void OnBeforeExport1(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
         //SETEXCEL();
+        //string newFileGroupID = FileCenter.Clone("A表單的FILE_GROUP_ID", Module.WKF);
+       
 
     }
     private void BindGrid2()
@@ -539,7 +542,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
 
     public void OnBeforeExport8(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
     {
-        //SETEXCEL();
+        //SETEXCEL();       
 
     }
     private void BindGrid9()
