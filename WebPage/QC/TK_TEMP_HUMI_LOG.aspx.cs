@@ -132,6 +132,34 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         {
         }
     }
+    protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // 取得使用者選取的值 (例如："ALL" 或 "超標")
+        string selectedValue = DropDownList3.SelectedValue;
+        if(selectedValue.Equals("作業時間"))
+        {
+            Label6.Text = "07 點~21 點";
+        }
+        else
+        {
+            Label6.Text = "";
+        }
+       
+    }
+    protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // 取得使用者選取的值 (例如："ALL" 或 "超標")
+        string selectedValue = DropDownList4.SelectedValue;
+        if (selectedValue.Equals("作業時間"))
+        {
+            Label7.Text = "07 點~21 點";
+        }
+        else
+        {
+            Label7.Text = "";
+        }
+
+    }
     private void BindDropDownList4()
     {
         DataTable dt = new DataTable();
