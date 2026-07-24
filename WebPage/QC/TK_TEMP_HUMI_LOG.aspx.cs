@@ -115,22 +115,36 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
 
         // 2. 定義 SQL 查詢字串           
         string cmdTxt = @"
-                           SELECT 
-                            [ID]
-                            ,[機台名稱]
-                            ,[區域]
-                            ,[TMP]
-                            ,[HUM]
-                            ,(SELECT TOP 1  CONVERT(DECIMAL(16,2),[控項_1]) FROM  [TK_FOOD].[dbo].[log_table] WHERE [log_table].[機台名稱]=[Machine].[機台名稱] ORDER BY [日期時間] DESC) AS '實際溫度'
-                            ,(SELECT TOP 1  CONVERT(DECIMAL(16,2),[控項_2]) FROM  [TK_FOOD].[dbo].[log_table] WHERE [log_table].[機台名稱]=[Machine].[機台名稱] ORDER BY [日期時間] DESC) AS '溫度上限'
-                            ,(SELECT TOP 1  CONVERT(DECIMAL(16,2),[控項_2]) FROM  [TK_FOOD].[dbo].[log_table] WHERE [log_table].[機台名稱]=[Machine].[機台名稱] ORDER BY [日期時間] DESC) AS '溫度上限'
-                            ,(SELECT TOP 1  CONVERT(DECIMAL(16,2),[控項_3]) FROM  [TK_FOOD].[dbo].[log_table] WHERE [log_table].[機台名稱]=[Machine].[機台名稱] ORDER BY [日期時間] DESC) AS '溫度下限'
-                            ,(SELECT TOP 1  CONVERT(DECIMAL(16,2),[控項_4]) FROM  [TK_FOOD].[dbo].[log_table] WHERE [log_table].[機台名稱]=[Machine].[機台名稱] ORDER BY [日期時間] DESC) AS '實際溼度'
-                            ,(SELECT TOP 1  CONVERT(DECIMAL(16,2),[控項_5]) FROM  [TK_FOOD].[dbo].[log_table] WHERE [log_table].[機台名稱]=[Machine].[機台名稱] ORDER BY [日期時間] DESC) AS '溼度上限'
-                            ,(SELECT TOP 1  CONVERT(DECIMAL(16,2),[控項_6]) FROM  [TK_FOOD].[dbo].[log_table] WHERE [log_table].[機台名稱]=[Machine].[機台名稱] ORDER BY [日期時間] DESC) AS '溼度下限'
-                            FROM [TK_FOOD].[dbo].[Machine]
-                            WHERE [機台名稱] LIKE '%溫濕度%'
-                            ORDER BY CONVERT(INT,[ID])
+                         SELECT 
+                             M.[ID]
+                            ,M.[機台名稱]
+                            ,M.[區域]
+                            ,M.[TMP]
+                            ,M.[HUM]
+                            ,L.[實際溫度]
+                            ,L.[溫度上限]
+                            ,L.[溫度下限]
+                            ,L.[實際溼度]
+                            ,L.[溼度上限]
+                            ,L.[溼度下限]
+                        FROM [TK_FOOD].[dbo].[Machine] AS M WITH(NOLOCK)
+                        OUTER APPLY (
+                            SELECT TOP 1 
+                                 TRY_CONVERT(DECIMAL(16,2), [控項_1]) AS '實際溫度'
+                                ,TRY_CONVERT(DECIMAL(16,2), [控項_2]) AS '溫度上限'
+                                ,TRY_CONVERT(DECIMAL(16,2), [控項_3]) AS '溫度下限'
+                                ,TRY_CONVERT(DECIMAL(16,2), [控項_4]) AS '實際溼度'
+                                ,TRY_CONVERT(DECIMAL(16,2), [控項_5]) AS '溼度上限'
+                                ,TRY_CONVERT(DECIMAL(16,2), [控項_6]) AS '溼度下限'
+                            FROM [TK_FOOD].[dbo].[log_table] WITH(NOLOCK)
+                            WHERE [機台名稱] = M.[機台名稱]
+                              -- 新增條件：限制日期時間必須在「今天 00:00:00」至「明天 00:00:00」之間（支援索引）
+                              AND [日期時間] >= CAST(CAST(GETDATE() AS DATE) AS DATETIME)
+                              AND [日期時間] < CAST(DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AS DATETIME)
+                            ORDER BY [日期時間] DESC
+                        ) AS L
+                        WHERE M.[機台名稱] LIKE '%溫濕度%'
+                        ORDER BY TRY_CONVERT(INT, M.[ID]);
                         ";
 
         //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());     
@@ -212,7 +226,12 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         string KINDS = DropDownList1.Text;
         if (KINDS.Equals("超標"))
         {
-            QUERY.AppendFormat(@" AND ([控項_1] > [控項_2] OR [控項_1] < [控項_3])");
+            QUERY.AppendFormat(@"
+                                AND (
+                                 TRY_CONVERT(DECIMAL(16,2), [控項_1]) > TRY_CONVERT(DECIMAL(16,2), [控項_2])
+                                 OR     TRY_CONVERT(DECIMAL(16,2), [控項_1]) < TRY_CONVERT(DECIMAL(16,2), [控項_3])
+                                 )
+                                ");
         }
         else
         {
@@ -309,7 +328,12 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         string KINDS = DropDownList2.Text;
         if (KINDS.Equals("超標"))
         {
-            QUERY.AppendFormat(@" AND ([控項_4] > [控項_5] OR [控項_4] < [控項_6])");
+            QUERY.AppendFormat(@" 
+                                AND (
+                                 TRY_CONVERT(DECIMAL(16,2), [控項_4]) > TRY_CONVERT(DECIMAL(16,2), [控項_5])
+                                 OR     TRY_CONVERT(DECIMAL(16,2), [控項_4]) < TRY_CONVERT(DECIMAL(16,2), [控項_6])
+                                )"
+                               );
         }
         else
         {
