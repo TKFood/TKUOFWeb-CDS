@@ -139,6 +139,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label4" runat="server" Text="時段:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
                                     <asp:Button ID="Button2" runat="server" Text="查詢" OnClick="Button2_Click"
@@ -221,6 +229,14 @@
                                 </td>
                                 <td class="PopTableRightTD">
                                     <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label5" runat="server" Text="時段:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
                                 </td>
                             </tr>
                             <tr>

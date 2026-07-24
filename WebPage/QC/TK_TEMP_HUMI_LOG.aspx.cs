@@ -38,6 +38,8 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
             BindData();
             BindDropDownList();
             BindDropDownList2();
+            BindDropDownList3();
+            BindDropDownList4();
         }
     }
 
@@ -99,6 +101,56 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
             DropDownList2.DataTextField = "PARANAME";
             DropDownList2.DataValueField = "PARANAME";
             DropDownList2.DataBind();
+
+        }
+        else
+        {
+        }
+    }
+    private void BindDropDownList3()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT [ID],[KIND],[PARAID],[PARANAME] FROM [TKQC].[dbo].[TBPARA] WHERE [KIND]='CDS_WebPage_QC_TK_TEMP_HUMI_LOG_HRS' ORDER BY [ID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList3.DataSource = dt;
+            DropDownList3.DataTextField = "PARANAME";
+            DropDownList3.DataValueField = "PARANAME";
+            DropDownList3.DataBind();
+
+        }
+        else
+        {
+        }
+    }
+    private void BindDropDownList4()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PARAID", typeof(String));
+        dt.Columns.Add("PARANAME", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @" SELECT [ID],[KIND],[PARAID],[PARANAME] FROM [TKQC].[dbo].[TBPARA] WHERE [KIND]='CDS_WebPage_QC_TK_TEMP_HUMI_LOG_HRS' ORDER BY [ID] ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList4.DataSource = dt;
+            DropDownList4.DataTextField = "PARANAME";
+            DropDownList4.DataValueField = "PARANAME";
+            DropDownList4.DataBind();
 
         }
         else
@@ -223,6 +275,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         
         StringBuilder SQL_QUERY = new StringBuilder();
         StringBuilder QUERY = new StringBuilder();
+        StringBuilder QUERY2 = new StringBuilder();
         string KINDS = DropDownList1.Text;
         if (KINDS.Equals("超標"))
         {
@@ -236,6 +289,19 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         else
         {
             QUERY.AppendFormat(@"");
+        }
+
+        string HRS= DropDownList3.Text;
+        if(HRS.Equals("作業時間"))
+        {
+            QUERY2.AppendFormat(@"
+                                AND DATEPART(HOUR, [日期時間]) >= 7 
+                                AND DATEPART(HOUR, [日期時間]) < 21
+                                ");
+        }
+        else
+        {
+            QUERY2.AppendFormat(@"");
         }
         // 2. 進行解析與預設值處理
         DateTime selectedDate;
@@ -266,9 +332,10 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                                     ) AS RN
                                 FROM [TK_FOOD].[dbo].[log_table] WITH(NOLOCK)
                                 INNER JOIN [TK_FOOD].[dbo].[Machine] WITH(NOLOCK) ON [Machine].機台名稱 = [log_table].機台名稱
-                                WHERE [Machine].[機台名稱]  LIKE '%溫濕度%'
-                                  {0}
-                                  AND [日期時間] >= '{1}' AND [日期時間] < '{2}'
+                                WHERE [Machine].[機台名稱]  LIKE '%溫濕度%'                                 
+                                  AND [日期時間] >= '{0}' AND [日期時間] < '{1}'
+                                {2}
+                                {3}
                             )
                             SELECT 
                                 [日期時間],
@@ -281,7 +348,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                             FROM CTE
                             WHERE RN = 1 -- 只取每 5 分鐘區間內的第一筆紀錄
                             ORDER BY [ID],[日期時間] 
-                            ", QUERY.ToString(), dateStart, dateEnd);
+                            ", dateStart, dateEnd, QUERY.ToString(), QUERY2.ToString());
         
         //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());     
 
@@ -325,6 +392,8 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
 
         StringBuilder SQL_QUERY = new StringBuilder();
         StringBuilder QUERY = new StringBuilder();
+        StringBuilder QUERY2 = new StringBuilder();
+
         string KINDS = DropDownList2.Text;
         if (KINDS.Equals("超標"))
         {
@@ -338,6 +407,18 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         else
         {
             QUERY.AppendFormat(@"");
+        }
+        string HRS = DropDownList4.Text;
+        if (HRS.Equals("作業時間"))
+        {
+            QUERY2.AppendFormat(@"
+                                AND DATEPART(HOUR, [日期時間]) >= 7 
+                                AND DATEPART(HOUR, [日期時間]) < 21
+                                ");
+        }
+        else
+        {
+            QUERY2.AppendFormat(@"");
         }
         // 2. 進行解析與預設值處理
         DateTime selectedDate;
@@ -368,9 +449,10 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                                     ) AS RN
                                 FROM [TK_FOOD].[dbo].[log_table] WITH(NOLOCK)
                                 INNER JOIN [TK_FOOD].[dbo].[Machine] WITH(NOLOCK) ON [Machine].機台名稱 = [log_table].機台名稱
-                                WHERE [Machine].[機台名稱]  LIKE '%溫濕度%'
-                                  {0}
-                                  AND [日期時間] >= '{1}' AND [日期時間] < '{2}'
+                                WHERE [Machine].[機台名稱]  LIKE '%溫濕度%'                               
+                                  AND [日期時間] >= '{0}' AND [日期時間] < '{1}'
+                                   {2}
+                                   {3}
                             )
                             SELECT 
                                 [日期時間],
@@ -383,7 +465,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                             FROM CTE
                             WHERE RN = 1 -- 只取每 5 分鐘區間內的第一筆紀錄
                             ORDER BY [ID],[日期時間] 
-                            ", QUERY.ToString(), dateStart, dateEnd);
+                            ", dateStart, dateEnd, QUERY.ToString(), QUERY2.ToString());
 
         //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());     
 
