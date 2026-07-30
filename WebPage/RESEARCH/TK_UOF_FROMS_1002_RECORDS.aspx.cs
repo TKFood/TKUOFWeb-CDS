@@ -114,6 +114,8 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         StringBuilder QUERYS = new StringBuilder();
         StringBuilder QUERYS2 = new StringBuilder();
         StringBuilder QUERYS3 = new StringBuilder();
+        StringBuilder QUERYS4 = new StringBuilder();
+
 
         StringBuilder ORDERBY = new StringBuilder();
 
@@ -139,11 +141,23 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
         {
             // 如果 STATUS 是外部傳入的變數，建議防範 SQL 注入
             // 這裡維持您原本的串接方式，但精簡了邏輯
-            QUERYS.AppendFormat(@" AND STATUS = '{0}' ", STATUS);
+            QUERYS2.AppendFormat(@" AND STATUS = '{0}' ", STATUS);
         }
         else
         {
-            QUERYS.AppendFormat(@" ");
+            QUERYS2.AppendFormat(@" ");
+        }
+        //WHERE 產品名稱
+        string names = TextBox1.Text.Trim();
+        if ( !string.IsNullOrEmpty(names))
+        {
+            // 如果 STATUS 是外部傳入的變數，建議防範 SQL 注入
+            // 這裡維持您原本的串接方式，但精簡了邏輯
+            QUERYS3.AppendFormat(@" AND TD.Row.value('(Cell[@fieldId=""DVV01""]/@fieldValue)[1]', 'NVARCHAR(MAX)') LIKE '%{0}%' ", names);
+        }
+        else
+        {
+            QUERYS3.AppendFormat(@" ");
         }
 
 
@@ -200,9 +214,13 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 AND f.FORM_NAME IN('1004.無品號試吃製作申請單')
                                 {0}
                                 {1}
+                                {2}
+                                {3}
                            ;
 
                             ", QUERYS.ToString()
+                            , QUERYS2.ToString()
+                            , QUERYS3.ToString()
                             , ORDERBY.ToString());
 
 

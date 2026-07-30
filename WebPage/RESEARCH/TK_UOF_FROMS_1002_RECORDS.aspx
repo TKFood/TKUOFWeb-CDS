@@ -66,6 +66,14 @@
                                 <asp:DropDownList ID="DropDownList_SORT" runat="server"></asp:DropDownList>
                             </td>
                         </tr>
+                           <tr>
+                            <td class="PopTableLeftTD">
+                                <asp:Label ID="Label3" runat="server" Text="產品名稱:" meta:resourcekey="Label4Resource1"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox1" runat="server" Text="" Width="10%"></asp:TextBox>
+                            </td>
+                        </tr
                         <tr>
                             <td class="PopTableLeftTD"></td>
                             <td>
