@@ -71,7 +71,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM [TKPUR].[dbo].[UOF_QUERYS]
                         )
-                        AND LA009 IN ('21001','21002','21005','20029')
+                        AND LA009 IN (SELECT  [LA009] FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS_INVLA])
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -131,6 +131,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         ,TD009 AS '單位'
                         FROM [TK].dbo.PURTC,[TK].dbo.PURTD
                         WHERE TC001=TD001 AND TC002=TD002
+                        AND TD007 IN (SELECT  [TD007]  FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS])
                         AND TD002>='20260408001'
                         AND TD004 IN
                         (
@@ -196,7 +197,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM  [TKPUR].[dbo].[UOF_QUERYS_BUYS]
                         )
-                        AND LA009 IN ('21001','21002','21005','20029')
+                        AND LA009 IN (SELECT  [LA009] FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS_INVLA])
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -254,6 +255,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         ,TD009 AS '單位'
                         FROM [TK].dbo.PURTC,[TK].dbo.PURTD
                         WHERE TC001=TD001 AND TC002=TD002
+                        AND TD007 IN (SELECT  [TD007]  FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS])
                         AND TD002>='20260408001'
                         AND TD004 IN
                         (
@@ -320,7 +322,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM   [TKPUR].[dbo].[UOF_QUERYS_DRINKS]
                         )
-                        AND LA009 IN ('21001','21002','21005','20029')
+                        AND LA009 IN (SELECT  [LA009] FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS_INVLA])
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -378,6 +380,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         ,TD009 AS '單位'
                         FROM [TK].dbo.PURTC,[TK].dbo.PURTD
                         WHERE TC001=TD001 AND TC002=TD002
+                        AND TD007 IN (SELECT  [TD007]  FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS])
                         AND TD002>='20260408001'
                         AND TD004 IN
                         (
@@ -443,7 +446,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM   [TKPUR].[dbo].[UOF_QUERYS_PACKAGE]
                         )
-                        AND LA009 IN ('21001','21002','21005','20029')
+                        AND LA009 IN (SELECT  [LA009] FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS_INVLA])
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -501,6 +504,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         ,TD009 AS '單位'
                         FROM [TK].dbo.PURTC,[TK].dbo.PURTD
                         WHERE TC001=TD001 AND TC002=TD002
+                        AND TD007 IN (SELECT  [TD007]  FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS])
                         AND TD002>='20260408001'
                         AND TD004 IN
                         (
@@ -566,7 +570,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         SELECT  [MB001]
                         FROM  [TKPUR].[dbo].[UOF_QUERYS_TASTE]
                         )
-                        AND LA009 IN ('21001','21002','21005','20029')
+                        AND LA009 IN (SELECT  [LA009] FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS_INVLA])
                         GROUP BY LA001,MB002, MB004
                         ORDER BY LA001
                         ";
@@ -624,6 +628,7 @@ public partial class CDS_WebPage_PUR_REPORT_MOBILE_QUERYS : Ede.Uof.Utility.Page
                         ,TD009 AS '單位'
                         FROM [TK].dbo.PURTC,[TK].dbo.PURTD
                         WHERE TC001=TD001 AND TC002=TD002
+                        AND TD007 IN (SELECT  [TD007]  FROM [TKPUR].[dbo].[UOF_QUERYS_SOTCKS])
                         AND TD002>='20260408001'
                         AND TD004 IN
                         (
