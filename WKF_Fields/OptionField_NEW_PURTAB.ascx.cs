@@ -15,7 +15,10 @@ using Ede.Uof.EIP.Organization.Util;
 using Ede.Uof.WKF.Design.Data;
 using Ede.Uof.WKF.VersionFields;
 using System.Xml;
+using System.Xml.Linq;
+using Ede.Uof.Utility.Page.Common;
 using System.Linq;
+using Kendo.Mvc.Extensions;
 
 public partial class WKF_OptionalFields_OptionField_NEW_PURTAB : WKF_FormManagement_VersionFieldUserControl_VersionFieldUC
 {
@@ -123,9 +126,11 @@ public partial class WKF_OptionalFields_OptionField_NEW_PURTAB : WKF_FormManagem
     {
         get
         {
-            //回傳字串
-			//取得表單欄位填寫的內容
-			return String.Empty;
+            if (string.IsNullOrEmpty(txtFieldValue.Text) || txtFieldValue.Text == "<FieldValue/>")
+            {
+                return "<FieldValue/>";
+            }
+            return txtFieldValue.Text;
         }
         set
         {
@@ -174,13 +179,24 @@ public partial class WKF_OptionalFields_OptionField_NEW_PURTAB : WKF_FormManagem
 
         if (fieldOptional != null)
         {
+            if (string.IsNullOrEmpty(fieldOptional.FieldValue))
+            {
+                txtFieldValue.Text = "<FieldValue/>";
+            }
+            else
+            {
+                txtFieldValue.Text = fieldOptional.FieldValue;
+
+                // 綁定單身 Grid
+                BindGrid();
+            }
 
             //若有擴充屬性，可以用該屬性存取
             // fieldOptional.ExtensionSetting
 
-            
+
             //草稿
-            if(!fieldOptional.IsAudit)
+            if (!fieldOptional.IsAudit)
             {
                 if(fieldOptional.HasAuthority)
                 {
@@ -314,19 +330,174 @@ public partial class WKF_OptionalFields_OptionField_NEW_PURTAB : WKF_FormManagem
         }
     }
 
+    /// <summary>
+    /// 解析 XML 並重新綁定 Grid
+    /// </summary>
+    private void BindGrid()
+    {
+        if (string.IsNullOrEmpty(txtFieldValue.Text)) return;
+
+        XElement xe = XElement.Parse(txtFieldValue.Text);
+
+        DataTable dt = new DataTable();
+        dt.Columns.Add("ID");
+        dt.Columns.Add("TA001");
+        dt.Columns.Add("TA002");
+        dt.Columns.Add("TB003");
+        dt.Columns.Add("TB004");
+        dt.Columns.Add("TB005");
+
+        var items = xe.Elements("Item");
+        foreach (var item in items)
+        {
+            XAttribute attrId = item.Attribute("id");
+            XAttribute attrTA001 = item.Attribute("TA001");
+            XAttribute attrTA002 = item.Attribute("TA002");
+            XAttribute attrTB003 = item.Attribute("TB003");
+            XAttribute attrTB004 = item.Attribute("TB004");
+            XAttribute attrTB005 = item.Attribute("TB005");
+
+            string id = (attrId != null) ? attrId.Value : string.Empty;
+            string ta001 = (attrTA001 != null) ? attrTA001.Value : string.Empty;
+            string ta002 = (attrTA002 != null) ? attrTA002.Value : string.Empty;
+            string tb003 = (attrTB003 != null) ? attrTB003.Value : string.Empty;
+            string tb004 = (attrTB004 != null) ? attrTB004.Value : string.Empty;
+            string tb005 = (attrTB005 != null) ? attrTB005.Value : string.Empty;
+
+            // ✅ 補齊 6 個欄位參數
+            dt.Rows.Add(id, ta001, ta002, tb003, tb004, tb005);
+        }
+
+        Grid1.DataSource = dt;
+        Grid1.DataBind();
+    }
+
+    /// <summary>
+    /// 新增 TB005 至 XML 並更新 Grid
+    /// </summary>
+    protected void btnAddDetail_Click(object sender, EventArgs e)
+    {
+        lblMessage.Text = string.Empty;
+
+        string tb005Value = txtTB005Input.Text.Trim();
+        if (string.IsNullOrEmpty(tb005Value))
+        {
+            lblMessage.Text = "請輸入 TB005 資料！";
+            return;
+        }
+
+        XElement xe = string.IsNullOrEmpty(txtFieldValue.Text) || txtFieldValue.Text == "<FieldValue/>"
+            ? new XElement("FieldValue")
+            : XElement.Parse(txtFieldValue.Text);
+
+        // 建立單身 Item 節點 (僅記錄 TB005)
+        XElement newItem = new XElement("Item",
+            new XAttribute("id", Guid.NewGuid().ToString()),
+            new XAttribute("TA001", tb005Value),
+            new XAttribute("TA002", tb005Value),
+            new XAttribute("TB003", tb005Value),
+            new XAttribute("TB004", tb005Value),
+            new XAttribute("TB005", tb005Value)
+        );
+
+        xe.Add(newItem);
+        txtFieldValue.Text = xe.ToString();
+
+        // 清空輸入欄位並重新綁定
+        txtTB005Input.Text = string.Empty;
+        BindGrid();
+    }
+
+    /// <summary>
+    /// 刪除 Grid 勾選的列
+    /// </summary>
+    protected void btnDeleteDetail_Click(object sender, EventArgs e)
+    {
+        string[] selectedIds = Grid1.GetSelectedRowGUIDs();
+        if (selectedIds == null || selectedIds.Length == 0) return;
+
+        XElement xe = XElement.Parse(txtFieldValue.Text);
+
+        foreach (string id in selectedIds)
+        {
+            XElement targetItem = xe.Elements("Item").FirstOrDefault(x => (string)x.Attribute("id") == id);
+            if (targetItem != null)
+            {
+                targetItem.Remove();
+            }
+        }
+
+        txtFieldValue.Text = xe.ToString();
+        BindGrid();
+    }
+
     protected void Button1_Click(object sender, EventArgs e)
     {
+        lblMessage.Text = string.Empty;
         string TA002 = TextBox1.Text.Trim();
-        if(!string.IsNullOrEmpty(TA002))
+
+        if (!string.IsNullOrEmpty(TA002))
         {
             DataTable dt = FIND_ERP_PURTA_PURTB(TA002);
 
-            if(dt!=null && dt.Rows.Count>=1)
+            if (dt != null && dt.Rows.Count > 0)
             {
-                Label2.Text = dt.Rows[0]["TB005"].ToString();
+                XElement xe;
+                if (string.IsNullOrEmpty(txtFieldValue.Text) || txtFieldValue.Text == "<FieldValue/>")
+                {
+                    xe = new XElement("FieldValue");
+                }
+                else
+                {
+                    xe = XElement.Parse(txtFieldValue.Text);
+                }
+
+                int addedCount = 0;
+                foreach (DataRow row in dt.Rows)
+                {
+                    // C# 5.0 安全取值 (轉換 DBNull 與 null)
+                    string TA001Value = (row["TA001"] != DBNull.Value && row["TA001"] != null) ? row["TA001"].ToString().Trim() : string.Empty;
+                    string TA002Value = (row["TA002"] != DBNull.Value && row["TA002"] != null) ? row["TA002"].ToString().Trim() : string.Empty;
+                    string TB003Value = (row["TB003"] != DBNull.Value && row["TB003"] != null) ? row["TB003"].ToString().Trim() : string.Empty;
+                    string TB004Value = (row["TB004"] != DBNull.Value && row["TB004"] != null) ? row["TB004"].ToString().Trim() : string.Empty;
+                    string tb005Value = (row["TB005"] != DBNull.Value && row["TB005"] != null) ? row["TB005"].ToString().Trim() : string.Empty;
+
+                    // 只要 TB005 有值（或改為判斷其他必填欄位）就匯入 XML
+                    if (!string.IsNullOrEmpty(tb005Value))
+                    {
+                        XElement newItem = new XElement("Item",
+                            new XAttribute("id", Guid.NewGuid().ToString()),
+                            new XAttribute("TA001", TA001Value),
+                            new XAttribute("TA002", TA002Value),
+                            new XAttribute("TB003", TB003Value),
+                            new XAttribute("TB004", TB004Value),
+                            new XAttribute("TB005", tb005Value)
+                        );
+
+                        xe.Add(newItem);
+                        addedCount++;
+                    }
+                }
+
+                if (addedCount > 0)
+                {
+                    txtFieldValue.Text = xe.ToString();
+                    BindGrid();
+                    Label2.Text = string.Format("已成功匯入 {0} 筆明細", addedCount);
+                }
+                else
+                {
+                    lblMessage.Text = "查詢結果中的 TB005 欄位皆為空值！";
+                }
+            }
+            else
+            {
+                lblMessage.Text = "查無對應的 ERP 單據資料！";
             }
         }
-       
-
+        else
+        {
+            lblMessage.Text = "請輸入單號！";
+        }
     }
 }
