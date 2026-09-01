@@ -116,6 +116,13 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
+                                               <Columns>
+                                                <asp:TemplateField HeaderText="表單狀態" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label_表單狀態" runat="server" Text='<%# Bind("表單狀態") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
                                             <Columns>
                                                 <asp:TemplateField HeaderText="申請者" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
@@ -173,7 +180,7 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="需求量" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="需求量" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_需求量" runat="server" Text='<%# Bind("需求量") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
@@ -194,14 +201,14 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="結案日" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="結案日" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_結案日" runat="server" Text='<%# Bind("結案日") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="備註" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="txtNewField_GV1_備註" runat="server" Text='<%# Bind("備註") %>' Width="100%" TextMode="MultiLine" CssClass="multiline-textbox" Rows="3" onkeyup="autoResizeTextBox(this)"></asp:TextBox>
                                                     </ItemTemplate>
@@ -218,7 +225,7 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="功能" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField HeaderText="功能" ItemStyle-Width="40px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                                                     <ItemTemplate>
                                                         <asp:Button ID="Button2" runat="server" Text="填寫" CommandName="Button2" ForeColor="Red" CommandArgument='<%# Container.DataItemIndex %>' OnClientClick="return confirm('確定？');" />
                                                     </ItemTemplate>

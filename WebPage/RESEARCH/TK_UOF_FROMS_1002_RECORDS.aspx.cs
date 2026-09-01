@@ -177,7 +177,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
                                 u.NAME            AS '申請者',
                                 CONVERT(nvarchar,t.BEGIN_TIME,111)      AS '申請時間',
                                 t.DOC_NBR         AS '表單編號',   
-	                            (CASE WHEN t.TASK_RESULT='0' THEN '已結案' ELSE '進行中' END ) TASK_RESULT,
+	                            (CASE WHEN t.TASK_RESULT='0' THEN '已結案' ELSE '進行中' END ) AS '表單狀態',
                                 t.CURRENT_SITE_ID,
 	                            t.TASK_ID,
                                 t.CURRENT_DOC,
@@ -500,6 +500,7 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             var columnMap = new Dictionary<string, string>
         {
             { "預交日", "預交日" },
+            { "表單狀態", "表單狀態" },
             { "表單編號", "表單編號" },
             { "申請者", "申請者" },
             { "申請時間", "申請時間" },
