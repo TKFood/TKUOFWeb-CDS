@@ -42,7 +42,7 @@
                                     <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                     <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                     <Columns>
-                                         <asp:TemplateField HeaderText="主要品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                        <asp:TemplateField HeaderText="主要品號" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="Label_主要品號" runat="server" Text='<%# Bind("主要品號") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                             </ItemTemplate>
@@ -67,19 +67,28 @@
                                                 <asp:Label ID="Label_元件品名" runat="server" Text='<%# Bind("元件品名") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="最近進貨價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Right">
-                                            <ItemTemplate>
-                                                <asp:Label ID="Label_最近進貨價" runat="server" 
-                                                    Text='<%# Eval("最近進貨價", "{0:N3}") %>' 
-                                                    Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: inline-block;">
-                                                </asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>                     
                                         <asp:TemplateField HeaderText="單位" ItemStyle-Width="60px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                             <ItemTemplate>
                                                 <asp:Label ID="Label_單位" runat="server" Text='<%# Bind("單位") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="最近進貨價" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Right">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Label_最近進貨價" runat="server"
+                                                    Text='<%# Eval("最近進貨價", "{0:N3}") %>'
+                                                    Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: inline-block;">
+                                                </asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="預估物料總金額" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Right">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Label1_預估物料總金額" runat="server"
+                                                    Text='<%# Eval("預估物料總金額", "{0:N3}") %>'
+                                                    Style="word-break: break-all; white-space: pre-line; width: 100%; text-align: right; display: inline-block;">
+                                                </asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
                                     </Columns>
                                 </Fast:Grid>
                             </div>
@@ -91,7 +100,8 @@
 
         <telerik:RadPageView ID="RadPageView99" runat="server">
         </telerik:RadPageView>
-    </telerik:RadMultiPage>​
+    </telerik:RadMultiPage>
+    ​
 
 </asp:Content>
 
