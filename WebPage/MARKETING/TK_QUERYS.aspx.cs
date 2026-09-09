@@ -81,31 +81,67 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         // 2. 定義 SQL 查詢字串           
         string cmdTxt = @"
-                            SELECT
-                                MIN(TA001) AS '日期起',
-                                MAX(TA001) AS '日期迄',
-                                POSTA.TA002 AS '門市代',
-                                CMSME.ME002 AS '門市',
-                                COUNT(POSTA.TA002) AS '銷售總筆數不含退貨',
-                                SUM(POSTA.TA026) AS '銷售總金額含稅不含退貨',
-                                SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN 1 ELSE 0 END) AS '滿額總筆數不含退貨',
-                                SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN POSTA.TA026 ELSE 0 END) AS '滿額金額含稅不含退貨',
-	                            (SELECT SUM(TA026) FROM [TK].dbo.POSTA TA2 WHERE TA2.TA038 NOT IN ('4') AND TA2.TA001>= @DATESTART AND TA2.TA001<= @DATESEND AND TA2.TA002=POSTA.TA002) AS '銷售總金額含退貨'
+                            SELECT *
+                            FROM 
+	                            (
+	                            SELECT
+		                            MIN(POSTA.TA001) AS '日期起',
+		                            MAX(POSTA.TA001) AS '日期迄',
+		                            POSTA.TA002 AS '門市代',
+		                            CMSME.ME002 AS '門市',    
+		                            -- 銷售總筆數 (全量)
+		                            COUNT(1) AS '銷售總筆數不含退貨',    
+		                            -- 銷售總金額 (全量)
+		                            SUM(POSTA.TA026) AS '銷售總金額含退貨',    
+		                            -- 滿額筆數 (>= 1000)
+		                            SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN 1 ELSE 0 END) AS '滿額總筆數不含退貨',    
+		                            -- 滿額總金額 (>= 1000)
+		                            SUM(CASE WHEN POSTA.TA026 >= @QUERYMONEY THEN POSTA.TA026 ELSE 0 END) AS '滿額金額含稅不含退貨'
+	                            FROM [TK].dbo.POSTA POSTA WITH (NOLOCK)
+	                            INNER JOIN [TK].dbo.CMSME CMSME WITH (NOLOCK) 
+		                            ON POSTA.TA002 = CMSME.ME001
+	                            WHERE POSTA.TA038 NOT IN ('4')
+	                              AND POSTA.TA001 >= @DATESTART
+	                              AND POSTA.TA001 <= @DATESEND
+                                  AND POSTA.TA002 LIKE '106%'
+	                            GROUP BY 
+		                            POSTA.TA002, 
+		                            CMSME.ME002
 
-                            FROM
-                                [TK].dbo.POSTA POSTA
-                            INNER JOIN
-                                [TK].dbo.CMSME CMSME ON POSTA.TA002 = CMSME.ME001
-                            WHERE
-                                TA038 NOT IN ('4')
-                                AND POSTA.TA001 >= @DATESTART
-                                AND POSTA.TA001 <= @DATESEND
-                                AND POSTA.TA026 >=0
-                                AND POSTA.TA002 LIKE '106%'
-                            GROUP BY
-                                POSTA.TA002, CMSME.ME002
-                            ORDER BY
-                                POSTA.TA002;
+	                            UNION ALL
+
+	                            SELECT 
+		                            MIN(COPTG.TG003) AS '日期起',
+		                            MAX(COPTG.TG003) AS '日期迄',
+		                            COPTG.TG005 AS '門市代',
+		                            CMSME.ME002 AS '門市',    
+		                            -- 銷售總筆數 (全量)
+		                            COUNT(1) AS '銷售總筆數不含退貨',    
+		                            -- 銷售總金額 (全量)
+		                            SUM(COPTG.TG045 + COPTG.TG046) AS '銷售總金額含退貨',    
+		                            -- 滿額筆數 (>= 1000)
+		                            SUM(CASE WHEN (COPTG.TG045 + COPTG.TG046) >= @QUERYMONEY THEN 1 ELSE 0 END) AS '滿額總筆數不含退貨',    
+		                            -- 滿額總金額 (>= 1000)
+		                            SUM(CASE WHEN (COPTG.TG045 + COPTG.TG046) >= @QUERYMONEY THEN (COPTG.TG045 + COPTG.TG046) ELSE 0 END) AS '滿額金額含稅不含退貨'
+	                            FROM [TK].dbo.COPTG COPTG WITH (NOLOCK)
+	                            INNER JOIN [TK].dbo.CMSME CMSME WITH (NOLOCK) 
+		                            ON COPTG.TG005 = CMSME.ME001
+	                            WHERE COPTG.TG023 = 'Y'
+	                              AND COPTG.TG003 >=@DATESTART 
+	                              AND COPTG.TG003 <=@DATESEND
+                                  -- 若門市代號格式固定，建議移除開頭 % 符號以利用 Index (例如改為 LIKE '117%' OR LIKE '120%')
+	                              AND (COPTG.TG005 LIKE '%117%' OR COPTG.TG005 LIKE '%120%')
+	                              -- 使用 EXISTS 代替 IN 效率更高
+	                              AND EXISTS (
+		                              SELECT 1 
+		                              FROM [TKBUSINESS].[dbo].[TK_TG001] TK 
+		                              WHERE TK.TG001 = COPTG.TG001
+	                              )
+	                            GROUP BY 
+		                            COPTG.TG005, 
+		                            CMSME.ME002
+                            ) AS TEMP
+                            ORDER BY 門市代
                         ";
 
         m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());
