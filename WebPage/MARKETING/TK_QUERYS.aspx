@@ -392,9 +392,9 @@
                                                         <asp:Label ID="Label_門市" runat="server" Text='<%# Bind("門市") %>' Style="word-break: break-all; white-space: pre-line;" Width="300px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="銷售總筆數(不含退貨)" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="銷售總筆數(含退貨)" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_銷售總筆數不含退貨" runat="server" Text='<%# Eval("銷售總筆數不含退貨", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="160px"></asp:Label>
+                                                        <asp:Label ID="Label_銷售總筆數含退貨" runat="server" Text='<%# Eval("銷售總筆數含退貨", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="160px"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="銷售總金額含稅(含退貨)" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
@@ -411,12 +411,7 @@
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label_滿額金額含稅不含退貨" runat="server" Text='<%# Eval("滿額金額含稅不含退貨", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="160px"></asp:Label>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                                     <asp:TemplateField HeaderText="銷售總金額(含退貨)" ItemStyle-Width="160px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label_銷售總金額含退貨" runat="server" Text='<%# Eval("銷售總金額含退貨", "{0:N0}") %>' Style="word-break: break-all; white-space: pre-line; text-align: right;" Width="160px"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>                                       
 
                                             </Columns>
                                         </Fast:Grid>

@@ -90,7 +90,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 		                            POSTA.TA002 AS '門市代',
 		                            CMSME.ME002 AS '門市',    
 		                            -- 銷售總筆數 (全量)
-		                            COUNT(1) AS '銷售總筆數不含退貨',    
+		                            COUNT(1) AS '銷售總筆數含退貨',    
 		                            -- 銷售總金額 (全量)
 		                            SUM(POSTA.TA026) AS '銷售總金額含退貨',    
 		                            -- 滿額筆數 (>= 1000)
@@ -116,7 +116,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 		                            COPTG.TG005 AS '門市代',
 		                            CMSME.ME002 AS '門市',    
 		                            -- 銷售總筆數 (全量)
-		                            COUNT(1) AS '銷售總筆數不含退貨',    
+		                            COUNT(1) AS '銷售總筆數含退貨',    
 		                            -- 銷售總金額 (全量)
 		                            SUM(COPTG.TG045 + COPTG.TG046) AS '銷售總金額含退貨',    
 		                            -- 滿額筆數 (>= 1000)
