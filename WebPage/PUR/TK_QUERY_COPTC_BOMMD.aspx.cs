@@ -60,11 +60,32 @@ public partial class CDS_WebPage_PUR_TK_QUERY_COPTC_BOMMD : Ede.Uof.Utility.Page
         StringBuilder cmdTxt = new StringBuilder();
 
         StringBuilder SQL_QUERY1 = new StringBuilder();
+        StringBuilder SQL_QUERY2 = new StringBuilder();
 
         DateTime DT_SDATES = Convert.ToDateTime(txtDate1.Text);
         string SDATES = DT_SDATES.ToString("yyyyMMdd");
-        DateTime DT_EDATES = Convert.ToDateTime(txtDate1.Text);
+        DateTime DT_EDATES = Convert.ToDateTime(txtDate2.Text);
         string EDATES = DT_EDATES.ToString("yyyyMMdd");
+
+        string MB001 = TextBox1.Text.Trim();
+        string TC002 = TextBox2.Text.Trim();
+
+        if(!string.IsNullOrEmpty(MB001))
+        {
+            SQL_QUERY1.AppendFormat(@" AND  (B.TD004 LIKE '%{0}%' OR B.TD005 LIKE '%{0}%') ", MB001);
+        }
+        else
+        {
+            SQL_QUERY1.AppendFormat(@" ");
+        }
+        if (!string.IsNullOrEmpty(TC002))
+        {
+            SQL_QUERY2.AppendFormat(@" AND B.TC002 LIKE '%{0}%' ", TC002);
+        }
+        else
+        {
+            SQL_QUERY2.AppendFormat(@" ");
+        }
 
         // 2. 定義 SQL 查詢字串           
         cmdTxt.AppendFormat(@"      
@@ -140,8 +161,8 @@ public partial class CDS_WebPage_PUR_TK_QUERY_COPTC_BOMMD : Ede.Uof.Utility.Page
                             SELECT 
                                 B.[BOM_Level]       AS 'BOM階層',
                                 B.[BOM_Path]        AS '展階路徑',
-                                B.TC001             AS '單別',
-                                B.TC002             AS '單號',
+                                B.TC001             AS '訂單單別',
+                                B.TC002             AS '訂單單號',
                                 B.TC003             AS '單據日期',
                                 B.TC053             AS '客戶簡稱',
                                 B.TD003             AS '序號',
@@ -183,7 +204,10 @@ public partial class CDS_WebPage_PUR_TK_QUERY_COPTC_BOMMD : Ede.Uof.Utility.Page
                                   -- 將比較運算子右移，確保索引 Seek 正常運作
                                   AND TB.TB011 > CONVERT(VARCHAR(8), DATEADD(DAY, -30, GETDATE()), 112)
                             ) PUR
-                            WHERE B.Child_MD003 LIKE '2%'
+                            WHERE 1=1
+                            AND B.Child_MD003 LIKE '2%'
+                            {2}
+                            {3}
                             ORDER BY 
                                 B.TC001, 
                                 B.TC002, 
@@ -193,7 +217,7 @@ public partial class CDS_WebPage_PUR_TK_QUERY_COPTC_BOMMD : Ede.Uof.Utility.Page
                                 PUR.TB001,
                                 PUR.TB002
                             OPTION (MAXRECURSION 32);
-                                                    ", SDATES, EDATES
+                                                    ", SDATES, EDATES, SQL_QUERY1.ToString(), SQL_QUERY2.ToString()
                         );
 
         //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());

@@ -29,7 +29,20 @@
                                     <asp:Label ID="Label5" runat="server" Text=" "></asp:Label>
                                 </td>
                             </tr>
-
+                             <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label3" runat="server" Text="品名/品號: "></asp:Label>
+                                    <asp:TextBox ID="TextBox1" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="PopTableLeftTD"></td>
+                                <td>
+                                    <asp:Label ID="Label2" runat="server" Text="訂單編號: "></asp:Label>
+                                    <asp:TextBox ID="TextBox2" Text="" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
@@ -46,14 +59,14 @@
                                             <EnhancePagerSettings FirstImageUrl="" FirstAltImageUrl="" PreviousImageUrl="" NextImageUrl="" LastImageUrl="" LastAltImage="" PageNumberCssClass="" PageNumberCurrentCssClass="" PageInfoCssClass="" PageRedirectCssClass="" NextIAltImageUrl="" PreviousAltImageUrl="" ShowHeaderPager="True"></EnhancePagerSettings>
                                             <ExportExcelSettings AllowExportToExcel="true" ExportType="GridContent"></ExportExcelSettings>
                                             <Columns>
-                                                <asp:TemplateField HeaderText="單別" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="訂單單別" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_單別" runat="server" Text='<%# Bind("單別") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label_訂單單別" runat="server" Text='<%# Bind("訂單單別") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="單號" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
+                                                <asp:TemplateField HeaderText="訂單單號" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="Label_單號" runat="server" Text='<%# Bind("單號") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
+                                                        <asp:Label ID="Label_訂單單號" runat="server" Text='<%# Bind("訂單單號") %>' Style="word-break: break-all; white-space: pre-line; width: 100%;"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="客戶簡稱" ItemStyle-Width="200px" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Left">
