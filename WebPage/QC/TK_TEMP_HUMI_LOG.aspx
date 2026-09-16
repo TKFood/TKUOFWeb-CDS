@@ -135,19 +135,27 @@
                                     <asp:Label ID="Label2" runat="server" Text="狀態:" meta:resourcekey="Label4Resource1"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>                                     
-                                </td>                               
-                            </tr>                           
+                                    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="PopTableLeftTD">
-                                    <asp:Label ID="Label4" runat="server" Text="時段:" meta:resourcekey="Label4Resource1"></asp:Label>     
-                                    <asp:Label ID="Label6" runat="server" Text="" meta:resourcekey="Label4Resource1"></asp:Label>     
-                                </td>              
-                                 <td class="PopTableRightTD">
-                                    <asp:DropDownList ID="DropDownList3" runat="server" 
-                                                  AutoPostBack="True" 
-                                                  OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">                            
-                                </asp:DropDownList>
+                                    <asp:Label ID="Label4" runat="server" Text="時段:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text="" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList3" runat="server"
+                                        AutoPostBack="True"
+                                        OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label8" runat="server" Text="區域:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList5" runat="server"></asp:DropDownList>
                                 </td>
                             </tr>
                             <tr>
@@ -238,13 +246,21 @@
                             <tr>
                                 <td class="PopTableLeftTD">
                                     <asp:Label ID="Label5" runat="server" Text="時段:" meta:resourcekey="Label4Resource1"></asp:Label>
-                                    <asp:Label ID="Label7" runat="server" Text="" meta:resourcekey="Label4Resource1"></asp:Label>     
+                                    <asp:Label ID="Label7" runat="server" Text="" meta:resourcekey="Label4Resource1"></asp:Label>
                                 </td>
                                 <td class="PopTableRightTD">
-                                     <asp:DropDownList ID="DropDownList4" runat="server" 
-                                                  AutoPostBack="True" 
-                                                  OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">                            
-                                </asp:DropDownList>
+                                    <asp:DropDownList ID="DropDownList4" runat="server"
+                                        AutoPostBack="True"
+                                        OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label10" runat="server" Text="區域:" meta:resourcekey="Label4Resource1"></asp:Label>
+                                </td>
+                                <td class="PopTableRightTD">
+                                    <asp:DropDownList ID="DropDownList6" runat="server"></asp:DropDownList>
                                 </td>
                             </tr>
                             <tr>

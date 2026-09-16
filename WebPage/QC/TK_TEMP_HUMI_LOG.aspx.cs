@@ -40,6 +40,8 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
             BindDropDownList2();
             BindDropDownList3();
             BindDropDownList4();
+            BindDropDownList5();
+            BindDropDownList6();
         }
     }
 
@@ -186,6 +188,57 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         }
     }
 
+    private void BindDropDownList5()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("MACHINE", typeof(String));
+        dt.Columns.Add("AREAS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [MACHINE],[AREAS] FROM [TKQC].[dbo].[LOG_MACHINE_AREAS]  ORDER BY SERNO ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList5.DataSource = dt;
+            DropDownList5.DataTextField = "AREAS";
+            DropDownList5.DataValueField = "AREAS";
+            DropDownList5.DataBind();
+
+        }
+        else
+        {
+        }
+    }
+    private void BindDropDownList6()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("MACHINE", typeof(String));
+        dt.Columns.Add("AREAS", typeof(String));
+
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        string cmdTxt = @"SELECT  [MACHINE],[AREAS] FROM [TKQC].[dbo].[LOG_MACHINE_AREAS]  ORDER BY SERNO ";
+
+        dt.Load(m_db.ExecuteReader(cmdTxt));
+
+        if (dt.Rows.Count > 0)
+        {
+            DropDownList6.DataSource = dt;
+            DropDownList6.DataTextField = "AREAS";
+            DropDownList6.DataValueField = "AREAS";
+            DropDownList6.DataBind();
+
+        }
+        else
+        {
+        }
+    }
+
     private void BindGrid()
     {
         // 1.取得連線字串
@@ -304,6 +357,8 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         StringBuilder SQL_QUERY = new StringBuilder();
         StringBuilder QUERY = new StringBuilder();
         StringBuilder QUERY2 = new StringBuilder();
+        StringBuilder QUERY3 = new StringBuilder();
+
         string KINDS = DropDownList1.Text;
         if (KINDS.Equals("超標"))
         {
@@ -331,6 +386,20 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         {
             QUERY2.AppendFormat(@"");
         }
+
+        string AREAS = DropDownList5.Text;
+        if (!AREAS.Equals("全部"))
+        {
+            QUERY3.AppendFormat(@"
+                                AND [區域] ='{0}'
+                               
+                                ", AREAS);
+        }
+        else
+        {
+            QUERY3.AppendFormat(@"");
+        }
+
         // 2. 進行解析與預設值處理
         DateTime selectedDate;
         if (!DateTime.TryParse(Date1.Text, out selectedDate))
@@ -364,6 +433,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                                   AND [日期時間] >= '{0}' AND [日期時間] < '{1}'
                                 {2}
                                 {3}
+                                {4}
                             )
                             SELECT 
                                 [日期時間],
@@ -376,7 +446,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                             FROM CTE
                             WHERE RN = 1 -- 只取每 5 分鐘區間內的第一筆紀錄
                             ORDER BY [ID],[日期時間] 
-                            ", dateStart, dateEnd, QUERY.ToString(), QUERY2.ToString());
+                            ", dateStart, dateEnd, QUERY.ToString(), QUERY2.ToString(), QUERY3.ToString());
         
         //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());     
 
@@ -421,6 +491,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         StringBuilder SQL_QUERY = new StringBuilder();
         StringBuilder QUERY = new StringBuilder();
         StringBuilder QUERY2 = new StringBuilder();
+        StringBuilder QUERY3 = new StringBuilder();
 
         string KINDS = DropDownList2.Text;
         if (KINDS.Equals("超標"))
@@ -448,6 +519,20 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
         {
             QUERY2.AppendFormat(@"");
         }
+
+        string AREAS = DropDownList6.Text;
+        if (!AREAS.Equals("全部"))
+        {
+            QUERY3.AppendFormat(@"
+                                AND [區域] ='{0}'
+                               
+                                ", AREAS);
+        }
+        else
+        {
+            QUERY3.AppendFormat(@"");
+        }
+
         // 2. 進行解析與預設值處理
         DateTime selectedDate;
         if (!DateTime.TryParse(Date2.Text, out selectedDate))
@@ -481,6 +566,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                                   AND [日期時間] >= '{0}' AND [日期時間] < '{1}'
                                    {2}
                                    {3}
+                                    {4}
                             )
                             SELECT 
                                 [日期時間],
@@ -493,7 +579,7 @@ public partial class CDS_WebPage_QC_TK_TEMP_HUMI_LOG : Ede.Uof.Utility.Page.Base
                             FROM CTE
                             WHERE RN = 1 -- 只取每 5 分鐘區間內的第一筆紀錄
                             ORDER BY [ID],[日期時間] 
-                            ", dateStart, dateEnd, QUERY.ToString(), QUERY2.ToString());
+                            ", dateStart, dateEnd, QUERY.ToString(), QUERY2.ToString(), QUERY3.ToString());
 
         //m_db.AddParameter("@DATESTART", TextBox1.Text.Trim());     
 
