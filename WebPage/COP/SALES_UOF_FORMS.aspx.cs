@@ -181,7 +181,10 @@ public partial class CDS_WebPage_COP_SALES_UOF_FORMS : Ede.Uof.Utility.Page.Base
 				                                    THEN [UOF].dbo.StripHTML(t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""DV09""]/@fieldValue)[1]', 'nvarchar(max)'))
 			                                    WHEN f.FORM_NAME = '2001.產品開發+包裝設計申請單' 
 				                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD3""]/@fieldValue)[1]', 'nvarchar(max)')  
-			                                    ELSE NULL
+                                                WHEN f.FORM_NAME = '2001A.產品開發+包裝設計申請單(行企專用)' 
+				                                    THEN t.CURRENT_DOC.value('(/Form/FormFieldValue/FieldItem[@fieldId=""FIELD3""]/@fieldValue)[1]', 'nvarchar(max)')  
+
+                                                ELSE NULL
 		                                    END AS '表單標題',
 		                                    t.CURRENT_SITE_ID,
 		                                    t.TASK_ID,
