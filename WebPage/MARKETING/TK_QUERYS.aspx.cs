@@ -71,6 +71,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         TextBox8.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox9.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox10.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox17.Text = DateTime.Now.ToString("yyyyMMdd");
+        TextBox18.Text = DateTime.Now.ToString("yyyyMMdd");
     }
     private void BindGrid()
     {
@@ -939,6 +941,130 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
             }
         }
     }
+    private void BindGrid5()
+    {
+        // 1.取得連線字串
+        // 請將 "YourConnectionStringName" 替換為 Web.config 中定義的連線名稱
+        string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+        Ede.Uof.Utility.Data.DatabaseHelper m_db = new Ede.Uof.Utility.Data.DatabaseHelper(connectionString);
+
+        StringBuilder cmdTxt = new StringBuilder();
+
+        StringBuilder SQL_QUERY1 = new StringBuilder();
+        StringBuilder SQL_QUERY2 = new StringBuilder();
+        StringBuilder SQL_QUERY3 = new StringBuilder();
+        StringBuilder SQL_QUERY4 = new StringBuilder();
+        StringBuilder SQL_QUERY5 = new StringBuilder();
+        StringBuilder SQL_QUERY6 = new StringBuilder();
+        StringBuilder SQL_QUERY7 = new StringBuilder();
+
+        string DATESTART = TextBox17.Text.Trim();
+        string DATESEND = TextBox18.Text.Trim();
+       
+
+        if (!string.IsNullOrEmpty(DATESTART) && !string.IsNullOrEmpty(DATESEND))
+        {
+            SQL_QUERY1.AppendFormat(@"AND  TC004>='{0}' AND TC004<='{1}'", DATESTART, DATESEND);
+        }
+        else
+        {
+            SQL_QUERY1.AppendFormat(@"");
+        }
+        //if (!string.IsNullOrEmpty(TA002))
+        //{
+        //    //SQL_QUERY2.AppendFormat(@" AND TA002='{0}'", TA002);
+        //}
+        //else
+        //{
+        //    SQL_QUERY2.AppendFormat(@"");
+        //}
+      
+
+        // 2. 定義 SQL 查詢字串           
+        cmdTxt.AppendFormat(@"      
+                            --20261006 查付款別的折扣.sql
+
+                            WITH OrderTotals AS (
+                                -- 第一階段：依單據主鍵 (TC001, TC002, TC003, TC006) 算每筆交易的總金額
+                                SELECT 
+                                    TC001,
+                                    TC002,
+                                    TC003,
+                                    TC006,
+                                    SUM(TC009) AS SingleOrderAmount
+                                FROM [TK].dbo.POSTC WITH (NOLOCK)
+                                WHERE TC008 = '0126'
+                                GROUP BY TC001, TC002, TC003, TC006
+                            )
+
+                            -- 正確的 EXISTS 寫法：將 POSTC 與 CTE (OrderTotals) 進行關聯
+                            SELECT 
+                            TC002 '門代'
+                            ,ME002 '門市'
+                            ,(SELECT COUNT(TC008) FROM [TK].dbo.POSTC TC2 WHERE TC2.TC008 = '0126' AND TC2.TC002=P.TC002 {0}) '交易筆數'
+                            ,SUM(P.TC009) AS 銷售總金額
+                            FROM [TK].dbo.POSTC P WITH (NOLOCK)
+                            LEFT JOIN [TK].dbo.CMSME ON ME001=TC002
+                            WHERE EXISTS (
+                                SELECT 1 
+                                FROM OrderTotals O
+                                WHERE P.TC001 = O.TC001
+                                  AND P.TC002 = O.TC002
+                                  AND P.TC003 = O.TC003
+                                  AND P.TC006 = O.TC006
+                            )
+                            {0}
+                            GROUP BY TC002,ME002
+                            ORDER BY TC002,ME002
+                            
+                        ", SQL_QUERY1.ToString()
+                        , SQL_QUERY2.ToString()
+                        , SQL_QUERY3.ToString()
+                        , SQL_QUERY4.ToString()
+                        , SQL_QUERY5.ToString()
+                        , SQL_QUERY6.ToString()
+                        , SQL_QUERY7.ToString());
+
+        //m_db.AddParameter("@QUERYMONEY", TextBox3.Text.Trim());
+
+        DataTable dt = new DataTable();
+
+        dt.Load(m_db.ExecuteReader(cmdTxt.ToString()));
+        //EXPORT_DT5 = dt;
+
+        Grid5.DataSource = dt;
+        Grid5.DataBind();
+
+
+    }
+
+    protected void grid_PageIndexChanging5(object sender, GridViewPageEventArgs e)
+    {
+
+    }
+    protected void Grid5_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void Grid5_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int rowIndex = -1;
+    }
+
+
+    public void OnBeforeExport5(object sender, Ede.Uof.Utility.Component.BeforeExportEventArgs e)
+    {
+        SETEXCEL5();
+        MsgBox("MsgBox!!!!", this.Page, this);
+
+    }
+
+    public void SETEXCEL5()
+    {
+
+    }
+
     public void MsgBox(String ex, Page pg, Object obj)
     {
         string script = "alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "');";
@@ -979,6 +1105,9 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
     {
         SETEXCEL4();
     }
-
+    protected void Button6_Click(object sender, EventArgs e)
+    {
+        BindGrid5();
+    }
     #endregion
 }
