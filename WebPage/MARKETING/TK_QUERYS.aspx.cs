@@ -57,6 +57,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         if (!IsPostBack)
         {
             SET_DATES();
+            BindDropDownList1();
         }
     }
 
@@ -73,6 +74,34 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         TextBox10.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox17.Text = DateTime.Now.ToString("yyyyMMdd");
         TextBox18.Text = DateTime.Now.ToString("yyyyMMdd");
+    }
+
+    private void BindDropDownList1()
+    {
+        // 1. 從 Web.config 取得連線字串
+        string connString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ConnectionString;
+
+        // 2. 撰寫 SQL 查詢語句
+        string sql = "SELECT MT002,MT003 FROM[TK].dbo.POSMT WHERE MT003 LIKE '%折價券%'";
+
+        DataTable dt = new DataTable();
+
+        // 3. 使用 using 自動管理資料庫連線與資源釋放
+        using (SqlConnection conn = new SqlConnection(connString))
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+        {
+            adapter.Fill(dt);
+        }
+
+        // 4. 設定 DropDownList 屬性並繫結資料
+        DropDownList1.DataSource = dt;
+        DropDownList1.DataTextField = "MT003"; // 顯示在下拉選單上的文字
+        DropDownList1.DataValueField = "MT002";   // 選項對應的實際 Value 值
+        DropDownList1.DataBind();
+
+        // 5. (可選) 加入預設提示選項
+        DropDownList1.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- 請選擇類別 --", "0"));
     }
     private void BindGrid()
     {
@@ -960,7 +989,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
 
         string DATESTART = TextBox17.Text.Trim();
         string DATESEND = TextBox18.Text.Trim();
-       
+        string TC008 = DropDownList1.SelectedValue.ToString();
 
         if (!string.IsNullOrEmpty(DATESTART) && !string.IsNullOrEmpty(DATESEND))
         {
@@ -970,15 +999,22 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
         {
             SQL_QUERY1.AppendFormat(@"");
         }
-        //if (!string.IsNullOrEmpty(TA002))
-        //{
-        //    //SQL_QUERY2.AppendFormat(@" AND TA002='{0}'", TA002);
-        //}
-        //else
-        //{
-        //    SQL_QUERY2.AppendFormat(@"");
-        //}
-      
+        if (!string.IsNullOrEmpty(TC008))
+        {
+            SQL_QUERY2.AppendFormat(@"AND TC008 = '{0}' ", TC008);
+        }
+        else
+        {
+            SQL_QUERY2.AppendFormat(@"");
+        }
+        if (!string.IsNullOrEmpty(TC008))
+        {
+            SQL_QUERY3.AppendFormat(@"AND  TC2.TC008 = '{0}' ", TC008);
+        }
+        else
+        {
+            SQL_QUERY3.AppendFormat(@"");
+        }
 
         // 2. 定義 SQL 查詢字串           
         cmdTxt.AppendFormat(@"      
@@ -993,7 +1029,8 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                                     TC006,
                                     SUM(TC009) AS SingleOrderAmount
                                 FROM [TK].dbo.POSTC WITH (NOLOCK)
-                                WHERE TC008 = '0126'
+                                WHERE 1=1
+                                    {1}
                                 GROUP BY TC001, TC002, TC003, TC006
                             )
 
@@ -1001,7 +1038,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             SELECT 
                             TC002 '門代'
                             ,ME002 '門市'
-                            ,(SELECT COUNT(TC008) FROM [TK].dbo.POSTC TC2 WHERE TC2.TC008 = '0126' AND TC2.TC002=P.TC002 {0}) '交易筆數'
+                            ,(SELECT COUNT(TC008) FROM [TK].dbo.POSTC TC2 WHERE 1=1 AND TC2.TC002=P.TC002 {2} {0}) '交易筆數'
                             ,SUM(P.TC009) AS 銷售總金額
                             FROM [TK].dbo.POSTC P WITH (NOLOCK)
                             LEFT JOIN [TK].dbo.CMSME ON ME001=TC002

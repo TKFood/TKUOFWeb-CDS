@@ -549,6 +549,14 @@
                                     <asp:TextBox ID="TextBox18" runat="server"></asp:TextBox>
                                 </td>
                             </tr>
+                              <tr>
+                                <td class="PopTableLeftTD">
+                                    <asp:Label ID="Label22" runat="server" Text="折價券"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="PopTableLeftTD"></td>
                                 <td>
