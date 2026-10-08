@@ -970,6 +970,9 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
             }
         }
     }
+
+
+
     private void BindGrid5()
     {
         // 1.取得連線字串
@@ -1053,7 +1056,7 @@ public partial class CDS_WebPage_MARKETING_TK_QUERYS : Ede.Uof.Utility.Page.Base
                             {0}
                             GROUP BY TC002,ME002
                             ORDER BY TC002,ME002
-                            
+
                         ", SQL_QUERY1.ToString()
                         , SQL_QUERY2.ToString()
                         , SQL_QUERY3.ToString()
