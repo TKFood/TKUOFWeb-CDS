@@ -137,15 +137,19 @@ public partial class CDS_WebPage_RESEARCH_TK_UOF_FROMS_1002_RECORDS : Ede.Uof.Ut
             QUERYS.AppendFormat(@" ");
         }
         //WHERE STATUS
-        if (!STATUS.Equals("全部") && !string.IsNullOrEmpty(STATUS))
+        if (string.IsNullOrEmpty(STATUS) || STATUS.Equals("全部"))
         {
-            // 如果 STATUS 是外部傳入的變數，建議防範 SQL 注入
-            // 這裡維持您原本的串接方式，但精簡了邏輯
-            QUERYS2.AppendFormat(@" AND STATUS = '{0}' ", STATUS);
+            // 如果是空值或「全部」，則不加任何篩選條件
+        }
+        else if (STATUS.Equals("未指定"))
+        {
+            QUERYS2.Append(" AND ISNULL(STATUS,'') = '' ");
         }
         else
         {
-            QUERYS2.AppendFormat(@" ");
+            // 注意：若 STATUS 是外部輸入，直接組字串會有 SQL 注入風險
+            // 建議改用參數化查詢，或是確保這裡的 STATUS 是安全的內部變數
+            QUERYS2.AppendFormat(" AND STATUS = '{0}' ", STATUS);
         }
         //WHERE 產品名稱
         string names = TextBox1.Text.Trim();
