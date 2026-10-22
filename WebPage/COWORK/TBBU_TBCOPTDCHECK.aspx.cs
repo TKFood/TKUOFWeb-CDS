@@ -597,7 +597,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK : Ede.Uof.Utility.Page.Ba
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Label Label_COPTDUDF01 = (Label)e.Row.FindControl("Label_COPTDUDF01");
-            Label Label_PURCHECKS = (Label)e.Row.FindControl("Label_PURCHECKS");           
+            //Label Label_PURCHECKS = (Label)e.Row.FindControl("Label_PURCHECKS");           
             Label Label_MOCCHECKS = (Label)e.Row.FindControl("Label_MOCCHECKS");
 
             Button Button2 = (Button)e.Row.FindControl("Button2");
