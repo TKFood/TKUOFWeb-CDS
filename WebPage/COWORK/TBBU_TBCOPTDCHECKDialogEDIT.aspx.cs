@@ -34,26 +34,26 @@ public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.P
         if (ROLES.Equals("ADMIN"))
         {
             Button1.Enabled = true;
-            Button2.Enabled = true;
+           // Button2.Enabled = true;
             Button3.Enabled = true;
         }
      
         else if (ROLES.Equals("MOC"))
         {
             Button1.Enabled = true;
-            Button2.Enabled = false;
+            //Button2.Enabled = false;
             Button3.Enabled = false;
         }
         else if (ROLES.Equals("PUR"))
         {
             Button1.Enabled = false;
-            Button2.Enabled = true;
+            //Button2.Enabled = true;
             Button3.Enabled = false;
         }
         else if (ROLES.Equals("SLAES"))
         {
             Button1.Enabled = false;
-            Button2.Enabled = false;
+            //Button2.Enabled = false;
             Button3.Enabled = true;
         }
 
@@ -140,9 +140,9 @@ public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.P
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
                         TextBox13.Text,
-                        TextBox14.Text,
-                        DropDownList2.SelectedValue,
-                        TextBox16.Text,
+                        "",
+                        "",
+                        "",
                         TextBox12.Text,
                         TextBox17.Text
                         );
@@ -150,7 +150,7 @@ public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.P
     //採購
     protected void Button2_Click(object sender, EventArgs e)
     {
-        TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+        string SDATES = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
         //Button1.Text = "OK";
         ADDTBCOPTDCHECK(
                         TextBox1.Text,
@@ -172,9 +172,9 @@ public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.P
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
                         TextBox13.Text,
-                        TextBox14.Text,
-                        DropDownList2.SelectedValue,
-                        TextBox16.Text,
+                        SDATES,
+                        "",
+                       "",
                         TextBox12.Text,
                         TextBox17.Text
                         );
@@ -204,9 +204,9 @@ public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.P
                         TextBox11.Text,
                         DropDownList1.SelectedValue,
                         TextBox13.Text,
-                        TextBox14.Text,
-                        DropDownList2.SelectedValue,
-                        TextBox16.Text,
+                        "",
+                        "",
+                       "",
                         TextBox12.Text,
                         TextBox17.Text
                         ); 
@@ -218,7 +218,7 @@ public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.P
     public void SETBUTTON()
     {
         Button1.Enabled = false;
-        Button2.Enabled = false;
+        //Button2.Enabled = false;
         Button3.Enabled = false;
     }
 
@@ -306,11 +306,11 @@ public partial class CDS_WebPage_TBBU_TBCOPTDCHECKDialogEDIT : Ede.Uof.Utility.P
             //TextBox12.Text = dt.Rows[0]["MOCCHECKS"].ToString();
             DropDownList1.SelectedValue= dt.Rows[0]["MOCCHECKS"].ToString();
             TextBox13.Text = dt.Rows[0]["MOCCHECKSCOMMENTS"].ToString();
-            TextBox14.Text = dt.Rows[0]["PURCHECKDATES"].ToString();
+            //TextBox14.Text = dt.Rows[0]["PURCHECKDATES"].ToString();
             //TextBox14.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             //TextBox15.Text = dt.Rows[0]["PURCHECKS"].ToString();
-            DropDownList2.SelectedValue = dt.Rows[0]["PURCHECKS"].ToString();
-            TextBox16.Text = dt.Rows[0]["PURCHECKSCOMMENTS"].ToString();
+            //DropDownList2.SelectedValue = dt.Rows[0]["PURCHECKS"].ToString();
+            //TextBox16.Text = dt.Rows[0]["PURCHECKSCOMMENTS"].ToString();
             TextBox12.Text = dt.Rows[0]["SALESCHECKDATES"].ToString();
             //TextBox12.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             TextBox17.Text = dt.Rows[0]["SALESCHECKSCOMMENTS"].ToString();

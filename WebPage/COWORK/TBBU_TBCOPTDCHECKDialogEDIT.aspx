@@ -214,7 +214,7 @@
 
         </table>
     </div>
-    <div style="background-color: #82FF82; padding: 10px; margin-bottom: 5px;">
+  <%--  <div style="background-color: #82FF82; padding: 10px; margin-bottom: 5px;">
         採購區
         <table>
             <tr>
@@ -229,8 +229,7 @@
                 <td class="PopTableLeftTD">
                     <asp:Label ID="Label16" runat="server" Text="採購是否核準"></asp:Label>
                 </td>
-                <td class="PopTableRightTD">
-                    <%-- <asp:TextBox ID="TextBox15" runat="server" Text="" Width="100%"></asp:TextBox>--%>
+                <td class="PopTableRightTD">                    
                     <asp:DropDownList ID="DropDownList2" runat="server" values="">
                         <asp:ListItem Selected="True" Value="N">N</asp:ListItem>
                         <asp:ListItem Value="Y">Y</asp:ListItem>
@@ -255,7 +254,7 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </div>--%>
     <div style="background-color: #30FFFF; padding: 10px; 5">
         業務區
           <table>
