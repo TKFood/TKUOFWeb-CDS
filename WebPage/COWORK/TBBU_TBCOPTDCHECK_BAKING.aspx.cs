@@ -610,7 +610,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             Button Button2 = (Button)e.Row.FindControl("Button2");
             if (Label_COPTDUDF01.Text.Equals("Y"))
             {
-                if (Label_PURCHECKS.Text.Equals("Y") && Label_MOCCHECKS.Text.Equals("Y"))
+                if ( Label_MOCCHECKS.Text.Equals("Y"))
                 {
                     Button2.Visible = true;
                 }
