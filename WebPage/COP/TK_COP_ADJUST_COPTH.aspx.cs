@@ -364,6 +364,7 @@ public partial class CDS_WebPage_COP_TK_COP_ADJUST_COPTH : Ede.Uof.Utility.Page.
                         ,TH036=TH036+@MODIFYTAXMONEYS
                         ,TH037=TH037+@MODIFYMONEYS
                         ,TH038=TH038+@MODIFYTAXMONEYS
+                        ,TH013=TH013+@MODIFYMONEYS+@MODIFYTAXMONEYS
                         WHERE TH001=@TG001 AND TH002 =@TG002 AND TH003=@TH003
 
                         UPDATE [TK].dbo.COPTG

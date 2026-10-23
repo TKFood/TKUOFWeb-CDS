@@ -360,60 +360,86 @@
                                                         </asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="總金額不變-調整未稅金額加1且稅額減1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                    <HeaderTemplate>
+                                                    總金額不變<br />
+                                                    -未稅金額加1<br />
+                                                    且稅額減1
+                                                </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button1" runat="server"
-                                                            Text="未稅金額加1且稅額減1"
+                                                            Text="未稅加1且稅額減1"
                                                             CommandName="Grid1Button1"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
-                                                            OnClientClick="return confirm('調整 未稅金額加1且稅額減 確定？');"
+                                                            OnClientClick="return confirm('調整 未稅加1且稅額減1 確定？');"
                                                             CssClass="grid-btn btn-add_1" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="總金額不變-調整 未稅金額減1 且 稅額加1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField  ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                     <HeaderTemplate>
+                                                    總金額不變<br />
+                                                    -未稅金額減1 <br />
+                                                    且稅額加1
+                                                </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button2" runat="server"
-                                                            Text="未稅金額減1且稅額加1"
+                                                            Text="未稅減1且稅額加1"
                                                             CommandName="Grid1Button2"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
-                                                            OnClientClick="return confirm('調整 未稅金額減1且稅額加1 確定？');"
+                                                            OnClientClick="return confirm('調整 未稅減1且稅額加1 確定？');"
                                                             CssClass="grid-btn btn-add_2" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="總金額加1-調整 未稅金額加1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                     <HeaderTemplate>
+                                                    總金額加1<br />
+                                                    -未稅金額加1
+                                                </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button3" runat="server"
-                                                            Text="總金額加1-調整未稅金額加1"
+                                                            Text="總金額加1-未稅加1"
                                                             CommandName="Grid1Button3"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
                                                             OnClientClick="return confirm('調整 總金額加1-未稅金額加1 確定？');"
                                                             CssClass="grid-btn btn-add_3" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="總金額加1-調整 稅額加1" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                     <HeaderTemplate>
+                                                    總金額加1<br />
+                                                    -稅額加1
+                                                </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button4" runat="server"
-                                                            Text="總金額加1-調整 稅額加1"
+                                                            Text="總金額加1-稅額加1"
                                                             CommandName="Grid1Button4"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
                                                             OnClientClick="return confirm('調整 總金額加1-稅額加1確定？');"
                                                             CssClass="grid-btn btn-add_4" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="總金額減1-調整 未稅金額減1  " ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField  ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                      <HeaderTemplate>
+                                                    總金額減1<br />
+                                                    -未稅金額減1
+                                                </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button5" runat="server"
-                                                            Text="總金額減1-調整未稅金額減1"
+                                                            Text="總金額減1-未稅減1"
                                                             CommandName="Grid1Button5"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
                                                             OnClientClick="return confirm('調整 總金額減1-未稅金額減1 確定？');"
                                                             CssClass="grid-btn btn-add_5" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="總金額減1-調整 稅額減1" ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                <asp:TemplateField ItemStyle-Width="4%" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                                                     <HeaderTemplate>
+                                                    總金額減1<br />
+                                                    - 稅額減1
+                                                </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Button ID="Grid1Button6" runat="server"
-                                                            Text="總金額減1-調整 稅額減1"
+                                                            Text="總金額減1-稅額減1"
                                                             CommandName="Grid1Button6"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
                                                             OnClientClick="return confirm('調整 總金額減1-稅額減1確定？');"
