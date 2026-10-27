@@ -1799,7 +1799,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
                                 AND 1=1
                                 ) AS TEMP 
                                 WHERE COPTFUDF01 IN ('Y','y')  
-                                AND (ISNULL(MOCCHECKS,'') NOT IN ('Y') OR ISNULL(PURCHECKS,'') NOT IN ('Y') )
+                                AND (ISNULL(MOCCHECKS,'') NOT IN ('Y')  )
                                 AND LTRIM(RTRIM(TF001))+LTRIM(RTRIM(TF002))+LTRIM(RTRIM(TF003))='{0}'
 
                                 ", TF001002003);
@@ -1839,7 +1839,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
             }
             else
             {
-                MsgBox("送單失敗!!!! \r\n 送單失敗!!!!\r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!!       \r\n \r\n訂單的單身有需要生產的，需經生管、採購同意" + TF001 + TF002 + TF003, this.Page, this);
+                MsgBox("送單失敗!!!! \r\n送單失敗!!!!\r\n送單失敗!!!! \r\n 送單失敗!!!! \r\n送單失敗!!!!       \r\n \r\n訂單的單身有需要生產的，需經生管、採購同意" + TF001 + TF002 + TF003, this.Page, this);
             }
         }
         catch
@@ -2075,15 +2075,16 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTFCHECK : Ede.Uof.Utility.Page.Ba
         DataTable DT_CHECK_COPTF_ZINVMBBAKING = CHECK_COPTF_ZINVMBBAKING(TE001, TE002, TE003);
 
         string account = DT.Rows[0]["TE009"].ToString();
-        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
-        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+      
+  
         string fillerName = DT.Rows[0]["NAME"].ToString();
         string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
-
         string BA = DT.Rows[0]["BA"].ToString();
         string BANAME = DT.Rows[0]["BANAME"].ToString();
         string BA_USER_GUID = DT.Rows[0]["BA_USER_GUID"].ToString();
 
+        string jobTitleId = DTUPFDEP.Rows[0]["TITLE_ID"].ToString();
+        string groupId = DTUPFDEP.Rows[0]["GROUP_ID"].ToString();
         string DEPNAME = DTUPFDEP.Rows[0]["DEPNAME"].ToString();
         string DEPNO = DTUPFDEP.Rows[0]["DEPNO"].ToString();
 
