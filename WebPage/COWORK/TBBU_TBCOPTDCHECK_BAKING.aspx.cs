@@ -1650,9 +1650,10 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                 MsgBox("送單失敗!!!! \r\n  送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            MsgBox("catch NG", this.Page, this);
+            Logger.Write("CHECKTBCOPTDCHECK", "例外錯誤：" + ex.ToString());
+            MsgBox("catch NG \r\n" + ex.Message, this.Page, this);
         }
         finally
         {
@@ -1736,9 +1737,10 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                 MsgBox("送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!! \r\n 送單失敗!!!!  \r\n  \r\n訂單的單身有需要生產的，需經生管、採購同意" + TC001 + TC002, this.Page, this);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            MsgBox("catch NG", this.Page, this);
+            Logger.Write("CHECKTBCOPTDCHECK2", "例外錯誤：" + ex.ToString());
+            MsgBox("catch NG \r\n" + ex.Message, this.Page, this);
         }
         finally
         {
@@ -1757,8 +1759,8 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
         DataTable DT_CHECK_COPTD_ZINVMBBAKING = CHECK_COPTD_ZINVMBBAKING(TC001, TC002);
 
         string account = DT.Rows[0]["TC006"].ToString();
-        string groupId = DT.Rows[0]["GROUP_ID"].ToString();
-        string jobTitleId = DT.Rows[0]["TITLE_ID"].ToString();
+        string groupId = DTUPFDEP.Rows[0]["GROUP_ID"].ToString();
+        string jobTitleId = DTUPFDEP.Rows[0]["TITLE_ID"].ToString();
         string fillerName = DT.Rows[0]["NAME"].ToString();
         string fillerUserGuid = DT.Rows[0]["USER_GUID"].ToString();
 
@@ -2971,8 +2973,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             }
 
         }
-        catch
+        catch (Exception ex)
         {
+            Logger.Write("SEARCHCOPTCCOPTD", "例外錯誤：" + ex.ToString());
             return null;
         }
         finally
@@ -3038,8 +3041,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             }
 
         }
-        catch
+        catch (Exception ex)
         {
+            Logger.Write("SEARCHUOFDEP", "例外錯誤：" + ex.ToString());
             return null;
         }
         finally
@@ -3093,8 +3097,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             }
 
         }
-        catch
+        catch (Exception ex)
         {
+            Logger.Write("SEARCHFORM_VERSION_ID", "例外錯誤：" + ex.ToString());
             return "";
         }
         finally
@@ -3789,8 +3794,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             }
 
         }
-        catch
+        catch (Exception ex)
         {
+            Logger.Write("CHECK_COPTD_ZINVMBBAKING", "例外錯誤：" + ex.ToString());
             return null;
         }
         finally
@@ -3850,8 +3856,9 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
             }
 
         }
-        catch
+        catch (Exception ex)
         {
+            Logger.Write("SEARCH_MOCMANULINEMB001LIKES", "例外錯誤：" + ex.ToString());
             return null;
         }
         finally
