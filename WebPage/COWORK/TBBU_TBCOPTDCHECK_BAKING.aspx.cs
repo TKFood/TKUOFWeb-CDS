@@ -1574,6 +1574,66 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
         //cs.RegisterClientScriptBlock(cstype, s, s.ToString());
     }
 
+    /// <summary>
+    /// 顯示可複製的錯誤視窗（含文字框、複製、關閉按鈕）
+    /// </summary>
+    public void ShowCopyableError(string title, string message, Page pg, Object obj)
+    {
+        string script =
+            "(function(){" +
+            "var old=document.getElementById('copyErrBox'); if(old){old.parentNode.removeChild(old);}" +
+            "var box=document.createElement('div'); box.id='copyErrBox';" +
+            "box.style.cssText='position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:99999;';" +
+            "var pnl=document.createElement('div');" +
+            "pnl.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80%;max-width:900px;background:#fff;border-radius:6px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,0.3);font-family:Microsoft JhengHei,Arial;';" +
+            "var h=document.createElement('div'); h.style.cssText='font-size:18px;font-weight:bold;color:#c00;margin-bottom:8px;'; h.appendChild(document.createTextNode(" + JsString(title) + "));" +
+            "var ta=document.createElement('textarea'); ta.id='copyErrText'; ta.readOnly=true; ta.value=" + JsString(message) + ";" +
+            "ta.style.cssText='width:100%;height:320px;box-sizing:border-box;font-family:Consolas,monospace;font-size:12px;';" +
+            "var bar=document.createElement('div'); bar.style.cssText='text-align:right;margin-top:10px;';" +
+            "var msg=document.createElement('span'); msg.style.cssText='color:green;margin-right:10px;';" +
+            "var bc=document.createElement('button'); bc.type='button'; bc.innerHTML='複製'; bc.style.cssText='margin-right:8px;padding:4px 16px;';" +
+            "bc.onclick=function(){ta.focus();ta.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}" +
+            "if(!ok&&navigator.clipboard){navigator.clipboard.writeText(ta.value);ok=true;}" +
+            "msg.innerHTML=ok?'已複製':'請按 Ctrl+C 複製';};" +
+            "var bx=document.createElement('button'); bx.type='button'; bx.innerHTML='關閉'; bx.style.cssText='padding:4px 16px;';" +
+            "bx.onclick=function(){box.parentNode.removeChild(box);};" +
+            "bar.appendChild(msg); bar.appendChild(bc); bar.appendChild(bx);" +
+            "pnl.appendChild(h); pnl.appendChild(ta); pnl.appendChild(bar); box.appendChild(pnl); document.body.appendChild(box);" +
+            "ta.focus(); ta.select();" +
+            "})();";
+        ScriptManager.RegisterStartupScript(pg, obj.GetType(), "CopyErrScript", script, true);
+    }
+
+    /// <summary>
+    /// 把字串轉成安全的 JavaScript 字串常值（含單引號）
+    /// </summary>
+    private static string JsString(string s)
+    {
+        if (s == null) return "''";
+        StringBuilder sb = new StringBuilder("'");
+        foreach (char c in s)
+        {
+            switch (c)
+            {
+                case '\\': sb.Append("\\\\"); break;
+                case '\'': sb.Append("\\'"); break;
+                case '"': sb.Append("\\\""); break;
+                case '\r': sb.Append("\\r"); break;
+                case '\n': sb.Append("\\n"); break;
+                case '\t': sb.Append("\\t"); break;
+                case '<': sb.Append("\\u003c"); break;
+                case '>': sb.Append("\\u003e"); break;
+                case '&': sb.Append("\\u0026"); break;
+                default:
+                    if (c < 32 || c == '\u2028' || c == '\u2029') sb.Append("\\u" + ((int)c).ToString("x4"));
+                    else sb.Append(c);
+                    break;
+            }
+        }
+        sb.Append("'");
+        return sb.ToString();
+    }
+
     public void CHECKTBCOPTDCHECK(string TD001TD002)
     {
         string connectionString = ConfigurationManager.ConnectionStrings["ERPconnectionstring"].ToString();
@@ -1653,7 +1713,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
         catch (Exception ex)
         {
             Logger.Write("CHECKTBCOPTDCHECK", "例外錯誤：" + ex.ToString());
-            MsgBox("catch NG \r\n" + ex.Message, this.Page, this);
+            ShowCopyableError("送單發生錯誤", ex.ToString(), this.Page, this);
         }
         finally
         {
@@ -1740,7 +1800,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
         catch (Exception ex)
         {
             Logger.Write("CHECKTBCOPTDCHECK2", "例外錯誤：" + ex.ToString());
-            MsgBox("catch NG \r\n" + ex.Message, this.Page, this);
+            ShowCopyableError("送單發生錯誤", ex.ToString(), this.Page, this);
         }
         finally
         {
@@ -2827,7 +2887,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
 
             Logger.Write("起單", status + error + "\r\n" + Form.OuterXml);
 
-            MsgBox("失敗了，無法送單!!!!    " + error + "\r\n" + Form.OuterXml, this.Page, this);
+            ShowCopyableError("失敗了，無法送單!!!!", error + "\r\n\r\n" + Form.OuterXml, this.Page, this);
 
             throw new Exception(status + error + "\r\n" + Form.OuterXml);
 
