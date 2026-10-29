@@ -1609,7 +1609,7 @@ public partial class CDS_WebPage_COP_TBBU_TBCOPTDCHECK_BAKING : Ede.Uof.Utility.
                                 ) 
                                 AS TEMP
                                 WHERE   COPTDUDF01 IN ('Y','y')
-                                AND (ISNULL([MOCCHECKS],'') NOT IN ('Y') OR ISNULL([PURCHECKS],'') NOT IN ('Y') )
+                                AND (ISNULL([MOCCHECKS],'') NOT IN ('Y')  )
                                 AND LTRIM(RTRIM(TD001))+LTRIM(RTRIM(TD002))='{0}'
 
                                 ", TD001TD002);
